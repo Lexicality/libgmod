@@ -2023,7 +2023,7 @@ function GEntity:SetCollisionGroup(group)
 end
 
 --- Sets the color of an entity.  
---- Some entities may need a custom [render mode](Enums/RENDERMODE) set for transparency to work. See example 2.<br>  
+--- Some entities may need a custom [render mode](Enums/RENDERMODE) set for transparency to work. See example 2.  
 --- Entities also must have a proper [render group](Enums/RENDERGROUP) set for transparency to work.  
 --- @param color table @The color to set
 function GEntity:SetColor(color)

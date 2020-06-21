@@ -917,7 +917,7 @@ end
 --- Automatically attempts to convert each argument to a string. (See Global.tostring)  
 --- Unlike Global.print, arguments are not separated by anything. They are simply concatenated.  
 --- Additionally, a newline isn't added automatically to the end, so subsequent Msg or print operations will continue the same line of text in the console. See Global.MsgN for a version that does add a newline.  
---- The text is blue on the server, orange on the client, and green on the menu: <img src="msg_server_client_colors.png">  
+--- The text is blue on the server, orange on the client, and green on the menu:   
 --- @vararg any @List of values to print.
 function Msg(...)
 end

@@ -67,6 +67,7 @@ interface FuncContainer {
 // Time to parse XML with regular expressions
 const INTERNAL_REGEX = /<internal>/;
 const UNWANTED_REGEX = /<(note|warning)>.+?<\/(note|warning)>/g;
+const USELESS_REGEX = /<br>|<pagelist.+?\/pagelist>|<img.+?>/g;
 const PAGE_REGEX = /<page( text="(.+?)")?>(.+?)<\/page>/g;
 const ARG_REGEX = /^(.+?)(\.\s|\n|$)/;
 const BUG_REGEX = /<bug issue="(.+?)">(.+?)<\/bug>/g;
@@ -145,6 +146,7 @@ function getRetDoc(retvals: FuncRet): string {
 function formatDesc(desc: string): string {
     return unpaginate(linkBugs(desc))
         .replace(UNWANTED_REGEX, "")
+        .replace(USELESS_REGEX, "\n")
         .replace(/\n+/g, "\n")
         .split("\n")
         .filter((line) => line)

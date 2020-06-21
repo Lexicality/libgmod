@@ -1,7 +1,6 @@
 --- @class GPhysObj
 --- This is the object returned by Entity:GetPhysicsObject and Entity:GetPhysicsObjectNum.  
 --- It represents a physics object.  
---- <pagelist category="classfunc" filter="^PhysObj:"></pagelist>  
 local GPhysObj = {}
 --- Adds the specified velocity to the current.  
 --- @param angularVelocity GVector @Additional velocity.
@@ -371,7 +370,7 @@ end
 function GPhysObj:Sleep()
 end
 
---- Unlike PhysObj:SetPos and PhysObj:SetAngles, this allows the movement of a physobj while leaving physics interactions intact.<br>  
+--- Unlike PhysObj:SetPos and PhysObj:SetAngles, this allows the movement of a physobj while leaving physics interactions intact.  
 --- This is used internally by the motion controller of the Gravity Gun , the +use pickup and the Physics Gun, and entities such as the crane.  
 --- @param targetPosition GVector @The position we should move to.
 --- @param targetAngles GAngle @The angle we should rotate towards.

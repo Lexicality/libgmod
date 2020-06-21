@@ -48,9 +48,9 @@ function GVector:Div(divisor)
 end
 
 --- Returns the [dot product](https://en.wikipedia.org/wiki/Dot_product#Geometric_definition)  of this vector and the passed one.  
---- The dot product of two vectors is the product of their magnitudes (lengths), and the cosine of the angle between them:<br><br>  
---- **a · b** = |**a**| |**b**| cos(θ) <br><br>  
---- where **a** and **b** are vectors.<br><br>  
+--- The dot product of two vectors is the product of their magnitudes (lengths), and the cosine of the angle between them:  
+--- **a · b** = |**a**| |**b**| cos(θ)   
+--- where **a** and **b** are vectors.  
 --- See Vector:Length for obtaining magnitudes.  
 --- A dot product returns just the cosine of the angle if both vectors are normalized, and zero if the vectors are at right angles to each other.  
 --- @param otherVector GVector @The vector to calculate the dot product with
@@ -143,8 +143,8 @@ function GVector:Sub(vector)
 end
 
 --- Translates the Vector (values ranging from 0 to 1) into a Color. This will also range the values from 0 - 1 to 0 - 255.  
---- x * 255 -> r<br>  
---- y * 255 -> g<br>  
+--- x * 255 -> r  
+--- y * 255 -> g  
 --- z * 255 -> b  
 --- This is the opposite of Color:ToVector  
 --- @return table @The created Color.

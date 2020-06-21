@@ -225,7 +225,7 @@ function GPlayer:EnterVehicle(vehicle)
 end
 
 --- Equips the player with the HEV suit.  
---- Allows the player to zoom, walk slowly, sprint, pickup armor batteries, use the health and armor stations and also shows the HUD.<br>  
+--- Allows the player to zoom, walk slowly, sprint, pickup armor batteries, use the health and armor stations and also shows the HUD.  
 --- The player also emits a flatline sound on death, which can be overridden with GM:PlayerDeathSound.  
 --- The player is automatically equipped with the suit on spawn, if you wish to stop that, use Player:RemoveSuit.  
 function GPlayer:EquipSuit()
@@ -1343,7 +1343,6 @@ function GPlayer:TranslateWeaponActivity(act)
 end
 
 --- Unlocks the player movement if locked previously.  
---- <br>  
 --- Will disable godmode for the player if locked previously.  
 function GPlayer:UnLock()
 end

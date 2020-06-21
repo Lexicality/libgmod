@@ -1396,7 +1396,8 @@ end
 function GPanel:UnselectAll()
 end
 
---- Forcibly updates the panels' HTML Material, similar to when Paint is called on it.<br>This is only useful if the panel is not normally visible, i.e the panel exists purely for its HTML Material.  
+--- Forcibly updates the panels' HTML Material, similar to when Paint is called on it.  
+--- This is only useful if the panel is not normally visible, i.e the panel exists purely for its HTML Material.  
 function GPanel:UpdateHTMLTexture()
 end
 

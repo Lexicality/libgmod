@@ -33,8 +33,8 @@ end
 
 --- Translates the Color into a Vector, losing the alpha channel.  
 --- This will also range the values from 0 - 255 to 0 - 1  
---- r / 255 -> x<br>  
---- g / 255 -> y<br>  
+--- r / 255 -> x  
+--- g / 255 -> y  
 --- b / 255 -> z  
 --- This is the opposite of Vector:ToColor  
 --- @return GVector @The created Vector

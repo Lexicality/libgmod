@@ -9,7 +9,7 @@ local GCSoundPatch = {}
 function GCSoundPatch:ChangePitch(pitch, deltaTime)
 end
 
---- Adjusts the volume of the sound played.<br>  
+--- Adjusts the volume of the sound played.  
 --- Appears to only work while the sound is being played.  
 --- @param volume number @The volume ranges from 0 to 1.
 --- @param deltaTime number @Time to fade the volume from previous to new value from.
