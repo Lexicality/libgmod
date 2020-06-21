@@ -131,7 +131,7 @@ end
 
 --- Creates the player's death ragdoll entity and deletes the old one.  
 --- This is normally used when a player dies, to create their death ragdoll.  
---- The ragdoll will be created with the player's properties such as <page text="Position">Entity:GetPos</page>, <page text="Angles">Entity:GetAngles</page>, <page text="PlayerColor">Player:GetPlayerColor</page>, <page text="Velocity">Entity:GetVelocity</page> and <page text="Model">Entity:GetModel</page>.  
+--- The ragdoll will be created with the player's properties such as Position, Angles, PlayerColor, Velocity and Model.  
 --- You can retrieve the entity this creates with Player:GetRagdollEntity.  
 function GPlayer:CreateRagdoll()
 end
@@ -163,13 +163,13 @@ function GPlayer:DetonateTripmines()
 end
 
 --- Sends a third person animation event to the player.  
---- Calls GM:DoAnimationEvent with <page text="PLAYERANIMEVENT_CUSTOM_GESTURE">Enums/PLAYERANIMEVENT</page> as the event, data as the given data.  
+--- Calls GM:DoAnimationEvent with PLAYERANIMEVENT_CUSTOM_GESTURE as the event, data as the given data.  
 --- @param data number @The data to send.
 function GPlayer:DoAnimationEvent(data)
 end
 
 --- Starts the player's attack animation. The attack animation is determined by the weapon's HoldType.  
---- Similar to other animation event functions, calls GM:DoAnimationEvent with <page text="PLAYERANIMEVENT_ATTACK_PRIMARY">Enums/PLAYERANIMEVENT</page> as the event and no extra data.  
+--- Similar to other animation event functions, calls GM:DoAnimationEvent with PLAYERANIMEVENT_ATTACK_PRIMARY as the event and no extra data.  
 function GPlayer:DoAttackEvent()
 end
 
@@ -181,12 +181,12 @@ function GPlayer:DoCustomAnimEvent(event, data)
 end
 
 --- Sends a third person reload animation event to the player.  
---- Similar to other animation event functions, calls GM:DoAnimationEvent with <page text="PLAYERANIMEVENT_RELOAD">Enums/PLAYERANIMEVENT</page> as the event and no extra data.  
+--- Similar to other animation event functions, calls GM:DoAnimationEvent with PLAYERANIMEVENT_RELOAD as the event and no extra data.  
 function GPlayer:DoReloadEvent()
 end
 
 --- Sends a third person secondary fire animation event to the player.  
---- Similar to other animation event functions, calls GM:DoAnimationEvent with <page text="PLAYERANIMEVENT_ATTACK_SECONDARY">Enums/PLAYERANIMEVENT</page> as the event and no extra data.  
+--- Similar to other animation event functions, calls GM:DoAnimationEvent with PLAYERANIMEVENT_ATTACK_SECONDARY as the event and no extra data.  
 function GPlayer:DoSecondaryAttack()
 end
 
@@ -251,7 +251,7 @@ function GPlayer:Frags()
 end
 
 --- Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to Player:Lock but the player can still take damage.  
---- Adds or removes the <page text="FL_FROZEN">Enums/FL</page> flag from the player.  
+--- Adds or removes the FL_FROZEN flag from the player.  
 --- <bug>Frozen bots will still be able to look around.</bug>  
 --- @param frozen boolean @Whether the player should be frozen.
 function GPlayer:Freeze(frozen)
@@ -397,13 +397,13 @@ end
 function GPlayer:GetHullDuck()
 end
 
---- Retrieves the value of a client-side ConVar. The ConVar must have a <page text="FCVAR_USERINFO">Enums/FCVAR</page> flag for this to work.  
+--- Retrieves the value of a client-side ConVar. The ConVar must have a FCVAR_USERINFO flag for this to work.  
 --- @param cVarName string @The name of the client-side ConVar
 --- @return string @The value of the ConVar
 function GPlayer:GetInfo(cVarName)
 end
 
---- Retrieves the numeric value of a client-side convar, returns nil if value is not convertible to a number. The ConVar must have a <page text="FCVAR_USERINFO">Enums/FCVAR</page> flag for this to work.  
+--- Retrieves the numeric value of a client-side convar, returns nil if value is not convertible to a number. The ConVar must have a FCVAR_USERINFO flag for this to work.  
 --- @param cVarName string @The name of the ConVar to query the value of
 --- @param default number @Default value if we failed to retrieve the number.
 --- @return number @The value of the ConVar or the default value
@@ -449,7 +449,7 @@ end
 
 --- Returns the entity the player is currently observing.  
 --- Set using Player:SpectateEntity.  
---- @return GEntity @The entity the player is currently spectating, or <page text="NULL">Global_Variables</page> if the player has no target.
+--- @return GEntity @The entity the player is currently spectating, or NULL if the player has no target.
 function GPlayer:GetObserverTarget()
 end
 
@@ -790,7 +790,7 @@ end
 --- This allows the server to mitigate the lag of the player by moving back all the entities that can be lag compensated to the time the player attacked with his weapon.  
 --- This technique is most commonly used on things that hit other entities instantaneously, such as traces.  
 --- Lag compensation only works for players and entities that have been enabled with Entity:SetLagCompensated  
---- Despite being defined shared, it can only be used server-side in a <page text="Predicted Hook">~search:%3Cpredicted%3EYes</page>.  
+--- Despite being defined shared, it can only be used server-side in a Predicted Hook.  
 --- * **BUG**: [Lag compensation does not support pose parameters.](https://github.com/Facepunch/garrysmod-issues/issues/3683)  
 --- @param lagCompensation boolean @The state of the lag compensation, true to enable and false to disable.
 function GPlayer:LagCompensation(lagCompensation)
@@ -807,7 +807,7 @@ function GPlayer:LimitHit(type)
 end
 
 --- Stops a player from using any inputs, such as moving, turning, or attacking. Key binds are still called. Similar to Player:Freeze but the player takes no damage.  
---- Adds the <page text="FL_FROZEN">Enums/FL</page> and <page text="FL_GODMODE">Enums/FL</page> flags to the player.  
+--- Adds the FL_FROZEN and FL_GODMODE flags to the player.  
 --- <bug>Frozen bots will still be able to look around.</bug>  
 function GPlayer:Lock()
 end
@@ -1077,7 +1077,7 @@ function GPlayer:SetNoCollideWithTeammates(shouldNotCollide)
 end
 
 --- Sets the players visibility towards NPCs.  
---- Internally this toggles the <page text="FL_NOTARGET">Enums/FL</page> flag, which you can manually test for using Entity:IsFlagSet  
+--- Internally this toggles the FL_NOTARGET flag, which you can manually test for using Entity:IsFlagSet  
 --- @param visibility boolean @The visibility.
 function GPlayer:SetNoTarget(visibility)
 end

@@ -108,7 +108,7 @@ end
 function GPanel:ConVarNumberThink()
 end
 
---- A think hook for <page text="panels">Panel</page> using ConVars as a value. Call it in the Think hook. Sets the panel's value should the convar change.  
+--- A think hook for panels using ConVars as a value. Call it in the Think hook. Sets the panel's value should the convar change.  
 --- This function is best for: text inputs, read-only inputs, dropdown selects  
 --- For a number alternative, see Panel:ConVarNumberThink.  
 --- `Important`: Make sure your Panel has a SetValue function, else you may get errors.  
@@ -1078,7 +1078,7 @@ end
 function GPanel:SetHeight(height)
 end
 
---- <deprecated>Alias of <page text="Panel:SetKeyboardInputEnabled">Panel:SetKeyboardInputEnabled(lowercase)</page></deprecated>Enables or disables the keyboard input for the panel.  
+--- <deprecated>Alias of Panel:SetKeyboardInputEnabled</deprecated>Enables or disables the keyboard input for the panel.  
 --- @param keyboardInput boolean @Whether to enable or disable keyboard input.
 function GPanel:SetKeyBoardInputEnabled(keyboardInput)
 end

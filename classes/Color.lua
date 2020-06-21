@@ -1,6 +1,6 @@
 --- @class GColor
 --- List of all possible functions to manipulate colors.  
---- Colors are implemented in Lua thus Global.type(color) == "table" and Global.TypeID(color) == <page text="TYPE_TABLE">Enums/TYPE#table</page>.  
+--- Colors are implemented in Lua thus Global.type(color) == "table" and Global.TypeID(color) == TYPE_TABLE.  
 --- For type checking use Global.IsColor.  
 --- Created by Global.Color, Global.HSVToColor, and Global.HSLToColor.  
 --- @field r number @The red component of the color.

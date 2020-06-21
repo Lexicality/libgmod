@@ -67,7 +67,7 @@ interface FuncContainer {
 // Time to parse XML with regular expressions
 const INTERNAL_REGEX = /<internal>/;
 const UNWANTED_REGEX = /<(note|warning)>.+?<\/(note|warning)>/g;
-const PAGE_REGEX = /<page>(.+?)<\/page>/g;
+const PAGE_REGEX = /<page( text="(.+?)")?>(.+?)<\/page>/g;
 const ARG_REGEX = /^(.+?)(\.\s|\n|$)/;
 const BUG_REGEX = /<bug issue="(.+?)">(.+?)<\/bug>/g;
 
@@ -80,7 +80,7 @@ function trimArg(text: string): string {
 }
 
 function unpaginate(text: string): string {
-    return text.replace(PAGE_REGEX, "$1");
+    return text.replace(PAGE_REGEX, (_1, _2, title, text) => title ?? text);
 }
 
 function linkBugs(text: string): string {

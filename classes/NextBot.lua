@@ -70,7 +70,7 @@ function GNextBot:PlaySequenceAndWait(name, speed)
 end
 
 --- Sets the solid mask for given NextBot.  
---- The default solid mask of a NextBot is <page text="MASK_NPCSOLID">Enums/MASK</page>.  
+--- The default solid mask of a NextBot is MASK_NPCSOLID.  
 --- @param mask number @The new mask, see Enums/CONTENTS and Enums/MASK
 function GNextBot:SetSolidMask(mask)
 end

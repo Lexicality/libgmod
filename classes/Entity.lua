@@ -1,5 +1,5 @@
 --- @class GEntity
---- This is a list of all available methods for entites, which includes <page text="Players">Player</page>, <page text="Weapons">Weapon</page>, <page text="NPCs">NPC</page> and <page text="Vehicles">Vehicle</page>.  
+--- This is a list of all available methods for entites, which includes Players, Weapons, NPCs and Vehicles.  
 local GEntity = {}
 --- Activates the entity. This needs to be used on some entities (like constraints) after being spawned.  
 --- * **BUG**: [This crashes the game with scaled vehicles.](https://github.com/Facepunch/garrysmod-issues/issues/3372)  
@@ -178,8 +178,8 @@ end
 --- If called inside ENTITY:Draw or ENTITY:DrawTranslucent, it only draws the entity's model itself.  
 --- If called outside of those hooks, it will call both of said hooks depending on Entity:GetRenderGroup, drawing the entire entity again.  
 --- <rendercontext hook="false" type="3D"></rendercontext>  
---- * **BUG**: [Calling this on entities with <page text="EF_BONEMERGE">Enums/EF</page> and <page text="EF_NODRAW">Enums/EF</page> applied causes a crash.](https://github.com/Facepunch/garrysmod-issues/issues/1558)  
---- * **BUG**: [Using this with a map model (game.GetWorld():<page text="GetModel">Entity:GetModel</page>()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
+--- * **BUG**: [Calling this on entities with EF_BONEMERGE and EF_NODRAW applied causes a crash.](https://github.com/Facepunch/garrysmod-issues/issues/1558)  
+--- * **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
 function GEntity:DrawModel()
 end
 
@@ -302,8 +302,8 @@ end
 
 --- Gets the angles of given entity.  
 --- * **BUG**: [This returns incorrect results for the local player clientside.](https://github.com/Facepunch/garrysmod-issues/issues/2764)  
---- * **BUG**: [This will return the local player's Global.EyeAngles in <page text="rendering hooks">Category:3D_Rendering_Hooks</page>.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
---- * **BUG**: [This will return Global.Angle(0,0,0) in <page text="rendering hooks">Category:3D_Rendering_Hooks</page> while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
+--- * **BUG**: [This will return the local player's Global.EyeAngles in rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
+--- * **BUG**: [This will return Global.Angle(0,0,0) in rendering hooks while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
 --- @return GAngle @The angles of the entity.
 function GEntity:GetAngles()
 end
@@ -1248,7 +1248,7 @@ function GEntity:GetSpawnEffect()
 end
 
 --- Returns the bitwise spawn flags used by the entity.  
---- @return number @The spawn flags of the entity, see <page text="SF_Enums">Enums/SF</page>.
+--- @return number @The spawn flags of the entity, see SF_Enums.
 function GEntity:GetSpawnFlags()
 end
 
@@ -1311,8 +1311,8 @@ end
 
 --- Returns the position and angle of the entity as a 3x4 matrix (VMatrix is 4x4 so the fourth row goes unused). The first three columns store the angle as a [rotation matrix](https://en.wikipedia.org/wiki/Rotation_matrix), and the fourth column stores the position vector.  
 --- * **BUG**: [This returns incorrect results for the angular component (columns 1-3) for the local player clientside.](https://github.com/Facepunch/garrysmod-issues/issues/2764)  
---- * **BUG**: [This will use the local player's Global.EyeAngles in <page text="rendering hooks">Category:3D_Rendering_Hooks</page>.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
---- * **BUG**: [Columns 1-3 will be all 0 (angular component) in <page text="rendering hooks">Category:3D_Rendering_Hooks</page> while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
+--- * **BUG**: [This will use the local player's Global.EyeAngles in rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
+--- * **BUG**: [Columns 1-3 will be all 0 (angular component) in rendering hooks while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
 --- @return GVMatrix @The position and angle matrix.
 function GEntity:GetWorldTransformMatrix()
 end
@@ -1467,7 +1467,7 @@ function GEntity:IsOnFire()
 end
 
 --- Returns whether the entity is on ground or not.  
---- Internally, this checks if <page text="FL_ONGROUND">Enums/FL</page> is set on the entity.  
+--- Internally, this checks if FL_ONGROUND is set on the entity.  
 --- This function is an alias of Entity:OnGround.  
 --- @return boolean @Whether the entity is on ground or not.
 function GEntity:IsOnGround()
@@ -1513,7 +1513,7 @@ end
 
 --- Returns whether the entity is a valid entity or not.  
 --- An entity is valid if:  
---- * It is not a <page text="NULL">Global_Variables</page> entity  
+--- * It is not a NULL entity  
 --- * It is not the worldspawn entity (game.GetWorld)  
 --- It will check whether the given variable contains an object (an Entity) or nothing at all for you. See examples.  
 --- This might be a cause for a lot of headache. Usually happening during networking etc., when completely valid entities suddenly become invalid on the client, but are never filtered with IsValid(). See GM:InitPostEntity for more details.  
@@ -1683,7 +1683,7 @@ function GEntity:ObjectCaps()
 end
 
 --- Returns true if the entity is on the ground, and false if it isn't.  
---- Internally, this checks if <page text="FL_ONGROUND">Enums/FL</page> is set on the entity. This is only updated for players and NPCs, and thus won't inherently work for other entities.  
+--- Internally, this checks if FL_ONGROUND is set on the entity. This is only updated for players and NPCs, and thus won't inherently work for other entities.  
 --- @return boolean @Whether the entity is on the ground or not.
 function GEntity:OnGround()
 end
@@ -1719,7 +1719,7 @@ end
 function GEntity:PhysicsFromMesh(vertices)
 end
 
---- Initializes the <page text="physics object">Entity:GetPhysicsObject</page> of the entity using its current <page text="model">Entity:GetModel</page>. Deletes the previous physics object if it existed and the new object creation was successful.  
+--- Initializes the physics object of the entity using its current model. Deletes the previous physics object if it existed and the new object creation was successful.  
 --- If the entity's current model has no physics mesh associated to it, no physics object will be created and the previous object will still exist, if applicable.  
 --- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
 --- @param solidType number @The solid type of the physics object to create, see Enums/SOLID
@@ -1782,7 +1782,7 @@ end
 function GEntity:PhysicsInitSphere(radius, physmat)
 end
 
---- Initializes a static physics object of the entity using its <page text="current model">Entity:GetModel</page>. If successful, the previous physics object is removed.  
+--- Initializes a static physics object of the entity using its current model. If successful, the previous physics object is removed.  
 --- This is what used by entities such as func_breakable, prop_dynamic, item_suitcharger, prop_thumper and npc_rollermine while it is in its "buried" state in the Half-Life 2 Campaign.  
 --- If the entity's current model has no physics mesh associated to it, no physics object will be created.  
 --- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
@@ -2001,7 +2001,7 @@ end
 function GEntity:SetBonePosition(bone, pos, ang)
 end
 
---- Sets the collision bounds for the entity, which are used for triggers ( Entity:SetTrigger, ENTITY:Touch ), determining if rendering is necessary clientside, and collision ( If Entity:SetSolid set as <page text="SOLID_BBOX">Enums/SOLID</page> ).  
+--- Sets the collision bounds for the entity, which are used for triggers ( Entity:SetTrigger, ENTITY:Touch ), determining if rendering is necessary clientside, and collision ( If Entity:SetSolid set as SOLID_BBOX ).  
 --- Input bounds are relative to Entity:GetPos!  
 --- See also Entity:SetCollisionBoundsWS.  
 --- @param mins GVector @The minimum vector of the bounds
@@ -2009,7 +2009,7 @@ end
 function GEntity:SetCollisionBounds(mins, maxs)
 end
 
---- Sets the collision bounds for the entity, which are used for triggers ( Entity:SetTrigger, ENTITY:Touch ), determining if rendering is necessary clientside, and collision ( If Entity:SetSolid set as <page text="SOLID_BBOX">Enums/SOLID</page> ).  
+--- Sets the collision bounds for the entity, which are used for triggers ( Entity:SetTrigger, ENTITY:Touch ), determining if rendering is necessary clientside, and collision ( If Entity:SetSolid set as SOLID_BBOX ).  
 --- Input bounds are in world coordinates!  
 --- See also Entity:SetCollisionBounds.  
 --- @param vec1 GVector @The first vector of the bounds.
@@ -2620,7 +2620,7 @@ function GEntity:SetTransmitWithParent(onoff)
 end
 
 --- Marks the entity as a trigger, so it will generate ENTITY:StartTouch, ENTITY:Touch and ENTITY:EndTouch callbacks.  
---- Internally this is stored as <page text="FSOLID_TRIGGER">Enums/FSOLID</page> flag.  
+--- Internally this is stored as FSOLID_TRIGGER flag.  
 --- @param maketrigger boolean @Make the entity trigger or not
 function GEntity:SetTrigger(maketrigger)
 end
@@ -2735,7 +2735,7 @@ end
 function GEntity:StopSound(sound)
 end
 
---- Applies the specified amount of damage to the entity with <page text="DMG_GENERIC">Enums/DMG</page> flag.  
+--- Applies the specified amount of damage to the entity with DMG_GENERIC flag.  
 --- @param damageAmount number @The amount of damage to be applied.
 --- @param attacker GEntity @The entity that initiated the attack that caused the damage.
 --- @param inflictor GEntity @The entity that applied the damage, eg

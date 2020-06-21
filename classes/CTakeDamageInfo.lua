@@ -73,7 +73,7 @@ end
 --- Returns the inflictor of the damage. This is not necessarily a weapon.  
 --- For hitscan weapons this is the weapon.  
 --- For projectile weapons this is the projectile.  
---- For a more reliable method of getting the weapon that damaged an entity, use <page text="GetAttacker">CTakeDamageInfo:GetAttacker</page> with <page text="GetActiveWeapon">Player:GetActiveWeapon</page>.  
+--- For a more reliable method of getting the weapon that damaged an entity, use GetAttacker with GetActiveWeapon.  
 --- @return GEntity @The inflictor
 function GCTakeDamageInfo:GetInflictor()
 end

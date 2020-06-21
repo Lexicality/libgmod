@@ -414,7 +414,7 @@ end
 function DrawSunbeams(darken, multiplier, sunSize, sunX, sunY)
 end
 
---- Draws the texturize shader, which replaces each pixel on your screen with a different part of the texture depending on its brightness. See <page text="g_texturize">Shaders/g_texturize</page> for information on making the texture.  
+--- Draws the texturize shader, which replaces each pixel on your screen with a different part of the texture depending on its brightness. See g_texturize for information on making the texture.  
 --- @param Scale number @Scale of the texture
 --- @param BaseTexture number @This will be the texture to use in the effect
 function DrawTexturize(Scale, BaseTexture)
@@ -492,7 +492,7 @@ end
 function Entity(entityIndex)
 end
 
---- Throws an error. This is currently an alias of Global.ErrorNoHalt despite it once throwing a halting error like <page text="error">Global.error(lowercase)</page> without the stack trace appended.  
+--- Throws an error. This is currently an alias of Global.ErrorNoHalt despite it once throwing a halting error like error without the stack trace appended.  
 --- * **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
 --- * **BUG**: [This function throws a non-halting error instead of a halting error.](https://github.com/Facepunch/garrysmod-issues/issues/2113)  
 --- @vararg any @Converts all arguments to strings and prints them with no spacing or line breaks.

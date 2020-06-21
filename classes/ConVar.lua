@@ -1,5 +1,5 @@
 --- @class GConVar
---- An object returned by Global.CreateConVar, Global.CreateClientConVar (which uses Global.CreateConVar internally), and Global.GetConVar. It represents a console variable. See <page text="this">ConVars</page> page for more information.  
+--- An object returned by Global.CreateConVar, Global.CreateClientConVar (which uses Global.CreateConVar internally), and Global.GetConVar. It represents a console variable. See this page for more information.  
 local GConVar = {}
 --- Tries to convert the current string value of a ConVar to a boolean.  
 --- @return boolean @The boolean value of the console variable

@@ -1,5 +1,5 @@
 --- @class GCEffectData
---- List of all possible functions available for effect data. This is the object returned by the <page text="EffectData">Global.EffectData</page> function and is required for util.Effect function.  
+--- List of all possible functions available for effect data. This is the object returned by the EffectData function and is required for util.Effect function.  
 local GCEffectData = {}
 --- Returns the angles of the effect.  
 --- @return GAngle @The angles of the effect

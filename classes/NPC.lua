@@ -93,7 +93,7 @@ end
 function GNPC:FoundEnemySound()
 end
 
---- Returns the weapon the NPC is currently carrying, or <page text="NULL">Global_Variables</page>.  
+--- Returns the weapon the NPC is currently carrying, or NULL.  
 --- @return GEntity @The NPCs current weapon
 function GNPC:GetActiveWeapon()
 end

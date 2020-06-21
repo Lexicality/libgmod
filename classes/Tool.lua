@@ -1,6 +1,6 @@
 --- @class GTool
 --- A list of functions available inside a Sandbox Toolgun tool.  
---- You can find the hooks  and members <page text="here">Structures/TOOL</page>.  
+--- You can find the hooks  and members here.  
 local GTool = {}
 --- Checks whether the tool is allowed on the server. This will always return true clientside and will not be affected by SANDBOX:CanTool.  
 --- This function uses **TOOL.AllowedCVar** which is a ConVar object pointing to  **toolmode_allow_`*toolname***` convar.  
