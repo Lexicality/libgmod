@@ -282,6 +282,15 @@ function handleClass(cls: FuncContainer): string {
     return def + desc + lua;
 }
 
+function handleLib(lib: FuncContainer): string {
+    let desc = "";
+    if (lib.description) {
+        desc = formatDesc(lib.description) + "\n";
+    }
+    let lua = `_G.${lib.name} = {}\n`;
+    return desc + lua;
+}
+
 async function doGlobals(): Promise<void> {
     let data: Func[] = JSON.parse(
         await fs.readFile("output/global-functions.json", "utf-8")
@@ -305,6 +314,51 @@ async function doGlobals(): Promise<void> {
         }
     }
     console.log("Done globals!");
+}
+
+async function doLibs(): Promise<void> {
+    let data: FuncContainer[] = JSON.parse(
+        await fs.readFile("output/libraries.json", "utf-8")
+    );
+    data = _.sortBy(data, "name");
+    await mkdirp("libraries");
+    for (let lib of data) {
+        let libdata: string;
+        try {
+            libdata = handleLib(lib);
+        } catch (e) {
+            console.error(
+                "Problem while getting library definition for %s: %s",
+                lib.name,
+                e
+            );
+            throw e;
+        }
+
+        let filename = path.join("libraries", `${lib.name}.lua`);
+        await fs.writeFile(filename, libdata);
+
+        let funcs = lib.functions;
+        funcs = _.sortBy(funcs, "name");
+        for (let func of funcs) {
+            let funcdata: string | undefined;
+            try {
+                funcdata = handleFunc(func, ".");
+            } catch (e) {
+                console.error(
+                    "Problem while getting func definition for %s.%s(): %s",
+                    lib.name,
+                    func.name,
+                    e
+                );
+                throw e;
+            }
+            if (funcdata) {
+                await fs.appendFile(filename, funcdata + "\n", "utf-8");
+            }
+        }
+        console.log("Done %s!", lib.name);
+    }
 }
 
 async function getClasses(): Promise<FuncContainer[]> {
@@ -369,8 +423,9 @@ async function main() {
 
         await Promise.all([
             doGlobals(),
-            //
+            doLibs(),
             doClasses(classes),
+            //
         ]);
         console.log("woop");
     } catch (e) {
