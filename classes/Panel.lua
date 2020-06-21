@@ -632,12 +632,12 @@ end
 function GPanel:IsOurChild(childPanel)
 end
 
---- Determines if the panel object is selectable (like icons in the Spawn Menu, holding <key>Shift</key>). This is set with Panel:SetSelectable.  
+--- Determines if the panel object is selectable (like icons in the Spawn Menu, holding `Shift`). This is set with Panel:SetSelectable.  
 --- @return boolean @Whether the panel is selectable or not.
 function GPanel:IsSelectable()
 end
 
---- Returns if the panel object is selected (like icons in the Spawn Menu, holding <key>Shift</key>). This can be set in Lua using Panel:SetSelected.  
+--- Returns if the panel object is selected (like icons in the Spawn Menu, holding `Shift`). This can be set in Lua using Panel:SetSelected.  
 --- @return boolean @Whether the panel object is selected or not
 function GPanel:IsSelected()
 end
@@ -1167,7 +1167,7 @@ end
 function GPanel:SetRenderInScreenshots(renderInScreenshot)
 end
 
---- Sets whether the panel object can be selected or not (like icons in the Spawn Menu, holding <key>Shift</key>). If enabled, this will affect the function of a DButton whilst <key>Shift</key> is pressed. Panel:SetSelected can be used to select/deselect the object.  
+--- Sets whether the panel object can be selected or not (like icons in the Spawn Menu, holding `Shift`). If enabled, this will affect the function of a DButton whilst `Shift` is pressed. Panel:SetSelected can be used to select/deselect the object.  
 --- @param selectable boolean @Whether the panel object should be selectable or not.
 function GPanel:SetSelectable(selectable)
 end

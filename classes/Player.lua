@@ -838,7 +838,7 @@ end
 function GPlayer:PhysgunUnfreeze()
 end
 
---- This makes the player hold ( same as pressing <key>E</key> on a small prop ) the provided entity.  
+--- This makes the player hold ( same as pressing `E` on a small prop ) the provided entity.  
 --- @param entity GEntity @Entity to pick up.
 function GPlayer:PickupObject(entity)
 end
@@ -1178,8 +1178,8 @@ end
 function GPlayer:SetViewPunchAngles(punchAngle)
 end
 
---- Sets the player's normal walking speed. Not sprinting, not slow walking <key>+walk</key>.  
---- There currently is no way to modify the slow walking <key>+walk</key> speed.  
+--- Sets the player's normal walking speed. Not sprinting, not slow walking `+walk`.  
+--- There currently is no way to modify the slow walking `+walk` speed.  
 --- See also Player:GetWalkSpeed, Player:SetCrouchedWalkSpeed, Player:SetMaxSpeed and Player:SetRunSpeed.  
 --- * **BUG**: [Using a speed of 0 can lead to prediction errors.](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
 --- @param walkSpeed number @The new walk speed when sv_friction is below 10
