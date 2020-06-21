@@ -6,7 +6,7 @@ function GITexture:Download()
 end
 
 --- Returns the color of the specified pixel, only works for textures created from PNG files.  
---- * **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param x number @The X coordinate.
 --- @param y number @The Y coordinate.
 --- @return table @The color of the pixel as a Color.
@@ -34,6 +34,7 @@ function GITexture:Height()
 end
 
 --- Returns whenever the texture is valid. (i.e. was loaded successfully or not)  
+--- ℹ **NOTE**: The "error" texture is a valid texture, and therefore this function will return false when used on it. Use ITexture:IsErrorTexture, instead.  
 --- @return boolean @Whether the texture was loaded successfully or not.
 function GITexture:IsError()
 end

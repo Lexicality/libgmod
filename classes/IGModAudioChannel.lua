@@ -200,7 +200,7 @@ function GIGModAudioChannel:SetVolume(volume)
 end
 
 --- Stop the stream. It can be started again using IGModAudioChannel:Play.  
---- * **BUG**: [Calling this invalidates the IGModAudioChannel object rendering it unusable for further functions.](https://github.com/Facepunch/garrysmod-issues/issues/1497)  
+--- 🦟 **BUG**: [Calling this invalidates the IGModAudioChannel object rendering it unusable for further functions.](https://github.com/Facepunch/garrysmod-issues/issues/1497)  
 function GIGModAudioChannel:Stop()
 end
 

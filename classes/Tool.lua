@@ -109,7 +109,7 @@ function GTool:MakeGhostEntity(model, pos, angle)
 end
 
 --- Returns the amount of stored objects ( Entitys ) the tool has.  
---- <validate>Are TOOLs limited to 4 entities?</validate>  
+--- ⁉ **VALIDATE**: Are TOOLs limited to 4 entities?  
 --- @return number @The amount of stored objects, or Tool:GetStage clientide.
 function GTool:NumObjects()
 end

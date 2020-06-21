@@ -1,5 +1,6 @@
 --- @class GWeapon : GEntity
 --- This is a list of all methods only available for weapons. It is also possible to call Entity functions on weapons.  
+--- ℹ **NOTE**: A list of available methods has been expanded in your navigation bar.  
 local GWeapon = {}
 --- Returns whether the weapon allows to being switched from when a better ( Weapon:GetWeight ) weapon is being picked up.  
 --- @return boolean @Whether the weapon allows to being switched from.
@@ -12,6 +13,7 @@ function GWeapon:AllowsAutoSwitchTo()
 end
 
 --- Calls a SWEP function on client.  
+--- ⚠ **WARNING**: This uses the usermessage internally, because of that, the combined length of the arguments of this function may not exceed 254 bytes/characters or the function will cease to function!  
 --- @param functionName string @Name of function to call
 --- @param arguments string @Arguments for the function, separated by spaces
 function GWeapon:CallOnClient(functionName, arguments)
@@ -28,16 +30,15 @@ function GWeapon:Clip2()
 end
 
 --- Forces the weapon to reload while playing given animation.  
---- <note>  
+--- ℹ **NOTE**:   
 --- This will stop the Weapon:Think function from getting called while the weapon is reloading!  
---- </note>  
 --- @param act number @Sequence to use as reload animation
 --- @return boolean @Did reloading actually take place
 function GWeapon:DefaultReload(act)
 end
 
 --- Returns the sequence enumeration number that the weapon is playing.  
---- * **BUG**: [This can return inconsistent results between the server and client.](https://github.com/Facepunch/garrysmod-issues/issues/2543)  
+--- 🦟 **BUG**: [This can return inconsistent results between the server and client.](https://github.com/Facepunch/garrysmod-issues/issues/2543)  
 --- @return number @Current activity, see Enums/ACT
 function GWeapon:GetActivity()
 end
@@ -73,6 +74,8 @@ function GWeapon:GetPrimaryAmmoType()
 end
 
 --- Returns the non-internal name of the weapon, that should be for displaying.  
+--- ℹ **NOTE**: If that returns an untranslated message (#HL2_XX), use language.GetPhrase to see the "nice" name.  
+--- ℹ **NOTE**: If SWEP.PrintName is not set in the Weapon or the Weapon Base then "<MISSING SWEP PRINT NAME>" will be returned.  
 --- @return string @The "nice" name of the weapon.
 function GWeapon:GetPrintName()
 end
@@ -108,6 +111,7 @@ function GWeapon:GetWeight()
 end
 
 --- Returns whether the weapon has ammo left or not. It will return false when there's no ammo left in the magazine **and** when there's no reserve ammo left.  
+--- ℹ **NOTE**: This will return true for weapons like crowbar, gravity gun, etc.  
 --- @return boolean @Whether the weapon has ammo or not.
 function GWeapon:HasAmmo()
 end
@@ -148,7 +152,8 @@ function GWeapon:SetClip2(ammo)
 end
 
 --- Sets the hold type of the weapon. This function also calls WEAPON:SetWeaponHoldType and properly networks it to all clients.  
---- <bug>Using this function on weapons held by bots will not network holdtype changes to clients if the world model is set to an empty string (SWEP.WorldModel = "").</bug>  
+--- ℹ **NOTE**: This only works on scripted weapons.  
+--- 🦟 **BUG**: Using this function on weapons held by bots will not network holdtype changes to clients if the world model is set to an empty string (SWEP.WorldModel = "").  
 --- @param name string @Name of the hold type
 function GWeapon:SetHoldType(name)
 end
@@ -159,7 +164,7 @@ function GWeapon:SetLastShootTime(time)
 end
 
 --- Sets when the weapon can fire again. Time should be based on Global.CurTime.  
---- * **BUG**: [This will fire extra bullets if the time is set to less than Global.CurTime.](https://github.com/Facepunch/garrysmod-issues/issues/3786)  
+--- 🦟 **BUG**: [This will fire extra bullets if the time is set to less than Global.CurTime.](https://github.com/Facepunch/garrysmod-issues/issues/3786)  
 --- @param time number @Time when player should be able to use primary fire again
 function GWeapon:SetNextPrimaryFire(time)
 end

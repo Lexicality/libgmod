@@ -2,6 +2,7 @@
 --- This is a list of all methods only available for NPCs. It is also possible to call [Entity](http://wiki.garrysmod.com/index.php?title=Category:Entity) functions on NPCs.  
 local GNPC = {}
 --- Makes the NPC like, hate, feel neutral towards, or fear the entity in question. If you want to setup relationship towards a certain entity `class`, use NPC:AddRelationship.  
+--- ℹ **NOTE**: NPCs do not see NextBots by default. This can be fixed by adding the FL_OBJECT flag to the NextBot.  
 --- @param target GEntity @The entity for the relationship to be applied to.
 --- @param disposition number @A Enums/D representing the relationship type.
 --- @param priority number @How strong the relationship is.
@@ -139,7 +140,7 @@ function GNPC:GetCurrentWeaponProficiency()
 end
 
 --- Returns the entity that this NPC is trying to fight.  
---- * **BUG**: [This returns nil if the NPC has no enemy. You should use Global.IsValid (which accounts for nil and NULL) on the return to verify validity of the enemy.](https://github.com/Facepunch/garrysmod-issues/issues/3132)  
+--- 🦟 **BUG**: [This returns nil if the NPC has no enemy. You should use Global.IsValid (which accounts for nil and NULL) on the return to verify validity of the enemy.](https://github.com/Facepunch/garrysmod-issues/issues/3132)  
 --- @return GNPC @Enemy NPC.
 function GNPC:GetEnemy()
 end
@@ -185,12 +186,13 @@ function GNPC:GetPathTimeToGoal()
 end
 
 --- Returns the shooting position of the NPC.  
+--- ℹ **NOTE**: This only works properly when called on an NPC that can hold weapons, otherwise it will return the same value as Entity:GetPos.  
 --- @return GVector @The NPC's shooting position.
 function GNPC:GetShootPos()
 end
 
 --- Returns the NPC's current target set by NPC:SetTarget.  
---- * **BUG**: [This returns nil if the NPC has no target. You should use Global.IsValid (which accounts for nil and NULL) on the return to verify validity of the target.](https://github.com/Facepunch/garrysmod-issues/issues/3132)  
+--- 🦟 **BUG**: [This returns nil if the NPC has no target. You should use Global.IsValid (which accounts for nil and NULL) on the return to verify validity of the target.](https://github.com/Facepunch/garrysmod-issues/issues/3132)  
 --- @return GEntity @Target entity
 function GNPC:GetTarget()
 end
@@ -288,7 +290,7 @@ end
 function GNPC:PlaySentence(sentence, delay, volume)
 end
 
---- <deprecated></deprecated>  
+--- 🛑 **DEPRECATED**:   
 --- This function crashes the game no matter how it is used and will be removed in a future update.  
 --- Use NPC:ClearEnemyMemory instead.  
 function GNPC:RemoveMemory()
@@ -356,6 +358,7 @@ function GNPC:SetHullType(hullType)
 end
 
 --- Sets the last registered or memorized position for an npc. When using scheduling, the NPC will focus on navigating to the last position via nodes.  
+--- ℹ **NOTE**: The navigation requires ground nodes to function properly, otherwise the NPC could only navigate in a small area. (https://developer.valvesoftware.com/wiki/Info_node)  
 --- @param Position GVector @Where the NPC's last position will be set.
 function GNPC:SetLastPosition(Position)
 end

@@ -78,7 +78,7 @@ function GCMoveData:GetUpSpeed()
 end
 
 --- Gets the players velocity.  
---- * **BUG**: [This will return Vector(0,0,0) sometimes when walking on props.](https://github.com/Facepunch/garrysmod-issues/issues/3413)  
+--- 🦟 **BUG**: [This will return Vector(0,0,0) sometimes when walking on props.](https://github.com/Facepunch/garrysmod-issues/issues/3413)  
 --- @return GVector @The players velocity
 function GCMoveData:GetVelocity()
 end
@@ -114,7 +114,7 @@ function GCMoveData:SetAbsMoveAngles(ang)
 end
 
 --- Sets angles.  
---- * **BUG**: [This function does nothing.](https://github.com/Facepunch/garrysmod-issues/issues/2382)  
+--- 🦟 **BUG**: [This function does nothing.](https://github.com/Facepunch/garrysmod-issues/issues/2382)  
 --- @param ang GAngle @The angles.
 function GCMoveData:SetAngles(ang)
 end
@@ -144,6 +144,7 @@ end
 --- This also automatically sets CMoveData:SetMaxSpeed when used in the GM:SetupMove hook. You must set it manually in the GM:Move hook.  
 --- This must be called on both client and server to avoid prediction errors.  
 --- This will **not** reduce speed in air.  
+--- ℹ **NOTE**: Setting this to 0 will not make the player stationary. It won't do anything.  
 --- @param maxSpeed number @The new maximum speed
 function GCMoveData:SetMaxClientSpeed(maxSpeed)
 end
@@ -155,7 +156,7 @@ function GCMoveData:SetMaxSpeed(maxSpeed)
 end
 
 --- Sets the serverside move angles, making the movement keys act as if player was facing that direction.  
---- * **BUG**: [This does nothing clientside.](https://github.com/Facepunch/garrysmod-issues/issues/1181)  
+--- 🦟 **BUG**: [This does nothing clientside.](https://github.com/Facepunch/garrysmod-issues/issues/1181)  
 --- @param dir GAngle @The aim direction.
 function GCMoveData:SetMoveAngles(dir)
 end

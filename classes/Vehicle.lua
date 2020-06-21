@@ -213,14 +213,14 @@ function GVehicle:SetSpringLength(wheel, length)
 end
 
 --- Sets the steering of the vehicle.  
---- <validate>The correct range, 0 to 1 or -1 to 1</validate>  
+--- ⁉ **VALIDATE**: The correct range, 0 to 1 or -1 to 1  
 --- @param front number @Angle of the front wheels (-1 to 1)
 --- @param rear number @Angle of the rear wheels (-1 to 1)
 function GVehicle:SetSteering(front, rear)
 end
 
 --- Sets the steering of the vehicle.  
---- <validate>The correct range, 0 to 1 or -1 to 1</validate>  
+--- ⁉ **VALIDATE**: The correct range, 0 to 1 or -1 to 1  
 --- @param front number @Angle of the front wheels (-1 to 1)
 --- @param rear number @Angle of the rear wheels (-1 to 1)
 function GVehicle:SetSteering(front, rear)
@@ -247,8 +247,9 @@ function GVehicle:SetVehicleEntryAnim(bOn)
 end
 
 --- Sets the vehicle parameters for given vehicle.  
---- <bug issue="2625">Because this method uses miles per hour but Vehicle:GetVehicleParams returns Hammer units per second, this method incorrectly modifies the vehicle engine's "boostMaxSpeed", "maxRevSpeed" and "maxSpeed" even when not explicitly set in a call to this method.  
---- **Workaround**: In order to retain the original values for these fields, call Vehicle:GetVehicleParams yourself, convert the mentioned fields from Hammer units per second to miles per hour (1 MPH ≈ 17.6 HU/s in this case) and add them to the table passed into the call to this setter. Avoid doing this repeatedly to avoid floating point inaccuracies over time (store the ready-calculated value for next time if possible).</bug>  
+--- ℹ **NOTE**: Not all variables from the Structures/VehicleParams can be set.  
+--- 🦟 **BUG**: [Because this method uses miles per hour but Vehicle:GetVehicleParams returns Hammer units per second, this method incorrectly modifies the vehicle engine's "boostMaxSpeed", "maxRevSpeed" and "maxSpeed" even when not explicitly set in a call to this method.](https://github.com/Facepunch/garrysmod-issues/issues/2625)  
+--- **Workaround**: In order to retain the original values for these fields, call Vehicle:GetVehicleParams yourself, convert the mentioned fields from Hammer units per second to miles per hour (1 MPH ≈ 17.6 HU/s in this case) and add them to the table passed into the call to this setter. Avoid doing this repeatedly to avoid floating point inaccuracies over time (store the ready-calculated value for next time if possible).  
 --- @param params table @The new new vehicle parameters
 function GVehicle:SetVehicleParams(params)
 end

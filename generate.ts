@@ -66,12 +66,28 @@ interface FuncContainer {
 
 // Time to parse XML with regular expressions
 const INTERNAL_REGEX = /<internal>/;
-const UNWANTED_REGEX = /<(note|warning)>.+?<\/(note|warning)>/g;
+const WARNINGS_REGEX = /<(note|warning|deprecated|bug|validate)>((?:.|\n)*?)<\/\1>/g;
 const USELESS_REGEX = /<br>|<pagelist.+?\/pagelist>|<img.+?>/g;
+const RENDER_REGEX = /<rendercontext hook="(true|false)" type="(\dD)"><\/rendercontext>/;
 const KEY_REGEX = /<key>(.+?)<\/key>/g;
 const PAGE_REGEX = /<page( text="(.+?)")?>(.+?)<\/page>/g;
 const ARG_REGEX = /^(.+?)(\.\s|\n|$)/;
-const BUG_REGEX = /<bug issue="(.+?)">(.+?)<\/bug>/g;
+const BUG_REGEX = /<bug (issue|request|pull)="(.+?)">(.+?)(\n(?:.|\n)*?)?<\/bug>/g;
+const EMJOI = {
+    note: "ℹ",
+    warning: "⚠",
+    deprecated: "🛑",
+    bug: "🦟",
+    validate: "⁉",
+    "3D": "🧱",
+    "2D": "🟥",
+};
+
+const BUG_URLS = {
+    issue: "https://github.com/Facepunch/garrysmod-issues/issues/",
+    request: "https://github.com/Facepunch/garrysmod-requests/issues/",
+    pull: "https://github.com/Facepunch/garrysmod/pull/",
+};
 
 function trimArg(text: string): string {
     let match = text.match(ARG_REGEX);
@@ -88,8 +104,35 @@ function unpaginate(text: string): string {
 function linkBugs(text: string): string {
     return text.replace(
         BUG_REGEX,
-        (_, issue, text) =>
-            `\n* **BUG**: [${text}](https://github.com/Facepunch/garrysmod-issues/issues/${issue})\n`
+        (
+            _,
+            type: "pull" | "issue" | "request",
+            issue: string,
+            text: string,
+            extra?: string
+        ) =>
+            `<bug>[${text}](${BUG_URLS[type]}${issue})${
+                extra != null ? "\n" + extra : ""
+            }</bug>`
+    );
+}
+
+function handleRenderContext(text: string): string {
+    return text.replace(
+        RENDER_REGEX,
+        (_, hook: "true" | "false", type: "3D" | "2D") =>
+            `\n${EMJOI[type]} **NOTE**: ${
+                hook == "true" ? "Provides" : "Requires"
+            } a ${type} rendering context\n`
+    );
+}
+
+function formatWarnings(text: string): string {
+    return text.replace(
+        WARNINGS_REGEX,
+        (match, type: keyof typeof EMJOI, text: string) => {
+            return `\n${EMJOI[type]} **${type.toUpperCase()}**: ${text}\n`;
+        }
     );
 }
 
@@ -145,8 +188,7 @@ function getRetDoc(retvals: FuncRet): string {
 }
 
 function formatDesc(desc: string): string {
-    return unpaginate(linkBugs(desc))
-        .replace(UNWANTED_REGEX, "")
+    return unpaginate(handleRenderContext(formatWarnings(linkBugs(desc))))
         .replace(USELESS_REGEX, "\n")
         .replace(KEY_REGEX, "`$1`")
         .replace(/\n+/g, "\n")

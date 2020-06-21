@@ -37,6 +37,7 @@ function GVector:DistToSqr(otherVec)
 end
 
 --- Returns the euclidean distance between the vector and the other vector.  
+--- ⚠ **WARNING**: This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:DistToSqr whenever possible.  
 --- @param otherVector GVector @The vector to get the distance to.
 --- @return number @Distance between the vectors.
 function GVector:Distance(otherVector)
@@ -58,13 +59,14 @@ end
 function GVector:Dot(otherVector)
 end
 
---- <deprecated>This is an alias of Vector:Dot. Use that instead.</deprecated>Returns the dot product of the two vectors.  
+--- 🛑 **DEPRECATED**: This is an alias of Vector:Dot. Use that instead.  
+--- Returns the dot product of the two vectors.  
 --- @param Vector GVector @The other vector.
 --- @return number @Dot Product
 function GVector:DotProduct(Vector)
 end
 
---- <deprecated>Use Vector:GetNormalized instead.</deprecated>  
+--- 🛑 **DEPRECATED**: Use Vector:GetNormalized instead.  
 --- Returns a normalized version of the vector. This is a alias of Vector:GetNormalized.  
 --- @return GVector @Normalized version of the vector.
 function GVector:GetNormal()
@@ -152,8 +154,9 @@ function GVector:ToColor()
 end
 
 --- Returns where on the screen the specified position vector would appear. A related function is gui.ScreenToVector, which converts a 2D coordinate to a 3D direction.  
---- * **BUG**: [Errors in a render hook can make this value incorrect until the player restarts their game.](https://github.com/Facepunch/garrysmod-issues/issues/462)  
---- * **BUG**: [cam.Start3D or 3D context cam.Start with non-default parameters incorrectly sets the reference FOV for this function, causing incorrect return values. This can be fixed by creating and ending a default 3D context (cam.Start3D with no arguments).](https://github.com/Facepunch/garrysmod-issues/issues/1404)  
+--- ℹ **NOTE**: Should be called from a 3D rendering environment or after cam.Start3D or it may not work correctly.  
+--- 🦟 **BUG**: [Errors in a render hook can make this value incorrect until the player restarts their game.](https://github.com/Facepunch/garrysmod-issues/issues/462)  
+--- 🦟 **BUG**: [cam.Start3D or 3D context cam.Start with non-default parameters incorrectly sets the reference FOV for this function, causing incorrect return values. This can be fixed by creating and ending a default 3D context (cam.Start3D with no arguments).](https://github.com/Facepunch/garrysmod-issues/issues/1404)  
 --- @return table @The created Structures/ToScreenData.
 function GVector:ToScreen()
 end

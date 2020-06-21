@@ -2,6 +2,7 @@
 --- This object represents a .pcf ( Orange Box ) particle system. Created by Entity:CreateParticleEffect and Global.CreateParticleSystem.  
 local GCNewParticleEffect = {}
 --- Adds a control point to the particle system.  
+--- ℹ **NOTE**: This function will not work if the CNewParticleEffect:GetOwner entity is not valid  
 --- @param cpID number @The control point ID, 0 to 63.
 --- @param ent GEntity @The entity to attach the control point to.
 --- @param partAttachment number @See Enums/PATTACH.
@@ -126,6 +127,7 @@ function GCNewParticleEffect:StopEmission(infiniteOnly, removeAllParticles, wake
 end
 
 --- Stops particle emission and destroys all particles instantly. Also detaches the particle effect from the entity it was attached to.  
+--- ℹ **NOTE**: This function will work identically to CNewParticleEffect:StopEmission( false, true ) if  CNewParticleEffect:GetOwner entity is not valid.  
 --- Consider using CNewParticleEffect:StopEmission( false, true ) instead, which has same effect, but doesn't require owner entity, and does't detach the particle system from its entity.  
 function GCNewParticleEffect:StopEmissionAndDestroyImmediately()
 end

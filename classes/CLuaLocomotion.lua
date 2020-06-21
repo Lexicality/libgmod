@@ -137,6 +137,7 @@ function GCLuaLocomotion:SetDesiredSpeed(speed)
 end
 
 --- Sets the locomotion's gravity.  
+--- ℹ **NOTE**: With values 0 or below, or even lower positive values, the nextbot will start to drift sideways, use CLuaLocomotion:SetVelocity to counteract this.  
 --- @param gravity number @New gravity to set
 function GCLuaLocomotion:SetGravity(gravity)
 end

@@ -64,6 +64,7 @@ function GAngle:SetUnpacked(p, y, r)
 end
 
 --- Snaps the angle to nearest interval of degrees.  
+--- ℹ **NOTE**: This will modify the original angle too!  
 --- @param axis string @The component/axis to snap
 --- @param target number @The target angle snap interval
 --- @return GAngle @The snapped angle.

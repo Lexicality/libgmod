@@ -6,7 +6,7 @@ local GPanel = {}
 function GPanel:Add(object)
 end
 
---- <deprecated>Does nothing</deprecated>  
+--- 🛑 **DEPRECATED**: Does nothing  
 --- This function does nothing.  
 function GPanel:AddText()
 end
@@ -146,8 +146,8 @@ end
 
 --- Returns the cursor position relative to the top left of the panel.  
 --- This is equivalent to calling gui.MousePos and then Panel:ScreenToLocal.  
---- <warning>This function uses a cached value for the screen position of the panel, computed at the end of the last VGUI Think/Layout pass.  
---- ie. inaccurate results may be returned if the panel or any of its ancestors have been repositioned outside of PANEL:Think or PANEL:PerformLayout within the last frame.</warning>  
+--- ⚠ **WARNING**: This function uses a cached value for the screen position of the panel, computed at the end of the last VGUI Think/Layout pass.  
+--- ie. inaccurate results may be returned if the panel or any of its ancestors have been repositioned outside of PANEL:Think or PANEL:PerformLayout within the last frame.  
 --- @return number, number
 function GPanel:CursorPos()
 end
@@ -180,11 +180,12 @@ function GPanel:DistanceFrom(posX, posY)
 end
 
 --- Makes the panel "lock" the screen until it is removed. It will silently fail if used while cursor is not visible. Call Panel:MakePopup before calling this function.  
---- * **BUG**: [You can still click in the world even if locked.](https://github.com/Facepunch/garrysmod-issues/issues/3457)  
+--- 🦟 **BUG**: [You can still click in the world even if locked.](https://github.com/Facepunch/garrysmod-issues/issues/3457)  
 function GPanel:DoModal()
 end
 
 --- Sets the dock type of the panel.  
+--- ℹ **NOTE**: After using this function, if you want to get the correct panel's bounds (position, size), use Panel:InvalidateParent (use **true** as argument if you need to update immediately)  
 --- @param dockType number @Dock type using Enums/DOCK.
 function GPanel:Dock(dockType)
 end
@@ -273,6 +274,7 @@ function GPanel:GetAlpha()
 end
 
 --- Returns the background color of a panel such as a RichText, Label or DColorCube.  
+--- ℹ **NOTE**: This doesn't apply to all VGUI elements and its function varies between them  
 --- @return number @The Color structure
 function GPanel:GetBGColor()
 end
@@ -370,6 +372,7 @@ end
 
 --- Returns the foreground color of the panel.  
 --- For a Label or RichText, this is the color of its text.  
+--- ℹ **NOTE**: This doesn't apply to all VGUI elements (such as DLabel) and its function varies between them  
 --- @return table @A color structure
 function GPanel:GetFGColor()
 end
@@ -397,6 +400,7 @@ function GPanel:GetName()
 end
 
 --- Returns the number of lines in a RichText. You must wait a couple frames before calling this after using Panel:AppendText or Panel:SetText, otherwise it will return the number of text lines before the text change.  
+--- ℹ **NOTE**: Even though this function can be called on any panel, it will only work with RichText  
 --- @return number @The number of lines.
 function GPanel:GetNumLines()
 end
@@ -462,7 +466,7 @@ function GPanel:GetTextInset()
 end
 
 --- Gets the size of the text within a Label derived panel.  
---- * **BUG**: [This can return 0 incorrectly.](https://github.com/Facepunch/garrysmod-issues/issues/2576)  
+--- 🦟 **BUG**: [This can return 0 incorrectly.](https://github.com/Facepunch/garrysmod-issues/issues/2576)  
 --- @return number, number
 function GPanel:GetTextSize()
 end
@@ -474,6 +478,7 @@ end
 
 --- Returns the value the panel holds.  
 --- In engine is only implemented for CheckButton, Label and TextEntry as a string.  
+--- ℹ **NOTE**: This function is limited to 8092 Bytes. If using DTextEntry, use Panel:GetText for unlimited bytes.  
 --- @return any @The value the panel holds.
 function GPanel:GetValue()
 end
@@ -506,7 +511,7 @@ function GPanel:GotoTextEnd()
 end
 
 --- Causes a RichText element to scroll to the top of its text.  
---- * **BUG**: [This does not work on the same frame as Panel:SetText.](https://github.com/Facepunch/garrysmod-issues/issues/2239)  
+--- 🦟 **BUG**: [This does not work on the same frame as Panel:SetText.](https://github.com/Facepunch/garrysmod-issues/issues/2239)  
 function GPanel:GotoTextStart()
 end
 
@@ -541,6 +546,7 @@ end
 
 --- Starts the insertion of clickable text for a RichText element. Any text appended with Panel:AppendText between this call and Panel:InsertClickableTextEnd will become clickable text.  
 --- The hook PANEL:ActionSignal is called when the text is clicked, with "TextClicked" as the signal name and `signalValue` as the signal value.  
+--- ℹ **NOTE**: The clickable text is a separate Derma panel which will not inherit the current font from the `RichText`.  
 --- @param signalValue string @The text passed as the action signal's value.
 function GPanel:InsertClickableTextStart(signalValue)
 end
@@ -567,7 +573,7 @@ end
 
 --- Causes the panel to re-layout in the next frame. During the layout process  PANEL:PerformLayout will be called on the target panel.  
 --- You should avoid calling this function every frame.  
---- * **BUG**: [Using this on a panel after clicking on a docked element will cause docked elements to reorient themselves incorrectly. This can be fixed by assigning a unique Panel:SetZPos to each docked element.](https://github.com/Facepunch/garrysmod-issues/issues/2574)  
+--- 🦟 **BUG**: [Using this on a panel after clicking on a docked element will cause docked elements to reorient themselves incorrectly. This can be fixed by assigning a unique Panel:SetZPos to each docked element.](https://github.com/Facepunch/garrysmod-issues/issues/2574)  
 --- @param layoutNow boolean @If true the panel will re-layout instantly and not wait for the next frame.
 function GPanel:InvalidateLayout(layoutNow)
 end
@@ -692,6 +698,8 @@ end
 
 --- Gets the absolute screen position of the position specified relative to the panel.  
 --- See also Panel:ScreenToLocal.  
+--- ⚠ **WARNING**: This function uses a cached value for the screen position of the panel, computed at the end of the last VGUI Think/Layout pass, so inaccurate results may be returned if the panel or any of its ancestors have been re-positioned outside of PANEL:Think or PANEL:PerformLayout within the last frame.  
+--- ℹ **NOTE**: If the panel uses Panel:Dock, this function will return 0, 0 when the panel was created. The position will be updated in the next frame.  
 --- @param posX number @The X coordinate of the position on the panel to translate.
 --- @param posY number @The Y coordinate of the position on the panel to translate.
 --- @return number, number
@@ -700,6 +708,7 @@ end
 
 --- Focuses the panel and enables it to receive input.  
 --- This automatically calls Panel:SetMouseInputEnabled and Panel:SetKeyboardInputEnabled and sets them to true.  
+--- ℹ **NOTE**: Panels derived from Panel will not work properly with this function. Due to this, any children will not be intractable with keyboard. Derive from EditablePanel instead.  
 function GPanel:MakePopup()
 end
 
@@ -743,6 +752,7 @@ function GPanel:MoveRightOf(panel, offset)
 end
 
 --- Moves the panel to the specified position using animation.  
+--- ℹ **NOTE**: Setting the ease argument to 0 will result in the animation happening instantly, this applies to all MoveTo/SizeTo functions  
 --- @param posX number @The target x coordinate of the panel.
 --- @param posY number @The target y coordinate of the panel.
 --- @param time number @The time to perform the animation within.
@@ -816,8 +826,10 @@ end
 function GPanel:ParentToHUD()
 end
 
+--- ⚠ **WARNING**: Due to privacy concerns, this function has been disabled  
 --- Only works for TextEntries.  
 --- Pastes the contents of the clipboard into the TextEntry.  
+--- ℹ **NOTE**: Tab characters will be dropped from the pasted text  
 function GPanel:Paste()
 end
 
@@ -831,7 +843,8 @@ end
 function GPanel:PositionLabel(lblWidth, x, y, lbl, panelObj)
 end
 
---- <deprecated>Only used in deprecated Derma controls.</deprecated>Sends a command to the panel.  
+--- 🛑 **DEPRECATED**: Only used in deprecated Derma controls.  
+--- Sends a command to the panel.  
 --- @param messageName string @The name of the message.
 --- @param valueType string @The type of the variable to post.
 --- @param value string @The value to post.
@@ -848,6 +861,7 @@ end
 
 --- Re-renders a spawn icon with customized cam data.  
 --- Global.PositionSpawnIcon can be used to easily calculate the necessary camera parameters.  
+--- ℹ **NOTE**: This function does **not** accept the standard Structures/CamData.  
 --- @param data table @A four-membered table containing the information needed to re-render:
 function GPanel:RebuildSpawnIconEx(data)
 end
@@ -883,6 +897,9 @@ function GPanel:ResetAllFades(hold, expiredOnly, newSustain)
 end
 
 --- Runs/Executes a string as JavaScript code in a panel.  
+--- ℹ **NOTE**: This function does **NOT** evaluate expression (i.e. allow you to pass variables from JavaScript (JS) to Lua context).  
+--- Because a return value is nil/no value (a.k.a. void).  
+--- If you wish to pass/return values from JS to Lua, you may want to use DHTML:AddFunction function to accomplish that job.  
 --- @param js string @Specify JavaScript code to be executed.
 function GPanel:RunJavascript(js)
 end
@@ -894,6 +911,7 @@ end
 
 --- Translates global screen coordinate to coordinates relative to the panel.  
 --- See also Panel:LocalToScreen.  
+--- ⚠ **WARNING**: This function uses a cached value for the screen position of the panel, computed at the end of the last VGUI Think/Layout pass, so inaccurate results may be returned if the panel or any of its ancestors have been re-positioned outside of PANEL:Think or PANEL:PerformLayout within the last frame.  
 --- @param screenX number @The x coordinate of the screen position to be translated.
 --- @param screenY number @The y coordinate of the screed position be to translated.
 --- @return number, number
@@ -921,7 +939,7 @@ end
 function GPanel:SetAchievement(id)
 end
 
---- <deprecated>Does nothing at all.</deprecated>  
+--- 🛑 **DEPRECATED**: Does nothing at all.  
 --- Used in Button to call a function when the button is clicked and in Slider when the value changes.  
 --- @param func function @Function to call when the Button is clicked or the Slider value is changed
 function GPanel:SetActionFunction(func)
@@ -949,6 +967,7 @@ function GPanel:SetAutoDelete(autoDelete)
 end
 
 --- Sets the background color of a panel such as a RichText, Label or DColorCube.  
+--- ℹ **NOTE**: This doesn't apply to all VGUI elements and its function varies between them  
 --- For DLabel elements, you must use Panel:SetPaintBackgroundEnabled( true ) before applying the color.  
 --- This will not work on setup of the panel - you should use this function in a hook like PANEL:ApplySchemeSettings or PANEL:PerformLayout.  
 --- @param r or color number @The red channel of the color, or a Color
@@ -969,6 +988,9 @@ end
 function GPanel:SetCommand()
 end
 
+--- ⚠ **WARNING**: This function does not exist on all panels  
+--- ⚠ **WARNING**: This function cannot interact with serverside convars unless you are host  
+--- ℹ **NOTE**: Blocked convars will not work with this, see Blocked ConCommands  
 --- Sets this panel's convar. When the convar changes this panel will update automatically.  
 --- For developer implementation, see Global.Derma_Install_Convar_Functions.  
 --- @param convar string @The console variable to check.
@@ -985,6 +1007,7 @@ end
 --- ```  
 --- panelCookieName.cookieName  
 --- ```  
+--- ⚠ **WARNING**: The panel's cookie name MUST be set for this function to work. See Panel:SetCookieName.  
 --- @param cookieName string @The unique name used to retrieve the cookie later.
 --- @param value string @The value to store in the cookie
 function GPanel:SetCookie(cookieName, value)
@@ -1020,6 +1043,8 @@ end
 
 --- Makes the panel render in front of all others, including the spawn menu and main menu.  
 --- Priority is given based on the last call, so of two panels that call this method, the second will draw in front of the first.  
+--- ℹ **NOTE**: This only makes the panel **draw** above other panels. If there's another panel that would have otherwise covered it, users will not be able to interact with it.  
+--- ⚠ **WARNING**: This does not work when using PANEL:SetPaintedManually or PANEL:PaintAt!  
 --- @param drawOnTop boolean @Whether or not to draw the panel in front of all others.
 function GPanel:SetDrawOnTop(drawOnTop)
 end
@@ -1048,6 +1073,7 @@ end
 --- Sets the foreground color of a panel.  
 --- For a Label or RichText, this is the color of its text.  
 --- This function calls Panel:SetFGColorEx internally.  
+--- ℹ **NOTE**: This doesn't apply to all VGUI elements (such as DLabel) and its function varies between them  
 --- @param r or color number @The red channel of the color, or a Color
 --- @param g number @The green channel of the color.
 --- @param b number @The blue channel of the color.
@@ -1078,7 +1104,8 @@ end
 function GPanel:SetHeight(height)
 end
 
---- <deprecated>Alias of Panel:SetKeyboardInputEnabled</deprecated>Enables or disables the keyboard input for the panel.  
+--- 🛑 **DEPRECATED**: Alias of Panel:SetKeyboardInputEnabled  
+--- Enables or disables the keyboard input for the panel.  
 --- @param keyboardInput boolean @Whether to enable or disable keyboard input.
 function GPanel:SetKeyBoardInputEnabled(keyboardInput)
 end
@@ -1103,6 +1130,7 @@ function GPanel:SetMinimumSize(minW, minH)
 end
 
 --- Sets the model to be displayed by SpawnIcon.  
+--- ℹ **NOTE**: This must be called after setting size if you wish to use a different size spawnicon  
 --- @param ModelPath string @The path of the model to set
 --- @param skin number @The skin to set
 --- @param bodygroups string @The body groups to set
@@ -1129,7 +1157,7 @@ end
 function GPanel:SetPaintBorderEnabled(paintBorder)
 end
 
---- <deprecated>This function does nothing.</deprecated>  
+--- 🛑 **DEPRECATED**: This function does nothing.  
 --- This function does nothing.  
 function GPanel:SetPaintFunction()
 end
@@ -1157,6 +1185,7 @@ end
 
 --- Sets the position of the panel's top left corner.  
 --- This will trigger PANEL:PerformLayout. You should avoid calling this function in PANEL:PerformLayout to avoid infinite loops.  
+--- ℹ **NOTE**: If you wish to position and re-size panels without much guesswork and have them look good on different screen resolutions, you may find Panel:Dock useful  
 --- @param posX number @The x coordinate of the position.
 --- @param posY number @The y coordinate of the position.
 function GPanel:SetPos(posX, posY)
@@ -1185,6 +1214,7 @@ end
 --- Sets the size of the panel.  
 --- Calls PANEL:OnSizeChanged and marks this panel for layout (Panel:InvalidateLayout).  
 --- See also Panel:SetWidth and Panel:SetHeight.  
+--- ℹ **NOTE**: If you wish to position and re-size panels without much guesswork and have them look good on different screen resolutions, you may find Panel:Dock useful  
 --- @param width number @The width of the panel.
 --- @param height number @The height of the panel.
 function GPanel:SetSize(width, height)
@@ -1218,11 +1248,13 @@ function GPanel:SetTall(height)
 end
 
 --- Removes the panel after given time in seconds.  
+--- ℹ **NOTE**: This function will not work if PANEL:AnimationThink is overridden, unless Panel:AnimationThinkInternal is called every frame.  
 --- @param delay number @Delay in seconds after which the panel should be removed.
 function GPanel:SetTerm(delay)
 end
 
 --- Sets the text value of a panel object containing text, such as a Label, TextEntry or  RichText and their derivatives, such as DLabel, DTextEntry or DButton.  
+--- ⚠ **WARNING**: When used on a Label or its derivatives ( DLabel and DButton ), it will automatically call Panel:InvalidateLayout, meaning that you should avoid running this function every frame on these panels to avoid unnecessary performance loss.  
 --- @param text string @The text value to set.
 function GPanel:SetText(text)
 end
@@ -1234,6 +1266,7 @@ function GPanel:SetTextInset(insetX, insetY)
 end
 
 --- Sets the height of a RichText element to accommodate the text inside.  
+--- ℹ **NOTE**: This function internally relies on Panel:GetNumLines, so it should be called at least a couple frames after modifying the text using Panel:AppendText  
 function GPanel:SetToFullHeight()
 end
 
@@ -1243,6 +1276,9 @@ function GPanel:SetTooltip(str)
 end
 
 --- Sets the panel to be displayed as contents of a DTooltip when a player hovers over the panel object with their cursor. See Panel:SetTooltipPanelOverride if you are looking to override DTooltip itself.  
+--- ℹ **NOTE**: Panel:SetTooltip will override this functionality.  
+--- ⚠ **WARNING**: Calling this from PANEL:OnCursorEntered is too late! The tooltip will not be displayed or be updated.  
+--- ⚠ **WARNING**: Given panel or the previously set one will NOT be automatically removed.  
 --- @param tooltipPanel GPanel @The panel to use as the tooltip.
 function GPanel:SetTooltipPanel(tooltipPanel)
 end
@@ -1287,7 +1323,7 @@ function GPanel:SetWidth(width)
 end
 
 --- This makes it so that when you're hovering over this panel you can `click` on the world. Your viewmodel will aim etc. This is primarily used for the Sandbox context menu.  
---- * **BUG**: [This function doesn't scale with custom FOV specified by GM:CalcView or WEAPON:TranslateFOV.](https://github.com/Facepunch/garrysmod-issues/issues/3467)  
+--- 🦟 **BUG**: [This function doesn't scale with custom FOV specified by GM:CalcView or WEAPON:TranslateFOV.](https://github.com/Facepunch/garrysmod-issues/issues/3467)  
 --- @param enabled boolean 
 function GPanel:SetWorldClicker(enabled)
 end
@@ -1320,23 +1356,29 @@ function GPanel:SizeTo(sizeW, sizeH, time, delay, ease, callback)
 end
 
 --- Resizes the panel to fit the bounds of its children.  
+--- ℹ **NOTE**: Your panel must have its layout updated (Panel:InvalidateLayout) for this function to work properly.  
+--- ℹ **NOTE**: The sizeW and sizeH parameters are false by default. Therefore, calling this function with no arguments will result in a no-op.  
 --- @param sizeW boolean @Resize with width of the panel.
 --- @param sizeH boolean @Resize the height of the panel.
 function GPanel:SizeToChildren(sizeW, sizeH)
 end
 
 --- Resizes the panel so that its width and height fit all of the content inside.  
+--- ℹ **NOTE**: Only works on Label derived panels such as DLabel by default, and on any panel that manually implemented the Panel:SizeToContents method, such as DNumberWang and DImage.  
+--- ⚠ **WARNING**: You must call this function **AFTER** setting text/font, adjusting child panels or otherwise altering the panel.  
 function GPanel:SizeToContents()
 end
 
 --- Resizes the panel object's width to accommodate all child objects/contents.  
 --- Only works on Label derived panels such as DLabel by default, and on any panel that manually implemented Panel:GetContentSize method.  
+--- ℹ **NOTE**: You must call this function **AFTER** setting text/font or adjusting child panels.  
 --- @param addVal number @The number of extra pixels to add to the width
 function GPanel:SizeToContentsX(addVal)
 end
 
 --- Resizes the panel object's height to accommodate all child objects/contents.  
 --- Only works on Label derived panels such as DLabel by default, and on any panel that manually implemented Panel:GetContentSize method.  
+--- ℹ **NOTE**: You must call this function **AFTER** setting text/font or adjusting child panels.  
 --- @param addVal number @The number of extra pixels to add to the height.
 function GPanel:SizeToContentsY(addVal)
 end
@@ -1398,10 +1440,13 @@ end
 
 --- Forcibly updates the panels' HTML Material, similar to when Paint is called on it.  
 --- This is only useful if the panel is not normally visible, i.e the panel exists purely for its HTML Material.  
+--- ℹ **NOTE**: Only works on with panels that have a HTML Material. See Panel:GetHTMLMaterial for more details.  
+--- ℹ **NOTE**: A good place to call this is in the GM:PreRender hook  
 function GPanel:UpdateHTMLTexture()
 end
 
---- <deprecated>Use Panel:IsValid instead.</deprecated>Returns if a given panel is valid or not.  
+--- 🛑 **DEPRECATED**: Use Panel:IsValid instead.  
+--- Returns if a given panel is valid or not.  
 --- @return boolean @Whether the panel is valid or not, true being it is, false being it isn't.
 function GPanel:Valid()
 end

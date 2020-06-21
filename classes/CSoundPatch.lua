@@ -57,7 +57,7 @@ function GCSoundPatch:PlayEx(volume, pitch)
 end
 
 --- Sets the DSP (Digital Signal Processor) effect for the sound. Similar to Player:SetDSP but for individual sounds.  
---- * **BUG**: [This will only apply if the sound is not playing.](https://github.com/Facepunch/garrysmod-issues/issues/4086)  
+--- 🦟 **BUG**: [This will only apply if the sound is not playing.](https://github.com/Facepunch/garrysmod-issues/issues/4086)  
 --- @param dsp number @The DSP effect to set
 function GCSoundPatch:SetDSP(dsp)
 end
@@ -68,7 +68,7 @@ function GCSoundPatch:SetSoundLevel(level)
 end
 
 --- Stops the sound from being played.  
---- * **BUG**: [This will not work if the entity attached to this sound patch (specified by Global.CreateSound) is invalid.](https://github.com/Facepunch/garrysmod-issues/issues/3260)  
+--- 🦟 **BUG**: [This will not work if the entity attached to this sound patch (specified by Global.CreateSound) is invalid.](https://github.com/Facepunch/garrysmod-issues/issues/3260)  
 function GCSoundPatch:Stop()
 end
 

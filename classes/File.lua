@@ -42,6 +42,8 @@ function GFile:ReadFloat()
 end
 
 --- Returns the contents of the file from the current position up until the end of the current line.  
+--- ℹ **NOTE**: This function will look specifically for `Line Feed` characters `\n` and will **completely ignore `Carriage Return` characters** `\r`.  
+--- ℹ **NOTE**: This function will not return more than 8192 characters.  
 --- @return string @The string of data from the read line.
 function GFile:ReadLine()
 end

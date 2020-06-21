@@ -12,7 +12,7 @@ function GProjectedTexture:GetBrightness()
 end
 
 --- Returns the color of the ProjectedTexture, which was previously set by ProjectedTexture:SetColor.  
---- * **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @return table @Color, the color of the ProjectedTexture.
 function GProjectedTexture:GetColor()
 end
@@ -117,6 +117,9 @@ function GProjectedTexture:SetConstantAttenuation(constAtten)
 end
 
 --- Enable or disable shadows cast from the projected texture.  
+--- ℹ **NOTE**: as with all types of projected textures (including the player's flashlight and env_projectedtexture), there can only be 8 projected textures with shadows enabled in total.   
+--- This limit can be increased with the launch parameter: -numshadowtextures limit  
+---  where limit is the new limit. Naturally, many projected lights with shadows enabled will drastically decrease framerate.  
 --- You must call ProjectedTexture:Update after using this function for it to take effect.  
 --- @param newState boolean 
 function GProjectedTexture:SetEnableShadows(newState)
@@ -150,6 +153,8 @@ end
 
 --- Sets the distance at which the projected texture begins its projection.  
 --- You must call ProjectedTexture:Update after using this function for it to take effect.  
+--- ℹ **NOTE**: Setting this to 0 will disable the projected texture completely! This may be useful if you want to disable a projected texture without actually removing it  
+--- ℹ **NOTE**: This seems to affect the rendering of shadows - a higher Near Z value will have shadows begin to render closer to their casting object. Comparing a low Near Z value (like 1) with a normal one (12) or high one (1000) is the easiest way to understand this artifact  
 --- @param nearZ number 
 function GProjectedTexture:SetNearZ(nearZ)
 end

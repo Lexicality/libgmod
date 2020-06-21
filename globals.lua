@@ -8,6 +8,9 @@ function AccessorFunc(tab, key, name, force)
 end
 
 --- Marks a Lua file to be sent to clients when they join the server. Doesn't do anything on the client - this means you can use it in a shared file without problems.  
+--- ⚠ **WARNING**: If the file trying to be added is empty, an error will occur, and the file will not be sent to the client.  
+--- ℹ **NOTE**: This function is not needed for scripts located in **lua/autorun/** and **lua/autorun/client/**: they are automatically sent to clients.  
+--- ℹ **NOTE**: You can add up to 8192 files.  
 --- @param file string @The name/path to the Lua file that should be sent, relative to the garrysmod/lua folder
 function AddCSLuaFile(file)
 end
@@ -21,6 +24,7 @@ end
 --- This function will make a World Tip that will only last 50 milliseconds (1/20th of a second), so you must call it continuously as long as you want the World Tip to be shown. It is common to call it inside a Think hook.  
 --- Contrary to what the function's name implies, it is impossible to create more than one World Tip at the same time. A new World Tip will overwrite the old one, so only use this function when you know nothing else will also be using it.  
 --- See SANDBOX:PaintWorldTips for more information.  
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives  
 --- @param entindex number @**This argument is no longer used**; it has no effect on anything
 --- @param text string @The text for the world tip to display.
 --- @param dieTime number @**This argument is no longer used**; when you add a World Tip it will always last only 0.05 seconds
@@ -57,6 +61,7 @@ function AngleRand(min, max)
 end
 
 --- Sends the specified Lua code to all connected clients and executes it.  
+--- ℹ **NOTE**: If you need to use this function more than once consider using net library. Send net message and make the entire code you want to execute in net.Receive on client.  
 --- @param code string @The code to be executed
 function BroadcastLua(code)
 end
@@ -72,9 +77,9 @@ function ChangeTooltip(panel)
 end
 
 --- Creates a non physical entity that only exists on the client. See also ents.CreateClientProp.  
---- * **BUG**: [Parented clientside models will become detached if the parent entity leaves the PVS.](https://github.com/Facepunch/garrysmod-issues/issues/861)  
---- * **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually.](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
---- * **BUG**: [Clientside models will occasionally delete themselves during high server lag.](https://github.com/Facepunch/garrysmod-issues/issues/3184)  
+--- 🦟 **BUG**: [Parented clientside models will become detached if the parent entity leaves the PVS.](https://github.com/Facepunch/garrysmod-issues/issues/861)  
+--- 🦟 **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually.](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
+--- 🦟 **BUG**: [Clientside models will occasionally delete themselves during high server lag.](https://github.com/Facepunch/garrysmod-issues/issues/3184)  
 --- @param model string @The file path to the model
 --- @param renderGroup number @The render group of the entity for the clientside leaf system, see Enums/RENDERGROUP.
 --- @return GCSEnt @Created client-side model
@@ -82,10 +87,10 @@ function ClientsideModel(model, renderGroup)
 end
 
 --- Creates a fully clientside ragdoll.  
---- <note>The ragdoll initially starts as hidden and with shadows disabled, see the example for how to enable it.  
+--- ℹ **NOTE**: The ragdoll initially starts as hidden and with shadows disabled, see the example for how to enable it.  
 --- There's no need to call Entity:Spawn on this entity.  
---- The physics won't initialize at all if the model hasn't been precached serverside first.</note>  
---- * **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually.](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
+--- The physics won't initialize at all if the model hasn't been precached serverside first.  
+--- 🦟 **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually.](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
 --- @param model string @The file path to the model
 --- @param renderGroup number @The Enums/RENDERGROUP to assign.
 --- @return GCSEnt @The newly created client-side ragdoll
@@ -159,6 +164,7 @@ function ConVarExists(name)
 end
 
 --- Makes a clientside-only console variable  
+--- ℹ **NOTE**: This function is a wrapper of Global.CreateConVar, with the difference being that FCVAR_ARCHIVE and FCVAR_USERINFO are added automatically when **shouldsave** and **userinfo** are true, respectively.  
 --- Although this function is shared, it should only be used clientside.  
 --- @param name string @Name of the ConVar to be created and able to be accessed
 --- @param default string @Default value of the ConVar.
@@ -172,7 +178,7 @@ function CreateClientConVar(name, default, shouldsave, userinfo, helptext, min, 
 end
 
 --- Creates a console variable (ConVar), in general these are for things like gamemode/server settings.  
---- * **BUG**: [FCVAR_ARCHIVE causes default value replication issues on clientside FCVAR_REPLICATED convars and should be omitted clientside as a workaround](https://github.com/Facepunch/garrysmod-issues/issues/3323)  
+--- 🦟 **BUG**: [FCVAR_ARCHIVE causes default value replication issues on clientside FCVAR_REPLICATED convars and should be omitted clientside as a workaround](https://github.com/Facepunch/garrysmod-issues/issues/3323)  
 --- @param name string @Name of the ConVar
 --- @param value string @Default value of the convar
 --- @param flags number @Flags of the convar, see Enums/FCVAR, either as bitflag or as table.
@@ -184,9 +190,10 @@ function CreateConVar(name, value, flags, helptext, min, max)
 end
 
 --- Creates a new material with the specified name and shader.  
---- * **BUG**: [.pngs must be loaded with Global.Material before being used with this function.](https://github.com/Facepunch/garrysmod-issues/issues/1531)  
---- * **BUG**: [This does not work with [patch materials](https://developer.valvesoftware.com/wiki/Patch).](https://github.com/Facepunch/garrysmod-issues/issues/2511)  
---- * **BUG**: [This will not create a new material if another material object with the same name already exists.](https://github.com/Facepunch/garrysmod-issues/issues/3103)  
+--- ℹ **NOTE**: Materials created with this function can be used in Entity:SetMaterial and Entity:SetSubMaterial by prepending a "!" to their material name argument.  
+--- 🦟 **BUG**: [.pngs must be loaded with Global.Material before being used with this function.](https://github.com/Facepunch/garrysmod-issues/issues/1531)  
+--- 🦟 **BUG**: [This does not work with [patch materials](https://developer.valvesoftware.com/wiki/Patch).](https://github.com/Facepunch/garrysmod-issues/issues/2511)  
+--- 🦟 **BUG**: [This will not create a new material if another material object with the same name already exists.](https://github.com/Facepunch/garrysmod-issues/issues/3103)  
 --- @param name string @The material name
 --- @param shaderName string @The shader name
 --- @param materialData table @Key-value table that contains shader parameters and proxies
@@ -195,6 +202,7 @@ function CreateMaterial(name, shaderName, materialData)
 end
 
 --- Creates a new particle system.  
+--- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
 --- @param ent GEntity @The entity to attach the control point to.
 --- @param effect string @The name of the effect to create
 --- @param partAttachment number @See Enums/PATTACH.
@@ -205,7 +213,7 @@ function CreateParticleSystem(ent, effect, partAttachment, entAttachment, offset
 end
 
 --- Creates a new PhysCollide from the given bounds.  
---- * **BUG**: [This fails to create planes or points - no components of the mins or maxs can be the same.](https://github.com/Facepunch/garrysmod-issues/issues/3568)  
+--- 🦟 **BUG**: [This fails to create planes or points - no components of the mins or maxs can be the same.](https://github.com/Facepunch/garrysmod-issues/issues/3568)  
 --- @param mins GVector @Min corner of the box
 --- @param maxs GVector @Max corner of the box
 --- @return GPhysCollide @The new PhysCollide
@@ -219,6 +227,7 @@ function CreatePhysCollidesFromModel(modelName)
 end
 
 --- Returns a sound parented to the specified entity.  
+--- ℹ **NOTE**: You can only create one CSoundPatch per audio file, per entity at the same time.  
 --- @param targetEnt GEntity @The target entity.
 --- @param soundName string @The sound to play.
 --- @param filter GCRecipientFilter @A CRecipientFilter of the players that will have this sound networked to them
@@ -236,9 +245,9 @@ end
 --- This is a synchronised value and affected by various factors such as host_timescale (or game.GetTimeScale) and the server being paused - either by sv_pausable or all players disconnecting.  
 --- You should use this function for timing in-game events but not for real-world events.  
 --- See also: Global.RealTime, Global.SysTime  
---- <note>This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).  
---- This is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this</note>  
---- * **BUG**: [This returns 0 in GM:PlayerAuthed.](https://github.com/Facepunch/garrysmod-issues/issues/3026)  
+--- ℹ **NOTE**: This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).  
+--- This is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this  
+--- 🦟 **BUG**: [This returns 0 in GM:PlayerAuthed.](https://github.com/Facepunch/garrysmod-issues/issues/3026)  
 --- @return number @Time synced with the game server.
 function CurTime()
 end
@@ -263,7 +272,7 @@ function DOF_Start()
 end
 
 --- Returns an CTakeDamageInfo object.  
---- * **BUG**: [This does not create a unique object, but instead returns a shared reference. That means you cannot use two or more of these objects at once.](https://github.com/Facepunch/garrysmod-issues/issues/2771)  
+--- 🦟 **BUG**: [This does not create a unique object, but instead returns a shared reference. That means you cannot use two or more of these objects at once.](https://github.com/Facepunch/garrysmod-issues/issues/2771)  
 --- @return GCTakeDamageInfo @The CTakeDamageInfo object.
 function DamageInfo()
 end
@@ -432,7 +441,9 @@ function DropEntityIfHeld(ent)
 end
 
 --- Creates or replaces a dynamic light with the given id.  
---- * **BUG**: [The minlight parameter affects the world and entities differently.](https://github.com/Facepunch/garrysmod-issues/issues/3798)  
+--- ℹ **NOTE**: Only 32 dlights and 64 elights can be active at once.  
+--- ⚠ **WARNING**: It is not safe to hold a reference to this object after creation since its data can be replaced by another dlight at any time.  
+--- 🦟 **BUG**: [The minlight parameter affects the world and entities differently.](https://github.com/Facepunch/garrysmod-issues/issues/3798)  
 --- @param index number @An unsigned Integer
 --- @param elight boolean @Allocates an elight instead of a dlight
 --- @return table @A DynamicLight structured table
@@ -440,7 +451,7 @@ function DynamicLight(index, elight)
 end
 
 --- Returns a CEffectData object to be used with util.Effect.  
---- * **BUG**: [This does not create a unique object, but instead returns a shared reference. That means you cannot use two or more of these objects at once.](https://github.com/Facepunch/garrysmod-issues/issues/2771)  
+--- 🦟 **BUG**: [This does not create a unique object, but instead returns a shared reference. That means you cannot use two or more of these objects at once.](https://github.com/Facepunch/garrysmod-issues/issues/2771)  
 --- @return GCEffectData @The CEffectData object.
 function EffectData()
 end
@@ -467,8 +478,8 @@ function EmitSentence(soundName, position, entity, channel, volume, soundLevel, 
 end
 
 --- Emits the specified sound at the specified position.  
---- <bug>Sounds must be precached serverside manually before they can be played. util.PrecacheSound does not work for this purpose, Entity.EmitSound does the trick</bug>  
---- <bug>This does not work with soundscripts. TODO: Is this a bug or intended?</bug>  
+--- 🦟 **BUG**: Sounds must be precached serverside manually before they can be played. util.PrecacheSound does not work for this purpose, Entity.EmitSound does the trick  
+--- 🦟 **BUG**: This does not work with soundscripts. TODO: Is this a bug or intended?  
 --- @param soundName string @The sound to play
 --- @param position GVector @The position to play at
 --- @param entity number @The entity to emit the sound from
@@ -487,14 +498,15 @@ end
 
 --- Returns the entity with the matching Entity:EntIndex.  
 --- Indices 1 through game.MaxPlayers() are always reserved for players.  
+--- ℹ **NOTE**: In examples on this wiki, **Entity( 1 )** is used when a player entity is needed (see ). In singleplayer and listen servers, **Entity( 1 )** will always be the first player. In dedicated servers, however, **Entity( 1 )** won't always be a valid player.  
 --- @param entityIndex number @The entity index.
 --- @return GEntity @The entity if it exists, or NULL if it doesn't.
 function Entity(entityIndex)
 end
 
 --- Throws an error. This is currently an alias of Global.ErrorNoHalt despite it once throwing a halting error like error without the stack trace appended.  
---- * **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
---- * **BUG**: [This function throws a non-halting error instead of a halting error.](https://github.com/Facepunch/garrysmod-issues/issues/2113)  
+--- 🦟 **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
+--- 🦟 **BUG**: [This function throws a non-halting error instead of a halting error.](https://github.com/Facepunch/garrysmod-issues/issues/2113)  
 --- @vararg any @Converts all arguments to strings and prints them with no spacing or line breaks.
 function Error(...)
 end
@@ -502,25 +514,25 @@ end
 --- Throws a Lua error but does not break out of the current call stack.  
 --- This function will not print a stack trace like a normal error would.  
 --- Essentially similar if not equivalent to Global.Msg.  
---- * **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
+--- 🦟 **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
 --- @vararg any @Converts all arguments to strings and prints them with no spacing.
 function ErrorNoHalt(...)
 end
 
 --- Returns the angles of the current render context as calculated by GM:CalcView.  
---- * **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
+--- 🦟 **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
 --- @return GAngle @The angle of the currently rendered scene.
 function EyeAngles()
 end
 
 --- Returns the origin of the current render context as calculated by GM:CalcView.  
---- * **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
+--- 🦟 **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
 --- @return GVector @Camera position.
 function EyePos()
 end
 
 --- Returns the normal vector of the current render context as calculated by GM:CalcView, similar to Global.EyeAngles.  
---- * **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
+--- 🦟 **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
 --- @return GVector @View direction of the currently rendered scene.
 function EyeVector()
 end
@@ -559,18 +571,21 @@ function FrameTime()
 end
 
 --- Gets the ConVar with the specified name.  
+--- ℹ **NOTE**: This function uses Global.GetConVar_Internal internally, but caches the result in Lua for quicker lookups.  
 --- @param name string @Name of the ConVar to get
 --- @return GConVar @The ConVar object, or nil if no such ConVar was found.
 function GetConVar(name)
 end
 
---- <deprecated>Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetInt or ConVar:GetFloat on it.</deprecated>Gets the numeric value ConVar with the specified name.  
+--- 🛑 **DEPRECATED**: Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetInt or ConVar:GetFloat on it.  
+--- Gets the numeric value ConVar with the specified name.  
 --- @param name string @Name of the ConVar to get.
 --- @return number @The ConVar's value.
 function GetConVarNumber(name)
 end
 
---- <deprecated>Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetString on it.</deprecated>Gets the string value ConVar with the specified name.  
+--- 🛑 **DEPRECATED**: Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetString on it.  
+--- Gets the string value ConVar with the specified name.  
 --- @param name string @Name of the ConVar to get.
 --- @return string @The ConVar's value.
 function GetConVarString(name)
@@ -605,7 +620,7 @@ function GetGlobalFloat(index, default)
 end
 
 --- Returns an integer that is shared between the server and all clients.  
---- * **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
+--- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
 --- @param index string @The unique index to identify the global value with.
 --- @param default number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
@@ -644,7 +659,7 @@ end
 
 --- Creates or gets the rendertarget with the given name.  
 --- See Global.GetRenderTargetEx for an advanced version of this function with more options.  
---- * **BUG**: [This crashes when used on a cubemap texture.](https://github.com/Facepunch/garrysmod-issues/issues/2885)  
+--- 🦟 **BUG**: [This crashes when used on a cubemap texture.](https://github.com/Facepunch/garrysmod-issues/issues/2885)  
 --- @param name string @The internal name of the render target.
 --- @param width number @The width of the render target, must be power of 2
 --- @param height number @The height of the render target, must be power of 2
@@ -673,7 +688,7 @@ function GetViewEntity()
 end
 
 --- Converts a color from [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
---- * **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param hue number @The hue in degrees from 0-360.
 --- @param saturation number @The saturation from 0-1.
 --- @param value number @The lightness from 0-1.
@@ -682,7 +697,7 @@ function HSLToColor(hue, saturation, value)
 end
 
 --- Converts a color from [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
---- * **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param hue number @The hue in degrees from 0-360.
 --- @param saturation number @The saturation from 0-1.
 --- @param value number @The value from 0-1.
@@ -691,13 +706,14 @@ function HSVToColor(hue, saturation, value)
 end
 
 --- Launches an asynchronous http request with the given parameters.  
---- * **BUG**: [This cannot send or receive multiple headers with the same name.](https://github.com/Facepunch/garrysmod-issues/issues/2232)  
+--- 🦟 **BUG**: [This cannot send or receive multiple headers with the same name.](https://github.com/Facepunch/garrysmod-issues/issues/2232)  
+--- ℹ **NOTE**: HTTP-requests on private networks don't work. To enable HTTP-requests on private networks use Command Line Parameters `-allowlocalhttp`  
 --- @param parameters table @The request parameters
 --- @return boolean @true if we made a request, nil if we failed.
 function HTTP(parameters)
 end
 
---- <deprecated>To send the target file to the client simply call AddCSLuaFile() in the target file itself.</deprecated>  
+--- 🛑 **DEPRECATED**: To send the target file to the client simply call AddCSLuaFile() in the target file itself.  
 --- This function works exactly the same as Global.include both clientside and serverside.  
 --- The only difference is that on the serverside it also calls Global.AddCSLuaFile on the filename, so that it gets sent to the client.  
 --- @param filename string @The filename of the Lua file you want to include.
@@ -705,7 +721,7 @@ function IncludeCS(filename)
 end
 
 --- Returns whether the given object does or doesn't have a `metatable` of a color.  
---- * **BUG**: [Engine functions (i.e. those not written in plain Lua) that return color objects do not currently set the color metatable and this function will return false if you use it on them.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [Engine functions (i.e. those not written in plain Lua) that return color objects do not currently set the color metatable and this function will return false if you use it on them.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param Object any @The object to be tested
 --- @return boolean @Whether the given object is a color or not
 function IsColor(Object)
@@ -749,6 +765,7 @@ end
 --- Returns if this is the first time this hook was predicted.  
 --- This is useful for one-time logic in your SWEPs PrimaryAttack, SecondaryAttack and Reload and other  (to prevent those hooks from being called rapidly in succession). It's also useful in a Move hook for when the client predicts movement.  
 --- Visit Prediction for more information about this behavior.  
+--- ℹ **NOTE**: This is already used internally for Entity:EmitSound, Weapon:SendWeaponAnim and Entity:FireBullets, but NOT in  util.Effect.  
 --- @return boolean @Whether or not this is the first time being predicted.
 function IsFirstTimePredicted()
 end
@@ -809,6 +826,7 @@ end
 
 --- Returns whether an object is valid or not. (Such as Entitys, Panels, custom table objects and more).  
 --- Checks that an object is not nil, has an IsValid method and if this method returns true.  
+--- ℹ **NOTE**: Due to vehicles being technically valid the moment they're spawned, also use Vehicle:IsValidVehicle to make sure they're fully initialized  
 --- @param toBeValidated any @The table or object to be validated.
 --- @return boolean @True if the object is valid.
 function IsValid(toBeValidated)
@@ -838,6 +856,7 @@ end
 
 --- Performs a linear interpolation from the start number to the end number.  
 --- This function provides a very efficient and easy way to smooth out movements.  
+--- ℹ **NOTE**: This function is not meant to be used with constant value in the first argument, if you're dealing with animation! Use a value that changes over time. See example for **proper** usage of Lerp for animations  
 --- @param t number @The fraction for finding the result
 --- @param from number @The starting number
 --- @param to number @The ending number
@@ -846,6 +865,7 @@ function Lerp(t, from, to)
 end
 
 --- Returns point between first and second angle using given fraction and linear interpolation  
+--- ℹ **NOTE**: This function is not meant to be used with constant value in the first argument, if you're dealing with animation! Use a value that changes over time  
 --- @param ratio number @Ratio of progress through values
 --- @param angleStart GAngle @Angle to begin from
 --- @param angleEnd GAngle @Angle to end at
@@ -854,6 +874,7 @@ function LerpAngle(ratio, angleStart, angleEnd)
 end
 
 --- Linear interpolation between two vectors. It is commonly used to smooth movement between two vectors  
+--- ℹ **NOTE**: This function is not meant to be used with constant value in the first argument, if you're dealing with animation! Use a value that changes over time  
 --- @param fraction number @Fraction ranging from 0 to 1
 --- @param from GVector @The initial Vector
 --- @param to GVector @The desired Vector
@@ -867,6 +888,7 @@ function LoadPresets()
 end
 
 --- Returns the player object of the current client.  
+--- ℹ **NOTE**: LocalPlayer() will return NULL until all entities have been initialized. See GM:InitPostEntity.  
 --- @return GPlayer @The player object representing the client.
 function LocalPlayer()
 end
@@ -889,6 +911,7 @@ function Localize(localisationToken, default)
 end
 
 --- Either returns the material with the given name, or loads the material interpreting the first argument as the path.  
+--- ℹ **NOTE**: When using .png or .jpg textures, try to make their sizes Power Of 2 (1, 2, 4, 8, 16, 32, 64, etc). While images are no longer scaled to Power of 2 sizes since February 2019, it is a good practice for things like icons, etc.  
 --- @param materialName string @The material name or path
 --- @param pngParameters string @A string containing space separated keywords which will be used to add material parameters
 --- @return GIMaterial, number
@@ -952,6 +975,7 @@ function NumModelSkins(modelName)
 end
 
 --- Modifies the given vectors so that all of vector2's axis are larger than vector1's by switching them around. Also known as ordering vectors.  
+--- ℹ **NOTE**: This function will irreversibly modify the given vectors  
 --- @param vector1 GVector @Bounding box min resultant
 --- @param vector2 GVector @Bounding box max resultant
 function OrderVectors(vector1, vector2)
@@ -964,6 +988,7 @@ function Particle(file)
 end
 
 --- Creates a particle effect.  
+--- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
 --- @param particleName string @The name of the particle effect.
 --- @param position GVector @The start position of the effect.
 --- @param angles GAngle @The orientation of the effect.
@@ -972,6 +997,7 @@ function ParticleEffect(particleName, position, angles, parent)
 end
 
 --- Creates a particle effect with specialized parameters.  
+--- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
 --- @param particleName string @The name of the particle effect.
 --- @param attachType number @Attachment type using Enums/PATTACH.
 --- @param entity GEntity @The entity to be used in the way specified by the attachType.
@@ -980,6 +1006,7 @@ function ParticleEffectAttach(particleName, attachType, entity, attachmentID)
 end
 
 --- Creates a new CLuaEmitter.  
+--- ℹ **NOTE**: Do not forget to delete the emitter with CLuaEmitter:Finish once you are done with it  
 --- @param position GVector @The start position of the emitter
 --- @param use3D boolean @Whenever to render the particles in 2D or 3D mode.
 --- @return GCLuaEmitter @The new particle emitter.
@@ -1068,8 +1095,9 @@ function RealFrameTime()
 end
 
 --- Returns the uptime of the game/server in seconds (to at least 4 decimal places)  
---- <note>This will be affected by precision loss if the uptime is more than 30+(?) days, and effectively cease to be functional after 50+(?) days.  
---- Changing the map will **not** fix it like it does with CurTime. A server restart is necessary.</note>  
+--- ℹ **NOTE**: This is **not** synchronised or affected by the game.  
+--- ℹ **NOTE**: This will be affected by precision loss if the uptime is more than 30+(?) days, and effectively cease to be functional after 50+(?) days.  
+--- Changing the map will **not** fix it like it does with CurTime. A server restart is necessary.  
 --- You should use this function (or SysTime) for timing real-world events such as user interaction, but not for timing game events such as animations.  
 --- See also: Global.CurTime, Global.SysTime  
 --- @return number @Uptime of the game/server.
@@ -1131,12 +1159,14 @@ function RestoreCursorPosition()
 end
 
 --- Executes the given console command with the parameters.  
+--- ℹ **NOTE**: Some commands/convars are blocked from being ran/changed using this function, usually to prevent harm/annoyance to clients. For a list of blocked commands, see Blocked ConCommands.  
 --- @param command string @The command to be executed.
 --- @vararg any @The arguments
 function RunConsoleCommand(command, ...)
 end
 
 --- Evaluates and executes the given code, will throw an error on failure.  
+--- ℹ **NOTE**: Local variables are not passed to the given code.  
 --- @param code string @The code to execute.
 --- @param identifier string @The name that should appear in any error messages caused by this code.
 --- @param handleError boolean @If false, this function will return a string containing any error messages instead of throwing an error.
@@ -1145,7 +1175,7 @@ function RunString(code, identifier, handleError)
 end
 
 --- Alias of Global.RunString.  
---- <deprecated>Use Global.RunString instead.</deprecated>  
+--- 🛑 **DEPRECATED**: Use Global.RunString instead.  
 function RunStringEx()
 end
 
@@ -1156,7 +1186,7 @@ end
 function SQLStr(input, noQuotes)
 end
 
---- <deprecated>You should be using Global.ScreenScale instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should be using Global.ScreenScale instead.  
 --- Returns a number based on the Size argument and your screen's width. Alias of Global.ScreenScale.  
 --- @param Size number @The number you want to scale.
 function SScale(Size)
@@ -1199,8 +1229,9 @@ end
 function ScreenScale(Size)
 end
 
---- <deprecated>This uses the umsg internally, which has been deprecated. Use the net instead.</deprecated>  
+--- 🛑 **DEPRECATED**: This uses the umsg internally, which has been deprecated. Use the net instead.  
 --- Send a usermessage  
+--- ℹ **NOTE**: Useless on client, only server can send info to client.  
 --- @param name string @The name of the usermessage
 --- @param recipients any @Can be a CRecipientFilter, table or Player object.
 --- @vararg any @Data to send in the usermessage
@@ -1224,43 +1255,50 @@ function SetClipboardText(text)
 end
 
 --- Defines an angle to be automatically networked to clients  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global angle with
 --- @param angle GAngle @Angle to be networked
 function SetGlobalAngle(index, angle)
 end
 
 --- Defined a boolean to be automatically networked to clients  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global boolean with
 --- @param bool boolean @Boolean to be networked
 function SetGlobalBool(index, bool)
 end
 
 --- Defines an entity to be automatically networked to clients  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global entity with
 --- @param ent GEntity @Entity to be networked
 function SetGlobalEntity(index, ent)
 end
 
 --- Defines a floating point number to be automatically networked to clients  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global float with
 --- @param float number @Float to be networked
 function SetGlobalFloat(index, float)
 end
 
 --- Sets an integer that is shared between the server and all clients.  
---- * **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
+--- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
 --- @param index string @The unique index to identify the global value with.
 --- @param value number @The value to set the global value to
 function SetGlobalInt(index, value)
 end
 
 --- Defines a string with a maximum of 199 characters to be automatically networked to clients  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global string with
 --- @param string string @String to be networked
 function SetGlobalString(index, string)
 end
 
 --- Defines a vector to be automatically networked to clients  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global vector with
 --- @param vec GVector @Vector to be networked
 function SetGlobalVector(index, vec)
@@ -1300,14 +1338,14 @@ function SortedPairsByValue(table, descending)
 end
 
 --- Runs util.PrecacheSound and returns the string.  
---- <bug>util.PrecacheSound does nothing and therefore so does this function</bug>  
+--- 🦟 **BUG**: util.PrecacheSound does nothing and therefore so does this function  
 --- @param soundPath string @The soundpath to precache
 --- @return string @The string passed as the first argument
 function Sound(soundPath)
 end
 
 --- Returns the duration of the sound specified in seconds.  
---- * **BUG**: [This only works properly for .wav files.](https://github.com/Facepunch/garrysmod-issues/issues/936)  
+--- 🦟 **BUG**: [This only works properly for .wav files.](https://github.com/Facepunch/garrysmod-issues/issues/936)  
 --- @param soundName string @The sound file path.
 --- @return number @Sound duration in seconds.
 function SoundDuration(soundName)
@@ -1342,7 +1380,7 @@ function TimedCos(frequency, min, max, offset)
 end
 
 --- Returns a sine value that fluctuates based on Global.CurTime. The value returned will be between the start value plus/minus the range value.  
---- <bug>The range arguments don't work as intended. The existing (bugged) behavior is documented below.</bug>  
+--- 🦟 **BUG**: The range arguments don't work as intended. The existing (bugged) behavior is documented below.  
 --- @param frequency number @The frequency of fluctuation, in
 --- @param origin number @The center value of the sine wave.
 --- @param max number @This argument's distance from origin defines the size of the full range of the sine wave
@@ -1352,14 +1390,14 @@ function TimedSin(frequency, origin, max, offset)
 end
 
 --- Gets the associated type ID of the variable. Unlike Global.type, this does not work with no value - an argument must be provided.  
---- <bug request="1120">This returns garbage for _LOADLIB objects.</bug>  
---- <bug request="1459">This returns TYPE_NIL for protos.</bug>  
+--- 🦟 **BUG**: [This returns garbage for _LOADLIB objects.](https://github.com/Facepunch/garrysmod-requests/issues/1120)  
+--- 🦟 **BUG**: [This returns TYPE_NIL for protos.](https://github.com/Facepunch/garrysmod-requests/issues/1459)  
 --- @param variable any @The variable to get the type ID of.
 --- @return number @The type ID of the variable
 function TypeID(variable)
 end
 
---- <deprecated>You should use Global.IsUselessModel instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Global.IsUselessModel instead.  
 --- Returns whether or not a model is useless by checking that the file path is that of a proper model.  
 --- If the string ".mdl" is not found in the model name, the function will return true.  
 --- The function will also return true if any of the following strings are found in the given model name:  
@@ -1400,7 +1438,7 @@ end
 function VGUIRect(x, y, w, h)
 end
 
---- <deprecated>You should use Global.IsValid instead</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Global.IsValid instead  
 --- Returns if a panel is safe to use.  
 --- @param panel GPanel @The panel to validate.
 function ValidPanel(panel)
@@ -1451,7 +1489,8 @@ end
 function error(message, errorLevel)
 end
 
---- <deprecated>This function was deprecated in Lua 5.1 and is removed in Lua 5.2. Use Global.collectgarbage( "count" ) instead.</deprecated> Returns the current floored dynamic memory usage of Lua in kilobytes.  
+--- 🛑 **DEPRECATED**: This function was deprecated in Lua 5.1 and is removed in Lua 5.2. Use Global.collectgarbage( "count" ) instead.  
+---  Returns the current floored dynamic memory usage of Lua in kilobytes.  
 --- @return number @The current floored dynamic memory usage of Lua, in kilobytes.
 function gcinfo()
 end
@@ -1470,7 +1509,11 @@ function getmetatable(object)
 end
 
 --- Executes a Lua script.  
---- * **BUG**: [Global.pcalling this function will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
+--- ℹ **NOTE**: Addon files (.gma files) do not support relative parent folders (`..` notation).  
+--- ⚠ **WARNING**: The file you are attempting to include MUST NOT be empty or the include will fail. Files over a certain size may fail as well.  
+--- ⚠ **WARNING**: If the file you are including is clientside or shared, it **must** be Global.AddCSLuaFile'd or this function will error saying the file doesn't exist.  
+--- ℹ **NOTE**: This function will try to load local client file if `sv_allowcslua` is **1**  
+--- 🦟 **BUG**: [Global.pcalling this function will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
 --- @param fileName string @The name of the script to be executed
 --- @return vararg @Anything that the executed Lua script returns.
 function include(fileName)
@@ -1553,6 +1596,7 @@ function newproxy(addMetatable)
 end
 
 --- Returns the next key and value pair in a table.  
+--- ℹ **NOTE**: Table keys in Lua have no specific order, and will be returned in whatever order they exist in memory. This may not always be in ascending order or alphabetical order. If you need to iterate over an array in order, use Global.ipairs.  
 --- @param tab table @The table
 --- @param prevKey any @The previous key in the table.
 --- @return any, any
@@ -1568,10 +1612,10 @@ function pairs(tab)
 end
 
 --- Calls a function and catches an error that can be thrown while the execution of the call.  
---- * **BUG**: [Using this function with Global.include will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
---- * **BUG**: [This cannot stop errors from hooks called from the engine.](https://github.com/Facepunch/garrysmod-issues/issues/2036)  
---- * **BUG**: [This does not stop Global.Error and Global.ErrorNoHalt from sending error messages to the server (if called clientside) or calling the GM:OnLuaError hook. The success boolean returned will always return true and thus you will not get the error message returned. Global.error does not exhibit these behaviours.](https://github.com/Facepunch/garrysmod-issues/issues/2498)  
---- * **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
+--- 🦟 **BUG**: [Using this function with Global.include will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
+--- 🦟 **BUG**: [This cannot stop errors from hooks called from the engine.](https://github.com/Facepunch/garrysmod-issues/issues/2036)  
+--- 🦟 **BUG**: [This does not stop Global.Error and Global.ErrorNoHalt from sending error messages to the server (if called clientside) or calling the GM:OnLuaError hook. The success boolean returned will always return true and thus you will not get the error message returned. Global.error does not exhibit these behaviours.](https://github.com/Facepunch/garrysmod-issues/issues/2498)  
+--- 🦟 **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
 --- @param func function @Function to be executed and of which the errors should be caught of
 --- @vararg any @Arguments to call the function with.
 --- @return boolean, vararg
@@ -1608,7 +1652,8 @@ function rawset(table, index, value)
 end
 
 --- First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.  
---- * **BUG**: [Running this function with Global.pcall or Global.xpcall will still print an error that counts towards sv_kickerrornum.](https://github.com/Facepunch/garrysmod-issues/issues/1041" request="813)  
+--- 🦟 **BUG**: [Running this function with Global.pcall or Global.xpcall will still print an error that counts towards sv_kickerrornum.](https://github.com/Facepunch/garrysmod-issues/issues/1041" request="813)  
+--- ℹ **NOTE**: This function will try to load local client file if `sv_allowcslua` is **1**  
 --- @param name string @The name of the module to be loaded.
 function require(name)
 end
@@ -1670,10 +1715,10 @@ end
 
 --- Attempts to call the first function. If the execution succeeds, this returns `true` followed by the returns of the function. If execution fails, this returns `false` and the second function is called with the error message.  
 --- Unlike in Global.pcall, the stack is not unwound and can therefore be used for stack analyses with the debug.  
---- * **BUG**: [Using this function with Global.include will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
---- * **BUG**: [This cannot stop errors from hooks called from the engine.](https://github.com/Facepunch/garrysmod-issues/issues/2036)  
---- * **BUG**: [This does not stop Global.Error and Global.ErrorNoHalt from sending error messages to the server (if called clientside) or calling the GM:OnLuaError hook. The success boolean returned will always return true and thus you will not get the error message returned. Global.error does not exhibit these behaviours.](https://github.com/Facepunch/garrysmod-issues/issues/2498)  
---- * **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
+--- 🦟 **BUG**: [Using this function with Global.include will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
+--- 🦟 **BUG**: [This cannot stop errors from hooks called from the engine.](https://github.com/Facepunch/garrysmod-issues/issues/2036)  
+--- 🦟 **BUG**: [This does not stop Global.Error and Global.ErrorNoHalt from sending error messages to the server (if called clientside) or calling the GM:OnLuaError hook. The success boolean returned will always return true and thus you will not get the error message returned. Global.error does not exhibit these behaviours.](https://github.com/Facepunch/garrysmod-issues/issues/2498)  
+--- 🦟 **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
 --- @param func function @The function to call initially.
 --- @param errorCallback function @The function to be called if execution of the first fails; the error message is passed as a string
 --- @vararg any @Arguments to pass to the initial function.

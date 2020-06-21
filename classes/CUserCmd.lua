@@ -3,6 +3,7 @@
 --- Can be modified during GM:CreateMove, GM:StartCommand and used in read only with GM:SetupMove and Player:GetCurrentCommand.  
 local GCUserCmd = {}
 --- Removes all keys from the command.  
+--- ℹ **NOTE**: If you are looking to affect player movement, you may need to use CUserCmd:ClearMovement instead of clearing the buttons.  
 function GCUserCmd:ClearButtons()
 end
 
@@ -12,6 +13,7 @@ function GCUserCmd:ClearMovement()
 end
 
 --- Returns an increasing number representing the index of the user cmd.  
+--- ⚠ **WARNING**: The value returned is occasionally 0 inside GM:CreateMove and GM:StartCommand. It is advised to check for a non-zero value if you wish to get the correct number.  
 --- @return number @The command number
 function GCUserCmd:CommandNumber()
 end
@@ -80,11 +82,13 @@ end
 
 --- Forces the associated player to select a weapon. This is used internally in the default HL2 weapon selection HUD.  
 --- This may not work immediately if the current command is in prediction. Use input.SelectWeapon to switch the weapon from the client when the next available command can do so.  
+--- ℹ **NOTE**: This is the ideal function to use to create a custom weapon selection HUD, as it allows prediction to run properly for WEAPON:Deploy and GM:PlayerSwitchWeapon  
 --- @param weapon GWeapon @The weapon entity to select.
 function GCUserCmd:SelectWeapon(weapon)
 end
 
 --- Sets the buttons as a bitflag. See also CUserCmd:GetButtons.  
+--- ℹ **NOTE**: If you are looking to affect player movement, you may need to use CUserCmd:SetForwardMove instead of setting the keys.  
 --- @param buttons number @Bitflag representing which buttons are "down", see Enums/IN.
 function GCUserCmd:SetButtons(buttons)
 end
@@ -131,11 +135,14 @@ function GCUserCmd:SetUpMove(speed)
 end
 
 --- Sets the direction the client wants to move in.  
+--- ℹ **NOTE**: The pitch (vertical) angle should be clamped to +/- 89° to prevent the player's view from glitching.  
 --- @param viewAngle GAngle @New view angles.
 function GCUserCmd:SetViewAngles(viewAngle)
 end
 
 --- Returns tick count since joining the server.  
+--- ℹ **NOTE**: This will always return 0 for bots.  
+--- ℹ **NOTE**: Returns 0 clientside during prediction calls. If you are trying to use CUserCmd:Set*() on the client in a movement or command hook, keep doing so till TickCount returns a non-zero number to maintain prediction.  
 --- @return number @The amount of ticks passed since joining the server.
 function GCUserCmd:TickCount()
 end

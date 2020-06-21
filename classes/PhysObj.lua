@@ -25,6 +25,7 @@ function GPhysObj:AlignAngles(from, to)
 end
 
 --- Applies the specified force to the physics object. (in Newtons)  
+--- ℹ **NOTE**: This will not work on players, use Entity:SetVelocity instead.  
 --- @param force GVector @The force to be applied.
 function GPhysObj:ApplyForceCenter(force)
 end
@@ -65,8 +66,8 @@ function GPhysObj:ComputeShadowControl(shadowparams)
 end
 
 --- Sets whether the physics object should collide with anything or not, including world.  
---- <warning>This function currently has major problems with player collisions, and as such should be avoided at all costs.  
---- A better alternative to this function would be using Entity:SetCollisionGroup( COLLISION_GROUP_WORLD ).</warning>  
+--- ⚠ **WARNING**: This function currently has major problems with player collisions, and as such should be avoided at all costs.  
+--- A better alternative to this function would be using Entity:SetCollisionGroup( COLLISION_GROUP_WORLD ).  
 --- @param enable boolean @True to enable, false to disable.
 function GPhysObj:EnableCollisions(enable)
 end
@@ -277,12 +278,14 @@ function GPhysObj:IsValid()
 end
 
 --- Mapping a vector in local frame of the physics object to world frame.  
+--- ℹ **NOTE**: this function does translation and rotation, with translation done first.  
 --- @param LocalVec GVector @A vector in the physics object's local frame
 --- @return GVector @The corresponding vector in world frame
 function GPhysObj:LocalToWorld(LocalVec)
 end
 
 --- Rotate a vector from the local frame of the physics object to world frame.  
+--- ℹ **NOTE**: This function only rotates the vector, without any translation operation.  
 --- @param LocalVec GVector @A vector in the physics object's local frame
 --- @return GVector @The corresponding vector in world frame
 function GPhysObj:LocalToWorldVector(LocalVec)
@@ -345,6 +348,7 @@ function GPhysObj:SetMass(mass)
 end
 
 --- Sets the material of the physobject.  
+--- ℹ **NOTE**: Impact sounds will only change if this is called on client  
 --- @param materialName string @The name of the phys material to use
 function GPhysObj:SetMaterial(materialName)
 end
@@ -372,6 +376,7 @@ end
 
 --- Unlike PhysObj:SetPos and PhysObj:SetAngles, this allows the movement of a physobj while leaving physics interactions intact.  
 --- This is used internally by the motion controller of the Gravity Gun , the +use pickup and the Physics Gun, and entities such as the crane.  
+--- ℹ **NOTE**: This is the ideal function to move a physics shadow created with Entity:PhysicsInitShadow or Entity:MakePhysicsObjectAShadow.  
 --- @param targetPosition GVector @The position we should move to.
 --- @param targetAngles GAngle @The angle we should rotate towards.
 --- @param frameTime number @The frame time to use for this movement, can be generally filled with Global.FrameTime or ENTITY:PhysicsSimulate with the deltaTime
@@ -390,6 +395,7 @@ function GPhysObj:WorldToLocal(vec)
 end
 
 --- Rotate a vector from the world frame to the local frame of the physics object.  
+--- ℹ **NOTE**: This function only rotates the vector, without any translation operation.  
 --- @param WorldVec GVector @A vector in the world frame
 --- @return GVector @The corresponding vector relative to the PhysObj
 function GPhysObj:WorldToLocalVector(WorldVec)

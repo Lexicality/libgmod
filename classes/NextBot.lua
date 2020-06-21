@@ -10,7 +10,7 @@ function GNextBot:BecomeRagdoll(info)
 end
 
 --- Should only be called in BodyUpdate. This sets the move_x and move_y pose parameters of the bot to fit how they're currently moving, sets the animation speed to suit the ground speed, and calls FrameAdvance.  
---- * **BUG**: [This function might cause crashes with some activities.](https://github.com/Facepunch/garrysmod-issues/issues/3420)  
+--- 🦟 **BUG**: [This function might cause crashes with some activities.](https://github.com/Facepunch/garrysmod-issues/issues/3420)  
 function GNextBot:BodyMoveXY()
 end
 

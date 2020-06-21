@@ -87,6 +87,7 @@ function GCEffectData:SetAngles(ang)
 end
 
 --- Sets the attachment id of the effect to be created with this effect data.  
+--- ℹ **NOTE**: This is internally stored as an integer, but only the first 5 bits will be networked.  
 --- @param attachment number @New attachment ID of the effect.
 function GCEffectData:SetAttachment(attachment)
 end
@@ -112,11 +113,13 @@ function GCEffectData:SetEntity(entity)
 end
 
 --- Sets the flags of the effect.  
+--- ℹ **NOTE**: This is internally stored as an integer, but only the first 8 bits will be networked.  
 --- @param flags number @The flags of the effect
 function GCEffectData:SetFlags(flags)
 end
 
 --- Sets the hit box index of the effect.  
+--- ℹ **NOTE**: This is internally stored as an integer, but only the first 11 bits will be networked.  
 --- @param hitBoxIndex number @The hit box index of the effect.
 function GCEffectData:SetHitBox(hitBoxIndex)
 end
@@ -127,6 +130,7 @@ function GCEffectData:SetMagnitude(magnitude)
 end
 
 --- Sets the material index of the effect.  
+--- ℹ **NOTE**: This is internally stored as an integer, but only the first 11 bits will be networked.  
 --- @param materialIndex number @The material index of the effect.
 function GCEffectData:SetMaterialIndex(materialIndex)
 end
@@ -142,6 +146,7 @@ function GCEffectData:SetOrigin(origin)
 end
 
 --- Sets the radius of the effect to be created with this effect data.  
+--- ℹ **NOTE**: This is clamped internally from 0 to 1023.  
 --- @param radius number @Radius of the effect.
 function GCEffectData:SetRadius(radius)
 end

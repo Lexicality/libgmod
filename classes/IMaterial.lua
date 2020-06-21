@@ -4,7 +4,7 @@
 local GIMaterial = {}
 --- Returns the color of the specified pixel of the $basetexture, only works for materials created from PNG files.  
 --- Basically identical to ITexture:GetColor used on IMaterial:GetTexture( "$basetexture" ).  
---- * **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param x number @The X coordinate.
 --- @param y number @The Y coordinate.
 --- @return table @The color of the pixel as a Color.
@@ -18,6 +18,7 @@ function GIMaterial:GetFloat(materialFloat)
 end
 
 --- Returns the specified material value as a int, rounds the value if its a float, or nil if the value is not set.  
+--- ℹ **NOTE**: Please note that certain material flags such as `$model` are stored in the `$flags` variable and cannot be directly retrieved with this function. See the full list here: Material Flags  
 --- @param materialInt string @The name of the material integer.
 --- @return number @The retrieved value as an integer
 function GIMaterial:GetInt(materialInt)
@@ -40,7 +41,7 @@ function GIMaterial:GetName()
 end
 
 --- Returns the name of the materials shader.  
---- * **BUG**: [This function does not work serverside on Linux SRCDS.](https://github.com/Facepunch/garrysmod-issues/issues/3256)  
+--- 🦟 **BUG**: [This function does not work serverside on Linux SRCDS.](https://github.com/Facepunch/garrysmod-issues/issues/3256)  
 --- @return string @shaderName
 function GIMaterial:GetShader()
 end
@@ -94,6 +95,7 @@ function GIMaterial:SetFloat(materialFloat, float)
 end
 
 --- Sets the specified material value to the specified int, does nothing on a type mismatch.  
+--- ℹ **NOTE**: Please note that certain material flags such as `$model` are stored in the `$flags` variable and cannot be directly set with this function. See the full list here: Material Flags  
 --- @param materialInt string @The name of the material int.
 --- @param int number @The new int value.
 function GIMaterial:SetInt(materialInt, int)
@@ -105,7 +107,8 @@ end
 function GIMaterial:SetMatrix(materialMatrix, matrix)
 end
 
---- <deprecated>This function does nothing</deprecated>The functionality of this function was removed due to the amount of crashes it caused.  
+--- 🛑 **DEPRECATED**: This function does nothing  
+--- The functionality of this function was removed due to the amount of crashes it caused.  
 --- @param shaderName string @Name of the shader
 function GIMaterial:SetShader(shaderName)
 end

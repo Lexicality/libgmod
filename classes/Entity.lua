@@ -2,12 +2,14 @@
 --- This is a list of all available methods for entites, which includes Players, Weapons, NPCs and Vehicles.  
 local GEntity = {}
 --- Activates the entity. This needs to be used on some entities (like constraints) after being spawned.  
---- * **BUG**: [This crashes the game with scaled vehicles.](https://github.com/Facepunch/garrysmod-issues/issues/3372)  
+--- ℹ **NOTE**: For some entity types when this function is used after Entity:SetModelScale, the physics object will be recreated with the new scale. [Source-sdk-2013](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp/src/game/server/baseanimating.cpp#L321-L327)  
+--- 🦟 **BUG**: [This crashes the game with scaled vehicles.](https://github.com/Facepunch/garrysmod-issues/issues/3372)  
 function GEntity:Activate()
 end
 
 --- Add a callback function to a specific event. This is used instead of hooks to avoid calling empty functions unnecessarily.  
 --- This also allows you to use certain hooks in engine entities (non-scripted entities).  
+--- ⚠ **WARNING**: This method does not check if the function has already been added to this object before, so if you add the same callback twice, it will be run twice! Make sure to add your callback only once.  
 --- @param hook string @The hook name to hook onto
 --- @param func function @The function to call
 --- @return number @The callback ID that was just added, which can later be used in Entity:RemoveCallback
@@ -32,6 +34,7 @@ end
 
 --- Adds a gesture animation to the entity and plays it.  
 --- See Entity:AddGestureSequence and Entity:AddLayeredSequence for functions that takes sequences instead of Enums/ACT.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param activity number @The activity to play as the gesture
 --- @param autokill boolean 
 --- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions.
@@ -41,6 +44,7 @@ end
 --- Adds a gesture animation to the entity and plays it.  
 --- See Entity:AddGesture for a function that takes Enums/ACT.  
 --- See also Entity:AddLayeredSequence.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param sequence number @The sequence ID to play as the gesture
 --- @param autokill boolean 
 --- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions.
@@ -50,6 +54,7 @@ end
 --- Adds a gesture animation to the entity and plays it.  
 --- See Entity:AddGestureSequence for a function that doesn't take priority.  
 --- See Entity:AddGesture for a function that takes Enums/ACT.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param sequence number @The sequence ID to play as the gesture
 --- @param priority number 
 --- @return number @Layer ID of created layer
@@ -64,11 +69,13 @@ end
 --- Adds a PhysObject to the entity's motion controller so that ENTITY:PhysicsSimulate will be called for given PhysObject as well.  
 --- You must first create a motion controller with Entity:StartMotionController.  
 --- You can remove added PhysObjects by using Entity:RemoveFromMotionController.  
+--- ℹ **NOTE**: Only works on a scripted Entity of anim type  
 --- @param physObj GPhysObj @The PhysObj to add to the motion controller.
 function GEntity:AddToMotionController(physObj)
 end
 
 --- Returns an angle based on the ones inputted that you can use to align an object.  
+--- ℹ **NOTE**: This function doesn't change the angle of the entity on its own (see example).  
 --- @param from GAngle @The angle you want to align from
 --- @param to GAngle @The angle you want to align to
 --- @return GAngle @The resulting aligned angle
@@ -89,6 +96,7 @@ function GEntity:BeingLookedAtByLocalPlayer()
 end
 
 --- Returns a centered vector of this entity, NPCs use this internally to aim at their targets.  
+--- ℹ **NOTE**: This only works on players and NPCs.  
 --- @param origin GVector @The vector of where the the attack comes from.
 --- @param noisy boolean @Decides if it should return the centered vector with a random offset to it.
 --- @return GVector @The centered vector.
@@ -114,7 +122,7 @@ function GEntity:BoundingRadius()
 end
 
 --- Causes a specified function to be run if the entity is removed by any means. This can later be undone by Entity:RemoveCallOnRemove if you need it to not run.  
---- <bug pull="1275">Using players with this function will provide a gimped entity to the callback.</bug>  
+--- 🦟 **BUG**: [Using players with this function will provide a gimped entity to the callback.](https://github.com/Facepunch/garrysmod/pull/1275)  
 --- @param identifier string @Identifier of the function within CallOnRemove
 --- @param removeFunc function @Function to be called on remove
 --- @vararg any @Optional arguments to pass to removeFunc
@@ -126,10 +134,13 @@ function GEntity:ClearPoseParameters()
 end
 
 --- Declares that the collision rules of the entity have changed, and subsequent calls for GM:ShouldCollide with this entity may return a different value than they did previously.  
+--- ⚠ **WARNING**: This function must **not** be called inside of GM:ShouldCollide. Instead, it must be called in advance when the condition is known to change.  
+--- ⚠ **WARNING**: Failure to use this function correctly will result in a crash of the physics engine.  
 function GEntity:CollisionRulesChanged()
 end
 
 --- Creates a clientside particle system attached to the entity. See also Global.CreateParticleSystem  
+--- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
 --- @param particle string @The particle name to create
 --- @param attachment number @Attachment ID to attach the particle to
 --- @param options table @A table of tables ( IDs 1 to 64 ) having the following structure:
@@ -163,6 +174,7 @@ function GEntity:DisableMatrix(matrixType)
 end
 
 --- Performs a trace attack.  
+--- ⚠ **WARNING**: Calling this function on the victim entity in ENTITY:OnTakeDamage can cause infinite loops.  
 --- @param damageInfo GCTakeDamageInfo @The damage to apply.
 --- @param traceRes table @Trace result to use to deal damage
 --- @param dir GVector @Direction of the attack.
@@ -177,9 +189,10 @@ end
 --- Draws the entity or model.  
 --- If called inside ENTITY:Draw or ENTITY:DrawTranslucent, it only draws the entity's model itself.  
 --- If called outside of those hooks, it will call both of said hooks depending on Entity:GetRenderGroup, drawing the entire entity again.  
---- <rendercontext hook="false" type="3D"></rendercontext>  
---- * **BUG**: [Calling this on entities with EF_BONEMERGE and EF_NODRAW applied causes a crash.](https://github.com/Facepunch/garrysmod-issues/issues/1558)  
---- * **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
+--- ℹ **NOTE**: When drawing an entity more than once per frame in different positions, you should call Entity:SetupBones before each draw; Otherwise, the entity will retain its first drawn position.  
+--- 🧱 **NOTE**: Requires a 3D rendering context  
+--- 🦟 **BUG**: [Calling this on entities with EF_BONEMERGE and EF_NODRAW applied causes a crash.](https://github.com/Facepunch/garrysmod-issues/issues/1558)  
+--- 🦟 **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
 function GEntity:DrawModel()
 end
 
@@ -189,13 +202,16 @@ function GEntity:DrawShadow(shouldDraw)
 end
 
 --- Move an entity down until it collides with something.  
+--- ⚠ **WARNING**: The entity needs to already have something below it within 256 units.  
 function GEntity:DropToFloor()
 end
 
 --- Plays a sound on an entity. If run clientside, the sound will only be heard locally.  
 --- If used on a player or NPC character with the mouth rigged, the character will "lip-sync". This does not work with all sound files.  
 --- It is recommended to use sound scripts ( see sound.Add ) over direct file paths. This will allow you to use Entity:StopSound to stop the played sound scripts.  
---- * **BUG**: [This does not respond to Global.SuppressHostEvents.](https://github.com/Facepunch/garrysmod-issues/issues/2651)  
+--- ℹ **NOTE**: When using this function with weapons, use the Weapon itself as the entity, not its owner!  
+--- ⚠ **WARNING**: Do not use this for looping sounds with a filepath: see Entity:StopSound for more details.  
+--- 🦟 **BUG**: [This does not respond to Global.SuppressHostEvents.](https://github.com/Facepunch/garrysmod-issues/issues/2651)  
 --- @param soundName string @The name of the sound to be played
 --- @param soundLevel number @A modifier for the distance this sound will reach, acceptable range is 0 to 511
 --- @param pitchPercent number @The pitch applied to the sound
@@ -219,14 +235,16 @@ end
 --- Can be used to apply a custom VMatrix to the entity, mostly used for scaling the model by a Vector.  
 --- To disable it, use Entity:DisableMatrix.  
 --- If your old scales are wrong due to a recent update, use Entity:SetLegacyTransform as a quick fix.  
---- * **BUG**: [This does not scale procedural bones.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
---- * **BUG**: [This disables inverse kinematics of an entity.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
+--- ℹ **NOTE**: The matrix can also be modified to apply a custom rotation and offset via the VMatrix:SetAngles and VMatrix:SetTranslation functions.  
+--- 🦟 **BUG**: [This does not scale procedural bones.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
+--- 🦟 **BUG**: [This disables inverse kinematics of an entity.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
 --- @param matrixType string @The name of the matrix type
 --- @param matrix GVMatrix @The matrix to apply before drawing the entity.
 function GEntity:EnableMatrix(matrixType, matrix)
 end
 
 --- Gets the unique entity index of an entity.  
+--- ℹ **NOTE**: Entity indices are marked as unused after deletion, and can be reused by newly-created entities  
 --- @return number @The index of the entity
 function GEntity:EntIndex()
 end
@@ -238,8 +256,8 @@ function GEntity:Extinguish()
 end
 
 --- Returns the direction a player/npc/ragdoll is looking as a world-oriented angle.  
---- * **BUG**: [This can return an incorrect value in pods.](https://github.com/Facepunch/garrysmod-issues/issues/1150)  
---- * **BUG**: [This can return an incorrect value in jeeps when used with Player:EnterVehicle.](https://github.com/Facepunch/garrysmod-issues/issues/2620)  
+--- 🦟 **BUG**: [This can return an incorrect value in pods.](https://github.com/Facepunch/garrysmod-issues/issues/1150)  
+--- 🦟 **BUG**: [This can return an incorrect value in jeeps when used with Player:EnterVehicle.](https://github.com/Facepunch/garrysmod-issues/issues/2620)  
 --- @return GAngle @eyeAng
 function GEntity:EyeAngles()
 end
@@ -273,6 +291,7 @@ end
 
 --- Fires a bullet.  
 --- When used in a  hook such as WEAPON:Think or WEAPON:PrimaryAttack, it will use Player:LagCompensation internally.  
+--- ℹ **NOTE**: Lag compensation will not work if this function is called in a timer, regardless if the timer was made in a  hook.  
 --- @param bulletInfo table @The bullet data to be used
 --- @param suppressHostEvents boolean @Has the effect of encasing the FireBullets call in Global.SuppressHostEvents, only works in multiplayer.
 function GEntity:FireBullets(bulletInfo, suppressHostEvents)
@@ -280,6 +299,8 @@ end
 
 --- Makes an entity follow another entity's bone.  
 --- Internally this function calls Entity:SetParent( parent, boneid ) and Entity:AddEffects( EF_FOLLOWBONE ).  
+--- ℹ **NOTE**: If the entity vibrates, you probably need to run Entity:SetPredictable( false ) clientside.  
+--- ⚠ **WARNING**: This function will not work if the target bone's parent bone is invalid or if the bone is not used by VERTEX LOD0  
 --- @param parent GEntity @The entity to follow the bone of
 --- @param boneid number @The bone to follow
 function GEntity:FollowBone(parent, boneid)
@@ -296,19 +317,21 @@ function GEntity:FrameAdvance(interval)
 end
 
 --- Returns the entity's velocity.  
+--- ℹ **NOTE**: Actually binds to CBaseEntity::GetLocalVelocity() which retrieves the velocity of the entity due to its movement in the world from forces such as gravity. Does not include velocity from entity-on-entity collision.  
 --- @return GVector @The velocity of the entity.
 function GEntity:GetAbsVelocity()
 end
 
 --- Gets the angles of given entity.  
---- * **BUG**: [This returns incorrect results for the local player clientside.](https://github.com/Facepunch/garrysmod-issues/issues/2764)  
---- * **BUG**: [This will return the local player's Global.EyeAngles in rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
---- * **BUG**: [This will return Global.Angle(0,0,0) in rendering hooks while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
+--- 🦟 **BUG**: [This returns incorrect results for the local player clientside.](https://github.com/Facepunch/garrysmod-issues/issues/2764)  
+--- 🦟 **BUG**: [This will return the local player's Global.EyeAngles in rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
+--- 🦟 **BUG**: [This will return Global.Angle(0,0,0) in rendering hooks while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
 --- @return GAngle @The angles of the entity.
 function GEntity:GetAngles()
 end
 
 --- Returns a table containing the number of frames, flags, name, and FPS of an entity's animation ID.  
+--- ℹ **NOTE**: Animation ID is not the same as sequence ID.  
 --- @param animIndex number @The animation ID to look up
 --- @return table @Information about the animation, or nil if the index is out of bounds
 function GEntity:GetAnimInfo(animIndex)
@@ -320,7 +343,8 @@ function GEntity:GetAnimTime()
 end
 
 --- Gets the orientation and position of the attachment by its ID, returns nothing if the attachment does not exist.  
---- * **BUG**: [This will return improper values for viewmodels if used in GM:CalcView.](https://github.com/Facepunch/garrysmod-issues/issues/1255)  
+--- ℹ **NOTE**: The update rate of this function is limited by the setting of ENT.AutomaticFrameAdvance for Scripted Entities!  
+--- 🦟 **BUG**: [This will return improper values for viewmodels if used in GM:CalcView.](https://github.com/Facepunch/garrysmod-issues/issues/1255)  
 --- @param attachmentId number @The internal ID of the attachment.
 --- @return table @The angle and position of the attachment
 function GEntity:GetAttachment(attachmentId)
@@ -328,7 +352,7 @@ end
 
 --- Returns a table containing all attachments of the given entitys model.  
 --- Returns an empty table or **nil** in case it's model has no attachments.  
---- * **BUG**: [This can have inconsistent results in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3167)  
+--- 🦟 **BUG**: [This can have inconsistent results in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3167)  
 --- @return table @Attachment data
 function GEntity:GetAttachments()
 end
@@ -374,20 +398,22 @@ function GEntity:GetBoneContents(bone)
 end
 
 --- Returns the value of the bone controller with the specified ID.  
+--- ℹ **NOTE**: This is the precursor of pose parameters, and only works for Half Life 1: Source models supporting it.  
 --- @param boneID number @ID of the bone controller
 --- @return number @The value set on the bone controller.
 function GEntity:GetBoneController(boneID)
 end
 
 --- Returns the amount of bones in the entity.  
+--- ℹ **NOTE**: Will return -1 for Global.ClientsideModel or undrawn entities until Entity:SetupBones is called on the entity.  
 --- @return number @The amount of bones in given entity; -1 on failure.
 function GEntity:GetBoneCount()
 end
 
 --- Returns the transformation matrix of a given bone on the entity's model. The matrix contains the transformation used to position the bone in the world. It is not relative to the parent bone.  
 --- This is equivalent to constructing a VMatrix using Entity:GetBonePosition.  
---- * **BUG**: [This can return the server's matrix during server lag.](https://github.com/Facepunch/garrysmod-issues/issues/884)  
---- * **BUG**: [This can return garbage serverside or a 0,0,0 fourth column (represents position) for v49 models.](https://github.com/Facepunch/garrysmod-issues/issues/3285)  
+--- 🦟 **BUG**: [This can return the server's matrix during server lag.](https://github.com/Facepunch/garrysmod-issues/issues/884)  
+--- 🦟 **BUG**: [This can return garbage serverside or a 0,0,0 fourth column (represents position) for v49 models.](https://github.com/Facepunch/garrysmod-issues/issues/3285)  
 --- @param boneID number @The bone to retrieve matrix of
 --- @return GVMatrix @The matrix
 function GEntity:GetBoneMatrix(boneID)
@@ -400,13 +426,14 @@ function GEntity:GetBoneName(index)
 end
 
 --- Returns parent bone of given bone.  
+--- ℹ **NOTE**: Will return -1 for Global.ClientsideModel until Entity:SetupBones is called on the entity.  
 --- @param bone number @The bode ID of the bone to get parent of
 --- @return number @Parent bone ID or -1 if we failed for some reason.
 function GEntity:GetBoneParent(bone)
 end
 
 --- Returns the position and angle of the given attachment, relative to the world.  
---- <warning>This function can return entity's `GetPos()` instead if the entity doesn't have it's bone cache set up.  
+--- ⚠ **WARNING**: This function can return entity's `GetPos()` instead if the entity doesn't have it's bone cache set up.  
 --- To ensure the bone position is correct use this:  
 --- ```lua  
 --- local pos = ent:GetBonePosition(0)  
@@ -414,10 +441,9 @@ end
 --- pos = ent:GetBoneMatrix(0):GetTranslation()  
 --- end  
 --- ```  
---- </warning>  
---- * **BUG**: [This can return the server's position during server lag.](https://github.com/Facepunch/garrysmod-issues/issues/884)  
---- * **BUG**: [This can return garbage serverside or Global.Vector(0,0,0) for v49 models.](https://github.com/Facepunch/garrysmod-issues/issues/3285)  
---- * **BUG**: [This can return garbage if a trace passed through the target bone during bone matrix access.](https://github.com/Facepunch/garrysmod-issues/issues/3739)  
+--- 🦟 **BUG**: [This can return the server's position during server lag.](https://github.com/Facepunch/garrysmod-issues/issues/884)  
+--- 🦟 **BUG**: [This can return garbage serverside or Global.Vector(0,0,0) for v49 models.](https://github.com/Facepunch/garrysmod-issues/issues/3285)  
+--- 🦟 **BUG**: [This can return garbage if a trace passed through the target bone during bone matrix access.](https://github.com/Facepunch/garrysmod-issues/issues/3739)  
 --- @param boneIndex number @The bone index of the bone to get the position of
 --- @return GVector, GAngle
 function GEntity:GetBonePosition(boneIndex)
@@ -430,6 +456,7 @@ function GEntity:GetBoneSurfaceProp(bone)
 end
 
 --- Returns info about given plane of non-nodraw brush model surfaces of the entity's model. Works on worldspawn as well.  
+--- ⚠ **WARNING**: This only works on entities with brush models.  
 --- @param id number @The index of the plane to get info of
 --- @return GVector, GVector, number
 function GEntity:GetBrushPlane(id)
@@ -459,10 +486,10 @@ function GEntity:GetChildBones(boneid)
 end
 
 --- Gets the children of the entity - that is, every entity whose move parent is this entity.  
---- <note>This function returns Entity:SetMoveParent children, **NOT** Entity:SetParent!  
+--- ℹ **NOTE**: This function returns Entity:SetMoveParent children, **NOT** Entity:SetParent!  
 --- Entity:SetParent however also calls Entity:SetMoveParent.  
 --- This means that some entities in the returned list might have a NULL Entity:GetParent.  
---- This also means that using this function on players will return their weapons on the client but not the server.</note>  
+--- This also means that using this function on players will return their weapons on the client but not the server.  
 --- @return table @A list of movement children entities
 function GEntity:GetChildren()
 end
@@ -473,7 +500,7 @@ function GEntity:GetClass()
 end
 
 --- Returns an entity's collision bounding box. In most cases, this will return the same bounding box as Entity:GetModelBounds unless the entity does not have a physics mesh or it has a PhysObj different from the default.  
---- * **BUG**: [This can be out-of-sync between the client and server for weapons.](https://github.com/Facepunch/garrysmod-issues/issues/223)  
+--- 🦟 **BUG**: [This can be out-of-sync between the client and server for weapons.](https://github.com/Facepunch/garrysmod-issues/issues/223)  
 --- @return GVector, GVector
 function GEntity:GetCollisionBounds()
 end
@@ -484,7 +511,7 @@ function GEntity:GetCollisionGroup()
 end
 
 --- Returns the color the entity is set to.  
---- * **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @return table @The color of the entity as a Color.
 function GEntity:GetColor()
 end
@@ -623,7 +650,7 @@ end
 function GEntity:GetHitBoxCount(group)
 end
 
---- <deprecated>You should use Entity:GetHitboxSetCount instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetHitboxSetCount instead.  
 --- Returns the number of hit box sets that an entity has. Functionally identical to Entity:GetHitboxSetCount  
 --- @return number @number of hit box sets
 function GEntity:GetHitBoxGroupCount()
@@ -655,29 +682,36 @@ end
 
 --- Returns a table containing all key values the entity has.  
 --- Single key values can usually be retrieved with Entity:GetInternalVariable.  
+--- ℹ **NOTE**: This only includes engine defined key values. "targetname" is not an actual key value in-engine, use Entity:GetName for that instead. For custom key values, use GM:EntityKeyValue or ENTITY:KeyValue to capture and store them.  
+--- ℹ **NOTE**: Not all key values can be retrieved. Some of them are write-only.  
 --- @return table @A table of key values.
 function GEntity:GetKeyValues()
 end
 
 --- Returns the animation cycle/frame for given layer.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @return number @The animation cycle/frame for given layer.
 function GEntity:GetLayerCycle(layerID)
 end
 
 --- Returns the duration of given layer.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @return number @The duration of the layer
 function GEntity:GetLayerDuration(layerID)
 end
 
 --- Returns the layer playback rate. See also Entity:GetLayerDuration.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @return number @The current playback rate.
 function GEntity:GetLayerPlaybackRate(layerID)
 end
 
 --- Returns the current weight of the layer. See Entity:SetLayerWeight for more information.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- ℹ **NOTE**: Next update: is shared  
 --- @param layerID number @The Layer ID
 --- @return number @The current weight of the layer
 function GEntity:GetLayerWeight(layerID)
@@ -730,7 +764,7 @@ end
 
 --- Returns the material override for this entity.  
 --- Returns an empty string if no material override exists. Use Entity:GetMaterials to list it's default materials.  
---- * **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
+--- 🦟 **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
 --- @return string @material
 function GEntity:GetMaterial()
 end
@@ -742,8 +776,8 @@ end
 
 --- Returns all materials of the entity's model.  
 --- This function is unaffected by Entity:SetSubMaterial as it returns the original materials.  
---- * **BUG**: [The server's values take priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
---- <bug>The table returned by this function will not contain materials if they are missing from the disk/repository. This means that if you are attempting to find the ID of a material to replace with Entity:SetSubMaterial and there are missing materials on the model, all subsequent materials will be offset in the table, meaning that the ID you are trying to get will be incorrect.</bug>  
+--- 🦟 **BUG**: [The server's values take priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
+--- 🦟 **BUG**: The table returned by this function will not contain materials if they are missing from the disk/repository. This means that if you are attempting to find the ID of a material to replace with Entity:SetSubMaterial and there are missing materials on the model, all subsequent materials will be offset in the table, meaning that the ID you are trying to get will be incorrect.  
 --- @return table @A table containing full paths to the materials of the model
 function GEntity:GetMaterials()
 end
@@ -754,7 +788,7 @@ function GEntity:GetMaxHealth()
 end
 
 --- Gets the model of given entity.  
---- * **BUG**: [This does not necessarily return the model's path, as is the case for brush and virtual models. This is intentional behaviour, however, there is currently no way to retrieve the actual file path.](https://github.com/Facepunch/garrysmod-issues/issues/2246)  
+--- 🦟 **BUG**: [This does not necessarily return the model's path, as is the case for brush and virtual models. This is intentional behaviour, however, there is currently no way to retrieve the actual file path.](https://github.com/Facepunch/garrysmod-issues/issues/2246)  
 --- @return string @The entity's model
 function GEntity:GetModel()
 end
@@ -790,6 +824,7 @@ function GEntity:GetModelScale()
 end
 
 --- Returns the amount a momentary_rot_button entity is turned based on the given angle. 0 meaning completely turned closed, 1 meaning completely turned open.  
+--- ⚠ **WARNING**: This only works on momentary_rot_button entities.  
 --- @param turnAngle GAngle @The angle of rotation to compare - usually should be Entity:GetAngles.
 --- @return number @The amount the momentary_rot_button is turned, ranging from 0 to 1, or nil if the entity is not a momentary_rot_button.
 function GEntity:GetMomentaryRotButtonPos(turnAngle)
@@ -840,7 +875,7 @@ function GEntity:GetNWFloat(key, fallback)
 end
 
 --- Retrieves a networked integer (whole number) value that was previously set by Entity:SetNWInt.  
---- * **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
+--- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
 --- @param key string @The key that is associated with the value
 --- @param fallback any @The value to return if we failed to retrieve the value (If it isn't set).
 --- @return any @The value associated with the key
@@ -887,7 +922,7 @@ end
 function GEntity:GetNetworkOrigin()
 end
 
---- <deprecated>You should use Entity:GetNWAngle instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWAngle instead.  
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNetworkedAngle.  
 --- @param key string @The key that is associated with the value
 --- @param fallback GAngle @The value to return if we failed to retrieve the value
@@ -895,7 +930,7 @@ end
 function GEntity:GetNetworkedAngle(key, fallback)
 end
 
---- <deprecated>You should use Entity:GetNWBool instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWBool instead.  
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNetworkedBool.  
 --- @param key string @The key that is associated with the value
 --- @param fallback boolean @The value to return if we failed to retrieve the value
@@ -903,7 +938,7 @@ end
 function GEntity:GetNetworkedBool(key, fallback)
 end
 
---- <deprecated>You should use Entity:GetNWEntity instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWEntity instead.  
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworkedEntity.  
 --- @param key string @The key that is associated with the value
 --- @param fallback GEntity @The value to return if we failed to retrieve the value
@@ -911,7 +946,7 @@ end
 function GEntity:GetNetworkedEntity(key, fallback)
 end
 
---- <deprecated>You should use Entity:GetNWFloat instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWFloat instead.  
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworkedFloat.  
 --- Seems to be the same as Entity:GetNetworkedInt.  
 --- @param key string @The key that is associated with the value
@@ -920,7 +955,7 @@ end
 function GEntity:GetNetworkedFloat(key, fallback)
 end
 
---- <deprecated>You should use Entity:GetNWInt instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWInt instead.  
 --- Retrieves a networked integer value at specified index on the entity that is set by Entity:SetNetworkedInt.  
 --- @param key string @The key that is associated with the value
 --- @param fallback number @The value to return if we failed to retrieve the value
@@ -928,7 +963,7 @@ end
 function GEntity:GetNetworkedInt(key, fallback)
 end
 
---- <deprecated>You should use Entity:GetNWString instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWString instead.  
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNetworkedString.  
 --- @param key string @The key that is associated with the value
 --- @param fallback string @The value to return if we failed to retrieve the value
@@ -936,20 +971,21 @@ end
 function GEntity:GetNetworkedString(key, fallback)
 end
 
---- <deprecated>You should be using Entity:GetNWVarProxy instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should be using Entity:GetNWVarProxy instead.  
 --- Returns callback function for given NWVar of this entity.  
+--- ℹ **NOTE**: Currently this function only works for the NW2Var system (accessed by adding a 2 in between Networked and Var for most NetworkedVar functions), which will replace the original one at some point in the future  
 --- @param name string @The name of the NWVar to get callback of.
 --- @return function @The callback of given NWVar, if any.
 function GEntity:GetNetworkedVarProxy(name)
 end
 
---- <deprecated>You should be using Entity:GetNWVarTable instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should be using Entity:GetNWVarTable instead.  
 --- Returns all the networked variables in an entity.  
 --- @return table @Key-Value table of all networked variables.
 function GEntity:GetNetworkedVarTable()
 end
 
---- <deprecated>You should use Entity:GetNWVector instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:GetNWVector instead.  
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNetworkedVector.  
 --- @param key string @The key that is associated with the value
 --- @param fallback GVector @The value to return if we failed to retrieve the value
@@ -958,6 +994,7 @@ function GEntity:GetNetworkedVector(key, fallback)
 end
 
 --- Returns if the entity's rendering and transmitting has been disabled.  
+--- ℹ **NOTE**: This is equivalent to calling Entity:IsEffectActive( EF_NODRAW )  
 --- @return boolean @Whether the entity's rendering and transmitting has been disabled.
 function GEntity:GetNoDraw()
 end
@@ -1011,6 +1048,7 @@ function GEntity:GetPhysicsAttacker(timeLimit)
 end
 
 --- Returns the entity's physics object, if the entity has physics.  
+--- ℹ **NOTE**: Entities don't have clientside physics objects by default, so this will return [NULL PHYSOBJ] on the client in most cases.  
 --- @return GPhysObj @The entity's physics object.
 function GEntity:GetPhysicsObject()
 end
@@ -1217,7 +1255,7 @@ function GEntity:GetSequenceName(index)
 end
 
 --- Checks if the entity plays a sound when picked up by a player.  
---- <bug pull="1488">This will return nil if Entity:SetShouldPlayPickupSound has not been called.</bug>  
+--- 🦟 **BUG**: [This will return nil if Entity:SetShouldPlayPickupSound has not been called.](https://github.com/Facepunch/garrysmod/pull/1488)  
 --- @return boolean @True if it plays the pickup sound, false otherwise.
 function GEntity:GetShouldPlayPickupSound()
 end
@@ -1254,7 +1292,7 @@ end
 
 --- Returns the material override for the given index.  
 --- Returns "" if no material override exists. Use Entity:GetMaterials to list it's default materials.  
---- * **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
+--- 🦟 **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
 --- @param index number @The index of the sub material
 --- @return string @The material that overrides this index, if any.
 function GEntity:GetSubMaterial(index)
@@ -1271,6 +1309,7 @@ function GEntity:GetTable()
 end
 
 --- Returns the last trace used in the collision callbacks such as ENTITY:StartTouch, ENTITY:Touch and ENTITY:EndTouch.  
+--- ℹ **NOTE**: This returns the last collision trace used, regardless of the entity that caused it. As such, it's only reliable when used in the hooks mentioned above  
 --- @return table @The Structures/TraceResult
 function GEntity:GetTouchTrace()
 end
@@ -1281,7 +1320,7 @@ function GEntity:GetTransmitWithParent()
 end
 
 --- Returns if the entity is unfreezable, meaning it can't be frozen with the physgun. By default props are freezable, so this function will typically return false.  
---- <bug pull="1488">This will return nil if Entity:SetUnFreezable has not been called.</bug>  
+--- 🦟 **BUG**: [This will return nil if Entity:SetUnFreezable has not been called.](https://github.com/Facepunch/garrysmod/pull/1488)  
 --- @return boolean @True if the entity is unfreezable, false otherwise.
 function GEntity:GetUnFreezable()
 end
@@ -1299,20 +1338,23 @@ function GEntity:GetVar(key, default)
 end
 
 --- Returns the entity's velocity.  
---- * **BUG**: [This can become out-of-sync on the client if the server has been up for a long time.](https://github.com/Facepunch/garrysmod-issues/issues/774)  
+--- ℹ **NOTE**: Actually binds to CBaseEntity::GetAbsVelocity() on the server and C_BaseEntity::EstimateAbsVelocity() on the client. This returns the total velocity of the entity and is equal to local velocity + base velocity.  
+--- 🦟 **BUG**: [This can become out-of-sync on the client if the server has been up for a long time.](https://github.com/Facepunch/garrysmod-issues/issues/774)  
 --- @return GVector @The velocity of the entity.
 function GEntity:GetVelocity()
 end
 
---- <deprecated></deprecated>Returns ID of workshop addon that the entity is from.  
+--- 🛑 **DEPRECATED**:   
+--- Returns ID of workshop addon that the entity is from.  
+--- ⚠ **WARNING**: The function **currently** does nothing and always returns nil  
 --- @return number @The workshop ID
 function GEntity:GetWorkshopID()
 end
 
 --- Returns the position and angle of the entity as a 3x4 matrix (VMatrix is 4x4 so the fourth row goes unused). The first three columns store the angle as a [rotation matrix](https://en.wikipedia.org/wiki/Rotation_matrix), and the fourth column stores the position vector.  
---- * **BUG**: [This returns incorrect results for the angular component (columns 1-3) for the local player clientside.](https://github.com/Facepunch/garrysmod-issues/issues/2764)  
---- * **BUG**: [This will use the local player's Global.EyeAngles in rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
---- * **BUG**: [Columns 1-3 will be all 0 (angular component) in rendering hooks while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
+--- 🦟 **BUG**: [This returns incorrect results for the angular component (columns 1-3) for the local player clientside.](https://github.com/Facepunch/garrysmod-issues/issues/2764)  
+--- 🦟 **BUG**: [This will use the local player's Global.EyeAngles in rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/3106)  
+--- 🦟 **BUG**: [Columns 1-3 will be all 0 (angular component) in rendering hooks while paused in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3107)  
 --- @return GVMatrix @The position and angle matrix.
 function GEntity:GetWorldTransformMatrix()
 end
@@ -1331,15 +1373,16 @@ end
 --- You must call Entity:PrecacheGibs on the entity before using this function, or it will not create any gibs.  
 --- The gibs will be spawned on the server and be synchronized with all clients.  
 --- Note, that this function will not remove or hide the entity it is called on.  
---- <warning>Large numbers of serverside gibs will cause lag.  
---- You can avoid this cost by spawning the gibs on the client using Entity:GibBreakClient</warning>  
+--- ⚠ **WARNING**: Large numbers of serverside gibs will cause lag.  
+--- You can avoid this cost by spawning the gibs on the client using Entity:GibBreakClient  
+--- ℹ **NOTE**: Despite existing on client, it doesn't actually do anything on client.  
 --- @param force GVector @The force to apply to the created gibs
 function GEntity:GibBreakServer(force)
 end
 
 --- Returns whether or not the bone manipulation functions have ever been called on given  entity.  
 --- Related functions are Entity:ManipulateBonePosition, Entity:ManipulateBoneAngles, Entity:ManipulateBoneJiggle, and Entity:ManipulateBoneScale.  
---- * **BUG**: [This will return true if the entity's bones have ever been manipulated. Resetting the position/angles/jiggle/scaling to 0,0,0 will not affect this function.](https://github.com/Facepunch/garrysmod-issues/issues/3131)  
+--- 🦟 **BUG**: [This will return true if the entity's bones have ever been manipulated. Resetting the position/angles/jiggle/scaling to 0,0,0 will not affect this function.](https://github.com/Facepunch/garrysmod-issues/issues/3131)  
 --- @return boolean @True if the entity has been bone manipulated, false otherwise.
 function GEntity:HasBoneManipulations()
 end
@@ -1356,6 +1399,7 @@ function GEntity:HasSpawnFlags(spawnFlags)
 end
 
 --- Returns the position of the head of this entity, NPCs use this internally to aim at their targets.  
+--- ℹ **NOTE**: This only works on players and NPCs.  
 --- @param origin GVector @The vector of where the attack comes from.
 --- @return GVector @The head position.
 function GEntity:HeadTarget(origin)
@@ -1373,11 +1417,11 @@ end
 function GEntity:Ignite(length, radius)
 end
 
---- <deprecated></deprecated>  
+--- 🛑 **DEPRECATED**:   
 --- Initializes this entity as being clientside only.  
 --- Only works on entities fully created clientside, and as such it has currently no use due to the lack of clientside ents.Create.  
 --- This function is automatically called by ents.CreateClientProp, Global.ClientsideModel and Global.ClientsideScene.  
---- * **BUG**: [Calling this on a clientside entity will crash the game.](https://github.com/Facepunch/garrysmod-issues/issues/3368)  
+--- 🦟 **BUG**: [Calling this on a clientside entity will crash the game.](https://github.com/Facepunch/garrysmod-issues/issues/3368)  
 function GEntity:InitializeAsClientEntity()
 end
 
@@ -1396,7 +1440,7 @@ function GEntity:InvalidateBoneCache()
 end
 
 --- Returns true if the entity has constraints attached to it  
---- * **BUG**: [This will only update clientside if the server calls it first. This only checks constraints added through the constraint so this will not react to map constraints.](https://github.com/Facepunch/garrysmod-issues/issues/3837)  
+--- 🦟 **BUG**: [This will only update clientside if the server calls it first. This only checks constraints added through the constraint so this will not react to map constraints.](https://github.com/Facepunch/garrysmod-issues/issues/3837)  
 --- @return boolean @Whether the entity is constrained or not.
 function GEntity:IsConstrained()
 end
@@ -1430,6 +1474,7 @@ function GEntity:IsFlagSet(flag)
 end
 
 --- Returns whether the entity is inside a wall or outside of the map.  
+--- ℹ **NOTE**: Internally this function uses util.IsInWorld, that means that this function only checks Entity:GetPos of the entity. If an entity is only partially inside a wall, or has a weird GetPos offset, this function may not give reliable output.  
 --- @return boolean @Is the entity in world
 function GEntity:IsInWorld()
 end
@@ -1479,12 +1524,13 @@ function GEntity:IsPlayer()
 end
 
 --- Returns true if the entity is being held by a player. Either by physics gun, gravity gun or use-key (+use).  
---- * **BUG**: [If multiple players are holding an object and one drops it, this will return false despite the object still being held.](https://github.com/Facepunch/garrysmod-issues/issues/2046)  
+--- 🦟 **BUG**: [If multiple players are holding an object and one drops it, this will return false despite the object still being held.](https://github.com/Facepunch/garrysmod-issues/issues/2046)  
 --- @return boolean @IsBeingHeld
 function GEntity:IsPlayerHolding()
 end
 
 --- Returns whether there's a gesture is given activity being played.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param activity number @The activity to test
 --- @return boolean @Whether there's a gesture is given activity being played.
 function GEntity:IsPlayingGesture(activity)
@@ -1515,13 +1561,16 @@ end
 --- An entity is valid if:  
 --- * It is not a NULL entity  
 --- * It is not the worldspawn entity (game.GetWorld)  
+--- ℹ **NOTE**: Instead of calling this method directly, it's a good idea to call the global Global.IsValid instead, however if you're sure the variable you're using is always an entity object it's better to use this method  
 --- It will check whether the given variable contains an object (an Entity) or nothing at all for you. See examples.  
+--- ⚠ **WARNING**: NULL entities can still be assigned with key/value pairs, but they will be instantly negated. See example 3  
 --- This might be a cause for a lot of headache. Usually happening during networking etc., when completely valid entities suddenly become invalid on the client, but are never filtered with IsValid(). See GM:InitPostEntity for more details.  
 --- @return boolean @true if the entity is valid, false otherwise
 function GEntity:IsValid()
 end
 
 --- Returns whether the given layer ID is valid and exists on this entity.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @return boolean @Whether the given layer ID is valid and exists on this entity.
 function GEntity:IsValidLayer(layerID)
@@ -1587,12 +1636,14 @@ end
 --- Turns the Entity:GetPhysicsObject into a physics shadow.  
 --- It's used internally for the Player's and NPC's physics object, and certain HL2 entities such as the crane.  
 --- A physics shadow can be used to have static entities that never move by setting both arguments to false.  
+--- ℹ **NOTE**: Unlike Entity:PhysicsInitShadow, this function doesn't remove the current physics object.  
 --- @param allowPhysicsMovement boolean @Whether to allow the physics shadow to move under stress.
 --- @param allowPhysicsRotation boolean @Whether to allow the physics shadow to rotate under stress.
 function GEntity:MakePhysicsObjectAShadow(allowPhysicsMovement, allowPhysicsRotation)
 end
 
 --- Sets custom bone angles.  
+--- ℹ **NOTE**: The repeated use of bone manipulation in multiplayer games is highly discouraged due to the huge produced network traffic.  
 --- @param boneID number @Index of the bone you want to manipulate
 --- @param ang GAngle @Angle to apply
 function GEntity:ManipulateBoneAngles(boneID, ang)
@@ -1611,7 +1662,8 @@ function GEntity:ManipulateBonePosition(boneID, pos)
 end
 
 --- Sets custom bone scale.  
---- * **BUG**: [This does not scale procedural bones.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
+--- ⚠ **WARNING**: When used serverside, this method produces a huge network consumption!  
+--- 🦟 **BUG**: [This does not scale procedural bones.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
 --- @param boneID number @Index of the bone you want to manipulate
 --- @param scale GVector @Scale vector to apply
 function GEntity:ManipulateBoneScale(boneID, scale)
@@ -1639,6 +1691,7 @@ end
 
 --- Creates a network variable on the entity and adds Set/Get functions for it. This function should only be called in ENTITY:SetupDataTables.  
 --- See Entity:NetworkVarNotify for a function to hook NetworkVar changes.  
+--- ⚠ **WARNING**: Make sure to not call the SetDT* and your custom set methods on the client realm unless you know exactly what you are doing.  
 --- @param type string @Supported choices:
 --- @param slot number @Each network var has to have a unique slot
 --- @param name string @The name will affect how you access it
@@ -1647,7 +1700,9 @@ function GEntity:NetworkVar(type, slot, name, extended)
 end
 
 --- Creates a callback that will execute when the given network variable changes - that is, when the Set<name> function is run.  
---- <bug request="324">The callback will not be called clientside if the var is changed right after entity spawn.</bug>  
+--- ℹ **NOTE**: The callback is executed `before` the value is changed, and is called even if the new and old values are the same.  
+--- ℹ **NOTE**: This function does not exist on entities in which Entity:InstallDataTable has not been called. By default, this means this function only exists on SENTs (both serverside and clientside) and on players with a Player Class (serverside and clientside Global.LocalPlayer only!). It is therefore safest to only use this in ENTITY:SetupDataTables.  
+--- 🦟 **BUG**: [The callback will not be called clientside if the var is changed right after entity spawn.](https://github.com/Facepunch/garrysmod-requests/issues/324)  
 --- @param name string @Name of variable to track changes of
 --- @param callback function @The function to call when the variable changes
 function GEntity:NetworkVarNotify(name, callback)
@@ -1655,7 +1710,7 @@ end
 
 --- In the case of a scripted entity, this will cause the next ENTITY:Think event to be run at the given time.  
 --- Does not work clientside! Use Entity:SetNextClientThink instead.  
---- * **BUG**: [This does not work with SWEPs or Nextbots.](https://github.com/Facepunch/garrysmod-issues/issues/3269)  
+--- 🦟 **BUG**: [This does not work with SWEPs or Nextbots.](https://github.com/Facepunch/garrysmod-issues/issues/3269)  
 --- @param timestamp number @The relative to Global.CurTime timestamp, at which the next think should occur.
 function GEntity:NextThink(timestamp)
 end
@@ -1678,6 +1733,7 @@ end
 --- Returns the entity's capabilities as a bitfield.  
 --- In the engine this function is mostly used to check the use type, the save/restore system and level transitions flags.  
 --- Even though the function is defined shared, it is not guaranteed to return the same value across states.  
+--- ℹ **NOTE**: The enums for this are not currently implemented in Lua, however you can access the defines [here](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp/src/game/shared/baseentity_shared.h#L21-L38).  
 --- @return number @The bitfield, a combination of the [FCAP_](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp
 function GEntity:ObjectCaps()
 end
@@ -1690,6 +1746,7 @@ end
 
 --- Tests whether the damage passes the entity filter.  
 --- This will call ENTITY:PassesDamageFilter on scripted entities of the type "filter".  
+--- ℹ **NOTE**: This function only works on entities of the type "filter". ( filter_* entities, including base game filter entites )  
 --- @param dmg GCTakeDamageInfo @The damage info to test
 --- @return boolean @Whether the damage info passes the entity filter.
 function GEntity:PassesDamageFilter(dmg)
@@ -1697,6 +1754,7 @@ end
 
 --- Tests whether the entity passes the entity filter.  
 --- This will call ENTITY:PassesFilter on scripted entities of the type "filter".  
+--- ℹ **NOTE**: This function only works on entities of the type "filter". ( filter_* entities, including base game filter entites )  
 --- @param caller GEntity @The initiator of the test
 --- @param ent GEntity @The entity to test against the entity filter.
 --- @return boolean @Whether the entity info passes the entity filter.
@@ -1708,6 +1766,7 @@ function GEntity:PhysWake()
 end
 
 --- Destroys the current physics object of an entity.  
+--- ℹ **NOTE**: Cannot be used on a ragdoll or the world entity.  
 function GEntity:PhysicsDestroy()
 end
 
@@ -1721,14 +1780,18 @@ end
 
 --- Initializes the physics object of the entity using its current model. Deletes the previous physics object if it existed and the new object creation was successful.  
 --- If the entity's current model has no physics mesh associated to it, no physics object will be created and the previous object will still exist, if applicable.  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
+--- ℹ **NOTE**: When called clientside, this will not create a valid PhysObj if the model hasn't been precached serverside.  
+--- ℹ **NOTE**: If successful, this function will automatically call Entity:SetSolid( solidType ) and Entity:SetSolidFlags( 0 ).  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- @param solidType number @The solid type of the physics object to create, see Enums/SOLID
 --- @return boolean @Returns true on success, false otherwise.
 function GEntity:PhysicsInit(solidType)
 end
 
 --- Makes the physics object of the entity a AABB.  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
+--- ℹ **NOTE**: If the volume of the resulting box is 0 (the mins and maxs are the same), the mins and maxs will be changed to Global.Vector( -1, -1, -1 ) and Global.Vector( 1, 1, 1 ), respectively.  
+--- ℹ **NOTE**: This function will automatically destroy any previous physics objects if successful and call Entity:SetSolid( SOLID_BBOX ), Entity:SetMoveType( MOVETYPE_VPHYSICS ), and Entity:SetCollisionBounds( mins, maxs ).  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- @param mins GVector @The minimum position of the box
 --- @param maxs GVector @The maximum position of the box
 --- @return boolean @Returns true on success, nil otherwise
@@ -1737,8 +1800,8 @@ end
 
 --- Initializes the physics mesh of the entity with a convex mesh defined by a table of points. The resulting mesh is the  of all the input points. If successful, the previous physics object will be removed.  
 --- This is the standard way of creating moving physics objects with a custom convex shape. For more complex, concave shapes, see Entity:PhysicsInitMultiConvex.  
---- * **BUG**: [This will crash if given all Global.Vector(0,0,0)s.](https://github.com/Facepunch/garrysmod-issues/issues/3301)  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
+--- 🦟 **BUG**: [This will crash if given all Global.Vector(0,0,0)s.](https://github.com/Facepunch/garrysmod-issues/issues/3301)  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- @param points table @A table of eight Vectors, in local coordinates, to be used in the computation of the convex mesh
 --- @return boolean @Returns true on success, nil otherwise.
 function GEntity:PhysicsInitConvex(points)
@@ -1746,7 +1809,7 @@ end
 
 --- An advanced version of Entity:PhysicsInitConvex which initializes a physics object from multiple convex meshes. This should be used for physics objects with a custom shape which cannot be represented by a single convex mesh.  
 --- If successful, the previous physics object will be removed.  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- You can use the following work-around for movement, though clientside collisions will still be broken.  
 --- ```  
 --- function ENT:Think()  
@@ -1759,7 +1822,6 @@ end
 --- end  
 --- end  
 --- ```  
---- </bug>  
 --- @param vertices table @A table consisting of tables of Vectors
 --- @return boolean @Returns true on success, nil otherwise
 function GEntity:PhysicsInitMultiConvex(vertices)
@@ -1767,7 +1829,7 @@ end
 
 --- Initializes the entity's physics object as a physics shadow. Removes the previous physics object if successful. This is used internally for the Player's and NPC's physics object, and certain HL2 entities such as the crane.  
 --- A physics shadow can be used to have static entities that never move by setting both arguments to false.  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- @param allowPhysicsMovement boolean @Whether to allow the physics shadow to move under stress.
 --- @param allowPhysicsRotation boolean @Whether to allow the physics shadow to rotate under stress.
 --- @return boolean @Return true on success, nil otherwise.
@@ -1775,7 +1837,8 @@ function GEntity:PhysicsInitShadow(allowPhysicsMovement, allowPhysicsRotation)
 end
 
 --- Makes the physics object of the entity a sphere.  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
+--- ℹ **NOTE**: This function will automatically destroy any previous physics objects and call Entity:SetSolid( SOLID_BBOX ) and Entity:SetMoveType( MOVETYPE_VPHYSICS ).  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- @param radius number @The radius of the sphere.
 --- @param physmat string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
 --- @return boolean @Returns true on success, false otherwise
@@ -1785,7 +1848,8 @@ end
 --- Initializes a static physics object of the entity using its current model. If successful, the previous physics object is removed.  
 --- This is what used by entities such as func_breakable, prop_dynamic, item_suitcharger, prop_thumper and npc_rollermine while it is in its "buried" state in the Half-Life 2 Campaign.  
 --- If the entity's current model has no physics mesh associated to it, no physics object will be created.  
---- <bug>Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.</bug>  
+--- ℹ **NOTE**: This function will automatically call Entity:SetSolid( solidType ).  
+--- 🦟 **BUG**: Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.  
 --- @param solidType number @The solid type of the physics object to create, see Enums/SOLID
 --- @return boolean @Returns true on success, false otherwise
 function GEntity:PhysicsInitStatic(solidType)
@@ -1830,6 +1894,7 @@ function GEntity:RemoveAllDecals()
 end
 
 --- Removes and stops all gestures.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 function GEntity:RemoveAllGestures()
 end
 
@@ -1861,11 +1926,13 @@ end
 
 --- Removes a PhysObject from the entity's motion controller so that ENTITY:PhysicsSimulate will no longer be called for given PhysObject.  
 --- You must first create a motion controller with Entity:StartMotionController.  
+--- ℹ **NOTE**: Only works on a scripted Entity of anim type  
 --- @param physObj GPhysObj @The PhysObj to remove from the motion controller.
 function GEntity:RemoveFromMotionController(physObj)
 end
 
 --- Removes and stops the gesture with given activity.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param activity number @The activity remove
 function GEntity:RemoveGesture(activity)
 end
@@ -1882,9 +1949,10 @@ function GEntity:RemoveSolidFlags(flags)
 end
 
 --- Plays an animation on the entity. This may not always work on engine entities.  
---- <note>This will not work properly if called directly after calling Entity:SetModel. Consider waiting until the next Tick.  
+--- ⚠ **WARNING**: This will not reset the animation on viewmodels, use Entity:SendViewModelMatchingSequence instead.  
+--- ℹ **NOTE**: This will not work properly if called directly after calling Entity:SetModel. Consider waiting until the next Tick.  
 --- Will not work on players due to the animations being reset every frame by the base gamemode animation system. See GM:CalcMainActivity.  
---- For custom scripted entities you will want to apply example from ENTITY:Think to make animations work.</note>  
+--- For custom scripted entities you will want to apply example from ENTITY:Think to make animations work.  
 --- @param sequence number @The sequence to play
 function GEntity:ResetSequence(sequence)
 end
@@ -1900,6 +1968,7 @@ function GEntity:Respawn()
 end
 
 --- Restarts the entity's animation gesture. If the given gesture is already playing, it will reset it and play it from the beginning.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites.  
 --- @param activity number @The activity number to send to the entity
 --- @param addIfMissing boolean @Add/start the gesture to if it has not been yet started.
 --- @param autokill boolean 
@@ -1925,24 +1994,26 @@ end
 
 --- Sends sequence animation to the view model. It is recommended to use this for view model animations, instead of Entity:ResetSequence.  
 --- This function is only usable on view models.  
---- * **BUG**: [Sequences 0-6 will not be looped regardless if they're marked as a looped animation or not.](https://github.com/Facepunch/garrysmod-issues/issues/3229)  
+--- 🦟 **BUG**: [Sequences 0-6 will not be looped regardless if they're marked as a looped animation or not.](https://github.com/Facepunch/garrysmod-issues/issues/3229)  
 --- @param seq number @The sequence ID returned by Entity:LookupSequence or  Entity:SelectWeightedSequence.
 function GEntity:SendViewModelMatchingSequence(seq)
 end
 
 --- Returns length of currently played sequence.  
---- * **BUG**: [This will return incorrect results for weapons and viewmodels clientside in thirdperson.](https://github.com/Facepunch/garrysmod-issues/issues/2783)  
+--- 🦟 **BUG**: [This will return incorrect results for weapons and viewmodels clientside in thirdperson.](https://github.com/Facepunch/garrysmod-issues/issues/2783)  
 --- @param seqid number @A sequence ID to return the length specific sequence of instead of the entity's main/currently playing sequence.
 --- @return number @The length of the sequence
 function GEntity:SequenceDuration(seqid)
 end
 
 --- Sets the entity's velocity.  
+--- ℹ **NOTE**: Actually binds to CBaseEntity::SetLocalVelocity() which sets the entity's velocity due to movement in the world from forces such as gravity. Does not include velocity from entity-on-entity collision or other world movement.  
 --- @param velocity GVector @The new velocity to set.
 function GEntity:SetAbsVelocity(velocity)
 end
 
 --- Sets the angles of the entity.  
+--- ℹ **NOTE**: To set a player's angles, use Player:SetEyeAngles instead.  
 --- @param angles GAngle @The new angles.
 function GEntity:SetAngles(angles)
 end
@@ -1957,7 +2028,7 @@ end
 function GEntity:SetAnimation(playerAnim)
 end
 
---- <deprecated>You should be using Entity:SetParent instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should be using Entity:SetParent instead.  
 --- Parents the sprite to an attachment on another model.  
 --- Works only on env_sprite.  
 --- Despite existing on client, it doesn't actually do anything on client.  
@@ -1983,12 +2054,14 @@ function GEntity:SetBodygroup(bodygroup, value)
 end
 
 --- Sets the specified value on the bone controller with the given ID of this entity, it's used in HL1 to change the head rotation of NPCs, turret aiming and so on.  
+--- ℹ **NOTE**: This is the precursor of pose parameters, and only works for Half Life 1: Source models supporting it.  
 --- @param boneControllerID number @The ID of the bone controller to set the value to
 --- @param value number @The value to set on the specified bone controller.
 function GEntity:SetBoneController(boneControllerID, value)
 end
 
 --- Sets the bone matrix of given bone to given matrix. See also Entity:GetBoneMatrix.  
+--- ℹ **NOTE**: Despite existing serverside, it does nothing.  
 --- @param boneid number @The ID of the bone
 --- @param matrix GVMatrix @The matrix to set.
 function GEntity:SetBoneMatrix(boneid, matrix)
@@ -2040,7 +2113,7 @@ function GEntity:SetCustomCollisionCheck(enable)
 end
 
 --- Sets the progress of the current animation to a specific value between 0 and 1.  
---- * **BUG**: [This does not work with viewmodels.](https://github.com/Facepunch/garrysmod-issues/issues/3038)  
+--- 🦟 **BUG**: [This does not work with viewmodels.](https://github.com/Facepunch/garrysmod-issues/issues/3038)  
 --- @param value number @The desired cycle value
 function GEntity:SetCycle(value)
 end
@@ -2062,7 +2135,7 @@ function GEntity:SetEyeTarget(pos)
 end
 
 --- Sets the flex scale of the entity.  
---- * **BUG**: [This does not work on Global.ClientsideModels or Global.ClientsideRagdolls.](https://github.com/Facepunch/garrysmod-issues/issues/1779)  
+--- 🦟 **BUG**: [This does not work on Global.ClientsideModels or Global.ClientsideRagdolls.](https://github.com/Facepunch/garrysmod-issues/issues/1779)  
 --- @param scale number @The new flex scale to set to
 function GEntity:SetFlexScale(scale)
 end
@@ -2074,13 +2147,14 @@ function GEntity:SetFlexWeight(flex, weight)
 end
 
 --- Sets how much friction an entity has when sliding against a surface. Entities default to 1 (100%) and can be higher or even negative.  
---- * **BUG**: [This has no effect on players.](https://github.com/Facepunch/garrysmod-issues/issues/1395)  
+--- ℹ **NOTE**: Works only for MOVETYPE_STEP entities.  
+--- 🦟 **BUG**: [This has no effect on players.](https://github.com/Facepunch/garrysmod-issues/issues/1395)  
 --- @param friction number @Friction multiplier
 function GEntity:SetFriction(friction)
 end
 
 --- Sets the gravity multiplier of the entity.  
---- * **BUG**: [This function is not predicted.](https://github.com/Facepunch/garrysmod-issues/issues/3648)  
+--- 🦟 **BUG**: [This function is not predicted.](https://github.com/Facepunch/garrysmod-issues/issues/3648)  
 --- @param gravityMultiplier number @Value which specifies the gravity multiplier.
 function GEntity:SetGravity(gravityMultiplier)
 end
@@ -2091,6 +2165,7 @@ function GEntity:SetGroundEntity(ground)
 end
 
 --- Sets the health of the entity.  
+--- ℹ **NOTE**: You may want to take Entity:GetMaxHealth into account when calculating what to set health to, in case a gamemode has a different max health than 100.  
 --- @param newHealth number @New health value.
 function GEntity:SetHealth(newHealth)
 end
@@ -2121,57 +2196,65 @@ function GEntity:SetLOD(lod)
 end
 
 --- This allows the entity to be lag compensated during Player:LagCompensation.  
---- <note>Players are lag compensated by default and there's no need to call this function for them.  
+--- ℹ **NOTE**: Players are lag compensated by default and there's no need to call this function for them.  
 --- It's best to not enable lag compensation on parented entities, as the system does not handle it that well ( they will be moved back but then the entity will lag behind ).  
---- Parented entities move back with the parent if it's lag compensated, so if you are making some kind of armor piece you shouldn't do anything.</note>  
+--- Parented entities move back with the parent if it's lag compensated, so if you are making some kind of armor piece you shouldn't do anything.  
 --- As a side note for parented entities, if your entity can be shot at, keep in mind that its collision bounds need to be bigger than the bone's hitbox the entity is parented to, or hull/line traces ( such as the crowbar attack or bullets ) might not hit at all.  
 --- @param enable boolean @Whether the entity should be lag compensated or not.
 function GEntity:SetLagCompensated(enable)
 end
 
-
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @param blendIn number 
 function GEntity:SetLayerBlendIn(layerID, blendIn)
 end
 
-
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @param blendOut number 
 function GEntity:SetLayerBlendOut(layerID, blendOut)
 end
 
 --- Sets the animation cycle/frame of given layer.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @param cycle number @The new animation cycle/frame for given layer.
 function GEntity:SetLayerCycle(layerID, cycle)
 end
 
 --- Sets the duration of given layer. This internally overrides the Entity:SetLayerPlaybackRate.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @param duration number @The new duration of the layer in seconds.
 function GEntity:SetLayerDuration(layerID, duration)
 end
 
 --- Sets whether the layer should loop or not.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @param loop boolean @Whether the layer should loop or not.
 function GEntity:SetLayerLooping(layerID, loop)
 end
 
 --- Sets the layer playback rate. See also Entity:SetLayerDuration.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- ℹ **NOTE**: Next update: is shared  
 --- @param layerID number @The Layer ID
 --- @param rate number @The new playback rate.
 function GEntity:SetLayerPlaybackRate(layerID, rate)
 end
 
 --- Sets the priority of given layer.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param layerID number @The Layer ID
 --- @param priority number @The new priority of the layer.
 function GEntity:SetLayerPriority(layerID, priority)
 end
 
 --- Sets the layer weight. This influences how strongly the animation should be overriding the normal animations of the entity.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- ℹ **NOTE**: Next update: is shared  
 --- @param layerID number @The Layer ID
 --- @param weight number @The new layer weight.
 function GEntity:SetLayerWeight(layerID, weight)
@@ -2204,6 +2287,7 @@ function GEntity:SetLocalPos(pos)
 end
 
 --- Sets the entity's local velocity which is their velocity due to movement in the world from forces such as gravity. Does not include velocity from entity-on-entity collision or other world movement.  
+--- ⚠ **WARNING**: Same as Entity:SetAbsVelocity, but clamps the given velocity, and is not recommended to be used because of that.  
 --- @param velocity GVector @The new velocity to set.
 function GEntity:SetLocalVelocity(velocity)
 end
@@ -2211,7 +2295,8 @@ end
 --- Sets the rendering material override of the entity.  
 --- To set a Lua material created with Global.CreateMaterial, just prepend a "!" to the material name.  
 --- If you wish to override a single material on the model, use Entity:SetSubMaterial instead.  
---- * **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
+--- ℹ **NOTE**: To apply materials to models, that material **must** have **VertexLitGeneric** shader. For that reason you cannot apply map textures onto models, map textures use a different material shader - **LightmappedGeneric**, which can be used on brush entities.  
+--- 🦟 **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
 --- @param materialName string @New material name
 function GEntity:SetMaterial(materialName)
 end
@@ -2223,6 +2308,7 @@ end
 
 --- Sets the model of the entity.  
 --- This does not update the physics of the entity - see Entity:PhysicsInit.  
+--- ⚠ **WARNING**: This silently fails when given an empty string.  
 --- @param modelName string @New model value.
 function GEntity:SetModel(modelName)
 end
@@ -2237,8 +2323,8 @@ end
 --- This is the same system used in TF2 for the Mann Vs Machine robots.  
 --- To resize the entity along any axis, use Entity:EnableMatrix instead.  
 --- If your old scales are wrong, use Entity:SetLegacyTransform as a quick fix.  
---- * **BUG**: [The hull does not scale properly with this function.](https://github.com/Facepunch/garrysmod-issues/issues/2193)  
---- * **BUG**: [This does not scale procedural bones and disables IK.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
+--- 🦟 **BUG**: [The hull does not scale properly with this function.](https://github.com/Facepunch/garrysmod-issues/issues/2193)  
+--- 🦟 **BUG**: [This does not scale procedural bones and disables IK.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
 --- @param scale number @A float to scale the model by
 --- @param deltaTime number @Transition time of the scale change, set to 0 to modify the scale right away.
 function GEntity:SetModelScale(scale, deltaTime)
@@ -2263,6 +2349,7 @@ end
 
 --- Sets a networked angle value on the entity.  
 --- The value can then be accessed with Entity:GetNWAngle both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value GAngle @The value to set
 function GEntity:SetNWAngle(key, value)
@@ -2270,6 +2357,7 @@ end
 
 --- Sets a networked boolean value on the entity.  
 --- The value can then be accessed with Entity:GetNWBool both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value boolean @The value to set
 function GEntity:SetNWBool(key, value)
@@ -2277,6 +2365,7 @@ end
 
 --- Sets a networked entity value on the entity.  
 --- The value can then be accessed with Entity:GetNWEntity both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value GEntity @The value to set
 function GEntity:SetNWEntity(key, value)
@@ -2285,6 +2374,7 @@ end
 --- Sets a networked float (number) value on the entity.  
 --- The value can then be accessed with Entity:GetNWFloat both from client and server.  
 --- Unlike Entity:SetNWInt, floats don't have to be whole numbers.  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value number @The value to set
 function GEntity:SetNWFloat(key, value)
@@ -2293,7 +2383,8 @@ end
 --- Sets a networked integer (whole number) value on the entity.  
 --- The value can then be accessed with Entity:GetNWInt both from client and server.  
 --- See Entity:SetNWFloat for numbers that aren't integers.  
---- * **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
+--- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
 --- @param key string @The key to associate the value with
 --- @param value number @The value to set
 function GEntity:SetNWInt(key, value)
@@ -2301,6 +2392,7 @@ end
 
 --- Sets a networked string value on the entity.  
 --- The value can then be accessed with Entity:GetNWString both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value string @The value to set, up to 199 characters.
 function GEntity:SetNWString(key, value)
@@ -2314,6 +2406,7 @@ end
 
 --- Sets a networked vector value on the entity.  
 --- The value can then be accessed with Entity:GetNWVector both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value GVector @The value to set
 function GEntity:SetNWVector(key, value)
@@ -2334,42 +2427,47 @@ end
 function GEntity:SetNetworkOrigin(origin)
 end
 
---- <deprecated>You should use Entity:SetNWAngle instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWAngle instead.  
 --- Sets a networked angle value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedAngle both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value GAngle @The value to set
 function GEntity:SetNetworkedAngle(key, value)
 end
 
---- <deprecated>You should use Entity:SetNWBool instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWBool instead.  
 --- Sets a networked boolean value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedBool both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value boolean @The value to set
 function GEntity:SetNetworkedBool(key, value)
 end
 
---- <deprecated>You should use Entity:SetNWEntity instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWEntity instead.  
 --- Sets a networked entity value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedEntity both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value GEntity @The value to set
 function GEntity:SetNetworkedEntity(key, value)
 end
 
---- <deprecated>You should use Entity:SetNWFloat instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWFloat instead.  
 --- Sets a networked float value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedFloat both from client and server.  
 --- Seems to be the same as Entity:GetNetworkedInt.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value number @The value to set
 function GEntity:SetNetworkedFloat(key, value)
 end
 
---- <deprecated>You should use Entity:SetNWInt instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWInt instead.  
 --- Sets a networked integer value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedInt both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value number @The value to set
 function GEntity:SetNetworkedInt(key, value)
@@ -2381,24 +2479,27 @@ end
 function GEntity:SetNetworkedNumber(index, number)
 end
 
---- <deprecated>You should use Entity:SetNWString instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWString instead.  
 --- Sets a networked string value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedString both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value string @The value to set
 function GEntity:SetNetworkedString(key, value)
 end
 
---- <deprecated>You should be using Entity:SetNWVarProxy instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should be using Entity:SetNWVarProxy instead.  
 --- Sets callback function to be called when given NWVar changes.  
+--- ℹ **NOTE**: Currently this function only works for the NW2Var system (accessed by adding a 2 in between Networked and Var for most NetworkedVar functions), which will replace the original one at some point in the future  
 --- @param name string @The name of the NWVar to add callback for.
 --- @param callback function @The function to be called when the NWVar changes.
 function GEntity:SetNetworkedVarProxy(name, callback)
 end
 
---- <deprecated>You should use Entity:SetNWVector instead.</deprecated>  
+--- 🛑 **DEPRECATED**: You should use Entity:SetNWVector instead.  
 --- Sets a networked vector value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedVector both from client and server.  
+--- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
 --- @param value GVector @The value to set
 function GEntity:SetNetworkedVector(key, value)
@@ -2421,23 +2522,28 @@ function GEntity:SetNotSolid(IsNotSolid)
 end
 
 --- Sets the owner of this entity, disabling all physics interaction with it.  
+--- ℹ **NOTE**: This function is generally used to disable physics interactions on projectiles being fired by their owner, but can also be used for normal ownership in case physics interactions are not involved at all. The Gravity gun will be able to pick up the entity even if the owner can't collide with it, the Physics gun however will not.  
 --- @param owner GEntity @The entity to be set as owner.
 function GEntity:SetOwner(owner)
 end
 
 --- Sets the parent of this entity, making it move with its parent.  
+--- ℹ **NOTE**: This does not work on the world.  
+--- ⚠ **WARNING**: This can cause undefined physics behaviour when used on entities that don't support parenting. See the [Valve developer wiki](https://developer.valvesoftware.com/wiki/Entity_Hierarchy_(parenting)) for more information.  
 --- @param parent GEntity @The entity to parent to
 --- @param attachmentId number @The attachment id to use when parenting, defaults to -1 or whatever the parent had set previously
 function GEntity:SetParent(parent, attachmentId)
 end
 
 --- Sets the parent of an entity to another entity with the given physics bone number. Similar to Entity:SetParent, except it is parented to a physbone. This function is useful mainly for ragdolls.  
+--- ℹ **NOTE**: Despite this function being available server side, it doesn't actually do anything server side.  
 --- @param bone number @Physics bone number to attach to
 function GEntity:SetParentPhysNum(bone)
 end
 
 --- Sets whether or not the given entity is persistent. A persistent entity will be saved on server shutdown and loaded back when the server starts up. Additionally, by default persistent entities cannot be grabbed with the physgun and tools cannot be used on them.  
 --- In sandbox, this can be set on an entity by opening the context menu, right clicking the entity, and choosing "Make Persistent".  
+--- ℹ **NOTE**: Persistence can only be enabled with the sbox_persist convar, which works as an identifier for the current set of persistent entities. An empty identifier (which is the default value) disables this feature.  
 --- @param persist boolean @Whether or not the entity should be persistent.
 function GEntity:SetPersistent(persist)
 end
@@ -2450,6 +2556,7 @@ function GEntity:SetPhysConstraintObjects(Phys1, Phys2)
 end
 
 --- Sets the player who gets credit if this entity kills something with physics damage within the time limit.  
+--- ℹ **NOTE**: This can only be called on props, "anim" type SENTs and vehicles.  
 --- @param ent GPlayer @Player who gets the kills
 --- @param timeLimit number @Time in seconds until the entity forgets its physics attacker and prevents it from getting the kill credit.
 function GEntity:SetPhysicsAttacker(ent, timeLimit)
@@ -2461,13 +2568,17 @@ function GEntity:SetPlaybackRate(fSpeed)
 end
 
 --- Moves the entity to the specified position.  
---- * **BUG**: [This will fail inside of predicted functions called during player movement processing. This includes WEAPON:PrimaryAttack and WEAPON:Think.](https://github.com/Facepunch/garrysmod-issues/issues/2447)  
+--- ℹ **NOTE**: If the new position doesn't take effect right away, you can use Entity:SetupBones to force it to do so. This issue is especially common when trying to render the same entity twice or more in a single frame at different positions.  
+--- ⚠ **WARNING**: Entities with Entity:GetSolid of SOLID_BBOX will have their angles reset!  
+--- 🦟 **BUG**: [This will fail inside of predicted functions called during player movement processing. This includes WEAPON:PrimaryAttack and WEAPON:Think.](https://github.com/Facepunch/garrysmod-issues/issues/2447)  
+--- ℹ **NOTE**: Some entities, such as ragdolls, will appear unaffected by this function in the next frame. Consider PhysObj:SetPos if necessary.  
 --- @param position GVector @The position to move the entity to.
 function GEntity:SetPos(position)
 end
 
 --- Sets the specified pose parameter to the specified value.  
 --- You should call Entity:InvalidateBoneCache after calling this function.  
+--- ℹ **NOTE**: Avoid calling this in draw hooks, especially when animating things, as it might cause visual artifacts.  
 --- @param poseName string @Name of the pose parameter.
 --- @param poseValue number @The value to set the pose to.
 function GEntity:SetPoseParameter(poseName, poseValue)
@@ -2479,13 +2590,15 @@ end
 --- Weapons are predictable by default, and the drive system uses this function to make the controlled prop predictable as well.  
 --- Visit  for a list of all predicted hooks, and the Prediction page.  
 --- For further technical information on the subject, visit [valve's wiki](https://developer.valvesoftware.com/wiki/Prediction).  
+--- ℹ **NOTE**: This function resets the datatable variables everytime it's called, it should ideally be called when a player starts using the entity and when he stops  
+--- ℹ **NOTE**: Entities set as predictable with this function will be unmarked when the user lags and receives a full packet update, to handle such case visit GM:NotifyShouldTransmit  
 --- @param setPredictable boolean @whether to make this entity predictable or not.
 function GEntity:SetPredictable(setPredictable)
 end
 
 --- Prevents the server from sending any further information about the entity to a player.  
---- * **BUG**: [This does not work for nextbots.](https://github.com/Facepunch/garrysmod-issues/issues/1736)  
---- <validate>When using this function, Entity:SetFlexScale will conflict with this function. Instead, consider using Entity:SetFlexScale on the client.</validate>  
+--- 🦟 **BUG**: [This does not work for nextbots.](https://github.com/Facepunch/garrysmod-issues/issues/1736)  
+--- ⁉ **VALIDATE**: When using this function, Entity:SetFlexScale will conflict with this function. Instead, consider using Entity:SetFlexScale on the client.  
 --- @param player GPlayer @The player to stop networking the entity to.
 --- @param stopTransmitting boolean @true to stop the entity from networking, false to make it network again.
 function GEntity:SetPreventTransmit(player, stopTransmitting)
@@ -2555,7 +2668,7 @@ end
 
 --- Sets a save value for an entity. You can see a full list of an entity's save values by creating it and printing Entity:GetSaveTable().  
 --- See Entity:GetInternalVariable for the opposite of this function.  
---- * **BUG**: [This does not type-check entity keys. Setting an entity key to a non-entity value will treat it as NULL.](https://github.com/Facepunch/garrysmod-issues/issues/4065)  
+--- 🦟 **BUG**: [This does not type-check entity keys. Setting an entity key to a non-entity value will treat it as NULL.](https://github.com/Facepunch/garrysmod-issues/issues/4065)  
 --- @param name string @Name of the save value to set
 --- @param value any @Value to set
 --- @return boolean @Key successfully set
@@ -2565,6 +2678,8 @@ end
 --- Sets the entity's model sequence.  
 --- If the specified sequence is already active, the animation will not be restarted. See Entity:ResetSequence for a function that restarts the animation even if it is already playing.  
 --- In some cases you want to run Entity:ResetSequenceInfo to make this function run.  
+--- ℹ **NOTE**: This will not work properly if called directly after calling Entity:SetModel. Consider waiting until the next Tick.  
+--- ℹ **NOTE**: Will not work on players due to the animations being reset every frame by the base gamemode animation system in GM:CalcMainActivity. For Players, use in GM:UpdateAnimation instead.  
 --- @param sequenceId number @The sequence to play
 function GEntity:SetSequence(sequenceId)
 end
@@ -2575,6 +2690,8 @@ function GEntity:SetShouldPlayPickupSound(playsound)
 end
 
 --- Sets if entity should create a server ragdoll on death or a client one.  
+--- ℹ **NOTE**: Player ragdolls created with this enabled will have an owner set, see Entity:SetOwner for more information on what effects this has.  
+--- ℹ **NOTE**: This is reset for players when they respawn. (Entity:Spawn)  
 --- @param serverragdoll boolean @Set true if ragdoll should be created on server, false if on client
 function GEntity:SetShouldServerRagdoll(serverragdoll)
 end
@@ -2597,13 +2714,14 @@ end
 
 --- Sets whether the entity should use a spawn effect when it is created on the client.  
 --- See Entity:GetSpawnEffect for more information on how the effect is applied.  
+--- ℹ **NOTE**: This function will only have an effect when the entity spawns. After that it will do nothing even is set to true.  
 --- @param spawnEffect boolean @Sets if we should show a spawn effect.
 function GEntity:SetSpawnEffect(spawnEffect)
 end
 
 --- Overrides a single material on the model of this entity.  
 --- To set a Lua material created with Global.CreateMaterial, just prepend a "!" to the material name.  
---- * **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
+--- 🦟 **BUG**: [The server's value takes priority on the client.](https://github.com/Facepunch/garrysmod-issues/issues/3362)  
 --- @param index number @Index of the material to override, acceptable values are from 0 to 31
 --- @param material string @The material to override the default one with
 function GEntity:SetSubMaterial(index, material)
@@ -2615,6 +2733,7 @@ function GEntity:SetTable(tab)
 end
 
 --- When this flag is set the entity will only transmit to the player when its parent is transmitted. This is useful for things like viewmodel attachments since without this flag they will transmit to everyone (and cause the viewmodels to transmit to everyone too).  
+--- ℹ **NOTE**: In the case of scripted entities, this will override ENTITY:UpdateTransmitState  
 --- @param onoff boolean @Will set the TransmitWithParent flag on or off
 function GEntity:SetTransmitWithParent(onoff)
 end
@@ -2636,28 +2755,35 @@ function GEntity:SetUseType(useType)
 end
 
 --- Allows to quickly set variable to entity's Entity:GetTable.  
+--- ℹ **NOTE**: This will not network the variable to client(s). You want Entity:SetNWString and similar functions for that  
 --- @param key any @Key of the value to set
 --- @param value any @Value to set the variable to
 function GEntity:SetVar(key, value)
 end
 
 --- Sets the entity's velocity. For entities with physics, consider using PhysObj:SetVelocity on the PhysObj of the entity.  
+--- ℹ **NOTE**: Actually binds to CBaseEntity::SetBaseVelocity() which sets the entity's velocity due to forces applied by other entities.  
+--- ⚠ **WARNING**: If applied to a player, this will actually **ADD** velocity, not set it.  
 --- @param velocity GVector @The new velocity to set.
 function GEntity:SetVelocity(velocity)
 end
 
 --- Sets the model and associated weapon to this viewmodel entity.  
 --- This is used internally when the player switches weapon.  
+--- ℹ **NOTE**: View models are not drawn without a weapons associated to them.  
+--- ⚠ **WARNING**: This will silently fail if the entity is not a viewmodel.  
 --- @param viewModel string @The model string to give to this viewmodel
 --- @param weapon GWeapon @The weapon entity to associate this viewmodel to.
 function GEntity:SetWeaponModel(viewModel, weapon)
 end
 
 --- Forces the entity to reconfigure its bones. You might need to call this after changing your model's scales or when manually drawing the entity multiple times at different positions.  
+--- ℹ **NOTE**: This calls the BuildBonePositions callback added via Entity:AddCallback, so avoid calling this function inside it to prevent an infinite loop.  
 function GEntity:SetupBones()
 end
 
 --- Initializes the class names of an entity's phoneme mappings (mouth movement data). This is called by default with argument "phonemes" when a flex-based entity (such as an NPC) is created.  
+--- ℹ **NOTE**: TF2 phonemes can be accessed by using a path such as "player/scout/phonemes/phonemes" , check TF2's "tf2_misc_dir.vpk" with GCFScape for other paths, however it seems that TF2 sounds don't contain phoneme definitions anymore after being converted to mp3 and only rely on VCD animations, this needs to be further investigated  
 --- @param fileRoot string @The file prefix of the phoneme mappings (relative to "garrysmod/expressions/").
 function GEntity:SetupPhonemeMappings(fileRoot)
 end
@@ -2692,6 +2818,7 @@ end
 --- Motion controllers are used internally to control other Entities' PhysObjects, such as the Gravity Gun, +use pickup and the Physics Gun.  
 --- This function should be called every time you recreate the Entity's PhysObj. Or alternatively you should call Entity:AddToMotionController on the new PhysObj.  
 --- Also see Entity:AddToMotionController and Entity:RemoveFromMotionController.  
+--- ℹ **NOTE**: Only works on a scripted Entity of anim type.  
 function GEntity:StartMotionController()
 end
 
@@ -2736,6 +2863,7 @@ function GEntity:StopSound(sound)
 end
 
 --- Applies the specified amount of damage to the entity with DMG_GENERIC flag.  
+--- ⚠ **WARNING**: Calling this function on the victim entity in ENTITY:OnTakeDamage can cause infinite loops.  
 --- @param damageAmount number @The amount of damage to be applied.
 --- @param attacker GEntity @The entity that initiated the attack that caused the damage.
 --- @param inflictor GEntity @The entity that applied the damage, eg
@@ -2743,6 +2871,7 @@ function GEntity:TakeDamage(damageAmount, attacker, inflictor)
 end
 
 --- Applies the damage specified by the damage info to the entity.  
+--- ⚠ **WARNING**: Calling this function on the victim entity in ENTITY:OnTakeDamage can cause infinite loops.  
 --- @param damageInfo GCTakeDamageInfo @The damage to apply.
 function GEntity:TakeDamageInfo(damageInfo)
 end
@@ -2754,6 +2883,7 @@ end
 
 --- Check if the given position or entity is within this entity's PVS.  
 --- See also Entity:IsDormant.  
+--- ℹ **NOTE**: The function won't take in to account Global.AddOriginToPVS and the like.  
 --- @param testPoint any @Entity or Vector to test against
 --- @return boolean @True if the testPoint is within our PVS.
 function GEntity:TestPVS(testPoint)
@@ -2773,6 +2903,7 @@ end
 function GEntity:TranslatePhysBoneToBone(physNum)
 end
 
+--- ℹ **NOTE**: Does nothing on server.  
 --- Animations will be handled purely clientside instead of a fixed animtime, enabling interpolation. This does not affect layers and gestures.  
 function GEntity:UseClientSideAnimation()
 end
@@ -2781,8 +2912,8 @@ end
 --- This will give the entity a "trigger box" that extends around its bounding box by boundSize units in X/Y and (boundSize / 2) in +Z (-Z remains the same).  
 --- The trigger box is world aligned and will work regardless of the object's solidity and collision group.  
 --- Valve use trigger boxes for all pickup items. Their bloat size is 24, a surprisingly large figure.  
---- <note>The trigger boxes can be made visible as a light blue box by using the **ent_bbox** console command while looking at the entity. Alternatively a classname or entity index can be used as the first argument.  
---- This requires **developer** to be set to **1**.</note>  
+--- ℹ **NOTE**: The trigger boxes can be made visible as a light blue box by using the **ent_bbox** console command while looking at the entity. Alternatively a classname or entity index can be used as the first argument.  
+--- This requires **developer** to be set to **1**.  
 --- @param enable boolean @Enable or disable the bounds.
 --- @param boundSize number @The distance/size of the trigger bounds.
 function GEntity:UseTriggerBounds(enable, boundSize)
@@ -2824,6 +2955,8 @@ function GEntity:WaterLevel()
 end
 
 --- Sets the activity of the entity's active weapon.  
+--- ℹ **NOTE**: This does nothing on the client.  
+--- ℹ **NOTE**: Only works for CBaseCombatCharacter entities, which includes players and NPCs.  
 --- @param act number @Activity number
 --- @param duration number @How long the animation should take in seconds.
 function GEntity:Weapon_SetActivity(act, duration)
