@@ -46,7 +46,6 @@ end
 --- Execute a named function within the player's set class  
 --- @param ply GPlayer @Player to execute function on.
 --- @param funcName string @Name of function.
---- @vararg any @Optional arguments
 --- @return any @The values returned by the called function.
 function player_manager.RunClass(ply, funcName, ...)
 end

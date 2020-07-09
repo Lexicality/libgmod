@@ -125,7 +125,6 @@ end
 --- 🦟 **BUG**: [Using players with this function will provide a gimped entity to the callback.](https://github.com/Facepunch/garrysmod/pull/1275)  
 --- @param identifier string @Identifier of the function within CallOnRemove
 --- @param removeFunc function @Function to be called on remove
---- @vararg any @Optional arguments to pass to removeFunc
 function GEntity:CallOnRemove(identifier, removeFunc, ...)
 end
 

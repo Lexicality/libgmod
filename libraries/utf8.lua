@@ -2,7 +2,7 @@
 --- Unless stated otherwise, all functions that expect a byte position as a parameter assume that the given position is either the start of a byte sequence or one plus the length of the subject string. As in the string library, negative indices count from the end of the string.  
 _G.utf8 = {}
 --- Receives zero or more integers, converts each one to its corresponding UTF-8 byte sequence and returns a string with the concatenation of all these sequences.  
---- @vararg any @Unicode code points to be converted in to a UTF-8 string.
+
 --- @return string @UTF-8 string generated from given arguments.
 function utf8.char(...)
 end

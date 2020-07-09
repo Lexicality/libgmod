@@ -122,7 +122,6 @@ end
 --- Register a function used for creating a duplicated constraint.  
 --- @param name string @The unique name of new constraint
 --- @param callback function @Function to be called when this constraint is created
---- @param ... any @Arguments passed to the callback function
 function duplicator.RegisterConstraint(name, callback, ...)
 end
 
@@ -130,7 +129,6 @@ end
 --- ℹ **NOTE**: Automatically calls duplicator.Allow for the entity class.  
 --- @param name string @The ClassName of the entity you wish to register a factory for
 --- @param func function @The factory function you want to have called
---- @vararg any @Strings of the names of arguments you want passed to function the from the Structures/EntityCopyData
 function duplicator.RegisterEntityClass(name, func, ...)
 end
 

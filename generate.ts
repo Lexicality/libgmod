@@ -184,8 +184,11 @@ function getArgDoc(arg: FuncArg): string {
     if (arg.description) {
         desc = "@" + trimArg(unpaginate(arg.description));
     }
-    if (arg.type == "vararg") {
-        return `--- @vararg any ${desc}`;
+    if (arg.type == "vararg" || arg.name == "...") {
+        // Vararg definitions seem to be broken rn
+        // https://github.com/sumneko/lua-language-server/issues/118
+        // return `--- @vararg any ${desc}`;
+        return "";
     }
     let name = getArgName(arg);
     let type = getTypeName(arg.type);
@@ -231,7 +234,12 @@ function handleFunc(func: Func, sepr?: string): undefined | string {
     }
     let args = "";
     if (func.arguments) {
-        args = func.arguments.map(getArgDoc).join("\n") + "\n";
+        args =
+            func.arguments
+                .map(getArgDoc)
+                // Some arguments might be deleted because they're bogus
+                .filter((l) => l)
+                .join("\n") + "\n";
     }
     let ret = "";
     if (func.returnValues && func.returnValues.length > 0) {

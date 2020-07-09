@@ -25,7 +25,6 @@ end
 --- @param ply GPlayer @The player whose numpad should be watched
 --- @param key number @The key, corresponding to Enums/KEY
 --- @param name string @The name of the function to run, corresponding with the one used in numpad.Register
---- @vararg any @Arguments to pass to the function passed to numpad.Register.
 --- @return number @The impulse ID
 function numpad.OnDown(ply, key, name, ...)
 end
@@ -35,7 +34,6 @@ end
 --- @param ply GPlayer @The player whose numpad should be watched
 --- @param key number @The key, corresponding to Enums/KEY
 --- @param name string @The name of the function to run, corresponding with the one used in numpad.Register
---- @vararg any @Arguments to pass to the function passed to numpad.Register.
 --- @return number @The impulse ID
 function numpad.OnUp(ply, key, name, ...)
 end

@@ -31,7 +31,7 @@ end
 --- jit.opt.start("-dce")  
 --- jit.opt.start("hotloop=10", "hotexit=2")  
 --- ```  
---- @vararg any 
+
 function jit.opt.start(...)
 end
 
