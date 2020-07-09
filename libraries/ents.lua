@@ -23,11 +23,11 @@ end
 
 --- Returns a table of all entities along the ray. The ray does not stop on collisions, meaning it will go through walls/entities.  
 --- @param start GVector @The start position of the ray
---- @param end GVector @The end position of the ray
+--- @param end_ GVector @The end position of the ray
 --- @param mins GVector @The mins corner of the ray
 --- @param maxs GVector @The maxs corner of the ray
 --- @return table @Table of the found entities.
-function ents.FindAlongRay(start, end, mins, maxs)
+function ents.FindAlongRay(start, end_, mins, maxs)
 end
 
 --- Gets all entities with the given class, supports wildcards. This works internally by iterating over ents.GetAll. Even if internally ents.GetAll is used, It is faster to use ents.FindByClass than ents.GetAll with a single class comparison.  

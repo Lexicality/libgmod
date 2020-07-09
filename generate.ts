@@ -18,6 +18,13 @@ const LUA_TYPES = [
     "vararg",
 ];
 
+const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
+    [/^function$/, "func"],
+    [/^end$/, "end_"],
+    [/ /g, "_"],
+    [/\//g, "_or_"],
+]);
+
 // urgh
 const ENTITY_CHILDREN = [
     //
@@ -134,11 +141,19 @@ function formatWarnings(text: string): string {
     );
 }
 
+function getArgName(arg: FuncArg): string {
+    let name = arg.name;
+    for (let [find, replace] of KEYWORD_REPLACEMENTS) {
+        name = name.replace(find, replace);
+    }
+    return name;
+}
+
 function getArgDef(arg: FuncArg): string {
     if (arg.type == "vararg") {
         return "...";
     }
-    return arg.name;
+    return getArgName(arg);
 }
 
 function getFuncDef(func: Func, sepr?: string) {
@@ -168,7 +183,9 @@ function getArgDoc(arg: FuncArg): string {
     if (arg.type == "vararg") {
         return `--- @vararg any ${desc}`;
     }
-    return `--- @param ${arg.name} ${getTypeName(arg.type)} ${desc}`;
+    let name = getArgName(arg);
+    let type = getTypeName(arg.type);
+    return `--- @param ${name} ${type} ${desc}`;
 }
 
 function getRetDoc(retvals: FuncRet): string {

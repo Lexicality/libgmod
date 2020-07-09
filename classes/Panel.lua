@@ -970,11 +970,11 @@ end
 --- ℹ **NOTE**: This doesn't apply to all VGUI elements and its function varies between them  
 --- For DLabel elements, you must use Panel:SetPaintBackgroundEnabled( true ) before applying the color.  
 --- This will not work on setup of the panel - you should use this function in a hook like PANEL:ApplySchemeSettings or PANEL:PerformLayout.  
---- @param r or color number @The red channel of the color, or a Color
+--- @param r_or_color number @The red channel of the color, or a Color
 --- @param g number @The green channel of the color.
 --- @param b number @The blue channel of the color.
 --- @param a number @The alpha channel of the color.
-function GPanel:SetBGColor(r or color, g, b, a)
+function GPanel:SetBGColor(r_or_color, g, b, a)
 end
 
 --- Sets the position of the caret (or text cursor) in a text-based panel object.  
@@ -1074,11 +1074,11 @@ end
 --- For a Label or RichText, this is the color of its text.  
 --- This function calls Panel:SetFGColorEx internally.  
 --- ℹ **NOTE**: This doesn't apply to all VGUI elements (such as DLabel) and its function varies between them  
---- @param r or color number @The red channel of the color, or a Color
+--- @param r_or_color number @The red channel of the color, or a Color
 --- @param g number @The green channel of the color.
 --- @param b number @The blue channel of the color.
 --- @param a number @The alpha channel of the color.
-function GPanel:SetFGColor(r or color, g, b, a)
+function GPanel:SetFGColor(r_or_color, g, b, a)
 end
 
 --- Sets the panel that owns this FocusNavGroup to be the root in the focus traversal hierarchy.  
@@ -1093,8 +1093,8 @@ function GPanel:SetFontInternal(fontName)
 end
 
 --- Allows you to set HTML code within a panel.  
---- @param HTML code string @The code to set.
-function GPanel:SetHTML(HTML code)
+--- @param HTML_code string @The code to set.
+function GPanel:SetHTML(HTML_code)
 end
 
 --- Sets the height of the panel.  

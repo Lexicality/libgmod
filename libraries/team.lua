@@ -110,9 +110,9 @@ function team.TotalDeaths(teamIndex)
 end
 
 --- Get's the total frags in a team.  
---- @param Entity or number GEntity @Entity or number.
+--- @param Entity_or_number GEntity @Entity or number.
 --- @return number @index
-function team.TotalFrags(Entity or number)
+function team.TotalFrags(Entity_or_number)
 end
 
 --- Returns true if the given team index is valid  

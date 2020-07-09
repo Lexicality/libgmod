@@ -29,9 +29,9 @@ end
 
 --- Returns whether or not the second passed string matches the end of the first.  
 --- @param str string @The string whose end is to be checked.
---- @param end string @The string to be matched with the end of the first.
+--- @param end_ string @The string to be matched with the end of the first.
 --- @return boolean @`true` if the first string ends with the second, or the second is empty, otherwise `false`.
-function string.EndsWith(str, end)
+function string.EndsWith(str, end_)
 end
 
 --- Splits a string up wherever it finds the given separator.  

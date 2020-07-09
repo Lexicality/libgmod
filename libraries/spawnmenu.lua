@@ -25,11 +25,11 @@ end
 
 --- Inserts a new tab into the CreationMenus table, which will be used by the creation menu to generate its tabs (Spawnlists, Weapons, Entities, etc.)  
 --- @param name string @What text will appear on the tab (I.E Spawnlists).
---- @param function function @The function called to generate the content of the tab.
+--- @param func function @The function called to generate the content of the tab.
 --- @param material string @Path to the material that will be used as an icon on the tab.
 --- @param order number @The order in which this tab should be shown relative to the other tabs on the creation menu.
 --- @param tooltip string @The tooltip to be shown for this tab.
-function spawnmenu.AddCreationTab(name, function, material, order, tooltip)
+function spawnmenu.AddCreationTab(name, func, material, order, tooltip)
 end
 
 --- Used to add addon spawnlists to the spawnmenu tree. This function should be called within SANDBOX:PopulatePropMenu.  

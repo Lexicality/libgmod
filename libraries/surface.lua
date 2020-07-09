@@ -160,9 +160,9 @@ end
 
 --- Returns the texture id of the material with the given name/path.  
 --- ℹ **NOTE**: This function will not work with .png or .jpg images. For that, see Global.Material  
---- @param name/path string @Name or path of the texture.
+--- @param name_or_path string @Name or path of the texture.
 --- @return number @The texture ID
-function surface.GetTextureID(name/path)
+function surface.GetTextureID(name_or_path)
 end
 
 --- Returns the size of the texture with the associated texture ID.  

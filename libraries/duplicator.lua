@@ -129,9 +129,9 @@ end
 --- This allows you to specify a specific function to be run when your SENT is pasted with the duplicator, instead of relying on the generic automatic functions.  
 --- ℹ **NOTE**: Automatically calls duplicator.Allow for the entity class.  
 --- @param name string @The ClassName of the entity you wish to register a factory for
---- @param function function @The factory function you want to have called
+--- @param func function @The factory function you want to have called
 --- @vararg any @Strings of the names of arguments you want passed to function the from the Structures/EntityCopyData
-function duplicator.RegisterEntityClass(name, function, ...)
+function duplicator.RegisterEntityClass(name, func, ...)
 end
 
 --- This allows you to register tweaks to entities. For instance, if you were making an "unbreakable" addon, you would use this to enable saving the "unbreakable" state of entities between duplications.  
