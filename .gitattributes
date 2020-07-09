@@ -1,0 +1,9 @@
+* text=auto
+
+# Technically these are all generated files too, but I want this to show up as
+# a lua repository and show their changes in commits, so not setting it as
+# such.
+# EOL is always CR because of how they're generated.
+*.lua text eol=cr
+# Hide the giant json files
+*.json text linguist-generated
