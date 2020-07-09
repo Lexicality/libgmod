@@ -21,8 +21,8 @@ const LUA_TYPES = [
 const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/^function$/, "func"],
     [/^end$/, "end_"],
-    [/ /g, "_"],
     [/\//g, "_or_"],
+    [/[^\w.]/g, "_"],
 ]);
 
 // urgh
@@ -45,6 +45,8 @@ function getTypeName(ret: string): string {
         // I can't think of a better way of handling this rn
         return "_G";
     }
+    // Get rid of any creative type names
+    ret = ret.replace(/[^\w.]/g, "_");
     return GMOD_TYPES[ret] ?? ret;
 }
 

@@ -163,7 +163,7 @@ function util.GetPData(steamID, name, default)
 end
 
 --- Creates a new PixVis handle. See util.PixelVisible.  
---- @return pixelvis handle t @PixVis
+--- @return pixelvis_handle_t @PixVis
 function util.GetPixelVisibleHandle()
 end
 
@@ -359,7 +359,7 @@ end
 --- Returns the visibility of a sphere in the world.  
 --- @param position GVector @The center of the visibility test.
 --- @param radius number @The radius of the sphere to check for visibility.
---- @param PixVis pixelvis handle t @The PixVis handle created with util.GetPixelVisibleHandle
+--- @param PixVis pixelvis_handle_t @The PixVis handle created with util.GetPixelVisibleHandle
 --- @return number @Visibility, ranges from 0-1
 function util.PixelVisible(position, radius, PixVis)
 end

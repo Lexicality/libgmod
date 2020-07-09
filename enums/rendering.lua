@@ -392,3 +392,6 @@ TEXFILTER.ANISOTROPIC = 3
 _G.color_white = Color(255, 255, 255, 255)
 _G.color_black = Color(0, 0, 0, 255)
 _G.color_transparent = Color(255, 255, 255, 0)
+
+--- @class pixelvis_handle_t
+local pixelvis_handle_t = {}
