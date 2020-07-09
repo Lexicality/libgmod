@@ -47,7 +47,7 @@ end
 --- @param ply GPlayer @Player to execute function on.
 --- @param funcName string @Name of function.
 --- @vararg any @Optional arguments
---- @return vararg @The values returned by the called function.
+--- @return any @The values returned by the called function.
 function player_manager.RunClass(ply, funcName, ...)
 end
 

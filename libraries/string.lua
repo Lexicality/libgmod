@@ -215,7 +215,7 @@ end
 --- @param string string @The string to get the chars from.
 --- @param startPos number @The first character of the string to get the byte of.
 --- @param endPos number @The last character of the string to get the byte of.
---- @return vararg @Numerical bytes
+--- @return any @Numerical bytes
 function string.byte(string, startPos, endPos)
 end
 
@@ -289,7 +289,7 @@ end
 --- @param string string @String which should be searched in for matches.
 --- @param pattern string @The pattern that defines what should be matched.
 --- @param startPosition number @The start index to start the matching from, can be negative to start the match from a position relative to the end.
---- @return vararg @Matched text(s)
+--- @return any @Matched text(s)
 function string.match(string, pattern, startPosition)
 end
 

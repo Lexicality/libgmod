@@ -12,7 +12,7 @@ end
 --- @param eventName string @The event to call hooks for
 --- @param gamemodeTable table @If the gamemode is specified, the gamemode hook within will be called, otherwise not
 --- @vararg any @The arguments to be passed to the hooks
---- @return vararg @Return data from called hooks
+--- @return any @Return data from called hooks
 function hook.Call(eventName, gamemodeTable, ...)
 end
 

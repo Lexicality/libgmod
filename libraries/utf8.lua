@@ -11,7 +11,7 @@ end
 --- @param string string @The string that you will get the code(s) from.
 --- @param startPos number @The starting byte of the string to get the codepoint of.
 --- @param endPos number @The ending byte of the string to get the codepoint of.
---- @return vararg @The codepoint number(s).
+--- @return any @The codepoint number(s).
 function utf8.codepoint(string, startPos, endPos)
 end
 

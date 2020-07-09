@@ -38,6 +38,10 @@ const ENTITY_CHILDREN = [
 let GMOD_TYPES: { [key: string]: string } = {};
 
 function getTypeName(ret: string): string {
+    if (ret == "vararg") {
+        // TODO: I don't think emmylua lets you mark returns as arbitrary varargs
+        return "any";
+    }
     return GMOD_TYPES[ret] ?? ret;
 }
 
