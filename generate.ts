@@ -4,8 +4,6 @@ import libfs = require("fs");
 import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
 const fs = libfs.promises;
 import mkdirp = require("mkdirp");
-import { table } from "console";
-import { stringify } from "querystring";
 
 const LUA_TYPES = [
     "any",
