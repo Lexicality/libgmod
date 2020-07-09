@@ -4,7 +4,7 @@
 --- @param key any @The key of the table to be get/set.
 --- @param name string @The name of the functions (will be prefixed with Get and Set).
 --- @param force number @The type the setter should force to (uses Enums/FORCE).
-function AccessorFunc(tab, key, name, force)
+function _G.AccessorFunc(tab, key, name, force)
 end
 
 --- Marks a Lua file to be sent to clients when they join the server. Doesn't do anything on the client - this means you can use it in a shared file without problems.  
@@ -12,12 +12,12 @@ end
 --- ℹ **NOTE**: This function is not needed for scripts located in **lua/autorun/** and **lua/autorun/client/**: they are automatically sent to clients.  
 --- ℹ **NOTE**: You can add up to 8192 files.  
 --- @param file string @The name/path to the Lua file that should be sent, relative to the garrysmod/lua folder
-function AddCSLuaFile(file)
+function _G.AddCSLuaFile(file)
 end
 
 --- Adds the specified vector to the PVS which is currently building. This allows all objects in visleafs visible from that vector to be drawn.  
 --- @param position GVector @The origin to add.
-function AddOriginToPVS(position)
+function _G.AddOriginToPVS(position)
 end
 
 --- This function creates a World Tip, similar to the one shown when aiming at a Thruster where it shows you its force.  
@@ -30,19 +30,19 @@ end
 --- @param dieTime number @**This argument is no longer used**; when you add a World Tip it will always last only 0.05 seconds
 --- @param pos GVector @Where in the world you want the World Tip to be drawn
 --- @param ent GEntity @Which entity you want to associate with the World Tip
-function AddWorldTip(entindex, text, dieTime, pos, ent)
+function _G.AddWorldTip(entindex, text, dieTime, pos, ent)
 end
 
 --- Defines a global entity class variable with an automatic value in order to prevent collisions with other Enums/CLASS. You should prefix your variable with CLASS_ for consistency.  
 --- @param name string @The name of the new enum/global variable.
-function Add_NPC_Class(name)
+function _G.Add_NPC_Class(name)
 end
 
 --- Loads the specified image from the /cache folder, used in combination steamworks.Download.  
 --- Most addons will provide a 512x512 png image.  
 --- @param name string @The name of the file.
 --- @return GIMaterial @The material, returns nil if the cached file is not an image.
-function AddonMaterial(name)
+function _G.AddonMaterial(name)
 end
 
 --- Creates an Angle object.  
@@ -50,30 +50,30 @@ end
 --- @param yaw number @The yaw value of the angle.
 --- @param roll number @The roll value of the angle.
 --- @return GAngle @Created angle
-function Angle(pitch, yaw, roll)
+function _G.Angle(pitch, yaw, roll)
 end
 
 --- Returns an angle with a randomized pitch, yaw, and roll between min(inclusive), max(exclusive).  
 --- @param min number @Min bound inclusive.
 --- @param max number @Max bound exclusive.
 --- @return GAngle @The randomly generated angle.
-function AngleRand(min, max)
+function _G.AngleRand(min, max)
 end
 
 --- Sends the specified Lua code to all connected clients and executes it.  
 --- ℹ **NOTE**: If you need to use this function more than once consider using net library. Send net message and make the entire code you want to execute in net.Receive on client.  
 --- @param code string @The code to be executed
-function BroadcastLua(code)
+function _G.BroadcastLua(code)
 end
 
 --- Dumps the networked variables of all entities into one table and returns it.  
 --- @return table @Format:
-function BuildNetworkedVarsTable()
+function _G.BuildNetworkedVarsTable()
 end
 
 --- Automatically called by the engine when a panel is hovered over with the mouse  
 --- @param panel GPanel @Panel that has been hovered over
-function ChangeTooltip(panel)
+function _G.ChangeTooltip(panel)
 end
 
 --- Creates a non physical entity that only exists on the client. See also ents.CreateClientProp.  
@@ -83,7 +83,7 @@ end
 --- @param model string @The file path to the model
 --- @param renderGroup number @The render group of the entity for the clientside leaf system, see Enums/RENDERGROUP.
 --- @return GCSEnt @Created client-side model
-function ClientsideModel(model, renderGroup)
+function _G.ClientsideModel(model, renderGroup)
 end
 
 --- Creates a fully clientside ragdoll.  
@@ -94,18 +94,18 @@ end
 --- @param model string @The file path to the model
 --- @param renderGroup number @The Enums/RENDERGROUP to assign.
 --- @return GCSEnt @The newly created client-side ragdoll
-function ClientsideRagdoll(model, renderGroup)
+function _G.ClientsideRagdoll(model, renderGroup)
 end
 
 --- Creates a scene entity based on the scene name and the entity.  
 --- @param name string @The name of the scene.
 --- @param targetEnt GEntity @The entity to play the scene on.
 --- @return GCSEnt @C_SceneEntity
-function ClientsideScene(name, targetEnt)
+function _G.ClientsideScene(name, targetEnt)
 end
 
 --- Closes all Derma menus that have been passed to Global.RegisterDermaMenuForClose and calls GM:CloseDermaMenus  
-function CloseDermaMenus()
+function _G.CloseDermaMenus()
 end
 
 --- Creates a Color.  
@@ -114,38 +114,38 @@ end
 --- @param b number @An integer from 0-255 describing the blue value of the color.
 --- @param a number @An integer from 0-255 describing the alpha (transparency) of the color.
 --- @return table @The created Color.
-function Color(r, g, b, a)
+function _G.Color(r, g, b, a)
 end
 
 --- Returns a new Color with the RGB components of the given Color and the alpha value specified.  
 --- @param color table @The Color from which to take RGB values
 --- @param alpha number @The new alpha value, a number between 0 and 255
 --- @return table @The new Color with the modified alpha value
-function ColorAlpha(color, alpha)
+function _G.ColorAlpha(color, alpha)
 end
 
 --- Creates a Color with randomized red, green, and blue components. If the alpha argument is true, alpha will also be randomized.  
 --- @param a boolean @Should alpha be randomized.
 --- @return table @The created Color.
-function ColorRand(a)
+function _G.ColorRand(a)
 end
 
 --- Converts a Color into HSL color space.  
 --- @param color table @The Color.
 --- @return number, number, number
-function ColorToHSL(color)
+function _G.ColorToHSL(color)
 end
 
 --- Converts a Color into HSV color space.  
 --- @param color table @The Color.
 --- @return number, number, number
-function ColorToHSV(color)
+function _G.ColorToHSV(color)
 end
 
 --- Attempts to compile the given file. If successful, returns a function that can be called to perform the actual execution of the script.  
 --- @param path string @Path to the file, relative to the garrysmod/lua/ directory.
 --- @return function @The function which executes the script.
-function CompileFile(path)
+function _G.CompileFile(path)
 end
 
 --- This function will compile the code argument as lua code and return a function that will execute that code.  
@@ -154,13 +154,13 @@ end
 --- @param identifier string @An identifier in case an error is thrown
 --- @param HandleError boolean @If false this function will return an error string instead of throwing an error.
 --- @return function @A function that, when called, will execute the given code
-function CompileString(code, identifier, HandleError)
+function _G.CompileString(code, identifier, HandleError)
 end
 
 --- Returns whether a ConVar with the given name exists or not  
 --- @param name string @Name of the ConVar.
 --- @return boolean @True if the ConVar exists, false otherwise.
-function ConVarExists(name)
+function _G.ConVarExists(name)
 end
 
 --- Makes a clientside-only console variable  
@@ -174,7 +174,7 @@ end
 --- @param min number @If set, the convar cannot be changed to a number lower than this value.
 --- @param max number @If set, the convar cannot be changed to a number higher than this value.
 --- @return GConVar @Created convar.
-function CreateClientConVar(name, default, shouldsave, userinfo, helptext, min, max)
+function _G.CreateClientConVar(name, default, shouldsave, userinfo, helptext, min, max)
 end
 
 --- Creates a console variable (ConVar), in general these are for things like gamemode/server settings.  
@@ -186,7 +186,7 @@ end
 --- @param min number @If set, the ConVar cannot be changed to a number lower than this value.
 --- @param max number @If set, the ConVar cannot be changed to a number higher than this value.
 --- @return GConVar @The convar created.
-function CreateConVar(name, value, flags, helptext, min, max)
+function _G.CreateConVar(name, value, flags, helptext, min, max)
 end
 
 --- Creates a new material with the specified name and shader.  
@@ -198,7 +198,7 @@ end
 --- @param shaderName string @The shader name
 --- @param materialData table @Key-value table that contains shader parameters and proxies
 --- @return GIMaterial @Created material
-function CreateMaterial(name, shaderName, materialData)
+function _G.CreateMaterial(name, shaderName, materialData)
 end
 
 --- Creates a new particle system.  
@@ -209,7 +209,7 @@ end
 --- @param entAttachment number @The attachment ID on the entity to attach the particle system to
 --- @param offset GVector @The offset from the Entity:GetPos of the entity we are attaching this CP to.
 --- @return GCNewParticleEffect @The created particle system.
-function CreateParticleSystem(ent, effect, partAttachment, entAttachment, offset)
+function _G.CreateParticleSystem(ent, effect, partAttachment, entAttachment, offset)
 end
 
 --- Creates a new PhysCollide from the given bounds.  
@@ -217,13 +217,13 @@ end
 --- @param mins GVector @Min corner of the box
 --- @param maxs GVector @Max corner of the box
 --- @return GPhysCollide @The new PhysCollide
-function CreatePhysCollideBox(mins, maxs)
+function _G.CreatePhysCollideBox(mins, maxs)
 end
 
 --- Creates PhysCollide objects for every physics object the model has. The model must be precached with util.PrecacheModel before being used with this function.  
 --- @param modelName string @Model path to get the collision objects of.
 --- @return table @Table of PhysCollide objects
-function CreatePhysCollidesFromModel(modelName)
+function _G.CreatePhysCollidesFromModel(modelName)
 end
 
 --- Returns a sound parented to the specified entity.  
@@ -232,13 +232,13 @@ end
 --- @param soundName string @The sound to play.
 --- @param filter GCRecipientFilter @A CRecipientFilter of the players that will have this sound networked to them
 --- @return GCSoundPatch @The sound object
-function CreateSound(targetEnt, soundName, filter)
+function _G.CreateSound(targetEnt, soundName, filter)
 end
 
 --- Creates and returns a new DSprite element with the supplied material.  
 --- @param material GIMaterial @Material the sprite should draw.
 --- @return GPanel @The new DSprite element.
-function CreateSprite(material)
+function _G.CreateSprite(material)
 end
 
 --- Returns the uptime of the server in seconds (to at least 4 decimal places)  
@@ -249,7 +249,7 @@ end
 --- This is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this  
 --- 🦟 **BUG**: [This returns 0 in GM:PlayerAuthed.](https://github.com/Facepunch/garrysmod-issues/issues/3026)  
 --- @return number @Time synced with the game server.
-function CurTime()
+function _G.CurTime()
 end
 
 --- This is not a function. This is a preprocessor keyword that translates to:  
@@ -259,39 +259,39 @@ end
 --- If you type `DEFINE_BASECLASS("my_weapon")` in your script.  
 --- See baseclass.Get for more information.  
 --- @param value string @Baseclass name
-function DEFINE_BASECLASS(value)
+function _G.DEFINE_BASECLASS(value)
 end
 
 --- Cancels current DOF post-process effect started with Global.DOF_Start  
-function DOF_Kill()
+function _G.DOF_Kill()
 end
 
 --- Cancels any existing DOF post-process effects.  
 --- Begins the DOF post-process effect.  
-function DOF_Start()
+function _G.DOF_Start()
 end
 
 --- Returns an CTakeDamageInfo object.  
 --- 🦟 **BUG**: [This does not create a unique object, but instead returns a shared reference. That means you cannot use two or more of these objects at once.](https://github.com/Facepunch/garrysmod-issues/issues/2771)  
 --- @return GCTakeDamageInfo @The CTakeDamageInfo object.
-function DamageInfo()
+function _G.DamageInfo()
 end
 
 --- Writes text to the right hand side of the screen, like the old error system. Messages disappear after a couple of seconds.  
 --- @param slot number @The location on the right hand screen to write the debug info to
 --- @param info string @The debugging information to be written to the screen
-function DebugInfo(slot, info)
+function _G.DebugInfo(slot, info)
 end
 
 --- Loads and registers the specified gamemode, setting the GM table's DerivedFrom field to the value provided, if the table exists. The DerivedFrom field is used post-gamemode-load as the "derived" parameter for gamemode.Register.  
 --- @param base string @Gamemode name to derive from.
-function DeriveGamemode(base)
+function _G.DeriveGamemode(base)
 end
 
 --- Creates a DMenu and closes any current menus.  
 --- @param parent GPanel @The panel to parent the created menu to.
 --- @return GPanel @The created DMenu
-function DermaMenu(parent)
+function _G.DermaMenu(parent)
 end
 
 --- Creates a new derma animation.  
@@ -299,13 +299,13 @@ end
 --- @param panel GPanel @Panel to run the animation on
 --- @param func function @Function to call to process the animation
 --- @return table @A lua metatable containing four methods:
-function Derma_Anim(name, panel, func)
+function _G.Derma_Anim(name, panel, func)
 end
 
 --- Draws background blur around the given panel.  
 --- @param panel GPanel @Panel to draw the background blur around
 --- @param startTime number @Time that the blur began being painted
-function Derma_DrawBackgroundBlur(panel, startTime)
+function _G.Derma_DrawBackgroundBlur(panel, startTime)
 end
 
 --- Creates panel method that calls the supplied Derma skin hook via derma.SkinHook  
@@ -313,7 +313,7 @@ end
 --- @param functionName string @Name of panel function to create
 --- @param hookName string @Name of Derma skin hook to call within the function
 --- @param typeName string @Type of element to call Derma skin hook for
-function Derma_Hook(panel, functionName, hookName, typeName)
+function _G.Derma_Hook(panel, functionName, hookName, typeName)
 end
 
 --- Makes the panel (usually an input of sorts) respond to changes in console variables by adding next functions to the panel:  
@@ -327,7 +327,7 @@ end
 --- Panel:ConVarNumberThink  
 --- in its PANEL:Think hook and should call Panel:ConVarChanged when the panel's value has changed.  
 --- @param target GPanel @The panel the functions should be added to.
-function Derma_Install_Convar_Functions(target)
+function _G.Derma_Install_Convar_Functions(target)
 end
 
 --- Creates a derma window to display information  
@@ -335,7 +335,7 @@ end
 --- @param Title string @The title of the created panel.
 --- @param Button string @The text of the button to close the panel.
 --- @return GPanel @The created DFrame
-function Derma_Message(Text, Title, Button)
+function _G.Derma_Message(Text, Title, Button)
 end
 
 --- Shows a message box in the middle of the screen, with up to 4 buttons they can press.  
@@ -350,7 +350,7 @@ end
 --- @param btn4text string @The text to display on the third button
 --- @param btn4func function @The function to run if the user clicks the fourth button.
 --- @return GPanel @The Panel object of the created window.
-function Derma_Query(text, title, btn1text, btn1func, btn2text, btn2func, btn3text, btn3func, btn4text, btn4func)
+function _G.Derma_Query(text, title, btn1text, btn1func, btn2text, btn2func, btn3text, btn3func, btn4text, btn4func)
 end
 
 --- Creates a derma window asking players to input a string.  
@@ -362,14 +362,14 @@ end
 --- @param confirmText string @Allows you to override text of the "OK" button
 --- @param cancelText string @Allows you to override text of the "Cancel" button
 --- @return GPanel @The created DFrame
-function Derma_StringRequest(title, subtitle, default, confirm, cancel, confirmText, cancelText)
+function _G.Derma_StringRequest(title, subtitle, default, confirm, cancel, confirmText, cancelText)
 end
 
 --- Sets whether rendering should be limited to being inside a panel or not.  
 --- See also Panel:NoClipping.  
 --- @param disable boolean @Whether or not clipping should be disabled
 --- @return boolean @Whether the clipping was enabled or not before this function call
-function DisableClipping(disable)
+function _G.DisableClipping(disable)
 end
 
 --- Draws the bloom shader, which creates a glowing effect from bright objects.  
@@ -382,36 +382,36 @@ end
 --- @param Red number @How much red to multiply with the glowing color
 --- @param Green number @How much green to multiply with the glowing color
 --- @param Blue number @How much blue to multiply with the glowing color
-function DrawBloom(Darken, Multiply, SizeX, SizeY, Passes, ColorMultiply, Red, Green, Blue)
+function _G.DrawBloom(Darken, Multiply, SizeX, SizeY, Passes, ColorMultiply, Red, Green, Blue)
 end
 
 --- Draws the Color Modify shader, which can be used to adjust colors on screen.  
 --- @param modifyParameters table @Color modification parameters
-function DrawColorModify(modifyParameters)
+function _G.DrawColorModify(modifyParameters)
 end
 
 --- Draws a material overlay on the screen.  
 --- @param Material string @This will be the material that is drawn onto the screen.
 --- @param RefractAmount number @This will adjust how much the material will refract your screen.
-function DrawMaterialOverlay(Material, RefractAmount)
+function _G.DrawMaterialOverlay(Material, RefractAmount)
 end
 
 --- Creates a motion blur effect by drawing your screen multiple times.  
 --- @param AddAlpha number @How much alpha to change per frame.
 --- @param DrawAlpha number @How much alpha the frames will have
 --- @param Delay number @Determines the amount of time between frames to capture.
-function DrawMotionBlur(AddAlpha, DrawAlpha, Delay)
+function _G.DrawMotionBlur(AddAlpha, DrawAlpha, Delay)
 end
 
 --- Draws the sharpen shader, which creates more contrast.  
 --- @param Contrast number @How much contrast to create.
 --- @param Distance number @How large the contrast effect will be.
-function DrawSharpen(Contrast, Distance)
+function _G.DrawSharpen(Contrast, Distance)
 end
 
 --- Draws the sobel shader, which detects edges and draws a black border.  
 --- @param Threshold number @Determines the threshold of edges
-function DrawSobel(Threshold)
+function _G.DrawSobel(Threshold)
 end
 
 --- Renders the post-processing effect of beams of light originating from the map's sun. Utilises the "pp/sunbeams" material  
@@ -420,24 +420,24 @@ end
 --- @param sunSize number @$sunsize property for sunbeams material
 --- @param sunX number @$sunx property for sunbeams material
 --- @param sunY number @$suny property for sunbeams material
-function DrawSunbeams(darken, multiplier, sunSize, sunX, sunY)
+function _G.DrawSunbeams(darken, multiplier, sunSize, sunX, sunY)
 end
 
 --- Draws the texturize shader, which replaces each pixel on your screen with a different part of the texture depending on its brightness. See g_texturize for information on making the texture.  
 --- @param Scale number @Scale of the texture
 --- @param BaseTexture number @This will be the texture to use in the effect
-function DrawTexturize(Scale, BaseTexture)
+function _G.DrawTexturize(Scale, BaseTexture)
 end
 
 --- Draws the toy town shader, which blurs the top and bottom of your screen. This can make very large objects look like toys, hence the name.  
 --- @param Passes number @An integer determining how many times to draw the effect
 --- @param Height number @The amount of screen which should be blurred on the top and bottom.
-function DrawToyTown(Passes, Height)
+function _G.DrawToyTown(Passes, Height)
 end
 
 --- Drops the specified entity if it is being held by any player with Gravity Gun or +use pickup.  
 --- @param ent GEntity @The entity to drop.
-function DropEntityIfHeld(ent)
+function _G.DropEntityIfHeld(ent)
 end
 
 --- Creates or replaces a dynamic light with the given id.  
@@ -447,13 +447,13 @@ end
 --- @param index number @An unsigned Integer
 --- @param elight boolean @Allocates an elight instead of a dlight
 --- @return table @A DynamicLight structured table
-function DynamicLight(index, elight)
+function _G.DynamicLight(index, elight)
 end
 
 --- Returns a CEffectData object to be used with util.Effect.  
 --- 🦟 **BUG**: [This does not create a unique object, but instead returns a shared reference. That means you cannot use two or more of these objects at once.](https://github.com/Facepunch/garrysmod-issues/issues/2771)  
 --- @return GCEffectData @The CEffectData object.
-function EffectData()
+function _G.EffectData()
 end
 
 --- A compact 'if then else'. This is *almost* equivalent to (`condition` and `truevar` or `falsevar`) in Lua.  
@@ -462,7 +462,7 @@ end
 --- @param truevar any @If the condition isn't nil/false, returns this value.
 --- @param falsevar any @If the condition is nil/false, returns this value.
 --- @return any @The result.
-function Either(condition, truevar, falsevar)
+function _G.Either(condition, truevar, falsevar)
 end
 
 --- Plays a sentence from `scripts/sentences.txt`  
@@ -474,7 +474,7 @@ end
 --- @param soundLevel number @The sound level of the sound, see Enums/SNDLVL
 --- @param soundFlags number @The flags of the sound, see Enums/SND
 --- @param pitch number @The pitch of the sound, 0-255
-function EmitSentence(soundName, position, entity, channel, volume, soundLevel, soundFlags, pitch)
+function _G.EmitSentence(soundName, position, entity, channel, volume, soundLevel, soundFlags, pitch)
 end
 
 --- Emits the specified sound at the specified position.  
@@ -488,12 +488,12 @@ end
 --- @param soundLevel number @The sound level of the sound, see Enums/SNDLVL
 --- @param soundFlags number @The flags of the sound, see Enums/SND
 --- @param pitch number @The pitch of the sound, 0-255
-function EmitSound(soundName, position, entity, channel, volume, soundLevel, soundFlags, pitch)
+function _G.EmitSound(soundName, position, entity, channel, volume, soundLevel, soundFlags, pitch)
 end
 
 --- Removes the currently active tool tip from the screen.  
 --- @param panel GPanel @This is the panel that has a tool tip.
-function EndTooltip(panel)
+function _G.EndTooltip(panel)
 end
 
 --- Returns the entity with the matching Entity:EntIndex.  
@@ -501,14 +501,14 @@ end
 --- ℹ **NOTE**: In examples on this wiki, **Entity( 1 )** is used when a player entity is needed (see ). In singleplayer and listen servers, **Entity( 1 )** will always be the first player. In dedicated servers, however, **Entity( 1 )** won't always be a valid player.  
 --- @param entityIndex number @The entity index.
 --- @return GEntity @The entity if it exists, or NULL if it doesn't.
-function Entity(entityIndex)
+function _G.Entity(entityIndex)
 end
 
 --- Throws an error. This is currently an alias of Global.ErrorNoHalt despite it once throwing a halting error like error without the stack trace appended.  
 --- 🦟 **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
 --- 🦟 **BUG**: [This function throws a non-halting error instead of a halting error.](https://github.com/Facepunch/garrysmod-issues/issues/2113)  
 
-function Error(...)
+function _G.Error(...)
 end
 
 --- Throws a Lua error but does not break out of the current call stack.  
@@ -516,25 +516,25 @@ end
 --- Essentially similar if not equivalent to Global.Msg.  
 --- 🦟 **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
 
-function ErrorNoHalt(...)
+function _G.ErrorNoHalt(...)
 end
 
 --- Returns the angles of the current render context as calculated by GM:CalcView.  
 --- 🦟 **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
 --- @return GAngle @The angle of the currently rendered scene.
-function EyeAngles()
+function _G.EyeAngles()
 end
 
 --- Returns the origin of the current render context as calculated by GM:CalcView.  
 --- 🦟 **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
 --- @return GVector @Camera position.
-function EyePos()
+function _G.EyePos()
 end
 
 --- Returns the normal vector of the current render context as calculated by GM:CalcView, similar to Global.EyeAngles.  
 --- 🦟 **BUG**: [This function is only reliable inside rendering hooks.](https://github.com/Facepunch/garrysmod-issues/issues/2516)  
 --- @return GVector @View direction of the currently rendered scene.
-function EyeVector()
+function _G.EyeVector()
 end
 
 --- Returns the meta table for the class with the matching name.  
@@ -543,79 +543,79 @@ end
 --- You can find a list of meta tables that can be retrieved with this function on Enums/TYPE. The name in the description is the string to use with this function.  
 --- @param metaName string @The object type to retrieve the meta table of.
 --- @return table @The corresponding meta table.
-function FindMetaTable(metaName)
+function _G.FindMetaTable(metaName)
 end
 
 --- Returns the tool-tip text and tool-tip-panel (if any) of the given panel as well as itself  
 --- @param panel GPanel @Panel to find tool-tip of
 --- @return string, GPanel, GPanel
-function FindTooltip(panel)
+function _G.FindTooltip(panel)
 end
 
 --- Formats the specified values into the string given. Same as string.format.  
 --- @param format string @The string to be formatted
 --- @return string @The formatted string
-function Format(format, ...)
+function _G.Format(format, ...)
 end
 
 --- Returns the number of frames rendered since the game was launched.  
-function FrameNumber()
+function _G.FrameNumber()
 end
 
 --- Returns the Global.CurTime-based time in seconds it took to render the last frame.  
 --- This should be used for frame/tick based timing, such as movement prediction or animations.  
 --- For real-time-based frame time that isn't affected by host_timescale, use Global.RealFrameTime. RealFrameTime is more suited for things like GUIs or HUDs.  
 --- @return number @time (in seconds)
-function FrameTime()
+function _G.FrameTime()
 end
 
 --- Gets the ConVar with the specified name.  
 --- ℹ **NOTE**: This function uses Global.GetConVar_Internal internally, but caches the result in Lua for quicker lookups.  
 --- @param name string @Name of the ConVar to get
 --- @return GConVar @The ConVar object, or nil if no such ConVar was found.
-function GetConVar(name)
+function _G.GetConVar(name)
 end
 
 --- 🛑 **DEPRECATED**: Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetInt or ConVar:GetFloat on it.  
 --- Gets the numeric value ConVar with the specified name.  
 --- @param name string @Name of the ConVar to get.
 --- @return number @The ConVar's value.
-function GetConVarNumber(name)
+function _G.GetConVarNumber(name)
 end
 
 --- 🛑 **DEPRECATED**: Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetString on it.  
 --- Gets the string value ConVar with the specified name.  
 --- @param name string @Name of the ConVar to get.
 --- @return string @The ConVar's value.
-function GetConVarString(name)
+function _G.GetConVarString(name)
 end
 
 --- Returns an angle that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
 --- @param default GAngle @The value to return if the global value is not set.
 --- @return GAngle @The global value, or default if the global is not set.
-function GetGlobalAngle(index, default)
+function _G.GetGlobalAngle(index, default)
 end
 
 --- Returns a boolean that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
 --- @param default boolean @The value to return if the global value is not set.
 --- @return boolean @The global value, or the default if the global value is not set.
-function GetGlobalBool(index, default)
+function _G.GetGlobalBool(index, default)
 end
 
 --- Returns an entity that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
 --- @param default GEntity @The value to return if the global value is not set.
 --- @return GEntity @The global value, or the default if the global value is not set.
-function GetGlobalEntity(index, default)
+function _G.GetGlobalEntity(index, default)
 end
 
 --- Returns a float that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
 --- @param default number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
-function GetGlobalFloat(index, default)
+function _G.GetGlobalFloat(index, default)
 end
 
 --- Returns an integer that is shared between the server and all clients.  
@@ -623,37 +623,37 @@ end
 --- @param index string @The unique index to identify the global value with.
 --- @param default number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
-function GetGlobalInt(index, default)
+function _G.GetGlobalInt(index, default)
 end
 
 --- Returns a string that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
 --- @param default string @The value to return if the global value is not set.
 --- @return string @The global value, or the default if the global value is not set.
-function GetGlobalString(index, default)
+function _G.GetGlobalString(index, default)
 end
 
 --- Returns a vector that is shared between the server and all clients.  
 --- @param Index string @The unique index to identify the global value with.
 --- @param Default GVector @The value to return if the global value is not set.
 --- @return GVector @The global value, or the default if the global value is not set.
-function GetGlobalVector(Index, Default)
+function _G.GetGlobalVector(Index, Default)
 end
 
 --- Returns the panel that is used as a wrapper for the HUD.  
 --- See also vgui.GetWorldPanel  
 --- @return GPanel @The HUD panel
-function GetHUDPanel()
+function _G.GetHUDPanel()
 end
 
 --- Returns the name of the current server.  
 --- @return string @The name of the server.
-function GetHostName()
+function _G.GetHostName()
 end
 
 --- Returns the player whose movement commands are currently being processed. The player this returns can safely have Player:GetCurrentCommand() called on them. See Prediction.  
 --- @return GPlayer @The player currently being predicted, or NULL if no command processing is currently being done.
-function GetPredictionPlayer()
+function _G.GetPredictionPlayer()
 end
 
 --- Creates or gets the rendertarget with the given name.  
@@ -664,7 +664,7 @@ end
 --- @param height number @The height of the render target, must be power of 2
 --- @param additive boolean @Sets whenever the rt should be additive.
 --- @return GITexture @The render target
-function GetRenderTarget(name, width, height, additive)
+function _G.GetRenderTarget(name, width, height, additive)
 end
 
 --- Gets (or creates if it does not exist) the rendertarget with the given name, this function allows to adjust the creation of a rendertarget more than Global.GetRenderTarget.  
@@ -678,12 +678,12 @@ end
 --- @param rtFlags number @Flags that controll the HDR behaviour of the render target, see Enums/CREATERENDERTARGETFLAGS.
 --- @param imageFormat number @Image format, see Enums/IMAGE_FORMAT.
 --- @return GITexture @The new render target.
-function GetRenderTargetEx(name, width, height, sizeMode, depthMode, textureFlags, rtFlags, imageFormat)
+function _G.GetRenderTargetEx(name, width, height, sizeMode, depthMode, textureFlags, rtFlags, imageFormat)
 end
 
 --- Returns the entity the client is using to see from (such as the player itself, the camera, or another entity).  
 --- @return GEntity @The view entity.
-function GetViewEntity()
+function _G.GetViewEntity()
 end
 
 --- Converts a color from [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
@@ -692,7 +692,7 @@ end
 --- @param saturation number @The saturation from 0-1.
 --- @param value number @The lightness from 0-1.
 --- @return table @The Color created from the HSL color space.
-function HSLToColor(hue, saturation, value)
+function _G.HSLToColor(hue, saturation, value)
 end
 
 --- Converts a color from [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
@@ -701,7 +701,7 @@ end
 --- @param saturation number @The saturation from 0-1.
 --- @param value number @The value from 0-1.
 --- @return table @The Color created from the HSV color space.
-function HSVToColor(hue, saturation, value)
+function _G.HSVToColor(hue, saturation, value)
 end
 
 --- Launches an asynchronous http request with the given parameters.  
@@ -709,21 +709,21 @@ end
 --- ℹ **NOTE**: HTTP-requests on private networks don't work. To enable HTTP-requests on private networks use Command Line Parameters `-allowlocalhttp`  
 --- @param parameters table @The request parameters
 --- @return boolean @true if we made a request, nil if we failed.
-function HTTP(parameters)
+function _G.HTTP(parameters)
 end
 
 --- 🛑 **DEPRECATED**: To send the target file to the client simply call AddCSLuaFile() in the target file itself.  
 --- This function works exactly the same as Global.include both clientside and serverside.  
 --- The only difference is that on the serverside it also calls Global.AddCSLuaFile on the filename, so that it gets sent to the client.  
 --- @param filename string @The filename of the Lua file you want to include.
-function IncludeCS(filename)
+function _G.IncludeCS(filename)
 end
 
 --- Returns whether the given object does or doesn't have a `metatable` of a color.  
 --- 🦟 **BUG**: [Engine functions (i.e. those not written in plain Lua) that return color objects do not currently set the color metatable and this function will return false if you use it on them.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param Object any @The object to be tested
 --- @return boolean @Whether the given object is a color or not
-function IsColor(Object)
+function _G.IsColor(Object)
 end
 
 --- Returns if the given NPC class name is an enemy.  
@@ -752,13 +752,13 @@ end
 --- * "npc_zombine"  
 --- @param className string @Class name of the entity to check
 --- @return boolean @Is an enemy
-function IsEnemyEntityName(className)
+function _G.IsEnemyEntityName(className)
 end
 
 --- Returns if the passed object is an Entity. Alias of Global.isentity.  
 --- @param variable any @The variable to check.
 --- @return boolean @True if the variable is an Entity.
-function IsEntity(variable)
+function _G.IsEntity(variable)
 end
 
 --- Returns if this is the first time this hook was predicted.  
@@ -766,7 +766,7 @@ end
 --- Visit Prediction for more information about this behavior.  
 --- ℹ **NOTE**: This is already used internally for Entity:EmitSound, Weapon:SendWeaponAnim and Entity:FireBullets, but NOT in  util.Effect.  
 --- @return boolean @Whether or not this is the first time being predicted.
-function IsFirstTimePredicted()
+function _G.IsFirstTimePredicted()
 end
 
 --- Returns if the given NPC class name is a friend.  
@@ -786,19 +786,19 @@ end
 --- * "npc_vortigaunt"  
 --- @param className string @Class name of the entity to check
 --- @return boolean @Is a friend
-function IsFriendEntityName(className)
+function _G.IsFriendEntityName(className)
 end
 
 --- Checks whether or not a game is currently mounted. Uses data given by engine.GetGames.  
 --- @param game string @The game string/app ID to check.
 --- @return boolean @True if the game is mounted.
-function IsMounted(game)
+function _G.IsMounted(game)
 end
 
 --- Returns whether or not every element within a table is a valid entity  
 --- @param table table @Table containing entities to check
 --- @return boolean @All entities valid
-function IsTableOfEntitiesValid(table)
+function _G.IsTableOfEntitiesValid(table)
 end
 
 --- Returns whether or not a model is useless by checking that the file path is that of a proper model.  
@@ -820,7 +820,7 @@ end
 --- * "shared_ragdoll_"  
 --- @param modelName string @The model name to be checked
 --- @return boolean @Whether or not the model is useless
-function IsUselessModel(modelName)
+function _G.IsUselessModel(modelName)
 end
 
 --- Returns whether an object is valid or not. (Such as Entitys, Panels, custom table objects and more).  
@@ -828,29 +828,29 @@ end
 --- ℹ **NOTE**: Due to vehicles being technically valid the moment they're spawned, also use Vehicle:IsValidVehicle to make sure they're fully initialized  
 --- @param toBeValidated any @The table or object to be validated.
 --- @return boolean @True if the object is valid.
-function IsValid(toBeValidated)
+function _G.IsValid(toBeValidated)
 end
 
 --- Adds javascript function 'language.Update' to an HTML panel as a method to call Lua's language.GetPhrase function.  
 --- @param htmlPanel GPanel @Panel to add javascript function 'language.Update' to.
-function JS_Language(htmlPanel)
+function _G.JS_Language(htmlPanel)
 end
 
 --- Adds javascript function 'util.MotionSensorAvailable' to an HTML panel as a method to call Lua's motionsensor.IsAvailable function.  
 --- @param htmlPanel GPanel @Panel to add javascript function 'util.MotionSensorAvailable' to.
-function JS_Utility(htmlPanel)
+function _G.JS_Utility(htmlPanel)
 end
 
 --- Adds workshop related javascript functions to an HTML panel, used by the "Dupes" and "Saves" tabs in the spawnmenu.  
 --- @param htmlPanel GPanel @Panel to add javascript functions to.
-function JS_Workshop(htmlPanel)
+function _G.JS_Workshop(htmlPanel)
 end
 
 --- Convenience function that creates a DLabel, sets the text, and returns it  
 --- @param text string @The string to set the label's text to
 --- @param parent GPanel @Optional
 --- @return GPanel @The created DLabel
-function Label(text, parent)
+function _G.Label(text, parent)
 end
 
 --- Performs a linear interpolation from the start number to the end number.  
@@ -860,7 +860,7 @@ end
 --- @param from number @The starting number
 --- @param to number @The ending number
 --- @return number @The result of the linear interpolation, `(1 - t) * from + t * to`.
-function Lerp(t, from, to)
+function _G.Lerp(t, from, to)
 end
 
 --- Returns point between first and second angle using given fraction and linear interpolation  
@@ -869,7 +869,7 @@ end
 --- @param angleStart GAngle @Angle to begin from
 --- @param angleEnd GAngle @Angle to end at
 --- @return GAngle @angle
-function LerpAngle(ratio, angleStart, angleEnd)
+function _G.LerpAngle(ratio, angleStart, angleEnd)
 end
 
 --- Linear interpolation between two vectors. It is commonly used to smooth movement between two vectors  
@@ -878,18 +878,18 @@ end
 --- @param from GVector @The initial Vector
 --- @param to GVector @The desired Vector
 --- @return GVector @The lerped vector.
-function LerpVector(fraction, from, to)
+function _G.LerpVector(fraction, from, to)
 end
 
 --- Loads all preset settings for the presets and returns them in a table  
 --- @return table @Preset data
-function LoadPresets()
+function _G.LoadPresets()
 end
 
 --- Returns the player object of the current client.  
 --- ℹ **NOTE**: LocalPlayer() will return NULL until all entities have been initialized. See GM:InitPostEntity.  
 --- @return GPlayer @The player object representing the client.
-function LocalPlayer()
+function _G.LocalPlayer()
 end
 
 --- Translates the specified position and angle from the specified local coordinate system into worldspace coordinates.  
@@ -900,13 +900,13 @@ end
 --- @param originPos GVector @The origin point of the source coordinate system, in world coordinates
 --- @param originAngle GAngle @The angles of the source coordinate system, as a world angle
 --- @return GVector, GAngle
-function LocalToWorld(localPos, localAng, originPos, originAngle)
+function _G.LocalToWorld(localPos, localAng, originPos, originAngle)
 end
 
 --- Returns a localisation for the given token, if none is found it will return the default (second) parameter.  
 --- @param localisationToken string @The token to find a translation for.
 --- @param default string @The default value to be returned if no translation was found.
-function Localize(localisationToken, default)
+function _G.Localize(localisationToken, default)
 end
 
 --- Either returns the material with the given name, or loads the material interpreting the first argument as the path.  
@@ -914,25 +914,25 @@ end
 --- @param materialName string @The material name or path
 --- @param pngParameters string @A string containing space separated keywords which will be used to add material parameters
 --- @return GIMaterial, number
-function Material(materialName, pngParameters)
+function _G.Material(materialName, pngParameters)
 end
 
 --- Returns a VMatrix object.  
 --- @param data table @Initial data to initialize the matrix with
 --- @return GVMatrix @New matrix.
-function Matrix(data)
+function _G.Matrix(data)
 end
 
 --- Returns a new mesh object.  
 --- @param mat GIMaterial @The material the mesh is intended to be rendered with
 --- @return GIMesh @The created object.
-function Mesh(mat)
+function _G.Mesh(mat)
 end
 
 --- Runs util.PrecacheModel and returns the string  
 --- @param model string @The model to precache
 --- @return string @The same string entered as an argument
-function Model(model)
+function _G.Model(model)
 end
 
 --- Writes every given argument to the console.  
@@ -941,49 +941,49 @@ end
 --- Additionally, a newline isn't added automatically to the end, so subsequent Msg or print operations will continue the same line of text in the console. See Global.MsgN for a version that does add a newline.  
 --- The text is blue on the server, orange on the client, and green on the menu:   
 
-function Msg(...)
+function _G.Msg(...)
 end
 
 --- Works exactly like Global.Msg except that, if called on the server, will print to all players consoles plus the server console.  
 
-function MsgAll(...)
+function _G.MsgAll(...)
 end
 
 --- Just like Global.Msg, except it can also print colored text, just like chat.AddText.  
 
-function MsgC(...)
+function _G.MsgC(...)
 end
 
 --- Same as Global.print, except it concatinates the arguments without inserting any whitespace in between them.  
 --- See also Global.Msg, which doesn't add a newline (`"\n"`) at the end.  
 
-function MsgN(...)
+function _G.MsgN(...)
 end
 
 --- Returns named color defined in resource/ClientScheme.res.  
 --- @param name string @Name of color
 --- @return table @A Color or nil
-function NamedColor(name)
+function _G.NamedColor(name)
 end
 
 --- Returns the amount of skins the specified model has.  
 --- See also Entity:SkinCount if you have an entity.  
 --- @param modelName string @Model to return amount of skins of
 --- @return number @Amount of skins
-function NumModelSkins(modelName)
+function _G.NumModelSkins(modelName)
 end
 
 --- Modifies the given vectors so that all of vector2's axis are larger than vector1's by switching them around. Also known as ordering vectors.  
 --- ℹ **NOTE**: This function will irreversibly modify the given vectors  
 --- @param vector1 GVector @Bounding box min resultant
 --- @param vector2 GVector @Bounding box max resultant
-function OrderVectors(vector1, vector2)
+function _G.OrderVectors(vector1, vector2)
 end
 
 --- Calls game.AddParticles and returns given string.  
 --- @param file string @The particle file.
 --- @return string @The particle file.
-function Particle(file)
+function _G.Particle(file)
 end
 
 --- Creates a particle effect.  
@@ -992,7 +992,7 @@ end
 --- @param position GVector @The start position of the effect.
 --- @param angles GAngle @The orientation of the effect.
 --- @param parent GEntity @If set, the particle will be parented to the entity.
-function ParticleEffect(particleName, position, angles, parent)
+function _G.ParticleEffect(particleName, position, angles, parent)
 end
 
 --- Creates a particle effect with specialized parameters.  
@@ -1001,7 +1001,7 @@ end
 --- @param attachType number @Attachment type using Enums/PATTACH.
 --- @param entity GEntity @The entity to be used in the way specified by the attachType.
 --- @param attachmentID number @The id of the attachment to be used in the way specified by the attachType.
-function ParticleEffectAttach(particleName, attachType, entity, attachmentID)
+function _G.ParticleEffectAttach(particleName, attachType, entity, attachmentID)
 end
 
 --- Creates a new CLuaEmitter.  
@@ -1009,13 +1009,13 @@ end
 --- @param position GVector @The start position of the emitter
 --- @param use3D boolean @Whenever to render the particles in 2D or 3D mode.
 --- @return GCLuaEmitter @The new particle emitter.
-function ParticleEmitter(position, use3D)
+function _G.ParticleEmitter(position, use3D)
 end
 
 --- Creates a path for the bot to follow  
 --- @param type string @The name of the path to create
 --- @return GPathFollower @The path
-function Path(type)
+function _G.Path(type)
 end
 
 --- Returns the player with the matching Player:UserID.  
@@ -1023,7 +1023,7 @@ end
 --- For a function that returns a player based on their connection ID, see player.GetByID.  
 --- @param playerIndex number @The player index.
 --- @return GPlayer @The retrieved player.
-function Player(playerIndex)
+function _G.Player(playerIndex)
 end
 
 --- Moves the given model to the given position and calculates appropriate camera parameters for rendering the model to an icon.  
@@ -1032,65 +1032,65 @@ end
 --- @param position GVector @Position that the model is being rendered at
 --- @param noAngles boolean @If true the function won't reset the angles to 0 for the model.
 --- @return table @Table of information of the view which can be used for rendering
-function PositionSpawnIcon(model, position, noAngles)
+function _G.PositionSpawnIcon(model, position, noAngles)
 end
 
 --- Precaches the particle with the specified name.  
 --- @param particleSystemName string @The name of the particle system.
-function PrecacheParticleSystem(particleSystemName)
+function _G.PrecacheParticleSystem(particleSystemName)
 end
 
 --- Precaches a scene file.  
 --- @param scene string @Path to the scene file to precache.
-function PrecacheScene(scene)
+function _G.PrecacheScene(scene)
 end
 
 --- Load and precache a custom sentence file.  
 --- @param filename string @The path to the custom sentences.txt.
-function PrecacheSentenceFile(filename)
+function _G.PrecacheSentenceFile(filename)
 end
 
 --- Precache a sentence group in a sentences.txt definition file.  
 --- @param group string @The group to precache.
-function PrecacheSentenceGroup(group)
+function _G.PrecacheSentenceGroup(group)
 end
 
 --- Displays a message in the chat, console, or center of screen of every player.  
 --- This uses the archaic user message system (umsg) and hence is limited to ≈250 characters.  
 --- @param type number @Which type of message should be sent to the players (see Enums/HUD)
 --- @param message string @Message to be sent to the players
-function PrintMessage(type, message)
+function _G.PrintMessage(type, message)
 end
 
 --- Recursively prints the contents of a table to the console.  
 --- @param tableToPrint table @The table to be printed
 --- @param indent number @Number of tabs to start indenting at
 --- @param done table @Internal argument, you shouldn't normally change this
-function PrintTable(tableToPrint, indent, done)
+function _G.PrintTable(tableToPrint, indent, done)
 end
 
 --- Creates a new ProjectedTexture.  
 --- @return GProjectedTexture @Newly created projected texture.
-function ProjectedTexture()
+function _G.ProjectedTexture()
 end
 
 --- Runs a function without stopping the whole script on error.  
 --- This function is similar to Global.pcall and Global.xpcall except the errors are still printed and sent to the error handler (i.e. sent to server console if clientside and GM:OnLuaError called).  
 --- @param func function @Function to run
 --- @return boolean @Whether the function executed successfully or not
-function ProtectedCall(func)
+function _G.ProtectedCall(func)
 end
 
 --- Returns an iterator function that can be used to loop through a table in random order  
 --- @param table table @Table to create iterator for
 --- @param descending boolean @Whether the iterator should iterate descending or not
 --- @return function @Iterator function
-function RandomPairs(table, descending)
+function _G.RandomPairs(table, descending)
 end
 
 --- Returns the real frame-time which is unaffected by host_timescale. To be used for GUI effects (for example)  
 --- @return number @Real frame time
-function RealFrameTime()
+function _G.RealFrameTime()
 end
 
 --- Returns the uptime of the game/server in seconds (to at least 4 decimal places)  
@@ -1100,31 +1100,31 @@ end
 --- You should use this function (or SysTime) for timing real-world events such as user interaction, but not for timing game events such as animations.  
 --- See also: Global.CurTime, Global.SysTime  
 --- @return number @Uptime of the game/server.
-function RealTime()
+function _G.RealTime()
 end
 
 --- Creates a new CRecipientFilter.  
 --- @return GCRecipientFilter @The new created recipient filter.
-function RecipientFilter()
+function _G.RecipientFilter()
 end
 
 --- Registers a Derma element to be closed the next time Global.CloseDermaMenus is called  
 --- @param menu GPanel @Menu to be registered for closure
-function RegisterDermaMenuForClose(menu)
+function _G.RegisterDermaMenuForClose(menu)
 end
 
 --- Saves position of your cursor on screen. You can restore it by using  
 --- Global.RestoreCursorPosition.  
-function RememberCursorPosition()
+function _G.RememberCursorPosition()
 end
 
 --- Does the removing of the tooltip panel. Called by Global.EndTooltip.  
-function RemoveTooltip()
+function _G.RemoveTooltip()
 end
 
 --- Returns the angle that the clients view is being rendered at  
 --- @return GAngle @Render Angles
-function RenderAngles()
+function _G.RenderAngles()
 end
 
 --- Renders a Depth of Field effect  
@@ -1137,30 +1137,30 @@ end
 --- @param spin boolean @Whether to cycle the frame or not
 --- @param inView table @Table of view data
 --- @param fov number @FOV to render the effect with
-function RenderDoF(origin, angle, usableFocusPoint, angleSize, radialSteps, passes, spin, inView, fov)
+function _G.RenderDoF(origin, angle, usableFocusPoint, angleSize, radialSteps, passes, spin, inView, fov)
 end
 
 --- Renders the stereoscopic post-process effect  
 --- @param viewOrigin GVector @Origin to render the effect at
 --- @param viewAngles GAngle @Angles to render the effect at
-function RenderStereoscopy(viewOrigin, viewAngles)
+function _G.RenderStereoscopy(viewOrigin, viewAngles)
 end
 
 --- Renders the Super Depth of Field post-process effect  
 --- @param viewOrigin GVector @Origin to render the effect at
 --- @param viewAngles GAngle @Angles to render the effect at
 --- @param viewFOV number @Field of View to render the effect at
-function RenderSuperDoF(viewOrigin, viewAngles, viewFOV)
+function _G.RenderSuperDoF(viewOrigin, viewAngles, viewFOV)
 end
 
 --- Restores position of your cursor on screen. You can save it by using Global.RememberCursorPosition.  
-function RestoreCursorPosition()
+function _G.RestoreCursorPosition()
 end
 
 --- Executes the given console command with the parameters.  
 --- ℹ **NOTE**: Some commands/convars are blocked from being ran/changed using this function, usually to prevent harm/annoyance to clients. For a list of blocked commands, see Blocked ConCommands.  
 --- @param command string @The command to be executed.
-function RunConsoleCommand(command, ...)
+function _G.RunConsoleCommand(command, ...)
 end
 
 --- Evaluates and executes the given code, will throw an error on failure.  
@@ -1169,62 +1169,62 @@ end
 --- @param identifier string @The name that should appear in any error messages caused by this code.
 --- @param handleError boolean @If false, this function will return a string containing any error messages instead of throwing an error.
 --- @return string @If handleError is false, the error message (if any).
-function RunString(code, identifier, handleError)
+function _G.RunString(code, identifier, handleError)
 end
 
 --- Alias of Global.RunString.  
 --- 🛑 **DEPRECATED**: Use Global.RunString instead.  
-function RunStringEx()
+function _G.RunStringEx()
 end
 
 --- Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless noQuotes is true. Alias of sql.SQLStr  
 --- @param input string @String to be escaped
 --- @param noQuotes boolean @Whether the returned value should be surrounded in quotes or not
 --- @return string @Escaped input
-function SQLStr(input, noQuotes)
+function _G.SQLStr(input, noQuotes)
 end
 
 --- 🛑 **DEPRECATED**: You should be using Global.ScreenScale instead.  
 --- Returns a number based on the Size argument and your screen's width. Alias of Global.ScreenScale.  
 --- @param Size number @The number you want to scale.
-function SScale(Size)
+function _G.SScale(Size)
 end
 
 --- Returns the ordinal suffix of a given number.  
 --- @param number number @The number to find the ordinal suffix of.
 --- @return string @suffix
-function STNDRD(number)
+function _G.STNDRD(number)
 end
 
 --- Removes the given entity unless it is a player or the world entity  
 --- @param ent GEntity @Entity to safely remove.
-function SafeRemoveEntity(ent)
+function _G.SafeRemoveEntity(ent)
 end
 
 --- Removes entity after delay using Global.SafeRemoveEntity  
 --- @param entity GEntity @Entity to be removed
 --- @param delay number @Delay for entity removal in seconds
-function SafeRemoveEntityDelayed(entity, delay)
+function _G.SafeRemoveEntityDelayed(entity, delay)
 end
 
 --- Overwrites all presets with the supplied table. Used by the presets for preset saving  
 --- @param presets table @Presets to be saved
-function SavePresets(presets)
+function _G.SavePresets(presets)
 end
 
 --- Gets the height of the game's window (in pixels).  
 --- @return number @The height of the game's window in pixels
-function ScrH()
+function _G.ScrH()
 end
 
 --- Gets the width of the game's window (in pixels).  
 --- @return number @The width of the game's window in pixels
-function ScrW()
+function _G.ScrW()
 end
 
 --- Returns a number based on the Size argument and your screen's width. The screen's width is always equal to size 640. This function is primarily used for scaling font sizes.  
 --- @param Size number @The number you want to scale.
-function ScreenScale(Size)
+function _G.ScreenScale(Size)
 end
 
 --- 🛑 **DEPRECATED**: This uses the umsg internally, which has been deprecated. Use the net instead.  
@@ -1232,51 +1232,51 @@ end
 --- ℹ **NOTE**: Useless on client, only server can send info to client.  
 --- @param name string @The name of the usermessage
 --- @param recipients any @Can be a CRecipientFilter, table or Player object.
-function SendUserMessage(name, recipients, ...)
+function _G.SendUserMessage(name, recipients, ...)
 end
 
 --- Returns approximate duration of a sentence by name. See Global.EmitSentence  
 --- @param name string @The sentence name
 --- @return number @The approximate duration
-function SentenceDuration(name)
+function _G.SentenceDuration(name)
 end
 
 --- Prints "ServerLog: PARAM" without a newline, to the server log and console.  
 --- @param parameter string @The value to be printed to console.
-function ServerLog(parameter)
+function _G.ServerLog(parameter)
 end
 
 --- Adds the given string to the computers clipboard, which can then be pasted in or outside of GMod with Ctrl + V.  
 --- @param text string @The text to add to the clipboard.
-function SetClipboardText(text)
+function _G.SetClipboardText(text)
 end
 
 --- Defines an angle to be automatically networked to clients  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global angle with
 --- @param angle GAngle @Angle to be networked
-function SetGlobalAngle(index, angle)
+function _G.SetGlobalAngle(index, angle)
 end
 
 --- Defined a boolean to be automatically networked to clients  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global boolean with
 --- @param bool boolean @Boolean to be networked
-function SetGlobalBool(index, bool)
+function _G.SetGlobalBool(index, bool)
 end
 
 --- Defines an entity to be automatically networked to clients  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global entity with
 --- @param ent GEntity @Entity to be networked
-function SetGlobalEntity(index, ent)
+function _G.SetGlobalEntity(index, ent)
 end
 
 --- Defines a floating point number to be automatically networked to clients  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global float with
 --- @param float number @Float to be networked
-function SetGlobalFloat(index, float)
+function _G.SetGlobalFloat(index, float)
 end
 
 --- Sets an integer that is shared between the server and all clients.  
@@ -1284,26 +1284,26 @@ end
 --- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
 --- @param index string @The unique index to identify the global value with.
 --- @param value number @The value to set the global value to
-function SetGlobalInt(index, value)
+function _G.SetGlobalInt(index, value)
 end
 
 --- Defines a string with a maximum of 199 characters to be automatically networked to clients  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global string with
 --- @param string string @String to be networked
-function SetGlobalString(index, string)
+function _G.SetGlobalString(index, string)
 end
 
 --- Defines a vector to be automatically networked to clients  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
 --- @param index any @Index to identify the global vector with
 --- @param vec GVector @Vector to be networked
-function SetGlobalVector(index, vec)
+function _G.SetGlobalVector(index, vec)
 end
 
 --- Called by the engine to set which constraint system [https://developer.valvesoftware.com/wiki/Phys_constraintsystem] the next created constraints should use  
 --- @param constraintSystem GEntity @Constraint system to use
-function SetPhysConstraintSystem(constraintSystem)
+function _G.SetPhysConstraintSystem(constraintSystem)
 end
 
 --- This function can be used in a for loop instead of Global.pairs. It sorts all **keys** alphabetically.  
@@ -1312,7 +1312,7 @@ end
 --- @param table table @The table to sort
 --- @param desc boolean @Reverse the sorting order
 --- @return function, table
-function SortedPairs(table, desc)
+function _G.SortedPairs(table, desc)
 end
 
 --- Returns an iterator function that can be used to loop through a table in order of member values, when the values of the table are also tables and contain that member.  
@@ -1322,7 +1322,7 @@ end
 --- @param memberKey any @Key of the value member to sort by.
 --- @param descending boolean @Whether the iterator should iterate in descending order or not.
 --- @return function, table
-function SortedPairsByMemberValue(table, memberKey, descending)
+function _G.SortedPairsByMemberValue(table, memberKey, descending)
 end
 
 --- Returns an iterator function that can be used to loop through a table in order of its **values**.  
@@ -1331,40 +1331,40 @@ end
 --- @param table table @Table to create iterator for
 --- @param descending boolean @Whether the iterator should iterate in descending order or not
 --- @return function, table
-function SortedPairsByValue(table, descending)
+function _G.SortedPairsByValue(table, descending)
 end
 
 --- Runs util.PrecacheSound and returns the string.  
 --- 🦟 **BUG**: util.PrecacheSound does nothing and therefore so does this function  
 --- @param soundPath string @The soundpath to precache
 --- @return string @The string passed as the first argument
-function Sound(soundPath)
+function _G.Sound(soundPath)
 end
 
 --- Returns the duration of the sound specified in seconds.  
 --- 🦟 **BUG**: [This only works properly for .wav files.](https://github.com/Facepunch/garrysmod-issues/issues/936)  
 --- @param soundName string @The sound file path.
 --- @return number @Sound duration in seconds.
-function SoundDuration(soundName)
+function _G.SoundDuration(soundName)
 end
 
 --- Suppress any networking from the server to the specified player. This is automatically called by the engine before/after a player fires their weapon, reloads, or causes any other similar shared-predicted event to occur.  
 --- @param suppressPlayer GPlayer @The player to suppress any networking to.
-function SuppressHostEvents(suppressPlayer)
+function _G.SuppressHostEvents(suppressPlayer)
 end
 
 --- Returns a highly accurate time in seconds since the start up, ideal for benchmarking.  
 --- @return number @Uptime of the server.
-function SysTime()
+function _G.SysTime()
 end
 
 --- Returns a TauntCamera object  
 --- @return table @TauntCamera
-function TauntCamera()
+function _G.TauntCamera()
 end
 
 --- Clears focus from any text entries player may have focused.  
-function TextEntryLoseFocus()
+function _G.TextEntryLoseFocus()
 end
 
 --- Returns a cosine value that fluctuates based on the current time  
@@ -1373,7 +1373,7 @@ end
 --- @param max number @Maxmimum value
 --- @param offset number @Offset variable that doesn't affect the rate of change, but causes the returned value to be offset by time
 --- @return number @Cosine value
-function TimedCos(frequency, min, max, offset)
+function _G.TimedCos(frequency, min, max, offset)
 end
 
 --- Returns a sine value that fluctuates based on Global.CurTime. The value returned will be between the start value plus/minus the range value.  
@@ -1383,7 +1383,7 @@ end
 --- @param max number @This argument's distance from origin defines the size of the full range of the sine wave
 --- @param offset number @Offset variable that doesn't affect the rate of change, but causes the returned value to be offset by time
 --- @return number @Sine value
-function TimedSin(frequency, origin, max, offset)
+function _G.TimedSin(frequency, origin, max, offset)
 end
 
 --- Gets the associated type ID of the variable. Unlike Global.type, this does not work with no value - an argument must be provided.  
@@ -1391,7 +1391,7 @@ end
 --- 🦟 **BUG**: [This returns TYPE_NIL for protos.](https://github.com/Facepunch/garrysmod-requests/issues/1459)  
 --- @param variable any @The variable to get the type ID of.
 --- @return number @The type ID of the variable
-function TypeID(variable)
+function _G.TypeID(variable)
 end
 
 --- 🛑 **DEPRECATED**: You should use Global.IsUselessModel instead.  
@@ -1414,16 +1414,16 @@ end
 --- * "shared_ragdoll_"  
 --- @param modelName string @The model name to be checked
 --- @return boolean @Whether or not the model is useless
-function UTIL_IsUselessModel(modelName)
+function _G.UTIL_IsUselessModel(modelName)
 end
 
 --- Returns the current asynchronous in-game time.  
 --- @return number @The asynchronous in-game time.
-function UnPredictedCurTime()
+function _G.UnPredictedCurTime()
 end
 
 --- Returns the time in seconds it took to render the VGUI.  
-function VGUIFrameTime()
+function _G.VGUIFrameTime()
 end
 
 --- Creates and returns a DShape rectangle GUI element with the given dimensions.  
@@ -1432,13 +1432,13 @@ end
 --- @param w number @Width of the created element
 --- @param h number @Height of the created element
 --- @return GPanel @DShape element
-function VGUIRect(x, y, w, h)
+function _G.VGUIRect(x, y, w, h)
 end
 
 --- 🛑 **DEPRECATED**: You should use Global.IsValid instead  
 --- Returns if a panel is safe to use.  
 --- @param panel GPanel @The panel to validate.
-function ValidPanel(panel)
+function _G.ValidPanel(panel)
 end
 
 --- Creates a Vector object.  
@@ -1446,14 +1446,14 @@ end
 --- @param y number @The y component of the vector.
 --- @param z number @The z component of the vector.
 --- @return GVector @The created vector object.
-function Vector(x, y, z)
+function _G.Vector(x, y, z)
 end
 
 --- Returns a random vector whose components are each between min(inclusive), max(exclusive).  
 --- @param min number @Min bound inclusive.
 --- @param max number @Max bound exclusive.
 --- @return GVector @The random direction vector.
-function VectorRand(min, max)
+function _G.VectorRand(min, max)
 end
 
 --- Translates the specified position and angle into the specified coordinate system.  
@@ -1462,46 +1462,46 @@ end
 --- @param newSystemOrigin GVector @The origin of the system to translate to.
 --- @param newSystemAngles GAngle @The angles of the system to translate to.
 --- @return GVector, GAngle
-function WorldToLocal(position, angle, newSystemOrigin, newSystemAngles)
+function _G.WorldToLocal(position, angle, newSystemOrigin, newSystemAngles)
 end
 
 --- If the result of the first argument is false or nil, an error is thrown with the second argument as the message.  
 --- @param expression any @The expression to assert.
 --- @param errorMessage string @The error message to throw when assertion fails
 --- @return any, any, any
-function assert(expression, errorMessage, ...)
+function _G.assert(expression, errorMessage, ...)
 end
 
 --- Executes the specified action on the garbage collector.  
 --- @param action string @The action to run
 --- @param arg number @The argument of the specified action, only applicable for "step", "setpause" and "setstepmul".
 --- @return any @If the action is count this is the number of kilobytes of memory used by Lua
-function collectgarbage(action, arg)
+function _G.collectgarbage(action, arg)
 end
 
 --- Throws a Lua error and breaks out of the current call stack.  
 --- @param message string @The error message to throw
 --- @param errorLevel number @The level to throw the error at.
-function error(message, errorLevel)
+function _G.error(message, errorLevel)
 end
 
 --- 🛑 **DEPRECATED**: This function was deprecated in Lua 5.1 and is removed in Lua 5.2. Use Global.collectgarbage( "count" ) instead.  
 ---  Returns the current floored dynamic memory usage of Lua in kilobytes.  
 --- @return number @The current floored dynamic memory usage of Lua, in kilobytes.
-function gcinfo()
+function _G.gcinfo()
 end
 
 --- Returns the environment table of either the stack level or the function specified.  
 --- @param location function @The object to get the enviroment from
 --- @return table @The environment.
-function getfenv(location)
+function _G.getfenv(location)
 end
 
 --- Returns the metatable of an object. This function obeys the metatable's __metatable field, and will return that field if the metatable has it set.  
 --- Use debug.getmetatable if you want the true metatable of the object.  
 --- @param object any @The value to return the metatable of.
 --- @return any @The metatable of the value
-function getmetatable(object)
+function _G.getmetatable(object)
 end
 
 --- Executes a Lua script.  
@@ -1512,7 +1512,7 @@ end
 --- 🦟 **BUG**: [Global.pcalling this function will break autorefresh.](https://github.com/Facepunch/garrysmod-issues/issues/1976)  
 --- @param fileName string @The name of the script to be executed
 --- @return any @Anything that the executed Lua script returns.
-function include(fileName)
+function _G.include(fileName)
 end
 
 --- Returns an iterator function for a for loop, to return ordered key-value pairs from a table.  
@@ -1521,73 +1521,73 @@ end
 --- For pairs sorted by key in alphabetical order, see Global.SortedPairs.  
 --- @param tab table @The table to iterate over.
 --- @return function, table, number
-function ipairs(tab)
+function _G.ipairs(tab)
 end
 
 --- Returns if the passed object is an Angle.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is an Angle.
-function isangle(variable)
+function _G.isangle(variable)
 end
 
 --- Returns if the passed object is a boolean.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a boolean.
-function isbool(variable)
+function _G.isbool(variable)
 end
 
 --- Returns if the passed object is a function.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a function.
-function isfunction(variable)
+function _G.isfunction(variable)
 end
 
 --- Returns whether the passed object is a VMatrix.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a VMatrix.
-function ismatrix(variable)
+function _G.ismatrix(variable)
 end
 
 --- Returns if the passed object is a number.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a number.
-function isnumber(variable)
+function _G.isnumber(variable)
 end
 
 --- Returns if the passed object is a Panel.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a Panel.
-function ispanel(variable)
+function _G.ispanel(variable)
 end
 
 --- Returns if the passed object is a string.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a string.
-function isstring(variable)
+function _G.isstring(variable)
 end
 
 --- Returns if the passed object is a table.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a table.
-function istable(variable)
+function _G.istable(variable)
 end
 
 --- Returns if the passed object is a Vector.  
 --- @param variable any @The variable to perform the type check for.
 --- @return boolean @True if the variable is a Vector.
-function isvector(variable)
+function _G.isvector(variable)
 end
 
 --- Creates a table with the specified module name and sets the function environment for said table.  
 --- Any passed loaders are called with the table as an argument. An example of this is package.seeall.  
 --- @param name string @The name of the module
-function module(name, ...)
+function _G.module(name, ...)
 end
 
 --- Returns a new userdata object.  
 --- @param addMetatable boolean @If true, the userdata will get its own metatable automatically.
 --- @return userdata @The newly created userdata.
-function newproxy(addMetatable)
+function _G.newproxy(addMetatable)
 end
 
 --- Returns the next key and value pair in a table.  
@@ -1595,7 +1595,7 @@ end
 --- @param tab table @The table
 --- @param prevKey any @The previous key in the table.
 --- @return any, any
-function next(tab, prevKey)
+function _G.next(tab, prevKey)
 end
 
 --- Returns an iterator function(Global.next) for a for loop that will return the values of the specified table in an arbitrary order.  
@@ -1603,7 +1603,7 @@ end
 --- For alphabetical **value** order use Global.SortedPairsByValue.  
 --- @param tab table @The table to iterate over
 --- @return function, table, any
-function pairs(tab)
+function _G.pairs(tab)
 end
 
 --- Calls a function and catches an error that can be thrown while the execution of the call.  
@@ -1613,7 +1613,7 @@ end
 --- 🦟 **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
 --- @param func function @Function to be executed and of which the errors should be caught of
 --- @return boolean, any
-function pcall(func, ...)
+function _G.pcall(func, ...)
 end
 
 --- Writes every given argument to the console.  
@@ -1621,60 +1621,60 @@ end
 --- Seperates lines with a line break (`"\n"`)  
 --- Separates arguments with a tab character (`"\t"`).  
 
-function print(...)
+function _G.print(...)
 end
 
 --- Compares the two values without calling their __eq operator.  
 --- @param value1 any @The first value to compare.
 --- @param value2 any @The second value to compare.
 --- @return boolean @Whether or not the two values are equal.
-function rawequal(value1, value2)
+function _G.rawequal(value1, value2)
 end
 
 --- Gets the value with the specified key from the table without calling the __index method.  
 --- @param table table @Table to get the value from.
 --- @param index any @The index to get the value from.
 --- @return any @The value.
-function rawget(table, index)
+function _G.rawget(table, index)
 end
 
 --- Sets the value with the specified key from the table without calling the __newindex method.  
 --- @param table table @Table to get the value from.
 --- @param index any @The index to get the value from.
 --- @param value any @The value to set for the specified key.
-function rawset(table, index, value)
+function _G.rawset(table, index, value)
 end
 
 --- First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.  
 --- 🦟 **BUG**: [Running this function with Global.pcall or Global.xpcall will still print an error that counts towards sv_kickerrornum.](https://github.com/Facepunch/garrysmod-issues/issues/1041" request="813)  
 --- ℹ **NOTE**: This function will try to load local client file if `sv_allowcslua` is **1**  
 --- @param name string @The name of the module to be loaded.
-function require(name)
+function _G.require(name)
 end
 
 --- Used to select single values from a vararg or get the count of values in it.  
 --- @param parameter any @Can be a number or string
 --- @return any @Returns a number or vararg, depending on the select method.
-function select(parameter, ...)
+function _G.select(parameter, ...)
 end
 
 --- Sets the enviroment for a function or a stack level, if a function is passed, the return value will be the function, otherwise nil.  
 --- @param location function @The function to set the enviroment for or a number representing stack level.
 --- @param enviroment table @Table to be used as enviroment.
-function setfenv(location, enviroment)
+function _G.setfenv(location, enviroment)
 end
 
 --- Sets, changes or removes a table's metatable. Returns Tab (the first argument).  
 --- @param Tab table @The table who's metatable to change.
 --- @param Metatable table @The metatable to assign
 --- @return table @The first argument.
-function setmetatable(Tab, Metatable)
+function _G.setmetatable(Tab, Metatable)
 end
 
 --- Attempts to return an appropriate boolean for the given value  
 --- @param val any @The object to be converted to a boolean
 --- @return boolean @**false** for the boolean false
-function tobool(val)
+function _G.tobool(val)
 end
 
 --- Attempts to convert the value to a number.  
@@ -1682,20 +1682,20 @@ end
 --- @param value any @The value to convert
 --- @param base number @The  used in the string
 --- @return number @The numeric representation of the value with the given base, or nil if the conversion failed.
-function tonumber(value, base)
+function _G.tonumber(value, base)
 end
 
 --- Attempts to convert the value to a string. If the value is an object and its metatable has defined the __tostring metamethod, this will call that function.  
 --- Global.print also uses this functionality.  
 --- @param value any @The object to be converted to a string.
 --- @return string @The string representation of the value.
-function tostring(value)
+function _G.tostring(value)
 end
 
 --- Returns a string representing the name of the type of the passed object.  
 --- @param var any @The object to get the type of.
 --- @return string @The name of the object's type.
-function type(var)
+function _G.type(var)
 end
 
 --- This function takes a numeric indexed table and return all the members as a vararg. If specified, it will start at the given index and end at end index.  
@@ -1703,7 +1703,7 @@ end
 --- @param startIndex number @Which index to start from
 --- @param endIndex number @Which index to end at
 --- @return any @Output values
-function unpack(tbl, startIndex, endIndex)
+function _G.unpack(tbl, startIndex, endIndex)
 end
 
 --- Attempts to call the first function. If the execution succeeds, this returns `true` followed by the returns of the function. If execution fails, this returns `false` and the second function is called with the error message.  
@@ -1715,6 +1715,6 @@ end
 --- @param func function @The function to call initially.
 --- @param errorCallback function @The function to be called if execution of the first fails; the error message is passed as a string
 --- @return boolean, any
-function xpcall(func, errorCallback, ...)
+function _G.xpcall(func, errorCallback, ...)
 end
 

@@ -41,6 +41,9 @@ function getTypeName(ret: string): string {
     if (ret == "vararg") {
         // TODO: I don't think emmylua lets you mark returns as arbitrary varargs
         return "any";
+    } else if (ret == "Global") {
+        // I can't think of a better way of handling this rn
+        return "_G";
     }
     return GMOD_TYPES[ret] ?? ret;
 }
@@ -327,7 +330,7 @@ async function doGlobals(): Promise<void> {
     for (let func of data) {
         let funcdata: string | undefined;
         try {
-            funcdata = handleFunc(func);
+            funcdata = handleFunc(func, ".");
         } catch (e) {
             console.error(
                 "Problem while getting func definition for _G.%s(): %s",
