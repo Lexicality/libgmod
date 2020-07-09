@@ -1,4 +1,4 @@
-mysqloo = {
+_G.mysqloo = {
 	VERSION = 9,
 	MINOR_VERSION = 6,
 	DATABASE_CONNECTED = 0,

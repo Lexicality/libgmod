@@ -254,55 +254,55 @@ IMAGE_FORMAT_RGBA16161616 = 25
 IMAGE_FORMAT_RGBA16161616F = 24
 
 --- None. No change.
-kRenderFxNone = 0
+_G.kRenderFxNone = 0
 --- Slowly pulses the entitys transparency, +-15 to the current alpha.
-kRenderFxPulseSlow = 1
+_G.kRenderFxPulseSlow = 1
 --- Quickly pulses the entitys transparency, +-15 to the current alpha.
-kRenderFxPulseFast = 2
+_G.kRenderFxPulseFast = 2
 --- Slowly pulses the entitys transparency, +-60 to the current alpha.
-kRenderFxPulseSlowWide = 3
+_G.kRenderFxPulseSlowWide = 3
 --- Quickly pulses the entitys transparency, +-60 to the current alpha.
-kRenderFxPulseFastWide = 4
+_G.kRenderFxPulseFastWide = 4
 --- Slowly fades away the entity, making it completely invisible. Starts from whatever alpha the entity currently has set.
-kRenderFxFadeSlow = 5
+_G.kRenderFxFadeSlow = 5
 --- Quickly fades away the entity, making it completely invisible. Starts from whatever alpha the entity currently has set.
-kRenderFxFadeFast = 6
+_G.kRenderFxFadeFast = 6
 --- Slowly solidifies the entity, making it fully opaque. Starts from whatever alpha the entity currently has set.
-kRenderFxSolidSlow = 7
+_G.kRenderFxSolidSlow = 7
 --- Quickly solidifies the entity, making it fully opaque. Starts from whatever alpha the entity currently has set.
-kRenderFxSolidFast = 8
+_G.kRenderFxSolidFast = 8
 --- Slowly switches the entitys transparency between its alpha and 0.
-kRenderFxStrobeSlow = 9
+_G.kRenderFxStrobeSlow = 9
 --- Quickly switches the entitys transparency between its alpha and 0.
-kRenderFxStrobeFast = 10
+_G.kRenderFxStrobeFast = 10
 --- Very quickly switches the entitys transparency between its alpha and 0.
-kRenderFxStrobeFaster = 11
+_G.kRenderFxStrobeFaster = 11
 --- Same as Strobe Slow, but the interval is more randomized.
-kRenderFxFlickerSlow = 12
+_G.kRenderFxFlickerSlow = 12
 --- Same as Strobe Fast, but the interval is more randomized.
-kRenderFxFlickerFast = 13
+_G.kRenderFxFlickerFast = 13
 ---
-kRenderFxNoDissipation = 14
+_G.kRenderFxNoDissipation = 14
 --- Flickers ( randomizes ) the entitys transparency
-kRenderFxDistort = 15
+_G.kRenderFxDistort = 15
 --- Same as Distort, but fades the entity away the farther you are from it.
-kRenderFxHologram = 16
+_G.kRenderFxHologram = 16
 ---
-kRenderFxExplode = 17
+_G.kRenderFxExplode = 17
 ---
-kRenderFxGlowShell = 18
+_G.kRenderFxGlowShell = 18
 ---
-kRenderFxClampMinScale = 19
+_G.kRenderFxClampMinScale = 19
 ---
-kRenderFxEnvRain = 20
+_G.kRenderFxEnvRain = 20
 ---
-kRenderFxEnvSnow = 21
+_G.kRenderFxEnvSnow = 21
 ---
-kRenderFxSpotlight = 22
+_G.kRenderFxSpotlight = 22
 ---
-kRenderFxRagdoll = 23
+_G.kRenderFxRagdoll = 23
 --- Quickly pulses the entitys transparency, from 0 to 255.
-kRenderFxPulseFastWider = 24
+_G.kRenderFxPulseFastWider = 24
 
 ---
 MATERIAL_LINES = 1
@@ -389,6 +389,6 @@ TEXFILTER.LINEAR = 2
 ---
 TEXFILTER.ANISOTROPIC = 3
 
-color_white = Color(255, 255, 255, 255)
-color_black = Color(0, 0, 0, 255)
-color_transparent = Color(255, 255, 255, 0)
+_G.color_white = Color(255, 255, 255, 255)
+_G.color_black = Color(0, 0, 0, 255)
+_G.color_transparent = Color(255, 255, 255, 0)

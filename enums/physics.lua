@@ -367,6 +367,6 @@ SURF_NOCHOP = 16384
 --- This surface is part of an entity's hitbox
 SURF_HITBOX = 32768
 
-vector_origin = Vector(0, 0, 0)
-vector_up = Vector(0, 0, 1)
-angle_zero = Angle(0, 0, 0)
+_G.vector_origin = Vector(0, 0, 0)
+_G.vector_up = Vector(0, 0, 1)
+_G.angle_zero = Angle(0, 0, 0)
