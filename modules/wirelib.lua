@@ -132,6 +132,13 @@ end
 function WireLib.AdjustOutputs(ent, names, descs)
 end
 
+
+--- @param ent GEntity
+--- @param iname string
+--- @param DontSendToCL boolean
+function WireLib.Link_Clear(ent, iname, DontSendToCL)
+end
+
 -- Backwards compatibility
 Wire_CreateInputs				= WireLib.CreateInputs
 Wire_CreateOutputs				= WireLib.CreateOutputs
@@ -140,3 +147,4 @@ Wire_AdjustOutputs				= WireLib.AdjustOutputs
 Wire_Restored					= WireLib.Restored
 Wire_Remove						= WireLib.Remove
 Wire_TriggerOutput				= WireLib.TriggerOutput
+Wire_Link_Clear					= WireLib.Link_Clear
