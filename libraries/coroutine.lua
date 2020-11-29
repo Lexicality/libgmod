@@ -8,6 +8,7 @@ end
 
 --- Resumes the given coroutine and passes the given vararg to either the function arguments or the coroutine.yield that is inside that function and returns whatever yield is called with the next time or by the final return in the function.  
 --- @param coroutine thread @Coroutine to resume.
+--- @vararg any @Arguments to be returned by coroutine.yield.
 --- @return boolean, any
 function coroutine.resume(coroutine, ...)
 end
@@ -37,7 +38,7 @@ function coroutine.wrap(coroutine)
 end
 
 --- Pauses the active coroutine and passes all additional variables to the call of coroutine.resume that resumed the coroutine last time, and returns all additional variables that were passed to the previous call of resume.  
-
+--- @vararg any @Arguments to be returned by the last call of coroutine.resume
 --- @return any @Arguments that were set previously by coroutine.resume
 function coroutine.yield(...)
 end

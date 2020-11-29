@@ -229,13 +229,13 @@ function math.log10(x)
 end
 
 --- Returns the largest value of all arguments.  
-
+--- @vararg any @Numbers to get the largest from
 --- @return number @The largest number
 function math.max(...)
 end
 
 --- Returns the smallest value of all arguments.  
-
+--- @vararg any @Numbers to get the smallest from.
 --- @return number @The smallest number
 function math.min(...)
 end

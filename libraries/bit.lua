@@ -23,6 +23,7 @@ end
 
 --- Returns the bitwise OR of all values specified.  
 --- @param value1 number @The first value.
+--- @vararg any @Extra values to be evaluated
 --- @return number @The bitwise OR result between all numbers.
 function bit.bor(value1, ...)
 end

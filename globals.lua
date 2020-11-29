@@ -507,7 +507,7 @@ end
 --- Throws an error. This is currently an alias of Global.ErrorNoHalt despite it once throwing a halting error like error without the stack trace appended.  
 --- 🦟 **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
 --- 🦟 **BUG**: [This function throws a non-halting error instead of a halting error.](https://github.com/Facepunch/garrysmod-issues/issues/2113)  
-
+--- @vararg any @Converts all arguments to strings and prints them with no spacing or line breaks.
 function _G.Error(...)
 end
 
@@ -515,7 +515,7 @@ end
 --- This function will not print a stack trace like a normal error would.  
 --- Essentially similar if not equivalent to Global.Msg.  
 --- 🦟 **BUG**: [Using this function in the menu state exits the menu.](https://github.com/Facepunch/garrysmod-issues/issues/1810)  
-
+--- @vararg any @Converts all arguments to strings and prints them with no spacing.
 function _G.ErrorNoHalt(...)
 end
 
@@ -554,6 +554,7 @@ end
 
 --- Formats the specified values into the string given. Same as string.format.  
 --- @param format string @The string to be formatted
+--- @vararg any @Values to be formatted into the string.
 --- @return string @The formatted string
 function _G.Format(format, ...)
 end
@@ -940,23 +941,23 @@ end
 --- Unlike Global.print, arguments are not separated by anything. They are simply concatenated.  
 --- Additionally, a newline isn't added automatically to the end, so subsequent Msg or print operations will continue the same line of text in the console. See Global.MsgN for a version that does add a newline.  
 --- The text is blue on the server, orange on the client, and green on the menu:   
-
+--- @vararg any @List of values to print.
 function _G.Msg(...)
 end
 
 --- Works exactly like Global.Msg except that, if called on the server, will print to all players consoles plus the server console.  
-
+--- @vararg any @List of values to print.
 function _G.MsgAll(...)
 end
 
 --- Just like Global.Msg, except it can also print colored text, just like chat.AddText.  
-
+--- @vararg any @Values to print
 function _G.MsgC(...)
 end
 
 --- Same as Global.print, except it concatinates the arguments without inserting any whitespace in between them.  
 --- See also Global.Msg, which doesn't add a newline (`"\n"`) at the end.  
-
+--- @vararg any @List of values to print
 function _G.MsgN(...)
 end
 
@@ -1160,6 +1161,7 @@ end
 --- Executes the given console command with the parameters.  
 --- ℹ **NOTE**: Some commands/convars are blocked from being ran/changed using this function, usually to prevent harm/annoyance to clients. For a list of blocked commands, see Blocked ConCommands.  
 --- @param command string @The command to be executed.
+--- @vararg any @The arguments
 function _G.RunConsoleCommand(command, ...)
 end
 
@@ -1232,6 +1234,7 @@ end
 --- ℹ **NOTE**: Useless on client, only server can send info to client.  
 --- @param name string @The name of the usermessage
 --- @param recipients any @Can be a CRecipientFilter, table or Player object.
+--- @vararg any @Data to send in the usermessage
 function _G.SendUserMessage(name, recipients, ...)
 end
 
@@ -1468,6 +1471,7 @@ end
 --- If the result of the first argument is false or nil, an error is thrown with the second argument as the message.  
 --- @param expression any @The expression to assert.
 --- @param errorMessage string @The error message to throw when assertion fails
+--- @vararg any @Any arguments past the error message will be returned by a successful assert.
 --- @return any, any, any
 function _G.assert(expression, errorMessage, ...)
 end
@@ -1581,6 +1585,7 @@ end
 --- Creates a table with the specified module name and sets the function environment for said table.  
 --- Any passed loaders are called with the table as an argument. An example of this is package.seeall.  
 --- @param name string @The name of the module
+--- @vararg any @Calls each function passed with the new table as an argument.
 function _G.module(name, ...)
 end
 
@@ -1612,6 +1617,7 @@ end
 --- 🦟 **BUG**: [This does not stop Global.Error and Global.ErrorNoHalt from sending error messages to the server (if called clientside) or calling the GM:OnLuaError hook. The success boolean returned will always return true and thus you will not get the error message returned. Global.error does not exhibit these behaviours.](https://github.com/Facepunch/garrysmod-issues/issues/2498)  
 --- 🦟 **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
 --- @param func function @Function to be executed and of which the errors should be caught of
+--- @vararg any @Arguments to call the function with.
 --- @return boolean, any
 function _G.pcall(func, ...)
 end
@@ -1620,7 +1626,7 @@ end
 --- Automatically attempts to convert each argument to a string. (See Global.tostring)  
 --- Seperates lines with a line break (`"\n"`)  
 --- Separates arguments with a tab character (`"\t"`).  
-
+--- @vararg any @List of values to print.
 function _G.print(...)
 end
 
@@ -1654,6 +1660,7 @@ end
 
 --- Used to select single values from a vararg or get the count of values in it.  
 --- @param parameter any @Can be a number or string
+--- @vararg any @The vararg
 --- @return any @Returns a number or vararg, depending on the select method.
 function _G.select(parameter, ...)
 end
@@ -1714,6 +1721,7 @@ end
 --- 🦟 **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
 --- @param func function @The function to call initially.
 --- @param errorCallback function @The function to be called if execution of the first fails; the error message is passed as a string
+--- @vararg any @Arguments to pass to the initial function.
 --- @return boolean, any
 function _G.xpcall(func, errorCallback, ...)
 end

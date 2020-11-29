@@ -1,7 +1,7 @@
 --- The chat library's purpose is to interface with the default chatbox.  
 _G.chat = {}
 --- Adds text to the local player's chat box (which only they can read).  
-
+--- @vararg any @The arguments
 function chat.AddText(...)
 end
 

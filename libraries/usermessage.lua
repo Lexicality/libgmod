@@ -12,6 +12,7 @@ end
 --- ⚠ **WARNING**: Usermessages have a limit of only 256 bytes!  
 --- @param name string @The message name to hook to.
 --- @param callback function @The function to be called if the specified message was received
+--- @vararg any @Arguments that are passed to the callback function when the hook is called
 function usermessage.Hook(name, callback, ...)
 end
 

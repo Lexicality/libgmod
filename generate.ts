@@ -189,14 +189,11 @@ function getArgDoc(arg: FuncArg): string {
     if (arg.description) {
         desc = "@" + trimArg(unpaginate(arg.description));
     }
+    let type = getTypeName(arg.type);
     if (arg.type == "vararg" || arg.name == "...") {
-        // Vararg definitions seem to be broken rn
-        // https://github.com/sumneko/lua-language-server/issues/118
-        // return `--- @vararg any ${desc}`;
-        return "";
+        return `--- @vararg ${type} ${desc}`;
     }
     let name = getArgName(arg);
-    let type = getTypeName(arg.type);
     return `--- @param ${name} ${type} ${desc}`;
 }
 

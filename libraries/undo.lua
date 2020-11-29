@@ -7,6 +7,7 @@ end
 
 --- Adds a function to call when the current undo block is undone  
 --- @param func function @The function to call
+--- @vararg any @Arguments to pass to the function (after the undo info table)
 function undo.AddFunction(func, ...)
 end
 

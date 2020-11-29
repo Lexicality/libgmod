@@ -220,7 +220,7 @@ function string.byte(string, startPos, endPos)
 end
 
 --- Takes the given numerical bytes and converts them to a string.  
-
+--- @vararg any @The bytes to create the string from.
 --- @return string @String built from given bytes
 function string.char(...)
 end
@@ -244,6 +244,7 @@ end
 
 --- Formats the specified values into the string given.  
 --- @param format string @The string to be formatted.<br>
+--- @vararg any @Values to be formatted into the string.
 --- @return string @The formatted string
 function string.format(format, ...)
 end
