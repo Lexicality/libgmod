@@ -184,7 +184,22 @@ function GVMatrix:Translate(translation)
 end
 
 --- Returns each component of the matrix, expanding rows before columns.  
---- @return number, number, number, number, number, number, number, number, number, number, number, number, number, number, number, number
+--- @return number @VMatrix:GetField(1, 1)
+--- @return number @VMatrix:GetField(1, 2)
+--- @return number @VMatrix:GetField(1, 3)
+--- @return number @VMatrix:GetField(1, 4)
+--- @return number @VMatrix:GetField(2, 1)
+--- @return number @VMatrix:GetField(2, 2)
+--- @return number @VMatrix:GetField(2, 3)
+--- @return number @VMatrix:GetField(2, 4)
+--- @return number @VMatrix:GetField(3, 1)
+--- @return number @VMatrix:GetField(3, 2)
+--- @return number @VMatrix:GetField(3, 3)
+--- @return number @VMatrix:GetField(3, 4)
+--- @return number @VMatrix:GetField(4, 1)
+--- @return number @VMatrix:GetField(4, 2)
+--- @return number @VMatrix:GetField(4, 3)
+--- @return number @VMatrix:GetField(4, 4)
 function GVMatrix:Unpack()
 end
 

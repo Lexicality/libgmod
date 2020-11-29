@@ -37,7 +37,8 @@ end
 
 --- Returns the size of a kill icon.  
 --- @param name string @Classname of the kill icon
---- @return number, number
+--- @return number @Width of the kill icon
+--- @return number @Height of the kill icon
 function killicon.GetSize(name)
 end
 

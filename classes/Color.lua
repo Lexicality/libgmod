@@ -17,12 +17,16 @@ function GColor:SetUnpacked(r, g, b, a)
 end
 
 --- Converts a Color into HSL color space. This calls Global.ColorToHSL internally.  
---- @return number, number, number
+--- @return number @The hue in degrees [0, 360).
+--- @return number @The saturation in the range [0, 1].
+--- @return number @The lightness in the range [0, 1].
 function GColor:ToHSL()
 end
 
 --- Converts a Color into HSV color space. This calls Global.ColorToHSV internally.  
---- @return number, number, number
+--- @return number @The hue in degrees [0, 360).
+--- @return number @The saturation in range [0, 1].
+--- @return number @The value in range [0, 1].
 function GColor:ToHSV()
 end
 
@@ -42,7 +46,10 @@ function GColor:ToVector()
 end
 
 --- Returns the red, green, blue, and alpha of the color.  
---- @return number, number, number, number
+--- @return number @Red
+--- @return number @Green
+--- @return number @Blue
+--- @return number @Alpha
 function GColor:Unpack()
 end
 

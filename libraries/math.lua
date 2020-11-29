@@ -204,7 +204,8 @@ end
 --- Used to split the number value into a normalized fraction and an exponent. Two values are returned: the first is a multiplier in the range 1/2 (inclusive) to 1 (exclusive) and the second is an integer exponent.  
 --- The result is such that x = m*2^e.  
 --- @param x number @The value to get the normalized fraction and the exponent from.
---- @return number, number
+--- @return number @m, multiplier - between 0.5 and 1
+--- @return number @e, exponent - always an integer
 function math.frexp(x)
 end
 
@@ -250,7 +251,8 @@ end
 
 --- Returns the integral and fractional component of the modulo operation.  
 --- @param base number @The base value.
---- @return number, number
+--- @return number @The integral component.
+--- @return number @The fractional component.
 function math.modf(base)
 end
 

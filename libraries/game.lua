@@ -181,7 +181,8 @@ end
 --- Mounts a GMA addon from the disk. Any error models currently loaded that the mounted addon provides will be reloaded.  
 --- Can be used with steamworks.DownloadUGC  
 --- @param path string @Location of the GMA file to mount, retrieved from steamworks.DownloadUGC
---- @return boolean, table
+--- @return boolean @success
+--- @return table @If successful, a table of files that have been mounted
 function game.MountGMA(path)
 end
 

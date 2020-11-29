@@ -8,13 +8,15 @@ function net.Broadcast()
 end
 
 --- Returns the amount of data left to read in the current message in bytes. Does nothing when sending data.  
---- @return number, number
+--- @return number @The amount of data left to read in the current net message in bytes
+--- @return number @The amount of data left to read in the current net message in bits
 function net.BytesLeft()
 end
 
 --- Returns the size of the current message in bytes.  
 --- ℹ **NOTE**: This will include 3 extra bytes used by the engine internally to send the data over the network.  
---- @return number, number
+--- @return number @The amount of bytes written to the current net message
+--- @return number @The amount of bits written to the current net message
 function net.BytesWritten()
 end
 

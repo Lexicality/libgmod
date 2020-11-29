@@ -10,12 +10,14 @@ function chat.Close()
 end
 
 --- Returns the chatbox position.  
---- @return number, number
+--- @return number @The X coordinate of the chatbox's position.
+--- @return number @The Y coordinate of the chatbox's position.
 function chat.GetChatBoxPos()
 end
 
 --- Returns the chatbox size.  
---- @return number, number
+--- @return number @The width of the chatbox.
+--- @return number @The height of the chatbox.
 function chat.GetChatBoxSize()
 end
 

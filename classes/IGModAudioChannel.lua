@@ -19,7 +19,9 @@ function GIGModAudioChannel:FFT(tbl, size)
 end
 
 --- Returns 3D cone of the sound channel. See IGModAudioChannel:Set3DCone.  
---- @return number, number, number
+--- @return number @The angle of the inside projection cone in degrees.
+--- @return number @The angle of the outside projection cone in degrees.
+--- @return number @The delta-volume outside the outer projection cone.
 function GIGModAudioChannel:Get3DCone()
 end
 
@@ -29,7 +31,8 @@ function GIGModAudioChannel:Get3DEnabled()
 end
 
 --- Returns 3D fade distances of a sound channel.  
---- @return number, number
+--- @return number @The minimum distance
+--- @return number @The maximum distance
 function GIGModAudioChannel:Get3DFadeDistance()
 end
 
@@ -55,7 +58,8 @@ function GIGModAudioChannel:GetLength()
 end
 
 --- Returns the right and left levels of sound played by the sound channel.  
---- @return number, number
+--- @return number @The left sound level
+--- @return number @The right sound level
 function GIGModAudioChannel:GetLevel()
 end
 

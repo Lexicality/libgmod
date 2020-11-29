@@ -4,7 +4,9 @@ _G.motionsensor = {}
 --- @param translator table 
 --- @param player GPlayer 
 --- @param rotation GAngle 
---- @return GVector, GAngle, sensor
+--- @return GVector @Pos
+--- @return GAngle @ang
+--- @return sensor @sensor
 function motionsensor.BuildSkeleton(translator, player, rotation)
 end
 

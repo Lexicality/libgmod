@@ -154,7 +154,8 @@ end
 
 --- Returns the width and height (in pixels) of the given text, but only if the font has been set with surface.SetFont.  
 --- @param text string @The string to check the size of.
---- @return number, number
+--- @return number @Width of the provided text
+--- @return number @Height of the provided text
 function surface.GetTextSize(text)
 end
 
@@ -168,7 +169,8 @@ end
 --- Returns the size of the texture with the associated texture ID.  
 --- For `.png/.jpg` textures loaded with Global.Material you can use the `$realheight` and `$realwidth` material parameters (IMaterial:GetInt) to get the size of the image.  
 --- @param textureID number @The texture ID, returned by surface.GetTextureID.
---- @return number, number
+--- @return number @The texture width.
+--- @return number @The texture height.
 function surface.GetTextureSize(textureID)
 end
 

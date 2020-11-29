@@ -186,7 +186,8 @@ end
 --- mytable[ math.random( #mytable ) ]  
 --- ```  
 --- @param haystack table @The table to choose from.
---- @return any, any
+--- @return any @A random value from the table.
+--- @return any @The key associated with the random value.
 function table.Random(haystack)
 end
 

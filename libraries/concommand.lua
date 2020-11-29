@@ -11,7 +11,8 @@ function concommand.Add(name, callback, autoComplete, helpText, flags)
 end
 
 --- Returns the tables of all console command callbacks, and autocomplete functions, that were added to the game with concommand.Add.  
---- @return table, table
+--- @return table @Table of command callback functions.
+--- @return table @Table of command autocomplete functions.
 function concommand.GetTable()
 end
 

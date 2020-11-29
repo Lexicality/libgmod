@@ -75,7 +75,8 @@ function GPanel:ChildCount()
 end
 
 --- Returns the width and height of the space between the position of the panel (upper-left corner) and the max bound of the children panels (farthest reaching lower-right corner).  
---- @return number, number
+--- @return number @The children size width.
+--- @return number @The children size height.
 function GPanel:ChildrenSize()
 end
 
@@ -148,7 +149,8 @@ end
 --- This is equivalent to calling gui.MousePos and then Panel:ScreenToLocal.  
 --- ⚠ **WARNING**: This function uses a cached value for the screen position of the panel, computed at the end of the last VGUI Think/Layout pass.  
 --- ie. inaccurate results may be returned if the panel or any of its ancestors have been repositioned outside of PANEL:Think or PANEL:PerformLayout within the last frame.  
---- @return number, number
+--- @return number @X coordinate of the cursor, relative to the top left of the panel.
+--- @return number @Y coordinate of the cursor, relative to the top left of the panel.
 function GPanel:CursorPos()
 end
 
@@ -281,7 +283,10 @@ end
 
 --- Returns the position and size of the panel.  
 --- This is equivalent to calling Panel:GetPos and Panel:GetSize together.  
---- @return number, number, number, number
+--- @return number @The x coordinate of the panel, relative to its parent's top left.
+--- @return number @The y coordinate of the panel, relative to its parent's top left.
+--- @return number @The width of the panel.
+--- @return number @The height of the panel.
 function GPanel:GetBounds()
 end
 
@@ -297,7 +302,8 @@ end
 
 --- Gets a child object's position relative to this panel object. The number of levels is not relevant; the child may have many parents between itself and the object on which the method is called.  
 --- @param pnl GPanel @The panel to get the position of.
---- @return number, number
+--- @return number @The horizontal (x) position of the child relative to this panel object.
+--- @return number @The vertical (y) position of the child relative to this panel object.
 function GPanel:GetChildPosition(pnl)
 end
 
@@ -323,14 +329,16 @@ end
 --- Returns the child of this panel object that is closest to the specified point. The point is relative to the object on which the method is called. The distance the child is from this point is also returned.  
 --- @param x number @The horizontal (x) position of the point.
 --- @param y number @The vertical (y) position of the point.
---- @return GPanel, number
+--- @return GPanel @The child object that was closest to the specified point.
+--- @return number @The distance that this child was from the point.
 function GPanel:GetClosestChild(x, y)
 end
 
 --- Gets the size of the content/children within a panel object.  
 --- Only works with Label derived panels by default such as DLabel.  
 --- Will also work on any panel that manually implements this method.  
---- @return number, number
+--- @return number @The content width of the object.
+--- @return number @The content height of the object.
 function GPanel:GetContentSize()
 end
 
@@ -361,12 +369,18 @@ function GPanel:GetDock()
 end
 
 --- Returns the docked margins of the panel. (set by Panel:DockMargin)  
---- @return number, number, number, number
+--- @return number @Left margin.
+--- @return number @Top margin.
+--- @return number @Right margin.
+--- @return number @Bottom margin.
 function GPanel:GetDockMargin()
 end
 
 --- Returns the docked padding of the panel. (set by Panel:DockPadding)  
---- @return number, number, number, number
+--- @return number @Left padding.
+--- @return number @Top padding.
+--- @return number @Right padding.
+--- @return number @Bottom padding.
 function GPanel:GetDockPadding()
 end
 
@@ -413,7 +427,8 @@ end
 --- Returns the position of the panel relative to its Panel:GetParent.  
 --- If you require the panel's position **and** size, consider using Panel:GetBounds instead.  
 --- If you need the position in screen space, see Panel:LocalToScreen.  
---- @return number, number
+--- @return number @X coordinate, relative to this panels parents top left corner.
+--- @return number @Y coordinate, relative to this panels parents top left corner.
 function GPanel:GetPos()
 end
 
@@ -424,7 +439,8 @@ end
 
 --- Returns the currently selected range of text.  
 --- This function will only work on RichText and TextEntry panels and their derivatives.  
---- @return number, number
+--- @return number @The start of the range
+--- @return number @The end of the range
 function GPanel:GetSelectedTextRange()
 end
 
@@ -435,7 +451,8 @@ end
 
 --- Returns the size of the panel.  
 --- If you require both the panel's position and size, consider using Panel:GetBounds instead.  
---- @return number, number
+--- @return number @width
+--- @return number @height
 function GPanel:GetSize()
 end
 
@@ -461,18 +478,21 @@ function GPanel:GetText()
 end
 
 --- Gets the left and top text margins of a text-based panel object, such as a DButton or DLabel. This is set with Panel:SetTextInset.  
---- @return number, number
+--- @return number @The left margin of the text, in pixels.
+--- @return number @The top margin of the text, in pixels.
 function GPanel:GetTextInset()
 end
 
 --- Gets the size of the text within a Label derived panel.  
 --- 🦟 **BUG**: [This can return 0 incorrectly.](https://github.com/Facepunch/garrysmod-issues/issues/2576)  
---- @return number, number
+--- @return number @The width of the text in the DLabel.
+--- @return number @The height of the text in the DLabel.
 function GPanel:GetTextSize()
 end
 
 --- Gets valid receiver slot of currently dragged panel.  
---- @return GPanel, table
+--- @return GPanel @The panel this was called on if a valid receiver slot exists, otherwise false.
+--- @return table @The slot table.
 function GPanel:GetValidReceiverSlot()
 end
 
@@ -692,7 +712,8 @@ function GPanel:LoadGWENString(str)
 end
 
 --- Returns the cursor position local to the position of the panel (usually the upper-left corner).  
---- @return number, number
+--- @return number @The x coordinate
+--- @return number @The y coordinate
 function GPanel:LocalCursorPos()
 end
 
@@ -702,7 +723,8 @@ end
 --- ℹ **NOTE**: If the panel uses Panel:Dock, this function will return 0, 0 when the panel was created. The position will be updated in the next frame.  
 --- @param posX number @The X coordinate of the position on the panel to translate.
 --- @param posY number @The Y coordinate of the position on the panel to translate.
---- @return number, number
+--- @return number @The X coordinate relative to the screen.
+--- @return number @The Y coordinate relative to the screen.
 function GPanel:LocalToScreen(posX, posY)
 end
 
@@ -914,7 +936,8 @@ end
 --- ⚠ **WARNING**: This function uses a cached value for the screen position of the panel, computed at the end of the last VGUI Think/Layout pass, so inaccurate results may be returned if the panel or any of its ancestors have been re-positioned outside of PANEL:Think or PANEL:PerformLayout within the last frame.  
 --- @param screenX number @The x coordinate of the screen position to be translated.
 --- @param screenY number @The y coordinate of the screed position be to translated.
---- @return number, number
+--- @return number @Relativeposition X
+--- @return number @Relativeposition Y
 function GPanel:ScreenToLocal(screenX, screenY)
 end
 

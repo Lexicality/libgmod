@@ -48,7 +48,11 @@ function GProjectedTexture:GetNearZ()
 end
 
 --- Returns the current orthographic settings of the Projected Texture. To set these values, use ProjectedTexture:SetOrthographic.  
---- @return boolean, number, number, number, number
+--- @return boolean @Whether or not this projected texture is orthographic
+--- @return number @left
+--- @return number @top
+--- @return number @right
+--- @return number @bottom
 function GProjectedTexture:GetOrthographic()
 end
 

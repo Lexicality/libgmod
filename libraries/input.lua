@@ -6,7 +6,8 @@ function input.CheckKeyTrapping()
 end
 
 --- Returns the cursor's position on the screen  
---- @return number, number
+--- @return number @The cursors position on the X axis
+--- @return number @The cursors position on the Y axis
 function input.GetCursorPos()
 end
 

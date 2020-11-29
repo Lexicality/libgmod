@@ -82,7 +82,9 @@ function GAngle:ToTable()
 end
 
 --- Returns the pitch, yaw, and roll components of the angle.  
---- @return number, number, number
+--- @return number @p, pitch, x, or Angle[1].
+--- @return number @y, yaw, or Angle[2].
+--- @return number @r, roll, r, or Angle[3].
 function GAngle:Unpack()
 end
 

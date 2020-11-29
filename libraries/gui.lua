@@ -74,7 +74,8 @@ end
 
 --- 🛑 **DEPRECATED**: Use input.GetCursorPos instead.  
 --- Returns the cursor's position on the screen, or 0, 0 if cursor is not visible.  
---- @return number, number
+--- @return number @mouseX
+--- @return number @mouseY
 function gui.MousePos()
 end
 

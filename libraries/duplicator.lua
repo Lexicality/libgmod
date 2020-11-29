@@ -108,7 +108,8 @@ end
 --- @param Player GPlayer @The player who wants to create something
 --- @param EntityList table @A table of duplicator data to create the entities from
 --- @param ConstraintList table @A table of duplicator data to create the constraints from
---- @return table, table
+--- @return table @List of created entities
+--- @return table @List of created constraints
 function duplicator.Paste(Player, EntityList, ConstraintList)
 end
 

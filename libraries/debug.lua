@@ -19,7 +19,9 @@ end
 
 --- Returns the current hook settings of the passed thread. The thread argument can be omitted. This is unrelated to . More information on hooks can be found at http://www.lua.org/pil/23.2.html  
 --- @param thread thread @Which thread to retrieve its hook from
---- @return function, string, number
+--- @return function @Hook function
+--- @return string @Hook mask
+--- @return number @Hook count
 function debug.gethook(thread)
 end
 
@@ -35,7 +37,8 @@ end
 --- @param thread thread @The thread
 --- @param level number @The level above the thread
 --- @param index number @The variable's index you want to get
---- @return string, any
+--- @return string @The name of the variable
+--- @return any @The value of the local variable.
 function debug.getlocal(thread, level, index)
 end
 
@@ -55,7 +58,8 @@ end
 --- Used for getting variable values in an index from the passed function. This does nothing for C functions.  
 --- @param func function @Function to get the upvalue indexed from.
 --- @param index number @The index in the upvalue array
---- @return string, any
+--- @return string @Name of the upvalue
+--- @return any @Value of the upvalue.
 function debug.getupvalue(func, index)
 end
 

@@ -80,7 +80,8 @@ function engine.OpenDupe(dupeName)
 end
 
 --- Returns an estimate of the server's performance. Equivalent to calling Global.FrameTime from the server, according to source code.  
---- @return number, number
+--- @return number @Frame time
+--- @return number @Server Framerate Std Deviation
 function engine.ServerFrameTime()
 end
 

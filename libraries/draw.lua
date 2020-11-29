@@ -60,7 +60,8 @@ end
 --- @param color table @The color of the text
 --- @param xAlign number @The alignment of the X coordinate using Enums/TEXT_ALIGN.
 --- @param yAlign number @The alignment of the Y coordinate using Enums/TEXT_ALIGN.
---- @return number, number
+--- @return number @The width of the text
+--- @return number @The height of the text
 function draw.SimpleText(text, font, x, y, color, xAlign, yAlign)
 end
 
@@ -75,14 +76,16 @@ end
 --- @param yAlign number @The alignment of the Y Coordinate using Enums/TEXT_ALIGN.
 --- @param outlinewidth number @Width of the outline.
 --- @param outlinecolor table @Color of the outline
---- @return number, number
+--- @return number @The width of the text
+--- @return number @The height of the text
 function draw.SimpleTextOutlined(Text, font, x, y, color, xAlign, yAlign, outlinewidth, outlinecolor)
 end
 
 --- Works like draw.SimpleText but uses a table structure instead.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
 --- @param textdata table @The text properties
---- @return number, number
+--- @return number @Width of drawn text
+--- @return number @Height of drawn text
 function draw.Text(textdata)
 end
 
@@ -109,7 +112,8 @@ end
 --- @param font string @Font to draw in
 --- @param boxcolor table @The box color
 --- @param textcolor table @The text color
---- @return number, number
+--- @return number @The width of the word box.
+--- @return number @The height of the word box.
 function draw.WordBox(bordersize, x, y, text, font, boxcolor, textcolor)
 end
 

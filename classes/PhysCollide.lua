@@ -19,7 +19,9 @@ end
 --- @param rayEnd GVector @The end position of the trace
 --- @param rayMins GVector @The mins of the trace's bounds
 --- @param rayMaxs GVector @The maxs of the trace's bounds
---- @return GVector, GVector, number
+--- @return GVector @Hit position of the trace
+--- @return GVector @Hit normal of the trace
+--- @return number @Fraction of the trace
 function GPhysCollide:TraceBox(origin, angles, rayStart, rayEnd, rayMins, rayMaxs)
 end
 

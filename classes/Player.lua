@@ -393,12 +393,14 @@ function GPlayer:GetHoveredWidget()
 end
 
 --- Gets the bottom base and the top base size of the player's hull.  
---- @return GVector, GVector
+--- @return GVector @Player's hull bottom base size
+--- @return GVector @Player's hull top base size
 function GPlayer:GetHull()
 end
 
 --- Gets the bottom base and the top base size of the player's crouch hull.  
---- @return GVector, GVector
+--- @return GVector @Player's crouch hull bottom base size
+--- @return GVector @Player's crouch hull top base size
 function GPlayer:GetHullDuck()
 end
 

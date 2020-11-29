@@ -445,7 +445,8 @@ end
 --- 🦟 **BUG**: [This can return garbage serverside or Global.Vector(0,0,0) for v49 models.](https://github.com/Facepunch/garrysmod-issues/issues/3285)  
 --- 🦟 **BUG**: [This can return garbage if a trace passed through the target bone during bone matrix access.](https://github.com/Facepunch/garrysmod-issues/issues/3739)  
 --- @param boneIndex number @The bone index of the bone to get the position of
---- @return GVector, GAngle
+--- @return GVector @The bone's position relative to the world
+--- @return GAngle @The bone's angle relative to the world.
 function GEntity:GetBonePosition(boneIndex)
 end
 
@@ -458,7 +459,9 @@ end
 --- Returns info about given plane of non-nodraw brush model surfaces of the entity's model. Works on worldspawn as well.  
 --- ⚠ **WARNING**: This only works on entities with brush models.  
 --- @param id number @The index of the plane to get info of
---- @return GVector, GVector, number
+--- @return GVector @The origin of the plane
+--- @return GVector @The normal of the plane.
+--- @return number @The "distance" of the plane
 function GEntity:GetBrushPlane(id)
 end
 
@@ -501,7 +504,8 @@ end
 
 --- Returns an entity's collision bounding box. In most cases, this will return the same bounding box as Entity:GetModelBounds unless the entity does not have a physics mesh or it has a PhysObj different from the default.  
 --- 🦟 **BUG**: [This can be out-of-sync between the client and server for weapons.](https://github.com/Facepunch/garrysmod-issues/issues/223)  
---- @return GVector, GVector
+--- @return GVector @The minimum vector of the collision bounds
+--- @return GVector @The maximum vector of the collision bounds
 function GEntity:GetCollisionBounds()
 end
 
@@ -517,12 +521,14 @@ function GEntity:GetColor()
 end
 
 --- Returns the two entities involved in a constraint ent, or nil if the entity is not a constraint.  
---- @return GEntity, GEntity
+--- @return GEntity @ent1
+--- @return GEntity @ent2
 function GEntity:GetConstrainedEntities()
 end
 
 --- Returns the two entities physobjects involved in a constraint ent, or no value if the entity is not a constraint.  
---- @return GPhysObj, GPhysObj
+--- @return GPhysObj @phys1
+--- @return GPhysObj @phys2
 function GEntity:GetConstrainedPhysObjects()
 end
 
@@ -573,7 +579,8 @@ end
 
 --- Returns acceptable value range for the flex.  
 --- @param flex number @The ID of the flex to look up bounds of
---- @return number, number
+--- @return number @The minimum value for this flex
+--- @return number @The maximum value for this flex
 function GEntity:GetFlexBounds(flex)
 end
 
@@ -640,7 +647,8 @@ end
 --- Gets the bounds (min and max corners) of a hit box.  
 --- @param hitbox number @The number of the hit box.
 --- @param group number @The group of the hit box
---- @return GVector, GVector
+--- @return GVector @Hit box mins
+--- @return GVector @Hit box maxs
 function GEntity:GetHitBoxBounds(hitbox, group)
 end
 
@@ -664,7 +672,8 @@ function GEntity:GetHitBoxHitGroup(hitbox, hitboxset)
 end
 
 --- Returns entity's current hit box set  
---- @return number, string
+--- @return number @The current hit box set id, or no value if the entity doesn't have hit boxes
+--- @return string @The current hit box set name, or no value if the entity doesn't have hit boxes
 function GEntity:GetHitboxSet()
 end
 
@@ -794,7 +803,8 @@ function GEntity:GetModel()
 end
 
 --- Returns the entity's model bounds. This is different than the collision bounds/hull. This is not scaled with Entity:SetModelScale, and will return the model's original, unmodified mins and maxs.  
---- @return GVector, GVector
+--- @return GVector @The minimum vector of the bounds
+--- @return GVector @The maximum vector of the bounds
 function GEntity:GetModelBounds()
 end
 
@@ -814,7 +824,8 @@ function GEntity:GetModelRadius()
 end
 
 --- Returns the entity's model render bounds. By default this will return the same bounds as Entity:GetModelBounds.  
---- @return GVector, GVector
+--- @return GVector @The minimum vector of the bounds
+--- @return GVector @The maximum vector of the bounds
 function GEntity:GetModelRenderBounds()
 end
 
@@ -1089,7 +1100,8 @@ end
 
 --- Returns pose parameter range  
 --- @param id number @Pose parameter ID to look up
---- @return number, number
+--- @return number @The minimum value
+--- @return number @The maximum value
 function GEntity:GetPoseParameterRange(id)
 end
 
@@ -1111,7 +1123,8 @@ end
 
 --- Returns render bounds of the entity. Can be overridden by Entity:SetRenderBounds.  
 --- If the render bounds are not inside players view, the entity will not be drawn!  
---- @return GVector, GVector
+--- @return GVector @The minimum vector of the bounds
+--- @return GVector @The maximum vector of the bounds.
 function GEntity:GetRenderBounds()
 end
 
@@ -1143,7 +1156,8 @@ end
 --- Returns the min and max of the entity's axis-aligned bounding box.  
 --- @param min GVector @Minimum extent of the bounding box.
 --- @param max GVector @Maximum extent of the bounding box.
---- @return GVector, GVector
+--- @return GVector @Minimum extent of the AABB
+--- @return GVector @Maximum extent of the AABB
 function GEntity:GetRotatedAABB(min, max)
 end
 
@@ -1243,7 +1257,9 @@ end
 --- @param sequenceId number @The sequence index
 --- @param startCycle number @The sequence start cycle
 --- @param endCyclnde number @The sequence end cycle
---- @return boolean, GVector, GAngle
+--- @return boolean @Whether the operation was successful
+--- @return GVector @The delta vector of the animation, how much the model's origin point moved.
+--- @return GAngle @The delta angle of the animation.
 function GEntity:GetSequenceMovement(sequenceId, startCycle, endCyclnde)
 end
 
@@ -1629,7 +1645,8 @@ end
 
 --- Returns sequence ID from its name.  
 --- @param name string @Sequence name
---- @return number, number
+--- @return number @Sequence ID for that name
+--- @return number @The sequence duration
 function GEntity:LookupSequence(name)
 end
 
@@ -1858,7 +1875,8 @@ end
 --- Makes the entity play a .vcd scene.  
 --- @param scene string @Filepath to scene
 --- @param delay number @Delay in seconds until the scene starts playing.
---- @return number, GEntity
+--- @return number @Estimated length of the scene
+--- @return GEntity @The scene entity, removing which will stop the scene from continuing to play.
 function GEntity:PlayScene(scene, delay)
 end
 
@@ -2970,7 +2988,8 @@ function GEntity:Weapon_TranslateActivity(act)
 end
 
 --- Returns two vectors representing the minimum and maximum extent of the entity's bounding box.  
---- @return GVector, GVector
+--- @return GVector @The minimum vector for the entity's bounding box.
+--- @return GVector @The maximum vector for the entity's bounding box.
 function GEntity:WorldSpaceAABB()
 end
 

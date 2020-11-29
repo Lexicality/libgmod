@@ -132,13 +132,17 @@ end
 
 --- Converts a Color into HSL color space.  
 --- @param color table @The Color.
---- @return number, number, number
+--- @return number @The hue in degrees [0, 360).
+--- @return number @The saturation in the range [0, 1].
+--- @return number @The lightness in the range [0, 1].
 function _G.ColorToHSL(color)
 end
 
 --- Converts a Color into HSV color space.  
 --- @param color table @The Color.
---- @return number, number, number
+--- @return number @The hue in degrees [0, 360).
+--- @return number @The saturation in the range [0, 1].
+--- @return number @The value in the range [0, 1].
 function _G.ColorToHSV(color)
 end
 
@@ -548,7 +552,9 @@ end
 
 --- Returns the tool-tip text and tool-tip-panel (if any) of the given panel as well as itself  
 --- @param panel GPanel @Panel to find tool-tip of
---- @return string, GPanel, GPanel
+--- @return string @tool-tip text
+--- @return GPanel @tool-tip panel
+--- @return GPanel @panel that the function was called with
 function _G.FindTooltip(panel)
 end
 
@@ -900,7 +906,8 @@ end
 --- @param localAng GAngle @The angle in the source coordinate system, that should be converted to a world angle
 --- @param originPos GVector @The origin point of the source coordinate system, in world coordinates
 --- @param originAngle GAngle @The angles of the source coordinate system, as a world angle
---- @return GVector, GAngle
+--- @return GVector @The world position of the supplied local position.
+--- @return GAngle @The world angles of the supplied local angle.
 function _G.LocalToWorld(localPos, localAng, originPos, originAngle)
 end
 
@@ -914,7 +921,8 @@ end
 --- ℹ **NOTE**: When using .png or .jpg textures, try to make their sizes Power Of 2 (1, 2, 4, 8, 16, 32, 64, etc). While images are no longer scaled to Power of 2 sizes since February 2019, it is a good practice for things like icons, etc.  
 --- @param materialName string @The material name or path
 --- @param pngParameters string @A string containing space separated keywords which will be used to add material parameters
---- @return GIMaterial, number
+--- @return GIMaterial @Generated material
+--- @return number @How long it took for the function to run
 function _G.Material(materialName, pngParameters)
 end
 
@@ -1314,7 +1322,8 @@ end
 --- For sorting by **value**, use Global.SortedPairsByValue.  
 --- @param table table @The table to sort
 --- @param desc boolean @Reverse the sorting order
---- @return function, table
+--- @return function @Iterator function
+--- @return table @The table being iterated over
 function _G.SortedPairs(table, desc)
 end
 
@@ -1324,7 +1333,8 @@ end
 --- @param table table @Table to create iterator for.
 --- @param memberKey any @Key of the value member to sort by.
 --- @param descending boolean @Whether the iterator should iterate in descending order or not.
---- @return function, table
+--- @return function @Iterator function
+--- @return table @The table the iterator was created for.
 function _G.SortedPairsByMemberValue(table, memberKey, descending)
 end
 
@@ -1333,7 +1343,8 @@ end
 --- To sort by **keys**, use Global.SortedPairs.  
 --- @param table table @Table to create iterator for
 --- @param descending boolean @Whether the iterator should iterate in descending order or not
---- @return function, table
+--- @return function @Iterator function
+--- @return table @The table which will be iterated over
 function _G.SortedPairsByValue(table, descending)
 end
 
@@ -1464,7 +1475,8 @@ end
 --- @param angle GAngle @The angles that should be translated from the current to the new system.
 --- @param newSystemOrigin GVector @The origin of the system to translate to.
 --- @param newSystemAngles GAngle @The angles of the system to translate to.
---- @return GVector, GAngle
+--- @return GVector @Local position
+--- @return GAngle @Local angles
 function _G.WorldToLocal(position, angle, newSystemOrigin, newSystemAngles)
 end
 
@@ -1472,7 +1484,9 @@ end
 --- @param expression any @The expression to assert.
 --- @param errorMessage string @The error message to throw when assertion fails
 --- @vararg any @Any arguments past the error message will be returned by a successful assert.
---- @return any, any, any
+--- @return any @If successful, returns the first argument.
+--- @return any @If successful, returns the error message
+--- @return any @Returns any arguments past the error message.
 function _G.assert(expression, errorMessage, ...)
 end
 
@@ -1524,7 +1538,9 @@ end
 --- For unordered pairs, see Global.pairs.  
 --- For pairs sorted by key in alphabetical order, see Global.SortedPairs.  
 --- @param tab table @The table to iterate over.
---- @return function, table, number
+--- @return function @The iterator function.
+--- @return table @The table being iterated over
+--- @return number @The origin index **=0**
 function _G.ipairs(tab)
 end
 
@@ -1599,7 +1615,8 @@ end
 --- ℹ **NOTE**: Table keys in Lua have no specific order, and will be returned in whatever order they exist in memory. This may not always be in ascending order or alphabetical order. If you need to iterate over an array in order, use Global.ipairs.  
 --- @param tab table @The table
 --- @param prevKey any @The previous key in the table.
---- @return any, any
+--- @return any @The next key for the table
+--- @return any @The value associated with that key
 function _G.next(tab, prevKey)
 end
 
@@ -1607,7 +1624,9 @@ end
 --- For alphabetical **key** order use Global.SortedPairs.  
 --- For alphabetical **value** order use Global.SortedPairsByValue.  
 --- @param tab table @The table to iterate over
---- @return function, table, any
+--- @return function @The iterator (Global.next)
+--- @return table @The table being iterated over
+--- @return any @**nil** (for the constructor)
 function _G.pairs(tab)
 end
 
@@ -1618,7 +1637,8 @@ end
 --- 🦟 **BUG**: [This does not stop errors incurred by Global.include.](https://github.com/Facepunch/garrysmod-issues/issues/3112)  
 --- @param func function @Function to be executed and of which the errors should be caught of
 --- @vararg any @Arguments to call the function with.
---- @return boolean, any
+--- @return boolean @If the function had no errors occur within it.
+--- @return any @If an error occurred, this will be a string containing the error message
 function _G.pcall(func, ...)
 end
 
@@ -1722,7 +1742,8 @@ end
 --- @param func function @The function to call initially.
 --- @param errorCallback function @The function to be called if execution of the first fails; the error message is passed as a string
 --- @vararg any @Arguments to pass to the initial function.
---- @return boolean, any
+--- @return boolean @Status of the execution; `true` for success, `false` for failure.
+--- @return any @The returns of the first function if execution succeeded, otherwise the **first** return value of the error callback.
 function _G.xpcall(func, errorCallback, ...)
 end
 

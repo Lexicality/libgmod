@@ -308,12 +308,16 @@ function render.GetDXLevel()
 end
 
 --- Returns the current fog color.  
---- @return number, number, number
+--- @return number @Red part of the color.
+--- @return number @Green part of the color
+--- @return number @Blue part of the color
 function render.GetFogColor()
 end
 
 --- Returns the fog start and end distance.  
---- @return number, number, number
+--- @return number @Fog start distance set by render.FogStart
+--- @return number @For end distance set by render.FogEnd
+--- @return number @Fog Z distance set by render.SetFogZ
 function render.GetFogDistances()
 end
 
@@ -553,7 +557,9 @@ end
 --- Reads the color of the specified pixel from the RenderTarget sent by render.CapturePixels  
 --- @param x number @The x coordinate.
 --- @param y number @The y coordinate.
---- @return number, number, number
+--- @return number @r
+--- @return number @g
+--- @return number @b
 function render.ReadPixel(x, y)
 end
 

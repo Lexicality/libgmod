@@ -167,7 +167,9 @@ function GVector:ToTable()
 end
 
 --- Returns the x, y, and z of the vector.  
---- @return number, number, number
+--- @return number @x or Vector[1].
+--- @return number @y or Vector[2].
+--- @return number @z or Vector[3].
 function GVector:Unpack()
 end
 

@@ -198,17 +198,16 @@ function getArgDoc(arg: FuncArg): string {
 }
 
 function getRetDoc(retvals: FuncRet): string {
-    if (retvals.length == 1) {
-        let ret = retvals[0];
+    let rets = [];
+    for (let ret of retvals) {
         let retType = getTypeName(ret.type);
         let desc = "";
         if (ret.description) {
             desc = "@" + trimArg(unpaginate(ret.description));
         }
-        return `--- @return ${retType} ${desc}`;
+        rets.push(`--- @return ${retType} ${desc}`);
     }
-    let types = retvals.map((r) => getTypeName(r.type)).join(", ");
-    return `--- @return ${types}`;
+    return rets.join("\n");
 }
 
 function formatDesc(desc: string): string {

@@ -238,7 +238,9 @@ end
 --- @param needle string @The string to find, can contain patterns if enabled.
 --- @param startPos number @The position to start the search from, can be negative start position will be relative to the end position.
 --- @param noPatterns boolean @Disable patterns.
---- @return number, number, string
+--- @return number @Starting position of the found text, or nil if the text wasn't found
+--- @return number @Ending position of found text, or nil if the text wasn't found
+--- @return string @Matched text for each group if patterns are enabled and used, or nil if the text wasn't found
 function string.find(haystack, needle, startPos, noPatterns)
 end
 
@@ -269,7 +271,8 @@ end
 --- @param pattern string @The pattern that defines what should be matched and eventually be replaced.
 --- @param replacement string @In case of a string the matches sequence will be replaced with it
 --- @param maxReplaces number @Maximum number of replacements to be made.
---- @return string, number
+--- @return string @replaceResult
+--- @return number @replaceCount
 function string.gsub(string, pattern, replacement, maxReplaces)
 end
 

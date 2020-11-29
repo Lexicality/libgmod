@@ -21,7 +21,8 @@ function GMarkupObject:GetWidth()
 end
 
 --- Gets computed the width and height of the markupobject.  
---- @return number, number
+--- @return number @The computed width.
+--- @return number @The computed height.
 function GMarkupObject:Size()
 end
 

@@ -36,14 +36,16 @@ function jit.opt.start(...)
 end
 
 --- Returns the status of the JIT compiler and the current optimizations enabled.  
---- @return boolean, any
+--- @return boolean @Is JIT enabled
+--- @return any @Strings for CPU-specific features and enabled optimizations
 function jit.status()
 end
 
 --- Returns bytecode of a function at a position.  
 --- @param func function @Function to retrieve bytecode from.
 --- @param pos number @Position of the bytecode to retrieve.
---- @return number, number
+--- @return number @bytecode instruction
+--- @return number @bytecode opcode
 function jit.util.funcbc(func, pos)
 end
 
@@ -112,18 +114,26 @@ end
 
 --- @param tr number 
 --- @param index number 
---- @return number, number, number, number, number
+--- @return number @m
+--- @return number @ot
+--- @return number @op1
+--- @return number @op2
+--- @return number @prev
 function jit.util.traceir(tr, index)
 end
 
 --- @param tr number 
 --- @param index number 
---- @return any, number, number
+--- @return any @k
+--- @return number @t
+--- @return number @slot; optional
 function jit.util.tracek(tr, index)
 end
 
 --- @param tr number 
---- @return string, number, number
+--- @return string @mcode
+--- @return number @address
+--- @return number @loop
 function jit.util.tracemc(tr)
 end
 

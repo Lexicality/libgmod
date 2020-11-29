@@ -110,7 +110,9 @@ end
 --- @param lineStart GVector @Start of the line.
 --- @param lineEnd GVector @End of the line.
 --- @param pointPos GVector @The position of the point.
---- @return number, GVector, number
+--- @return number @Distance from line.
+--- @return GVector @Nearest point on line.
+--- @return number @Distance along line from start.
 function util.DistanceToLine(lineStart, lineEnd, pointPos)
 end
 
@@ -212,7 +214,9 @@ end
 --- @param boxAngles GAngle @The angles of the box.
 --- @param boxMins GVector @The min position of the box.
 --- @param boxMaxs GVector @The max position of the box.
---- @return GVector, GVector, number
+--- @return GVector @Hit position, nil if not hit.
+--- @return GVector @Normal/direction vector, nil if not hit.
+--- @return number @Fraction of trace used, nil if not hit.
 function util.IntersectRayWithOBB(rayStart, rayDelta, boxOrigin, boxAngles, boxMins, boxMaxs)
 end
 

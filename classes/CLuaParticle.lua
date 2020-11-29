@@ -22,7 +22,9 @@ function GCLuaParticle:GetBounce()
 end
 
 --- Returns the color of the particle.  
---- @return number, number, number
+--- @return number @Red part of the color
+--- @return number @Green part of the color
+--- @return number @Blue part of the color
 function GCLuaParticle:GetColor()
 end
 

@@ -45,7 +45,8 @@ end
 --- Finds the closest standable ground at, above, or below the provided position.  
 --- ℹ **NOTE**: The ground must have at least 32 units of empty space above it to be considered by this function, unless 16 layers are tested without finding valid ground.  
 --- @param pos GVector @Position to find the closest ground for.
---- @return number, GVector
+--- @return number @The height of the ground layer.
+--- @return GVector @The normal of the ground layer.
 function navmesh.GetGroundHeight(pos)
 end
 

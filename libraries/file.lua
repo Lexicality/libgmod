@@ -35,7 +35,8 @@ end
 --- @param name string @The wildcard to search for
 --- @param path string @The path to look for the files and directories in
 --- @param sorting string @The sorting to be used, optional
---- @return table, table
+--- @return table @A table of found files, or nil if the path is invalid
+--- @return table @A table of found directories, or nil if the path is invalid
 function file.Find(name, path, sorting)
 end
 

@@ -19,7 +19,9 @@ function GVehicle:EnableEngine(enable)
 end
 
 --- Returns information about the ammo of the vehicle  
---- @return number, number, number
+--- @return number @Ammo type of the vehicle ammo
+--- @return number @Clip size
+--- @return number @Count
 function GVehicle:GetAmmo()
 end
 
@@ -56,7 +58,8 @@ end
 
 --- Returns the seat position and angle of a given passenger seat.  
 --- @param role number @The passenger role
---- @return GVector, GAngle
+--- @return GVector @The seat position
+--- @return GAngle @The seat angle
 function GVehicle:GetPassengerSeatPoint(role)
 end
 
@@ -102,7 +105,9 @@ end
 
 --- Returns the view position and forward angle of a given passenger seat.  
 --- @param role number @The passenger role
---- @return GVector, GAngle, number
+--- @return GVector @The view position, will be 0, 0, 0 on failure
+--- @return GAngle @The view angles, will be 0, 0, 0 on failure
+--- @return number @The field of view, will be 0 on failure
 function GVehicle:GetVehicleViewPosition(role)
 end
 
@@ -120,7 +125,9 @@ end
 
 --- Returns the wheel contact point.  
 --- @param wheel number @The wheel to check
---- @return GVector, number, boolean
+--- @return GVector @The contact position
+--- @return number @The Surface Properties ID of hit surface.
+--- @return boolean @Whether the wheel is on ground or not
 function GVehicle:GetWheelContactPoint(wheel)
 end
 

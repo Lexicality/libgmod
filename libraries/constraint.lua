@@ -98,7 +98,10 @@ end
 
 --- Creates an invisible, non-moveable anchor point in the world to which things can be attached.  
 --- @param pos GVector @The position to spawn the anchor at
---- @return GEntity, GPhysObj, number, GVector
+--- @return GEntity @anchor
+--- @return GPhysObj @physicsObject,
+--- @return number @bone
+--- @return GVector @LPos
 function constraint.CreateStaticAnchorPoint(pos)
 end
 
@@ -115,7 +118,8 @@ end
 --- @param material string @The material of the rope.
 --- @param width number @Width of rope.
 --- @param stretchonly boolean 
---- @return GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @rope
 function constraint.Elastic(Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly)
 end
 
@@ -189,7 +193,10 @@ end
 --- @param fixed number @Whether the hydraulic is fixed.
 --- @param speed number 
 --- @param material string @The material of the rope.
---- @return GEntity, GEntity, GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @rope
+--- @return GEntity @controller
+--- @return GEntity @slider
 function constraint.Hydraulic(pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material)
 end
 
@@ -221,7 +228,8 @@ end
 --- @param numpadkey_bwd number @The key binding for "backwards", corresponding to an Enums/KEY
 --- @param direction number 
 --- @param LocalAxis GVector 
---- @return GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @axis
 function constraint.Motor(Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcetime, nocollide, toggle, pl, forcelimit, numpadkey_fwd, numpadkey_bwd, direction, LocalAxis)
 end
 
@@ -242,7 +250,10 @@ end
 --- @param amplitude number 
 --- @param starton boolean 
 --- @param material string @Material of the rope.
---- @return GEntity, GEntity, GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @rope
+--- @return GEntity @controller
+--- @return GEntity @slider
 function constraint.Muscle(pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, period, amplitude, starton, material)
 end
 
@@ -275,14 +286,16 @@ end
 
 --- Attempts to remove all constraints associated with an entity  
 --- @param ent GEntity @The entity to remove constraints from
---- @return boolean, number
+--- @return boolean @Whether any constraints were removed
+--- @return number @Number of constraints removed
 function constraint.RemoveAll(ent)
 end
 
 --- Attempts to remove all constraints of a specified type associated with an entity  
 --- @param ent GEntity @The entity to check
 --- @param type string @The constraint type to remove (eg
---- @return boolean, number
+--- @return boolean @Whether we removed any constraints or not
+--- @return number @The amount of constraints removed
 function constraint.RemoveConstraints(ent, type)
 end
 
@@ -299,7 +312,8 @@ end
 --- @param width number @Width of the rope.
 --- @param material string @Material of the rope.
 --- @param rigid boolean @Whether the constraint is rigid.
---- @return GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @rope
 function constraint.Rope(Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid)
 end
 
@@ -312,7 +326,8 @@ end
 --- @param LPos2 GVector 
 --- @param width number @The width of the rope.
 --- @param material string @The material of the rope.
---- @return GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @rope
 function constraint.Slider(Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material)
 end
 
@@ -343,7 +358,9 @@ end
 --- @param bwd_speed number @Backwards speed.
 --- @param material string @The material of the rope.
 --- @param toggle boolean @Whether the winch should be on toggle.
---- @return GEntity, GEntity, GEntity
+--- @return GEntity @Constraint
+--- @return GEntity @rope
+--- @return GEntity @controller
 function constraint.Winch(pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle)
 end
 

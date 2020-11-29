@@ -44,14 +44,16 @@ end
 --- Calculates the force and torque on the center of mass for an offset force impulse. The outputs can be directly passed to PhysObj:ApplyForceCenter and PhysObj:ApplyTorqueCenter, respectively.  
 --- @param force GVector @The initial force
 --- @param pos GVector @The location of the force in world coordinates
---- @return GVector, GVector
+--- @return GVector @The calculated force on the physics object's center of mass
+--- @return GVector @The calculated torque on the physics object's center of mass
 function GPhysObj:CalculateForceOffset(force, pos)
 end
 
 --- Calculates the linear and angular velocities on the center of mass for an offset force impulse. The outputs can be directly passed to PhysObj:AddVelocity and PhysObj:AddAngleVelocity, respectively.  
 --- @param force GVector @The initial force
 --- @param pos GVector @The location of the force in world coordinates
---- @return GVector, GVector
+--- @return GVector @The calculated linear velocity from the force on the physics object's center of mass
+--- @return GVector @The calculated angular velocity from the force on the physics object's center of mass
 function GPhysObj:CalculateVelocityOffset(force, pos)
 end
 
@@ -89,7 +91,8 @@ function GPhysObj:EnableMotion(enable)
 end
 
 --- Returns the mins and max of the physics object.  
---- @return GVector, GVector
+--- @return GVector @Mins
+--- @return GVector @Maxs
 function GPhysObj:GetAABB()
 end
 
@@ -109,7 +112,8 @@ function GPhysObj:GetContents()
 end
 
 --- Returns the linear and angular damping of the physics object.  
---- @return number, number
+--- @return number @The linear damping
+--- @return number @The angular damping
 function GPhysObj:GetDamping()
 end
 

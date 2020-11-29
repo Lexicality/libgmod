@@ -32,7 +32,8 @@ end
 --- @param string string @The string to calculate the length of.
 --- @param startPos number @The starting position to get the length from.
 --- @param endPos number @The ending position to get the length from.
---- @return number, number
+--- @return number @The number of UTF-8 characters in the string
+--- @return number @The position of the first invalid byte
 function utf8.len(string, startPos, endPos)
 end
 

@@ -316,7 +316,8 @@ end
 
 --- Returns whether we can be seen from the given position.  
 --- @param pos GVector @The position to check.
---- @return boolean, GVector
+--- @return boolean @Whether we can be seen or not.
+--- @return GVector @If we can be seen, this is returned with either the center or one of the corners of the Nav Area.
 function GCNavArea:IsVisible(pos)
 end
 
