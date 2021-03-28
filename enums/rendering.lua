@@ -192,6 +192,23 @@ STENCIL_GREATEREQUAL = 7
 --- Always passes.
 STENCIL_ALWAYS = 8
 
+--- Preserves the existing stencil buffer value.
+STENCIL_KEEP = 1
+--- Sets the value in the stencil buffer to 0.
+STENCIL_ZERO = 2
+--- Sets the value in the stencil buffer to the reference value, set using render.SetStencilReferenceValue.
+STENCIL_REPLACE = 3
+--- Increments the value in the stencil buffer by 1, clamping the result.
+STENCIL_INCRSAT = 4
+--- Decrements the value in the stencil buffer by 1, clamping the result.
+STENCIL_DECRSAT = 5
+--- Inverts the value in the stencil buffer.
+STENCIL_INVERT = 6
+--- Increments the value in the stencil buffer by 1, wrapping around on overflow.
+STENCIL_INCR = 7
+--- Decrements the value in the stencil buffer by 1, wrapping around on overflow.
+STENCIL_DECR = 8
+
 SCREENFADE = {}
 --- Fade out after the hold time has passed
 SCREENFADE.IN = 1
