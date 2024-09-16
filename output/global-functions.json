@@ -12,7 +12,7 @@
       {
         "name": "tab",
         "type": "table",
-        "description": "The table to add the accessor functions too."
+        "description": "The table to add the accessor functions to."
       },
       {
         "name": "key",
@@ -40,7 +40,7 @@
       "client",
       "server"
     ],
-    "description": "Defines a global entity class variable with an automatic value in order to prevent collisions with other <page>Enums/CLASS</page>. You should prefix your variable with CLASS_ for consistency.",
+    "description": "Defines a global entity class variable with an automatic value. In order to prevent collisions with other <page>Enums/CLASS</page>. You should prefix your variable with CLASS_ for consistency.",
     "arguments": [
       {
         "name": "name",
@@ -98,13 +98,13 @@
       "client",
       "server"
     ],
-    "description": "Marks a Lua file to be sent to clients when they join the server. Doesn't do anything on the client - this means you can use it in a shared file without problems.\n\n<warning>If the file trying to be added is empty, an error will occur, and the file will not be sent to the client.</warning>\n\n<note>This function is not needed for scripts located in **lua/autorun/** and **lua/autorun/client/**: they are automatically sent to clients.</note>\n<note>You can add up to 8192 files.</note>",
+    "description": "Marks a Lua file to be sent to clients when they join the server. Doesn't do anything on the client - this means you can use it in a shared file without problems.\n\n<warning>If the file trying to be added is empty, an error will occur, and the file will not be sent to the client\n\nThe string cannot have whitespace.</warning>\n\n<note>\nThis function is not needed for scripts located in these paths because they are automatically sent to clients.\n**lua/matproxy/**\n**lua/postprocess/**\n**lua/vgui/**\n**lua/skins/**\n**lua/autorun/**\n**lua/autorun/client/**\n\nYou can add up to **8192** files. Each file can be up to **64KB** compressed (LZMA)\n</note>",
     "arguments": [
       {
         "name": "file",
         "type": "string",
         "default": "current file",
-        "description": "The name/path to the Lua file that should be sent, relative to the garrysmod/lua folder. If no parameter is specified, it sends the current file.\n\nThe file path can be relative to the script it is ran from. For example, if your script is in lua/myfolder/stuff.lua, calling <page>Global.AddCSLuaFile</page>(\"otherstuff.lua\") and <page>Global.AddCSLuaFile</page>(\"myfolder/otherstuff.lua\") is the same thing."
+        "description": "The name/path to the Lua file that should be sent, **relative to the garrysmod/lua folder**. If no parameter is specified, it sends the current file.\n\nThe file path can be relative to the script it's ran from. For example, if your script is in `lua/myfolder/stuff.lua`, calling <page>Global.AddCSLuaFile</page>(\"otherstuff.lua\") and <page>Global.AddCSLuaFile</page>(\"myfolder/otherstuff.lua\") is the same thing.\n\n<note>Please make sure your file names are unique, the filesystem is shared across all addons, so a file named `lua/config.lua` in your addon may be overwritten by the same file in another addon.</note>"
       }
     ]
   },
@@ -115,7 +115,7 @@
       "client",
       "menu"
     ],
-    "description": "Loads the specified image from the /cache folder, used in combination <page>steamworks.Download</page>.\nMost addons will provide a 512x512 png image.",
+    "description": "Loads the specified image from the `/cache` folder, used in combination with <page>steamworks.Download</page>. Most addons will provide a 512x512 png image.\n\n<note>This works with any image file with the `.cache` file extension, even outside of the `/cache` folder.</note>",
     "arguments": [
       {
         "name": "name",
@@ -126,7 +126,7 @@
     "returnValues": [
       {
         "type": "IMaterial",
-        "description": "The material, returns nil if the cached file is not an image."
+        "description": "The material, returns `nil` if the cached file is not an image."
       }
     ]
   },
@@ -142,6 +142,36 @@
         "name": "position",
         "type": "Vector",
         "description": "The origin to add."
+      }
+    ]
+  },
+  {
+    "name": "AddPropsOfParent",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "This function creates a Custom Category in the Spawnlist. Use <page>Global.GenerateSpawnlistFromPath</page> if you want to create a category with the contents of a folder.\n<warning>Using this function before <page>SANDBOX:PopulateContent</page> has been called will result in an error</warning>",
+    "arguments": [
+      {
+        "name": "pnlContent",
+        "type": "Panel",
+        "description": "The SMContentPanel of the Node"
+      },
+      {
+        "name": "node",
+        "type": "Panel",
+        "description": "The Node"
+      },
+      {
+        "name": "parentid",
+        "type": "number",
+        "description": "The ParentID to use"
+      },
+      {
+        "name": "customProps",
+        "type": "table",
+        "description": "The Table with the Contents of the new Category"
       }
     ]
   },
@@ -192,31 +222,40 @@
       "client",
       "server"
     ],
-    "description": "Creates an <page>Angle</page> object.",
+    "description": "Creates an <page>Angle</page> object, representing a [Euler Angle](https://en.wikipedia.org/wiki/Euler_angles) made up of pitch, yaw, and roll components.\n\n<warning>\nThis function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.\nWhere possible, it is generally better to store an <page>Angle</page> in a variable and re-use that variable rather than re-creating it repeatedly.\nIn cases where an empty <page>Angle</page> is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.\n</warning>",
     "arguments": [
       {
         "name": "pitch",
         "type": "number",
-        "default": "0",
-        "description": "The pitch value of the angle.\n\n\nIf this is an <page>Angle</page>, this function will return a copy of the given angle.\n\n\nIf this is a <page>string</page>, this function will try to parse the string as a angle. If it fails, it returns a 0 angle.\n(See examples)"
+        "description": "The pitch value of the angle, in degrees."
       },
       {
         "name": "yaw",
         "type": "number",
         "default": "0",
-        "description": "The yaw value of the angle."
+        "description": "The yaw value of the angle, in degrees."
       },
       {
         "name": "roll",
         "type": "number",
         "default": "0",
-        "description": "The roll value of the angle."
+        "description": "The roll value of the angle, in degrees."
+      },
+      {
+        "name": "angle",
+        "type": "Angle",
+        "description": "Creates a new <page>Angle</page> that is a copy of the <page>Angle</page> passed in."
+      },
+      {
+        "name": "angleString",
+        "type": "string",
+        "description": "Attempts to parse the input <page>string</page> from the <page>Global.print</page> format of an <page>Angle</page>.\n\nReturns an <page>Angle</page> with its pitch, yaw, and roll set to `0` if the <page>string</page> cannot be parsed."
       }
     ],
     "returnValues": [
       {
         "type": "Angle",
-        "description": "Created angle"
+        "description": "The newly created <page>Angle</page>"
       }
     ]
   },
@@ -294,12 +333,29 @@
     ]
   },
   {
+    "name": "BRANCH",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "description": "A variable containing a string indicating which (Beta) Branch of the game you are using.\n\nWhile this variable is always available in the <page text=\"Client\">States#client</page> & <page text=\"Menu\">States#menu</page>\nrealms, it is only defined in the <page text=\"Server\">States#server</page>  realm on local servers.\n\nFor more information on beta branches, see <page text=\"this page\">Dev_Branch</page>",
+    "returnValues": [
+      {
+        "type": "string",
+        "description": "The current branch."
+      }
+    ]
+  },
+  {
     "name": "BroadcastLua",
     "parent": "Global",
     "realms": [
+      "client",
       "server"
     ],
-    "description": "Sends the specified Lua code to all connected clients and executes it.\n<note>If you need to use this function more than once consider using <page>net</page> library. Send net message and make the entire code you want to execute in <page>net.Receive</page> on client.</note>",
+    "description": "Sends the specified Lua code to all connected clients and executes it.\n<note>\nIf you need to use this function more than once, consider using <page>net</page> library.\nSend net message and make the entire code you want to execute in <page>net.Receive</page> on client.\nIf executed **clientside** it won't do anything.\n</note>",
     "arguments": [
       {
         "name": "code",
@@ -332,7 +388,8 @@
     "description": "<internal></internal>\n\nUsed internally to check if the current server the player is on can be added to favorites or not. Does not check if the server is ALREADY in the favorites.",
     "returnValues": [
       {
-        "type": "boolean"
+        "type": "boolean",
+        "description": "Can add to favorites"
       }
     ]
   },
@@ -384,17 +441,47 @@
     "description": "Empties the pool of main menu background images."
   },
   {
+    "name": "ClearLuaErrorGroup",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Clears all Lua Errors with the given group id.",
+    "arguments": [
+      {
+        "name": "group_id",
+        "type": "string",
+        "description": "group_id to remove. Will be \"[addon-name]-0\" or \"Other-\""
+      }
+    ]
+  },
+  {
+    "name": "ClearProblem",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Removes the given Problem from the Problems table and refreshes the Problems panel.",
+    "arguments": [
+      {
+        "name": "id",
+        "type": "string",
+        "description": "The Problem ID to remove"
+      }
+    ]
+  },
+  {
     "name": "ClientsideModel",
     "parent": "Global",
     "realms": [
       "client"
     ],
-    "description": "Creates a non physical entity that only exists on the client. See also <page>ents.CreateClientProp</page>.\n\n<bug issue=\"861\">Parented clientside models will become detached if the parent entity leaves the PVS.</bug>\n\n<bug issue=\"1387\">Clientside entities are not garbage-collected, thus you must store a reference to the object and call <page>CSEnt:Remove</page> manually.</bug>\n\n<bug issue=\"3184\">Clientside models will occasionally delete themselves during high server lag.</bug>",
+    "description": "Creates a non physical entity that only exists on the client. See also <page>ents.CreateClientProp</page>.\n\n<bug issue=\"861\">Parented clientside models will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**</bug>\n\n<bug issue=\"1387\">Clientside entities are not garbage-collected, thus you must store a reference to the object and call <page>CSEnt:Remove</page> manually. **To workaround this bug, you need to hold a reference (in a variable) to the entity and remove it when necessary.**</bug>\n\n<bug issue=\"3184\">Clientside models will occasionally delete themselves during high server lag.</bug>",
     "arguments": [
       {
         "name": "model",
         "type": "string",
-        "description": "The file path to the model.\n\n<warning>Model must be precached with <page>util.PrecacheModel</page> on the server before usage.</warning>"
+        "description": "The file path to the model."
       },
       {
         "name": "renderGroup",
@@ -406,7 +493,7 @@
     "returnValues": [
       {
         "type": "CSEnt",
-        "description": "Created client-side model. ( C_BaseFlex )"
+        "description": "Created client-side model (`C_BaseFlex`)."
       }
     ]
   },
@@ -416,12 +503,12 @@
     "realms": [
       "client"
     ],
-    "description": "Creates a fully clientside ragdoll.\n\n<note>The ragdoll initially starts as hidden and with shadows disabled, see the example for how to enable it.\n\nThere's no need to call <page>Entity:Spawn</page> on this entity.\n\nThe physics won't initialize at all if the model hasn't been precached serverside first.</note>\n\n<bug issue=\"1387\">Clientside entities are not garbage-collected, thus you must store a reference to the object and call <page>CSEnt:Remove</page> manually.</bug>",
+    "description": "Creates a fully clientside ragdoll.\n\n<note>The ragdoll initially starts as hidden and with shadows disabled, see the example for how to enable it.\n\nThere's no need to call <page>Entity:Spawn</page> on this entity.</note>\n\n<bug issue=\"1387\">Clientside entities are not garbage-collected, thus you must store a reference to the object and call <page>CSEnt:Remove</page> manually.</bug>",
     "arguments": [
       {
         "name": "model",
         "type": "string",
-        "description": "The file path to the model.\n\n<warning>Model must be precached with <page>util.PrecacheModel</page> on the server before usage.</warning>"
+        "description": "The file path to the model."
       },
       {
         "name": "renderGroup",
@@ -433,7 +520,7 @@
     "returnValues": [
       {
         "type": "CSEnt",
-        "description": "The newly created client-side ragdoll. ( C_ClientRagdoll )"
+        "description": "The newly created client-side only ragdoll. (`C_ClientRagdoll`)"
       }
     ]
   },
@@ -486,12 +573,12 @@
         "name": "action",
         "type": "string",
         "default": "collect",
-        "description": "The action to run.\n\nValid actions are \"collect\", \"stop\", \"restart\", \"count\", \"step\", \"setpause\" and \"setstepmul\"."
+        "description": "The action to run.\n\nValid actions are `collect`, `stop`, `restart`, `count`, `step`, `setpause`, `setstepmul` and `isrunning`.\n<note>`isrunning` is only available on the x86-64 versions, because of the difference in the LuaJIT version. [See here](jit.version)</note>"
       },
       {
         "name": "arg",
         "type": "number",
-        "description": "The argument of the specified action, only applicable for \"step\", \"setpause\" and \"setstepmul\"."
+        "description": "The argument of the specified action, only applicable for `step`, `setpause` and `setstepmul`."
       }
     ],
     "returnValues": [
@@ -509,33 +596,33 @@
       "client",
       "server"
     ],
-    "description": "Creates a <page>Color</page>.",
+    "description": "Creates a <page>Color</page>.\n<warning>This function is relatively expensive when used in rendering hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the color in a variable or to use the [default colors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available.</warning>",
     "arguments": [
       {
         "name": "r",
         "type": "number",
-        "description": "An integer from 0-255 describing the red value of the color."
+        "description": "An integer from `0-255` describing the red value of the color."
       },
       {
         "name": "g",
         "type": "number",
-        "description": "An integer from 0-255 describing the green value of the color."
+        "description": "An integer from `0-255` describing the green value of the color."
       },
       {
         "name": "b",
         "type": "number",
-        "description": "An integer from 0-255 describing the blue value of the color."
+        "description": "An integer from `0-255` describing the blue value of the color."
       },
       {
         "name": "a",
         "type": "number",
         "default": "255",
-        "description": "An integer from 0-255 describing the alpha (transparency) of the color."
+        "description": "An integer from `0-255` describing the alpha (transparency) of the color.(default 255)"
       }
     ],
     "returnValues": [
       {
-        "type": "table",
+        "type": "Color",
         "description": "The created <page>Color</page>."
       }
     ]
@@ -611,15 +698,15 @@
     "returnValues": [
       {
         "type": "number",
-        "description": "The hue in degrees [0, 360)."
+        "description": "The hue in degrees `[0, 360]`."
       },
       {
         "type": "number",
-        "description": "The saturation in the range [0, 1]."
+        "description": "The saturation in the range `[0, 1]`."
       },
       {
         "type": "number",
-        "description": "The lightness in the range [0, 1]."
+        "description": "The lightness in the range `[0, 1]`."
       }
     ]
   },
@@ -642,15 +729,15 @@
     "returnValues": [
       {
         "type": "number",
-        "description": "The hue in degrees [0, 360)."
+        "description": "The hue in degrees `[0, 360]`."
       },
       {
         "type": "number",
-        "description": "The saturation in the range [0, 1]."
+        "description": "The saturation in the range `[0, 1]`."
       },
       {
         "type": "number",
-        "description": "The value in the range [0, 1]."
+        "description": "The value in the range `[0, 1]`."
       }
     ]
   },
@@ -666,7 +753,7 @@
       {
         "name": "path",
         "type": "string",
-        "description": "Path to the file, relative to the garrysmod/lua/ directory."
+        "description": "Path to the file, relative to the `garrysmod/lua/` directory."
       }
     ],
     "returnValues": [
@@ -697,7 +784,7 @@
         "description": "An identifier in case an error is thrown. (The same identifier can be used multiple times)"
       },
       {
-        "name": "HandleError",
+        "name": "handleError",
         "type": "boolean",
         "default": "true",
         "description": "If false this function will return an error string instead of throwing an error."
@@ -707,27 +794,6 @@
       {
         "type": "function",
         "description": "A function that, when called, will execute the given code.\n\nReturns the error string if there was a Lua error and third argument is false."
-      }
-    ]
-  },
-  {
-    "name": "ConsoleAutoComplete",
-    "parent": "Global",
-    "realms": [
-      "menu"
-    ],
-    "description": "Returns a table of console command names beginning with the given text.",
-    "arguments": [
-      {
-        "name": "text",
-        "type": "string",
-        "description": "Text that the console commands must begin with."
-      }
-    ],
-    "returnValues": [
-      {
-        "type": "table",
-        "description": "Table of console command names."
       }
     ]
   },
@@ -778,13 +844,13 @@
         "name": "shouldsave",
         "type": "boolean",
         "default": "true",
-        "description": "Should the ConVar be saved across sessions"
+        "description": "Should the ConVar be saved across sessions in the cfg/client.vdf file."
       },
       {
         "name": "userinfo",
         "type": "boolean",
         "default": "false",
-        "description": "Should the ConVar and its containing data be sent to the server when it has changed. This make the convar accessible from server using <page>Player:GetInfoNum</page> and similar functions."
+        "description": "Should the ConVar and its containing data be sent to the server when it has changed. This makes the convar accessible from server using <page>Player:GetInfoNum</page> and similar functions."
       },
       {
         "name": "helptext",
@@ -812,6 +878,14 @@
     ]
   },
   {
+    "name": "CreateContextMenu",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "Creates a ContextMenu.\n<internal></internal>"
+  },
+  {
     "name": "CreateConVar",
     "parent": "Global",
     "realms": [
@@ -819,12 +893,12 @@
       "client",
       "server"
     ],
-    "description": "Creates a console variable (<page>ConVar</page>), in general these are for things like gamemode/server settings.\n<bug issue=\"3323\">FCVAR_ARCHIVE causes default value replication issues on clientside FCVAR_REPLICATED convars and should be omitted clientside as a workaround</bug>",
+    "description": "Creates a console variable (<page>ConVar</page>), in general these are for things like gamemode/server settings.\n<warning>Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.</warning>",
     "arguments": [
       {
         "name": "name",
         "type": "string",
-        "description": "Name of the <page>ConVar</page>.\n\nThis cannot be a name of an engine console command or console variable. It will silently fail if it is. If it is the same name as another lua ConVar, it will return that ConVar object."
+        "description": "Name of the <page>ConVar</page>.\n\nThis cannot be a name of an engine console command or console variable. It will throw an error if it is. If it is the same name as another lua ConVar, it will return that ConVar object."
       },
       {
         "name": "value",
@@ -869,7 +943,7 @@
       "client",
       "menu"
     ],
-    "description": "Creates a new material with the specified name and shader.\n\n<note>Materials created with this function can be used in <page>Entity:SetMaterial</page> and <page>Entity:SetSubMaterial</page> by prepending a \"!\" to their material name argument.</note>\n\n<bug issue=\"1531\">.pngs must be loaded with <page>Global.Material</page> before being used with this function.</bug>\n\n<bug issue=\"2511\">This does not work with [patch materials](https://developer.valvesoftware.com/wiki/Patch).</bug>\n\n<bug issue=\"3103\">This will not create a new material if another material object with the same name already exists.</bug>",
+    "description": "Creates a new material with the specified name and shader.\n\nMaterials created with this function can be used in <page>Entity:SetMaterial</page> and <page>Entity:SetSubMaterial</page> by prepending a `!` to their material name argument.\n\nThis will not create a new material if another material object with the same name already exists. All Materials created by this functions are cleaned up on map shutdown.\n\n<note>This does not work with [patch materials](https://developer.valvesoftware.com/wiki/Patch).</note>\n\n<bug issue=\"1531\">.pngs must be loaded with <page>Global.Material</page> before being used with this function.</bug>",
     "arguments": [
       {
         "name": "name",
@@ -895,12 +969,27 @@
     ]
   },
   {
+    "name": "CreateNewAddonPreset",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Creates a new Preset from the given JSON string.",
+    "arguments": [
+      {
+        "name": "data",
+        "type": "string",
+        "description": "A JSON string containing all necessary informations.\nJSON structue should be <page>Structures/Preset</page>"
+      }
+    ]
+  },
+  {
     "name": "CreateParticleSystem",
     "parent": "Global",
     "realms": [
       "client"
     ],
-    "description": "Creates a new particle system.\n\n<note>The particle effect must be precached with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
+    "description": "Creates a new particle system. See also <page>Entity:CreateParticleEffect</page>, <page>Global.ParticleEffectAttach</page> and <page>Global.CreateParticleSystemNoEntity</page>.\n\n<note>The particle effect must be precached with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
     "arguments": [
       {
         "name": "ent",
@@ -928,6 +1017,38 @@
         "type": "Vector",
         "default": "Vector( 0, 0, 0 )",
         "description": "The offset from the <page>Entity:GetPos</page> of the entity we are attaching this CP to."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "CNewParticleEffect",
+        "description": "The created particle system."
+      }
+    ]
+  },
+  {
+    "name": "CreateParticleSystemNoEntity",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "Creates a new particle system, and sets control points 0 and 1 to given position, as well as optionally orientation of CP0 to the given angles. See also <page>Global.CreateParticleSystem</page>\n\n<note>The particle effect must be precached with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
+    "arguments": [
+      {
+        "name": "effect",
+        "type": "string",
+        "description": "The name of the effect to create. It must be precached."
+      },
+      {
+        "name": "pos",
+        "type": "Vector",
+        "description": "The position for the particle system."
+      },
+      {
+        "name": "ang",
+        "type": "Angle",
+        "default": "Angle( 0, 0, 0 )",
+        "description": "The orientation of the particle system."
       }
     ],
     "returnValues": [
@@ -993,7 +1114,7 @@
       "client",
       "server"
     ],
-    "description": "Returns a sound parented to the specified entity.\n\n<note>You can only create one CSoundPatch per audio file, per entity at the same time.</note>",
+    "description": "Returns a sound parented to the specified entity.\n\n<note>You can only create one CSoundPatch per audio file, per entity at the same time.</note>\n<note>\nValid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:\n\n`Unsupported 32-bit wave file your_sound.wav` and\n`Invalid sample rate (48000) for sound 'your_sound.wav'`\n</note>",
     "arguments": [
       {
         "name": "targetEnt",
@@ -1003,19 +1124,19 @@
       {
         "name": "soundName",
         "type": "string",
-        "description": "The sound to play."
+        "description": "The sound to play. (Sound path or a <page text=\"soundscript\">sound.Add</page>) [Soundscript Characters](https://developer.valvesoftware.com/wiki/Soundscripts/en#Sound_Characters) are supported."
       },
       {
         "name": "filter",
         "type": "CRecipientFilter",
-        "default": "[CPASAttenuationFilter](https://developer.valvesoftware.com/wiki/CRecipientFilter#Derived_classes)",
-        "description": "A <page>CRecipientFilter</page> of the players that will have this sound networked to them.\n\n<note>This argument only works serverside.</note>"
+        "default": "nil",
+        "description": "A <page>CRecipientFilter</page> of the players that will have this sound networked to them.\n\nIf not set, the default is a [CPASAttenuationFilter](https://developer.valvesoftware.com/wiki/CRecipientFilter#Derived_classes).\n\n<note>This argument only works serverside.</note>"
       }
     ],
     "returnValues": [
       {
         "type": "CSoundPatch",
-        "description": "The sound object"
+        "description": "The sound object. You should keep a reference to this object for as long as you wish the sound to play!"
       }
     ]
   },
@@ -1048,7 +1169,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the uptime of the server in seconds (to at least 4 decimal places)\n\nThis is a synchronised value and affected by various factors such as host_timescale (or <page>game.GetTimeScale</page>) and the server being paused - either by sv_pausable or all players disconnecting.\n\nYou should use this function for timing in-game events but not for real-world events.\n\nSee also: <page>Global.RealTime</page>, <page>Global.SysTime</page>\n\n<note>This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).\n\n\n\nThis is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this</note>\n\n<bug issue=\"3026\">This returns 0 in <page>GM:PlayerAuthed</page>.</bug>",
+    "description": "Returns the uptime of the server in seconds (to at least 4 decimal places)\n\nThis is a synchronised value and affected by various factors such as host_timescale (or <page>game.GetTimeScale</page>) and the server being paused - either by `sv_pausable` or all players disconnecting.\n\nYou should use this function for timing in-game events but not for real-world events.\n\nSee also: <page>Global.RealTime</page>, <page>Global.SysTime</page>\n\n<note>This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).\n\n\n\nThis is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this</note>\n\n<bug issue=\"3026\">This returns 0 in <page>GM:PlayerAuthed</page>.</bug>",
     "returnValues": [
       {
         "type": "number",
@@ -1101,12 +1222,27 @@
       "client",
       "server"
     ],
-    "description": "This is not a function. This is a preprocessor keyword that translates to:\n```\nlocal BaseClass = baseclass.Get(\"my_weapon\")\n```\nIf you type `DEFINE_BASECLASS(\"my_weapon\")` in your script.\n\nSee <page>baseclass.Get</page> for more information.",
+    "description": "A preprocessor keyword that is directly replaced with the following text:\n```lua\nlocal BaseClass = baseclass.Get\n```\n\nBecause this is a simple preprocessor keyword and not a function, it will cause problems if not used properly\n\nSee <page>baseclass.Get</page> for more information.\n<warning>The preprocessor is not smart enough to know when substitution doesn't make sense, such as: table keys and strings.\n\nRunning `print(\"DEFINE_BASECLASS\")` will result in `local BaseClass = baseclass.Get`</warning>\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
     "arguments": [
       {
         "name": "value",
         "type": "string",
         "description": "Baseclass name"
+      }
+    ]
+  },
+  {
+    "name": "DeleteAddonPreset",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Deletes the given Preset.",
+    "arguments": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The name of the Preset to delete."
       }
     ]
   },
@@ -1117,7 +1253,7 @@
       "client",
       "server"
     ],
-    "description": "Loads and registers the specified gamemode, setting the GM table's DerivedFrom field to the value provided, if the table exists. The DerivedFrom field is used post-gamemode-load as the \"derived\" parameter for <page>gamemode.Register</page>.",
+    "description": "Loads and registers the specified gamemode, setting the GM table's DerivedFrom field to the value provided, if the table exists. The DerivedFrom field is used post-gamemode-load as the \"derived\" parameter for <page>gamemode.Register</page>. See  <page>Gamemode_Creation#derivinggamemodes</page> for more information about deriving gamemodes.",
     "arguments": [
       {
         "name": "base",
@@ -1148,7 +1284,7 @@
       {
         "name": "func",
         "type": "function",
-        "description": "Function to call to process the animation\n\n\nArguments:\n* <page>Panel</page> pnl - the panel passed to Derma_Anim\n* <page>table</page> anim - the anim table\n* <page>number</page> delta - the fraction of the progress through the animation\n* <page>any</page> data - optional data passed to the run metatable method"
+        "description": "Function to call to process the animation\n\n<callback>\n<arg type=\"Panel\" name=\"pnl\">the panel passed to Derma_Anim</arg>\n<arg type=\"table\" name=\"anim\">the anim table</arg>\n<arg type=\"number\" name=\"delta\">the fraction of the progress through the animation</arg>\n<arg type=\"any\" name=\"data\">optional data passed to the run metatable method</arg>\n</callback>"
       }
     ],
     "returnValues": [
@@ -1165,7 +1301,7 @@
       "client",
       "menu"
     ],
-    "description": "Draws background blur around the given panel.",
+    "description": "Draws background blur around the given panel.\n<note>Calling this on the same <page>Panel</page> multiple times makes the blur darker.</note>",
     "arguments": [
       {
         "name": "panel",
@@ -1318,7 +1454,7 @@
         "name": "btn4text",
         "type": "string",
         "default": "nil",
-        "description": "The text to display on the third button"
+        "description": "The text to display on the fourth button"
       },
       {
         "name": "btn4func",
@@ -1351,7 +1487,7 @@
       {
         "name": "subtitle",
         "type": "string",
-        "description": "The text above the input box"
+        "description": "The text above the input box."
       },
       {
         "name": "default",
@@ -1361,13 +1497,13 @@
       {
         "name": "confirm",
         "type": "function",
-        "description": "The function to be called once the user has confirmed their input."
+        "description": "The function to be called once the user has confirmed their input.\n<callback>\n<arg name=\"text\" type=\"string\">The text the player entered.</arg>\n</callback>"
       },
       {
         "name": "cancel",
         "type": "function",
         "default": "nil",
-        "description": "The function to be called once the user has cancelled their input"
+        "description": "The function to be called once the user has cancelled their input.\n<callback>\n<arg name=\"text\" type=\"string\">The text the player entered.</arg>\n</callback>"
       },
       {
         "name": "confirmText",
@@ -1399,15 +1535,23 @@
     "description": "Creates a <page>DMenu</page> and closes any current menus.",
     "arguments": [
       {
+        "name": "keepOpen",
+        "type": "boolean",
+        "default": "false",
+        "description": "If we should keep other <page>DMenu</page>s open (`true`) or not (`false`)."
+      },
+      {
         "name": "parent",
         "type": "Panel",
+        "default": "nil",
         "description": "The panel to parent the created menu to."
       }
     ],
     "returnValues": [
       {
         "type": "Panel",
-        "description": "The created <page>DMenu</page>"
+        "name": "menu",
+        "description": "The created <page>DMenu</page>."
       }
     ]
   },
@@ -1418,7 +1562,7 @@
       "client",
       "menu"
     ],
-    "description": "Sets whether rendering should be limited to being inside a panel or not.\n\nSee also <page>Panel:NoClipping</page>.",
+    "description": "Sets whether rendering should be limited to being inside a panel or not. Needs to be used inside one of the <page>2d rendering hooks</page>\n\nSee also <page>Panel:NoClipping</page>.",
     "arguments": [
       {
         "name": "disable",
@@ -1456,12 +1600,27 @@
     "realms": [
       "client"
     ],
-    "description": "A hacky method used to fix some bugs regarding DoF.\n\n<internal></internal>",
+    "description": "A hacky method used to fix some bugs regarding DoF. What this basically does it force all `C_BaseAnimating` entities to have the translucent <page text=\"rendergroup\">Enums/RENDERGROUP</page>, even if they use opaque or two-pass models.\n\n<internal></internal>",
     "arguments": [
       {
         "name": "enable",
         "type": "boolean",
         "description": "Enables or disables depth-of-field mode"
+      }
+    ]
+  },
+  {
+    "name": "DoStopServers",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Stops searching for new servers in the given category",
+    "arguments": [
+      {
+        "name": "category",
+        "type": "string",
+        "description": "The category to stop searching in. **Working Values: internet, favorite, history, lan**"
       }
     ]
   },
@@ -1484,12 +1643,12 @@
       {
         "name": "Darken",
         "type": "number",
-        "description": "Determines how much to darken the effect. A lower number will make the glow come from lower light levels. A value of 1 will make the bloom effect unnoticeable. Negative values will make even pitch black areas glow."
+        "description": "Determines how much to darken the effect. A lower number will make the glow come from lower light levels. A value of `1` will make the bloom effect unnoticeable. Negative values will make even pitch black areas glow."
       },
       {
         "name": "Multiply",
         "type": "number",
-        "description": "Will affect how bright the glowing spots are. A value of 0 will make the bloom effect unnoticeable."
+        "description": "Will affect how bright the glowing spots are. A value of `0` will make the bloom effect unnoticeable."
       },
       {
         "name": "SizeX",
@@ -1514,17 +1673,42 @@
       {
         "name": "Red",
         "type": "number",
-        "description": "How much red to multiply with the glowing color. Should be between 0 and 1"
+        "description": "How much red to multiply with the glowing color. Should be between `0` and `1`."
       },
       {
         "name": "Green",
         "type": "number",
-        "description": "How much green to multiply with the glowing color. Should be between 0 and 1"
+        "description": "How much green to multiply with the glowing color. Should be between `0` and `1`."
       },
       {
         "name": "Blue",
         "type": "number",
-        "description": "How much blue to multiply with the glowing color. Should be between 0 and 1"
+        "description": "How much blue to multiply with the glowing color. Should be between `0` and `1`."
+      }
+    ]
+  },
+  {
+    "name": "DrawBokehDOF",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "Draws the Bokeh Depth Of Field effect .",
+    "arguments": [
+      {
+        "name": "intensity",
+        "type": "number",
+        "description": "Intensity of the effect."
+      },
+      {
+        "name": "distance",
+        "type": "number",
+        "description": "**Not worldspace distance**. Value range is from `0` to `1`."
+      },
+      {
+        "name": "focus",
+        "type": "number",
+        "description": "Focus. Recommended values are from 0 to 12."
       }
     ]
   },
@@ -1619,7 +1803,7 @@
       {
         "name": "Threshold",
         "type": "number",
-        "description": "Determines the threshold of edges. A value of 0 will make your screen completely black."
+        "description": "Determines the threshold of edges. A value of `0` will make your screen completely black."
       }
     ]
   },
@@ -1629,32 +1813,32 @@
     "realms": [
       "client"
     ],
-    "description": "Renders the post-processing effect of beams of light originating from the map's sun. Utilises the \"pp/sunbeams\" material",
+    "description": "Renders the post-processing effect of beams of light originating from the map's sun. Utilises the `pp/sunbeams` material.",
     "arguments": [
       {
         "name": "darken",
         "type": "number",
-        "description": "$darken property for sunbeams material"
+        "description": "`$darken` property for sunbeams material."
       },
       {
         "name": "multiplier",
         "type": "number",
-        "description": "$multiply property for sunbeams material"
+        "description": "`$multiply` property for sunbeams material."
       },
       {
         "name": "sunSize",
         "type": "number",
-        "description": "$sunsize property for sunbeams material"
+        "description": "`$sunsize` property for sunbeams material."
       },
       {
         "name": "sunX",
         "type": "number",
-        "description": "$sunx property for sunbeams material"
+        "description": "`$sunx` property for sunbeams material."
       },
       {
         "name": "sunY",
         "type": "number",
-        "description": "$suny property for sunbeams material"
+        "description": "`$suny` property for sunbeams material."
       }
     ]
   },
@@ -1674,7 +1858,7 @@
       {
         "name": "BaseTexture",
         "type": "number",
-        "description": "This will be the texture to use in the effect. Make sure you use <page>Global.Material</page> to get the texture number"
+        "description": "This will be the texture to use in the effect. Make sure you use <page>Global.Material</page> to get the texture number."
       }
     ]
   },
@@ -1702,15 +1886,45 @@
     "name": "DropEntityIfHeld",
     "parent": "Global",
     "realms": [
-      "client",
       "server"
     ],
-    "description": "Drops the specified entity if it is being held by any player with Gravity Gun or +use pickup.",
+    "description": "<deprecated>You really should be using <page>Entity:ForcePlayerDrop</page>, which does the same thing.</deprecated>\n\nDrops the specified entity if it is being held by any player with Gravity Gun or `+use` pickup.\n\nSee also <page>Player:DropObject</page> and <page>Entity:ForcePlayerDrop</page>.",
     "arguments": [
       {
         "name": "ent",
         "type": "Entity",
         "description": "The entity to drop."
+      }
+    ]
+  },
+  {
+    "name": "DTVar_ReceiveProxyGL",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Calls all NetworkVarNotify functions of the given entity with the given new value, but doesn't change the real value.\ninternally uses <page>Entity:CallDTVarProxies</page>",
+    "arguments": [
+      {
+        "name": "entity",
+        "type": "Entity",
+        "description": "The Entity to run the NetworkVarNotify functions from."
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "description": "The NetworkVar Type.\n* `String`\n* `Bool`\n* `Float`\n* `Int` (32-bit signed integer)\n* `Vector`\n* `Angle`\n* `Entity`"
+      },
+      {
+        "name": "index",
+        "type": "number",
+        "description": "The NetworkVar index."
+      },
+      {
+        "name": "new value",
+        "type": "any",
+        "description": "The new value."
       }
     ]
   },
@@ -1742,6 +1956,33 @@
     ]
   },
   {
+    "name": "DynamicMaterial",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Creates a dynamic Material from the given materialPath\n<warning>This function should never be used in a Rendering Hook because it creates a new dynamic material every time and can fill up your vram.</warning>",
+    "arguments": [
+      {
+        "name": "materialPath",
+        "type": "string",
+        "description": "The material with path. The path is relative to the `materials/` folder."
+      },
+      {
+        "name": "flags",
+        "type": "string",
+        "default": "nil",
+        "description": "Some bind of bits / byte.\n<validate>What does this argument do / use.</validate> Currently working value: \"0100010\" --nocull smooth"
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "IMaterial",
+        "description": "Generated material."
+      }
+    ]
+  },
+  {
     "name": "EffectData",
     "parent": "Global",
     "realms": [
@@ -1764,7 +2005,7 @@
       "client",
       "server"
     ],
-    "description": "A compact 'if then else'. This is *almost* equivalent to (`condition` and `truevar` or `falsevar`) in Lua.\n\nThe difference is that if `truevar` evaluates to false, the plain Lua method stated would return `falsevar` regardless of `condition` whilst this function would take `condition` into account.",
+    "description": "An [eagerly evaluated](https://en.wikipedia.org/wiki/Eager_evaluation) [ternary operator](https://en.wikipedia.org/wiki/%3F:), or, in layman's terms, a compact \"if then else\" statement.\n\nIn most cases, you should just use Lua's [\"pseudo\" ternary operator](https://en.wikipedia.org/wiki/%3F:#Lua), like this:\n\n```\nlocal myCondition = true\nlocal consequent = \"myCondition is true\"\nlocal alternative = \"myCondition is false\"\n\nprint(myCondition and consequent or alternative)\n```\n\nIn the above example, due to [short-circuit evaluation](https://en.wikipedia.org/wiki/Short-circuit_evaluation), `consequent` would be \"skipped\" and ignored (not evaluated) by Lua due to `myCondition` being `true`, and only `alternative` would be evaluated. However, when using `Either`, both `consequent` and `alternative` would be evaluated. A practical example of this can be found at the bottom of the page.\n\n# Falsey values\n\nIf `consequent` is \"falsey\" (Lua considers both `false` and `nil` as false), this will not work. For example:\n\n```\nlocal X = true\nlocal Y = false\nlocal Z = \"myCondition is false\"\n\nprint(X and Y or Z)\n```\n\nThis will actually print the value of `Z`.\n\nIn the above case, and other very rare cases, you may find `Either` useful.",
     "arguments": [
       {
         "name": "condition",
@@ -1852,22 +2093,23 @@
       "client",
       "server"
     ],
-    "description": "Emits the specified sound at the specified position.\n\n<bug>Sounds must be precached serverside manually before they can be played. util.PrecacheSound does not work for this purpose, Entity.EmitSound does the trick</bug>\n<bug>This does not work with soundscripts. TODO: Is this a bug or intended?</bug>",
+    "description": "Emits the specified sound at the specified position. See also <page>Entity:EmitSound</page> if you wish to play sounds on a specific entity.\n\n<note>\nValid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:\n\n`Unsupported 32-bit wave file your_sound.wav` and\n`Invalid sample rate (48000) for sound 'your_sound.wav'`\n</note>",
     "arguments": [
       {
         "name": "soundName",
         "type": "string",
-        "description": "The sound to play"
+        "description": "The sound to play\n\nThis should either be a sound script name (<page>sound.Add</page>) or a file path relative to the `sound/` folder. (Make note that it's not sound**s**)"
       },
       {
         "name": "position",
         "type": "Vector",
-        "description": "The position to play at"
+        "description": "The position where the sound is meant to play, which is also used for a network filter (`CPASAttenuationFilter`) to decide which players will hear the sound."
       },
       {
         "name": "entity",
         "type": "number",
-        "description": "The entity to emit the sound from. Can be an <page>Entity:EntIndex</page> or one of the following:\n* 0 - Plays sound on the world (Position set to 0,0,0)\n* -1 - Plays sound on the local player (on server acts as 0)\n* -2 - Plays UI sound (Position set to 0,0,0, no spatial sound,on server acts as 0)"
+        "default": "0",
+        "description": "The entity to emit the sound from. Can be an <page>Entity:EntIndex</page> or one of the following:\n* `0` - Plays sound on the world (position set to `0,0,0`)\n* `-1` - Plays sound on the local player (on server acts as `0`)\n* `-2` - Plays UI sound (position set to `0,0,0`, no spatial sound, on server acts as `0`)"
       },
       {
         "name": "channel",
@@ -1898,6 +2140,18 @@
         "type": "number",
         "default": "100",
         "description": "The pitch of the sound, 0-255"
+      },
+      {
+        "name": "dsp",
+        "type": "number",
+        "default": "0",
+        "description": "The DSP preset for this sound. [List of DSP presets](https://developer.valvesoftware.com/wiki/Dsp_presets)"
+      },
+      {
+        "name": "filter",
+        "type": "CRecipientFilter",
+        "default": "nil",
+        "description": "If set serverside, the sound will only be networked to the clients in the filter."
       }
     ]
   },
@@ -1924,7 +2178,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the entity with the matching <page>Entity:EntIndex</page>.\n\nIndices 1 through <page>game.MaxPlayers</page>() are always reserved for players.\n\n<note>In examples on this wiki, **Entity( 1 )** is used when a player entity is needed (see ). In singleplayer and listen servers, **Entity( 1 )** will always be the first player. In dedicated servers, however, **Entity( 1 )** won't always be a valid player.</note>",
+    "description": "Returns the entity with the matching <page>Entity:EntIndex</page>.\n\nIndices `1` through <page>game.MaxPlayers</page>() are always reserved for players.\n\n<note>In examples on this wiki, `Entity( 1 )` is used when a player entity is needed (see ). In singleplayer and listen servers, `Entity( 1 )` will always be the first player. In dedicated servers, however, `Entity( 1 )` won't always be a valid player if there is no one currently on the server.</note>",
     "arguments": [
       {
         "name": "entityIndex",
@@ -1970,7 +2224,7 @@
       "client",
       "server"
     ],
-    "description": "Throws an error. This is currently an alias of <page>Global.ErrorNoHalt</page> despite it once throwing a halting error like <page text=\"error\">Global.error(lowercase)</page> without the stack trace appended.\n\n<bug issue=\"1810\">Using this function in the menu state exits the menu.</bug>\n<bug issue=\"2113\">This function throws a non-halting error instead of a halting error.</bug>",
+    "description": "Throws an error. This is currently an alias of <page>Global.ErrorNoHalt</page> despite it once throwing a halting error like <page text=\"error\">Global.error(lowercase)</page> without the stack trace appended.\n\n<bug issue=\"2113\">This function throws a non-halting error instead of a halting error.</bug>",
     "arguments": [
       {
         "name": "arguments",
@@ -1987,7 +2241,24 @@
       "client",
       "server"
     ],
-    "description": "Throws a Lua error but does not break out of the current call stack.\nThis function will not print a stack trace like a normal error would.\nEssentially similar if not equivalent to <page>Global.Msg</page>.\n\n<bug issue=\"1810\">Using this function in the menu state exits the menu.</bug>",
+    "description": "Throws a Lua error but does not break out of the current call stack.\nThis function will not print a stack trace like a normal error would.\nEssentially similar if not equivalent to <page>Global.Msg</page>.",
+    "arguments": [
+      {
+        "name": "arguments",
+        "type": "vararg",
+        "description": "Converts all arguments to strings and prints them with no spacing."
+      }
+    ]
+  },
+  {
+    "name": "ErrorNoHaltWithStack",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "description": "Throws a Lua error but does not break out of the current call stack.\n\nThis function will print a stack trace like a normal error would.",
     "arguments": [
       {
         "name": "arguments",
@@ -2092,6 +2363,54 @@
     ]
   },
   {
+    "name": "FireAddonConflicts",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Refreshes all Addon Conflicts and Fires a Problem. Internally uses <page>Global.FireProblem</page>"
+  },
+  {
+    "name": "FireProblem",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Creates a problem from the given definition.\n\n<note>\n\nExisting problems with the same Id will be replaced / overridden.\n\n</note>",
+    "arguments": [
+      {
+        "name": "problem",
+        "type": "Structures/Problem",
+        "description": "The problem's definition."
+      }
+    ]
+  },
+  {
+    "name": "FireProblemFromEngine",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal>Internally uses <page>Global.FireProblem</page> to create / fire the Problem.</internal>\nThis function is called from the engine to notify the player about a problem in a more user friendly way compared to a console message.",
+    "arguments": [
+      {
+        "name": "id",
+        "type": "string",
+        "description": "The Problem ID."
+      },
+      {
+        "name": "severity",
+        "type": "number",
+        "description": "The Problem severity."
+      },
+      {
+        "name": "params",
+        "type": "string",
+        "description": "Additional Parameters."
+      }
+    ]
+  },
+  {
     "name": "Format",
     "parent": "Global",
     "realms": [
@@ -2123,7 +2442,8 @@
     "name": "FrameNumber",
     "parent": "Global",
     "realms": [
-      "client"
+      "client",
+      "server"
     ],
     "description": "Returns the number of frames rendered since the game was launched."
   },
@@ -2135,7 +2455,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the <page>Global.CurTime</page>-based time in seconds it took to render the last frame.\n\nThis should be used for frame/tick based timing, such as movement prediction or animations.\n\nFor real-time-based frame time that isn't affected by host_timescale, use <page>Global.RealFrameTime</page>. RealFrameTime is more suited for things like GUIs or HUDs.",
+    "description": "Returns the <page>Global.CurTime</page>-based time in seconds it took to render the last frame.\n\nThis should be used for frame/tick based timing, such as movement prediction or animations.\n\nFor real-time-based frame time that isn't affected by `host_timescale`, use <page>Global.RealFrameTime</page>. RealFrameTime is more suited for things like GUIs or HUDs.",
     "returnValues": [
       {
         "type": "number",
@@ -2200,6 +2520,77 @@
     ]
   },
   {
+    "name": "GenerateSpawnlistFromPath",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "This function adds all models from a specified folder to a custom Spawnlist category. Internally uses <page>Global.AddPropsOfParent</page>\n<warning>Using this function before <page>SANDBOX:PopulateContent</page> has been called will result in an error</warning>",
+    "arguments": [
+      {
+        "name": "folder",
+        "type": "string",
+        "description": "the folder to search for models"
+      },
+      {
+        "name": "path",
+        "type": "string",
+        "description": "The path to look for the files and directories in. See <page text=\"this list\">File_Search_Paths</page> for a list of valid paths."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The Spawnmenu Category name"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "default": "icon16/page.png",
+        "description": "The Spawnmenu Category Icon to use"
+      },
+      {
+        "name": "appid",
+        "type": "number",
+        "description": "The AppID which is needed for the Content"
+      }
+    ]
+  },
+  {
+    "name": "GetAddonStatus",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Returns if the game was started with either -noaddons or -noworkshop",
+    "returnValues": [
+      {
+        "type": "boolean",
+        "name": "noaddons",
+        "description": "true if the game was started with -noaddons. (see <page>Command_Line_Parameters</page>)"
+      },
+      {
+        "type": "boolean",
+        "name": "noworkshop",
+        "description": "true if the game was started with -noworkshop. (see <page>Command_Line_Parameters</page>)"
+      }
+    ]
+  },
+  {
+    "name": "GetAPIManifest",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\n\nGets miscellaneous information from Facepunches API.",
+    "arguments": [
+      {
+        "name": "callback",
+        "type": "function",
+        "description": "Callback to be called when the API request is done.\n\n<callback>\n<arg type=\"string\" name=\"data\">JSON encoded data, see <page>util.JSONToTable</page>.</arg>\n</callback>\n\n<br>\nFormatted output:\n```js\n{\n\"ManifestVersion\": \tnumber - Version of the manifest\n\"Date\": \t\t\tstring - Date the data was retrieved\n\n// Contains all the blog posts, the things in the top right of the menu\n\"News\": {\n\"Blogs\": [\n\n// Structure of blog posts\n{\n\"Date\": \t\tstring - Date the post was created\n\"ShortName\": \tstring - Short name of the post, identifier of it on the blog website\n\"Title\": \t\tstring - Title of the post\n\"HeaderImage\": \tstring - Main image of the post, showed in the top right\n\"SummaryHtml\": \tstring - Summary of the blogpost, text thats shown to the user\n\"Url\": \t\t\tstring - URL to the post on the blog\n\"Tags\": \t\tstring - String of the posts tag\n}\n]\n}\n\n// Array of Facepunches Mods, Admins and Developers\n\"Administrators\": [\n{\n\"UserId\": \t\tstring - SteamID64 of the person\n\"Level\": \t\tstring - Level of the user (Administrator, Developer or Moderator)\n}\n]\n\n// Unused and contains nothing useful\n\"Heroes\": {}\n\n\"SentryUrl\": \t\tstring - Nothing\n\"DatabaseUrl\" \t\tstring - URL to the Facepunch API (/database/{action}/)\n\"FeedbackUrl\" \t\tstring - URL to the Facepunch API (/feedback/add/)\n\"ReportUrl\" \t\tstring - URL to the Facepunch API (/feedback/report/)\n\"LeaderboardUrl\" \tstring - URL to the Facepunch API (/leaderboard/{action}/)\n\"BenchmarkUrl\" \t\tstring - URL to the Facepunch API (/benchmark/add/)\n\"AccountUrl\" \t\tstring - URL to the Facepunch API (/account/{action}/)\n\n\"Servers\": {\n\"Official\": [] // Nothing\n\n// List of blacklisted servers\n\"Banned\": [\nstring \t- IP of the blacklisted server\n]\n}\n}\n```"
+      }
+    ]
+  },
+  {
     "name": "GetConVar",
     "parent": "Global",
     "realms": [
@@ -2207,7 +2598,7 @@
       "client",
       "server"
     ],
-    "description": "Gets the <page>ConVar</page> with the specified name.\n\n<note>This function uses <page>Global.GetConVar_Internal</page> internally, but caches the result in Lua for quicker lookups.</note>",
+    "description": "Gets the <page>ConVar</page> with the specified name.\n\n<note>This function uses <page>Global.GetConVar_Internal</page> internally, but caches the result in Lua for quicker lookups.</note>\n<warning>Due to this function using <page>Global.GetConVar_Internal</page> internally it tends to be relatively slow. Please attempt to 'cache' the return of what you used to make it instead of using this function.\n\nExample:\n```\nlocal exampleConvar = CreateClientConVar(\"exampleConvar\", \"hi\")\n\nprint(exampleConvar:GetString())\n```\n\n</warning>",
     "arguments": [
       {
         "name": "name",
@@ -2230,7 +2621,7 @@
       "client",
       "server"
     ],
-    "description": "<internal></internal>Gets the ConVar with the specified name. This function doesn't cache the convar.",
+    "description": "<internal></internal>\n<warning>This function is very slow and not recommended. See <page>Global.GetConVar</page> for an example on how to properly store the return of what you're using so you can avoid using this function as much as possible.</warning>\nGets the ConVar with the specified name. This function doesn't cache the convar.",
     "arguments": [
       {
         "name": "name",
@@ -2354,13 +2745,235 @@
         "name": "location",
         "type": "function",
         "default": "1",
-        "description": "The object to get the enviroment from. Can also be a number that specifies the function at that stack level: Level 1 is the function calling getfenv."
+        "description": "The object to get the enviroment from. Can also be a number that specifies the function at that stack level: Level 1 is the function calling getfenv. Level 0 is the base Garry's Mod environment (_G)."
       }
     ],
     "returnValues": [
       {
         "type": "table",
         "description": "The environment."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Angle",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns an angle that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "Angle",
+        "default": "Angle( 0, 0, 0 )",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "Angle",
+        "description": "The global value, or default if the global is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Bool",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns a boolean that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "boolean",
+        "default": "false",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "boolean",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Entity",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns an entity that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "Entity",
+        "default": "NULL",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "Entity",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Float",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns a float that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "number",
+        "default": "0",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "number",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Int",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns an integer that is shared between the server and all clients.\n\n<warning>The integer has a 32 bit limit. Use <page>Global.GetGlobalInt</page> for a higher limit</warning>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "number",
+        "default": "0",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "number",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2String",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns a string that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "string",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "string",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Var",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns a value that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "default": "nil",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "any",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
+    "name": "GetGlobal2Vector",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns a vector that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "Index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "Default",
+        "type": "Vector",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "Vector",
+        "description": "The global value, or the default if the global value is not set."
       }
     ]
   },
@@ -2381,7 +2994,6 @@
       {
         "name": "default",
         "type": "Angle",
-        "default": "Angle( 0, 0, 0 )",
         "description": "The value to return if the global value is not set."
       }
     ],
@@ -2532,6 +3144,34 @@
     ]
   },
   {
+    "name": "GetGlobalVar",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Returns a value that is shared between the server and all clients.",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "default",
+        "type": "any",
+        "default": "nil",
+        "description": "The value to return if the global value is not set."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "any",
+        "description": "The global value, or the default if the global value is not set."
+      }
+    ]
+  },
+  {
     "name": "GetGlobalVector",
     "parent": "Global",
     "realms": [
@@ -2579,7 +3219,7 @@
     "realms": [
       "client"
     ],
-    "description": "Returns the panel that is used as a wrapper for the HUD.\n\nSee also <page>vgui.GetWorldPanel</page>",
+    "description": "Returns the panel that is used as a wrapper for the HUD. If you want your panel to be hidden when the main menu is opened, parent it to this. Child panels will also have their controls disabled.\n\nSee also <page>vgui.GetWorldPanel</page>",
     "returnValues": [
       {
         "type": "Panel",
@@ -2625,7 +3265,7 @@
     "returnValues": [
       {
         "type": "table",
-        "description": "table of map names and categories"
+        "description": "Table of map names and categories."
       }
     ]
   },
@@ -2637,7 +3277,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the metatable of an object. This function obeys the metatable's __metatable field, and will return that field if the metatable has it set.\n\nUse <page>debug.getmetatable</page> if you want the true metatable of the object.",
+    "description": "Returns the metatable of an object. This function obeys the metatable's __metatable field, and will return that field if the metatable has it set.\n\nUse <page>debug.getmetatable</page> if you want the true metatable of the object.\n\nIf you want to modify the metatable, check out <page>Global.FindMetaTable</page>",
     "arguments": [
       {
         "name": "object",
@@ -2667,6 +3307,21 @@
     ]
   },
   {
+    "name": "GetPlayerList",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nUpdates the PlayerList for the Currently Viewed Server. Internally uses <page>serverlist.PlayerList</page> to retrieve the PlayerList.",
+    "arguments": [
+      {
+        "name": "serverip",
+        "type": "string",
+        "description": "The ServerIP to retrieve the PlayerList from."
+      }
+    ]
+  },
+  {
     "name": "GetPredictionPlayer",
     "parent": "Global",
     "realms": [
@@ -2687,7 +3342,7 @@
     "realms": [
       "client"
     ],
-    "description": "Creates or gets the rendertarget with the given name.\n\nSee <page>Global.GetRenderTargetEx</page> for an advanced version of this function with more options.\n\n<bug issue=\"2885\">This crashes when used on a cubemap texture.</bug>",
+    "description": "Creates or gets the rendertarget with the given name.\n\nSee <page>Global.GetRenderTargetEx</page> for an advanced version of this function with more options.\n\n<bug issue=\"2885\">This crashes when used on a cubemap texture.</bug>\n<warning>Rendertargets are not garbage-collected, which means they will remain in memory until you disconnect. So make sure to avoid creating new ones unecessarily and re-use as many of your existing rendertargets as possible to avoid filling up all your memory.</warning>\n<warning>Drawing rendertargets on themself can produce odd and unexpected results.</warning>\n<note>\nCalling this function is equivalent to\n```lua\nGetRenderTargetEx(name,\nwidth, height,\nRT_SIZE_NO_CHANGE,\nMATERIAL_RT_DEPTH_SEPARATE,\nbit.bor(2, 256),\n0,\nIMAGE_FORMAT_BGRA8888\n)\n```\n</note>",
     "arguments": [
       {
         "name": "name",
@@ -2703,12 +3358,6 @@
         "name": "height",
         "type": "number",
         "description": "The height of the render target, must be power of 2. If not set to PO2, the size will be automatically converted to the nearest PO2 size."
-      },
-      {
-        "name": "additive",
-        "type": "boolean",
-        "default": "false",
-        "description": "Sets whenever the rt should be additive."
       }
     ],
     "returnValues": [
@@ -2749,7 +3398,7 @@
       {
         "name": "depthMode",
         "type": "number",
-        "description": "Bitflag that determines the depth buffer usage of the render target <page>Enums/MATERIAL_RT_DEPTH</page>."
+        "description": "Bitflag that determines the depth buffer usage of the render target <page>Enums/MATERIAL_RT_DEPTH</page>.\n\n<warning>PNG's may not render to non MATERIAL_RT_DEPTH_NONE RenderTargets</warning>"
       },
       {
         "name": "textureFlags",
@@ -2764,7 +3413,7 @@
       {
         "name": "imageFormat",
         "type": "number",
-        "description": "Image format, see <page>Enums/IMAGE_FORMAT</page>."
+        "description": "Image format, see <page>Enums/IMAGE_FORMAT</page>.\n<note>Some additional image formats are accepted, but don't have enums. See [VTF Enumerations.](https://developer.valvesoftware.com/wiki/Valve_Texture_Format#VTF_enumerations)</note>"
       }
     ],
     "returnValues": [
@@ -2796,6 +3445,44 @@
     ]
   },
   {
+    "name": "GetServers",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nStarts Searching for Servers in the given Category. Can be stopped with <page>Global.DoStopServers</page>.\nInternally uses <page>serverlist.Query</page> to search for Servers.",
+    "arguments": [
+      {
+        "name": "category",
+        "type": "string",
+        "description": "The Category to start searching the Servers in. **Working Values: internet, favorite, history, lan**"
+      },
+      {
+        "name": "id",
+        "type": "number",
+        "description": "Some ID. can be a random number?"
+      }
+    ]
+  },
+  {
+    "name": "GetTimeoutInfo",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "Returns if the client is timing out, and time since last ping from the server. Similar to the server side <page>Player:IsTimingOut</page>.",
+    "returnValues": [
+      {
+        "type": "boolean",
+        "description": "Is timing out?"
+      },
+      {
+        "type": "number",
+        "description": "Get time since last pinged received."
+      }
+    ]
+  },
+  {
     "name": "GetViewEntity",
     "parent": "Global",
     "realms": [
@@ -2806,6 +3493,21 @@
       {
         "type": "Entity",
         "description": "The view entity."
+      }
+    ]
+  },
+  {
+    "name": "GMOD_OpenURLNoOverlay",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nOpens the given URL in a <page>HTML</page> panel.",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "description": "The url to open."
       }
     ]
   },
@@ -2883,7 +3585,7 @@
       "client",
       "server"
     ],
-    "description": "Launches an asynchronous http request with the given parameters.\n\n<bug issue=\"2232\">This cannot send or receive multiple headers with the same name.</bug>\n<note>HTTP-requests on private networks don't work. To enable HTTP-requests on private networks use <page>Command Line Parameters</page> `-allowlocalhttp`</note>",
+    "description": "Launches an asynchronous http request with the given parameters.\n\n<bug issue=\"2232\">This cannot send or receive multiple headers with the same name.</bug>\n<note>HTTP-requests that respond with a large body may return an `unsuccessful` error. Try using the [Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range) header to download the file in chunks.</note>\n<note>\nHTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.\n<br>\nTo enable HTTP-requests to destinations on private networks use <page>Command Line Parameters</page> `-allowlocalhttp`. (Dedicated servers only)\n</note>",
     "arguments": [
       {
         "name": "parameters",
@@ -2894,7 +3596,7 @@
     "returnValues": [
       {
         "type": "boolean",
-        "description": "true if we made a request, nil if we failed."
+        "description": "`true` if we made a request, `nil` if we failed."
       }
     ]
   },
@@ -2906,12 +3608,12 @@
       "client",
       "server"
     ],
-    "description": "Executes a Lua script.\n\n<note>Addon files (.gma files) do not support relative parent folders (`..` notation).</note>\n\n<warning>The file you are attempting to include MUST NOT be empty or the include will fail. Files over a certain size may fail as well.</warning>\n\n<warning>If the file you are including is clientside or shared, it **must** be <page>Global.AddCSLuaFile</page>'d or this function will error saying the file doesn't exist.</warning>\n\n<note>This function will try to load local client file if `sv_allowcslua` is **1**</note>\n\n<bug issue=\"1976\"><page>Global.pcall</page>ing this function will break autorefresh.</bug>",
+    "description": "Executes a Lua script.\n\nThis function will try to load local client file if `sv_allowcslua` is **1**.\n\n<warning>The file you are attempting to include **MUST NOT** be empty or the include will fail. Files over a certain size (64KB compressed) may fail clientside as well.\n\nIf the file you are including is clientside or shared, it **must** be <page>Global.AddCSLuaFile</page>'d or this function will error saying the file doesn't exist.</warning>",
     "arguments": [
       {
         "name": "fileName",
         "type": "string",
-        "description": "The name of the script to be executed. The path must be either relative to the current file, or be an absolute path (relative to and excluding the lua/ folder).\n\n<note>Please make sure your file names are unique, the filesystem is shared across all addons, so a file named \"lua/config.lua\" in your addon may be overwritten by the same file in another addon.</note>"
+        "description": "The name of the script to be executed. The path must be either relative to the current file, or be an absolute path (relative to and excluding the **lua/** folder).\n\nAddon files (.gma files) and dedicated servers clientside do not support relative parent folders (`..` notation).\n\nAbsolute paths for gamemode files must include `<gamemode_folder_name>/gamemode/`.\n\n<note>\nPlease make sure your file names are unique, the filesystem is shared across all addons, so a file named `lua/config.lua` in your addon may be overwritten by the same file in another addon.</note></gamemode_folder_name>"
       }
     ],
     "returnValues": [
@@ -2936,6 +3638,12 @@
         "type": "string",
         "description": "The filename of the Lua file you want to include."
       }
+    ],
+    "returnValues": [
+      {
+        "type": "vararg",
+        "description": "Anything that the executed Lua script returns."
+      }
     ]
   },
   {
@@ -2946,7 +3654,7 @@
       "client",
       "server"
     ],
-    "description": "Returns an iterator function for a for loop, to return ordered key-value pairs from a table.\n\nThis will only iterate though **numerical** keys, and these must also be **sequential**; starting at 1 with no gaps.\n\nFor unordered pairs, see <page>Global.pairs</page>.\n\n\nFor pairs sorted by key in alphabetical order, see <page>Global.SortedPairs</page>.",
+    "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for a [Generic For Loops](https://www.lua.org/pil/4.3.5.html), to return ordered key-value pairs from a table.\n\nThis will only iterate though **numerical** keys, and these must also be **sequential**; starting at 1 with no gaps.\n\nFor unordered pairs, see <page>Global.pairs</page>.\n\nFor pairs sorted by key in alphabetical order, see <page>Global.SortedPairs</page>.",
     "arguments": [
       {
         "name": "tab",
@@ -2961,11 +3669,11 @@
       },
       {
         "type": "table",
-        "description": "The table being iterated over"
+        "description": "The table being iterated over."
       },
       {
         "type": "number",
-        "description": "The origin index **=0**"
+        "description": "The origin index **=0**."
       }
     ]
   },
@@ -3039,6 +3747,29 @@
     ]
   },
   {
+    "name": "IsConCommandBlocked",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "description": "Determines whether or not the provided console command will be blocked if it's ran through Lua functions, such as <page>Global.RunConsoleCommand</page> or <page>Player:ConCommand</page>.\n\nFor more info on blocked console commands, check out <page text=\"Blocked ConCommands\">Blocked_ConCommands</page>.\n<internal></internal>",
+    "arguments": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The console command to test."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "boolean",
+        "description": "Whether the command will be blocked."
+      }
+    ]
+  },
+  {
     "name": "IsEnemyEntityName",
     "parent": "Global",
     "realms": [
@@ -3046,29 +3777,30 @@
       "client",
       "server"
     ],
-    "description": "Returns if the given NPC class name is an enemy.\n\nReturns true if the entity name is one of the following:\n* \"npc_antlion\"\n* \"npc_antlionguard\"\n* \"npc_antlionguardian\"\n* \"npc_barnacle\"\n* \"npc_breen\"\n* \"npc_clawscanner\"\n* \"npc_combine_s\"\n* \"npc_cscanner\"\n* \"npc_fastzombie\"\n* \"npc_fastzombie_torso\"\n* \"npc_headcrab\"\n* \"npc_headcrab_fast\"\n* \"npc_headcrab_poison\"\n* \"npc_hunter\"\n* \"npc_metropolice\"\n* \"npc_manhack\"\n* \"npc_poisonzombie\"\n* \"npc_strider\"\n* \"npc_stalker\"\n* \"npc_zombie\"\n* \"npc_zombie_torso\"\n* \"npc_zombine\"",
+    "description": "Returns if the given NPC class name is an enemy. Returns `true` if the entity name is one of the following:\n* `monster_alien_grunt`\n* `monster_nihilanth`\n* `monster_tentacle`\n* `monster_alien_slave`\n* `monster_bigmomma`\n* `monster_bullchicken`\n* `monster_gargantua`\n* `monster_human_assassin`\n* `monster_babycrab`\n* `monster_human_grunt`\n* `monster_cockroach`\n* `monster_houndeye`\n* `monster_zombie`\n* `monster_headcrab`\n* `monster_alien_controller`\n* `monster_turret`\n* `monster_miniturret`\n* `monster_sentry`\n* `npc_antlion`\n* `npc_antlionguard`\n* `npc_antlionguardian`\n* `npc_barnacle`\n* `npc_breen`\n* `npc_clawscanner`\n* `npc_combine_s`\n* `npc_cscanner`\n* `npc_fastzombie`\n* `npc_fastzombie_torso`\n* `npc_headcrab`\n* `npc_headcrab_fast`\n* `npc_headcrab_poison`\n* `npc_hunter`\n* `npc_metropolice`\n* `npc_manhack`\n* `npc_poisonzombie`\n* `npc_strider`\n* `npc_stalker`\n* `npc_zombie`\n* `npc_zombie_torso`\n* `npc_zombine`\n* `npc_combine_camera`\n* `npc_turret_ceiling`\n* `npc_combinedropship`\n* `npc_combinegunship`\n* `npc_helicopter`\n* `npc_turret_floor`\n* `npc_antlion_worker`\n* `npc_headcrab_black`",
     "arguments": [
       {
         "name": "className",
         "type": "string",
-        "description": "Class name of the entity to check"
+        "description": "Class name of the entity to check."
       }
     ],
     "returnValues": [
       {
         "type": "boolean",
-        "description": "Is an enemy"
+        "description": "Is an enemy?"
       }
     ]
   },
   {
-    "name": "IsEntity",
+    "name": "isentity",
     "parent": "Global",
     "realms": [
+      "menu",
       "client",
       "server"
     ],
-    "description": "Returns if the passed object is an <page>Entity</page>. Alias of <page>Global.isentity</page>.",
+    "description": "Returns if the passed object is an <page>Entity</page>.",
     "arguments": [
       {
         "name": "variable",
@@ -3106,7 +3838,7 @@
       "client",
       "server"
     ],
-    "description": "Returns if the given NPC class name is a friend.\n\nReturns true if the entity name is one of the following:\n* \"npc_alyx\"\n* \"npc_barney\"\n* \"npc_citizen\"\n* \"npc_dog\"\n* \"npc_eli\"\n* \"npc_fisherman\"\n* \"npc_gman\"\n* \"npc_kleiner\"\n* \"npc_magnusson\"\n* \"npc_monk\"\n* \"npc_mossman\"\n* \"npc_odessa\"\n* \"npc_vortigaunt\"",
+    "description": "Returns if the given NPC class name is a friend. Returns `true` if the entity name is one of the following:\n* `monster_scientist`\n* `monster_barney`\n* `npc_alyx`\n* `npc_barney`\n* `npc_citizen`\n* `npc_dog`\n* `npc_eli`\n* `npc_fisherman`\n* `npc_gman`\n* `npc_kleiner`\n* `npc_magnusson`\n* `npc_monk`\n* `npc_mossman`\n* `npc_odessa`\n* `npc_vortigaunt`",
     "arguments": [
       {
         "name": "className",
@@ -3155,6 +3887,20 @@
       {
         "type": "boolean",
         "description": "True if we are in a game."
+      }
+    ]
+  },
+  {
+    "name": "IsInLoading",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Returns true when the loading panel is active.",
+    "returnValues": [
+      {
+        "type": "boolean",
+        "description": "True if loading panel is active."
       }
     ]
   },
@@ -3251,6 +3997,48 @@
     ]
   },
   {
+    "name": "IsServerBlacklisted",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Checks if the given server data is blacklisted or not.",
+    "arguments": [
+      {
+        "name": "address",
+        "type": "string",
+        "description": "Server ip. can end with *"
+      },
+      {
+        "name": "hostname",
+        "type": "string",
+        "description": "Server name"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "description": "description to check"
+      },
+      {
+        "name": "gm",
+        "type": "string",
+        "description": "Gamemode name"
+      },
+      {
+        "name": "map",
+        "type": "string",
+        "description": "Map name"
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "string",
+        "name": "result",
+        "description": "Returns the reason why the server is blacklisted or nil if the server is not blacklisted."
+      }
+    ]
+  },
+  {
     "name": "isstring",
     "parent": "Global",
     "realms": [
@@ -3281,7 +4069,7 @@
       "client",
       "server"
     ],
-    "description": "Returns if the passed object is a <page>table</page>.",
+    "description": "Returns if the passed object is a <page>table</page>.\n<note>Will return TRUE for variables of type <page>Color</page></note>",
     "arguments": [
       {
         "name": "variable",
@@ -3350,7 +4138,7 @@
       "client",
       "server"
     ],
-    "description": "Returns whether an object is valid or not. (Such as <page>Entity</page>s, <page>Panel</page>s, custom <page>table</page> objects and more).\nChecks that an object is not nil, has an IsValid method and if this method returns true.\n\n<note>Due to vehicles being technically valid the moment they're spawned, also use <page>Vehicle:IsValidVehicle</page> to make sure they're fully initialized</note>",
+    "description": "Returns whether an object is valid or not. (Such as <page text=\"entities\">Entity</page>, <page>Panel</page>s, custom <page>table</page> objects and more).\n\nChecks that an object is not <page>nil</page>, has an `IsValid` method and if this method returns `true`. If the object has no `IsValid` method, it will return `false`.\n\n<note>Due to vehicles being technically valid the moment they're spawned, also use <page>Vehicle:IsValidVehicle</page> to make sure they're fully initialized.</note>",
     "arguments": [
       {
         "name": "toBeValidated",
@@ -3458,7 +4246,7 @@
       "client",
       "menu"
     ],
-    "description": "Convenience function that creates a DLabel, sets the text, and returns it",
+    "description": "Convenience function that creates a <page>DLabel</page>, sets the text, and returns it",
     "arguments": [
       {
         "name": "text",
@@ -3475,7 +4263,7 @@
     "returnValues": [
       {
         "type": "Panel",
-        "description": "The created DLabel"
+        "description": "The created <page>DLabel</page>"
       }
     ]
   },
@@ -3502,7 +4290,7 @@
       "client",
       "server"
     ],
-    "description": "Performs a linear interpolation from the start number to the end number.\n\nThis function provides a very efficient and easy way to smooth out movements.\n<note>This function is not meant to be used with constant value in the first argument, if you're dealing with animation! Use a value that changes over time. See example for **proper** usage of Lerp for animations</note>",
+    "description": "Performs a linear interpolation from the start number to the end number.\n\nThis function provides a very efficient and easy way to smooth out movements.\n\nSee also <page>math.ease</page> for functions that allow to have non linear animations using linear interpolation.\n\n<note>This function is not meant to be used with constant value in the first argument if you're dealing with animation! Use a value that changes over time. See example for **proper** usage of Lerp for animations.</note>",
     "arguments": [
       {
         "name": "t",
@@ -3523,7 +4311,7 @@
     "returnValues": [
       {
         "type": "number",
-        "description": "The result of the linear interpolation, `(1 - t) * from + t * to`."
+        "description": "The result of the linear interpolation, `from + (to - from) * t`."
       }
     ]
   },
@@ -3594,12 +4382,43 @@
     ]
   },
   {
+    "name": "ListAddonPresets",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nLoads all Addon Presets and updates the Preset list."
+  },
+  {
+    "name": "LoadAddonPresets",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Returns the contents of `addonpresets.txt` located in the `garrysmod/settings` folder. By default, this file stores your addon presets as JSON.\n\nYou can use <page>Global.SaveAddonPresets</page> to modify this file.",
+    "returnValues": [
+      {
+        "type": "string",
+        "name": "JSON",
+        "description": "The contents of the file."
+      }
+    ]
+  },
+  {
     "name": "LoadLastMap",
     "parent": "Global",
     "realms": [
       "menu"
     ],
     "description": "<internal></internal>This function is used to get the last map and category to which the map belongs from the cookie saved with <page>Global.SaveLastMap</page>."
+  },
+  {
+    "name": "LoadNewsList",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nUpdates the News List"
   },
   {
     "name": "LoadPresets",
@@ -3699,28 +4518,28 @@
       "client",
       "server"
     ],
-    "description": "Either returns the material with the given name, or loads the material interpreting the first argument as the path.\n\n<note>When using .png or .jpg textures, try to make their sizes Power Of 2 (1, 2, 4, 8, 16, 32, 64, etc). While images are no longer scaled to Power of 2 sizes since February 2019, it is a good practice for things like icons, etc.</note>",
+    "description": "Either returns the material with the given name, or loads the material interpreting the first argument as the path.\n\n## .png, .jpg and other image formats\n\nThis function is capable to loading `.png` or `.jpg` images, generating a texture and material for them on the fly.\n\nPNG, JPEG, GIF, and TGA files will work, but only if they have the `.png` or `.jpg` file extensions (even if the actual image format doesn't match the file extension)\n\nUse <page>Global.AddonMaterial</page> for image files with the `.cache` file extension. (from <page>steamworks.Download</page>)\n\nWhile images are no longer scaled to Power of 2 (sizes of 8, 16, 32, 64, 128, etc.) sizes since February 2019, it is still a good practice for things like icons, etc.\n\n<warning>Server-side, this function can consistently return an invalid material (with '__error') depending on the file type loaded.</warning>\n\n<warning>This function is very expensive when used in rendering hooks or in operations requiring very frequent calls. It is a good idea to cache the material in a variable (like in the examples).</warning>",
     "arguments": [
       {
         "name": "materialName",
         "type": "string",
-        "description": "The material name or path. The path is relative to the **materials/** folder. You do not need to add **materials/** to your path.\n\nTo retrieve a Lua material created with <page>Global.CreateMaterial</page>, just prepend a \"!\" to the material name.\n\n<note>Since paths are relative to the materials folder, resource paths like ../data/MyImage.jpg will work since \"..\" translates to moving up a parent directory in the file tree.</note>"
+        "description": "The material name or path relative to the `materials/` folder.\nPaths outside the `materials/` folder like `data/MyImage.jpg` or `maps/thumb/gm_construct.png` will also work for when generating materials.\n\nTo retrieve a Lua material created with <page>Global.CreateMaterial</page>, just prepend a `!` to the material name."
       },
       {
         "name": "pngParameters",
         "type": "string",
         "default": "nil",
-        "description": "A string containing space separated keywords which will be used to add material parameters.\n\nSee <page>Material Parameters</page> for more information.\n\n<note>This feature only works when importing .png or .jpeg image files</note>"
+        "description": "A string containing space separated keywords which will be used to add material parameters.\n\nSee <page>Material Parameters</page> for more information.\n\n<note>This feature only works when importing `.png` or `.jpg` image files.</note>"
       }
     ],
     "returnValues": [
       {
         "type": "IMaterial",
-        "description": "Generated material"
+        "description": "Generated material."
       },
       {
         "type": "number",
-        "description": "How long it took for the function to run"
+        "description": "How long it took for the function to run."
       }
     ]
   },
@@ -3731,7 +4550,7 @@
       "client",
       "server"
     ],
-    "description": "Returns a <page>VMatrix</page> object.",
+    "description": "Returns a <page>VMatrix</page> object, a 4x4 matrix.",
     "arguments": [
       {
         "name": "data",
@@ -3748,12 +4567,27 @@
     ]
   },
   {
+    "name": "MenuGetAddonData",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal>Internally uses <page>steamworks.FileInfo</page> to fetch the data.</internal>\nThis function retrieves the Addon data and passes it onto JS(JavaScript)",
+    "arguments": [
+      {
+        "name": "workshopItemID",
+        "type": "string",
+        "description": "The ID of Steam Workshop item."
+      }
+    ]
+  },
+  {
     "name": "Mesh",
     "parent": "Global",
     "realms": [
       "client"
     ],
-    "description": "Returns a new mesh object.",
+    "description": "Returns a new static mesh object.",
     "arguments": [
       {
         "name": "mat",
@@ -3777,18 +4611,18 @@
       "client",
       "server"
     ],
-    "description": "Runs <page>util.PrecacheModel</page> and returns the string",
+    "description": "Runs <page>util.PrecacheModel</page> and returns the string.",
     "arguments": [
       {
         "name": "model",
         "type": "string",
-        "description": "The model to precache"
+        "description": "The model to precache."
       }
     ],
     "returnValues": [
       {
         "type": "string",
-        "description": "The same string entered as an argument"
+        "description": "The same string entered as an argument."
       }
     ]
   },
@@ -3910,19 +4744,24 @@
       "client",
       "server"
     ],
-    "description": "Returns a new userdata object.",
+    "description": "<bug issue=\"5299\">Fails under certain conditions when called in coroutines</bug>\nCreates a new <page>userdata</page> object.",
     "arguments": [
       {
         "name": "addMetatable",
         "type": "boolean",
         "default": "false",
-        "description": "If true, the userdata will get its own metatable automatically."
+        "description": "If true, the created <page>userdata</page> will be given its own metatable."
+      },
+      {
+        "name": "userData",
+        "type": "userdata",
+        "description": "Creates a new <page>userdata</page> with the same metatable the <page>userdata</page> passed in had. The <page>userdata</page> passed in **must be** a <page>userdata</page> that has a metatable that was created from this function."
       }
     ],
     "returnValues": [
       {
         "type": "userdata",
-        "description": "The newly created userdata."
+        "description": "The newly created <page>userdata</page>."
       }
     ]
   },
@@ -4055,6 +4894,14 @@
     ]
   },
   {
+    "name": "OpenProblemsPanel",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Opens the Problems Panel."
+  },
+  {
     "name": "OrderVectors",
     "parent": "Global",
     "realms": [
@@ -4084,26 +4931,26 @@
       "client",
       "server"
     ],
-    "description": "Returns an iterator function(<page>Global.next</page>) for a for loop that will return the values of the specified table in an arbitrary order.\n\nFor alphabetical **key** order use <page>Global.SortedPairs</page>.\n\n\nFor alphabetical **value** order use <page>Global.SortedPairsByValue</page>.",
+    "description": "Returns an iterator function(<page>Global.next</page>) for a for loop that will return the values of the specified table in an arbitrary order.\n\n* For alphabetical **key** order use <page>Global.SortedPairs</page>.\n* For alphabetical **value** order use <page>Global.SortedPairsByValue</page>.",
     "arguments": [
       {
         "name": "tab",
         "type": "table",
-        "description": "The table to iterate over"
+        "description": "The table to iterate over."
       }
     ],
     "returnValues": [
       {
         "type": "function",
-        "description": "The iterator (<page>Global.next</page>)"
+        "description": "The iterator (<page>Global.next</page>)."
       },
       {
         "type": "table",
-        "description": "The table being iterated over"
+        "description": "The table being iterated over."
       },
       {
         "type": "any",
-        "description": "**nil** (for the constructor)"
+        "description": "**nil** (for the constructor)."
       }
     ]
   },
@@ -4137,7 +4984,7 @@
       "client",
       "server"
     ],
-    "description": "Creates a particle effect.\n\n<note>The particle effect must be precached with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
+    "description": "Creates a particle effect. See also <page>Global.CreateParticleSystem</page>.\n\n<note>The particle effect must be precached **serverside** with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
     "arguments": [
       {
         "name": "particleName",
@@ -4147,12 +4994,12 @@
       {
         "name": "position",
         "type": "Vector",
-        "description": "The start position of the effect."
+        "description": "The start position of Control Point 0 for the particle system."
       },
       {
         "name": "angles",
         "type": "Angle",
-        "description": "The orientation of the effect."
+        "description": "The orientation of Control Point 0 for the particle system.\n\nYou must provide the entity argument for the angles to take effect."
       },
       {
         "name": "parent",
@@ -4169,7 +5016,7 @@
       "client",
       "server"
     ],
-    "description": "Creates a particle effect with specialized parameters.\n\n<note>The particle effect must be precached with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
+    "description": "Creates a particle effect with specialized parameters. See also <page>Entity:CreateParticleEffect</page> and <page>Global.CreateParticleSystem</page>.\n\n<note>The particle effect must be precached **serverside** with <page>Global.PrecacheParticleSystem</page> and the file its from must be added via <page>game.AddParticles</page> before it can be used!</note>",
     "arguments": [
       {
         "name": "particleName",
@@ -4199,7 +5046,7 @@
     "realms": [
       "client"
     ],
-    "description": "Creates a new <page>CLuaEmitter</page>.\n\n<note>Do not forget to delete the emitter with <page>CLuaEmitter:Finish</page> once you are done with it</note>",
+    "description": "Creates a new <page>CLuaEmitter</page>.\n\n<note>Do not forget to delete the emitter with <page>CLuaEmitter:Finish</page> once you are done with it</note>\n<warning>There is a limit of 4097 emitters that can be active at once, exceeding this limit will throw a non-halting error in console!</warning>",
     "arguments": [
       {
         "name": "position",
@@ -4209,7 +5056,8 @@
       {
         "name": "use3D",
         "type": "boolean",
-        "description": "Whenever to render the particles in 2D or 3D mode."
+        "default": "false",
+        "description": "Whenever to render the particles in 2D or 3D mode. Supplying \"true\" will enable 3D (non-billboarded), otherwise it will default to 2D."
       }
     ],
     "returnValues": [
@@ -4230,7 +5078,7 @@
       {
         "name": "type",
         "type": "string",
-        "description": "The name of the path to create.\nThis is going to be \"Follow\" or \"Chase\" right now."
+        "description": "The name of the path to create.\nThis is going to be `\"Follow\"` or `\"Chase\"` right now."
       }
     ],
     "returnValues": [
@@ -4248,7 +5096,7 @@
       "client",
       "server"
     ],
-    "description": "Calls a function and catches an error that can be thrown while the execution of the call.\n\n<bug issue=\"1976\">Using this function with <page>Global.include</page> will break autorefresh.</bug>\n\n<bug issue=\"2036\">This cannot stop errors from hooks called from the engine.</bug>\n\n<bug issue=\"2498\">This does not stop <page>Global.Error</page> and <page>Global.ErrorNoHalt</page> from sending error messages to the server (if called clientside) or calling the <page>GM:OnLuaError</page> hook. The success boolean returned will always return true and thus you will not get the error message returned. <page>Global.error</page> does not exhibit these behaviours.</bug>\n\n<bug issue=\"3112\">This does not stop errors incurred by <page>Global.include</page>.</bug>",
+    "description": "Calls a function and catches an error that can be thrown while the execution of the call.\n\n<bug issue=\"2036\">This cannot stop errors from hooks called from the engine.</bug>\n\n<bug issue=\"2498\">This does not stop <page>Global.Error</page> and <page>Global.ErrorNoHalt</page> from sending error messages to the server (if called clientside) or calling the <page>GM:OnLuaError</page> hook. The success boolean returned will always return true and thus you will not get the error message returned. <page>Global.error</page> does not exhibit these behaviours.</bug>",
     "arguments": [
       {
         "name": "func",
@@ -4332,7 +5180,7 @@
       "client",
       "server"
     ],
-    "description": "Precaches the particle with the specified name.",
+    "description": "Precaches a particle system with the specified name. The particle system must come from a file that is loaded with <page>game.AddParticles</page> beforehand.\n\nWhen used on the server, it automatically precaches the particle on client.\n\n<warning>There is a limit of 4096 precached particles on the server. So only precache particles that are actually going to be used.</warning>",
     "arguments": [
       {
         "name": "particleSystemName",
@@ -4360,6 +5208,7 @@
     "name": "PrecacheSentenceFile",
     "parent": "Global",
     "realms": [
+      "client",
       "server"
     ],
     "description": "Load and precache a custom sentence file.",
@@ -4409,7 +5258,7 @@
     "realms": [
       "server"
     ],
-    "description": "Displays a message in the chat, console, or center of screen of every player.\n\nThis uses the archaic user message system (<page>umsg</page>) and hence is limited to ≈250 characters.",
+    "description": "Displays a message in the chat, console, or center of screen of every player.\n\nThis uses the archaic user message system (<page>umsg</page>) and hence is limited to 255 characters.",
     "arguments": [
       {
         "name": "type",
@@ -4479,6 +5328,11 @@
         "name": "func",
         "type": "function",
         "description": "Function to run"
+      },
+      {
+        "name": "arguments",
+        "type": "vararg",
+        "description": "Arguments to call the function with."
       }
     ],
     "returnValues": [
@@ -4506,6 +5360,7 @@
       {
         "name": "descending",
         "type": "boolean",
+        "default": "nil",
         "description": "Whether the iterator should iterate descending or not"
       }
     ],
@@ -4605,7 +5460,7 @@
     "realms": [
       "client"
     ],
-    "description": "Returns the real frame-time which is unaffected by host_timescale. To be used for GUI effects (for example)",
+    "description": "Returns the real frame-time which is unaffected by host_timescale. To be used for GUI effects (for example)\n<note>The returned number is clamped between `0` and `0.1`.</note>",
     "returnValues": [
       {
         "type": "number",
@@ -4620,7 +5475,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the uptime of the game/server in seconds (to at least 4 decimal places)\n\n<note>This is **not** synchronised or affected by the game.</note>\n\n<note>This will be affected by precision loss if the uptime is more than 30+(?) days, and effectively cease to be functional after 50+(?) days.\n\nChanging the map will **not** fix it like it does with CurTime. A server restart is necessary.</note>\n\nYou should use this function (or SysTime) for timing real-world events such as user interaction, but not for timing game events such as animations.\n\nSee also: <page>Global.CurTime</page>, <page>Global.SysTime</page>",
+    "description": "Returns the uptime of the game/server in seconds (to at least **4** decimal places). This value updates itself once every time the realm thinks. For servers, this is the server tickrate. For clients, its their current FPS.\n\n<note>This is **not** synchronised or affected by the game.\n\nThis will be affected by precision loss if the uptime is more than 30+(?) days, and effectively cease to be functional after 50+(?) days.\n\nChanging the map will **not** fix it like it does with <page>Global.CurTime</page>. A server restart is necessary.</note>\n\nYou should use this function (or <page>Global.SysTime</page>) for timing real-world events such as user interaction, but not for timing game events such as animations.\n\nSee also: <page>Global.CurTime</page>, <page>Global.SysTime</page>",
     "returnValues": [
       {
         "type": "number",
@@ -4635,6 +5490,14 @@
       "server"
     ],
     "description": "Creates a new <page>CRecipientFilter</page>.",
+    "arguments": [
+      {
+        "name": "unreliable",
+        "type": "boolean",
+        "default": "false",
+        "description": "If set to true, makes the filter unreliable.\n\nThis means, when sending over the network in cases like <page>Global.CreateSound</page> (and its subsequent updates), the message is not guaranteed to reach all clients."
+      }
+    ],
     "returnValues": [
       {
         "type": "CRecipientFilter",
@@ -4651,6 +5514,14 @@
     "description": "<internal></internal>\nAdds a frame to the currently recording demo."
   },
   {
+    "name": "RefreshAddonConflicts",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Refreshes all Addon Conflicts after 1 Second. Internally uses <page>Global.FireAddonConflicts</page>"
+  },
+  {
     "name": "RegisterDermaMenuForClose",
     "parent": "Global",
     "realms": [
@@ -4663,6 +5534,28 @@
         "name": "menu",
         "type": "Panel",
         "description": "Menu to be registered for closure"
+      }
+    ]
+  },
+  {
+    "name": "RegisterMetaTable",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "description": "Registers a given table as a metatable. It can then be accessed by other code/addons via <page>Global.FindMetaTable</page>.",
+    "arguments": [
+      {
+        "name": "metaName",
+        "type": "string",
+        "description": "The new metatable name. Cannot override existing types."
+      },
+      {
+        "name": "metaTable",
+        "type": "table",
+        "description": "The new metatable table. It will be given a `MetaID` and `MetaName` fields."
       }
     ]
   },
@@ -4799,6 +5692,51 @@
     ]
   },
   {
+    "name": "RequestConnectToServer",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal>Called by <page>permissions.AskToConnect</page></internal>\nIf the server has the permission \"connect\" granted, it will instantly connect you to the server.\nIf the permission is not granted it will, it opens a confirmation window to connect to the server.\n<upload src=\"ab571/8dc3890a88522bb.png\" size=\"16390\" name=\"connect_dialog.png\">\n</upload>",
+    "arguments": [
+      {
+        "name": "serverip",
+        "type": "string",
+        "description": "The server ip to connect to"
+      }
+    ]
+  },
+  {
+    "name": "RequestOpenURL",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nOpens a confirmation window to open the url.\n<upload src=\"ab571/8dc3890ccb8cfd4.png\" size=\"14654\" name=\"confirm_dialog.png\">\n</upload>",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "description": "The Website URL to open."
+      }
+    ]
+  },
+  {
+    "name": "RequestPermission",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nOpens a confirmation window to grant the requested permission.\n<upload src=\"ab571/8dc3890f84fb468.png\" size=\"17108\" name=\"permission_request.png\">\n</upload>",
+    "arguments": [
+      {
+        "name": "permission",
+        "type": "string",
+        "description": "The permission to ask"
+      }
+    ]
+  },
+  {
     "name": "require",
     "parent": "Global",
     "realms": [
@@ -4806,7 +5744,7 @@
       "client",
       "server"
     ],
-    "description": "First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.\n\n<bug issue=\"1041\" request=\"813\">Running this function with <page>Global.pcall</page> or <page>Global.xpcall</page> will still print an error that counts towards sv_kickerrornum.</bug>\n<note>This function will try to load local client file if `sv_allowcslua` is **1**</note>",
+    "description": "First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.\n\n<bug issue=\"1041\" request=\"813\">Running this function with <page>Global.pcall</page> or <page>Global.xpcall</page> will still print an error that counts towards sv_kickerrornum.</bug>\n<note>This function will try to load local client file if `sv_allowcslua` is set to `1`</note>\n<note>\nBinary modules can't be installed as part of an addon and have to be put directly into ``garrysmod/lua/bin/`` to be detected.\nThis is a safety measure, because modules can be malicious and harm the system.\n</note>",
     "arguments": [
       {
         "name": "name",
@@ -4852,12 +5790,12 @@
     "realms": [
       "menu"
     ],
-    "description": "Runs a menu command. Equivalent to <page>Global.RunConsoleCommand</page>( \"gamemenucommand\", command ) unless the command starts with the \"engine\" keyword in which case it is equivalent to <page>Global.RunConsoleCommand</page>( command ).",
+    "description": "Runs a menu command. Equivalent to <page>Global.RunConsoleCommand</page>`( \"gamemenucommand\", command )` unless the command starts with the `\"engine\"` keyword in which case it is equivalent to <page>Global.RunConsoleCommand</page>`( command )`.\n<warning>Invoking engine commands no longer works, prints out `Not running engine cmd 'concommand'`</warning>",
     "arguments": [
       {
         "name": "command",
         "type": "string",
-        "description": "The menu command to run\n\nShould be one of the following:\n* Disconnect - Disconnects from the current server.\n* OpenBenchmarkDialog - Opens the \"Video Hardware Stress Test\" dialog.\n* OpenChangeGameDialog - Does not work in GMod.\n* OpenCreateMultiplayerGameDialog - Opens the Source dialog for creating a listen server.\n* OpenCustomMapsDialog - Does nothing.\n* OpenFriendsDialog - Does nothing.\n* OpenGameMenu - Does not work in GMod.\n* OpenLoadCommentaryDialog - Opens the \"Developer Commentary\" selection dialog. Useless in GMod.\n* OpenLoadDemoDialog - Does nothing.\n* OpenLoadGameDialog - Opens the Source \"Load Game\" dialog.\n* OpenNewGameDialog - Opens the \"New Game\" dialog. Useless in GMod.\n* OpenOptionsDialog - Opens the options dialog.\n* OpenPlayerListDialog - Opens the \"Mute Players\" dialog that shows all players connected to the server and allows to mute them.\n* OpenSaveGameDialog - Opens the Source \"Save Game\" dialog.\n* OpenServerBrowser - Opens the legacy server browser.\n* Quit - Quits the game `without` confirmation (unlike other Source games).\n* QuitNoConfirm - Quits the game without confirmation (like other Source games).\n* ResumeGame - Closes the menu and returns to the game.\n* engine <concommand> - Runs a console command. Equivalent to <page>Global.RunConsoleCommand</page>( <concommand> ).</concommand></concommand>"
+        "description": "The menu command to run\n\nShould be one of the following:\n* `Disconnect` - Disconnects from the current server.\n* `OpenBenchmarkDialog` - Opens the \"Video Hardware Stress Test\" dialog.\n* `OpenChangeGameDialog` - Does not work in GMod.\n* `OpenCreateMultiplayerGameDialog` - Opens the Source dialog for creating a listen server.\n* `OpenCustomMapsDialog` - Does nothing.\n* `OpenFriendsDialog` - Does nothing.\n* `OpenGameMenu` - Does not work in GMod.\n* `OpenLoadCommentaryDialog` - Opens the \"Developer Commentary\" selection dialog. Useless in GMod.\n* `OpenLoadDemoDialog` - Does nothing.\n* `OpenLoadGameDialog` - Opens the Source \"Load Game\" dialog.\n* `OpenNewGameDialog` - Opens the \"New Game\" dialog. Useless in GMod.\n* `OpenOptionsDialog` - Opens the options dialog.\n* `OpenPlayerListDialog` - Opens the \"Mute Players\" dialog that shows all players connected to the server and allows to mute them.\n* `OpenSaveGameDialog` - Opens the Source \"Save Game\" dialog.\n* `OpenServerBrowser` - Opens the legacy server browser.\n* `Quit` - Quits the game **without** confirmation (unlike other Source games).\n* `QuitNoConfirm` - Quits the game without confirmation (like other Source games).\n* `ResumeGame` - Closes the menu and returns to the game.\n* `engine 'concommand'` - Runs a console command. Unlike <page>Global.RunConsoleCommand</page> It will ignore <page>Blocked ConCommands</page>"
       }
     ]
   },
@@ -4946,6 +5884,36 @@
     ]
   },
   {
+    "name": "SaveAddonPresets",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "Sets the content of `addonpresets.txt` located in the `garrysmod/settings` folder. By default, this file stores your addon presets as JSON.\n\nYou can use <page>Global.LoadAddonPresets</page> to retrieve the data in this file.",
+    "arguments": [
+      {
+        "name": "JSON",
+        "type": "string",
+        "description": "The new contents of the file."
+      }
+    ]
+  },
+  {
+    "name": "SaveHideNews",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nHides the News List when set to true.\n<note>If you call this don't forget to call <page>Global.LoadNewsList</page> to update the News List.</note>",
+    "arguments": [
+      {
+        "name": "hide",
+        "type": "boolean",
+        "description": "true if it should hide the News."
+      }
+    ]
+  },
+  {
     "name": "SaveLastMap",
     "parent": "Global",
     "realms": [
@@ -4986,12 +5954,39 @@
     "realms": [
       "client"
     ],
-    "description": "Returns a number based on the Size argument and your screen's width. The screen's width is always equal to size 640. This function is primarily used for scaling font sizes.",
+    "description": "Returns a number based on the `size` argument and the players' screen width. The width is scaled in relation to `640x480` resolution.  This function is primarily used for scaling font sizes.\n\nSee <page>Global.ScreenScaleH</page> for a function that scales from height.",
     "arguments": [
       {
-        "name": "Size",
+        "name": "size",
         "type": "number",
         "description": "The number you want to scale."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "number",
+        "description": "The scaled number based on your screen's width"
+      }
+    ]
+  },
+  {
+    "name": "ScreenScaleH",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "description": "Returns a number based on the `size` argument and players' screen height. The height is scaled in relation to `640x480` resolution.  This function is primarily used for scaling font sizes.\n\nSee <page>Global.ScreenScale</page> for a function that scales from width.",
+    "arguments": [
+      {
+        "name": "size",
+        "type": "number",
+        "description": "The number you want to scale."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "number",
+        "description": "The scaled number based on your screen's height."
       }
     ]
   },
@@ -5002,7 +5997,7 @@
       "client",
       "menu"
     ],
-    "description": "Gets the height of the game's window (in pixels).",
+    "description": "Gets the height of the game's window (in pixels).\n<note>ScrH() returns the height from the current viewport, this can be changed via <page>render.SetViewPort</page>, inside Render Targets and cam.Start contexts.</note>",
     "returnValues": [
       {
         "type": "number",
@@ -5017,7 +6012,7 @@
       "client",
       "menu"
     ],
-    "description": "Gets the width of the game's window (in pixels).",
+    "description": "Gets the width of the game's window (in pixels).\n<note>ScrW() returns the width from the current viewport, this can be changed via <page>render.SetViewPort</page>, inside Render Targets and cam.Start contexts.</note>",
     "returnValues": [
       {
         "type": "number",
@@ -5060,7 +6055,7 @@
       "client",
       "server"
     ],
-    "description": "<deprecated>This uses the <page>umsg</page> internally, which has been deprecated. Use the <page>net</page> instead.</deprecated>\nSend a usermessage\n<note>Useless on client, only server can send info to client.</note>",
+    "description": "Send a usermessage\n<deprecated>\nThis uses the <page>umsg</page> internally, which has been deprecated. Use the <page>net</page> instead.\n</deprecated>\n\n<note>\nThis does nothing clientside.\n</note>",
     "arguments": [
       {
         "name": "name",
@@ -5086,18 +6081,18 @@
       "client",
       "server"
     ],
-    "description": "Returns approximate duration of a sentence by name. See <page>Global.EmitSentence</page>",
+    "description": "Returns approximate duration of a sentence by name. See <page>Global.EmitSentence</page>.",
     "arguments": [
       {
         "name": "name",
         "type": "string",
-        "description": "The sentence name"
+        "description": "The sentence name."
       }
     ],
     "returnValues": [
       {
         "type": "number",
-        "description": "The approximate duration"
+        "description": "The approximate duration."
       }
     ]
   },
@@ -5107,7 +6102,7 @@
     "realms": [
       "server"
     ],
-    "description": "Prints \"ServerLog: PARAM\" without a newline, to the server log and console.",
+    "description": "Prints `ServerLog: PARAM` without a newline, to the server log and console.\n\nAs of June 2022, if `sv_logecho` is set to `0` (defaults to `1`) the message will not print to console and will only be written to the server's log file.",
     "arguments": [
       {
         "name": "parameter",
@@ -5140,22 +6135,28 @@
       "client",
       "server"
     ],
-    "description": "Sets the enviroment for a function or a stack level, if a function is passed, the return value will be the function, otherwise nil.",
+    "description": "Sets the environment for a function or a stack level. Can be used to sandbox code.",
     "arguments": [
       {
         "name": "location",
         "type": "function",
-        "description": "The function to set the enviroment for or a number representing stack level."
+        "description": "The function to set the environment for, or a number representing stack level."
       },
       {
-        "name": "enviroment",
+        "name": "environment",
         "type": "table",
-        "description": "Table to be used as enviroment."
+        "description": "Table to be used as the the environment."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "function",
+        "description": "The function passed, otherwise nil."
       }
     ]
   },
   {
-    "name": "SetGlobalAngle",
+    "name": "SetGlobal2Angle",
     "parent": "Global",
     "realms": [
       "client",
@@ -5176,7 +6177,7 @@
     ]
   },
   {
-    "name": "SetGlobalBool",
+    "name": "SetGlobal2Bool",
     "parent": "Global",
     "realms": [
       "client",
@@ -5197,7 +6198,7 @@
     ]
   },
   {
-    "name": "SetGlobalEntity",
+    "name": "SetGlobal2Entity",
     "parent": "Global",
     "realms": [
       "client",
@@ -5218,13 +6219,181 @@
     ]
   },
   {
+    "name": "SetGlobal2Float",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines a floating point number to be automatically networked to clients\n\n<warning>This function has a floating point precision error. Use <page>Global.SetGlobalFloat</page> instead</warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global float with"
+      },
+      {
+        "name": "float",
+        "type": "number",
+        "description": "Float to be networked"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobal2Int",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Sets an integer that is shared between the server and all clients.\n<warning>The integer has a 32 bit limit. Use <page>Global.SetGlobalInt</page> instead</warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "string",
+        "description": "The unique index to identify the global value with."
+      },
+      {
+        "name": "value",
+        "type": "number",
+        "description": "The value to set the global value to"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobal2String",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines a string with a maximum of 511 characters to be automatically networked to clients\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global string with"
+      },
+      {
+        "name": "string",
+        "type": "string",
+        "description": "String to be networked"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobal2Var",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines a variable to be automatically networked to clients\n\n\n| Allowed Types   |\n| --------------- |\n| Angle           |\n| Boolean         |\n| Entity          |\n| Float           |\n| Int             |\n| String          |\n| Vector          |\n<warning>Trying to network a type that is not listed above will result in a nil value!</warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global vector with"
+      },
+      {
+        "name": "value",
+        "type": "any",
+        "description": "Value to be networked"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobal2Vector",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines a vector to be automatically networked to clients\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global vector with"
+      },
+      {
+        "name": "vec",
+        "type": "Vector",
+        "description": "Vector to be networked"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobalAngle",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines an angle to be automatically networked to clients\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Angle</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global angle with"
+      },
+      {
+        "name": "angle",
+        "type": "Angle",
+        "description": "Angle to be networked"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobalBool",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defined a boolean to be automatically networked to clients\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Bool</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global boolean with"
+      },
+      {
+        "name": "bool",
+        "type": "boolean",
+        "description": "Boolean to be networked"
+      }
+    ]
+  },
+  {
+    "name": "SetGlobalEntity",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines an entity to be automatically networked to clients\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Entity</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global entity with"
+      },
+      {
+        "name": "ent",
+        "type": "Entity",
+        "description": "Entity to be networked"
+      }
+    ]
+  },
+  {
     "name": "SetGlobalFloat",
     "parent": "Global",
     "realms": [
       "client",
       "server"
     ],
-    "description": "Defines a floating point number to be automatically networked to clients\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "description": "Defines a floating point number to be automatically networked to clients\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Float</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
     "arguments": [
       {
         "name": "index",
@@ -5245,7 +6414,7 @@
       "client",
       "server"
     ],
-    "description": "Sets an integer that is shared between the server and all clients.\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>\n<bug issue=\"3374\">This function will not round decimal values as it actually networks a float internally.</bug>",
+    "description": "Sets an integer that is shared between the server and all clients.\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Int</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>\n<bug issue=\"3374\">This function will not round decimal values as it actually networks a float internally.</bug>",
     "arguments": [
       {
         "name": "index",
@@ -5266,7 +6435,7 @@
       "client",
       "server"
     ],
-    "description": "Defines a string with a maximum of 199 characters to be automatically networked to clients\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "description": "Defines a string with a maximum of 199 characters to be automatically networked to clients\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2String</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>If you want to have a higher characters limit use <page>Global.SetGlobal2String</page></note>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
     "arguments": [
       {
         "name": "index",
@@ -5281,13 +6450,34 @@
     ]
   },
   {
+    "name": "SetGlobalVar",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Defines a variable to be automatically networked to clients\n\n\n| Allowed Types   |\n| --------------- |\n| Angle           |\n| Boolean         |\n| Entity          |\n| Float           |\n| Int             |\n| String          |\n| Vector          |\n<warning>Trying to network a type that is not listed above will result in an error!\nThere's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Var</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "any",
+        "description": "Index to identify the global vector with"
+      },
+      {
+        "name": "value",
+        "type": "any",
+        "description": "Value to be networked"
+      }
+    ]
+  },
+  {
     "name": "SetGlobalVector",
     "parent": "Global",
     "realms": [
       "client",
       "server"
     ],
-    "description": "Defines a vector to be automatically networked to clients\n\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
+    "description": "Defines a vector to be automatically networked to clients\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Vector</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>",
     "arguments": [
       {
         "name": "index",
@@ -5336,7 +6526,7 @@
       "client",
       "server"
     ],
-    "description": "Called by the engine to set which constraint system [https://developer.valvesoftware.com/wiki/Phys_constraintsystem] the next created constraints should use",
+    "description": "Called by the engine to set which [constraint system](https://developer.valvesoftware.com/wiki/Phys_constraintsystem) the next created constraints should use.",
     "arguments": [
       {
         "name": "constraintSystem",
@@ -5457,18 +6647,18 @@
       "client",
       "server"
     ],
-    "description": "Runs <page>util.PrecacheSound</page> and returns the string.\n\n<bug><page>util.PrecacheSound</page> does nothing and therefore so does this function</bug>",
+    "description": "Runs <page>util.PrecacheSound</page> and returns the string.\n\n<bug><page>util.PrecacheSound</page> does nothing and therefore so does this function.</bug>",
     "arguments": [
       {
         "name": "soundPath",
         "type": "string",
-        "description": "The soundpath to precache"
+        "description": "The soundpath to precache."
       }
     ],
     "returnValues": [
       {
         "type": "string",
-        "description": "The string passed as the first argument"
+        "description": "The string passed as the first argument."
       }
     ]
   },
@@ -5479,7 +6669,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the duration of the sound specified in seconds.\n\n<bug issue=\"936\">This only works properly for .wav files.</bug>",
+    "description": "Returns the approximate duration of the specified sound in seconds, for `.wav` and `.mp3` sounds.",
     "arguments": [
       {
         "name": "soundName",
@@ -5502,7 +6692,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless noQuotes is true. Alias of <page>sql.SQLStr</page>",
+    "description": "Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless noQuotes is true. Alias of <page>sql.SQLStr</page>\n\n<note>This function is not meant to be used with external database engines such as `MySQL`. Escaping strings with inadequate functions is dangerous!</note>",
     "arguments": [
       {
         "name": "input",
@@ -5584,7 +6774,7 @@
       "client",
       "server"
     ],
-    "description": "Returns a highly accurate time in seconds since the start up, ideal for benchmarking.",
+    "description": "Returns a highly accurate time in seconds since the start up, ideal for benchmarking. Unlike <page>Global.RealTime</page>, this value will be updated any time the function is called, allowing for sub-think precision.",
     "returnValues": [
       {
         "type": "number",
@@ -5639,7 +6829,7 @@
       {
         "name": "max",
         "type": "number",
-        "description": "Maxmimum value"
+        "description": "Maximum value"
       },
       {
         "name": "offset",
@@ -5703,7 +6893,7 @@
     "description": "Attempts to return an appropriate boolean for the given value",
     "arguments": [
       {
-        "name": "val",
+        "name": "input",
         "type": "any",
         "description": "The object to be converted to a boolean"
       }
@@ -5711,7 +6901,7 @@
     "returnValues": [
       {
         "type": "boolean",
-        "description": "**false** for the boolean false.\n**false** for \"false\".\n**false** for \"0\".\n**false** for numeric 0.\n**false** for nil.\n**true** otherwise."
+        "description": "* `false` for the boolean `false`.\n* `false` for `\"false\"`.\n* `false` for `\"0\"`.\n* `false` for numeric `0`.\n* `false` for `nil`.\n* `true` otherwise."
       }
     ]
   },
@@ -5738,7 +6928,7 @@
       "client",
       "server"
     ],
-    "description": "Attempts to convert the value to a number.\n\nReturns nil on failure.",
+    "description": "Attempts to convert the value to a number.",
     "arguments": [
       {
         "name": "value",
@@ -5749,13 +6939,13 @@
         "name": "base",
         "type": "number",
         "default": "10",
-        "description": "The  used in the string. Can be any integer between 2 and 36, inclusive."
+        "description": "The base used in the string. Can be any integer between 2 and 36, inclusive."
       }
     ],
     "returnValues": [
       {
         "type": "number",
-        "description": "The numeric representation of the value with the given base, or nil if the conversion failed."
+        "description": "The numeric representation of the value with the given base, or <page>nil</page> if the conversion failed."
       }
     ]
   },
@@ -5811,7 +7001,7 @@
       "client",
       "server"
     ],
-    "description": "Returns a string representing the name of the type of the passed object.",
+    "description": "Returns a string representing the name of the type of the passed object.\n<warning>This will return `table` if the input is <page>Global.Color</page>, consider using <page>Global.IsColor</page> in that case.</warning>",
     "arguments": [
       {
         "name": "var",
@@ -5833,7 +7023,7 @@
       "client",
       "server"
     ],
-    "description": "Gets the associated type ID of the variable. Unlike <page>Global.type</page>, this does not work with <page>no value</page> - an argument must be provided.\n\n<bug request=\"1120\">This returns garbage for _LOADLIB objects.</bug>\n<bug request=\"1459\">This returns TYPE_NIL for <page>proto</page>s.</bug>",
+    "description": "Gets the associated type ID of the variable. Unlike <page>Global.type</page>, this does not work with <page>no value</page> - an argument must be provided.\n\n<warning>This will return `TYPE_TABLE` for <page>Color</page> objects.</warning>\n<warning>All subclasses of <page>Entity</page> will return `TYPE_ENTITY`.</warning>\n<bug request=\"1120\">This returns garbage for _LOADLIB objects.</bug>\n<bug request=\"1459\">This returns `TYPE_NIL` for <page>proto</page>s.</bug>",
     "arguments": [
       {
         "name": "variable",
@@ -5891,13 +7081,45 @@
       "client",
       "server"
     ],
-    "description": "Returns the current asynchronous in-game time.",
+    "description": "Returns the current asynchronous in-game time. This will not be synced with the players current clock allowing you to get <page>Global.CurTime</page> without interference from <page>Prediction</page>.",
     "returnValues": [
       {
         "type": "number",
         "description": "The asynchronous in-game time."
       }
     ]
+  },
+  {
+    "name": "UpdateAddonDisabledState",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nThis function retrieves the values from <page>Global.GetAddonStatus</page> and passes them to JS(JavaScript)."
+  },
+  {
+    "name": "UpdateAddonMapList",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nThis function is called by <page>Global.UpdateMapList</page> to pass the AddonMaps to JS to be used for the Search."
+  },
+  {
+    "name": "UpdateGames",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nUpdates the Gamelist."
+  },
+  {
+    "name": "UpdateLanguages",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nThis function searches for all available languages and passes them to JS(JavaScript). JS then updates the Language list with the given languages."
   },
   {
     "name": "UpdateLoadPanel",
@@ -5915,6 +7137,30 @@
     ]
   },
   {
+    "name": "UpdateMapList",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal>Called from JS when starting a new game</internal>\nThis function updates the Map List"
+  },
+  {
+    "name": "UpdateServerSettings",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal>Called from JS when starting a new game</internal>\nUpdates the Server Settings when called."
+  },
+  {
+    "name": "UpdateSubscribedAddons",
+    "parent": "Global",
+    "realms": [
+      "menu"
+    ],
+    "description": "<internal></internal>\nUpdates the Addons list."
+  },
+  {
     "name": "UTIL_IsUselessModel",
     "parent": "Global",
     "realms": [
@@ -5922,7 +7168,7 @@
       "client",
       "server"
     ],
-    "description": "<deprecated>You should use <page>Global.IsUselessModel</page> instead.</deprecated>\n\nReturns whether or not a model is useless by checking that the file path is that of a proper model.\n\nIf the string \".mdl\" is not found in the model name, the function will return true.\n\nThe function will also return true if any of the following strings are found in the given model name:\n* \"_gesture\"\n* \"_anim\"\n* \"_gst\"\n* \"_pst\"\n* \"_shd\"\n* \"_ss\"\n* \"_posture\"\n* \"_anm\"\n* \"ghostanim\"\n* \"_paths\"\n* \"_shared\"\n* \"anim_\"\n* \"gestures_\"\n* \"shared_ragdoll_\"",
+    "description": "<deprecated>You should use <page>Global.IsUselessModel</page> instead.</deprecated>\n\nThis function is an alias of <page>Global.IsUselessModel</page>.\n\nReturns whether or not a model is useless by checking that the file path is that of a proper model.\n\nIf the string \".mdl\" is not found in the model name, the function will return true.\n\nThe function will also return true if any of the following strings are found in the given model name:\n* \"_gesture\"\n* \"_anim\"\n* \"_gst\"\n* \"_pst\"\n* \"_shd\"\n* \"_ss\"\n* \"_posture\"\n* \"_anm\"\n* \"ghostanim\"\n* \"_paths\"\n* \"_shared\"\n* \"anim_\"\n* \"gestures_\"\n* \"shared_ragdoll_\"",
     "arguments": [
       {
         "name": "modelName",
@@ -5961,13 +7207,13 @@
       "client",
       "server"
     ],
-    "description": "Creates a <page>Vector</page> object.",
+    "description": "Creates a <page>Vector</page> object.\n<warning>Creating Vectors is relatively expensive when used in often running hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the vector in a variable or to use the [default vectors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available. See <page>Vector:Add</page>.</warning>",
     "arguments": [
       {
         "name": "x",
         "type": "number",
         "default": "0",
-        "description": "The x component of the vector.\n\n\nIf this is a <page>Vector</page>, this function will return a copy of the given vector.\n\n\nIf this is a <page>string</page>, this function will try to parse the string as a vector. If it fails, it returns a 0 vector.\n(See examples)"
+        "description": "The x component of the vector."
       },
       {
         "name": "y",
@@ -5980,6 +7226,16 @@
         "type": "number",
         "default": "0",
         "description": "The z component of the vector."
+      },
+      {
+        "name": "vector",
+        "type": "Vector",
+        "description": "Creates a new <page>Vector</page> that is a copy of the given <page>Vector</page>."
+      },
+      {
+        "name": "vectorString",
+        "type": "string",
+        "description": "Attempts to parse the input <page>string</page> from the <page>Global.print</page> format of an <page>Vector</page>.\n\nReturns a <page>Vector</page> with its `x`, `y`, and `z` set to `0` if the <page>string</page> cannot be parsed."
       }
     ],
     "returnValues": [
@@ -6023,10 +7279,11 @@
     "name": "VGUIFrameTime",
     "parent": "Global",
     "realms": [
+      "menu",
       "client",
-      "menu"
+      "server"
     ],
-    "description": "Returns the time in seconds it took to render the VGUI."
+    "description": "Identical to <page>Global.SysTime</page>."
   },
   {
     "name": "VGUIRect",
@@ -6156,7 +7413,7 @@
       "client",
       "server"
     ],
-    "description": "Attempts to call the first function. If the execution succeeds, this returns `true` followed by the returns of the function. If execution fails, this returns `false` and the second function is called with the error message.\n\nUnlike in <page>Global.pcall</page>, the stack is not unwound and can therefore be used for stack analyses with the <page>debug</page>.\n\n<bug issue=\"1976\">Using this function with <page>Global.include</page> will break autorefresh.</bug>\n\n<bug issue=\"2036\">This cannot stop errors from hooks called from the engine.</bug>\n\n<bug issue=\"2498\">This does not stop <page>Global.Error</page> and <page>Global.ErrorNoHalt</page> from sending error messages to the server (if called clientside) or calling the <page>GM:OnLuaError</page> hook. The success boolean returned will always return true and thus you will not get the error message returned. <page>Global.error</page> does not exhibit these behaviours.</bug>\n\n<bug issue=\"3112\">This does not stop errors incurred by <page>Global.include</page>.</bug>",
+    "description": "Attempts to call the first function. If the execution succeeds, this returns `true` followed by the returns of the function. If execution fails, this returns `false` and the second function is called with the error message.\n\nUnlike in <page>Global.pcall</page>, the stack is not unwound and can therefore be used for stack analyses with the <page>debug</page>.\n\n<bug issue=\"2036\">This cannot stop errors from hooks called from the engine.</bug>\n\n<bug issue=\"2498\">This does not stop <page>Global.Error</page> and <page>Global.ErrorNoHalt</page> (As well as <page>Global.include</page>) from sending error messages to the server (if called clientside) or calling the <page>GM:OnLuaError</page> hook. The success boolean returned will always return true and thus you will not get the error message returned. <page>Global.error</page> does not exhibit these behaviours.</bug>",
     "arguments": [
       {
         "name": "func",

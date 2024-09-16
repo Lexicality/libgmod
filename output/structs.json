@@ -34,13 +34,13 @@
         "name": "npcdmg",
         "type": "number",
         "default": "10",
-        "description": "<note>Can also be a string pointing to a convar. The value will automatically update with the convar's.</note>\n\nThe damage dealt to NPCs.\n\nRelated function is <page>game.GetAmmoNPCDamage</page>."
+        "description": "The damage dealt to NPCs.\n\nRelated function is <page>game.GetAmmoNPCDamage</page>.\n\nCan also be a string pointing to a <page>convar</page>. The value will automatically update with the convar's."
       },
       {
         "name": "plydmg",
         "type": "number",
         "default": "10",
-        "description": "<note>Can also be a string pointing to a convar. The value will automatically update with the convar's.</note>\n\nThe damage dealt to players.\n\nRelated function is <page>game.GetAmmoPlayerDamage</page>."
+        "description": "The damage dealt to players.\n\nRelated function is <page>game.GetAmmoPlayerDamage</page>.\n\nCan also be a string pointing to a <page>convar</page>. The value will automatically update with the convar's."
       },
       {
         "name": "tracer",
@@ -52,7 +52,7 @@
         "name": "maxcarry",
         "type": "number",
         "default": "9999",
-        "description": "Maximum amount of ammo of this type the player should be able to carry in reserve.\n\nRelated function is <page>game.GetAmmoMax</page>.\n\n<note>Can also be a string pointing to a convar. The value will automatically update with the convar's.</note>\n\n<note>gmod_maxammo will override this value if set to above 0.</note>"
+        "description": "Maximum amount of ammo of this type the player should be able to carry in reserve. `-2` makes this ammo type infinite.\n\nRelated function is <page>game.GetAmmoMax</page>.\n\nCan also be a string pointing to a <page>convar</page>. The value will automatically update with the convar's.\n<warning>`gmod_maxammo` convar will override this value if set to above 0, **which it is by default**.</warning>"
       },
       {
         "name": "flags",
@@ -79,6 +79,11 @@
         "name": "Pos",
         "type": "Vector",
         "description": "Vector object"
+      },
+      {
+        "name": "Bone",
+        "type": "number",
+        "description": "The bone ID the attachment point is parented to."
       }
     ],
     "realms": [
@@ -109,12 +114,12 @@
       {
         "name": "OnEnd",
         "type": "function",
-        "description": "The callback function that will be called upon completion of the animation. The arguments passed to it are:\n* <page>table</page> animData - This structure.\n* <page>Panel</page> tgtPanel - The panel the animation was run on."
+        "description": "The callback function that will be called upon completion of the animation.\n\n<callback>\n<arg type=\"table\" name=\"animData\">This structure.</arg>\n<arg type=\"Panel\" name=\"tgtPanel\">The panel the animation was run on.</arg>\n</callback>"
       },
       {
         "name": "Think",
         "type": "function",
-        "description": "The `think` function called every frame that will animate the panel object. This varies based on the animation. You can create a custom function for this if you aren't using the stock panel methods. The arguments passed to it are:\n* <page>table</page> animData - This structure.\n* <page>Panel</page> tgtPanel - The panel the animation is being run on.\n* <page>number</page> fraction - The progress fraction of the animation, between 0 and 1. The change rate of this number will not be linear if you are easing."
+        "description": "The `think` function called every frame that will animate the panel object. This varies based on the animation. You can create a custom function for this if you aren't using the stock panel methods.\n\n<callback>\n<arg type=\"table\" name=\"animData\">This structure.</arg>\n<arg type=\"Panel\" name=\"tgtPanel\">The panel the animation is being run on.</arg>\n</callback>\n<arg type=\"number\" name=\"fraction\">The progress fraction of the animation, between 0 and 1. The change rate of this number will not be linear if you are easing.</arg>"
       },
       {
         "name": "Pos",
@@ -274,13 +279,13 @@
         "name": "Callback",
         "type": "function",
         "default": "nil",
-        "description": "Function to be called **after** the bullet was fired but **before** the damage is applied (the callback is called even if no damage is applied). The arguments are:\n* <page>Entity</page> attacker\n* <page>table</page> tr - See <page>Structures/TraceResult</page>\n* <page>CTakeDamageInfo</page> dmgInfo"
+        "description": "Function to be called **after** the bullet was fired but **before** the damage is applied (the callback is called even if no damage is applied).\n\n<callback>\n<arg type=\"Entity\" name=\"attacker\"></arg>\n<arg type=\"table\" name=\"tr\">See <page>Structures/TraceResult</page></arg>\n<arg type=\"CTakeDamageInfo\" name=\"dmgInfo\"></arg>\n<ret type=\"table\">\nThe return value can be a table with following keys:\n* <page>boolean</page> effects - `false` to not do any of the effects.\n* <page>boolean</page> damage - `false` to not do any damage.\n</ret>\n</callback>"
       },
       {
         "name": "Damage",
         "type": "number",
         "default": "1",
-        "description": "The damage dealt by the bullet"
+        "description": "The damage dealt by the bullet.\n\nIf set to `0`, it means the damage should be calculated from the ammo type's <page>ConVar</page>s if  the ammo type has `AMMO_INTERPRET_PLRDAMAGE_AS_DAMAGE_TO_PLAYER` flag set.\nSee <page>Structures/AmmoData</page>."
       },
       {
         "name": "Force",
@@ -322,7 +327,7 @@
         "name": "TracerName",
         "type": "string",
         "default": "nil",
-        "description": "The tracer name. You can find a list of default effects <page text=\"here\">Effects</page>."
+        "description": "The tracer name. You can find a list of default effects <page text=\"here\">Default_Effects</page>."
       },
       {
         "name": "Dir",
@@ -393,7 +398,7 @@
         "name": "ortho",
         "type": "table",
         "default": "nil",
-        "description": "If set, enables orthographic mode. The table has following arguments:\n* <page>number</page> left\n* <page>number</page> right\n* <page>number</page> top\n* <page>number</page> bottom"
+        "description": "If set, enables orthographic mode. The table has following arguments:\n* <page>number</page> left\n* <page>number</page> right\n* <page>number</page> top\n* <page>number</page> bottom\n\nEach describes where their border starts, (`left`+`right`) and (`top`+`bottom`) should equal `0` to center on the view position."
       }
     ],
     "realms": [
@@ -461,8 +466,8 @@
       },
       {
         "name": "HitSpeed",
-        "type": "number",
-        "description": "The scalar speed at which the impact happened"
+        "type": "Vector",
+        "description": "The speed at which the impact happened"
       },
       {
         "name": "OurNewVelocity",
@@ -527,7 +532,7 @@
       {
         "name": "Function",
         "type": "function",
-        "description": "The function used to generate the content of the tab."
+        "description": "The function used to generate the content of the tab.\n\n<callback>\n<ret type=\"Panel\" name=\"content\">A container panel that holds all of the content for the new tab.</ret>\n</callback>"
       },
       {
         "name": "Icon",
@@ -600,6 +605,7 @@
       }
     ],
     "realms": [
+      "menu",
       "client",
       "server"
     ],
@@ -656,7 +662,7 @@
       {
         "name": "isvararg",
         "type": "boolean",
-        "description": "Whether the function is variadic (has a <kbd>...</kbd> argument).\n\n**Option: u**"
+        "description": "Whether the function is variadic (has a `...` argument).\n\n**Option: u**"
       },
       {
         "name": "nparams",
@@ -675,6 +681,7 @@
       }
     ],
     "realms": [
+      "menu",
       "client",
       "server"
     ],
@@ -856,29 +863,34 @@
       {
         "name": "Type",
         "type": "string",
-        "description": "Type of the entity. This **must be one of these:**\n* **anim**\n* **brush**\n* **point**\n* **ai**\n* **nextbot**\n* **filter**\n\nSee <page>Scripted Entities</page> for a more detailed explanation of what each one is."
+        "description": "Type of the entity. This **must** be one of these:\n* **anim**\n* **brush**\n* **point**\n* **ai**\n* **nextbot**\n* **filter**\n\nSee <page>Scripted Entities</page> for a more detailed explanation of what each one is."
       },
       {
         "name": "ClassName",
         "type": "string",
-        "description": "Entity class name of the entity (File or folder name of your entity).\n**This is set automatically `after` the entity file is loaded.**"
+        "description": "The class name of the entity (File or folder name of your entity).\n**This is set automatically _after_ the entity file is loaded.**"
+      },
+      {
+        "name": "ClassNameOverride",
+        "type": "string",
+        "description": "If set, overrides the classname of the SWEP."
       },
       {
         "name": "Folder",
         "type": "string",
-        "description": "The folder from where the entity was loaded. This should always be \"entity/ent_myentity\", regardless whether your entity is stored as a file, or multiple files in a folder. **This is set automatically `before` the entity file is loaded.**"
+        "description": "The folder from where the entity was loaded. This should always be \"entity/ent_myentity\", regardless whether your entity is stored as a file, or multiple files in a folder. **This is set automatically _before_ the entity file is loaded.**"
       },
       {
         "name": "AutomaticFrameAdvance",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Set this to true if your entity has animations. You should also apply changes to the <page>ENTITY:Think</page> function from the example on that page."
+        "description": "Set this to true if your entity has animations. You should also apply changes to the <page>ENTITY:Think</page> function from the example on that page."
       },
       {
         "name": "Category",
         "type": "string",
         "default": "Other",
-        "description": "(Clientside) Spawnmenu category to put the entity into"
+        "description": "Spawnmenu category to put the entity into"
       },
       {
         "name": "Spawnable",
@@ -901,62 +913,80 @@
       {
         "name": "PrintName",
         "type": "string",
-        "default": " ",
-        "description": "(Clientside) Nice name of the entity to appear in the spawn menu"
+        "description": "Nice name of the entity to appear in the spawn menu"
       },
       {
         "name": "Author",
         "type": "string",
-        "default": "\\u0022\\u0022",
-        "description": "(Clientside) The author of the entity"
+        "description": "The author of the entity"
       },
       {
         "name": "Contact",
         "type": "string",
-        "default": "\\u0022\\u0022",
-        "description": "(Clientside) The contacts of the entity creator"
+        "description": "The contacts of the entity creator"
       },
       {
         "name": "Purpose",
         "type": "string",
-        "default": "\\u0022\\u0022",
-        "description": "(Clientside) The purpose of the entity creation"
+        "description": "The purpose of the entity creation"
       },
       {
         "name": "Instructions",
         "type": "string",
-        "default": "\\u0022\\u0022",
-        "description": "(Clientside) How to use your entity"
+        "description": "How to use your entity"
       },
       {
         "name": "RenderGroup",
         "type": "number",
-        "default": "RENDERGROUP_OPAQUE",
-        "description": "(Clientside) The entity's render group, see <page>Enums/RENDERGROUP</page>."
+        "description": "The entity's render group, see <page>Enums/RENDERGROUP</page>. If unset, the engine will decide the render group based on the entity's model."
+      },
+      {
+        "name": "WantsTranslucency",
+        "type": "boolean",
+        "default": "false",
+        "description": "If set and RenderGroup is not, will switch the render group to <page text=\"RENDERGROUP_BOTH\">Enums/RENDERGROUP#RENDERGROUP_BOTH</page> when appropriate."
       },
       {
         "name": "DisableDuplicator",
         "type": "boolean",
         "default": "false",
-        "description": "(Serverside) Disable the ability for players to duplicate this entity."
+        "description": "Disable the ability for players to duplicate this entity."
       },
       {
         "name": "ScriptedEntityType",
         "type": "string",
-        "default": "\\u0022entity\\u0022",
-        "description": "(Clientside) Sets the spawnmenu content icon type for the entity, used by spawnmenu in the Sandbox-derived gamemodes.\nSee <page>spawnmenu.AddContentType</page> for more information."
+        "description": "Sets the spawnmenu content icon type for the entity, used by spawnmenu in the Sandbox-derived gamemodes.\nSee <page>spawnmenu.AddContentType</page> for more information."
       },
       {
         "name": "DoNotDuplicate",
         "type": "boolean",
-        "description": "(Serverside) If set, the entity will not be duplicated via the built-in duplicator system."
+        "default": "false",
+        "description": "If set, the entity will not be duplicated via the built-in duplicator system."
+      },
+      {
+        "name": "IconOverride",
+        "type": "string",
+        "default": "entities/<ClassName>.png",
+        "description": "If set, overrides the icon path to be displayed in the Spawnmenu for this entity.\n\nLike many functions, this expects a path relative to the `materials/` folder, do not include `materials/` in the provided string."
+      },
+      {
+        "name": "PhysgunDisabled",
+        "type": "boolean",
+        "default": "false",
+        "description": "If set, the entity forbid physgun interaction."
+      },
+      {
+        "name": "PhysicsSolidMask",
+        "type": "number",
+        "default": "nil",
+        "description": "If set, a bitflag for the physics solidity of the entity. See <page>Enums/CONTENTS</page>.\n\nCan be used to make the entity pass though certain otherwise solid meshes, such as grates, or special clip brushes.\n\n<note>This only works for `nextbot`, `anim` and `ai` type SENTs.</note>"
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "Information about the ENT structure.\n\nTo learn more about scripted entities, <page text=\"see this page\">Scripted_Entities</page>.\n\nWhile some of the fields may be serverside or clientside only, it is recommended to provide them on both so addons could use their values.\n\n<note>Values defined in ENT table can't be changed per instance. Initialize default values in <page>ENTITY:Initialize</page> or other hook</note>",
+    "description": "Information about the ENT structure, which represents a Scripted Entity class definition.\n\nTo learn more about scripted entities, <page text=\"see this page\">Scripted_Entities</page>.\n\nSee also <page>ENTITY Hooks</page> for a list of events scripted entities can have. See <page>Custom Entity Fields</page> for a list of events and fields all entities can have.\n\nWhile some of the fields may be serverside or clientside only, it is recommended to provide them on both so addons could use their values.\n\n<note>Values defined in ENT table can't be changed per instance. Initialize default values in <page>ENTITY:Initialize</page> or other hook.</note>",
     "name": "ENT"
   },
   {
@@ -1055,7 +1085,7 @@
     "realms": [
       "server"
     ],
-    "description": "Data structure used by the <page>duplicator</page> to store and load entity data.\n\nIt is created by <page>duplicator.CopyEntTable</page> and can be loaded by <page>duplicator.CreateEntityFromTable</page>.\n\nIt also shows up in several other contexts:\n* <page>duplicator.RegisterEntityClass</page>\n* <page>ENTITY:OnEntityCopyTableFinish</page>\n* <page>ENTITY:OnDuplicated</page>\n\n<note>1=In addition to all fields listed here, any field saved on the entity will be saved as-is to this table. For example, if you set ent.FavoriteFood = \"Steak\" before duplicating it, this structure will also contain the field FavoriteFood with the value \"Steak\".</note>",
+    "description": "Data structure used by the <page>duplicator</page> to store and load entity data.\n\nIt is created by <page>duplicator.CopyEntTable</page> and can be loaded by <page>duplicator.CreateEntityFromTable</page>.\n\nIt also shows up in several other contexts:\n* <page>duplicator.RegisterEntityClass</page>\n* <page>ENTITY:OnEntityCopyTableFinish</page>\n* <page>ENTITY:OnDuplicated</page>\n\n<note>In addition to all fields listed here, any field saved on the entity will be saved as-is to this table. For example, if you set `ent.FavoriteFood = \"Steak\"` before duplicating it, this structure will also contain the field `FavoriteFood` with the value `\"Steak\"`.</note>",
     "name": "EntityCopyData"
   },
   {
@@ -1064,7 +1094,7 @@
         "name": "font",
         "type": "string",
         "default": "Arial",
-        "description": "The font source. Custom font files are stored in resource/fonts/.\n\nThe length is limited to 31 characters maximum.\n\n<warning>This must be the actual 'nice' font, not a file name. (<page>Finding the Font Name</page>)\n\nThis also cannot be an already registered font, i.e. you cannot base your font from any of the <page text=\"Default Fonts\">Default_Fonts</page></warning>"
+        "description": "The font source. Custom font files are stored in resource/fonts/.\n\nThe length is limited to 31 characters maximum.\n\n<warning>This must be the actual 'nice' font, not a file name. Unless the client is running Linux or macOS. (<page>Finding the Font Name</page>)\n\nThis also cannot be an already registered font, i.e. you cannot base your font from any of the <page text=\"Default Fonts\">Default_Fonts</page></warning>"
       },
       {
         "name": "extended",
@@ -1152,7 +1182,8 @@
       }
     ],
     "realms": [
-      "client"
+      "client",
+      "menu"
     ],
     "description": "Used for <page>surface.CreateFont</page>.",
     "name": "FontData"
@@ -1214,7 +1245,7 @@
       "client",
       "server"
     ],
-    "description": "Information about a gamemode, used in .\n\nWhile some of the fields may be serverside or clientside only, it is recommended to provide them on both so addons could use their values.",
+    "description": "Information about a gamemode.\n\nWhile some of the fields may be serverside or clientside only, it is recommended to provide them on both so addons could use their values.",
     "name": "GM"
   },
   {
@@ -1222,12 +1253,12 @@
       {
         "name": "failed",
         "type": "function",
-        "description": "Function to be called on failure. Arguments are\n* <page>string</page> reason"
+        "description": "Function to be called on failure.\n<callback>\n<arg type=\"string\" name=\"reason\">Reason for the failure.</arg>\n</callback>"
       },
       {
         "name": "success",
         "type": "function",
-        "description": "Function to be called on success. Arguments are\n* <page>number</page> code\n* <page>string</page> body\n* <page>table</page> headers"
+        "description": "Function to be called on success.\n<callback>\n<arg type=\"number\" name=\"code\">The HTTP result code</arg>\n<arg type=\"string\" name=\"body\">The document data, usually HTML or JSON contents.</arg>\n<arg type=\"table\" name=\"headers\">List of headers the server provided.</arg>\n</callback>"
       },
       {
         "name": "method",
@@ -1257,11 +1288,18 @@
       {
         "name": "type",
         "type": "string",
-        "default": "\\u0022text/plain; charset\\u0026#61;utf-8\\u0022",
+        "default": "text/plain; charset=utf-8",
         "description": "Content type for body."
+      },
+      {
+        "name": "timeout",
+        "type": "number",
+        "default": "60",
+        "description": "The timeout for the connection."
       }
     ],
     "realms": [
+      "menu",
       "client",
       "server"
     ],
@@ -1293,8 +1331,8 @@
       {
         "name": "filter",
         "type": "Entity",
-        "default": "{}",
-        "description": "Things the trace should not hit. Can also be a table of entities or a function with one argument:\n\n\n* <page>Entity</page> ent - The entity that the trace hit\n\nUsing a function here is super slow. Try to avoid it."
+        "default": "nil",
+        "description": "Things the trace should not hit. Can be an entity, a table of entities, a table of entity classes or a function:\n\n<callback>\n<arg type=\"Entity\" name=\"ent\">The entity that the trace hit</arg>\n<ret type=\"boolean\">Return `true` to hit the entity, `false` to skip it.</ret>\n</callback>\n\nUsing a function here is super slow. Try to avoid it."
       },
       {
         "name": "mask",
@@ -1319,6 +1357,18 @@
         "type": "table",
         "default": "nil",
         "description": "If set, the trace result will be written to the supplied table instead of returning a new table"
+      },
+      {
+        "name": "whitelist",
+        "type": "boolean",
+        "default": "false",
+        "description": "Turns the `filter` field into a whitelist, if it is a table."
+      },
+      {
+        "name": "hitclientonly",
+        "type": "boolean",
+        "default": "false",
+        "description": "Enables traces to hit clientside only entities. Keep in mind that most naturally spawned entities are classified as debris, so extra `mask` values might be required."
       }
     ],
     "realms": [
@@ -1423,12 +1473,12 @@
       {
         "name": "init",
         "type": "function",
-        "description": "The function used to get variables from the \".vmt\". Called once per each \".vmt\". Arguments are:\n* <page>table</page> self\n* <page>string</page> materialName\n* <page>table</page> values"
+        "description": "The function used to get variables from the \".vmt\". Called once per each \".vmt\".\n\n<callback>\n<arg type=\"table\" name=\"self\">The table structure itself</arg>\n<arg type=\"string\" name=\"name\">The material name</arg>\n<arg type=\"table\" name=\"values\">The material key values</arg>\n</callback>"
       },
       {
         "name": "bind",
         "type": "function",
-        "description": "The function used to apply the proxy. This is called every frame while any materials with this proxy are used in world. Arguments are:\n* <page>table</page> self\n* <page>string</page> materialName\n* <page>Entity</page> ent"
+        "description": "The function used to apply the proxy. This is called every frame while any materials with this proxy are used in world.\n\n<callback>\n<arg type=\"table\" name=\"self\">The table structure itself.</arg>\n<arg type=\"string\" name=\"name\">The material name.</arg>\n<arg type=\"Entity\" name=\"ent\">The entity the material instance is applied to, if any.</arg>\n</callback>"
       }
     ],
     "realms": [
@@ -1447,17 +1497,17 @@
       {
         "name": "normal",
         "type": "Vector",
-        "description": "The triangles normal required to calculate lighting(optional)."
+        "description": "The triangles normal required to calculate lighting (Optional)."
       },
       {
         "name": "tangent",
         "type": "Vector",
-        "description": "The triangles tangent. Not used by the VertexLitGeneric shader."
+        "description": "The triangles tangent. Not used by the `VertexLitGeneric` shader."
       },
       {
         "name": "binormal",
         "type": "Vector",
-        "description": "The triangles binormal. Not used by the VertexLitGeneric shader."
+        "description": "The triangles binormal. Not used by the `VertexLitGeneric` shader."
       },
       {
         "name": "pos",
@@ -1467,12 +1517,22 @@
       {
         "name": "u",
         "type": "number",
-        "description": "The u texture scale."
+        "description": "The U texture coordinate."
       },
       {
         "name": "v",
         "type": "number",
-        "description": "The v texture scale."
+        "description": "The V texture coordinate."
+      },
+      {
+        "name": "u1",
+        "type": "number",
+        "description": "The secondary U texture coordinate. Only works when passed to <page>IMesh:BuildFromTriangles</page>, Useful for `LightmappedGeneric` shader."
+      },
+      {
+        "name": "v1",
+        "type": "number",
+        "description": "The secondary V texture coordinate. Only works when passed to <page>IMesh:BuildFromTriangles</page>."
       },
       {
         "name": "userdata",
@@ -1481,10 +1541,120 @@
       }
     ],
     "realms": [
-      "client"
+      "client",
+      "server"
     ],
-    "description": "Table used by various functions, such as <page>IMesh:BuildFromTriangles</page>.",
+    "description": "Table structure representing a mesh vertex used by various functions, such as <page>IMesh:BuildFromTriangles</page> and <page>Entity:PhysicsFromMesh</page> and returned by functions such as <page>util.GetModelMeshes</page> and  <page>PhysObj:GetMesh</page>.",
     "name": "MeshVertex"
+  },
+  {
+    "fields": [
+      {
+        "name": "Name",
+        "type": "string",
+        "description": "The nice name of the NPC for UI display."
+      },
+      {
+        "name": "Class",
+        "type": "string",
+        "description": "Class name of the entity to spawn."
+      },
+      {
+        "name": "Category",
+        "type": "string",
+        "default": "Other",
+        "description": "Spawnmenu category to put the NPCinto."
+      },
+      {
+        "name": "Weapons",
+        "type": "table",
+        "default": "{}",
+        "description": "A list of weapons this NPC is typically meant to use. One will be picked on spawn at random, unless overwritten by the player."
+      },
+      {
+        "name": "KeyValues",
+        "type": "table",
+        "default": "{}",
+        "description": "Key-value pairs to apply to the NPC on spawn. See <page>Entity:SetKeyValue</page>."
+      },
+      {
+        "name": "Model",
+        "type": "string",
+        "default": "nil",
+        "description": "Model override for this NPC."
+      },
+      {
+        "name": "SpawnFlags",
+        "type": "number",
+        "default": "0",
+        "description": "Additional spawnflags for this NPC. See <page>Entity:GetSpawnFlags</page>.\n\nIgnored if `TotalSpawnFlags` key is present."
+      },
+      {
+        "name": "TotalSpawnFlags",
+        "type": "number",
+        "default": "nil",
+        "description": "Total spawnflags override for this NPC."
+      },
+      {
+        "name": "OnCeiling",
+        "type": "boolean",
+        "default": "false",
+        "description": "If set to `true`, this NPC can only be spawned on the ceiling. Stacks with `OnFloor`."
+      },
+      {
+        "name": "OnFloor",
+        "type": "boolean",
+        "default": "false",
+        "description": "If set to `true`, this NPC can only be spawned on the floor. Stacks with `OnCeiling`."
+      },
+      {
+        "name": "Offset",
+        "type": "number",
+        "default": "0",
+        "description": "Offset, in Hammer units, away from the surface where the player is looking at for the NPC spawn position."
+      },
+      {
+        "name": "Material",
+        "type": "string",
+        "description": "Material override for this NPC. See <page>Entity:SetMaterial</page>."
+      },
+      {
+        "name": "Skin",
+        "type": "number",
+        "default": "nil",
+        "description": "Skin override for the NPC. See <page>Entity:SetSkin</page>."
+      },
+      {
+        "name": "NoDrop",
+        "type": "boolean",
+        "default": "false",
+        "description": "If set to `true`, do not try to teleport the NPC to the ground."
+      },
+      {
+        "name": "Rotate",
+        "type": "Angle",
+        "default": "Angle( 0, 0, 0 )",
+        "description": "Used to add additional rotation the NPC post spawn. Usually all NPCs would be facing the player on spawn. Value of `Angle( 0, 180, 0 )` would make the NPC face away from the player."
+      },
+      {
+        "name": "Health",
+        "type": "number",
+        "default": "nil",
+        "description": "Health override for this NPC. Also sets <page>Entity:SetMaxHealth</page>."
+      },
+      {
+        "name": "OnDuplicated",
+        "type": "function",
+        "default": "nil",
+        "description": "If set, a function to be called when the NPC is pasted using the <page>duplicator</page> library."
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Information about the NPC data structure, used to define spawnable NPCs for the Sandbox gamemode.\n\nExample usage:\n```\nlist.Set( \"NPC\", \"npc_tf2_ghost\", {\nName = \"Example NPC\",\nClass = \"npc_tf2_ghost\",\nCategory = \"Nextbot\"\n} )\n```",
+    "name": "NPCData"
   },
   {
     "fields": [
@@ -1524,6 +1694,50 @@
     ],
     "description": "The structure used by <page>Vehicle:GetOperatingParams</page>.",
     "name": "OperatingParams"
+  },
+  {
+    "fields": [
+      {
+        "name": "translate_x",
+        "type": "number",
+        "description": "The X coordinate for the top-left corner of the <page>Panel</page> currently being drawn."
+      },
+      {
+        "name": "translate_y",
+        "type": "number",
+        "description": "The Y coordinate for the top-left corner of the <page>Panel</page> currently being drawn."
+      },
+      {
+        "name": "scissor_left",
+        "type": "number",
+        "description": "The X coordinate for the left edge of the <page text=\"ScissorRect\">render.SetScissorRect</page> that surrounds the <page>Panel</page> that is currently being drawn."
+      },
+      {
+        "name": "scissor_top",
+        "type": "number",
+        "description": "The Y coordinate for the top edge of the <page text=\"ScissorRect\">render.SetScissorRect</page> that surrounds the <page>Panel</page> that is currently being drawn."
+      },
+      {
+        "name": "scissor_right",
+        "type": "number",
+        "description": "The X coordinate for the right edge of the <page text=\"ScissorRect\">render.SetScissorRect</page> that surrounds the <page>Panel</page> that is currently being drawn."
+      },
+      {
+        "name": "scissor_bottom",
+        "type": "number",
+        "description": "The Y coordinate for the bottom edge of the <page text=\"ScissorRect\">render.SetScissorRect</page> that surrounds the <page>Panel</page> that is currently being drawn."
+      },
+      {
+        "name": "scissor_enabled",
+        "type": "boolean",
+        "description": "Whether or not the <page>Panel</page> currently being drawn has <page>render.SetScissorRect</page> active."
+      }
+    ],
+    "realms": [
+      "client"
+    ],
+    "description": "This table is returned by <page>surface.GetPanelPaintState</page>.",
+    "name": "PanelPaintState"
   },
   {
     "fields": [
@@ -1592,49 +1806,57 @@
       {
         "name": "LookAheadTimeObjectsVsObject",
         "type": "number",
-        "description": "Maximum amount of seconds to precalculate collisions with objects."
+        "default": "nil",
+        "description": "Maximum amount of seconds to precalculate collisions with objects.\n\nDefault value for this setting is `0.5`."
       },
       {
         "name": "LookAheadTimeObjectsVsWorld",
         "type": "number",
-        "description": "Maximum amount of seconds to precalculate collisions with world."
-      },
-      {
-        "name": "MaxAngularVelocity",
-        "type": "number",
-        "description": "Maximum rotation velocity."
+        "default": "nil",
+        "description": "Maximum amount of seconds to precalculate collisions with world.\n\nDefault value for this setting is `1`."
       },
       {
         "name": "MaxCollisionChecksPerTimestep",
         "type": "number",
-        "description": "Maximum collision checks per tick."
+        "default": "nil",
+        "description": "Maximum collision checks per tick.\n\nObjects may penetrate after this many collision checks\n\nDefault value for this setting is `50000`."
       },
       {
         "name": "MaxCollisionsPerObjectPerTimestep",
         "type": "number",
-        "description": "Maximum collision per object per tick."
-      },
-      {
-        "name": "MaxFrictionMass",
-        "type": "number",
-        "description": "Maximum mass of an object to be affected by friction."
+        "default": "nil",
+        "description": "Maximum collision per object per tick.\n\nObject will be frozen after this many collisions (visual hitching vs. CPU cost)\n\nDefault value for this setting is `10`."
       },
       {
         "name": "MaxVelocity",
         "type": "number",
-        "description": "Maximum speed of an object."
+        "default": "nil",
+        "description": "Maximum world-space speed of an object in inches per second.\n\nDefault value for this setting is `4000`."
+      },
+      {
+        "name": "MaxAngularVelocity",
+        "type": "number",
+        "default": "nil",
+        "description": "Maximum world-space rotational velocity in degrees per second.\n\nDefault value for this setting is `7200`."
       },
       {
         "name": "MinFrictionMass",
         "type": "number",
-        "description": "Minimum mass of an object to be affected by friction."
+        "default": "nil",
+        "description": "Minimum mass of an object to be affected by friction.\n\nDefault value for this setting is `10`."
+      },
+      {
+        "name": "MaxFrictionMass",
+        "type": "number",
+        "default": "nil",
+        "description": "Maximum mass of an object to be affected by friction.\n\nDefault value for this setting is `2500`."
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "Table used by <page>physenv.SetPerformanceSettings</page>.",
+    "description": "Table used by <page>physenv.SetPerformanceSettings</page> and <page>physenv.GetPerformanceSettings</page>.\n\nWhen setting the settings, omitting any key will fallback to its current value. (can be retrieved via the get function)",
     "name": "PhysEnvPerformanceSettings"
   },
   {
@@ -1668,7 +1890,7 @@
     "realms": [
       "server"
     ],
-    "description": "Structure used in storing/restoring physics object attributes.\n<page>duplicator.GenericDuplicatorFunction</page> and <page>duplicator.DoGenericPhysics</page> use a table of PhysicsObjectSaves with the struct's index in the table being the physics object ID.\n\nPos and Angle are set by the following:\n\n```\nPos, Angle = WorldToLocal(phys:GetPos(), phys:GetAngle(), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ))\n```",
+    "description": "Structure used in storing/restoring physics object attributes.\n<page>duplicator.GenericDuplicatorFunction</page> and <page>duplicator.DoGenericPhysics</page> use a table of **PhysicsObjectSave**s with the struct's index in the table being the physics object ID.\n\nPos and Angle are set by the following:\n\n```\nPos, Angle = WorldToLocal(phys:GetPos(), phys:GetAngle(), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ))\n```",
     "name": "PhysicsObjectSave"
   },
   {
@@ -1712,6 +1934,12 @@
         "description": "How fast to move when running/sprinting"
       },
       {
+        "name": "SlowWalkSpeed",
+        "type": "number",
+        "default": "200",
+        "description": "How fast to move when slow walking, which is activated via the <key>+WALK</key> keybind."
+      },
+      {
         "name": "CrouchedWalkSpeed",
         "type": "number",
         "default": "0.3",
@@ -1746,6 +1974,12 @@
         "type": "number",
         "default": "100",
         "description": "Max health we can have"
+      },
+      {
+        "name": "MaxArmor",
+        "type": "number",
+        "default": "0",
+        "description": "Max armor the player can have"
       },
       {
         "name": "StartHealth",
@@ -1815,10 +2049,74 @@
       }
     ],
     "realms": [
-      "client"
+      "client",
+      "menu"
     ],
-    "description": "A structure containing vertex information for use with <page>surface.DrawPoly</page>.\n\nUV coordinates describe which part of a given texture should be drawn at a vertex - your graphics card's interpolator will fill in space between vertices. UV coords range from 0-1, with 0 being top/left and 1 being bottom/right. If you're using a texture these are mandatory.\n\n<note>You must pass a table of tables with this structure to the function. **You need to pass at least 3 points.**</note><note>Your points must be defined in a **clockwise order.** Otherwise, your shape will not render.</note>",
+    "description": "A structure containing vertex information for use with <page>surface.DrawPoly</page>.\n\nUV coordinates describe which part of a given texture should be drawn at a vertex - your graphics card's interpolator will fill in space between vertices. UV coords range from `0-1`, with `0` being top/left and `1` being bottom/right. If you're using a texture these are mandatory.\n\n<note>You must pass a table of tables with this structure to the function. **You need to pass at least 3 points.**\n\nYour points must be defined in a **clockwise order.** Otherwise, your shape will not render properly.</note>",
     "name": "PolygonVertex"
+  },
+  {
+    "fields": [
+      {
+        "name": "enabled",
+        "type": "table",
+        "description": "A Table containing all enabled addons."
+      },
+      {
+        "name": "disabled",
+        "type": "table",
+        "description": "A Table containing all disabled addons."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The name of the Preset."
+      },
+      {
+        "name": "newAction",
+        "type": "string",
+        "description": "What to do with addons not in the preset. Can be `enable`, `disable` or nothing."
+      }
+    ],
+    "realms": [
+      "menu"
+    ],
+    "description": "The structure used by <page>Global.CreateNewAddonPreset</page>.",
+    "name": "Preset"
+  },
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string",
+        "description": "The Problem ID."
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "description": "The Text to Display."
+      },
+      {
+        "name": "severity",
+        "type": "number",
+        "description": "The Problem severity."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "description": "The Problem Type. Possible values are:\n* config\n* hardware\n* addons"
+      },
+      {
+        "name": "fix",
+        "type": "function",
+        "description": "a Function that fixes the Problem."
+      }
+    ],
+    "realms": [
+      "menu"
+    ],
+    "description": "Table used by <page>Global.FireProblem</page> function.",
+    "name": "Problem"
   },
   {
     "fields": [
@@ -1852,32 +2150,32 @@
       {
         "name": "Filter",
         "type": "function",
-        "description": "Used **clientside** to decide whether this property should be shown for an entity. Gets these arguments:\n* <page>table</page> self - the property table\n* <page>Entity</page> ent - the entity the player clicked\n\nReturn true if the property should be shown for this entity. It's good practice to call <page>SANDBOX:CanProperty</page> in this hook via <page>gamemode.Call</page> or <page>hook.Run</page>."
+        "description": "Used **clientside** to decide whether this property should be shown for an entity.\n\nIt's good practice to call <page>GM:CanProperty</page> in this hook via <page>gamemode.Call</page> or <page>hook.Run</page>.\n\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"Entity\" name=\"ent\">the entity the player clicked</arg>\n<arg type=\"Global.LocalPlayer\" name=\"player\">the localplayer</arg>\n<ret type=\"boolean\" name=\"check\">Return true if the property should be shown for this entity.</ret>\n</callback>"
       },
       {
         "name": "Checked",
         "type": "function",
-        "description": "Required for toggle properties (clientside). Must return a boolean value to either check or uncheck the toggle property.\n* <page>table</page> self - the property table\n* <page>Entity</page> ent - the entity the player clicked\n* <page>table</page> tr - the player's eye trace"
+        "description": "Required for toggle properties (clientside).\n\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"Entity\" name=\"ent\">the entity the player clicked</arg>\n<arg type=\"table\" name=\"tr\">the player's eye trace</arg>\n<ret type=\"boolean\" name=\"check\">Return true if the property should appear checked in the UI.</ret>\n</callback>"
       },
       {
         "name": "Action",
         "type": "function",
-        "description": "Called **clientside** when the property is clicked with these arguments:\n* <page>table</page> self - the property table\n* <page>Entity</page> ent - the entity the player clicked\n* <page>table</page> tr - the player's eye trace\n\nWhen appropriate, within this function you can call self:MsgStart(), write data with the <page>net</page> 'Write' functions, and finish with self:MsgEnd(). This will activate the 'Receive' function on the server. In most cases, you will want to send the entity to the server, as it's not done by default."
+        "description": "Called **clientside** when the property is clicked\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"Entity\" name=\"ent\">the entity the player clicked</arg>\n<arg type=\"table\" name=\"tr\">the player's eye trace</arg>\n</callback>\n\nWhen appropriate, within this function you can call `self:MsgStart()`, write data with the <page>net</page>.`Write*` functions, and finish with `self:MsgEnd()`. This will activate the `Receive` function on the server. In most cases, you will want to send the entity to the server, as it's not done by default."
       },
       {
         "name": "Receive",
         "type": "function",
-        "description": "Called **serverside** if the client sends a message in the 'Action' function (see above).\n* <page>table</page> self - the property table\n* <page>number</page> len - the net message length, although this includes the property identifier used internally (the name of the property)\n* <page>Player</page> ply - the player who clicked the property\n\nYou can read data received from the client with the <page>net</page> 'Read' functions. It's good practice to check <page>SANDBOX:CanProperty</page> here via <page>gamemode.Call</page> or <page>hook.Run</page>."
+        "description": "Called **serverside** if the client sends a message in the `Action` function (see above).\n\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"number\" name=\"len\">the net message length, although this includes the property identifier used internally (the name of the property)</arg>\n<arg type=\"Player\" name=\"ply\">the player who clicked the property</arg>\n</callback>\n\nYou can read data received from the client with the <page>net</page>.`Read*` functions. It's good practice to check <page>GM:CanProperty</page> here via <page>gamemode.Call</page> or <page>hook.Run</page>."
       },
       {
         "name": "MenuOpen",
         "type": "function",
-        "description": "Called **clientside** when the property option has been created in the right-click menu. This is not called for toggle properties!\n* <page>table</page> self - the property table\n* <page>DMenuOption</page> option - the menu option\n* <page>Entity</page> ent - the entity the player right-clicked\n* <page>table</page> tr - the player's eye trace"
+        "description": "Called **clientside** when the property option has been created in the right-click menu. This is not called for toggle properties!\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"DMenuOption\" name=\"option\">the menu option</arg>\n<arg type=\"Entity\" name=\"ent\">the entity the player right-clicked</arg>\n<arg type=\"table\" name=\"tr\">the player's eye trace</arg>\n</callback>"
       },
       {
         "name": "OnCreate",
         "type": "function",
-        "description": "Same as MenuOpen, but also called for toggle properties and has different arguments. This is called immediately after MenuOpen, but nothing happens in between so you should only ever use one or the other.\n* <page>table</page> self - the property table\n* <page>DMenu</page> menu - the property menu\n* <page>DMenuOption</page> option - the menu option"
+        "description": "Same as `MenuOpen`, but also called for toggle properties and has different arguments. This is called immediately after `MenuOpen`, but nothing happens in between so you should only ever use one or the other.\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"DMenu\" name=\"menu\">the property menu</arg>\n<arg type=\"DMenuOption\" name=\"option\">the menu option</arg>\n</callback>"
       }
     ],
     "realms": [
@@ -1892,21 +2190,25 @@
       {
         "name": "x",
         "type": "number",
+        "default": "nil",
         "description": "The x position of the view port"
       },
       {
         "name": "y",
         "type": "number",
+        "default": "nil",
         "description": "The y position of the view port"
       },
       {
         "name": "w",
         "type": "number",
+        "default": "nil",
         "description": "The width of the view port"
       },
       {
         "name": "h",
         "type": "number",
+        "default": "nil",
         "description": "The height of the view port"
       },
       {
@@ -1918,37 +2220,43 @@
       {
         "name": "origin",
         "type": "Vector",
+        "default": "nil",
         "description": "The position to render from"
       },
       {
         "name": "angles",
         "type": "Angle",
+        "default": "nil",
         "description": "The angles to render from"
       },
       {
         "name": "fov",
         "type": "number",
+        "default": "nil",
         "description": "The field of view"
       },
       {
         "name": "aspect",
         "type": "number",
+        "default": "nil",
         "description": "The aspect ratio of the view port (Note that this is NOT set to w/h by default)"
       },
       {
         "name": "zfar",
         "type": "number",
+        "default": "nil",
         "description": "The distance to the far clipping plane"
       },
       {
         "name": "znear",
         "type": "number",
+        "default": "nil",
         "description": "The distance to the near clipping plane"
       },
       {
         "name": "subrect",
         "type": "boolean",
-        "default": "false",
+        "default": "nil",
         "description": "Set to true if this is to draw into a subrect of the larger screen."
       },
       {
@@ -1960,18 +2268,20 @@
       {
         "name": "offcenter",
         "type": "table",
+        "default": "nil",
         "description": "A table having these keys: ( all floats )\n* left\n* right\n* bottom\n* top"
       },
       {
         "name": "ortho",
         "type": "table",
+        "default": "nil",
         "description": "If set, makes the view/camera orthogonal. A table having these keys: ( all floats )\n* left\n* right\n* bottom\n* top"
       }
     ],
     "realms": [
       "client"
     ],
-    "description": "Used for <page>cam.Start</page>.\n\nUnless stated otherwise, the default values for all these keys would be inherited from the engine's current CViewSetup and do not have static representations.",
+    "description": "Used for <page>cam.Start</page>.\n\nUnless stated otherwise, the default values for all these keys would be inherited from the engine's current `CViewSetup` and do not have static representations.",
     "name": "RenderCamData"
   },
   {
@@ -1979,7 +2289,7 @@
       {
         "name": "format",
         "type": "string",
-        "description": "Format of the capture. Valid formats are: jpeg, png"
+        "description": "Format of the capture. Valid formats are:\n* `jpeg` or `jpg`\n* `png`"
       },
       {
         "name": "x",
@@ -2133,7 +2443,7 @@
       {
         "name": "Type",
         "type": "string",
-        "description": "Type of servers to retrieve. Valid values are:\n* \"internet\"\n* \"favorite\"\n* \"history\"\n* \"lan\""
+        "description": "Type of servers to retrieve. Valid values are `internet`, `favorite`, `history` and `lan`"
       },
       {
         "name": "AppID",
@@ -2144,7 +2454,12 @@
       {
         "name": "Callback",
         "type": "function",
-        "description": "Called when a new server is found and queried. Arguments:\n\n\n<page>number</page> ping - Latency to the server.\n\n\n<page>string</page> name - Name of the server\n\n\n<page>string</page> desc - \"Nice\" gamemode name\n\n\n<page>string</page> map - Current map\n\n\n<page>number</page> players - Total player number ( bot + human )\n\n\n<page>number</page> maxplayers - Maximum reported amount of players\n\n\n<page>number</page> botplayers - Amount of bots on the server\n\n\n<page>boolean</page> pass - Whether this server has password or not\n\n\n<page>number</page> lastplayed - Time when you last played on this server, as UNIX timestamp or 0\n\n\n<page>string</page> address - IP Address of the server\n\n\n<page>string</page> gamemode - Gamemode folder name\n\n\n<page>number</page> workshopid - Gamemode Steam Workshop ID\n\n\n\n\n\nReturn false to stop the query."
+        "description": "Called when a new server is found and queried.\n\n<callback>\n<arg type=\"number\" name=\"ping\">Latency to the server.</arg>\n<arg type=\"string\" name=\"name\">Name of the server</arg>\n<arg type=\"string\" name=\"desc\">\"Nice\" gamemode name</arg>\n<arg type=\"string\" name=\"map\">Current map</arg>\n<arg type=\"number\" name=\"players\">Total player number ( bot + human )</arg>\n<arg type=\"number\" name=\"maxplayers\">Maximum reported amount of players</arg>\n<arg type=\"number\" name=\"botplayers\">Amount of bots on the server</arg>\n<arg type=\"boolean\" name=\"pass\">Whether this server has password or not</arg>\n<arg type=\"number\" name=\"lastplayed\">Time when you last played on this server, as UNIX timestamp or 0</arg>\n<arg type=\"string\" name=\"address\">IP Address of the server</arg>\n<arg type=\"string\" name=\"gamemode\">Gamemode folder name</arg>\n<arg type=\"number\" name=\"workshopid\">Gamemode Steam Workshop ID</arg>\n<arg type=\"boolean\" name=\"isanon\">Is the server signed into an anonymous account?</arg>\n<arg type=\"string\" name=\"version\">Version number, same format as <page>jit.version_num</page></arg>\n<arg type=\"string\" name=\"localization\">Two digit country code, `us` if <page>nil</page></arg>\n<arg type=\"string\" name=\"gmcategory\">Category of the gamemode, ex. `pvp`, `pve`, `rp` or `roleplay`</arg>\n\n<ret type=\"boolean\" name=\"stop\">Return `false` to stop the query.</ret>\n</callback>"
+      },
+      {
+        "name": "CallbackFailed",
+        "type": "function",
+        "description": "Called if the query has failed, called with the servers IP Address"
       },
       {
         "name": "Finished",
@@ -2161,46 +2476,116 @@
   {
     "fields": [
       {
+        "name": "secondstoarrive",
+        "type": "number",
+        "default": "TICK_INTERVAL * 2",
+        "description": "How long it takes to move to the set pos and angle. Limited by max speed/damping.\n<warning>Cannot be 0! Will give errors if you do.</warning>"
+      },
+      {
+        "name": "delta",
+        "type": "number",
+        "default": "0.1",
+        "description": "The time it should use - just use the one from <page>ENTITY:PhysicsSimulate</page>."
+      },
+      {
+        "name": "pos",
+        "type": "Vector",
+        "default": "vector_origin",
+        "description": "Where you want to move to."
+      },
+      {
+        "name": "angle",
+        "type": "Angle",
+        "default": "angle_zero",
+        "description": "Angle you want to move to."
+      },
+      {
+        "name": "maxangular",
+        "type": "number",
+        "default": "1",
+        "description": "What should be the maximal angular force applied."
+      },
+      {
+        "name": "maxangulardamp",
+        "type": "number",
+        "default": "1",
+        "description": "At which force/speed should it start damping the rotation."
+      },
+      {
+        "name": "maxspeed",
+        "type": "number",
+        "default": "1",
+        "description": "Maximum linear force applied"
+      },
+      {
+        "name": "maxspeeddamp",
+        "type": "number",
+        "default": "1",
+        "description": "Maximum linear force/speed before damping."
+      },
+      {
+        "name": "dampfactor",
+        "type": "number",
+        "default": "1",
+        "description": "The percentage it should damp the linear/angular force if it reaches it's max amount"
+      },
+      {
+        "name": "teleportdistance",
+        "type": "number",
+        "default": "0",
+        "description": "If it's further away than this it'll teleport (Set to 0 to not teleport)"
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Table used by <page>PhysObj:ComputeShadowControl</page>. Default values are given if the table element is omitted.",
+    "name": "ShadowControlParams"
+  },
+  {
+    "fields": [
+      {
+        "name": "sound",
+        "type": "string",
+        "description": "Path to the sound file to be used in this sound effect, relative to `sound/` directory (so exclude the `sound/` part).\n\nCan be a table of sound files, in which case the sound will be chosen randomly every time from the provided list.\n\nEach sound path can be prepended with a special character for special effects. You can learn more about this [here](https://developer.valvesoftware.com/wiki/Soundscripts#Sound_Characters)."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The name of the soundscript, to be referenced by in functions such as <page>Entity:EmitSound</page>."
+      },
+      {
         "name": "channel",
         "type": "number",
         "description": "The sound channel to play in. See <page>Enums/CHAN</page>"
       },
       {
-        "name": "name",
-        "type": "string",
-        "description": "The name of the sound."
-      },
-      {
-        "name": "pitchend",
-        "type": "number",
-        "description": "The pitch end. Deprecated, use pitch."
-      },
-      {
-        "name": "pitchstart",
-        "type": "number",
-        "description": "The initial pitch. Deprecated, use pitch."
-      },
-      {
         "name": "level",
         "type": "number",
-        "description": "The soundlevel of the sound in dB. See <page>Enums/SNDLVL</page>."
-      },
-      {
-        "name": "sound",
-        "type": "string",
-        "description": "The sound file to be used in this sound effect. Can be a table of sound files. Relative to \"sound\" directory (must be in a subfolder, so sound/test.wav will not work)."
+        "description": "The soundlevel of the sound in dB. See <page>Enums/SNDLVL</page>. This will affect how far the sound can be heard."
       },
       {
         "name": "volume",
         "type": "number",
         "default": "1.0",
-        "description": "The volume of the sound as a decimal between 0 and 1. Can be a table of two numbers, a minimum and a maximum value."
+        "description": "The volume of the sound as a decimal between `0` and `1`. Can be a table of two numbers, a minimum and a maximum value.\n\n**Warning:** Volume of `0` will act as volume of `1`"
       },
       {
         "name": "pitch",
         "type": "number",
         "default": "100",
         "description": "The pitch of the sound. Can be a table of two numbers, a minimum and a maximum value."
+      },
+      {
+        "name": "pitchstart",
+        "type": "number",
+        "description": "The initial pitch.\n<warning>Deprecated, use pitch.</warning>"
+      },
+      {
+        "name": "pitchend",
+        "type": "number",
+        "description": "The pitch end.\n<warning>Deprecated, use pitch.</warning>"
       }
     ],
     "realms": [
@@ -2209,6 +2594,55 @@
     ],
     "description": "Table used in <page>sound.Add</page> and <page>sound.GetProperties</page>.",
     "name": "SoundData"
+  },
+  {
+    "fields": [
+      {
+        "name": "origin",
+        "type": "Vector",
+        "description": "Origin of the sound hint"
+      },
+      {
+        "name": "owner",
+        "type": "Entity",
+        "description": "Owner of the sound hint, if any (emitting entity, like a thumper)"
+      },
+      {
+        "name": "target",
+        "type": "Entity",
+        "description": "Target of the sound hint, if any"
+      },
+      {
+        "name": "volume",
+        "type": "number",
+        "description": "Volume of the sound hint"
+      },
+      {
+        "name": "type",
+        "type": "number",
+        "description": "<page text=\"SOUND_ enums\">Enums/SOUND</page>"
+      },
+      {
+        "name": "expiration",
+        "type": "number",
+        "description": "<page text=\"CurTime\">Global.CurTime</page> based expiration date"
+      },
+      {
+        "name": "expires",
+        "type": "boolean",
+        "description": "Does this sound hint expire?"
+      },
+      {
+        "name": "channel",
+        "type": "number",
+        "description": "<page text=\"CHAN_ enums\">Enums/CHAN</page>"
+      }
+    ],
+    "realms": [
+      "server"
+    ],
+    "description": "Table describing a sound hint, used by <page>NPC:GetBestSoundHint</page> and <page>sound.GetLoudestSoundHint</page>.",
+    "name": "SoundHintData"
   },
   {
     "fields": [
@@ -2374,214 +2808,214 @@
       {
         "name": "ClassName",
         "type": "string",
-        "description": "Entity class name of the SWEP (file or folder name of your SWEP). This is set automatically"
+        "description": "Entity class name of the SWEP (file or folder name of your SWEP). This is\nset automatically"
+      },
+      {
+        "name": "ClassNameOverride",
+        "type": "string",
+        "description": "If set, overrides the classname of the SWEP."
       },
       {
         "name": "Category",
         "type": "string",
         "default": "Other",
-        "description": "(Clientside) Category the SWEP is in"
+        "description": "The spawn menu category that this weapon\nresides in."
       },
       {
         "name": "Spawnable",
         "type": "boolean",
         "default": "false",
-        "description": "Whether this SWEP should be displayed in the Q menu"
+        "description": "Whether or not this weapon can be obtained through the\nspawn menu."
       },
       {
         "name": "AdminOnly",
         "type": "boolean",
         "default": "false",
-        "description": "Whether or not only admins can spawn the SWEP from their Q menu"
+        "description": "If spawnable, this variable determines whether only\nadministrators can use the button in the spawn menu."
       },
       {
         "name": "PrintName",
         "type": "string",
         "default": "Scripted Weapon",
-        "description": "Nice name of the SWEP"
+        "description": "The name of the SWEP displayed in the spawn menu."
       },
       {
         "name": "Base",
         "type": "string",
         "default": "weapon_base",
-        "description": "The base weapon to derive from. This **must** be a Lua weapon"
+        "description": "The weapon's base script, relative to `lua/weapons`."
       },
       {
         "name": "m_WeaponDeploySpeed",
         "type": "number",
         "default": "1",
-        "description": "Multiplier of deploy speed"
+        "description": "The deploy speed multiplier. This does not change the\ninternal deployment speed."
       },
       {
         "name": "Owner",
         "type": "Entity",
-        "description": "<deprecated>Use <page>Entity:GetOwner</page>() instead, which is slightly faster.</deprecated> The entity that owns/wields this SWEP, if any. This is an __index override and not an actual key, so <page>Global.rawget</page>(self:GetTable(), \"Owner\") will return `nil`."
+        "description": "<warning>Deprecated, use <page>Entity:GetOwner</page>() instead.</warning>"
       },
       {
         "name": "Weapon",
         "type": "Weapon",
-        "description": "<deprecated></deprecated> This is equivalent to `self` in SWEP functions. This only exists for legacy code."
+        "description": "<warning>Deprecated, use `SWEP` instead. However, if called in a method; use `self` instead.</warning>"
       },
       {
         "name": "Author",
         "type": "string",
-        "default": " ",
-        "description": "(Clientside) The author of the SWEP to be shown in weapon selection"
+        "description": "The SWEP's author."
       },
       {
         "name": "Contact",
         "type": "string",
-        "default": " ",
-        "description": "(Clientside) The contacts of the SWEP creator to be shown in weapon selection"
+        "description": "The contact information regarding the SWEP's author."
       },
       {
         "name": "Purpose",
         "type": "string",
-        "default": " ",
-        "description": "(Clientside) The purpose of the SWEP creator to be shown in weapon selection"
+        "description": "The purpose of the SWEP."
       },
       {
         "name": "Instructions",
         "type": "string",
-        "default": " ",
-        "description": "(Clientside) How to use your weapon, to be shown in weapon selection"
+        "description": "The instructions regarding the SWEP's usage."
       },
       {
         "name": "ViewModel",
         "type": "string",
         "default": "models/weapons/v_pistol.mdl",
-        "description": "Path to the view model for your SWEP (what the wielder will see)"
+        "description": "Relative path to the SWEP's view model."
       },
       {
         "name": "ViewModelFlip",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Should we flip the view model? This is needed for some CS:S view models"
+        "description": "Used primarily for Counter Strike: Source view models, this variable is used to flip them back to normal."
       },
       {
         "name": "ViewModelFlip1",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Same as ViewModelFlip, but for the second viewmodel"
+        "description": "Behaves similarly to `ViewModelFlip`, but for the second view model."
       },
       {
         "name": "ViewModelFlip2",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Same as ViewModelFlip, but for the third viewmodel"
+        "description": "Behaves similarly to `ViewModelFlip`, but for the third view model."
       },
       {
         "name": "ViewModelFOV",
         "type": "number",
         "default": "62",
-        "description": "(Clientside) An angle of FOV used for the view model (Half-Life value is 90; Half-Life 2 is 54; Counter-Strike: Source is 74; Day of Defeat: Source is 45)"
+        "description": "The field of view percieved whilst wielding this `SWEP`."
       },
       {
         "name": "WorldModel",
         "type": "string",
         "default": "models/weapons/w_357.mdl",
-        "description": "The world model for your SWEP (what you will see in other players hands)"
+        "description": "Relative path to the SWEP's world model."
       },
       {
         "name": "AutoSwitchFrom",
         "type": "boolean",
         "default": "true",
-        "description": "(Serverside) Whether this weapon can be autoswitched away from when the player runs out of ammo in this weapon or picks up another weapon or ammo"
+        "description": "Whether this weapon can be autoswitched\naway from when the player runs out of ammo in this weapon or picks up another weapon or ammo"
       },
       {
         "name": "AutoSwitchTo",
         "type": "boolean",
         "default": "true",
-        "description": "(Serverside) Whether this weapon can be autoswitched to when the player runs out of ammo in their current weapon or they pick this weapon up"
+        "description": "Whether this weapon can be autoswitched to\nwhen the player runs out of ammo in their current weapon or they pick this weapon up"
       },
       {
         "name": "Weight",
         "type": "number",
         "default": "5",
-        "description": "(Serverside) Determines the priority of the weapon when autoswitching. The weapon being autoswitched from will attempt to switch to a weapon with the same weight that has ammo, but if none exists, it will prioritise higher weight weapons."
+        "description": "Determines the priority of the weapon when\nautoswitching. The weapon being autoswitched from will attempt to switch to a weapon with the same weight\nthat has ammo, but if none exists, it will prioritise higher weight weapons."
       },
       {
         "name": "BobScale",
         "type": "number",
         "default": "1",
-        "description": "(Clientside) The scale of the viewmodel bob (viewmodel movement from left to right when walking around)"
+        "description": "The scale of the viewmodel bob (viewmodel movement\nfrom left to right when walking around)"
       },
       {
         "name": "SwayScale",
         "type": "number",
         "default": "1",
-        "description": "(Clientside) The scale of the viewmodel sway (viewmodel position lerp when looking around)."
+        "description": "The scale of the viewmodel sway (viewmodel\nposition lerp when looking around)."
       },
       {
         "name": "BounceWeaponIcon",
         "type": "boolean",
         "default": "true",
-        "description": "(Clientside) Should the weapon icon bounce in weapon selection?"
+        "description": "Should the weapon icon bounce in weapon\nselection?"
       },
       {
         "name": "DrawWeaponInfoBox",
         "type": "boolean",
         "default": "true",
-        "description": "(Clientside) Should draw the weapon selection info box, containing SWEP.Instructions, etc."
+        "description": "Should draw the weapon selection info\nbox, containing SWEP.Instructions, etc."
       },
       {
         "name": "DrawAmmo",
         "type": "boolean",
         "default": "true",
-        "description": "(Clientside) Should we draw the default HL2 ammo counter?"
+        "description": "Should we draw the default HL2 ammo counter?"
       },
       {
         "name": "DrawCrosshair",
         "type": "boolean",
         "default": "true",
-        "description": "(Clientside) Should we draw the default crosshair?"
+        "description": "Should we draw the default crosshair?"
       },
       {
         "name": "RenderGroup",
         "type": "number",
-        "default": "RENDERGROUP_OPAQUE",
-        "description": "(Clientside) The SWEP render group, see <page>Enums/RENDERGROUP</page>"
+        "description": "The SWEP render group, see <page>Enums/RENDERGROUP</page>. If unset, the engine will decide the render group based on the SWEPs world model."
       },
       {
         "name": "Slot",
         "type": "number",
         "default": "0",
-        "description": "Slot in the weapon selection menu, starts with 0"
+        "description": "Slot in the weapon selection menu, starts with `0`"
       },
       {
         "name": "SlotPos",
         "type": "number",
         "default": "10",
-        "description": "Position in the slot, should be in the range 0-128"
+        "description": "Position in the slot, should be in the range `0-128`"
       },
       {
         "name": "SpeechBubbleLid",
         "type": "number",
         "default": "surface.GetTextureID( 'gui/speech_lid' )",
-        "description": "(Clientside) Internal variable for drawing the info box in weapon selection"
+        "description": "Internal variable for drawing the info box in weapon selection"
       },
       {
         "name": "WepSelectIcon",
         "type": "number",
         "default": "surface.GetTextureID( 'weapons/swep' )",
-        "description": "(Clientside) Path to an texture. Override this in your SWEP to set the icon in the weapon selection. This must be the texture ID, see <page>surface.GetTextureID</page>"
+        "description": "Path to\nan texture. Override this in your SWEP to set the icon in the weapon selection. This must be the texture ID,\nsee <page>surface.GetTextureID</page>. Alternatively you can render custom weapon selection via <page>WEAPON:DrawWeaponSelection</page>."
       },
       {
         "name": "CSMuzzleFlashes",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Should we use Counter-Strike muzzle flashes upon firing? This is required for DoD:S or CS:S view models to fix their muzzle flashes."
+        "description": "Should we use Counter-Strike muzzle\nflashes upon firing? This is required for DoD:S or CS:S view models to fix their muzzle flashes."
       },
       {
         "name": "CSMuzzleX",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Use the X shape muzzle flash instead of the default Counter-Strike muzzle flash. Requires CSMuzzleFlashes to be set to true"
+        "description": "Use the X shape muzzle flash instead of the\ndefault Counter-Strike muzzle flash. Requires <page text=\"CSMuzzleFlashes\">Structures/SWEP#CSMuzzleFlashes</page> to be set to true."
       },
       {
         "name": "Primary",
         "type": "table",
-        "description": "Primary attack settings. The table contains these fields:\n* <page>string</page> Ammo - Ammo type (\"Pistol\", \"SMG1\" etc)\n* <page>number</page> ClipSize - The maximum amount of bullets one clip can hold\n* <page>number</page> DefaultClip - Default ammo in the clip, making it higher than ClipSize will give player additional ammo on spawn\n* <page>boolean</page> Automatic - If true makes the weapon shoot automatically as long as the player has primary attack button held down"
+        "description": "Primary attack settings. The table contains these fields:\n\n* <page>string</page> `Ammo` - Ammo type (`Pistol`, `SMG1`, etc.) See <page>game.AddAmmoType</page>.\n* <page>number</page> `ClipSize` - The maximum amount of bullets one clip can hold. Setting it to `-1` means weapon uses no clips, like a grenade or a rocket launch.\n* <page>number</page> `DefaultClip` - Default ammo in the clip, making it higher than ClipSize will give player additional ammo on spawn\n* <page>boolean</page> `Automatic` - If true makes the weapon shoot automatically as long as the player has primary attack button held down"
       },
       {
         "name": "Secondary",
@@ -2592,43 +3026,49 @@
         "name": "UseHands",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Makes the player models hands bonemerged onto the view model\n\n<warning>The gamemode and view models **must** support this feature for it to work!\nYou can find more information here: <page text=\"Using Viewmodel Hands\">Using_Viewmodel_Hands</page></warning>"
+        "description": "Makes the player models hands bonemerged onto\nthe view model\n\n<warning>The gamemode and view models **must** support this feature for it to work!\nYou can find more information here: <page text=\"Using Viewmodel Hands\">Using_Viewmodel_Hands</page>\n</warning>"
       },
       {
         "name": "Folder",
         "type": "string",
-        "description": "The folder from where the weapon was loaded. This should always be \"weapons/weapon_myweapon\", regardless whether your SWEP is stored as a file, or multiple files in a folder. It is set automatically on load"
+        "description": "The folder from where the weapon was loaded. This should always be\n\"weapons/weapon_myweapon\", regardless whether your SWEP is stored as a file, or multiple files in a folder.\nIt is set automatically on load"
       },
       {
         "name": "AccurateCrosshair",
         "type": "boolean",
         "default": "false",
-        "description": "(Clientside) Makes the default SWEP crosshair be positioned in 3D space where your aim actually is (like on Jeep), instead of simply sitting in the middle of the screen at all times"
+        "description": "Makes the default SWEP crosshair be\npositioned in 3D space where your aim actually is (like on Jeep), instead of simply sitting in the middle of\nthe screen at all times"
       },
       {
         "name": "DisableDuplicator",
         "type": "boolean",
         "default": "false",
-        "description": "Disable the ability for players to duplicate this SWEP"
+        "description": "Disable the ability for players to duplicate this\nSWEP"
       },
       {
         "name": "ScriptedEntityType",
         "type": "string",
         "default": "weapon",
-        "description": "(Clientside) Sets the spawnmenu content icon type for the entity, used by spawnmenu in the Sandbox-derived gamemodes.\nSee <page>spawnmenu.AddContentType</page> for more information."
+        "description": "Sets the spawnmenu content icon type\nfor the entity, used by spawnmenu in the Sandbox-derived gamemodes.\nSee <page>spawnmenu.AddContentType</page> for more information."
       },
       {
         "name": "m_bPlayPickupSound",
         "type": "boolean",
         "default": "true",
-        "description": "If set to false, the weapon will not play the weapon pick up sound when picked up."
+        "description": "If set to false, the weapon will not play the\nweapon pick up sound when picked up."
+      },
+      {
+        "name": "IconOverride",
+        "type": "string",
+        "default": "materials/entities/<ClassName>.png",
+        "description": "If set,\noverrides the icon path to be displayed in the Spawnmenu for this entity."
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "Information about a <page text=\"Scripted Weapons\">Scripted_Entities</page>, used by <page>SANDBOX:PlayerGiveSWEP</page> and in SWEP creation.\n\nFor list of callbacks, see `WEAPON` hooks.\n\nWhile some of the fields may be serverside or clientside only, it is recommended to provide them on both so addons could use their values.",
+    "description": "Information about <page text=\"Scripted Weapons\">Scripted_Entities</page> (SWEPs),\nused by <page>SANDBOX:PlayerGiveSWEP</page> and in SWEP creation.\n\nFor list of callbacks, see <page text=\"WEAPON Hooks\">WEAPON_Hooks</page>.\n\nWhile some of the fields may be serverside or clientside only, it is recommended to provide them on both so\naddons could use their values.",
     "name": "SWEP"
   },
   {
@@ -2671,7 +3111,7 @@
       {
         "name": "font",
         "type": "string",
-        "default": "\\u0022DermaDefault\\u0022",
+        "default": "DermaDefault",
         "description": "The font to draw with. List of default fonts can be found <page text=\"here\">Default_Fonts</page>."
       },
       {
@@ -2699,7 +3139,8 @@
       }
     ],
     "realms": [
-      "client"
+      "client",
+      "menu"
     ],
     "description": "Used for <page>draw.Text</page>.",
     "name": "TextData"
@@ -2782,9 +3223,19 @@
         "description": "Same as above, but created server-side instead."
       },
       {
+        "name": "ClientConVars",
+        "type": "table",
+        "description": "A key-value ( <page>string</page> name - <page>ConVar</page> object ) table containing the cached convar objected created from `ClientConVar`."
+      },
+      {
+        "name": "ServerConVars",
+        "type": "table",
+        "description": "Same as above, but server-side (`ServerConVar`) instead."
+      },
+      {
         "name": "BuildCPanel",
         "type": "function",
-        "description": "The function that is called to build the context menu for your tool. It has one argument, namely the context menu's base panel to which all of your custom panels are going to be parented to.\n\nWhile it might sound like a hook, it isn't - you won't receive a self argument inside the function."
+        "description": "The function that is called to build the context menu for your tool. It has one argument, namely the context menu's base panel to which all of your custom panels are going to be parented to.\n\nWhile it might sound like a hook, it isn't - you won't receive a `self` argument inside the function. See <page>TOOL.BuildCPanel</page>."
       },
       {
         "name": "Information",
@@ -2795,13 +3246,30 @@
         "name": "Mode",
         "type": "string",
         "description": "Class name of the tool. (name of the .lua file)\n\nThis is set automatically."
+      },
+      {
+        "name": "Tab",
+        "type": "string",
+        "description": "The tool tab (<page>spawnmenu.AddToolTab</page>) to add this tool to. (The internal name, first argument)"
+      },
+      {
+        "name": "LeftClickAutomatic",
+        "type": "boolean",
+        "default": "false",
+        "description": "When enabled the game tries to run the left mouse click as soon as possible"
+      },
+      {
+        "name": "RightClickAutomatic",
+        "type": "boolean",
+        "default": "false",
+        "description": "When enabled the game tries to run the right mouse click as soon as possible"
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "The TOOL table is used in Sandbox tool creation. You can find a list of callbacks on the  page and a list of methods on the  page. Do note that some of the fields below have no effect on server-side operations.\n\nThe tool information box drawn on the HUD while your tool is selected has 2 values that are set by <page>language.Add</page>.\n* `tool.[tool mode].name` - The tool name (Note this is NOT the same as TOOL.Name)\n* `tool.[tool mode].desc` - The tool description\n\nEnsure that all tool file names are entirely lowercase.  Including capital letters can lead to unintended behavior.",
+    "description": "The **TOOL** table is used in Sandbox tool creation. You can find a list of callbacks on the  page and a list of methods on the  page. Do note that some of the fields below have no effect on server-side operations.\n\nThe tool information box drawn on the HUD while your tool is selected has 2 values that are set by <page>language.Add</page>.\n* `tool.[tool mode].name` - The tool name (Note this is NOT the same as TOOL.Name)\n* `tool.[tool mode].desc` - The tool description\n\nEnsure that all tool file names are entirely lowercase.  Including capital letters can lead to unintended behavior.",
     "name": "TOOL"
   },
   {
@@ -2845,8 +3313,8 @@
       {
         "name": "filter",
         "type": "Entity",
-        "default": "{}",
-        "description": "Things the trace should not hit. Can also be a table of entities or a function with one argument:\n\n\n* <page>Entity</page> ent - The entity that the trace hit\n\nReturn true in the function to hit the entity, false to skip it.\n\n<warning>Using a function here is super slow - try to avoid it.</warning>"
+        "default": "nil",
+        "description": "Things the trace should not hit. Can be an entity, a table of entities, a table of entity classes or a function:\n\n<callback>\n<arg type=\"Entity\" name=\"ent\">The entity that the trace hit</arg>\n<ret type=\"boolean\">Return `true` to hit the entity, `false` to skip it.</ret>\n</callback>\n\nUsing a function here is super slow. Try to avoid it."
       },
       {
         "name": "mask",
@@ -2871,6 +3339,18 @@
         "type": "table",
         "default": "nil",
         "description": "If set, the trace result will be written to the supplied table instead of returning a new table"
+      },
+      {
+        "name": "whitelist",
+        "type": "boolean",
+        "default": "false",
+        "description": "Turns the `filter` field into a whitelist, if it is a table."
+      },
+      {
+        "name": "hitclientonly",
+        "type": "boolean",
+        "default": "false",
+        "description": "Enables traces to hit clientside only entities. Keep in mind that most naturally spawned entities are classified as debris, so extra `mask` values might be required."
       }
     ],
     "realms": [
@@ -2968,7 +3448,7 @@
       {
         "name": "Normal",
         "type": "Vector",
-        "description": "The direction of the trace as a normal vector (vector with <page text=\"length\">Vector:Length</page> of 1)."
+        "description": "The direction of the trace as a normal vector (vector with <page text=\"length\">Vector:Length</page> of 1).\n\nEquivalent to: `( traceRes.HitPos - traceRes.StartPos ):Normalize()`"
       },
       {
         "name": "PhysicsBone",
@@ -3021,7 +3501,7 @@
       "client",
       "server"
     ],
-    "description": "Table structure used as trace result. Default values are when the trace hits nothing.",
+    "description": "Table structure used as trace result. Default values are when the trace hits nothing.\n\nSee <page>util.TraceLine</page> and <page>util.TraceHull</page>.",
     "name": "TraceResult"
   },
   {
@@ -3050,6 +3530,11 @@
         "name": "previewid",
         "type": "number",
         "description": "The internal File ID of the workshop item preview, if any"
+      },
+      {
+        "name": "previewurl",
+        "type": "string",
+        "description": "A URL to the preview image of the workshop item"
       },
       {
         "name": "owner",
@@ -3104,12 +3589,32 @@
       {
         "name": "ownername",
         "type": "string",
-        "description": "<deprecated></deprecated>\n\nThe \"nice\" name of the Uploader, or \"Unnammed Player\" if we failed to get the data for some reason.\n\nDo not use this field as it will most likely not be updated in time. Use <page>steamworks.RequestPlayerInfo</page> instead."
+        "description": "<warning>We advise against using this. It may be changed or removed in a future update.</warning>\n\nThe \"nice\" name of the Uploader, or \"Unnammed Player\" if we failed to get the data for some reason.\n\nDo not use this field as it will most likely not be updated in time. Use <page>steamworks.RequestPlayerInfo</page> instead."
       },
       {
         "name": "error",
         "type": "number",
         "description": "If this key is set, no other data will be present in the response.\n\nValues above 0 represent Steam Error codes, values below 0 mean the following:\n* -1 means Failed to create query\n* -2 means Failed to send query\n* -3 means Received 0 or more than 1 result\n* -4 means Failed to get item data from the response\n* -5 means Workshop item ID in the response is invalid\n* -6 means Workshop item ID in response is mismatching the requested file ID"
+      },
+      {
+        "name": "up",
+        "type": "number",
+        "description": "Number of \"up\" votes for this item."
+      },
+      {
+        "name": "down",
+        "type": "number",
+        "description": "Number of \"down\" votes for this item."
+      },
+      {
+        "name": "total",
+        "type": "number",
+        "description": "Number of total votes (up and down) for this item. This is NOT `up - down`."
+      },
+      {
+        "name": "score",
+        "type": "number",
+        "description": "The up down vote ratio for this item, i.e. `1` is when every vote is `up`, `0.5` is when half of the total votes are the up votes, etc."
       }
     ],
     "realms": [
@@ -3145,12 +3650,17 @@
         "name": "CustomUndoText",
         "type": "string",
         "description": "A custom undo text to show the client"
+      },
+      {
+        "name": "NiceName",
+        "type": "string",
+        "description": "A \"nice\" name of the undo, which will be used for the UI"
       }
     ],
     "realms": [
       "server"
     ],
-    "description": "Table structure used by <page>undo.Do_Undo</page>.",
+    "description": "Table structure used by <page>undo.Do_Undo</page> and <page>GM:CanUndo</page>.",
     "name": "Undo"
   },
   {
@@ -3367,12 +3877,12 @@
       {
         "name": "boostMaxSpeed",
         "type": "number",
-        "description": "Maximum speed while boosting\n\n<warning>The <page>Vehicle:SetVehicleParams</page> function takes this in **miles per hour**, but <page>Vehicle:GetVehicleParams</page> returns this in **hammer units per second**!\n\n1 MPH is roughly 17.6 HU/s.</warning>"
+        "description": "Maximum speed while boosting\n\n<warning>The <page>Vehicle:SetVehicleParams</page> function takes this in **miles per hour**, but <page>Vehicle:GetVehicleParams</page> returns this in **hammer units per second**!\n\nIn this case HU = inches, so 1 MPH is 17.6 HU/s.</warning>"
       },
       {
         "name": "gearCount",
         "type": "number",
-        "description": "Amount of gears this vehicle has"
+        "description": "Amount of gears this vehicle has."
       },
       {
         "name": "gearRatio",
@@ -3397,12 +3907,12 @@
       {
         "name": "maxRevSpeed",
         "type": "number",
-        "description": "Maximum reverse speed of the vehicle\n\n<warning>The <page>Vehicle:SetVehicleParams</page> function takes this in **miles per hour**, but <page>Vehicle:GetVehicleParams</page> returns this in **hammer units per second**!\n\n1 MPH is roughly 17.6 HU/s.</warning>"
+        "description": "Maximum reverse speed of the vehicle\n\n<warning>The <page>Vehicle:SetVehicleParams</page> function takes this in **miles per hour**, but <page>Vehicle:GetVehicleParams</page> returns this in **hammer units per second**!\n\nIn this case HU = inches, so 1 MPH is 17.6 HU/s.</warning>"
       },
       {
         "name": "maxSpeed",
         "type": "number",
-        "description": "Maximum forward going speed of the vehicle without boosting\n\n<warning>The <page>Vehicle:SetVehicleParams</page> function takes this in **miles per hour**, but <page>Vehicle:GetVehicleParams</page> returns this in **hammer units per second**!\n\n1 MPH is roughly 17.6 HU/s.</warning>"
+        "description": "Maximum forward going speed of the vehicle without boosting\n\n<warning>The <page>Vehicle:SetVehicleParams</page> function takes this in **miles per hour**, but <page>Vehicle:GetVehicleParams</page> returns this in **hammer units per second**!\n\nIn this case HU = inches, so 1 MPH is 17.6 HU/s.</warning>"
       },
       {
         "name": "shiftDownRPM",
@@ -3523,6 +4033,64 @@
   {
     "fields": [
       {
+        "name": "Class",
+        "type": "string",
+        "description": "Entity class name for this vehicle."
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "description": "Nice name for this vehicle, for UI purposes."
+      },
+      {
+        "name": "Model",
+        "type": "string",
+        "description": "Model of the vehicle."
+      },
+      {
+        "name": "KeyValues",
+        "type": "table",
+        "description": "A list of key-value pairs to apply to the vehicle entity.\nPossible valid keys that can be set are:\n* `vehiclescript`\n* `limitview`\n* `vehiclelocked`\n* `cargovisible`\n* `enablegun`"
+      },
+      {
+        "name": "Offset",
+        "type": "number",
+        "default": "nil",
+        "description": "Offset away the surface player is looking at to spawn at."
+      },
+      {
+        "name": "Members",
+        "type": "table",
+        "default": "nil",
+        "description": "Set these members on the spawned vehicle's table (<page>Entity:GetTable</page>) to given values."
+      },
+      {
+        "name": "Author",
+        "type": "string",
+        "description": "Author of the vehicle, for UI purposes."
+      },
+      {
+        "name": "Category",
+        "type": "string",
+        "default": "Other",
+        "description": "Category of this vehicle, for UI purposes."
+      },
+      {
+        "name": "Information",
+        "type": "string",
+        "description": "A small description of the vehicle, for UI purposes."
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "Table structure passed to <page>SANDBOX:PlayerSpawnVehicle</page>, describing a spawnable Vehicle in Sandbox gamemode.\n\nExample usage in defined a custom spawnable vehicle:\n```\nlist.Set( \"Vehicles\", \"Jeep\", {\n-- Required information\nName = \"Jeep\",\nModel = \"models/buggy.mdl\",\nClass = \"prop_vehicle_jeep_old\",\nCategory = \"Half-Life 2\",\n\n-- Optional information\nAuthor = \"VALVe\",\nInformation = \"The regular old jeep\",\n\nKeyValues = {\nvehiclescript = \"scripts/vehicles/jeep_test.txt\"\n}\n} )\n```",
+    "name": "VehicleTable"
+  },
+  {
+    "fields": [
+      {
         "name": "container",
         "type": "string",
         "description": "The video container format.\n\nValid options are: `webm`, `ogg`"
@@ -3574,9 +4142,10 @@
       }
     ],
     "realms": [
-      "client"
+      "client",
+      "menu"
     ],
-    "description": "Table used by <page>video.Record</page>.",
+    "description": "Table structure used by <page>video.Record</page>.",
     "name": "VideoData"
   },
   {
@@ -3592,9 +4161,9 @@
         "description": "The view's angles"
       },
       {
-        "name": "aspectratio",
+        "name": "aspect",
         "type": "number",
-        "description": "Default width divided by height"
+        "description": "Default width divided by height. Has a deprecated alias `aspectratio`."
       },
       {
         "name": "x",
@@ -3646,29 +4215,28 @@
       },
       {
         "name": "ortho",
-        "type": "boolean",
-        "default": "false",
-        "description": "Render the view orthogonal. Can also be a table with these keys: (In which case orthogonal view is automatically set to true)\n* left\n* right\n* top\n* bottom"
+        "type": "table",
+        "description": "If set, renders the view orthogonally. A table with these keys:\n* left\n* right\n* top\n* bottom"
       },
       {
         "name": "ortholeft",
         "type": "number",
-        "description": "Coordinate for the left clipping plane"
+        "description": "Coordinate for the left clipping plane. Requires `ortho` to be set to `true`.\n\n**Deprecated**: Use `ortho` table instead!"
       },
       {
         "name": "orthoright",
         "type": "number",
-        "description": "Coordinate for the right clipping plane"
+        "description": "Coordinate for the right clipping plane. Requires `ortho` to be set to `true`.\n\n**Deprecated**: Use `ortho` table instead!"
       },
       {
         "name": "orthotop",
         "type": "number",
-        "description": "Coordinate for the top clipping plane"
+        "description": "Coordinate for the top clipping plane. Requires `ortho` to be set to `true`.\n\n**Deprecated**: Use `ortho` table instead!"
       },
       {
         "name": "orthobottom",
         "type": "number",
-        "description": "Coordinate for the bottom clipping plane"
+        "description": "Coordinate for the bottom clipping plane. Requires `ortho` to be set to `true`.\n\n**Deprecated**: Use `ortho` table instead!"
       },
       {
         "name": "znear",
@@ -3703,9 +4271,15 @@
         "description": "Disables default engine bloom and pauses the \"brightness changes\" on HDR maps."
       },
       {
+        "name": "viewid",
+        "type": "number",
+        "default": "0",
+        "description": "This is identifying which logical part of the scene an entity is being redered in, see <page>Enums/VIEW</page>."
+      },
+      {
         "name": "offcenter",
         "type": "table",
-        "description": "This allows you to \"zoom in\" on a part of the screen - for example, the top-left quarter of the screen. This is similar to how [poster splits the screen](https://garry.tv/2012/02/25/poster-screenshots/) into separate renders.\n\nIt's a table with 4 keys, controlling what portion of the screen to draw:\n* left - where the left edge starts. Natural value is 0.\n* right - where the right edge ends. Natural value is equal to w (the width of the viewport).\n* top - where the `bottom` edge starts. Natural value is 0.\n* bottom - where the `top` edge ends. Natural value is equal to h (the height of the viewport).\n\nNote that top and bottom are reversed.\n\nValues outside the viewport are allowed, but not recommended - instead you should increase the view FOV."
+        "description": "This allows you to \"zoom in\" on a part of the screen - for example, the top-left quarter of the screen. This is similar to how [poster splits the screen](https://garry.blog/poster-screenshots/) into separate renders.\n\nIt's a table with 4 keys, controlling what portion of the screen to draw:\n* left - where the left edge starts. Natural value is 0.\n* right - where the right edge ends. Natural value is equal to w (the width of the viewport).\n* top - where the `bottom` edge starts. Natural value is 0.\n* bottom - where the `top` edge ends. Natural value is equal to h (the height of the viewport).\n\nNote that top and bottom are reversed.\n\nValues outside the viewport are allowed, but not recommended - instead you should increase the view FOV."
       }
     ],
     "realms": [
@@ -3713,5 +4287,109 @@
     ],
     "description": "Table structure used for <page>render.RenderView</page>.\n\nUnless stated otherwise, the default values for all these keys would be inherited from the engine's CViewSetup and do not have static representations.",
     "name": "ViewData"
+  },
+  {
+    "fields": [
+      {
+        "name": "origin",
+        "type": "Vector",
+        "description": "The view's origin/position"
+      },
+      {
+        "name": "angles",
+        "type": "Angle",
+        "description": "The view's angles"
+      },
+      {
+        "name": "aspect",
+        "type": "number",
+        "description": "Width divided by height"
+      },
+      {
+        "name": "x",
+        "type": "number",
+        "description": "The x position of the viewport"
+      },
+      {
+        "name": "y",
+        "type": "number",
+        "description": "The y position of the viewport"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "description": "The width of the viewport"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "description": "The height of the viewport"
+      },
+      {
+        "name": "fov",
+        "type": "number",
+        "description": "The main view's FOV, adjusted for aspect ratio."
+      },
+      {
+        "name": "fov_unscaled",
+        "type": "number",
+        "description": "The main view's FOV as the user setting."
+      },
+      {
+        "name": "fovviewmodel",
+        "type": "number",
+        "description": "The viewmodel's FOV, adjusted for aspect ratio."
+      },
+      {
+        "name": "fovviewmodel_unscaled",
+        "type": "number",
+        "description": "The viewmodel's FOV as the user setting."
+      },
+      {
+        "name": "ortho",
+        "type": "table",
+        "description": "If the current view is orthogonal, a table with these keys:\n* left\n* right\n* top\n* bottom\n\nWill not be present if view is not orthagonal."
+      },
+      {
+        "name": "znear",
+        "type": "number",
+        "description": "The distance of the view's origin to the near clipping plane"
+      },
+      {
+        "name": "zfar",
+        "type": "number",
+        "description": "The distance of the view's origin to the far clipping plane"
+      },
+      {
+        "name": "znearviewmodel",
+        "type": "number",
+        "description": "The distance of the view's origin to the near clipping plane for the viewmodel"
+      },
+      {
+        "name": "zfarviewmodel",
+        "type": "number",
+        "description": "The distance of the view's origin to the far clipping plane for the viewmodel"
+      },
+      {
+        "name": "bloomtone",
+        "type": "boolean",
+        "description": "Whether default engine bloom and tonemapping are enabled at this instant for this view."
+      },
+      {
+        "name": "subrect",
+        "type": "boolean",
+        "description": "Whether `m_bRenderToSubrectOfLargerScreen` if set for this view."
+      },
+      {
+        "name": "offcenter",
+        "type": "table",
+        "description": "It's a table with 4 keys, controlling what portion of the screen to draw:\n* left - where the left edge starts. Natural value is 0.\n* right - where the right edge ends. Natural value is equal to w (the width of the viewport).\n* top - where the `bottom` edge starts. Natural value is 0.\n* bottom - where the `top` edge ends. Natural value is equal to h (the height of the viewport).\n\nNote that top and bottom are reversed.\n\nThis will not be present if offscreen rendering is not enabled for this view.\n\nSee <page>Structures/ViewData</page> for more info."
+      }
+    ],
+    "realms": [
+      "client"
+    ],
+    "description": "Table structure used for <page>render.GetViewSetup</page>.",
+    "name": "ViewSetup"
   }
 ]
