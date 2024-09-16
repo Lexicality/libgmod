@@ -21,6 +21,7 @@ const LUA_TYPES = [
 const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/^function$/, "func"],
     [/^end$/, "end_"],
+    [/^until$/, "until_"],
     [/\//g, "_or_"],
     [/[^\w.]/g, "_"],
 ]);
@@ -155,6 +156,9 @@ function getArgName(arg: FuncArg): string {
     for (let [find, replace] of KEYWORD_REPLACEMENTS) {
         name = name.replace(find, replace);
     }
+    if (name == "") {
+        name = "arg";
+    }
     return name;
 }
 
@@ -166,9 +170,19 @@ function getArgDef(arg: FuncArg): string {
 }
 
 function getFuncDef(func: Func, sepr?: string) {
+    let seenArgs = new Set<string>();
     let args = "";
     if (func.arguments) {
-        args = func.arguments.map(getArgDef).join(", ");
+        args = func.arguments
+            .filter((arg) => {
+                if (seenArgs.has(arg.name)) {
+                    return false;
+                }
+                seenArgs.add(arg.name);
+                return true;
+            })
+            .map(getArgDef)
+            .join(", ");
     }
     let prefix = "";
     if (sepr) {
@@ -233,10 +247,18 @@ function handleFunc(func: Func, sepr?: string): undefined | string {
     if (func.description) {
         desc = formatDesc(func.description) + "\n";
     }
+    let seenArgs = new Set<string>();
     let args = "";
     if (func.arguments) {
         args =
             func.arguments
+                .filter((arg) => {
+                    if (seenArgs.has(arg.name)) {
+                        return false;
+                    }
+                    seenArgs.add(arg.name);
+                    return true;
+                })
                 .map(getArgDoc)
                 // Some arguments might be deleted because they're bogus
                 .filter((l) => l)
