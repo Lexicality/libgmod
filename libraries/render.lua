@@ -1,6 +1,7 @@
 --- The render library is a powerful set of functions that let you control how the world and its contents are rendered. It can also be used to draw some 3D clientside effects such as beams, boxes and spheres.  
 _G.render = {}
---- Adds a beam segment to the beam started by render.StartBeam.  
+--- Adds a Beam Segment to the Beam started by render.StartBeam.  
+--- For more detailed information on Beams, as well as usage examples, see the Beams Render Reference  
 --- @param startPos GVector @Beam start position.
 --- @param width number @The width of the beam.
 --- @param textureEnd number @The end coordinate of the texture used.
@@ -9,6 +10,7 @@ function render.AddBeam(startPos, width, textureEnd, color)
 end
 
 --- Blurs the render target ( or a given texture )  
+--- ⚠ **WARNING**: Calling this on a RenderTarget created with TEXTUREFLAGS_POINTSAMPLE will result in strange visual glitching.  
 --- @param rendertarget GITexture @The texture to blur
 --- @param blurx number @Horizontal amount of blur
 --- @param blury number @Vertical amount of blur
@@ -17,45 +19,53 @@ function render.BlurRenderTarget(rendertarget, blurx, blury, passes)
 end
 
 --- This function overrides the brush material for next render operations. It can be used with Entity:DrawModel.  
---- @param mat GIMaterial 
+--- @param mat? GIMaterial 
 function render.BrushMaterialOverride(mat)
 end
 
 --- Captures a part of the current render target and returns the data as a binary string in the given format.  
---- Since the pixel buffer clears itself every frame, this will return a black screen outside of . To capture the user's final view, use GM:PostRender. This will not capture the Steam overlay or third-party injections (such as the Discord overlay, Overwolf, and advanced cheats) on the user's screen.  
---- 🦟 **BUG**: [This sets the alpha channel incorrectly in PNG mode, causing the foreground to be rendered almost completely transparent.](https://github.com/Facepunch/garrysmod-issues/issues/2571)  
+--- Since the pixel buffer clears itself every frame, this will return a black screen outside of render hooks. To capture the user's final view, use GM:PostRender. This will not capture the Steam overlay or third-party injections (such as the Discord overlay, Overwolf, and advanced cheats) on the user's screen.  
+--- 🦟 **BUG**: [In PNG mode, this function can produce unexpected result where foreground is rendered as transparent.](https://github.com/Facepunch/garrysmod-issues/issues/2571)  
+--- This is caused by render.SetWriteDepthToDestAlpha set to `true` when doing most of render operations, including rendering in `_rt_fullframefb`. If you want to capture render target's content as PNG image only for output quality, set Structures/RenderCaptureData's `alpha` to `false` when capturing render targets with render.SetWriteDepthToDestAlpha set to `true`.  
+--- ⚠ **WARNING**: This function will return nil if escape menu is open  
 --- @param captureData table @Parameters of the capture
 --- @return string @binaryData
 function render.Capture(captureData)
 end
 
+--- 🟥 **NOTE**: Requires a 2D rendering context  
 --- Dumps the current render target and allows the pixels to be accessed by render.ReadPixel.  
+--- Capturing outside a render hook will return 0 0 0 255  
 function render.CapturePixels()
 end
 
 --- Clears the current render target and the specified buffers.  
 --- 🦟 **BUG**: [This sets the alpha incorrectly for surface draw calls for render targets.](https://github.com/Facepunch/garrysmod-issues/issues/2085)  
---- @param r number @Red component to clear to.
---- @param g number @Green component to clear to.
---- @param b number @Blue component to clear to.
---- @param a number @Alpha component to clear to.
---- @param clearDepth boolean @Clear the depth.
---- @param clearStencil boolean @Clear the stencil.
+--- @param r? number @Red component to clear to.
+--- @param g? number @Green component to clear to.
+--- @param b? number @Blue component to clear to.
+--- @param a? number @Alpha component to clear to.
+--- @param clearDepth? boolean @Clear the depth.
+--- @param clearStencil? boolean @Clear the stencil.
 function render.Clear(r, g, b, a, clearDepth, clearStencil)
 end
 
---- Clears the current rendertarget for obeying the current stencil buffer conditions.  
---- @param r number @Value of the red channel to clear the current rt with.
---- @param g number @Value of the green channel to clear the current rt with.
---- @param b number @Value of the blue channel to clear the current rt with.
---- @param a number @Value of the alpha channel to clear the current rt with.
---- @param depth boolean @Clear the depth buffer.
-function render.ClearBuffersObeyStencil(r, g, b, a, depth)
+--- Tests every pixel of the active Render Target against the current Stencil configuration and sets the Color Channel values and, optionally, the Depth Buffer values for every pixel that passes.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- ℹ **NOTE**:   
+--- This function does **not** clear the Stencil Buffer on its own.  
+--- If you would like to clear the Stencil Buffer, you can use render.ClearStencil  
+--- @param red number @The red Color Channel value for each pixel that is cleared
+--- @param green number @The green Color Channel value for each pixel that is cleared
+--- @param blue number @The blue Color Channel value for each pixel that is cleared
+--- @param alpha number @The alpha (translucency) Color Channel value for each pixel that is cleared
+--- @param clearDepth boolean @If true, reset the Depth Buffer values.
+function render.ClearBuffersObeyStencil(red, green, blue, alpha, clearDepth)
 end
 
 --- Resets the depth buffer.  
---- 🦟 **BUG**: [This function also clears the stencil buffer. Use render.Clear in the meantime.](https://github.com/Facepunch/garrysmod-issues/issues/3317)  
-function render.ClearDepth()
+--- @param clearStencil? boolean @Whether to also clear the stencil buffer.
+function render.ClearDepth(clearStencil)
 end
 
 --- Clears a render target  
@@ -65,18 +75,20 @@ end
 function render.ClearRenderTarget(texture, color)
 end
 
---- Resets all values in the stencil buffer to zero.  
+--- Sets the Stencil Buffer value to `0` for all pixels in the currently active Render Target.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
 function render.ClearStencil()
 end
 
---- Sets the stencil value in a specified rect.  
+--- Sets the Stencil Buffer value for every pixel in a given rectangle to a given value.  
 --- This is **not** affected by render.SetStencilWriteMask  
---- @param originX number @X origin of the rectangle.
---- @param originY number @Y origin of the rectangle.
---- @param endX number @The end X coordinate of the rectangle.
---- @param endY number @The end Y coordinate of the rectangle.
---- @param stencilValue number @Value to set cleared stencil buffer to.
-function render.ClearStencilBufferRectangle(originX, originY, endX, endY, stencilValue)
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param startX number @The X coordinate of the top left corner of the rectangle to be cleared.
+--- @param startY number @The Y coordinate of the top left corner of the rectangle to be cleared.
+--- @param endX number @The X coordinate of the bottom right corner of the rectangle to be cleared
+--- @param endY number @The Y coordinate of the bottom right corner of the rectangle to be cleared
+--- @param stencilBufferValue number @The Stencil Buffer value that all pixels within the rectangle will be set to.
+function render.ClearStencilBufferRectangle(startX, startY, endX, endY, stencilBufferValue)
 end
 
 --- Calculates the lighting caused by dynamic lights for the specified surface.  
@@ -93,18 +105,28 @@ end
 function render.ComputeLighting(position, normal)
 end
 
+--- Calculates diameter of a 3D sphere on a 2D screen.  
+--- 🧱 **NOTE**: Requires a 3D rendering context  
+--- @param point GVector @The position of the sphere in 3D space.
+--- @param radius number @The radius of the sphere in 3D space.
+--- @return number @The diameter of the sphere in 2D screen space.
+function render.ComputePixelDiameterOfSphere(point, radius)
+end
+
 --- Copies the currently active Render Target to the specified texture.  
+--- ⚠ **WARNING**: This does not copy the Depth buffer, no method for that is known at this moment so a common workaround is to store the source texture somewhere else, perform your drawing operations, save the result somewhere else and reapply the source texture.  
 --- @param Target GITexture @The texture to copy to
 function render.CopyRenderTargetToTexture(Target)
 end
 
 --- Copies the contents of one texture to another. Only works with rendertargets.  
+--- ⚠ **WARNING**: This does not copy the Depth buffer, no method for that is known at this moment so a common workaround is to store the source texture somewhere else, perform your drawing operations, save the result somewhere else and reapply the source texture.  
 --- @param texture_from GITexture 
 --- @param texture_to GITexture 
 function render.CopyTexture(texture_from, texture_to)
 end
 
---- Changes the cull mode.  
+--- Sets the cull mode. The culling mode defines how back faces are culled when rendering geometry.  
 --- @param cullMode number @Cullmode, see Enums/MATERIAL_CULLMODE
 function render.CullMode(cullMode)
 end
@@ -115,64 +137,66 @@ end
 function render.DepthRange(depthmin, depthmax)
 end
 
---- Draws textured beam.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param startPos GVector @Beam start position.
---- @param endPos GVector @Beam end position.
---- @param width number @The width of the beam.
---- @param textureStart number @The start coordinate of the texture used.
---- @param textureEnd number @The end coordinate of the texture used.
---- @param color table @The color to be used
+--- Draws a single-segment Beam made out of a textured, billboarded quad stretching between two points.  
+--- For more detailed information, including usage examples, see the Beams Render Reference  
+--- @param startPos? GVector @The Beam's start position.
+--- @param endPos? GVector @The Beam's end position.
+--- @param width? number @The width of the Beam.
+--- @param textureStart? number @The starting coordinate of the Beam's texture.
+--- @param textureEnd? number @The end coordinate of the Beam's texture.
+--- @param color? GColor @What Color to tint the Beam.
 function render.DrawBeam(startPos, endPos, width, textureStart, textureEnd, color)
 end
 
 --- Draws a box in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position GVector @Origin of the box.
---- @param angles GAngle @Orientation of the box.
---- @param mins GVector @Start position of the box, relative to origin.
---- @param maxs GVector @End position of the box, relative to origin.
---- @param color table @The color of the box
+--- @param position? GVector @Origin of the box.
+--- @param angles? GAngle @Orientation of the box.
+--- @param mins? GVector @Start position of the box, relative to origin.
+--- @param maxs? GVector @End position of the box, relative to origin.
+--- @param color? table @The color of the box
 function render.DrawBox(position, angles, mins, maxs, color)
 end
 
 --- Draws a line in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param startPos GVector @Line start position in world coordinates.
---- @param endPos GVector @Line end position in world coordinates.
---- @param color table @The color to be used
---- @param writeZ boolean @Whether or not to consider the Z buffer
+--- @param startPos? GVector @Line start position in world coordinates.
+--- @param endPos? GVector @Line end position in world coordinates.
+--- @param color? table @The color to be used
+--- @param writeZ? boolean @Whether or not to consider the Z buffer
 function render.DrawLine(startPos, endPos, color, writeZ)
 end
 
 --- Draws 2 connected triangles. Expects material to be set by render.SetMaterial.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param vert1 GVector @First vertex.
---- @param vert2 GVector @The second vertex.
---- @param vert3 GVector @The third vertex.
---- @param vert4 GVector @The fourth vertex.
---- @param color table @The color of the quad
+--- @param vert1? GVector @First vertex.
+--- @param vert2? GVector @The second vertex.
+--- @param vert3? GVector @The third vertex.
+--- @param vert4? GVector @The fourth vertex.
+--- @param color? table @The color of the quad
 function render.DrawQuad(vert1, vert2, vert3, vert4, color)
 end
 
 --- Draws a quad.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position GVector @Origin of the sprite.
---- @param normal GVector @The face direction of the quad.
---- @param width number @The width of the quad.
---- @param height number @The height of the quad.
---- @param color table @The color of the quad
---- @param rotation number @The rotation of the quad counter-clockwise in degrees around the normal axis
+--- @param position? GVector @Origin of the sprite.
+--- @param normal? GVector @The face direction of the quad.
+--- @param width? number @The width of the quad.
+--- @param height? number @The height of the quad.
+--- @param color? table @The color of the quad
+--- @param rotation? number @The rotation of the quad counter-clockwise in degrees around the normal axis
 function render.DrawQuadEasy(position, normal, width, height, color, rotation)
 end
 
 --- Draws the current material set by render.SetMaterial to the whole screen. The color cannot be customized.  
 --- See also render.DrawScreenQuadEx.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
-function render.DrawScreenQuad()
+--- @param applyPoster? boolean @If set to true, when rendering a poster the quad will be properly drawn in parts in the poster
+function render.DrawScreenQuad(applyPoster)
 end
 
---- Draws the the current material set by render.SetMaterial to the area specified. Color cannot be customized.  
+--- Draws the current material set by render.SetMaterial to the area specified. Color cannot be customized.  
 --- See also render.DrawScreenQuad.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
 --- @param startX number @X start position of the rect.
@@ -185,20 +209,20 @@ end
 --- Draws a sphere in 3D space. The material previously set with render.SetMaterial will be applied the sphere's surface.  
 --- See also render.DrawWireframeSphere for a wireframe equivalent.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position GVector @Position of the sphere.
---- @param radius number @Radius of the sphere
---- @param longitudeSteps number @The number of longitude steps
---- @param latitudeSteps number @The number of latitude steps
---- @param color table @The color of the sphere
+--- @param position? GVector @Position of the sphere.
+--- @param radius? number @Radius of the sphere
+--- @param longitudeSteps? number @The number of longitude steps
+--- @param latitudeSteps? number @The number of latitude steps
+--- @param color? table @The color of the sphere
 function render.DrawSphere(position, radius, longitudeSteps, latitudeSteps, color)
 end
 
 --- Draws a sprite in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position GVector @Position of the sprite.
---- @param width number @Width of the sprite.
---- @param height number @Height of the sprite.
---- @param color table @Color of the sprite
+--- @param position? GVector @Position of the sprite.
+--- @param width? number @Width of the sprite.
+--- @param height? number @Height of the sprite.
+--- @param color? table @Color of the sprite
 function render.DrawSprite(position, width, height, color)
 end
 
@@ -220,35 +244,35 @@ end
 
 --- Draws a wireframe box in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position GVector @Position of the box.
---- @param angle GAngle @Angles of the box.
---- @param mins GVector @The lowest corner of the box.
---- @param maxs GVector @The highest corner of the box.
---- @param color table @The color of the box
---- @param writeZ boolean @Sets whenever to write to the zBuffer.
+--- @param position? GVector @Position of the box.
+--- @param angle? GAngle @Angles of the box.
+--- @param mins? GVector @The lowest corner of the box.
+--- @param maxs? GVector @The highest corner of the box.
+--- @param color? table @The color of the box
+--- @param writeZ? boolean @Sets whenever to write to the zBuffer.
 function render.DrawWireframeBox(position, angle, mins, maxs, color, writeZ)
 end
 
 --- Draws a wireframe sphere in 3d space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position GVector @Position of the sphere.
---- @param radius number @The size of the sphere.
---- @param longitudeSteps number @The amount of longitude steps
---- @param latitudeSteps number @The amount of latitude steps
---- @param color table @The color of the wireframe
---- @param writeZ boolean @Whether or not to consider the Z buffer
+--- @param position? GVector @Position of the sphere.
+--- @param radius? number @The size of the sphere.
+--- @param longitudeSteps? number @The amount of longitude steps
+--- @param latitudeSteps? number @The amount of latitude steps
+--- @param color? table @The color of the wireframe
+--- @param writeZ? boolean @Whether or not to consider the Z buffer
 function render.DrawWireframeSphere(position, radius, longitudeSteps, latitudeSteps, color, writeZ)
 end
 
 --- Sets the status of the clip renderer, returning previous state.  
 --- ⚠ **WARNING**: To prevent unintended rendering behavior of other mods/the game, you must reset the clipping state to its previous value.  
---- 🦟 **BUG**: [Reloading the map does not reset the previous value of this function.](https://github.com/Facepunch/garrysmod-issues/issues/3105)  
 --- @param state boolean @New clipping state.
 --- @return boolean @Previous clipping state.
 function render.EnableClipping(state)
 end
 
 --- Ends the beam mesh of a beam started with render.StartBeam.  
+--- For more detailed information on Beams, as well as usage examples, see the Beams Render Reference  
 function render.EndBeam()
 end
 
@@ -285,20 +309,14 @@ function render.GetAmbientLightColor()
 end
 
 --- Returns the current alpha blending.  
---- @return number @blend
+--- @return number @Current alpha blending in range 0 to 1.
 function render.GetBlend()
-end
-
---- @return GITexture @The bloom texture
-function render.GetBloomTex0()
-end
-
---- @return GITexture 
-function render.GetBloomTex1()
 end
 
 --- Returns the current color modulation values as normals.  
 --- @return number @r
+--- @return number @g
+--- @return number @b
 function render.GetColorModulation()
 end
 
@@ -326,9 +344,14 @@ end
 function render.GetFogMode()
 end
 
---- Returns the _rt_FullFrameDepth texture. Alias of _rt_PowerOfTwoFB  
---- @return GITexture 
+--- Returns the full screen depth texture.  
+--- @return GITexture @The `_rt_FullFrameDepth` texture.
 function render.GetFullScreenDepthTexture()
+end
+
+--- Returns whether HDR is currently enabled or not. This takes into account hardware support, current map and current client settings.  
+--- @return boolean @`true` if the player currently has HDR enabled.
+function render.GetHDREnabled()
 end
 
 --- Gets the light exposure on the specified position.  
@@ -337,29 +360,14 @@ end
 function render.GetLightColor(position)
 end
 
---- @return GITexture 
-function render.GetMoBlurTex0()
-end
-
---- @return GITexture 
-function render.GetMoBlurTex1()
-end
-
---- @return GITexture 
-function render.GetMorphTex0()
-end
-
---- @return GITexture 
-function render.GetMorphTex1()
-end
-
---- Returns the render target's power of two texture.  
---- @return GITexture @The power of two texture, which is **_rt_poweroftwofb** by default.
+--- Returns the Power Of Two Frame Buffer texture.  
+--- @return GITexture @The power of two texture, which is `_rt_PowerOfTwoFB` by default.
 function render.GetPowerOfTwoTexture()
 end
 
+--- 🛑 **DEPRECATED**: Alias of render.GetPowerOfTwoTexture.  
 --- Alias of render.GetPowerOfTwoTexture.  
---- @return GITexture 
+--- @return GITexture @The render.GetPowerOfTwoTexture.
 function render.GetRefractTexture()
 end
 
@@ -369,34 +377,36 @@ end
 function render.GetRenderTarget()
 end
 
---- Returns the _rt_ResolvedFullFrameDepth texture for SSAO depth.  
---- @return GITexture 
+--- Returns the `_rt_ResolvedFullFrameDepth` texture for SSAO depth. It will only be updated if GM:NeedsDepthPass returns true.  
+--- @return GITexture @The depth texture.
 function render.GetResolvedFullFrameDepth()
 end
 
 --- Obtain an ITexture of the screen. You must call render.UpdateScreenEffectTexture in order to update this texture with the currently rendered scene.  
 --- This texture is mainly used within GM:RenderScreenspaceEffects  
---- @param textureIndex number @Max index is 3, but engine only creates the first two for you.
---- @return GITexture 
+--- @param textureIndex? number @Max index is 3, but engine only creates the first two for you.
+--- @return GITexture @The requested texture.
 function render.GetScreenEffectTexture(textureIndex)
 end
 
---- @return GITexture 
+--- Returns the first quarter sized frame buffer texture.  
+--- @return GITexture @The render target texture named `_rt_SmallFB0`.
 function render.GetSmallTex0()
 end
 
---- @return GITexture 
+--- Returns the second quarter sized frame buffer texture.  
+--- @return GITexture @The render target texture named `_rt_SmallFB1`.
 function render.GetSmallTex1()
 end
 
---- Returns a floating point texture the same resolution as the screen.  
+--- Returns a floating point texture (RGBA16161616F format) the same resolution as the screen.  
 --- ℹ **NOTE**: The gmodscreenspace doesn't behave as expected when drawing a floating-point texture to an integer texture (e.g. the default render target). Use an UnlitGeneric material instead  
---- @return GITexture @Render target named "__rt_supertexture1"
+--- @return GITexture @Render target named `__rt_SuperTexture1`
 function render.GetSuperFPTex()
 end
 
 --- See render.GetSuperFPTex  
---- @return GITexture @Render target named "__rt_supertexture2"
+--- @return GITexture @Render target named `__rt_SuperTexture2`.
 function render.GetSuperFPTex2()
 end
 
@@ -412,15 +422,21 @@ end
 function render.GetToneMappingScaleLinear()
 end
 
+--- Returns the current view setup.  
+--- @param noPlayer? boolean @If `true`, returns the `view->GetViewSetup`, if `false` - returns `view->GetPlayerViewSetup`
+--- @return table @Current current view setup
+function render.GetViewSetup(noPlayer)
+end
+
 --- Sets the render material override for all next calls of Entity:DrawModel. Also overrides render.MaterialOverrideByIndex.  
---- @param material GIMaterial @The material to use as override, use nil to disable.
+--- @param material? GIMaterial @The material to use as override, use nil to disable.
 function render.MaterialOverride(material)
 end
 
---- Similar to render.MaterialOverride, but overrides the materials per index.  
+--- Similar to render.MaterialOverride, but overrides the materials per index. Similar to Entity:SetSubMaterial  
 --- render.MaterialOverride overrides effects of this function.  
---- @param index number @Starts with 0, the index of the material to override
---- @param material GIMaterial @The material to override with
+--- @param index? number @The index of the material to override, in range of 0 to 31
+--- @param material? GIMaterial @The material to override with, `nil` will reset the override for given index.
 function render.MaterialOverrideByIndex(index, material)
 end
 
@@ -436,14 +452,15 @@ end
 
 --- Creates a new Global.ClientsideModel, renders it at the specified pos/ang, and removes it. Can also be given an existing CSEnt to reuse instead.  
 --- ℹ **NOTE**: This function is only meant to be used in a single render pass kind of scenario, if you need to render a model continuously, use a cached Global.ClientsideModel and provide it as a second argument.  
---- 🦟 **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/3307)  
---- @param settings table @Requires:
---- @param ent GCSEnt @If provided, this entity will be reused instead of creating a new one with Global.ClientsideModel
+--- 🦟 **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
+--- @param settings? table @Requires:
+--- @param ent? GCSEnt @If provided, this entity will be reused instead of creating a new one with Global.ClientsideModel
 function render.Model(settings, ent)
 end
 
---- Sets a material to override a model's default material. Similar to Entity:SetMaterial except it uses an IMaterial argument and it can be used to change materials on models which are part of the world geometry.  
---- @param material GIMaterial @The material override.
+--- Forces all future draw operations to use a specific IMaterial.  
+--- Because this is independent of a specific Entity, it can be used to change materials on static models that are part of maps.  
+--- @param material GIMaterial @The IMaterial that will be used for all upcoming draw operations, or `nil` to stop overriding.
 function render.ModelMaterialOverride(material)
 end
 
@@ -455,28 +472,32 @@ end
 function render.OverrideAlphaWriteEnable(enable, shouldWrite)
 end
 
---- Overrides the internal graphical functions used to determine the final color and alpha of a rendered texture.  
---- See also render.OverrideAlphaWriteEnable.  
---- ℹ **NOTE**: Doing surface draw calls with alpha set to 0 is a no-op and won't have an effect.  
---- @param enabled boolean @true to enable, false to disable
---- @param srcBlend number @The source color blend function Enums/BLEND
---- @param destBlend number @The destination color blend function Enums/BLEND.
---- @param blendFunc number @The blend mode used for drawing the color layer Enums/BLENDFUNC.
---- @param srcBlendAlpha number @The source alpha blend function Enums/BLEND
---- @param destBlendAlpha number @The destination alpha blend function Enums/BLEND.
---- @param blendFuncAlpha number @The blend mode used for drawing the alpha layer Enums/BLENDFUNC.
-function render.OverrideBlend(enabled, srcBlend, destBlend, blendFunc, srcBlendAlpha, destBlendAlpha, blendFuncAlpha)
+--- Overrides the way that the final color and alpha is calculated for each pixel affected by upcoming draw operations.  
+--- When a draw operation is performed, the rendering system examines each pixel that is affected by the draw operation and determines its new color by combining (or "Blending") the pixel's current color (Called the "Destination" or "Dst" color) with the new color produced by the draw operation (Called the "Source" or "Src" color.)  
+--- This function allows you to control the way that those two colors (The Source and Destination) are combined to produce the final pixel color.  
+--- It's important to know that while Colors use values in the range `(0-255)`, the color and alpha values used here are normalized to the range `(0-1)` so that they can be multiplied together to produce a value that is still in the range `(0-1)`.  
+--- @param enabled? boolean @Set to `true` to enable Blend Overrides.
+--- @param sourceMultiplier? number @This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Func
+--- @param destinationMultiplier? number @This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending
+--- @param blendingFunction? number @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
+--- @param sourceColorMultiplier? number @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
+--- @param destinationColorMultiplier? number @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
+--- @param colorBlendingFunction? number @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
+--- @param sourceAlphaMultiplier? number @This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function
+--- @param destinationAlphaMultiplier? number @This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Fun
+--- @param alphaBlendingFunction? number @After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending 
+function render.OverrideBlend(enabled, sourceMultiplier, destinationMultiplier, blendingFunction, sourceColorMultiplier, destinationColorMultiplier, colorBlendingFunction, sourceAlphaMultiplier, destinationAlphaMultiplier, alphaBlendingFunction)
 end
 
 --- 🛑 **DEPRECATED**: Use render.OverrideBlend instead.  
 --- Overrides the internal graphical functions used to determine the final color and alpha of a rendered texture.  
 --- See also render.OverrideAlphaWriteEnable.  
 --- ℹ **NOTE**: Doing surface draw calls with alpha set to 0 is a no-op and will never have any effect.  
---- @param enabled boolean @true to enable, false to disable
---- @param srcBlend number @The source color blend function Enums/BLEND
---- @param destBlend number 
---- @param srcBlendAlpha number @The source alpha blend function Enums/BLEND
---- @param destBlendAlpha number 
+--- @param enabled? boolean @true to enable, false to disable
+--- @param srcBlend? number @The source color blend function Enums/BLEND
+--- @param destBlend? number 
+--- @param srcBlendAlpha? number @The source alpha blend function Enums/BLEND
+--- @param destBlendAlpha? number 
 function render.OverrideBlendFunc(enabled, srcBlend, destBlend, srcBlendAlpha, destBlendAlpha)
 end
 
@@ -492,6 +513,8 @@ end
 function render.OverrideDepthEnable(enable, shouldWrite)
 end
 
+--- Performs a Stencil operation on every pixel in the active Render Target without performing a draw operation.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
 function render.PerformFullScreenStencilOperation()
 end
 
@@ -499,13 +522,15 @@ end
 function render.PopCustomClipPlane()
 end
 
---- Pops the current texture magnification filter from the filter stack.  
---- See render.PushFilterMag  
+--- Pops (Removes) the texture filter most recently pushed (Added) onto the magnification texture filter stack.  
+--- This function should only be called *after* a magnification filter has been pushed via render.PushFilterMag()  
+--- For more detailed information and a usage example, see the texture minification and magnification render reference.  
 function render.PopFilterMag()
 end
 
---- Pops the current texture minification filter from the filter stack.  
---- See render.PushFilterMin  
+--- Pops (Removes) the texture filter most recently pushed (Added) onto the minification texture filter stack.  
+--- This function should only be called *after* a minification filter has been pushed via render.PushFilterMin()  
+--- For more detailed information and a usage example, see the texture minification and magnification render reference.  
 function render.PopFilterMin()
 end
 
@@ -519,25 +544,33 @@ function render.PopRenderTarget()
 end
 
 --- Pushes a new clipping plane of the clip plane stack and sets it as active.  
---- ℹ **NOTE**: A max of 2 clip planes are supported on Linux/POSIX, and 6 on Windows.  
+--- 🦟 **BUG**: [A max of 2 clip planes are supported on Linux/POSIX, and 6 on Windows.](https://github.com/Facepunch/garrysmod-issues/issues/2687)  
 --- @param normal GVector @The normal of the clipping plane.
 --- @param distance number @The distance of the plane from the world origin
 function render.PushCustomClipPlane(normal, distance)
 end
 
---- Pushes a texture filter onto the magnification texture filter stack.  
---- @param texFilterType number @The texture filter type, see Enums/TEXFILTER
+--- Pushes (Adds) a texture filter onto the magnification texture filter stack.  
+--- This will modify how textures are stretched to sizes larger than their native resolution for upcoming rendering and drawing operations.  
+--- For a version of this same function that modifies filtering for texture sizes smaller than their native resolution, see render.PushFilterMin()  
+--- Always be sure to call render.PopFilterMag() afterwards to avoid texture filtering problems.  
+--- For more detailed information and a usage example, see the texture minification and magnification render reference.  
+--- @param texFilterType number @The texture filter to use
 function render.PushFilterMag(texFilterType)
 end
 
---- Pushes a texture filter onto the minification texture filter stack.  
---- @param texFilterType number @The texture filter type, see Enums/TEXFILTER
+--- Pushes (Adds) a texture filter onto the minification texture filter stack.  
+--- This will modify how textures are compressed to a lower resolution than their native resolution for upcoming rendering and drawing operations.  
+--- For a version of this same function that modifies filtering for texture sizes larger than their native resolution, see render.PushFilterMag()  
+--- Always be sure to call render.PopFilterMin() afterwards to avoid texture filtering problems.  
+--- For more detailed information and a usage example, see the texture minification and magnification render reference.  
+--- @param texFilterType number @The texture filter to use
 function render.PushFilterMin(texFilterType)
 end
 
 --- Enables the flashlight projection for the upcoming rendering.  
---- 🦟 **BUG**: [This will leave models lit under specific conditions.](https://github.com/Facepunch/garrysmod-issues/issues/3029)  
---- @param enable boolean @Whether the flashlight mode should be enabled or disabled.
+--- 🛑 **DEPRECATED**: This will leave models lit under specific conditions. You should use render.RenderFlashlights which is meant as a direct replacement for this function.  
+--- @param enable? boolean @Whether the flashlight mode should be enabled or disabled.
 function render.PushFlashlightMode(enable)
 end
 
@@ -546,26 +579,33 @@ end
 --- See also render.PopRenderTarget.  
 --- ℹ **NOTE**: If you want to render to the render target in 2d mode and it is not the same size as the screen, use cam.Start2D and cam.End2D.  
 --- ℹ **NOTE**: If the render target is bigger than the screen, rendering done with the surface library will be clipped to the screen bounds unless you call Global.DisableClipping  
---- @param texture GITexture @The new render target to be used.
---- @param x number @X origin of the viewport.
---- @param y number @Y origin of the viewport.
---- @param w number @Width of the viewport.
---- @param h number @Height of the viewport
+--- @param texture? GITexture @The new render target to be used
+--- @param x? number @X origin of the viewport.
+--- @param y? number @Y origin of the viewport.
+--- @param w? number @Width of the viewport.
+--- @param h? number @Height of the viewport
 function render.PushRenderTarget(texture, x, y, w, h)
 end
 
 --- Reads the color of the specified pixel from the RenderTarget sent by render.CapturePixels  
 --- @param x number @The x coordinate.
 --- @param y number @The y coordinate.
---- @return number @r
---- @return number @g
---- @return number @b
+--- @return number @The red channel value.
+--- @return number @The green channel value.
+--- @return number @The blue channel value.
+--- @return number @The alpha channel value or no value if the render target has no alpha channel.
 function render.ReadPixel(x, y)
 end
 
 --- This applies the changes made to map lighting using engine.LightStyle.  
---- @param DoStaticProps boolean @When true, this will also apply lighting changes to static props
-function render.RedownloadAllLightmaps(DoStaticProps)
+--- @param DoStaticProps? boolean @When true, this will also apply lighting changes to static props
+--- @param UpdateStaticLighting? boolean @Forces all props to update their static lighting
+function render.RedownloadAllLightmaps(DoStaticProps, UpdateStaticLighting)
+end
+
+--- Renders additive flashlights on an IMesh, a direct replacement for render.PushFlashlightMode.  
+--- @param renderFunc function @The function that renders the IMesh, or a model.
+function render.RenderFlashlights(renderFunc)
 end
 
 --- Renders the HUD on the screen.  
@@ -578,7 +618,7 @@ end
 
 --- Renders the scene with the specified viewData to the current active render target.  
 --- 🦟 **BUG**: [Static props and LODs are rendered improperly due to incorrectly perceived distance.](https://github.com/Facepunch/garrysmod-issues/issues/1330)  
---- @param view table @The view data to be used in the rendering
+--- @param view? table @The view data to be used in the rendering
 function render.RenderView(view)
 end
 
@@ -603,9 +643,12 @@ end
 function render.SetAmbientLight(r, g, b)
 end
 
---- Sets the alpha blending for every upcoming render operation.  
---- 🦟 **BUG**: [This does not affect non-model render.Draw* functions.](https://github.com/Facepunch/garrysmod-issues/issues/3166)  
---- @param blending number @Blending value from 0-1.
+--- Sets the alpha blending (or transparency) for upcoming render operations.  
+--- By itself, this will cause visible overlapping on parts of a model that are in front of other parts of the same model.  
+--- For a solution to this, see the examples below.  
+--- 🦟 **BUG**: [This does not affect non-model `render.Draw*` functions.](https://github.com/Facepunch/garrysmod-issues/issues/3166)  
+--- ℹ **NOTE**: If a material has the [$alphatest](https://developer.valvesoftware.com/wiki/$alphatest) flag enabled then this function might not behave as expected because alpha will be binary, this has a default cutoff of `0.7`.  
+--- @param blending number @The alpha (transparency) for upcoming draw operations
 function render.SetBlend(blending)
 end
 
@@ -624,7 +667,7 @@ end
 function render.SetColorMaterial()
 end
 
---- Sets the current drawing material to "color_ignorez".  
+--- Sets the current drawing material to `color_ignorez`.  
 --- The material is defined as:  
 --- ```  
 --- "UnlitGeneric"  
@@ -664,29 +707,25 @@ end
 function render.SetLightingMode(Mode)
 end
 
---- Sets the lighting origin.  
+--- Sets lighting origin for the current model.  
 --- 🦟 **BUG**: [This does not work for prop_physics.](https://github.com/Facepunch/garrysmod-issues/issues/2804)  
---- @param lightingOrigin GVector @The position from which the light should be "emitted".
+--- @param lightingOrigin GVector @The position which will be used to calculate lighting for the current model.
 function render.SetLightingOrigin(lightingOrigin)
 end
 
 --- Sets the texture to be used as the lightmap in upcoming rendering operations. This is required when rendering meshes using a material with a lightmapped shader such as LightmappedGeneric.  
---- 🧱 **NOTE**: Requires a 3D rendering context  
---- <rendercontext hook="false" type="2D"></rendercontext>  
 --- @param tex GITexture @The texture to be used as the lightmap.
 function render.SetLightmapTexture(tex)
 end
 
 --- Sets up the local lighting for any upcoming render operation. Up to 4 local lights can be defined, with one of three different types (point, directional, spot).  
 --- Disables all local lights if called with no arguments.  
---- @param lights table @A table containing up to 4 tables for each light source that should be set up
+--- @param lights? table @A table containing up to 4 tables for each light source that should be set up
 function render.SetLocalModelLights(lights)
 end
 
 --- Sets the material to be used in any upcoming render operation using the render.  
 --- Not to be confused with surface.SetMaterial.  
---- 🧱 **NOTE**: Requires a 3D rendering context  
---- <rendercontext hook="false" type="2D"></rendercontext>  
 --- @param mat GIMaterial @The material to be used.
 function render.SetMaterial(mat)
 end
@@ -711,7 +750,7 @@ end
 function render.SetRenderTargetEx(rtIndex, texture)
 end
 
---- Sets a scissoring rect which limits the drawing area.  
+--- Sets a scissoring rect which limits(otherwise known as clipping) the drawing area.  
 --- @param startX number @X start coordinate of the scissor rect.
 --- @param startY number @Y start coordinate of the scissor rect.
 --- @param endX number @X end coordinate of the scissor rect.
@@ -742,47 +781,63 @@ end
 function render.SetShadowsDisabled(newState)
 end
 
---- Sets the compare function of the stencil.  
---- Pixels which fail the stencil comparison function are not written to the render target. The operation to be performed on the stencil buffer values for these pixels can be set using render.SetStencilFailOperation.  
---- Pixels which pass the stencil comparison function are written to the render target unless they fail the depth buffer test (where applicable). The operation to perform on the stencil buffer values for these pixels can be set using render.SetStencilPassOperation and render.SetStencilZFailOperation.  
---- @param compareFunction number @Compare function, see Enums/STENCILCOMPARISONFUNCTION, and Enums/STENCIL for short.
+--- Sets the Compare Function that all pixels affected by a draw operation will have their Stencil Buffer value tested against.  
+--- When not set to a static value like NEVER or ALWAYS, the Stencil Buffer value corresponding to each affected pixel will be compared against the current Reference Value.  
+--- Pixels that **Pass** the Compare Function check move on to the Depth Test, which determines if the draw operation will ultimately be allowed to overwrite the pixel's Color Channel, Stencil Buffer, and Depth Buffer values.  
+--- Pixels that **Fail** the Compare Function check have the Fail Operation performed on their Stencil Buffer value and do **not** have any of their Render Target layers modified by the draw operation.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param compareFunction number @The Compare Function that each affected pixel's Stencil Buffer value will be evaluated against during a draw operation.
 function render.SetStencilCompareFunction(compareFunction)
 end
 
---- Sets whether stencil tests are carried out for each rendered pixel.  
---- Only pixels passing the stencil test are written to the render target.  
+--- Enables or disables the Stencil system for future draw operations.  
+--- While enabled, all pixels affected by draw operations will have their corresponding values in the active Render Target's Stencil Buffer compared against the current Reference Value and their current Depth Buffer value compared against the depth of the corresponding pixel from the draw operation.  
+--- Depending on the outcomes of these comparisons, one of either the Pass, Fail, or Z-Fail operations is performed on the pixel's Stencil Buffer value.  
+--- A pixel will only be updated in the active Render Target if the Pass Operation is performed.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- ℹ **NOTE**: The Stencil system's configuration does **not** reset automatically.  
+--- To prevent unexpected behavior, always manually ensure that the Stencil system is configured appropriately for your use-case after enabling it.  
 --- @param newState boolean @The new state.
 function render.SetStencilEnable(newState)
 end
 
---- Sets the operation to be performed on the stencil buffer values if the compare function was not successful.  
---- Note that this takes place **before** depth testing.  
---- @param failOperation number @Fail operation function, see Enums/STENCILOPERATION
+--- Sets the Stencil Operation that will be performed on the Stencil Buffer values of pixels affected by draw operations if the Compare Function did **not** Pass the pixel.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param failOperation number @The Stencil Operation to be performed if the Compare Function does not Pass a pixel.
 function render.SetStencilFailOperation(failOperation)
 end
 
---- Sets the operation to be performed on the stencil buffer values if the compare function was successful.  
---- @param passOperation number @Pass operation function, see Enums/STENCILOPERATION
+--- Sets the Stencil Operation that will be performed on the Stencil Buffer values of pixels affected by draw operations if the Compare Function Passes the pixel.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param passOperation number @The Stencil Operation to be performed if the Compare Function Passes a pixel.
 function render.SetStencilPassOperation(passOperation)
 end
 
---- Sets the reference value which will be used for all stencil operations. This is an unsigned integer.  
---- @param referenceValue number @Reference value.
+--- Sets the Stencil system's Reference Value which is compared against each pixel's corresponding Stencil Buffer value in the Compare Function and can be used to modify the Stencil Buffer value of those same pixels in the Pass, Fail, and Z Fail operations.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param referenceValue number @The value that the Compare function and the pass, fail, and z-fail operations will use
 function render.SetStencilReferenceValue(referenceValue)
 end
 
---- Sets the unsigned 8-bit test bitflag mask to be used for any stencil testing.  
---- @param mask number @The mask bitflag.
-function render.SetStencilTestMask(mask)
+--- Sets the unsigned 8-bit (`byte`) bitflag mask that will be bitwise ANDed with all values as they are read (tested) from the Stencil Buffer  
+--- This can be considered a "niche" Stencil function as it is not required for many Stencil use-cases.  
+--- This is a companion function to render.SetStencilWriteMask which modifies Stencil Buffer values as they are written.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param bitMask number @The 8-bit (`byte`) mask
+function render.SetStencilTestMask(bitMask)
 end
 
---- Sets the unsigned 8-bit write bitflag mask to be used for any writes to the stencil buffer.  
---- @param mask number @The mask bitflag.
-function render.SetStencilWriteMask(mask)
+--- Sets the unsigned 8-bit (`byte`) bitflag mask that will be bitwise ANDed with all values as they are written to the Stencil Buffer  
+--- This can be considered a "niche" Stencil function as it is not required for many Stencil use-cases.  
+--- This is a companion function to render.SetStencilTestMask which modifies Stencil Buffer values as they are read.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param bitMask number @The 8-bit (`byte`) mask
+function render.SetStencilWriteMask(bitMask)
 end
 
---- Sets the operation to be performed on the stencil buffer values if the stencil test is passed but the depth buffer test fails.  
---- @param zFailOperation number @Z fail operation function, see Enums/STENCILOPERATION
+--- Sets the Stencil Operation that will be performed on the Stencil Buffer values of pixels affected by draw operations if the Compare Function Passed a given pixel, but it did **not** Pass the Depth Test.  
+--- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
+--- @param zFailOperation number @The Stencil Operation to be performed if the Compare Function Passes a pixel, but the pixel fails the Depth Test.
 function render.SetStencilZFailOperation(zFailOperation)
 end
 
@@ -810,14 +865,15 @@ end
 function render.Spin()
 end
 
---- Start a new beam draw operation.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param segmentCount number @Amount of beam segments that are about to be drawn.
+--- Begin drawing a multi-segment Beam.  
+--- For more detailed information on Beams, as well as usage examples, see the Beams Render Reference  
+--- @param segmentCount number @The number of Beam Segments that this multi-segment Beam will contain
 function render.StartBeam(segmentCount)
 end
 
---- Returns whether the game supports HDR, i.e. if the DirectX level is higher than or equal to 8.  
---- @return boolean @supportsHDR
+--- Returns whether the player's hardware supports HDR. (High Dynamic Range) HDR can still be disabled by the `mat_hdr_level` console variable or just not be supported by the map.  
+--- @return boolean @`true` if the player's hardware supports HDR.
 function render.SupportsHDR()
 end
 
@@ -852,7 +908,7 @@ function render.UpdateFullScreenDepthTexture()
 end
 
 --- Updates the power of two texture.  
---- @return GITexture @Returns render.GetPowerOfTwoTexture.
+--- @return GITexture @The render.GetPowerOfTwoTexture.
 function render.UpdatePowerOfTwoTexture()
 end
 
@@ -861,6 +917,12 @@ function render.UpdateRefractTexture()
 end
 
 --- Copies the entire screen to the screen effect texture, which can be acquired via render.GetScreenEffectTexture. This function is mainly intended to be used in GM:RenderScreenspaceEffects  
-function render.UpdateScreenEffectTexture()
+--- @param textureIndex? number @Texture index to update
+function render.UpdateScreenEffectTexture(textureIndex)
+end
+
+--- This function overrides all map materials for one frame.  
+--- @param mat? GIMaterial 
+function render.WorldMaterialOverride(mat)
 end
 

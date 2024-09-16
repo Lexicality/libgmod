@@ -1,9 +1,11 @@
 --- @class GCLuaLocomotion
 --- This class is essentially what controls a NextBot NPC. You can access it in a NextBot NPC by using **self.loco** variable.  
 local GCLuaLocomotion = {}
---- Sets the location we want to get to  
---- @param goal GVector @The vector we want to get to
---- @param goalweight number @If unsure then set this to 1
+--- Sets the location we want to get to.  
+--- Each call of Approach moves the NextBot 1 unit towards the specified goal. The size of this unit is determined by SetDesiredSpeed; the default is `0` (each call of Approach moves the NextBot 0).  
+--- To achieve smooth movement with Approach, it should be called in a hook like Think, as shown in the example.  
+--- @param goal GVector @The vector we want to get to.
+--- @param goalweight number @If unsure then set this to `1`.
 function GCLuaLocomotion:Approach(goal, goalweight)
 end
 
@@ -21,6 +23,16 @@ end
 function GCLuaLocomotion:GetAcceleration()
 end
 
+--- Returns whether the Nextbot is allowed to avoid obstacles or not.  
+--- @return boolean @Whether this bot is allowed to try to avoid obstacles.
+function GCLuaLocomotion:GetAvoidAllowed()
+end
+
+--- Returns whether the Nextbot is allowed to climb or not.  
+--- @return boolean @Whether this bot is allowed to climb.
+function GCLuaLocomotion:GetClimbAllowed()
+end
+
 --- Returns the current acceleration as a vector  
 --- @return GVector @Current acceleration
 function GCLuaLocomotion:GetCurrentAcceleration()
@@ -36,6 +48,11 @@ end
 function GCLuaLocomotion:GetDeceleration()
 end
 
+--- Returns the desired movement speed set by CLuaLocomotion:SetDesiredSpeed  
+--- @return number @The desired movement speed.
+function GCLuaLocomotion:GetDesiredSpeed()
+end
+
 --- Returns the locomotion's gravity.  
 --- @return number @The gravity.
 function GCLuaLocomotion:GetGravity()
@@ -44,6 +61,16 @@ end
 --- Return unit vector in XY plane describing our direction of motion - even if we are currently not moving  
 --- @return GVector @A vector representing the X and Y movement
 function GCLuaLocomotion:GetGroundMotionVector()
+end
+
+--- Returns the current ground normal.  
+--- @return GVector @The current ground normal.
+function GCLuaLocomotion:GetGroundNormal()
+end
+
+--- Returns whether the Nextbot is allowed to jump gaps or not.  
+--- @return boolean @Whether this bot is allowed to jump gaps.
+function GCLuaLocomotion:GetJumpGapsAllowed()
 end
 
 --- Gets the height of the bot's jump  
@@ -107,10 +134,12 @@ end
 function GCLuaLocomotion:IsUsingLadder()
 end
 
---- Makes the bot jump  
-function GCLuaLocomotion:Jump()
+--- Makes the bot jump. It must be on ground (Entity:IsOnGround) and its model must have `ACT_JUMP` activity.  
+--- @param act? number @The activity to use as the jumping animation.
+function GCLuaLocomotion:Jump(act)
 end
 
+--- Makes the bot jump across a gap. The bot must be on ground (Entity:IsOnGround) and its model must have `ACT_JUMP` activity.  
 --- @param landingGoal GVector 
 --- @param landingForward GVector 
 function GCLuaLocomotion:JumpAcrossGap(landingGoal, landingForward)
@@ -119,6 +148,16 @@ end
 --- Sets the acceleration speed  
 --- @param speed number @Speed acceleration (default is 400)
 function GCLuaLocomotion:SetAcceleration(speed)
+end
+
+--- Sets whether the Nextbot is allowed try to to avoid obstacles or not. This is used during path generation. Works similarly to `nb_allow_avoiding` convar. By default bots are allowed to try to avoid obstacles.  
+--- @param allowed boolean @Whether this bot should be allowed to try to avoid obstacles.
+function GCLuaLocomotion:SetAvoidAllowed(allowed)
+end
+
+--- Sets whether the Nextbot is allowed to climb or not. This is used during path generation. Works similarly to `nb_allow_climbing` convar. By default bots are allowed to climb.  
+--- @param allowed boolean @Whether this bot should be allowed to climb.
+function GCLuaLocomotion:SetClimbAllowed(allowed)
 end
 
 --- Sets the height the bot is scared to fall from.  
@@ -140,6 +179,11 @@ end
 --- ℹ **NOTE**: With values 0 or below, or even lower positive values, the nextbot will start to drift sideways, use CLuaLocomotion:SetVelocity to counteract this.  
 --- @param gravity number @New gravity to set
 function GCLuaLocomotion:SetGravity(gravity)
+end
+
+--- Sets whether the Nextbot is allowed to jump gaps or not. This is used during path generation. Works similarly to `nb_allow_gap_jumping` convar. By default bots are allowed to jump gaps.  
+--- @param allowed boolean @Whether this bot should be allowed to jump gaps.
+function GCLuaLocomotion:SetJumpGapsAllowed(allowed)
 end
 
 --- Sets the height of the bot's jump  

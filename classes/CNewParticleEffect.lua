@@ -3,11 +3,11 @@
 local GCNewParticleEffect = {}
 --- Adds a control point to the particle system.  
 --- ℹ **NOTE**: This function will not work if the CNewParticleEffect:GetOwner entity is not valid  
---- @param cpID number @The control point ID, 0 to 63.
---- @param ent GEntity @The entity to attach the control point to.
---- @param partAttachment number @See Enums/PATTACH.
---- @param entAttachment number @The attachment ID on the entity to attach the particle system to
---- @param offset GVector @The offset from the Entity:GetPos of the entity we are attaching this CP to.
+--- @param cpID? number @The control point ID, 0 to 63.
+--- @param ent? GEntity @The entity to attach the control point to.
+--- @param partAttachment? number @See Enums/PATTACH.
+--- @param entAttachment? number @The attachment ID on the entity to attach the particle system to
+--- @param offset? GVector @The offset from the Entity:GetPos of the entity we are attaching this CP to.
 function GCNewParticleEffect:AddControlPoint(cpID, ent, partAttachment, entAttachment, offset)
 end
 
@@ -28,6 +28,12 @@ end
 --- Returns the owner of the particle system, the entity the particle system is attached to.  
 --- @return GEntity @The owner of the particle system.
 function GCNewParticleEffect:GetOwner()
+end
+
+--- Returns the bounding box of the particle effect, including all the particles it emitted.  
+--- @return GVector @Mins of the bounding box.
+--- @return GVector @Maxs of the bounding box.
+function GCNewParticleEffect:GetRenderBounds()
 end
 
 --- Returns whether the particle system has finished emitting particles or not.  
@@ -61,10 +67,10 @@ end
 function GCNewParticleEffect:SetControlPoint(cpID, value)
 end
 
---- Essentially makes child control point follow the parent entity.  
---- @param child number @The child control point ID, 0 to 63.
---- @param parent GEntity @The parent entity to follow.
-function GCNewParticleEffect:SetControlPointEntity(child, parent)
+--- Sets an entity to given control point for particle to use.  
+--- @param cpID number @The control point ID, 0 to 63.
+--- @param parent GEntity @The entity to set.
+function GCNewParticleEffect:SetControlPointEntity(cpID, parent)
 end
 
 --- Sets the forward direction for given control point.  
@@ -82,9 +88,9 @@ function GCNewParticleEffect:SetControlPointOrientation(cpID, forward, right, up
 end
 
 --- Essentially makes child control point follow the parent control point.  
---- @param child number @The child control point ID, 0 to 63.
---- @param parent number @The parent control point ID, 0 to 63.
-function GCNewParticleEffect:SetControlPointParent(child, parent)
+--- @param childID number @The child control point ID, 0 to 63.
+--- @param parentID number @The parent control point ID, 0 to 63.
+function GCNewParticleEffect:SetControlPointParent(childID, parentID)
 end
 
 --- Sets the right direction for given control point.  
@@ -99,7 +105,8 @@ end
 function GCNewParticleEffect:SetControlPointUpVector(cpID, upward)
 end
 
---- @param isViewModel boolean 
+--- Set whether this particle effect is a view model effect or not. This will have an effect on attachment positioning and other things.  
+--- @param isViewModel boolean @Whether this particle effect is a view model effect or not.
 function GCNewParticleEffect:SetIsViewModelEffect(isViewModel)
 end
 
@@ -115,14 +122,14 @@ function GCNewParticleEffect:SetSortOrigin(origin)
 end
 
 --- Starts the particle emission.  
---- @param infiniteOnly boolean 
+--- @param infiniteOnly? boolean 
 function GCNewParticleEffect:StartEmission(infiniteOnly)
 end
 
 --- Stops the particle emission.  
---- @param infiniteOnly boolean 
---- @param removeAllParticles boolean 
---- @param wakeOnStop boolean 
+--- @param infiniteOnly? boolean 
+--- @param removeAllParticles? boolean 
+--- @param wakeOnStop? boolean 
 function GCNewParticleEffect:StopEmission(infiniteOnly, removeAllParticles, wakeOnStop)
 end
 

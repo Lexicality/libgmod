@@ -1,8 +1,9 @@
---- The list library allows you add and retrieve values to and from lists. The list library is basically a fancy wrapper for a table, but with much more limited functionality.  
+--- The list library allows you add and retrieve values to and from lists. The list library is basically a fancy wrapper for a table, but with much more limited functionality. See Default Lists for a page of default Sandbox lists.  
 _G.list = {}
 --- Adds an item to a named list  
 --- @param identifier string @The list identifier
 --- @param item any @The item to add to the list
+--- @return number @The index at which the item was added.
 function list.Add(identifier, item)
 end
 
@@ -21,9 +22,15 @@ function list.Get(identifier)
 end
 
 --- Returns the actual table of the list stored at identifier. Modifying this will affect the stored list  
---- @param identifier string @The list identifier
+--- @param identifier? string @The list identifier
+--- @param dontCreate? boolean @If the list at given identifier does not exist, do **not** create it.
 --- @return table @The actual list
-function list.GetForEdit(identifier)
+function list.GetForEdit(identifier, dontCreate)
+end
+
+--- Returns a list of all lists currently in use.  
+--- @return table @The list of all lists, i.e
+function list.GetTable()
 end
 
 --- Returns true if the list contains the given key.  

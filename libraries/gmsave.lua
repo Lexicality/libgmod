@@ -1,9 +1,10 @@
 --- The gmsave library provides functions relating to the singleplayer save system in Garry's Mod.  
 _G.gmsave = {}
 --- Loads a saved map.  
---- @param mapData string @The JSON encoded string containing all the map data.
---- @param ply GPlayer @The player to load positions for
-function gmsave.LoadMap(mapData, ply)
+--- @param mapData? string @The JSON encoded string containing all the map data.
+--- @param ply? GPlayer @The player to load positions for.
+--- @param callback? function @A function to be called after all the entities have been placed.
+function gmsave.LoadMap(mapData, ply, callback)
 end
 
 --- Sets player position and angles from supplied table  

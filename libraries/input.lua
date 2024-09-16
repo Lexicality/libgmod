@@ -5,14 +5,21 @@ _G.input = {}
 function input.CheckKeyTrapping()
 end
 
---- Returns the cursor's position on the screen  
---- @return number @The cursors position on the X axis
---- @return number @The cursors position on the Y axis
+--- Returns the digital value of an analog stick on the current (set up via convars) controller.  
+--- @param axis number @The analog axis to poll
+--- @return number @The digital value
+function input.GetAnalogValue(axis)
+end
+
+--- Returns the cursor's position on the screen.  
+--- 🦟 **BUG**: [On macOS, the cursor isn't locked on the middle of the screen which causes a significant offset of the positions returned by this function.](https://github.com/Facepunch/garrysmod-issues/issues/4964)  
+--- @return number @The cursors position on the X axis.
+--- @return number @The cursors position on the Y axis.
 function input.GetCursorPos()
 end
 
 --- Gets the button code from a button name. This is opposite of input.GetKeyName.  
---- @param button string @The internal button name, such as "e" or "shift".
+--- @param button string @The internal button name, such as <key>E</key> or <key>SHIFT</key>.
 --- @return number @The button code, see Enums/BUTTON_CODE.
 function input.GetKeyCode(button)
 end
@@ -36,7 +43,7 @@ end
 function input.IsControlDown()
 end
 
---- Gets whether a key is down  
+--- Gets whether a key is down.  
 --- @param key number @The key, see Enums/KEY.
 --- @return boolean @Is the key down
 function input.IsKeyDown(key)
@@ -58,9 +65,9 @@ end
 function input.IsShiftDown()
 end
 
---- Gets the match uppercase key for the specified binding.  
---- @param binding string @The binding name
---- @param exact boolean @True if the binding should match exactly
+--- Returns the client's bound key for the specified console command. If the player has multiple keys bound to a single command, then the key with the lowest Enums/BUTTON_CODE will be returned.  
+--- @param binding? string @The binding name
+--- @param exact? boolean @True to disable automatic stripping of a single leading `+` character
 --- @return string @The first key found with that binding or no value if no key with given binding was found
 function input.LookupBinding(binding, exact)
 end
@@ -86,7 +93,7 @@ end
 function input.StartKeyTrapping()
 end
 
---- Translates a console command alias, basically reverse of the `alias` console command  
+--- Translates a console command alias, basically reverse of the `alias` console command.  
 --- @param command string @The alias to lookup.
 --- @return string @The command(s) this alias will execute if ran, or nil if the alias doesn't exist.
 function input.TranslateAlias(command)

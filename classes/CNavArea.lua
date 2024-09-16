@@ -1,10 +1,15 @@
 --- @class GCNavArea
 --- An object returned by navmesh functions.  
 local GCNavArea = {}
+--- Adds given attributes to given CNavArea. See CNavArea:HasAttributes and CNavArea:SetAttributes.  
+--- @param attribs number @The attributes to add, as a bitflag
+function GCNavArea:AddAttributes(attribs)
+end
+
 --- Adds a hiding spot onto this nav area.  
 --- There's a limit of 255 hiding spots per area.  
---- @param pos GVector @The position on the nav area
---- @param flags number @Flags describing what kind of hiding spot this is
+--- @param pos? GVector @The position on the nav area
+--- @param flags? number @Flags describing what kind of hiding spot this is
 function GCNavArea:AddHidingSpot(pos, flags)
 end
 
@@ -69,10 +74,17 @@ end
 function GCNavArea:DrawSpots()
 end
 
---- Returns a table of all the CNavAreas that have a  ( one and two way ) connection **from** this CNavArea.  
+--- Returns a list of all the CNavAreas that have a one-way connection **to** this CNavArea and their pre-computed distances.  
+--- If an area has a one-way incoming connection to this CNavArea, then it will **not** be returned from this function, use CNavArea:GetIncomingConnectionDistances to get all one-way incoming connections.  
+--- @param dir? number @If set, will only return areas in the specified direction
+--- @return table @A list of tables in the following format:
+function GCNavArea:GetAdjacentAreaDistances(dir)
+end
+
+--- Returns a list of all the CNavAreas that have a  (one and two way) connection **from** this CNavArea.  
 --- If an area has a one-way incoming connection to this CNavArea, then it will **not** be returned from this function, use CNavArea:GetIncomingConnections to get all one-way incoming connections.  
 --- See CNavArea:GetAdjacentAreasAtSide for a function that only returns areas from one side/direction.  
---- @return table @A table of all CNavArea that have a ( one and two way ) connection **from** this CNavArea
+--- @return table @A list of all CNavArea that have a (one and two way) connection **from** this CNavArea
 function GCNavArea:GetAdjacentAreas()
 end
 
@@ -98,7 +110,7 @@ function GCNavArea:GetAdjacentCountAtSide(navDir)
 end
 
 --- Returns the attribute mask for the given CNavArea.  
---- @return boolean @Attribute mask for this CNavArea, see Enums/NAV_MESH for the specific flags
+--- @return number @Attribute mask for this CNavArea, see Enums/NAV_MESH for the specific flags
 function GCNavArea:GetAttributes()
 end
 
@@ -139,7 +151,7 @@ end
 
 --- Returns a table of good hiding spots in this area.  
 --- See also CNavArea:GetExposedSpots.  
---- @param type number @The type of spots to include
+--- @param type? number @The type of spots to include
 --- @return table @A table of Vectors
 function GCNavArea:GetHidingSpots(type)
 end
@@ -147,6 +159,13 @@ end
 --- Returns this CNavAreas unique ID.  
 --- @return number @The unique ID.
 function GCNavArea:GetID()
+end
+
+--- Returns a table of all the CNavAreas that have a one-way connection **to** this CNavArea and their pre-computed distances.  
+--- If a CNavArea has a two-way connection **to or from** this CNavArea then it will not be returned from this function, use CNavArea:GetAdjacentAreaDistances to get outgoing (one and two way) connections.  
+--- @param dir? number @If set, will only return areas in the specified direction
+--- @return table @A list of tables in the following format:
+function GCNavArea:GetIncomingConnectionDistances(dir)
 end
 
 --- Returns a table of all the CNavAreas that have a one-way connection **to** this CNavArea.  
@@ -213,11 +232,21 @@ end
 function GCNavArea:GetSizeY()
 end
 
+--- Returns all possible path segments through a CNavArea, and the dangerous spots to look at as we traverse that path segment.  
+--- @return table @A sequential list of spot encounters in the following format:
+function GCNavArea:GetSpotEncounters()
+end
+
 --- Returns the total cost when passing from starting area to the goal area through this node. Set by CNavArea:SetTotalCost.  
 --- Used in pathfinding via the [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm).  
 --- More information can be found on the Simple Pathfinding page.  
 --- @return number @The total cost
 function GCNavArea:GetTotalCost()
+end
+
+--- Returns all CNavAreas that are visible from this CNavArea.  
+--- @return table @A sequential table containing all CNavAreas that are visible from this CNavArea.
+function GCNavArea:GetVisibleAreas()
 end
 
 --- Returns the elevation of this Nav Area at the given position.  
@@ -233,8 +262,8 @@ function GCNavArea:HasAttributes(attribs)
 end
 
 --- Returns whether the nav area is blocked or not, i.e. whether it can be walked through or not.  
---- @param teamID number @The team ID to test, -2 = any team
---- @param ignoreNavBlockers boolean @Whether to ignore [func_nav_blocker](https://developer.valvesoftware.com/wiki/Func_nav_blocker) entities.
+--- @param teamID? number @The team ID to test, -2 = any team
+--- @param ignoreNavBlockers? boolean @Whether to ignore [func_nav_blocker](https://developer.valvesoftware.com/wiki/Func_nav_blocker) entities.
 --- @return boolean @Whether the area is blocked or not
 function GCNavArea:IsBlocked(teamID, ignoreNavBlockers)
 end
@@ -244,6 +273,12 @@ end
 --- More information can be found on the Simple Pathfinding page.  
 --- @return boolean @Whether this node is in the Closed List.
 function GCNavArea:IsClosed()
+end
+
+--- Returns whether this CNavArea can completely (i.e. all corners of this area can see all corners of the given area) see the given CNavArea.  
+--- @param area GCNavArea @The CNavArea to test.
+--- @return boolean @Whether the given area is visible from this area
+function GCNavArea:IsCompletelyVisible(area)
 end
 
 --- Returns whether this CNavArea has an outgoing ( one or two way ) connection **to** given CNavArea.  
@@ -267,6 +302,11 @@ end
 function GCNavArea:IsCoplanar(navArea)
 end
 
+--- Returns whether the CNavArea would damage if traversed, as set by CNavArea:MarkAsDamaging.  
+--- @return boolean @Whether the area is damaging or not
+function GCNavArea:IsDamaging()
+end
+
 --- Returns whether this Nav Area is flat within the tolerance of the **nav_coplanar_slope_limit_displacement** and **nav_coplanar_slope_limit** convars.  
 --- @return boolean @Whether this CNavArea is mostly flat.
 function GCNavArea:IsFlat()
@@ -287,8 +327,8 @@ function GCNavArea:IsOpenListEmpty()
 end
 
 --- Returns if this position overlaps the Nav Area within the given tolerance.  
---- @param pos GVector @The overlapping position to test.
---- @param tolerance number @The tolerance of the overlapping, set to 0 for no tolerance.
+--- @param pos? GVector @The overlapping position to test.
+--- @param tolerance? number @The tolerance of the overlapping, set to 0 for no tolerance.
 --- @return boolean @Whether the given position overlaps the Nav Area or not.
 function GCNavArea:IsOverlapping(pos, tolerance)
 end
@@ -297,6 +337,19 @@ end
 --- @param navArea GCNavArea @The CNavArea to test against.
 --- @return boolean @True if the given CNavArea overlaps this CNavArea at any point.
 function GCNavArea:IsOverlappingArea(navArea)
+end
+
+--- Returns whether this CNavArea can see given position.  
+--- @param pos? GVector @The position to test.
+--- @param ignoreEnt? GEntity @If set, the given entity will be ignored when doing LOS tests
+--- @return boolean @Whether the given position is visible from this area
+function GCNavArea:IsPartiallyVisible(pos, ignoreEnt)
+end
+
+--- Returns whether this CNavArea can potentially see the given CNavArea.  
+--- @param area GCNavArea @The CNavArea to test.
+--- @return boolean @Whether the given area is visible from this area
+function GCNavArea:IsPotentiallyVisible(area)
 end
 
 --- Returns if we're shaped like a square.  
@@ -321,6 +374,21 @@ end
 function GCNavArea:IsVisible(pos)
 end
 
+--- Marks the area as blocked and unable to be traversed. See CNavArea:IsBlocked and CNavArea:MarkAsUnblocked.  
+--- @param teamID? number @TeamID to mark the area as blocked for
+function GCNavArea:MarkAsBlocked(teamID)
+end
+
+--- Marks the area as damaging if traversed, for example when, for example having poisonous or no atmosphere, or a temporary fire present. See CNavArea:IsDamaging.  
+--- @param duration number @For how long the area should stay marked as damaging
+function GCNavArea:MarkAsDamaging(duration)
+end
+
+--- Unblocked this area if it was previously blocked by CNavArea:MarkAsBlocked.  
+--- @param teamID? number @TeamID to unblock the area for
+function GCNavArea:MarkAsUnblocked(teamID)
+end
+
 --- Drops a corner or all corners of a CNavArea to the ground below it.  
 --- @param corner number @The corner(s) to drop, uses Enums/NavCorner
 function GCNavArea:PlaceOnGround(corner)
@@ -337,14 +405,20 @@ end
 function GCNavArea:Remove()
 end
 
+--- Removes given attributes from given CNavArea. See also CNavArea:SetAttributes.  
+--- @param attribs number @The attributes to remove, as a bitflag
+function GCNavArea:RemoveAttributes(attribs)
+end
+
+--- 🛑 **DEPRECATED**: Does nothing  
 --- Removes this node from the Closed List.  
 --- Used in pathfinding via the [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm).  
 --- More information can be found on the Simple Pathfinding page.  
 function GCNavArea:RemoveFromClosedList()
 end
 
---- Sets the attributes for given CNavArea.  
---- @param attribs number @The attribute bitflag
+--- Sets the attributes for given CNavArea. See CNavArea:HasAttributes.  
+--- @param attribs number @The attributes to set, as a bitflag
 function GCNavArea:SetAttributes(attribs)
 end
 
@@ -363,12 +437,13 @@ end
 
 --- Sets the new parent of this CNavArea.  
 --- @param parent GCNavArea @The new parent to set
-function GCNavArea:SetParent(parent)
+--- @param how number @How we get from parent to us using Enums/NavTraverseType
+function GCNavArea:SetParent(parent, how)
 end
 
 --- Sets the Place of the nav area.  
---- There is a limit of 256 Places per nav file.  
---- @param place string @Set to "" to remove place from the nav area.
+--- There is a limit of 256 unique places per `.nav` file.  
+--- @param place string @Set to `""` to remove place from the nav area
 --- @return boolean @Returns true of operation succeeded, false otherwise.
 function GCNavArea:SetPlace(place)
 end

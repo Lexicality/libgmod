@@ -5,6 +5,7 @@
 --- * ENTITY:OnTakeDamage  
 --- * GM:DoPlayerDeath  
 --- * GM:EntityTakeDamage  
+--- * GM:PostEntityTakeDamage  
 --- * GM:OnDamagedByExplosion  
 --- * GM:ScaleNPCDamage  
 --- * GM:ScalePlayerDamage  
@@ -78,7 +79,7 @@ end
 function GCTakeDamageInfo:GetInflictor()
 end
 
---- Returns the maximum damage.  
+--- Returns the maximum damage. See CTakeDamageInfo:SetMaxDamage  
 --- @return number @maxDmg
 function GCTakeDamageInfo:GetMaxDamage()
 end
@@ -124,6 +125,11 @@ end
 function GCTakeDamageInfo:SetAttacker(ent)
 end
 
+--- Sets the initial unmodified by skill level ( game.GetSkillLevel ) damage. This function will not update or touch CTakeDamageInfo:GetDamage.  
+--- @param arg number @baseDamage
+function GCTakeDamageInfo:SetBaseDamage(arg)
+end
+
 --- Sets the amount of damage.  
 --- @param damage number @The value to set the absolute damage to.
 function GCTakeDamageInfo:SetDamage(damage)
@@ -140,6 +146,8 @@ function GCTakeDamageInfo:SetDamageCustom(DamageType)
 end
 
 --- Sets the directional force of the damage.  
+--- ℹ **NOTE**:   
+--- This function seems to have no effect on player knockback. To disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use workaround example below.  
 --- @param force GVector @The vector to set the force to.
 function GCTakeDamageInfo:SetDamageForce(force)
 end
@@ -161,7 +169,7 @@ end
 function GCTakeDamageInfo:SetInflictor(inflictor)
 end
 
---- Sets the maximum damage the object can cause.  
+--- Sets the maximum damage this damage event can cause.  
 --- @param maxDamage number @Maximum damage value.
 function GCTakeDamageInfo:SetMaxDamage(maxDamage)
 end

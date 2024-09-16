@@ -5,12 +5,12 @@ function dragndrop.Clear()
 end
 
 --- Returns a table of currently dragged panels.  
---- @param name string @If set, the function will return only the panels with this Panel:Droppable name.
+--- @param name? string @If set, the function will return only the panels with this Panel:Droppable name.
 --- @return table @A table of all panels that are being currently dragged, if any.
 function dragndrop.GetDroppable(name)
 end
 
---- If returns true, calls dragndrop.StopDragging in dragndrop.Drop. Seems to be broken and does nothing. Is it for override?  
+--- Allows you to capture the panel that was dropped into the game (dropped onto the root panel). This function is meant to be overridden.  
 function dragndrop.HandleDroppedInGame()
 end
 

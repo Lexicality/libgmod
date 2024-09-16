@@ -1,11 +1,12 @@
 --- The player_manager library lets you manage players, such as setting their models or creating player classes.  
 _G.player_manager = {}
 --- Assigns view model hands to player model.  
---- @param name string @Player model name
---- @param model string @Hands model
---- @param skin number @Skin to apply to the hands
---- @param bodygroups string @Bodygroups to apply to the hands
-function player_manager.AddValidHands(name, model, skin, bodygroups)
+--- @param name? string @Player model name
+--- @param model? string @Hands model
+--- @param skin? number @Skin to apply to the hands
+--- @param bodygroups? string @Bodygroups to apply to the hands
+--- @param matchBodySkin? boolean @If set to `true`, the skin of the hands will be set to the skin of the playermodel
+function player_manager.AddValidHands(name, model, skin, bodygroups, matchBodySkin)
 end
 
 --- Associates a simplified name with a path to a valid player model.  
@@ -16,6 +17,7 @@ function player_manager.AddValidModel(name, model)
 end
 
 --- Returns the entire list of valid player models.  
+--- @return table @List of all valid player models.
 function player_manager.AllValidModels()
 end
 
@@ -30,16 +32,28 @@ end
 function player_manager.GetPlayerClass(ply)
 end
 
+--- Gets a players' class table  
+--- @param ply GPlayer @Player to get class of
+--- @return table @The players class table
+function player_manager.GetPlayerClassTable(ply)
+end
+
+--- Retrieves a copy of all registered player classes.  
+--- @return table @A copy of all registered player classes.
+function player_manager.GetPlayerClasses()
+end
+
 --- Applies basic class variables when the player spawns.  
 --- Called from GM:PlayerSpawn in the base gamemode.  
---- @param ply GPlayer @Player to setup
-function player_manager.OnPlayerSpawn(ply)
+--- @param ply GPlayer @Player to setup.
+--- @param transiton boolean @If true, the player just spawned from a map transition
+function player_manager.OnPlayerSpawn(ply, transiton)
 end
 
 --- Register a class metatable to be assigned to players later  
---- @param name string @Class name
---- @param table table @Class metatable
---- @param base string @Base class name
+--- @param name? string @Class name
+--- @param table? table @Class metatable, see Structures/PLAYER
+--- @param base? string @Base class name
 function player_manager.RegisterClass(name, table, base)
 end
 
@@ -58,6 +72,7 @@ function player_manager.SetPlayerClass(ply, classname)
 end
 
 --- Retrieves correct hands for given player model. By default returns citizen hands.  
+--- ℹ **NOTE**: See player_manager.AddValidHands for defining/linking hands to a model - this must be defined somewhere otherwise the model will return citizen hands here.  
 --- @param name string @Player model name
 --- @return table @A table with following contents:
 function player_manager.TranslatePlayerHands(name)

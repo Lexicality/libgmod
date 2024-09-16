@@ -33,7 +33,7 @@ function GIRestore:ReadInt()
 end
 
 --- Reads next bytes from the restore object as a string.  
---- @return string @The read string
+--- @return string @The read string.
 function GIRestore:ReadString()
 end
 

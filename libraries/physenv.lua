@@ -6,14 +6,20 @@ _G.physenv = {}
 function physenv.AddSurfaceData(properties)
 end
 
---- Returns the air density.  
---- @return number @airDensity
+--- Returns the air density used to calculate drag on physics objects.  
+--- ⁉ **VALIDATE**: The unit is in `kg/m³`.  
+--- @return number @Default value is 2.
 function physenv.GetAirDensity()
 end
 
---- Gets the global gravity.  
---- @return GVector @gravity
+--- Gets the gravitational acceleration used for physics objects in `source_unit/s^2`.  
+--- @return GVector @gravAccel
 function physenv.GetGravity()
+end
+
+--- Returns the last simulation duration of the in-game physics.  
+--- @return number @The last simulation duration of the in-game physics in seconds
+function physenv.GetLastSimulationTime()
 end
 
 --- Gets the current performance settings in table form.  
@@ -26,9 +32,10 @@ end
 function physenv.SetAirDensity(airDensity)
 end
 
---- Sets the directional gravity, does not work on players.  
---- @param gravity GVector @The new gravity.
-function physenv.SetGravity(gravity)
+--- Sets the gravitational acceleration used for physics objects.  
+--- ℹ **NOTE**: Does not work on players.  
+--- @param gravAccel GVector @The new gravity in `source_unit/s^2`.
+function physenv.SetGravity(gravAccel)
 end
 
 --- Sets the performance settings.  

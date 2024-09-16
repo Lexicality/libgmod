@@ -1,17 +1,18 @@
 --- The mesh library allows you to create meshes. A mesh is a set of vertices that define a 3D shape, for constant meshes you should use the IMesh object instead.  
 _G.mesh = {}
---- Pushes the new vertex data onto the render stack.  
+--- Pushes the currently set vertex data (via other `mesh.*` functions) into the mesh stack. See example on mesh.Begin.  
 function mesh.AdvanceVertex()
 end
 
---- Starts a new dynamic mesh. If an IMesh is passed, it will use that mesh instead.  
---- @param mesh GIMesh @Mesh to build
---- @param primitiveType number @Primitive type, see Enums/MATERIAL.
---- @param primiteCount number @The amount of primitives.
-function mesh.Begin(mesh, primitiveType, primiteCount)
+--- Starts constructing a new 3D mesh constructed from a given number of primitives in a given primitive format.  
+--- The resulting mesh can be stored in an IMesh if it is intended to be drawn multiple times or on multiple frames.  
+--- @param primitiveType number @An enum that indicates what the format of the mesh's primitives will be
+--- @param primitiveCount number @The quantity of primitives this mesh will contain as a whole integer number.
+--- @param mesh GIMesh @The IMesh that the created mesh will be stored in.
+function mesh.Begin(primitiveType, primitiveCount, mesh)
 end
 
---- Sets the color to be used for the next vertex.  
+--- Sets the color to be used for the next vertex. See mesh.Begin.  
 --- @param r number @Red component.
 --- @param g number @Green component.
 --- @param b number @Blue component.
@@ -19,38 +20,47 @@ end
 function mesh.Color(r, g, b, a)
 end
 
---- Ends the mesh and renders it.  
+--- Ends the mesh (Started with mesh.Begin) and renders it.  
 function mesh.End()
 end
 
---- Sets the normal to be used for the next vertex.  
+--- Sets the normal to be used for the next vertex. See mesh.Begin.  
 --- @param normal GVector @The normal of the vertex.
-function mesh.Normal(normal)
+--- @param x number @The X part of the vertex normal.
+--- @param y number @The Y part of the vertex normal.
+--- @param z number @The Z part of the vertex normal.
+function mesh.Normal(normal, x, y, z)
 end
 
---- Sets the position to be used for the next vertex.  
+--- Sets the position to be used for the next vertex. See mesh.Begin.  
 --- @param position GVector @The position of the vertex.
-function mesh.Position(position)
+--- @param x number @The X position of the vertex.
+--- @param y number @The Y position of the vertex.
+--- @param z number @The Z position of the vertex.
+function mesh.Position(position, x, y, z)
 end
 
---- Draws a quad using 4 vertices.  
+--- Adds a quad (4 vertices) to the currently built mesh. See mesh.Begin.  
 --- @param vertex1 GVector @The first vertex.
 --- @param vertex2 GVector @The second vertex.
 --- @param vertex3 GVector @The third vertex.
 --- @param vertex4 GVector @The fourth vertex.
-function mesh.Quad(vertex1, vertex2, vertex3, vertex4)
+--- @param color table @The color for the vertices.
+function mesh.Quad(vertex1, vertex2, vertex3, vertex4, color)
 end
 
---- Draws a quad using a position, a normal and the size.  
+--- Adds a quad (4 vertices) to the currently built mesh, by using position, normal and sizes. See mesh.Begin.  
+--- See also mesh.Quad.  
 --- @param position GVector @The center of the quad.
 --- @param normal GVector @The normal of the quad.
 --- @param sizeX number @X size in pixels.
 --- @param sizeY number @Y size in pixels.
-function mesh.QuadEasy(position, normal, sizeX, sizeY)
+--- @param color table @The color for the vertices.
+function mesh.QuadEasy(position, normal, sizeX, sizeY, color)
 end
 
 --- Sets the specular map values.  
---- This function actually does nothing.  
+--- There is no known use case for this function.  
 --- @param r number @The red channel multiplier of the specular map.
 --- @param g number @The green channel multiplier of the specular map.
 --- @param b number @The blue channel multiplier of the specular map.
@@ -58,28 +68,35 @@ end
 function mesh.Specular(r, g, b, a)
 end
 
---- Sets the s tangent to be used.  
---- This function actually does nothing.  
---- @param sTanger GVector @The s tangent.
-function mesh.TangentS(sTanger)
+--- Sets the `S` tangent to be used, also known as "binormal".  
+--- Tangents and binormals are using in bumpmap rendering.  
+--- See also mesh.TangentT and mesh.Begin.  
+--- @param tangentS GVector @The S tangent.
+--- @param x number @The X part of the vertex' tangent S.
+--- @param y number @The Y part of the vertex' tangent S.
+--- @param z number @The Z part of the vertex' tangent S.
+function mesh.TangentS(tangentS, x, y, z)
 end
 
---- Sets the T tangent to be used.  
---- This function actually does nothing.  
---- @param tTanger GVector @The t tangent.
-function mesh.TangentT(tTanger)
+--- Sets the `T` tangent to be used.  
+--- Tangents and binormals are using in bumpmap rendering.  
+--- See also mesh.TangentS and mesh.Begin.  
+--- @param tangentT GVector @The T tangent.
+--- @param x number @The X part of the vertex' tangent T.
+--- @param y number @The Y part of the vertex' tangent T.
+--- @param z number @The Z part of the vertex' tangent T.
+function mesh.TangentT(tangentT, x, y, z)
 end
 
 --- Sets the texture coordinates for the next vertex.  
---- Non-zero values of stage require the currently bound material to support it. For example, any LightmappedGeneric material supports stages 1 and 2 (lightmap texture coordinates).  
---- @param stage number @The stage of the texture coordinate.
+--- @param set number @The texture coordinate set, 0 to 7
 --- @param u number @U coordinate.
 --- @param v number @V coordinate.
-function mesh.TexCoord(stage, u, v)
+function mesh.TexCoord(set, u, v)
 end
 
---- ℹ **NOTE**: It is recommended to use IMesh:BuildFromTriangles instead of the mesh library.  
---- A table of four numbers. This is used by most shaders in Source to hold tangent information of the vertex ( tangentX, tangentY, tangentZ, tangentHandedness ).  
+--- A set of four numbers that can be used for arbitrary purposes by Material shaders.  
+--- This is most commonly used to provide tangent information about each vertex to the Material's shader.  
 --- @param tangentX number 
 --- @param tangentY number 
 --- @param tangentZ number 
@@ -87,8 +104,8 @@ end
 function mesh.UserData(tangentX, tangentY, tangentZ, tangentHandedness)
 end
 
---- Returns the amount of vertex that have yet been pushed.  
---- @return number @vertexCount
+--- Returns the amount of vertices that have been pushed via mesh.AdvanceVertex.  
+--- @return number @The amount of vertices.
 function mesh.VertexCount()
 end
 

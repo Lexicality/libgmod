@@ -23,18 +23,40 @@ end
 function navmesh.CreateNavArea(corner, opposite_corner)
 end
 
---- Returns a bunch of areas within distance, used to find hiding spots by NextBots for example.  
+--- Creates a new CNavLadder.  
+--- @param top? GVector @The top position of the ladder.
+--- @param bottom? GVector @The bottom position of the ladder.
+--- @param width? number @Width for the new ladder.
+--- @param dir? GVector @Directional vector in which way the ladder should be facing
+--- @param maxHeightAboveTopArea? number @If above 0, will limit how much the top of the ladder can be adjusted to the closest CNavArea when automatically connecting the newly create
+--- @return GCNavLadder @The new CNavLadder or nil if we failed for some reason.
+function navmesh.CreateNavLadder(top, bottom, width, dir, maxHeightAboveTopArea)
+end
+
+--- Returns a list of areas within distance, used to find hiding spots by NextBots for example.  
 --- @param pos GVector @The position to search around
 --- @param radius number @Radius to search within
---- @param stepdown number @Maximum stepdown( fall distance ) allowed
---- @param stepup number @Maximum stepup( jump height ) allowed
---- @return table @A table of CNavAreas
-function navmesh.Find(pos, radius, stepdown, stepup)
+--- @param stepHeight number @Maximum step up height allowed
+--- @param dropHeight number @Maximum step down (fall distance) allowed
+--- @return table @A list of found CNavAreas.
+function navmesh.Find(pos, radius, stepHeight, dropHeight)
+end
+
+--- Returns a list of CNavAreas overlapping the given cube extents.  
+--- @param pos1 GVector @The start position of the cube to search in.
+--- @param pos2 GVector @The "end" position of the cube to search in
+--- @return table @A list of found CNavAreas.
+function navmesh.FindInBox(pos1, pos2)
 end
 
 --- Returns an integer indexed table of all CNavAreas on the current map. If the map doesn't have a navmesh generated then this will return an empty table.  
 --- @return table @A table of all the CNavAreas on the current map.
 function navmesh.GetAllNavAreas()
+end
+
+--- Returns a table of all blocked CNavAreas on the current map. See CNavArea:MarkAsBlocked.  
+--- @return table @A table of all the blocked CNavAreas on the current map.
+function navmesh.GetBlockedAreas()
 end
 
 --- Returns the position of the edit cursor when nav_edit is set to 1.  
@@ -75,8 +97,8 @@ end
 function navmesh.GetNavAreaByID(id)
 end
 
---- Returns the highest ID of all nav areas on the map. While this can be used to get all nav areas, this number may not actually be the actual number of nav areas on the map.  
---- @return number @The highest ID of all nav areas on the map.
+--- Returns the total count of nav areas on the map. If you want to get all nav areas, use navmesh.GetAllNavAreas instead as nav areas IDs are not always sequential.  
+--- @return number @The total count of nav areas on the map.
 function navmesh.GetNavAreaCount()
 end
 
@@ -88,12 +110,12 @@ end
 
 --- Returns the closest CNavArea to given position at the same height, or beneath it.  
 --- This function will ignore blocked CNavAreas. See navmesh.GetNavArea for a function that does see blocked areas.  
---- @param pos GVector @The position to look from
---- @param anyZ boolean @This argument is ignored and has no effect
---- @param maxDist number @This is the maximum distance from the given position that the function will look for a CNavArea
---- @param checkLOS boolean @If this is set to true then the function will internally do a util.TraceLine from the starting position to each potential CNavArea with a [M
---- @param checkGround boolean @If checkGround is true then this function will internally call navmesh.GetNavArea to check if there is a CNavArea directly below the positio
---- @param team number @This will internally call CNavArea:IsBlocked to check if the target CNavArea is not to be navigated by the given team
+--- @param pos? GVector @The position to look from
+--- @param anyZ? boolean @This argument is ignored and has no effect
+--- @param maxDist? number @This is the maximum distance from the given position that the function will look for a CNavArea
+--- @param checkLOS? boolean @If this is set to true then the function will internally do a util.TraceLine from the starting position to each potential CNavArea with a [M
+--- @param checkGround? boolean @If checkGround is true then this function will internally call navmesh.GetNavArea to check if there is a CNavArea directly below the positio
+--- @param team? number @This will internally call CNavArea:IsBlocked to check if the target CNavArea is not to be navigated by the given team
 --- @return GCNavArea @The closest CNavArea found with the given parameters, or a NULL CNavArea if one was not found.
 function navmesh.GetNearestNavArea(pos, anyZ, maxDist, checkLOS, checkGround, team)
 end
@@ -114,6 +136,8 @@ function navmesh.IsLoaded()
 end
 
 --- Loads a new navmesh from the .nav file for current map discarding any changes made to the navmesh previously.  
+--- ⚠ **WARNING**:   
+--- Calling this function too soon, causes the Server to crash!  
 function navmesh.Load()
 end
 

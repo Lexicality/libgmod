@@ -10,22 +10,18 @@ end
 
 --- Switches the renderer back to the previous drawing mode from a 3D context.  
 --- This function is an alias of cam.End3D.  
---- 🦟 **BUG**: [This will crash the game if there is no context to end.](https://github.com/Facepunch/garrysmod-issues/issues/1091)  
 function cam.End()
 end
 
 --- Switches the renderer back to the previous drawing mode from a 2D context.  
---- 🦟 **BUG**: [This will crash the game if there is no context to end.](https://github.com/Facepunch/garrysmod-issues/issues/1091)  
 function cam.End2D()
 end
 
 --- Switches the renderer back to the previous drawing mode from a 3D context.  
---- 🦟 **BUG**: [This will crash the game if there is no context to end.](https://github.com/Facepunch/garrysmod-issues/issues/1091)  
 function cam.End3D()
 end
 
 --- Switches the renderer back to the previous drawing mode from a 3D2D context.  
---- 🦟 **BUG**: [This will crash the game if there is no context to end.](https://github.com/Facepunch/garrysmod-issues/issues/1091)  
 function cam.End3D2D()
 end
 
@@ -33,13 +29,14 @@ end
 function cam.EndOrthoView()
 end
 
---- Returns the currently active model matrix.  
---- ⁉ **VALIDATE**: Does this actually mean the matrix on top of the stack? Probably  
+--- Returns a copy of the model matrix that is at the top of the stack.  
+--- ℹ **NOTE**: Editing the matrix **will not** edit the current view. To do so, you will have to use cam.PushModelMatrix.  
 --- @return GVMatrix @The currently active matrix.
 function cam.GetModelMatrix()
 end
 
 --- Tells the renderer to ignore the depth buffer and draw any upcoming operation "ontop" of everything that was drawn yet.  
+--- This is identical to calling `render.DepthRange( 0, 0.01 )` for `true` and  `render.DepthRange( 0, 1 )` for `false`. See render.DepthRange.  
 --- @param ignoreZ boolean @Determines whenever to ignore the depth buffer or not.
 function cam.IgnoreZ(ignoreZ)
 end
@@ -50,8 +47,9 @@ end
 
 --- Pushes the specified matrix onto the render matrix stack. Unlike opengl, this will replace the current model matrix.  
 --- ℹ **NOTE**: This does not work with cam.Start3D2D if `multiply` is false.  
---- @param matrix GVMatrix @The matrix to push.
---- @param multiply boolean @If set, multiplies given matrix with currently active matrix (cam.GetModelMatrix) before pushing.
+--- ⚠ **WARNING**: When used in the Paint function of a panel, if you want to rely on the top-left position of the panel, you must use VMatrix:Translate with the (0, 0) position of the panel relative to the screen.  
+--- @param matrix? GVMatrix @The matrix to push.
+--- @param multiply? boolean @If set, multiplies given matrix with currently active matrix (cam.GetModelMatrix) before pushing.
 function cam.PushModelMatrix(matrix, multiply)
 end
 
@@ -69,25 +67,23 @@ function cam.Start2D()
 end
 
 --- Sets up a new 3D rendering context. Must be finished by cam.End3D.  
---- For more advanced settings such as an orthographic view, use cam.Start instead.  
+--- For more advanced settings such as an orthographic view, use cam.Start instead, which this is an alias of basically.  
 --- 🧱 **NOTE**: Provides a 3D rendering context  
---- ℹ **NOTE**: Both zNear and zFar need a value before any of them work.  
---- zNear also requires a value higher than 0.  
 --- 🦟 **BUG**: [Negative x/y values won't work.](https://github.com/Facepunch/garrysmod-issues/issues/1995)  
 --- 🦟 **BUG**: [This will not update current view properties.](https://github.com/Facepunch/garrysmod-issues/issues/2682)  
---- @param pos GVector @Render cam position.
---- @param angles GAngle @Render cam angles.
---- @param fov number @Field of view.
---- @param x number @X coordinate of where to start the new view port.
---- @param y number @Y coordinate of where to start the new view port.
---- @param w number @Width of the new viewport.
---- @param h number @Height of the new viewport.
---- @param zNear number @Distance to near clipping plane.
---- @param zFar number @Distance to far clipping plane.
+--- @param pos? GVector @Render cam position.
+--- @param angles? GAngle @Render cam angles.
+--- @param fov? number @Field of view.
+--- @param x? number @X coordinate of where to start the new view port.
+--- @param y? number @Y coordinate of where to start the new view port.
+--- @param w? number @Width of the new viewport.
+--- @param h? number @Height of the new viewport.
+--- @param zNear? number @Distance to near clipping plane
+--- @param zFar? number @Distance to far clipping plane.
 function cam.Start3D(pos, angles, fov, x, y, w, h, zNear, zFar)
 end
 
---- Sets up a new 2D rendering context. Must be finished by cam.End3D2D. This function pushes a new matrix onto the stack. (cam.PushModelMatrix)  
+--- Sets up the model transformation matrix to draw 2D content in 3D space and pushes it into the stack (cam.PushModelMatrix).  
 --- Matrix formula:  
 --- ```  
 --- local m = Matrix()  
@@ -95,9 +91,7 @@ end
 --- m:SetTranslation(pos)  
 --- m:SetScale(Vector(scale, -scale, 1))  
 --- ```  
---- 🟥 **NOTE**: Provides a 2D rendering context  
---- <rendercontext hook="false" type="3D"></rendercontext>  
---- ⚠ **WARNING**: This should be closed by cam.End3D2D otherwise the game crashes  
+--- ⚠ **WARNING**: This must be closed by cam.End3D2D. If not done so, unexpected issues might arise.  
 --- @param pos GVector @Origin of the 3D2D context, ie
 --- @param angles GAngle @Angles of the 3D2D context
 --- @param scale number @The scale of the render context

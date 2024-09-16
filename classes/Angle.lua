@@ -1,14 +1,14 @@
 --- @class GAngle
 --- List of all possible functions to manipulate angles.  
 --- Created by Global.Angle.  
---- @field p number @The pitch component of the angle
---- @field pitch number @The pitch component of the angle
---- @field x number @The pitch component of the angle
---- @field y number @The yaw component of the angle
---- @field yaw number @The yaw component of the angle
---- @field r number @The roll  component of the angle
---- @field roll number @The roll  component of the angle
---- @field z number @The roll  component of the angle
+--- @field p number @The pitch component of the angle.
+--- @field pitch number @The pitch component of the angle.
+--- @field x number @The pitch component of the angle.
+--- @field y number @The yaw component of the angle.
+--- @field yaw number @The yaw component of the angle.
+--- @field r number @The roll  component of the angle.
+--- @field roll number @The roll  component of the angle.
+--- @field z number @The roll  component of the angle.
 local GAngle = {}
 --- Adds the values of the argument angle to the orignal angle.  
 --- This functions the same as angle1 + angle2 without creating a new angle object, skipping object construction and garbage collection.  
@@ -26,6 +26,13 @@ end
 function GAngle:Forward()
 end
 
+--- Returns if the angle is equal to another angle with the given tolerance.  
+--- @param compare GAngle @The angle to compare to.
+--- @param tolerance number @The tolerance range.
+--- @return boolean @Are the angles equal or not.
+function GAngle:IsEqualTol(compare, tolerance)
+end
+
 --- Returns whether the pitch, yaw and roll are 0 or not.  
 --- @return boolean @Whether the pitch, yaw and roll are 0 or not.
 function GAngle:IsZero()
@@ -40,13 +47,19 @@ end
 function GAngle:Normalize()
 end
 
+--- Randomizes each element of this Angle object.  
+--- @param min? number @The minimum value for each component.
+--- @param max? number @The maximum value for each component.
+function GAngle:Random(min, max)
+end
+
 --- Returns a normal vector facing in the direction that points right relative to the angle's direction.  
 --- @return GVector @The right direction of the angle
 function GAngle:Right()
 end
 
 --- Rotates the angle around the specified axis by the specified degrees.  
---- @param axis GVector @The axis to rotate around.
+--- @param axis GVector @The axis to rotate around as a normalized unit vector
 --- @param rotation number @The degrees to rotate around the specified axis.
 function GAngle:RotateAroundAxis(axis, rotation)
 end

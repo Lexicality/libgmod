@@ -128,7 +128,7 @@ function GCLuaParticle:SetCollide(shouldCollide)
 end
 
 --- Sets the function that gets called whenever the particle collides with the world.  
---- @param collideFunc function @Collide callback, the arguments are:
+--- @param collideFunc function @The collision callback
 function GCLuaParticle:SetCollideCallback(collideFunc)
 end
 
@@ -172,8 +172,8 @@ end
 function GCLuaParticle:SetLifeTime(lifeTime)
 end
 
---- Sets whether the particle should be lighted.  
---- @param useLighting boolean @Whether the particle should be lighted.
+--- Sets whether the particle should be affected by lighting.  
+--- @param useLighting boolean @Whether the particle should be affected by lighting.
 function GCLuaParticle:SetLighting(useLighting)
 end
 
@@ -228,7 +228,7 @@ function GCLuaParticle:SetVelocity(vel)
 end
 
 --- Scales the velocity based on the particle speed.  
---- @param doScale boolean @Use velocity scaling.
+--- @param doScale? boolean @Use velocity scaling.
 function GCLuaParticle:SetVelocityScale(doScale)
 end
 

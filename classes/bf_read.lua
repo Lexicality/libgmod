@@ -1,12 +1,13 @@
 --- @class Gbf_read
 --- This is the object passed to usermessage.Hook when a message is received. It contains each value stored in the message in sequential order. You should read values from it in the order you wrote them.  
+--- 🛑 **DEPRECATED**: You should be using net instead  
 local Gbf_read = {}
---- Reads an returns an angle object from the bitstream.  
+--- Reads and returns an angle object from the bitstream.  
 --- @return GAngle @The read angle
 function Gbf_read:ReadAngle()
 end
 
---- Reads 1 bit an returns a bool representing the bit.  
+--- Reads 1 bit and returns a bool representing the bit.  
 --- @return boolean @bit
 function Gbf_read:ReadBool()
 end

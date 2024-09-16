@@ -22,9 +22,39 @@ end
 function GCMoveData:GetButtons()
 end
 
---- Returns the radius that constrains the players movement.  
+--- Returns the center of the player movement constraint. See CMoveData:SetConstraintCenter.  
+--- @return GVector @The constraint origin.
+function GCMoveData:GetConstraintCenter()
+end
+
+--- Returns the radius that constrains the players movement. See CMoveData:SetConstraintRadius.  
 --- @return number @The constraint radius
 function GCMoveData:GetConstraintRadius()
+end
+
+--- Returns the player movement constraint speed scale. See CMoveData:SetConstraintSpeedScale.  
+--- @return number @The constraint speed scale
+function GCMoveData:GetConstraintSpeedScale()
+end
+
+--- Returns the width (distance from the edge of the radius, inward) where the actual movement constraint functions.  
+--- @return number @The constraint width
+function GCMoveData:GetConstraintWidth()
+end
+
+--- Returns an internal player movement variable `m_outWishVel`.  
+--- @return GVector 
+function GCMoveData:GetFinalIdealVelocity()
+end
+
+--- Returns an internal player movement variable `m_outJumpVel`.  
+--- @return GVector 
+function GCMoveData:GetFinalJumpVelocity()
+end
+
+--- Returns an internal player movement variable `m_outStepHeight`.  
+--- @return number 
+function GCMoveData:GetFinalStepHeight()
 end
 
 --- Returns the players forward speed.  
@@ -124,10 +154,43 @@ end
 function GCMoveData:SetButtons(buttons)
 end
 
+--- Sets the center of the player movement constraint. See CMoveData:SetConstraintRadius.  
+--- @param pos GVector @The constraint origin.
+function GCMoveData:SetConstraintCenter(pos)
+end
+
 --- Sets the radius that constrains the players movement.  
---- It is unknown what this function does as changing its values doesn't affect player movement.  
+--- Works with conjunction of:  
+--- * CMoveData:SetConstraintWidth  
+--- * CMoveData:SetConstraintSpeedScale  
+--- * CMoveData:SetConstraintCenter  
 --- @param radius number @The new constraint radius
 function GCMoveData:SetConstraintRadius(radius)
+end
+
+--- Sets the player movement constraint speed scale. This will be applied to the player within the constraint radius when approaching its edge.  
+--- @param arg number @The constraint speed scale
+function GCMoveData:SetConstraintSpeedScale(arg)
+end
+
+--- Sets  the width (distance from the edge of the radius, inward) where the actual movement constraint functions.  
+--- @param arg number @The constraint width
+function GCMoveData:SetConstraintWidth(arg)
+end
+
+--- Sets an internal player movement variable `m_outWishVel`.  
+--- @param idealVel GVector 
+function GCMoveData:SetFinalIdealVelocity(idealVel)
+end
+
+--- Sets an internal player movement variable `m_outJumpVel`.  
+--- @param jumpVel GVector 
+function GCMoveData:SetFinalJumpVelocity(jumpVel)
+end
+
+--- Sets an internal player movement variable `m_outStepHeight`.  
+--- @param stepHeight number 
+function GCMoveData:SetFinalStepHeight(stepHeight)
 end
 
 --- Sets players forward speed.  
@@ -156,7 +219,7 @@ function GCMoveData:SetMaxSpeed(maxSpeed)
 end
 
 --- Sets the serverside move angles, making the movement keys act as if player was facing that direction.  
---- 🦟 **BUG**: [This does nothing clientside.](https://github.com/Facepunch/garrysmod-issues/issues/1181)  
+--- This function is predicted, and should be called shared with matching data on client and server.  
 --- @param dir GAngle @The aim direction.
 function GCMoveData:SetMoveAngles(dir)
 end

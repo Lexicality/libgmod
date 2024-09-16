@@ -6,12 +6,6 @@ _G.scripted_ents = {}
 function scripted_ents.Alias(alias, classname)
 end
 
---- Returns a copy of the ENT table for a class, including functions defined by the base class  
---- @param classname string @The classname of the ENT table to return, can be an alias
---- @return table @entTable
-function scripted_ents.Get(classname)
-end
-
 --- Returns a copy of the list of all ENT tables registered  
 --- @return table @A table of all entities in the following format: (table keys are the classnames)
 function scripted_ents.GetList()
@@ -24,7 +18,7 @@ end
 function scripted_ents.GetMember(class, name)
 end
 
---- Returns a list of all ENT tables which contain either ENT.Spawnable or ENT.AdminSpawnable  
+--- Returns a list of all ENT tables which contain ENT.Spawnable  
 --- @return table @A table of Structures/ENTs
 function scripted_ents.GetSpawnable()
 end
@@ -51,7 +45,7 @@ end
 --- Registers an ENT table with a classname. Reregistering an existing classname will automatically update the functions of all existing entities of that class.  
 --- 🦟 **BUG**: [Sub-tables provided in the first argument will not carry over their metatable, and will receive a BaseClass key if the table was merged with the base's. Userdata references, which includes Vectors, Angles, Entities, etc. will not be copied.](https://github.com/Facepunch/garrysmod/pull/1300)  
 --- @param ENT table @The ENT table to register
---- @param classname string @The classname to register
+--- @param classname string @The classname to register.
 function scripted_ents.Register(ENT, classname)
 end
 

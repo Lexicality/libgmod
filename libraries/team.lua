@@ -11,7 +11,7 @@ end
 function team.BestAutoJoinTeam()
 end
 
---- Returns a table consisting of information on every defined team  
+--- Returns the real table consisting of information on every defined team  
 --- @return table @Team info
 function team.GetAllTeams()
 end
@@ -35,8 +35,9 @@ function team.GetName(teamIndex)
 end
 
 --- Returns a table with all player of the specified team.  
+--- ℹ **NOTE**: This function returns a sequential table, meaning it should be looped with Global.ipairs instead of Global.pairs for efficiency reasons.  
 --- @param teamIndex number @The team index.
---- @return table @A table of Players that belong to the requested team.
+--- @return table @A sequential table of Players that belong to the requested team.
 function team.GetPlayers(teamIndex)
 end
 
@@ -96,17 +97,17 @@ function team.SetSpawnPoint(index, classes)
 end
 
 --- Creates a new team.  
---- @param teamIndex number @The team index.
---- @param teamName string @The team name.
---- @param teamColor table @The team color
---- @param isJoinable boolean @Whether the team is joinable or not.
+--- @param teamIndex? number @The team index.
+--- @param teamName? string @The team name.
+--- @param teamColor? table @The team color
+--- @param isJoinable? boolean @Whether the team is joinable or not.
 function team.SetUp(teamIndex, teamName, teamColor, isJoinable)
 end
 
---- Returns the sum of deaths of all players of the team.  
---- @param teamIndex number @The team index.
---- @return number @deathCount
-function team.TotalDeaths(teamIndex)
+--- Returns the total number of deaths of all players in the team.  
+--- @param index number @The team index.
+--- @return number @Total deaths in team.
+function team.TotalDeaths(index)
 end
 
 --- Get's the total frags in a team.  

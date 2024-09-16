@@ -87,12 +87,14 @@ function GCEffectData:SetAngles(ang)
 end
 
 --- Sets the attachment id of the effect to be created with this effect data.  
---- ℹ **NOTE**: This is internally stored as an integer, but only the first 5 bits will be networked.  
+--- ℹ **NOTE**: This is internally stored as an integer, but only the first 5 bits will be networked, effectively limiting this function to 0-31 range.  
 --- @param attachment number @New attachment ID of the effect.
 function GCEffectData:SetAttachment(attachment)
 end
 
---- Sets the color of the effect.  
+--- Sets the "color" of the effect.  
+--- All this does is provide an addition 8 bits of data for the effect to use. What this will actually do will vary from effect to effect, depending on how a specific effect uses this given data, if at all.  
+--- ℹ **NOTE**: Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to 0-255 range.  
 --- @param color number @Color represented by a byte.
 function GCEffectData:SetColor(color)
 end
@@ -112,41 +114,49 @@ end
 function GCEffectData:SetEntity(entity)
 end
 
---- Sets the flags of the effect.  
---- ℹ **NOTE**: This is internally stored as an integer, but only the first 8 bits will be networked.  
+--- Sets the flags of the effect. Can be used to change the appearance of a MuzzleFlash effect.  
+--- ## Example values for MuzzleFlash effect  
+--- Flags |  Description |  
+--- ------|--------------|  
+--- 1 | Regular muzzleflash|  
+--- 5 | Combine muzzleflash|  
+--- 7 | Regular muzzle but bigger|  
+--- ℹ **NOTE**: Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `0-255` range.  
 --- @param flags number @The flags of the effect
 function GCEffectData:SetFlags(flags)
 end
 
 --- Sets the hit box index of the effect.  
---- ℹ **NOTE**: This is internally stored as an integer, but only the first 11 bits will be networked.  
+--- ℹ **NOTE**: Internally stored as an integer, but only first 11 bits are networked, effectively limiting this function to 0-2047 range.  
 --- @param hitBoxIndex number @The hit box index of the effect.
 function GCEffectData:SetHitBox(hitBoxIndex)
 end
 
 --- Sets the magnitude of the effect.  
+--- ℹ **NOTE**: Internally stored as a float with 12 bit precision for networking purposes, limited to range of 0-1023.  
 --- @param magnitude number @The magnitude of the effect.
 function GCEffectData:SetMagnitude(magnitude)
 end
 
 --- Sets the material index of the effect.  
---- ℹ **NOTE**: This is internally stored as an integer, but only the first 11 bits will be networked.  
+--- ℹ **NOTE**: Internally stored as an integer, but only first 12 bits are networked, effectively limiting this function to 0-4095 range.  
 --- @param materialIndex number @The material index of the effect.
 function GCEffectData:SetMaterialIndex(materialIndex)
 end
 
---- Sets the normalized direction vector of the effect to be created with this effect data.  
+--- Sets the normalized (length=1) direction vector of the effect to be created with this effect data. This **must** be a normalized vector for networking purposes.  
 --- @param normal GVector @The normalized direction vector of the effect.
 function GCEffectData:SetNormal(normal)
 end
 
 --- Sets the origin of the effect to be created with this effect data.  
+--- ℹ **NOTE**: Limited to world bounds (+-16386 on every axis) and has horrible networking precision. (17 bit float per component)  
 --- @param origin GVector @Origin of the effect.
 function GCEffectData:SetOrigin(origin)
 end
 
 --- Sets the radius of the effect to be created with this effect data.  
---- ℹ **NOTE**: This is clamped internally from 0 to 1023.  
+--- ℹ **NOTE**: Internally stored as a float, but networked as a 10bit float, and is clamped to 0-1023 range.  
 --- @param radius number @Radius of the effect.
 function GCEffectData:SetRadius(radius)
 end
@@ -157,11 +167,13 @@ function GCEffectData:SetScale(scale)
 end
 
 --- Sets the start of the effect to be created with this effect data.  
+--- ℹ **NOTE**: Limited to world bounds (+-16386 on every axis) and has horrible networking precision. (17 bit float per component)  
 --- @param start GVector @Start of the effect.
 function GCEffectData:SetStart(start)
 end
 
 --- Sets the surface property index of the effect.  
+--- ℹ **NOTE**: Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `-1`-`254` range.(yes, that's not a mistake)  
 --- @param surfaceProperties number @The surface property index of the effect.
 function GCEffectData:SetSurfaceProp(surfaceProperties)
 end

@@ -2,12 +2,11 @@
 --- A Material object. It represents a game material, similarly to how a .vmt file does.  
 --- It can be created with Global.Material or Global.CreateMaterial.  
 local GIMaterial = {}
---- Returns the color of the specified pixel of the $basetexture, only works for materials created from PNG files.  
---- Basically identical to ITexture:GetColor used on IMaterial:GetTexture( "$basetexture" ).  
---- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
+--- Returns the color of the specified pixel of the `$basetexture`, only works for materials created from PNG files.  
+--- Basically identical to ITexture:GetColor used on IMaterial:GetTexture`( "$basetexture" )`.  
 --- @param x number @The X coordinate.
 --- @param y number @The Y coordinate.
---- @return table @The color of the pixel as a Color.
+--- @return GColor @The color of the pixel as a Color.
 function GIMaterial:GetColor(x, y)
 end
 
@@ -65,6 +64,15 @@ end
 function GIMaterial:GetVector(materialVector)
 end
 
+--- Returns the specified material vector as a 4 component vector.  
+--- @param name string @The name of the material vector to retrieve.
+--- @return number @The x component of the vector.
+--- @return number @The y component of the vector.
+--- @return number @The z component of the vector.
+--- @return number @The w component of the vector.
+function GIMaterial:GetVector4D(name)
+end
+
 --- Returns the specified material linear color vector, or nil if the value is not set.  
 --- See https://en.wikipedia.org/wiki/Gamma_correction  
 --- See also IMaterial:GetVector  
@@ -73,8 +81,8 @@ end
 function GIMaterial:GetVectorLinear(materialVector)
 end
 
---- Returns the height of the member texture set for $basetexture.  
---- @return number @height
+--- Returns the height of the member texture set for `$basetexture`.  
+--- @return number @Height of the base texture.
 function GIMaterial:Height()
 end
 
@@ -136,8 +144,17 @@ end
 function GIMaterial:SetVector(MaterialVector, vec)
 end
 
---- Returns the width of the member texture set for $basetexture.  
---- @return number @width
+--- Sets the specified material vector to the specified 4 component vector, does nothing on a type mismatch.  
+--- @param name string @The name of the material vector.
+--- @param x number @The x component of the new vector.
+--- @param y number @The y component of the new vector.
+--- @param z number @The z component of the new vector.
+--- @param w number @The w component of the new vector.
+function GIMaterial:SetVector4D(name, x, y, z, w)
+end
+
+--- Returns the width of the member texture set for `$basetexture`.  
+--- @return number @Width of the base texture.
 function GIMaterial:Width()
 end
 

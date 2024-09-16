@@ -1,5 +1,6 @@
 --- @class GConVar
---- An object returned by Global.CreateConVar, Global.CreateClientConVar (which uses Global.CreateConVar internally), and Global.GetConVar. It represents a console variable. See this page for more information.  
+--- An object returned by Global.CreateConVar, Global.CreateClientConVar (which uses Global.CreateConVar internally), and Global.GetConVar.  
+--- It represents a console variable. See this page for more information.  
 local GConVar = {}
 --- Tries to convert the current string value of a ConVar to a boolean.  
 --- @return boolean @The boolean value of the console variable
@@ -58,6 +59,7 @@ function GConVar:IsFlagSet(flag)
 end
 
 --- Reverts ConVar to its default value  
+--- ℹ **NOTE**: This can only be ran on ConVars created from within Lua.  
 function GConVar:Revert()
 end
 
@@ -66,12 +68,14 @@ end
 function GConVar:SetBool(value)
 end
 
---- Sets a ConVar's value to to the input number. This can only be ran on ConVars created from within Lua.  
+--- Sets a ConVar's value to the input number.  
+--- ℹ **NOTE**: This can only be ran on ConVars created from within Lua.  
 --- @param value number @Value to set the ConVar to.
 function GConVar:SetFloat(value)
 end
 
---- Sets a ConVar's value to the input number after converting it to an integer. This can only be ran on ConVars created from within Lua.  
+--- Sets a ConVar's value to the input number after converting it to an integer.  
+--- ℹ **NOTE**: This can only be ran on ConVars created from within Lua.  
 --- @param value number @Value to set the ConVar to.
 function GConVar:SetInt(value)
 end

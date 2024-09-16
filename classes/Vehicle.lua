@@ -1,5 +1,5 @@
 --- @class GVehicle : GEntity
---- This is a list of all methods only available for vehicles. It is also possible to call [Entity](http://wiki.garrysmod.com/index.php?title=Category:Entity) functions on vehicles.  
+--- This is a list of all methods only available for vehicles. It is also possible to call [Entity](https://wiki.facepunch.com/gmod/Entity) functions on vehicles.  
 local GVehicle = {}
 --- Returns the remaining boosting time left.  
 --- @return number @The remaining boosting time left
@@ -30,8 +30,8 @@ end
 function GVehicle:GetCameraDistance()
 end
 
---- Gets the driver of the vehicle, returns NULL if no driver is present.  
---- @return GEntity @The driver of the vehicle
+--- Gets the driver of the vehicle, returns `NULL` if no driver is present.  
+--- @return GEntity @The driver of the vehicle.
 function GVehicle:GetDriver()
 end
 
@@ -104,7 +104,7 @@ function GVehicle:GetVehicleParams()
 end
 
 --- Returns the view position and forward angle of a given passenger seat.  
---- @param role number @The passenger role
+--- @param role? number @The passenger role
 --- @return GVector @The view position, will be 0, 0, 0 on failure
 --- @return GAngle @The view angles, will be 0, 0, 0 on failure
 --- @return number @The field of view, will be 0 on failure
@@ -167,7 +167,7 @@ end
 function GVehicle:IsEngineStarted()
 end
 
---- Returns true if the vehicle object is a valid or not. This will return false when Vehicle functions are not usable on the vehicle.  
+--- Returns true if the vehicle object is a valid or not. This will return `false` when Vehicle functions are not usable on the vehicle.  
 --- @return boolean @Is the vehicle a valid vehicle or not
 function GVehicle:IsValidVehicle()
 end
@@ -226,13 +226,6 @@ end
 function GVehicle:SetSteering(front, rear)
 end
 
---- Sets the steering of the vehicle.  
---- ⁉ **VALIDATE**: The correct range, 0 to 1 or -1 to 1  
---- @param front number @Angle of the front wheels (-1 to 1)
---- @param rear number @Angle of the rear wheels (-1 to 1)
-function GVehicle:SetSteering(front, rear)
-end
-
 --- Sets the maximum steering degrees of the vehicle  
 --- @param steeringDegrees number @The new maximum steering degree
 function GVehicle:SetSteeringDegrees(steeringDegrees)
@@ -255,8 +248,6 @@ end
 
 --- Sets the vehicle parameters for given vehicle.  
 --- ℹ **NOTE**: Not all variables from the Structures/VehicleParams can be set.  
---- 🦟 **BUG**: [Because this method uses miles per hour but Vehicle:GetVehicleParams returns Hammer units per second, this method incorrectly modifies the vehicle engine's "boostMaxSpeed", "maxRevSpeed" and "maxSpeed" even when not explicitly set in a call to this method.](https://github.com/Facepunch/garrysmod-issues/issues/2625)  
---- **Workaround**: In order to retain the original values for these fields, call Vehicle:GetVehicleParams yourself, convert the mentioned fields from Hammer units per second to miles per hour (1 MPH ≈ 17.6 HU/s in this case) and add them to the table passed into the call to this setter. Avoid doing this repeatedly to avoid floating point inaccuracies over time (store the ready-calculated value for next time if possible).  
 --- @param params table @The new new vehicle parameters
 function GVehicle:SetVehicleParams(params)
 end

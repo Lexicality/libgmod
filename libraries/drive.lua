@@ -1,4 +1,4 @@
---- The drive library is for adding custom control modes to the new "remote control" entity piloting system in Garry's Mod 13.  
+--- The drive library is for adding custom control modes to the new "remote control" entity piloting system in Garry's Mod 13. See Entity Driving.  
 _G.drive = {}
 --- Player has stopped driving the entity.  
 --- @param ply GPlayer @The player
@@ -19,9 +19,9 @@ function drive.PlayerStopDriving(ply)
 end
 
 --- Registers a new entity drive.  
---- @param name string @The name of the drive.
---- @param data table @The data required to create the drive
---- @param base string @The base of the drive.
+--- @param name? string @The name of the drive.
+--- @param data? table @The data required to create the drive
+--- @param base? string @The base of the drive.
 function drive.Register(name, data, base)
 end
 

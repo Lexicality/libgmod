@@ -8,7 +8,7 @@ function system.AppTime()
 end
 
 --- Returns the current battery power.  
---- @return number @0-100 if on battery power
+--- @return number @0-100 if a battery (laptop, UPS, etc) is present
 function system.BatteryPower()
 end
 
@@ -23,9 +23,7 @@ function system.GetCountry()
 end
 
 --- Returns whether or not the game window has focus.  
---- Returns true 100% of the time on OS X.  
 --- ℹ **NOTE**: This function does not work on dedicated servers and will instead return no value.  
---- 🦟 **BUG**: [This will return true when minimized in windowed-mode.](https://github.com/Facepunch/garrysmod-issues/issues/2424)  
 --- @return boolean @Whether or not the game window has focus.
 function system.HasFocus()
 end

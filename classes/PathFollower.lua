@@ -1,21 +1,22 @@
 --- @class GPathFollower
---- Path object for a NextBot NPC. Returned by Global.Path.  
+--- Path object for a NextBot NPC and bots created by player.CreateNextbot. Returned by Global.Path.  
 local GPathFollower = {}
---- If you created your path with type "Chase" this functions should be used in place of PathFollower:Update to cause the bot to chase the specified entity.  
---- @param bot GNextBot @The bot to update along the path
---- @param ent GEntity @The entity we want to chase
-function GPathFollower:Chase(bot, ent)
+--- If you created your path with type `"Chase"` this functions should be used in place of PathFollower:Update to cause the bot to chase the specified entity.  
+--- @param bot? GNextBot @The bot to update along the path
+--- @param ent? GEntity @The entity we want to chase
+--- @param generator? function @A function that allows you to alter the path generation
+function GPathFollower:Chase(bot, ent, generator)
 end
 
 --- Compute shortest path from bot to 'goal' via A* algorithm.  
---- @param from GNextBot @The nextbot we're generating for
---- @param to GVector @To point
---- @param generator function @A funtion that allows you to alter the path generation
+--- @param bot? GNextBot @The nextbot we're generating for
+--- @param goal? GVector @The target location, the goal.
+--- @param generator? function @A function that allows you to alter the path generation
 --- @return boolean @* If returns true, path was found to the goal position
-function GPathFollower:Compute(from, to, generator)
+function GPathFollower:Compute(bot, goal, generator)
 end
 
---- Draws the path. This is meant for debugging - and uses debug overlay.  
+--- Draws the path. This is meant for debugging - and uses debugoverlay.  
 function GPathFollower:Draw()
 end
 
@@ -117,9 +118,9 @@ function GPathFollower:MoveCursorTo(distance)
 end
 
 --- Moves the cursor of the path to the closest position compared to given vector.  
---- @param pos GVector 
---- @param type number @Seek type
---- @param alongLimit number 
+--- @param pos? GVector 
+--- @param type? number @Seek type
+--- @param alongLimit? number 
 function GPathFollower:MoveCursorToClosestPosition(pos, type, alongLimit)
 end
 
@@ -129,6 +130,16 @@ end
 
 --- Moves the cursor to the end of the path  
 function GPathFollower:MoveCursorToStart()
+end
+
+--- Returns the next segment of the path.  
+--- @return table @A table with Structures/PathSegment.
+function GPathFollower:NextSegment()
+end
+
+--- Returns the previous segment of the path.  
+--- @return table @A table with Structures/PathSegment.
+function GPathFollower:PriorSegment()
 end
 
 --- Resets the age which is retrieved by PathFollower:GetAge to 0.  

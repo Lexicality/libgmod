@@ -1,28 +1,13 @@
---- Add proxies to materials.  
+--- A library that allows implementing custom [material proxies](https://developer.valvesoftware.com/wiki/Material_proxies) for materials.  
+--- Material proxies allow programmatically setting specific `.vmt` shader parameters on a per-entity basis, rather being global across all instances of a material.  
 _G.matproxy = {}
---- Adds a material proxy.  
---- @param MatProxyData table @The information about the proxy
-function matproxy.Add(MatProxyData)
+--- Register a material proxy. See matproxy for more general explanation of what they are.  
+--- @param matProxyData table @The information about the proxy
+function matproxy.Add(matProxyData)
 end
 
---- Called by the engine from OnBind  
---- @param uname string 
---- @param mat GIMaterial 
---- @param ent GEntity 
-function matproxy.Call(uname, mat, ent)
-end
-
---- Called by the engine from OnBind  
---- @param name string 
---- @param uname string 
---- @param mat GIMaterial 
---- @param values table 
-function matproxy.Init(name, uname, mat, values)
-end
-
---- Called by engine, returns true if we're overriding a proxy  
---- @param name string @The name of proxy in question
---- @return boolean @Are we overriding it?
-function matproxy.ShouldOverrideProxy(name)
+--- A list of all material proxies registered with matproxy.Add.  
+--- @return table @The list of all material proxies.
+function matproxy.ProxyList()
 end
 

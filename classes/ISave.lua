@@ -37,8 +37,8 @@ end
 function GISave:WriteInt(int)
 end
 
---- Writes a string to the save object.  
---- @param str string @The string to write
+--- Writes a **null terminated** string to the save object.  
+--- @param str string @The string to write.
 function GISave:WriteString(str)
 end
 

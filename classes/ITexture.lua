@@ -28,6 +28,11 @@ end
 function GITexture:GetName()
 end
 
+--- Returns the number of animation frames in this texture.  
+--- @return number @The number of animation frames in this texture.
+function GITexture:GetNumAnimationFrames()
+end
+
 --- Returns the modified height of the texture, this value may be affected by mipmapping and other factors.  
 --- @return number @height
 function GITexture:Height()

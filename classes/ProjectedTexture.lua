@@ -37,6 +37,11 @@ end
 function GProjectedTexture:GetHorizontalFOV()
 end
 
+--- Returns whenever or not the Texture should light up world geometry.  
+--- @return boolean @`true` if the Texture should light up world geometry.
+function GProjectedTexture:GetLightWorld()
+end
+
 --- Returns the linear attenuation of the projected texture, which can also be set by ProjectedTexture:SetLinearAttenuation.  
 --- @return number @The linear attenuation.
 function GProjectedTexture:GetLinearAttenuation()
@@ -64,6 +69,29 @@ end
 --- Returns the quadratic attenuation of the projected texture, which can also be set by ProjectedTexture:SetQuadraticAttenuation.  
 --- @return number @The quadratic attenuation
 function GProjectedTexture:GetQuadraticAttenuation()
+end
+
+--- Returns the shadow depth bias of the projected texture.  
+--- Set by ProjectedTexture:SetShadowDepthBias.  
+--- @return number @The current shadow depth bias.
+function GProjectedTexture:GetShadowDepthBias()
+end
+
+--- Returns the shadow "filter size" of the projected texture. `0` is fully pixelated, higher values will blur the shadow more.  
+--- Set by ProjectedTexture:SetShadowFilter.  
+--- @return number @The current shadow filter size.
+function GProjectedTexture:GetShadowFilter()
+end
+
+--- Returns the shadow depth slope scale bias of the projected texture.  
+--- Set by ProjectedTexture:SetShadowSlopeScaleDepthBias.  
+--- @return number @The current shadow depth slope scale bias.
+function GProjectedTexture:GetShadowSlopeScaleDepthBias()
+end
+
+--- Returns the target entity of this projected texture.  
+--- @return GEntity @The current target entity.
+function GProjectedTexture:GetTargetEntity()
 end
 
 --- Returns the texture of the ProjectedTexture, which was previously set by ProjectedTexture:SetTexture  
@@ -121,9 +149,9 @@ function GProjectedTexture:SetConstantAttenuation(constAtten)
 end
 
 --- Enable or disable shadows cast from the projected texture.  
---- ℹ **NOTE**: as with all types of projected textures (including the player's flashlight and env_projectedtexture), there can only be 8 projected textures with shadows enabled in total.   
---- This limit can be increased with the launch parameter: -numshadowtextures limit  
----  where limit is the new limit. Naturally, many projected lights with shadows enabled will drastically decrease framerate.  
+--- ℹ **NOTE**: As with all types of projected textures (including the player's flashlight and env_projectedtexture), there can only be 8 projected textures with shadows enabled in total.  
+--- This limit can be increased with the launch parameter `-numshadowtextures LIMIT` where `LIMIT` is the new limit.  
+--- Naturally, many projected lights with shadows enabled will drastically decrease framerate.  
 --- You must call ProjectedTexture:Update after using this function for it to take effect.  
 --- @param newState boolean 
 function GProjectedTexture:SetEnableShadows(newState)
@@ -147,6 +175,11 @@ end
 function GProjectedTexture:SetHorizontalFOV(hFOV)
 end
 
+--- Set whenever or not the Texture should light up world geometry.  
+--- @param lightworld boolean @Set it to `true` if the Texture should light up world geometry.
+function GProjectedTexture:SetLightWorld(lightworld)
+end
+
 --- Sets the linear attenuation of the projected texture.  
 --- See also ProjectedTexture:SetConstantAttenuation and ProjectedTexture:SetQuadraticAttenuation.  
 --- The default value of linear attenuation when the projected texture is created is 100. (others are 0, as you are not supposed to mix them)  
@@ -165,6 +198,7 @@ end
 
 --- Changes the current projected texture between orthographic and perspective projection.  
 --- You must call ProjectedTexture:Update after using this function for it to take effect.  
+--- Shadows dont work. (For non static props and for most map brushes)  
 --- @param orthographic boolean @When false, all other arguments are ignored and the texture is reset to perspective projection.
 --- @param left number @The amount of units left from the projected texture's origin to project.
 --- @param top number @The amount of units upwards from the projected texture's origin to project.
@@ -186,6 +220,32 @@ end
 function GProjectedTexture:SetQuadraticAttenuation(quadAtten)
 end
 
+--- Sets the shadow depth bias of the projected texture.  
+--- The initial value is `0.0001`. Normal projected textures obey the value of the `mat_depthbias_shadowmap` ConVar.  
+--- ⁉ **VALIDATE**: You must call ProjectedTexture:Update after using this function for it to take effect.  
+--- @param bias number @The shadow depth bias to set.
+function GProjectedTexture:SetShadowDepthBias(bias)
+end
+
+--- Sets the shadow "filter size" of the projected texture. `0` is fully pixelated, higher values will blur the shadow more. The initial value is the value of `r_projectedtexture_filter` ConVar.  
+--- ⁉ **VALIDATE**: You must call ProjectedTexture:Update after using this function for it to take effect.  
+--- @param filter number @The shadow filter size to set.
+function GProjectedTexture:SetShadowFilter(filter)
+end
+
+--- Sets the shadow depth slope scale bias of the projected texture.  
+--- The initial value is `2`. Normal projected textures obey the value of the `mat_slopescaledepthbias_shadowmap` ConVar.  
+--- ⁉ **VALIDATE**: You must call ProjectedTexture:Update after using this function for it to take effect.  
+--- @param bias number @The shadow depth slope scale bias to set.
+function GProjectedTexture:SetShadowSlopeScaleDepthBias(bias)
+end
+
+--- Sets the target entity for this projected texture, meaning it will only be lighting the given entity and the world.  
+--- ⁉ **VALIDATE**: You must call ProjectedTexture:Update after using this function for it to take effect.  
+--- @param target? GEntity @The target entity, or `NULL` to reset.
+function GProjectedTexture:SetTargetEntity(target)
+end
+
 --- Sets the texture to be projected.  
 --- You must call ProjectedTexture:Update after using this function for it to take effect.  
 --- @param texture string @The name of the texture
@@ -205,6 +265,7 @@ function GProjectedTexture:SetVerticalFOV(vFOV)
 end
 
 --- Updates the Projected Light and applies all previously set parameters.  
+--- The best place to call this function is in GM:PreDrawOpaqueRenderables.  
 function GProjectedTexture:Update()
 end
 

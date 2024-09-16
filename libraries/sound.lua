@@ -1,6 +1,8 @@
 --- Used primarily for adding new soundscript entries.  
 _G.sound = {}
 --- Creates a sound script. It can also override sounds, which seems to only work when set on the server.  
+--- You can find a list of common sound scripts that are shipped with the game by default here: Common Sounds.  
+--- A list of sound scripts can be retrieved with sound.GetTable.  
 --- @param soundData table @The sounds properties
 function sound.Add(soundData)
 end
@@ -10,14 +12,29 @@ end
 function sound.AddSoundOverrides(filepath)
 end
 
+--- Emits a sound hint to the game elements to react to, for example to repel or attract antlions.  
+--- @param hint? number @The hint to emit
+--- @param pos? GVector @The position to emit the hint at
+--- @param volume? number @The volume or radius of the hint
+--- @param duration? number @The duration of the hint in seconds
+--- @param owner? GEntity @If set, the sound hint will be ignored/deleted when the given entity is destroyed.
+function sound.EmitHint(hint, pos, volume, duration, owner)
+end
+
 --- Creates a sound from a function.  
---- 🦟 **BUG**: [This function cannot generate sounds that have a duration of less than 1 second.](https://github.com/Facepunch/garrysmod-issues/issues/3360)  
---- 🦟 **BUG**: [Sounds persist between disconnects.](https://github.com/Facepunch/garrysmod-issues/issues/4082)  
---- @param indentifier string @An unique identified for the sound
---- @param samplerate number @The sample rate of the sound
---- @param length number @The length in seconds of the sound to generate.
---- @param callback function @A function which will be called to generate every sample on the sound
-function sound.Generate(indentifier, samplerate, length, callback)
+--- @param indentifier? string @An unique identified for the sound
+--- @param samplerate? number @The sample rate of the sound
+--- @param length? number @The length in seconds of the sound to generate.
+--- @param callbackOrData? function @A function which will be called to generate every sample on the sound
+--- @param loopStart? number @Sample ID of the loop start
+function sound.Generate(indentifier, samplerate, length, callbackOrData, loopStart)
+end
+
+--- Returns the most dangerous/closest sound hint based on given location and types of sounds to sense.  
+--- @param types number @The types of sounds to choose from
+--- @param pos GVector @The position to sense sounds at.
+--- @return table @A table with SoundHintData structure or `nil` if no sound hints are nearby.
+function sound.GetLoudestSoundHint(types, pos)
 end
 
 --- Returns properties of the soundscript.  
@@ -27,18 +44,21 @@ function sound.GetProperties(name)
 end
 
 --- Returns a list of all registered sound scripts.  
+--- New ones can be registered using sound.Add, and detailed information about each one can be retrieved via sound.GetProperties.  
 --- @return table @The list/array of all registered sound scripts ( No other information is provided )
 function sound.GetTable()
 end
 
 --- Plays a sound from the specified position in the world.  
 --- If you want to play a sound without a position, such as a UI sound, use surface.PlaySound instead.  
---- @param Name string @A string path to the sound.
---- @param Pos GVector @A vector describing where the sound should play.
---- @param Level number @Sound level in decibels
---- @param Pitch number @An integer describing the sound pitch
---- @param Volume number @A float ranging from 0-1 describing the output volume of the sound.
-function sound.Play(Name, Pos, Level, Pitch, Volume)
+--- This function is similar to Global.EmitSound, but with less options.  
+--- @param snd? string @The sound to play
+--- @param pos? GVector @Where the sound should play.
+--- @param level? number @Sound level in decibels
+--- @param pitch? number @The sound pitch
+--- @param volume? number @Output volume of the sound in range 0 to 1.
+--- @param dsp? number @The DSP preset for this sound
+function sound.Play(snd, pos, level, pitch, volume, dsp)
 end
 
 --- Plays a file from GMod directory. You can find a list of all error codes [here](http://www.un4seen.com/doc/#bass/BASS_ErrorGetCode.html)  

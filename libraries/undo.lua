@@ -5,7 +5,7 @@ _G.undo = {}
 function undo.AddEntity(ent)
 end
 
---- Adds a function to call when the current undo block is undone  
+--- Adds a function to call when the current undo block is undone. Note that if an undo has a function, the player will always be notified when this undo is performed, even if the entity it is meant to undo no longer exists.  
 --- @param func function @The function to call
 --- @vararg any @Arguments to pass to the function (after the undo info table)
 function undo.AddFunction(func, ...)
@@ -24,10 +24,12 @@ function undo.Do_Undo(tab)
 end
 
 --- Completes an undo entry, and registers it with the player's client  
-function undo.Finish()
+--- @param NiceText? string @Text that appears in the player's undo history
+function undo.Finish(NiceText)
 end
 
 --- Serverside, returns a table containing all undo blocks of all players. Clientside, returns a table of the local player's undo blocks.  
+--- ℹ **NOTE**: Serverside, this table's keys use Player:UniqueID to store a player's undo blocks.  
 --- @return table @The undo table.
 function undo.GetTable()
 end

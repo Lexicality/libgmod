@@ -12,7 +12,7 @@ function cleanup.GetList()
 end
 
 --- Gets the table of cleanup types.  
---- @return table @cleanup_types
+--- @return table @A list of cleanup types.
 function cleanup.GetTable()
 end
 

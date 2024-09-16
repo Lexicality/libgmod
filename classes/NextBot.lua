@@ -9,13 +9,17 @@ local GNextBot = {}
 function GNextBot:BecomeRagdoll(info)
 end
 
---- Should only be called in BodyUpdate. This sets the move_x and move_y pose parameters of the bot to fit how they're currently moving, sets the animation speed to suit the ground speed, and calls FrameAdvance.  
+--- Should only be called in NEXTBOT:BodyUpdate. This sets the `move_x` and `move_y` pose parameters of the bot to fit how they're currently moving, sets the animation speed (Entity:GetPlaybackRate) to suit the ground speed, and calls Entity:FrameAdvance.  
 --- 🦟 **BUG**: [This function might cause crashes with some activities.](https://github.com/Facepunch/garrysmod-issues/issues/3420)  
 function GNextBot:BodyMoveXY()
 end
 
+--- Clears this bot's last known area. See NextBot:GetLastKnownArea.  
+function GNextBot:ClearLastKnownArea()
+end
+
 --- Like NextBot:FindSpots but only returns a vector.  
---- @param type string @Either "random", "near", "far"
+--- @param type string @Either `"random"`, `"near"`, `"far"`.
 --- @param options table @This table should contain the search info
 --- @return GVector @If it finds a spot it will return a vector
 function GNextBot:FindSpot(type, options)
@@ -30,6 +34,21 @@ end
 --- Returns the currently running activity  
 --- @return number @The current activity
 function GNextBot:GetActivity()
+end
+
+--- Returns the Field of View of the Nextbot NPC, used for its vision functionality, such as NextBot:IsAbleToSee.  
+--- @return number @The current FOV of the nextbot
+function GNextBot:GetFOV()
+end
+
+--- Returns this bots last known area. See also NextBot:ClearLastKnownArea.  
+--- @return GCNavArea @The last area the bot is known to have been in.
+function GNextBot:GetLastKnownArea()
+end
+
+--- Returns the maximum range the nextbot can see other nextbots/players at. See NextBot:IsAbleToSee.  
+--- @return number @The current vision range
+function GNextBot:GetMaxVisionRange()
 end
 
 --- Returns squared distance to an entity or a position.  
@@ -56,17 +75,35 @@ end
 function GNextBot:HandleStuck()
 end
 
+--- Returns if the Nextbot NPC can see the give entity or not.  
+--- ⚠ **WARNING**: Using this function creates the nextbot vision interface which will cause a significant performance hit!  
+--- @param ent? GEntity @The entity to test if we can see
+--- @param useFOV? number @Whether to use the Field of View of the Nextbot
+--- @return boolean @If the nextbot can see or not
+function GNextBot:IsAbleToSee(ent, useFOV)
+end
+
 --- To be called in the behaviour coroutine only! Will yield until the bot has reached the goal or is stuck  
 --- @param pos GVector @The position we want to get to
 --- @param options table @A table containing a bunch of tweakable options
---- @return string @Either "failed", "stuck", "timeout" or "ok" - depending on how the NPC got on
+--- @return string @Either `"failed"`, `"stuck"`, `"timeout"` or `"ok"` - depending on how the NPC got on
 function GNextBot:MoveToPos(pos, options)
 end
 
 --- To be called in the behaviour coroutine only! Plays an animation sequence and waits for it to end before returning.  
---- @param name string @The sequence name
---- @param speed number @Playback Rate of that sequence
+--- @param name? string @The sequence name
+--- @param speed? number @Playback Rate of that sequence
 function GNextBot:PlaySequenceAndWait(name, speed)
+end
+
+--- Sets the Field of View for the Nextbot NPC, used for its vision functionality, such as NextBot:IsAbleToSee.  
+--- @param fov number @The new FOV
+function GNextBot:SetFOV(fov)
+end
+
+--- Sets the maximum range the nextbot can see other nextbots/players at. See NextBot:IsAbleToSee.  
+--- @param range number @The new vision range to set.
+function GNextBot:SetMaxVisionRange(range)
 end
 
 --- Sets the solid mask for given NextBot.  

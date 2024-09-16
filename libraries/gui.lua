@@ -4,13 +4,23 @@ _G.gui = {}
 function gui.ActivateGameUI()
 end
 
---- Enables the mouse cursor without restricting player movement, like using Sandbox's context menu.  
---- 🦟 **BUG**: [Some CUserCmd functions will return incorrect values when this function is active.](https://github.com/Facepunch/garrysmod-issues/issues/982)  
+--- Pushes text to the closed caption box.  
+--- ℹ **NOTE**: The function will not work, if the console command variable "closecaption" is set to 0.  
+--- @param text? string @The caption to emit
+--- @param duration? number @How long the caption should stay for
+--- @param fromPlayer? boolean @Is this caption coming from the player?
+function gui.AddCaption(text, duration, fromPlayer)
+end
+
+--- Enables the mouse cursor without restricting player movement, like using Sandbox's context menu. See vgui.CursorVisible for a function to see if the cursor is visible or not.  
+--- ℹ **NOTE**:   
+--- Some CUserCmd functions will return incorrect values when this function is active because [the user input is getting overtaken by the vgui system](https://github.com/Facepunch/garrysmod-issues/issues/982#issuecomment-505671531).  
 --- @param enabled boolean @Whether the cursor should be enabled or not
 function gui.EnableScreenClicker(enabled)
 end
 
 --- Hides the game menu overlay.  
+--- 🛑 **DEPRECATED**: Will be disabled in a future patch. Use GM:OnPauseMenuShow instead.  
 function gui.HideGameUI()
 end
 
@@ -38,7 +48,7 @@ end
 --- Simulates an ASCII symbol writing.  
 --- Use to write text in the chat or in VGUI.  
 --- Doesn't work while the main menu is open!  
---- @param code number @ASCII code of symbol, see http://www.mikroe.com/img/publication/spa/pic-books/programming-in-basic/chapter/04/fig4-24.gif
+--- @param code number @ASCII code of symbol, see [this chart](https://files.facepunch.com/wiki/files/ab571/8dc389806d65b98.gif).
 function gui.InternalKeyTyped(code)
 end
 
@@ -67,8 +77,8 @@ end
 function gui.IsConsoleVisible()
 end
 
---- Returns whenever the game menu overlay ( main menu ) is open or not.  
---- @return boolean @Whenever the game menu overlay ( main menu ) is open or not
+--- Returns whether the game menu overlay ( main menu ) is open or not.  
+--- @return boolean @Whether the game menu overlay ( main menu ) is open or not
 function gui.IsGameUIVisible()
 end
 
@@ -89,10 +99,9 @@ end
 function gui.MouseY()
 end
 
---- Opens specified URL in the steam overlay browser. The URL has to start with either http:// or https://  
+--- Opens specified URL in the steam overlay browser.  
 --- ℹ **NOTE**: When called clientside, user will be asked for confirmation before the website will open.  
---- 🦟 **BUG**: [You can't click the confirmation if a model panel has focus.](https://github.com/Facepunch/garrysmod-issues/issues/3383)  
---- @param url string @URL to open
+--- @param url string @URL to open, it has to start with either `http://` or `https://`.
 function gui.OpenURL(url)
 end
 

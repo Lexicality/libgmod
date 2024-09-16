@@ -1,38 +1,43 @@
 --- @class GPlayer : GEntity
 --- This is a list of all methods only available for players. It is also possible to call Entity functions on the Player.  
 local GPlayer = {}
---- Returns the player's AccountID aka SteamID3.  
---- For bots this will return values starting with 0 for the first bot, 1 for the second bot and so on.  
---- In singleplayer, this will return no value.  
---- @return number @Player's SteamID3 aka AccountID.
+--- Returns the player's AccountID part of their full SteamID.  
+--- Since this does not include other vital parts of the SteamID such as "Account Type" and "Account Instance", it should be avoided, as AccountIDs are finite, and can theoretically be the same for multiple valid accounts.  
+--- See Player:SteamID for the text representation of the full SteamID.  
+--- See Player:SteamID64 for a 64bit representation of the full SteamID.  
+--- ℹ **NOTE**: In a `-multirun` environment, this will return `-1` for all "copies" of a player because they are not authenticated with Steam.  
+--- For bots this will return values starting with `0` for the first bot, `1` for the second bot and so on.  
+--- @return number @The AccountID of Player's SteamID.
 function GPlayer:AccountID()
 end
 
---- Adds an entity to the players clean up list.  
---- @param type string @Cleanup type
---- @param ent GEntity @Entity to add
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives.  
+--- Adds an entity to the player's clean up list. This uses cleanup.Add internally.  
+--- @param type string @The Cleanup type for this Entity.
+--- @param ent GEntity @The Entity to add.
 function GPlayer:AddCleanup(type, ent)
 end
 
---- Adds an entity to the total count of entities of same class.  
---- @param str string @Entity type
---- @param ent GEntity @Entity
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives.  
+--- Adds an entity to the player's list of entities of the same type. See Player:GetCount to get the current count of entities of an entity type added with this function.  
+--- @param str string @The type of this Entity.
+--- @param ent GEntity @The Entity you want to add to the list.
 function GPlayer:AddCount(str, ent)
 end
 
---- Add a certain amount to the player's death count  
---- @param count number @number of deaths to add
+--- Adds the provided amount to the player's death count.  
+--- @param count number @The amount to add to the death count.
 function GPlayer:AddDeaths(count)
 end
 
---- Add a certain amount to the player's frag count (or kills count)  
---- @param count number @number of frags to add
+--- Adds the provided amount to the player's frag/kill count.  
+--- @param count number @The amount to add.
 function GPlayer:AddFrags(count)
 end
 
---- Adds a entity to the players list of frozen objects.  
---- @param ent GEntity @Entity
---- @param physobj GPhysObj @Physics object belonging to ent
+--- Adds an entity to the player's list of frozen objects.  
+--- @param ent GEntity @The Entity to add.
+--- @param physobj GPhysObj @The physics object of the Entity.
 function GPlayer:AddFrozenPhysicsObject(ent, physobj)
 end
 
@@ -40,16 +45,17 @@ end
 --- This is a really barebone system. By calling this a vote gets started, when the player presses 0-9 the callback function gets called along with the key the player pressed. Use the draw callback to draw the vote panel.  
 --- @param name string @Name of the vote
 --- @param timeout number @Time until the vote expires
---- @param vote_callback function @The function to be run when the player presses 0-9 while a vote is active.
+--- @param vote_callback function @The function to be run when the player presses 0-9 while a vote is active
 --- @param draw_callback function @Used to draw the vote panel.
 function GPlayer:AddPlayerOption(name, timeout, vote_callback, draw_callback)
 end
 
 --- Plays a sequence directly from a sequence number, similar to Player:AnimRestartGesture. This function has the advantage to play sequences that haven't been bound to an existing Enums/ACT  
---- @param slot number @Gesture slot using Enums/GESTURE_SLOT
---- @param sequenceId number @The sequence ID to play, can be retrieved with Entity:LookupSequence.
---- @param cycle number @The cycle to start the animation at, ranges from 0 to 1.
---- @param autokill boolean @If the animation should not loop
+--- ⚠ **WARNING**: This is not automatically networked. This function has to be called on the client to be seen by said client.  
+--- @param slot? number @Gesture slot using Enums/GESTURE_SLOT
+--- @param sequenceId? number @The sequence ID to play, can be retrieved with Entity:LookupSequence.
+--- @param cycle? number @The cycle to start the animation at, ranges from 0 to 1.
+--- @param autokill? boolean @If the animation should not loop
 function GPlayer:AddVCDSequenceToGestureSlot(slot, sequenceId, cycle, autokill)
 end
 
@@ -58,12 +64,12 @@ end
 function GPlayer:Alive()
 end
 
---- Sets if the player can toggle his flashlight. Function exists on both the server and client but has no effect when ran on the client.  
+--- Sets if the player can toggle their flashlight. Function exists on both the server and client but has no effect when ran on the client.  
 --- @param canFlashlight boolean @True allows flashlight toggling
 function GPlayer:AllowFlashlight(canFlashlight)
 end
 
---- Lets the player spray his decal without delay  
+--- Lets the player spray their decal without delay  
 --- @param allow boolean @Allow or disallow
 function GPlayer:AllowImmediateDecalPainting(allow)
 end
@@ -75,9 +81,9 @@ end
 
 --- Restart a gesture on a player, within a gesture slot.  
 --- ⚠ **WARNING**: This is not automatically networked. This function has to be called on the client to be seen by said client.  
---- @param slot number @Gesture slot using Enums/GESTURE_SLOT
---- @param activity number @The activity ( see Enums/ACT ) or sequence that should be played
---- @param autokill boolean @Whether the animation should be automatically stopped
+--- @param slot? number @Gesture slot using Enums/GESTURE_SLOT
+--- @param activity? number @The activity ( see Enums/ACT ) or sequence that should be played
+--- @param autokill? boolean @Whether the animation should be automatically stopped
 function GPlayer:AnimRestartGesture(slot, activity, autokill)
 end
 
@@ -103,8 +109,8 @@ function GPlayer:Armor()
 end
 
 --- Bans the player from the server for a certain amount of minutes.  
---- @param minutes number @Duration of the ban in minutes (0 is permanent)
---- @param kick boolean @Whether to kick the player after banning them or not
+--- @param minutes? number @Duration of the ban in minutes (0 is permanent)
+--- @param kick? boolean @Whether to kick the player after banning them or not
 function GPlayer:Ban(minutes, kick)
 end
 
@@ -120,13 +126,15 @@ end
 function GPlayer:ChatPrint(message)
 end
 
---- Checks if the limit is hit or not. If it is, it will throw a notification saying so.  
---- @param limitType string @Limit type
---- @return boolean @Returns true if limit is not hit, false if it is hit
-function GPlayer:CheckLimit(limitType)
+--- Checks if the limit of an entity type added by Player:AddCount is hit or not. If it's hit, it will call the GM:PlayerCheckLimit hook, and call Player:LimitHit if the hook doesn't return `false`.  
+--- This will always return `true` in singleplayer, as singleplayer does not have limits.  
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives.  
+--- @param str string @The entity type to check the limit for
+--- @return boolean @Returns `true` if the limit of this type is not hit, `false` otherwise.
+function GPlayer:CheckLimit(str)
 end
 
---- Runs the concommand on the player. This does not work on bots.  
+--- Runs the concommand on the player. This does not work on bots. If used clientside, always runs the command on the local player.  
 --- If you wish to directly modify the movement input of bots, use GM:StartCommand instead.  
 --- ℹ **NOTE**: Some commands/convars are blocked from being ran/changed using this function, usually to prevent harm/annoyance to clients. For a list of blocked commands, see Blocked ConCommands.  
 --- @param command string @command to run
@@ -148,8 +156,8 @@ end
 function GPlayer:CrosshairEnable()
 end
 
---- Returns whether the player is crouching or not. (FL_DUCKING flag)  
---- @return boolean @Whether the player is crouching
+--- Returns whether the player is crouching or not (FL_DUCKING flag).  
+--- @return boolean @Whether the player is crouching.
 function GPlayer:Crouching()
 end
 
@@ -164,6 +172,11 @@ end
 
 --- Detonates all tripmines belonging to the player.  
 function GPlayer:DetonateTripmines()
+end
+
+--- Disables world clicking for given player. See Panel:SetWorldClicker and Player:IsWorldClickingDisabled.  
+--- @param disable boolean @Whether the world clicking should be disabled.
+function GPlayer:DisableWorldClicking(disable)
 end
 
 --- Sends a third person animation event to the player.  
@@ -195,8 +208,8 @@ function GPlayer:DoSecondaryAttack()
 end
 
 --- Show/Hide the player's weapon's viewmodel.  
---- @param draw boolean @Should draw
---- @param vm number @Which view model to show/hide, 0-2.
+--- @param draw? boolean @Should draw
+--- @param vm? number @Which view model to show/hide, 0-2.
 function GPlayer:DrawViewModel(draw, vm)
 end
 
@@ -206,24 +219,26 @@ function GPlayer:DrawWorldModel(draw)
 end
 
 --- Drops the players' weapon of a specific class.  
---- @param class string @The class to drop.
---- @param target GVector @If set, launches the weapon at given position
---- @param velocity GVector @If set and previous argument is unset, launches the weapon with given velocity
+--- @param class? string @The class to drop.
+--- @param target? GVector @If set, launches the weapon at given position
+--- @param velocity? GVector @If set and previous argument is unset, launches the weapon with given velocity
 function GPlayer:DropNamedWeapon(class, target, velocity)
 end
 
---- Drops any object the player is currently holding with either gravitygun or +Use (E key)  
+--- Drops any object the player is currently holding with either Gravity Gun or `+use` (E key)  
+--- See also Entity:ForcePlayerDrop.  
 function GPlayer:DropObject()
 end
 
 --- Forces the player to drop the specified weapon  
---- @param weapon GWeapon @Weapon to be dropped
---- @param target GVector @If set, launches the weapon at given position
---- @param velocity GVector @If set and previous argument is unset, launches the weapon with given velocity
+--- @param weapon? GWeapon @Weapon to be dropped
+--- @param target? GVector @If set, launches the weapon at given position
+--- @param velocity? GVector @If set and previous argument is unset, launches the weapon with given velocity
 function GPlayer:DropWeapon(weapon, target, velocity)
 end
 
---- Enters the player into specified vehicle  
+--- Force puts the player into a specified vehicle.  
+--- This **does not** bypass GM:CanPlayerEnterVehicle.  
 --- @param vehicle GVehicle @Vehicle the player will enter
 function GPlayer:EnterVehicle(vehicle)
 end
@@ -235,11 +250,12 @@ end
 function GPlayer:EquipSuit()
 end
 
---- Makes the player exit the vehicle if they're in one.  
+--- Forces the player to exit the vehicle if they're in one.  
+--- This function will bypass GM:CanExitVehicle. See also GM:PlayerLeaveVehicle  
 function GPlayer:ExitVehicle()
 end
 
---- Enables/Disables the player's flashlight  
+--- Enables/Disables the player's flashlight.Player:CanUseFlashlight must be true in order for the player's flashlight to be changed.  
 --- @param isOn boolean @Turns the flashlight on/off
 function GPlayer:Flashlight(isOn)
 end
@@ -249,22 +265,28 @@ end
 function GPlayer:FlashlightIsOn()
 end
 
---- Returns the amount of kills a player has.  
---- @return number @kills
+--- Returns the amount of frags a player has.  
+--- ℹ **NOTE**: The value will change depending on the player's kill or suicide: +1 for a kill, -1 for a suicide.   
+--- @return number @frags
 function GPlayer:Frags()
 end
 
 --- Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to Player:Lock but the player can still take damage.  
 --- Adds or removes the FL_FROZEN flag from the player.  
 --- 🦟 **BUG**: Frozen bots will still be able to look around.  
---- @param frozen boolean @Whether the player should be frozen.
+--- @param frozen? boolean @Whether the player should be frozen.
 function GPlayer:Freeze(frozen)
 end
 
 --- Returns the player's active weapon.  
 --- If used on a Global.LocalPlayer() and the player is spectating another player with `OBS_MODE_IN_EYE`, the weapon returned will be of the spectated player.  
---- @return GWeapon @The weapon the player is currently has equipped.
+--- @return GWeapon @The weapon the player currently has equipped or NULL if the player doesn't have an active weapon eg
 function GPlayer:GetActiveWeapon()
+end
+
+--- Returns the player's current activity.  
+--- @return number @The player's current activity
+function GPlayer:GetActivity()
 end
 
 --- Returns the direction that the player is aiming.  
@@ -277,8 +299,8 @@ end
 function GPlayer:GetAllowFullRotation()
 end
 
---- Returns whether the player is allowed to use his weapons in a vehicle or not.  
---- @return boolean @Whether the player is allowed to use his weapons in a vehicle or not.
+--- Returns whether the player is allowed to use their weapons in a vehicle or not.  
+--- @return boolean @Whether the player is allowed to use their weapons in a vehicle or not.
 function GPlayer:GetAllowWeaponsInVehicle()
 end
 
@@ -313,9 +335,30 @@ end
 function GPlayer:GetClassID()
 end
 
---- Gets total count of entities of same class.  
---- @param type string @Entity type to get count of.
---- @param minus number @If specified, it will reduce the counter by this value
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives.  
+--- Gets the total amount of entities of an entity type added by Player:AddCount.  
+--- Default types:  
+--- ```  
+--- balloons  
+--- buttons  
+--- cameras  
+--- dynamite  
+--- effects  
+--- emitters  
+--- hoverballs  
+--- lamps  
+--- lights  
+--- npcs  
+--- props  
+--- ragdolls  
+--- sents  
+--- thrusters  
+--- vehicles  
+--- wheels  
+--- ```  
+--- @param type? string @Type to get entity count of.
+--- @param minus? number @If specified, it will reduce the counter by this value
+--- @return number @The returned count.
 function GPlayer:GetCount(type, minus)
 end
 
@@ -338,8 +381,8 @@ end
 function GPlayer:GetCurrentViewOffset()
 end
 
---- Gets the entity the player is currently driving.  
---- @return GEntity @DriveEntity
+--- Gets the entity the player is currently driving via the drive library.  
+--- @return GEntity @The currently driven entity, or NULL entity
 function GPlayer:GetDrivingEntity()
 end
 
@@ -359,15 +402,17 @@ function GPlayer:GetEntityInUse()
 end
 
 --- Returns a table with information of what the player is looking at.  
---- The results of this function are cached every frame.  
---- See also Player:GetEyeTraceNoCursor  
---- @return table @Trace information, see Structures/TraceResult
+--- The results of this function are **cached** clientside every frame.  
+--- Uses util.GetPlayerTrace internally and is therefore bound by its limits.  
+--- See also Player:GetEyeTraceNoCursor.  
+--- @return table @Trace information, see Structures/TraceResult.
 function GPlayer:GetEyeTrace()
 end
 
---- Returns the trace according to the players view direction, ignoring their mouse ( Holding C and moving the mouse in Sandbox ).  
---- The results of this function are cached every frame.  
---- See also Player:GetEyeTrace  
+--- Returns the trace according to the players view direction, ignoring their mouse (holding `C` and moving the mouse in Sandbox).  
+--- The results of this function are **cached** clientside every frame.  
+--- Uses util.GetPlayerTrace internally and is therefore bound by its limits.  
+--- See also Player:GetEyeTrace.  
 --- @return table @Trace result
 function GPlayer:GetEyeTraceNoCursor()
 end
@@ -387,27 +432,28 @@ end
 function GPlayer:GetHands()
 end
 
---- Returns the widget the player is hovering with his mouse.  
+--- Returns the widget the player is hovering with their mouse.  
 --- @return GEntity @The hovered widget.
 function GPlayer:GetHoveredWidget()
 end
 
 --- Gets the bottom base and the top base size of the player's hull.  
---- @return GVector @Player's hull bottom base size
---- @return GVector @Player's hull top base size
+--- @return GVector @Player's hull bottom base size.
+--- @return GVector @Player's hull top base size.
 function GPlayer:GetHull()
 end
 
 --- Gets the bottom base and the top base size of the player's crouch hull.  
---- @return GVector @Player's crouch hull bottom base size
---- @return GVector @Player's crouch hull top base size
+--- @return GVector @Player's crouch hull bottom base size.
+--- @return GVector @Player's crouch hull top base size.
 function GPlayer:GetHullDuck()
 end
 
 --- Retrieves the value of a client-side ConVar. The ConVar must have a FCVAR_USERINFO flag for this to work.  
 --- ⚠ **WARNING**: The returned value is truncated to 31 bytes.  
---- @param cVarName string @The name of the client-side ConVar
---- @return string @The value of the ConVar
+--- ⚠ **WARNING**: On client this function will return value of the local player, regardless of which player the function was called on!  
+--- @param cVarName string @The name of the client-side ConVar.
+--- @return string @The value of the ConVar.
 function GPlayer:GetInfo(cVarName)
 end
 
@@ -430,8 +476,13 @@ function GPlayer:GetLadderClimbSpeed()
 end
 
 --- Returns the timescale multiplier of the player movement.  
---- @return number @The timescale multiplier, defaults to 1.
+--- @return number @The timescale multiplier, defaults to `1`.
 function GPlayer:GetLaggedMovementValue()
+end
+
+--- Returns the maximum amount of armor the player should have. Default value is 100.  
+--- @return number @The new max armor value
+function GPlayer:GetMaxArmor()
 end
 
 --- Returns the player's maximum movement speed.  
@@ -442,7 +493,7 @@ end
 
 --- Returns the player's name, this is an alias of Player:Nick.  
 --- ℹ **NOTE**: This function overrides Entity:GetName (in the Lua metatable, not in c++), keep it in mind when dealing with ents.FindByName or any engine function which requires the mapping name.  
---- @return string @The player's name
+--- @return string @The player's name.
 function GPlayer:GetName()
 end
 
@@ -462,18 +513,19 @@ end
 function GPlayer:GetObserverTarget()
 end
 
---- Returns a **P**layer **Data** key-value pair from the SQL database. (sv.db when called on server,  cl.db when called on client)  
---- Internally uses the sql.  
---- ⚠ **WARNING**: This function internally uses Player:UniqueID, which can cause collisions (two or more players sharing the same PData entry). It's recommended that you don't use it. See the related wiki page for more information.  
+--- Returns a **P**ersistent **Data** key-value pair from the SQL database. (`sv.db` when called on server, `cl.db` when called on client)  
+--- Internally uses the sql library. See util.GetPData for cases when the player is not currently on the server.  
+--- ℹ **NOTE**: This function internally uses Player:SteamID64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry). Player:SetPData now replaces all instances of Player:UniqueID with Player:SteamID64 when running Player:SetPData  
 --- ℹ **NOTE**: PData is not networked from servers to clients!  
---- @param key string @Name of the PData key
---- @param default any @Default value if PData key doesn't exist.
+--- @param key? string @Name of the PData key
+--- @param default? any @Default value if PData key doesn't exist.
 --- @return string @The data in the SQL database or the default value given.
 function GPlayer:GetPData(key, default)
 end
 
---- Returns a player model's color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is Vector(r,g,b), and each color should be between 0 and 1.  
---- @return GVector @color
+--- Returns a player model's color. The part of the model that is colored is determined by the model itself, and is different for each model.  
+--- ℹ **NOTE**: Overide this function clientside on a Entity(not a player) with playermodel and return color will apply color on it  
+--- @return GVector @The format is `Vector(r,g,b)`, and each color component should be between 0 and 1.
 function GPlayer:GetPlayerColor()
 end
 
@@ -490,7 +542,7 @@ function GPlayer:GetPreferredCarryAngles(carryEnt)
 end
 
 --- Returns the widget entity the player is using.  
---- Having a pressed widget stops the player from firing his weapon to allow input to be passed onto the widget.  
+--- Having a pressed widget stops the player from firing their weapon to allow input to be passed onto the widget.  
 --- @return GEntity @The pressed widget.
 function GPlayer:GetPressedWidget()
 end
@@ -501,12 +553,13 @@ function GPlayer:GetPreviousWeapon()
 end
 
 --- 🛑 **DEPRECATED**: You should use Player:GetViewPunchAngles instead.  
---- Returns players screen punch effect angle.  
+--- Returns players screen punch effect angle. See Player:ViewPunch and Player:SetViewPunchAngles  
 --- @return GAngle @The punch angle
 function GPlayer:GetPunchAngle()
 end
 
 --- Returns players death ragdoll. The ragdoll is created by Player:CreateRagdoll.  
+--- 🦟 **BUG**: Calling Entity:GetPos server-side with this function then will return the position when Player:CreateRagdoll was used.  
 --- @return GEntity @The ragdoll
 function GPlayer:GetRagdollEntity()
 end
@@ -524,11 +577,11 @@ end
 
 --- Returns the position of a Player's view  
 --- ℹ **NOTE**: This is the same as calling Entity:EyePos on the player.  
---- @return GVector @aim pos
+--- @return GVector @The position of the player's view.
 function GPlayer:GetShootPos()
 end
 
---- Returns the player's slow walking speed, which is activated via `+walk` keybind.  
+--- Returns the player's slow walking speed, which is activated via `+WALK` keybind.  
 --- See Player:GetWalkSpeed for normal walking speed, Player:GetRunSpeed for sprinting speed and Player:GetLadderClimbSpeed for ladder climb speed.  
 --- @return number @The new slow walking speed.
 function GPlayer:GetSlowWalkSpeed()
@@ -546,12 +599,13 @@ function GPlayer:GetSuitPower()
 end
 
 --- Returns the number of seconds that the player has been timing out for. You can check if a player is timing out with Player:IsTimingOut.  
+--- ℹ **NOTE**: This function is relatively useless because it is tied to the value of the `sv_timeout` ConVar, which is irrelevant to the description above. [This is not considered as a bug](https://discord.com/channels/565105920414318602/567617926991970306/748970396224585738).  
 --- @return number @Timeout seconds.
 function GPlayer:GetTimeoutSeconds()
 end
 
 --- Returns TOOL table of players current tool, or of the one specified.  
---- @param mode string @Classname of the tool to retrieve
+--- @param mode? string @Classname of the tool to retrieve
 --- @return table @TOOL table, or nil if the table wasn't found or the player doesn't have a tool gun.
 function GPlayer:GetTool(mode)
 end
@@ -561,7 +615,14 @@ end
 function GPlayer:GetUnDuckSpeed()
 end
 
---- Returns the player's user group.  
+--- Returns the entity the player would use if they would press their `+use` keybind.  
+--- <note issue="5027">Because entity physics objects usually do not exist on the client, the client's use entity will resolve to whatever the crosshair is placed on within a little less than 72 units of the player's eye position. This differs from the entity returned by the server, which has fully physical use checking. See util.TraceHull.  
+--- Issue tracker: [5027](https://github.com/Facepunch/garrysmod-issues/issues/5027)</note>  
+--- @return GEntity @The entity that would be used or NULL.
+function GPlayer:GetUseEntity()
+end
+
+--- Returns the player's user group. By default, player user groups are loaded from `garrysmod/settings/users.txt`.  
 --- @return string @The user group of the player
 function GPlayer:GetUserGroup()
 end
@@ -572,6 +633,7 @@ function GPlayer:GetVehicle()
 end
 
 --- Returns the entity the player is using to see from (such as the player itself, the camera, or another entity).  
+--- ℹ **NOTE**: This function will return a [NULL Entity] until Player:SetViewEntity has been used  
 --- @return GEntity @The entity the player is using to see from
 function GPlayer:GetViewEntity()
 end
@@ -580,7 +642,7 @@ end
 --- Each player has 3 view models by default, but only the first one is used.  
 --- To use the other viewmodels in your SWEP, see Entity:SetWeaponModel.  
 --- ℹ **NOTE**: In the Client realm, other players' viewmodels are not available unless they are being spectated.  
---- @param index number @optional index of the view model to return, can range from 0 to 2
+--- @param index? number @optional index of the view model to return, can range from 0 to 2
 --- @return GEntity @The view model entity
 function GPlayer:GetViewModel(index)
 end
@@ -602,6 +664,16 @@ end
 function GPlayer:GetViewPunchAngles()
 end
 
+--- Returns client's view punch velocity. See Player:ViewPunch and Player:SetViewPunchVelocity  
+--- @return GAngle @The current view punch angle velocity.
+function GPlayer:GetViewPunchVelocity()
+end
+
+--- Returns the current voice volume scale for given player on client.  
+--- @return number @The voice volume scale, where 0 is 0% and 1 is 100%.
+function GPlayer:GetVoiceVolumeScale()
+end
+
 --- Returns the player's normal walking speed. Not sprinting, not slow walking. (+walk)  
 --- See also Player:SetWalkSpeed, Player:GetMaxSpeed and Player:GetRunSpeed.  
 --- @return number @The normal walking speed.
@@ -610,7 +682,7 @@ end
 
 --- Returns the weapon for the specified class  
 --- @param className string @Class name of weapon
---- @return GWeapon @The weapon for the specified class.
+--- @return GWeapon @The weapon for the specified class, or NULL ENTITY if the player does not have this weapon.
 function GPlayer:GetWeapon(className)
 end
 
@@ -620,22 +692,24 @@ function GPlayer:GetWeaponColor()
 end
 
 --- Returns a table of the player's weapons.  
+--- ℹ **NOTE**:   
+--- This function returns a sequential table. Prefer to loop it with Global.ipairs instead of the Global.pairs function.  
 --- @return table @All the weapons the player currently has.
 function GPlayer:GetWeapons()
 end
 
 --- Gives the player a weapon.  
 --- ℹ **NOTE**: While this function is meant for weapons/pickupables only, it is **not** restricted to weapons. Any entity can be spawned using this function, including NPCs and SENTs.  
---- @param weaponClassName string @Class name of weapon to give the player
---- @param bNoAmmo boolean @Set to true to not give any ammo on weapon spawn
+--- @param weaponClassName? string @Class name of weapon to give the player
+--- @param bNoAmmo? boolean @Set to true to not give any ammo on weapon spawn
 --- @return GWeapon @The weapon given to the player, if one was given
 function GPlayer:Give(weaponClassName, bNoAmmo)
 end
 
 --- Gives ammo to a player  
---- @param amount number @Amount of ammo
---- @param type string @Type of ammo
---- @param hidePopup boolean @Hide display popup when giving the ammo
+--- @param amount? number @Amount of ammo
+--- @param type? any @Type of ammo
+--- @param hidePopup? boolean @Hide display popup when giving the ammo
 --- @return number @Ammo given.
 function GPlayer:GiveAmmo(amount, type, hidePopup)
 end
@@ -649,7 +723,6 @@ function GPlayer:GodEnable()
 end
 
 --- Returns whether the player has god mode or not, contolled by Player:GodEnable and Player:GodDisable.  
---- 🦟 **BUG**: [This is not synced between the client and server. This will cause the client to always return false even in godmode.](https://github.com/Facepunch/garrysmod-issues/issues/2038)  
 --- @return boolean @Whether the player has god mode or not.
 function GPlayer:HasGodMode()
 end
@@ -661,6 +734,7 @@ function GPlayer:HasWeapon(className)
 end
 
 --- Returns the player's IP address and connection port in ip:port form  
+--- ℹ **NOTE**: Returns `Error!` for bots.  
 --- @return string @The player's IP address and connection port
 function GPlayer:IPAddress()
 end
@@ -670,8 +744,9 @@ end
 function GPlayer:InVehicle()
 end
 
---- Returns whether the player is an admin or not  
---- @return boolean @True if the player is an admin
+--- Returns whether the player is an admin or not. It will also return `true` if the player is Player:IsSuperAdmin by default.  
+--- Internally this is determined by Player:IsUserGroup.  
+--- @return boolean @True if the player is an admin or a super admin.
 function GPlayer:IsAdmin()
 end
 
@@ -690,18 +765,19 @@ end
 function GPlayer:IsDrivingEntity()
 end
 
---- Returns whether the players movement is currently frozen, contolled by Player:Freeze.  
+--- Returns whether the players movement is currently frozen, controlled by Player:Freeze.  
 --- @return boolean @Whether the players movement is currently frozen or not.
 function GPlayer:IsFrozen()
 end
 
 --- Returns whether the player identity was confirmed by the steam network.  
+--- See also GM:PlayerAuthed.  
 --- @return boolean @Whether the player has been fully authenticated or not
 function GPlayer:IsFullyAuthenticated()
 end
 
 --- Returns if a player is the host of the current session.  
---- @return boolean @True if the player is the listen server host, false otherwise
+--- @return boolean @`true` if the player is the listen server host, `false` otherwise
 function GPlayer:IsListenServerHost()
 end
 
@@ -715,12 +791,13 @@ end
 function GPlayer:IsPlayingTaunt()
 end
 
---- Returns whenever the player is heard by the local player.  
---- @return boolean @isSpeaking
+--- Returns whenever the player is heard by the local player clientside, or if the player is speaking serverside.  
+--- @return boolean @Is the player speaking or not.
 function GPlayer:IsSpeaking()
 end
 
---- Returns whether the player is currently sprinting or not.  
+--- Returns whether the player is currently sprinting or not, specifically if they are holding their sprint key and are allowed to sprint.  
+--- This will not check if the player is currently sprinting into a wall. (i.e. holding their sprint key but not moving)  
 --- @return boolean @Is the player sprinting or not
 function GPlayer:IsSprinting()
 end
@@ -731,13 +808,15 @@ end
 function GPlayer:IsSuitEquipped()
 end
 
---- Returns whether the player is a superadmin.  
---- @return boolean @True if the player is a superadmin.
+--- Returns whether the player is a super admin.  
+--- Internally this is determined by Player:IsUserGroup. See also Player:IsAdmin.  
+--- @return boolean @True if the player is a super admin.
 function GPlayer:IsSuperAdmin()
 end
 
---- Returns true if the player is timing out (i.e. is losing connection), false otherwise.  
---- @return boolean @isTimingOut
+--- Returns `true` if the player is timing out (i.e. is losing connection), `false` otherwise.  
+--- A player is considered timing out when more than 4 seconds has elapsed since a network packet was received from given player.  
+--- @return boolean @Whether the player is timing out.
 function GPlayer:IsTimingOut()
 end
 
@@ -747,7 +826,7 @@ end
 function GPlayer:IsTyping()
 end
 
---- Returns true/false if the player is in specified group or not.  
+--- Returns true/false if the player is in specified group or not. See Player:GetUserGroup for a way to get player's usergroup.  
 --- @param groupname string @Group to check the player for.
 --- @return boolean @isInUserGroup
 function GPlayer:IsUserGroup(groupname)
@@ -758,31 +837,40 @@ end
 function GPlayer:IsVoiceAudible()
 end
 
---- Returns if the player is in the context menu.  
---- ℹ **NOTE**: Although this is shared, it will only work properly on the CLIENT for the local player. Using this serverside or on other players will return false.  
+--- Returns if the player currently walking. (`+walk` keybind)  
+--- @return boolean @True if the player is currently walking.
+function GPlayer:IsWalking()
+end
+
+--- Returns whether the player is using the world clicking feature, see Panel:SetWorldClicker  
 --- @return boolean @Is the player world clicking or not.
 function GPlayer:IsWorldClicking()
 end
 
---- Gets whether a key is down. This is not networked to other players, meaning only the local client can see the keys they are pressing.  
+--- Returns whether the world clicking is disabled for given player or not. See Player:DisableWorldClicking.  
+--- @return boolean @Whether the world clicking is disabled or not.
+function GPlayer:IsWorldClickingDisabled()
+end
+
+--- Returns whether a key is down. This is not networked to other players, meaning only the local client can see the keys they are pressing.  
 --- @param key number @The key, see Enums/IN
---- @return boolean @isDown
+--- @return boolean @whether the key is down or not.
 function GPlayer:KeyDown(key)
 end
 
 --- Gets whether a key was down one tick ago.  
 --- @param key number @The key, see Enums/IN
---- @return boolean @Is key down
+--- @return boolean @Is key down ?
 function GPlayer:KeyDownLast(key)
 end
 
---- Gets whether a key was just pressed this tick  
+--- Gets whether a key was just pressed this tick.  
 --- @param key number @Corresponds to an Enums/IN
 --- @return boolean @Was pressed or not
 function GPlayer:KeyPressed(key)
 end
 
---- Gets whether a key was just released this tick  
+--- Gets whether a key was just released this tick.  
 --- @param key number @The key, see Enums/IN
 --- @return boolean @Was released or not
 function GPlayer:KeyReleased(key)
@@ -790,7 +878,7 @@ end
 
 --- Kicks the player from the server.  
 --- ℹ **NOTE**: This can not be run before the player has fully joined in. Use game.KickID for that.  
---- @param reason string @Reason to show for disconnection
+--- @param reason? string @Reason to show for disconnection
 function GPlayer:Kick(reason)
 end
 
@@ -820,9 +908,15 @@ function GPlayer:LastHitGroup()
 end
 
 --- Shows "limit hit" notification in sandbox.  
---- ℹ **NOTE**: This function is only available in Sandbox and its derivatives  
---- @param type string @Type of hit limit
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives.  
+--- @param type string @Type of hit limit.
 function GPlayer:LimitHit(type)
+end
+
+--- Returns the direction a player is looking as a entity/local-oriented angle.  
+--- Unlike Entity:EyeAngles, this function does not include angles of the Player's Entity:GetParent.  
+--- @return GAngle @local eye angles
+function GPlayer:LocalEyeAngles()
 end
 
 --- Stops a player from using any inputs, such as moving, turning, or attacking. Key binds are still called. Similar to Player:Freeze but the player takes no damage.  
@@ -838,7 +932,7 @@ function GPlayer:MotionSensorPos(bone)
 end
 
 --- Returns the players name. Identical to Player:Nick and Player:GetName.  
---- @return string @Player's Steam name
+--- @return string @Player's Steam name.
 function GPlayer:Name()
 end
 
@@ -847,8 +941,15 @@ end
 function GPlayer:Nick()
 end
 
---- Returns the packet loss of the client. It is not networked so it only returns 0 when run clientside.  
---- @return number @Packets lost
+--- Returns the 64-bit SteamID aka CommunityID of the Steam Account that owns the Garry's Mod license this player is using. This is useful for detecting players using Steam Family Sharing.  
+--- If player is not using Steam Family Sharing, this will return the player's actual SteamID64().  
+--- ℹ **NOTE**: This data will only be available after the player has fully authenticated with Steam. See Player:IsFullyAuthenticated.  
+--- @return string @The 64bit SteamID
+function GPlayer:OwnerSteamID64()
+end
+
+--- Returns the percentage of packets lost by the client. It is not networked so it only returns 0 when run clientside.  
+--- @return number @Percentage of packets lost (0-100)
 function GPlayer:PacketLoss()
 end
 
@@ -864,6 +965,14 @@ end
 function GPlayer:PickupObject(entity)
 end
 
+--- Forces the player to pickup an existing weapon entity. The player will not pick up the weapon if they already own a weapon of given type, or if the player could not normally have this weapon in their inventory.  
+--- This function **will** bypass GM:PlayerCanPickupWeapon.  
+--- @param wep? GWeapon @The weapon to try to pick up.
+--- @param ammoOnly? boolean @If set to true, the player will only attempt to pick up the ammo from the weapon
+--- @return boolean @Whether the player succeeded in picking up the weapon or not.
+function GPlayer:PickupWeapon(wep, ammoOnly)
+end
+
 --- Returns the player's ping to server.  
 --- @return number @The player's ping.
 function GPlayer:Ping()
@@ -876,9 +985,9 @@ end
 
 --- Displays a message either in their chat, console, or center of the screen. See also Global.PrintMessage.  
 --- ℹ **NOTE**: When called serverside, this uses the archaic user message system (the umsg) and hence is limited to ≈250 characters.  
---- ℹ **NOTE**: `HUD_PRINTCENTER` will not work when this is called clientside.  
---- @param type number @Which type of message should be sent to the player (Enums/HUD)
---- @param message string @Message to be sent to the player
+--- `HUD_PRINTCENTER` will not work when this is called clientside.  
+--- @param type number @Which type of message should be sent to the player (Enums/HUD).
+--- @param message string @Message to be sent to the player.
 function GPlayer:PrintMessage(type, message)
 end
 
@@ -896,9 +1005,10 @@ end
 function GPlayer:RemoveAmmo(ammoCount, ammoName)
 end
 
---- Removes a **P**layer **Data** key-value pair from the SQL database. (sv.db when called on server,  cl.db when called on client)  
---- Internally uses the sql.  
---- ⚠ **WARNING**: This function internally uses Player:UniqueID, which can cause collisions (two or more players sharing the same PData entry). It's recommended that you don't use it. See the related wiki page for more information.  
+--- Removes a **P**ersistent **Data** key-value pair from the SQL database. (`sv.db` when called on server, `cl.db` when called on client)  
+--- Internally uses the sql library. See util.RemovePData for cases when the player is not currently on the server.  
+--- ℹ **NOTE**: This function internally uses Player:SteamID64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry). Player:SetPData now replaces all instances of Player:UniqueID with Player:SteamID64 when running Player:SetPData  
+--- ℹ **NOTE**: PData is not networked from servers to clients!  
 --- @param key string @Key to remove
 --- @return boolean @true is succeeded, false otherwise
 function GPlayer:RemovePData(key)
@@ -914,16 +1024,16 @@ end
 
 --- Forces the player to say whatever the first argument is. Works on bots too.  
 --- ℹ **NOTE**: This function ignores the default chat message cooldown  
---- @param text string @The text to force the player to say.
---- @param teamOnly boolean @Whether to send this message to our own team only.
+--- @param text? string @The text to force the player to say.
+--- @param teamOnly? boolean @Whether to send this message to our own team only.
 function GPlayer:Say(text, teamOnly)
 end
 
 --- Fades the screen  
---- @param flags number @Fade flags defined with Enums/SCREENFADE.
---- @param clr number @The color of the screenfade
---- @param fadeTime number @Fade(in/out) effect transition time ( From no fade to full fade and vice versa )
---- @param fadeHold number @Fade effect hold time
+--- @param flags? number @Fade flags defined with Enums/SCREENFADE.
+--- @param clr? number @The color of the screenfade
+--- @param fadeTime? number @Fade(in/out) effect transition time ( From no fade to full fade and vice versa )
+--- @param fadeHold? number @Fade effect hold time
 function GPlayer:ScreenFade(flags, clr, fadeTime, fadeHold)
 end
 
@@ -935,7 +1045,7 @@ function GPlayer:SelectWeapon(className)
 end
 
 --- Sends a hint to a player.  
---- ℹ **NOTE**: This function is only available in Sandbox and its derivatives. Since this adds `#Hint_` to the beginning of each message, you should only use it with default hint messages, or those cached with language.Add. For hints with custom text, look at notification.AddLegacy  
+--- ℹ **NOTE**: This function is only available in Sandbox and its derivatives. Since this adds `#Hint_` to the beginning of each message, you should only use it with default hint messages, or those cached with language.Add. For hints with custom text, look at notification.AddLegacy.  
 --- @param name string @Name/class/index of the hint
 --- @param delay number @Delay in seconds before showing the hint
 function GPlayer:SendHint(name, delay)
@@ -949,10 +1059,15 @@ function GPlayer:SendLua(script)
 end
 
 --- Sets the player's active weapon. You should use CUserCmd:SelectWeapon or Player:SelectWeapon, instead in most cases.  
---- ℹ **NOTE**: This function will not trigger the weapon switch event or associated equip animations. You can achieve this using Player:SelectWeapon with Entity:GetClass.  
---- ℹ **NOTE**: This will not call GM:PlayerSwitchWeapon.  
+--- This function will not trigger the weapon switch events or associated equip animations. It will bypass  
+--- GM:PlayerSwitchWeapon and the currently active weapon's WEAPON:Holster return value.  
 --- @param weapon GWeapon @The weapon to equip.
 function GPlayer:SetActiveWeapon(weapon)
+end
+
+--- Sets the player's activity.  
+--- @param act number @The new activity to set
+function GPlayer:SetActivity(act)
 end
 
 --- Set if the players' model is allowed to rotate around the pitch and roll axis.  
@@ -960,10 +1075,9 @@ end
 function GPlayer:SetAllowFullRotation(Allowed)
 end
 
---- Allows player to use his weapons in a vehicle. You need to call this before entering a vehicle.  
+--- Allows player to use their weapons in a vehicle. You need to call this before entering a vehicle.  
 --- 🦟 **BUG**: [Shooting in a vehicle fires two bullets.](https://github.com/Facepunch/garrysmod-issues/issues/1277)  
---- 🦟 **BUG**: [Weapon viewpunch does not decay while in a vehicle, leading to incorrect aim angles.](https://github.com/Facepunch/garrysmod-issues/issues/3261)  
---- @param allow boolean @Show we allow player to use his weapons in a vehicle or not.
+--- @param allow boolean @Show we allow player to use their weapons in a vehicle or not.
 function GPlayer:SetAllowWeaponsInVehicle(allow)
 end
 
@@ -978,8 +1092,10 @@ end
 function GPlayer:SetArmor(Amount)
 end
 
---- Pushes the player away from another player whenever it's inside the other players bounding box.  
---- @param avoidPlayers boolean @Avoid or not avoid.
+--- Pushes the player away from other players whenever the player inside another players' bounding box.  
+--- This avoidance is performed clientside by altering movement sent to server.  
+--- This applies to players within a single team. (Player:Team)  
+--- @param avoidPlayers boolean @Whether to avoid teammates, or not.
 function GPlayer:SetAvoidPlayers(avoidPlayers)
 end
 
@@ -1011,10 +1127,11 @@ end
 function GPlayer:SetCurrentViewOffset(viewOffset)
 end
 
---- Applies the specified sound filter to the player.  
---- @param soundFilter number @The index of the sound filter to apply
---- @param fastReset boolean @If set to true the sound filter will be removed faster.
-function GPlayer:SetDSP(soundFilter, fastReset)
+--- Activates a given DSP (Digital Signal Processor) effect on all sounds that the player hears.  
+--- To apply a DSP effect to individual sounds, see CSoundPatch:SetDSP  
+--- @param dspEffectId number @The index of the DSP sound filter to apply
+--- @param fastReset boolean @If set to true the sound filter will be removed faster
+function GPlayer:SetDSP(dspEffectId, fastReset)
 end
 
 --- Sets a player's death count  
@@ -1028,15 +1145,16 @@ end
 function GPlayer:SetDuckSpeed(duckSpeed)
 end
 
---- Sets the angle of the player's view (may rotate body too if angular difference is large)  
+--- Sets the local angle of the player's view (may rotate body too if angular difference is large)  
 --- @param angle GAngle @Angle to set the view to
 function GPlayer:SetEyeAngles(angle)
 end
 
 --- Set a player's FOV (Field Of View) over a certain amount of time.  
---- @param fov number @the angle of perception (FOV)
---- @param time number @the time it takes to transition to the FOV expressed in a floating point.
---- @param requester GEntity @The requester or "owner" of the zoom event.
+--- This is meant to be called on the server or shared (for prediction), it will have no effect if called clientside only. You may want to use GM:CalcView for that instead.  
+--- @param fov? number @the angle of perception (FOV)
+--- @param time? number @the time it takes to transition to the FOV expressed in a floating point.
+--- @param requester? GEntity @The requester or "owner" of the zoom event
 function GPlayer:SetFOV(fov, time, requester)
 end
 
@@ -1053,24 +1171,27 @@ function GPlayer:SetHands(hands)
 end
 
 --- Sets the widget that is currently hovered by the player's mouse.  
---- @param widget GEntity @The widget entity that the player is hovering.
+--- @param widget? GEntity @The widget entity that the player is hovering.
 function GPlayer:SetHoveredWidget(widget)
 end
 
 --- Sets the mins and maxs of the AABB of the players collision.  
---- 🦟 **BUG**: [Setting both the mins and maxs to Global.Vector(0,0,0) will crash the game.](https://github.com/Facepunch/garrysmod-issues/issues/3365)  
+--- See Player:SetHullDuck for the hull while crouching/ducking.  
+--- ℹ **NOTE**: Not replicated, need to be call on server and client.  
 --- @param hullMins GVector @The min coordinates of the hull.
 --- @param hullMaxs GVector @The max coordinates of the hull.
 function GPlayer:SetHull(hullMins, hullMaxs)
 end
 
 --- Sets the mins and maxs of the AABB of the players collision when ducked.  
+--- See Player:SetHull for setting the hull while standing.  
+--- ℹ **NOTE**: Not replicated, need to be call on server and client.  
 --- @param hullMins GVector @The min coordinates of the hull.
 --- @param hullMaxs GVector @The max coordinates of the hull.
 function GPlayer:SetHullDuck(hullMins, hullMaxs)
 end
 
---- Sets the jump power, eg. the velocity the player will applied to when he jumps.  
+--- Sets the jump power, eg. the velocity that will be applied to the player when they jump.  
 --- @param jumpPower number @The new jump velocity.
 function GPlayer:SetJumpPower(jumpPower)
 end
@@ -1083,15 +1204,20 @@ end
 
 --- Slows down the player movement simulation by the timescale, this is used internally in the HL2 weapon stripping sequence.  
 --- It achieves such behavior by multiplying the Global.FrameTime by the specified timescale at the start of the movement simulation and then restoring it afterwards.  
---- ℹ **NOTE**: This is reset to 1 on spawn  
---- ℹ **NOTE**: There is no weapon counterpart to this, you'll have to hardcode the multiplier in the weapon or call Weapon:SetNextPrimaryFire / Weapon:SetNextSecondaryFire manually from a  
+--- ℹ **NOTE**: This is reset to 1 on spawn.  
+--- There is no weapon counterpart to this, you'll have to hardcode the multiplier in the weapon or call Weapon:SetNextPrimaryFire / Weapon:SetNextSecondaryFire manually.  
 --- @param timescale number @The timescale multiplier.
 function GPlayer:SetLaggedMovementValue(timescale)
 end
 
 --- Sets the hitgroup where the player was last hit.  
---- @param hitgroup number @The hitgroup to set as the "last hit", see Enums/HITGROUP
+--- @param hitgroup number @The hitgroup to set as the "last hit", see Enums/HITGROUP.
 function GPlayer:SetLastHitGroup(hitgroup)
+end
+
+--- Sets the maximum amount of armor the player should have. This affects default built-in armor pickups, but not Player:SetArmor.  
+--- @param maxarmor number @The new max armor value.
+function GPlayer:SetMaxArmor(maxarmor)
 end
 
 --- Sets the maximum speed which the player can move at.  
@@ -1105,9 +1231,10 @@ end
 function GPlayer:SetMuted(mute)
 end
 
---- Sets whenever the player should not collide with their teammates.  
---- 🦟 **BUG**: [This only works with Player:Team IDs 1-4. This also has major collision issues.](https://github.com/Facepunch/garrysmod-issues/issues/2757)  
---- @param shouldNotCollide boolean @True to disable, false to enable collision.
+--- Sets whenever the player should not collide with their teammates, based on their Player:Team.  
+--- ℹ **NOTE**: This will only work for teams with ID 1 to 4 due to internal Engine limitations.  
+--- ℹ **NOTE**: This causes traces with COLLISION_GROUP_PLAYER to pass through players.  
+--- @param shouldNotCollide boolean @`true` to disable, `false` to enable collision.
 function GPlayer:SetNoCollideWithTeammates(shouldNotCollide)
 end
 
@@ -1122,9 +1249,9 @@ end
 function GPlayer:SetObserverMode(mode)
 end
 
---- Writes a **P**layer **Data** key-value pair to the SQL database. (sv.db when called on server,  cl.db when called on client)  
---- Internally uses the sql.  
---- ⚠ **WARNING**: This function internally uses Player:UniqueID, which can cause collisions (two or more players sharing the same PData entry). It's recommended that you don't use it. See the related wiki page for more information.  
+--- Writes a **P**ersistent **Data** key-value pair to the SQL database. (`sv.db` when called on server, `cl.db` when called on client)  
+--- Internally uses the sql library. See util.SetPData for cases when the player is not currently on the server.  
+--- ℹ **NOTE**: This function internally uses Player:SteamID64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry). Player:SetPData now replaces all instances of Player:UniqueID with Player:SteamID64 when running Player:SetPData  
 --- ℹ **NOTE**: PData is not networked from servers to clients!  
 --- @param key string @Name of the PData key
 --- @param value any @Value to write to the key (**must** be an SQL valid data type, such as a string or integer)
@@ -1138,23 +1265,24 @@ function GPlayer:SetPlayerColor(Color)
 end
 
 --- Sets the widget that is currently in use by the player's mouse.  
---- Having a pressed widget stops the player from firing his weapon to allow input to be passed onto the widget.  
---- @param pressedWidget GEntity @The widget the player is currently using.
+--- Having a pressed widget stops the player from firing their weapon to allow input to be passed onto the widget.  
+--- @param pressedWidget? GEntity @The widget the player is currently using.
 function GPlayer:SetPressedWidget(pressedWidget)
 end
 
---- Sets the render angles of a player.  
+--- Sets the render angles of a player. Value set by this function is reset to player's angles (Entity:GetAngles) right after GM:UpdateAnimation.  
 --- @param ang GAngle @The new render angles to set
 function GPlayer:SetRenderAngles(ang)
 end
 
 --- Sets the player's sprint speed.  
 --- See also Player:GetRunSpeed, Player:SetWalkSpeed and Player:SetMaxSpeed.  
---- @param runSpeed number @The new sprint speed when sv_friction is below 10
+--- ℹ **NOTE**: player_default class run speed is: `240`  
+--- @param runSpeed number @The new sprint speed when `sv_friction` is below `10`
 function GPlayer:SetRunSpeed(runSpeed)
 end
 
---- Sets the player's slow walking speed, which is activated via `+walk` keybind.  
+--- Sets the player's slow walking speed, which is activated via `+WALK` keybind.  
 --- See Player:SetWalkSpeed for normal walking speed, Player:SetRunSpeed for sprinting speed and Player:SetLadderClimbSpeed for ladder climb speed.  
 --- @param speed number @The new slow walking speed.
 function GPlayer:SetSlowWalkSpeed(speed)
@@ -1210,16 +1338,27 @@ end
 function GPlayer:SetViewOffsetDucked(viewOffset)
 end
 
---- Sets client's view punch. See Player:ViewPunch  
+--- Sets client's view punch angle, but not the velocity. See Player:ViewPunch  
 --- @param punchAngle GAngle @The angle to set.
 function GPlayer:SetViewPunchAngles(punchAngle)
 end
 
+--- Sets client's view punch velocity. See Player:ViewPunch and Player:SetViewPunchAngles  
+--- @param punchVel GAngle @The angle velocity to set.
+function GPlayer:SetViewPunchVelocity(punchVel)
+end
+
+--- Sets the voice volume scale for given player on client. This value will persist from server to server, but will be reset when the game is shut down.  
+--- ℹ **NOTE**: This doesn't work on bots, their scale will always be `1`.  
+--- @param arg number @The voice volume scale, where `0` is 0% and `1` is 100%.
+function GPlayer:SetVoiceVolumeScale(arg)
+end
+
 --- Sets the player's normal walking speed. Not sprinting, not slow walking `+walk`.  
---- There currently is no way to modify the slow walking `+walk` speed.  
---- See also Player:GetWalkSpeed, Player:SetCrouchedWalkSpeed, Player:SetMaxSpeed and Player:SetRunSpeed.  
---- 🦟 **BUG**: [Using a speed of 0 can lead to prediction errors.](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
---- @param walkSpeed number @The new walk speed when sv_friction is below 10
+--- See also Player:SetSlowWalkSpeed, Player:GetWalkSpeed, Player:SetCrouchedWalkSpeed, Player:SetMaxSpeed and Player:SetRunSpeed.  
+--- 🦟 **BUG**: [Using a speed of `0` can lead to prediction errors.](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
+--- ℹ **NOTE**: `player_default` class walk speed is: `160`.  
+--- @param walkSpeed number @The new walk speed when `sv_friction` is below `10`
 function GPlayer:SetWalkSpeed(walkSpeed)
 end
 
@@ -1233,8 +1372,8 @@ end
 function GPlayer:SetupHands(ent)
 end
 
---- Polls the engine to request if the player should be drawn at the time the function is called.  
---- @return boolean @shouldDraw
+--- Returns whether the player's player model will be drawn at the time the function is called.  
+--- @return boolean @`true` if the player's playermodel is visible
 function GPlayer:ShouldDrawLocalPlayer()
 end
 
@@ -1254,8 +1393,9 @@ function GPlayer:SimulateGravGunDrop(ent)
 end
 
 --- Signals the entity that it was picked up by the gravity gun. This call is only required if you want to simulate the situation of picking up objects.  
---- @param ent GEntity @The entity picked up
-function GPlayer:SimulateGravGunPickup(ent)
+--- @param ent? GEntity @The entity picked up
+--- @param lightning? boolean @Whether or not to show lightning effects around the entity
+function GPlayer:SimulateGravGunPickup(ent, lightning)
 end
 
 --- Starts spectate mode for given player. This will also affect the players movetype in some cases.  
@@ -1263,9 +1403,8 @@ end
 function GPlayer:Spectate(mode)
 end
 
---- Makes the player spectate the entity  
---- To get the applied spectated entity, use Player:GetObserverTarget().  
---- 🦟 **BUG**: [The player's position will not update while spectating, causing area portals and other map optimisations to not work properly. You can fix this by setting the player's position to the spectated entity's each tick.](https://github.com/Facepunch/garrysmod-issues/issues/3267)  
+--- Makes the player spectate the entity.  
+--- To get the applied spectated entity, use Player:GetObserverTarget.  
 --- @param entity GEntity @Entity to spectate.
 function GPlayer:SpectateEntity(entity)
 end
@@ -1277,12 +1416,10 @@ function GPlayer:SprayDecal(sprayOrigin, sprayEndPos)
 end
 
 --- Disables the sprint on the player.  
---- 🦟 **BUG**: [Not working - use Player:SetRunSpeed or CMoveData:SetMaxSpeed in a GM:Move hook, instead.](https://github.com/Facepunch/garrysmod-issues/issues/2390)  
 function GPlayer:SprintDisable()
 end
 
 --- Enables the sprint on the player.  
---- 🦟 **BUG**: [Not working - use Player:SetRunSpeed or CMoveData:SetMaxSpeed in a GM:Move hook, instead.](https://github.com/Facepunch/garrysmod-issues/issues/2390)  
 function GPlayer:SprintEnable()
 end
 
@@ -1296,21 +1433,21 @@ end
 function GPlayer:StartWalking()
 end
 
---- Returns the player's SteamID. In singleplayer, this will be STEAM_ID_PENDING serverside.  
---- For Bots this will return "BOT" on the server and on the client it returns "NULL".  
---- Use Player:AccountID for a shorter version of the SteamID.  
---- @return string @SteamID
+--- Returns the player's SteamID.  
+--- See Player:AccountID for a shorter version of the SteamID and Player:SteamID64 for the full SteamID.  
+--- It is recommended to use Player:SteamID64 over the other SteamID formats whenever possible.  
+--- ℹ **NOTE**: In a `-multirun` environment, this will return `STEAM_0:0:0` (serverside) or `NULL` (clientside) for all "copies" of a player because they are not authenticated with Steam.  
+--- For Bots this will return `BOT`.  
+--- @return string @"Text" representation of the player's SteamID.
 function GPlayer:SteamID()
 end
 
---- Returns the player's 64-bit SteamID aka CommunityID.  
---- ⚠ **WARNING**: In singleplayer, this will return no value serverside.  
---- ℹ **NOTE**: In a multirun environment, this will return no value serverside for all "copies" of a player.  
---- ℹ **NOTE**: For bots, this will return 90071996842377216 (equivalent to STEAM_0:0:0) for the first bot to join.  
---- For each additional bot, the number increases by 1. So the next bot will be 90071996842377217 (STEAM_0:1:0) then 90071996842377218 (STEAM_0:0:1) and so on.  
---- ℹ **NOTE**: On the client it returns no value for bots.  
---- Use Player:AccountID for a shorter version of the SteamID.  
---- @return string @Player's 64bit SteamID aka CommunityID.
+--- Returns the player's full **64-bit SteamID**, also known as **CommunityID**. Information on how data is packed into this value can be found [here](https://developer.valvesoftware.com/wiki/SteamID).  
+--- See Player:AccountID for a function that returns only the Account ID part of the SteamID and Player:SteamID for the text version of the SteamID.  
+--- ℹ **NOTE**: In a `-multirun` environment, this will return `"0"` for all "copies" of a player because they are not authenticated with Steam.  
+--- For bots, this will return `90071996842377216` (equivalent to `STEAM_0:0:0`) for the first bot to join.  
+--- For each additional bot, the number increases by 1. So the next bot will be `90071996842377217` (`STEAM_0:1:0`) then `90071996842377218` (`STEAM_0:0:1`) and so on.  
+--- @return string @Player's 64-bit SteamID aka CommunityID
 function GPlayer:SteamID64()
 end
 
@@ -1330,11 +1467,13 @@ end
 function GPlayer:StopZooming()
 end
 
+--- 🛑 **DEPRECATED**: Alias of Player:RemoveAllAmmo  
 --- Removes all ammo from the player.  
 function GPlayer:StripAmmo()
 end
 
 --- Removes the specified weapon class from a certain player  
+--- ℹ **NOTE**: this function will call the Entity:OnRemove but if you try use Entity:GetOwner it will return nil  
 --- @param weapon string @The weapon class to remove
 function GPlayer:StripWeapon(weapon)
 end
@@ -1373,7 +1512,7 @@ end
 --- @param mins GVector @The minimum coordinates of the hull.
 --- @param maxs GVector @The maximum coordinates of the hull.
 --- @param damage number @The damage to be applied.
---- @param damageFlags GVector @Bitflag specifying the damage type, see Enums/DMG.
+--- @param damageFlags number @Bitflag specifying the damage type, see Enums/DMG.
 --- @param damageForce number @The force to be applied to the hit object.
 --- @param damageAllNPCs boolean @Whether to apply damage to all hit NPCs or not.
 --- @return GEntity @The hit entity
@@ -1399,14 +1538,17 @@ end
 function GPlayer:UnfreezePhysicsObjects()
 end
 
---- ⚠ **WARNING**: **This function has collisions,** where more than one player has the same UniqueID. It is **highly** recommended to use Player:AccountID, Player:SteamID or Player:SteamID64 instead, which are guaranteed to be unique to each player.  
+--- 🛑 **DEPRECATED**:   
+--- **This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use Player:SteamID64 or Player:SteamID instead, which are guaranteed to be unique to each player.  
 --- Returns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.  
 --- ℹ **NOTE**: In Singleplayer, this function will always return 1.  
 --- @return number @The player's Unique ID
 function GPlayer:UniqueID()
 end
 
---- Returns a table that will stay allocated for the specific player between connects until the server shuts down. Note, that this table is not synchronized between client and server.  
+--- 🛑 **DEPRECATED**: This is based on Player:UniqueID which is deprecated and vulnerable to collisions.  
+--- Returns a table that will stay allocated for the specific player serveside between connects until the server shuts down. On client it has no such special behavior.  
+--- ℹ **NOTE**: This table is not synchronized (networked) between client and server.  
 --- @param key any @Unique table key.
 --- @return table @The table that contains any info you have put in it.
 function GPlayer:UniqueIDTable(key)
@@ -1418,13 +1560,13 @@ end
 function GPlayer:UserID()
 end
 
---- Simulates a push on the client's screen.  
+--- Simulates a push on the client's screen. This **adds** view punch velocity, and does not touch the current view punch angle, for which you can use Player:SetViewPunchAngles.  
 --- @param PunchAngle GAngle @The angle in which to push the player's screen.
 function GPlayer:ViewPunch(PunchAngle)
 end
 
---- Resets the player's view punch ( Player:ViewPunch ) effect back to normal.  
---- @param tolerance number @Reset all ViewPunch below this threshold.
+--- Resets the player's view punch (and the view punch velocity, read more at Player:ViewPunch) effect back to normal.  
+--- @param tolerance? number @Reset all ViewPunch below this threshold.
 function GPlayer:ViewPunchReset(tolerance)
 end
 

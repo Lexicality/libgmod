@@ -47,12 +47,18 @@ end
 function GIGModAudioChannel:GetBitsPerSample()
 end
 
+--- Returns the buffered time of the sound channel in seconds, for online streaming sound channels. (sound.PlayURL)  
+--- For offline channels this will be equivalent to IGModAudioChannel:GetLength.  
+--- @return number @The current buffered time of the stream, in seconds.
+function GIGModAudioChannel:GetBufferedTime()
+end
+
 --- Returns the filename for the sound channel.  
 --- @return string @The file name
 function GIGModAudioChannel:GetFileName()
 end
 
---- Returns the length of sound played by the sound channel.  
+--- Returns the length of sound played by the sound channel in seconds.  
 --- @return number @The length of the sound
 function GIGModAudioChannel:GetLength()
 end
@@ -89,7 +95,7 @@ function GIGModAudioChannel:GetState()
 end
 
 --- Retrieves HTTP headers from a bass stream channel created by sound.PlayURL, if available.  
---- @return table @Returns a table of HTTP headers
+--- @return table @Returns a table of HTTP headers.<br>Returns nil if no information is available.
 function GIGModAudioChannel:GetTagsHTTP()
 end
 
@@ -114,7 +120,7 @@ end
 function GIGModAudioChannel:GetTagsVendor()
 end
 
---- Returns the current time of the sound channel  
+--- Returns the current time of the sound channel in seconds  
 --- @return number @The current time of the stream
 function GIGModAudioChannel:GetTime()
 end
@@ -187,15 +193,16 @@ function GIGModAudioChannel:SetPlaybackRate(rate)
 end
 
 --- Sets position of sound channel in case the sound channel has a 3d option set.  
---- @param pos GVector @The position to put the sound into
---- @param dir GVector @The direction of the sound
+--- @param pos? GVector @The position to put the sound into
+--- @param dir? GVector @The direction of the sound
 function GIGModAudioChannel:SetPos(pos, dir)
 end
 
 --- Sets the sound channel to specified time ( Rewind to that position of the song ). Does not work on online radio streams.  
 --- Streamed sounds must have "noblock" parameter for this to work and IGModAudioChannel:IsBlockStreamed must return false.  
---- @param secs number @The time to set the stream to, in seconds.
-function GIGModAudioChannel:SetTime(secs)
+--- @param secs? number @The time to set the stream to, in seconds.
+--- @param dont_decode? boolean @Set to true to skip decoding to set time, and instead just seek to it which is faster
+function GIGModAudioChannel:SetTime(secs, dont_decode)
 end
 
 --- Sets the volume of a sound channel  

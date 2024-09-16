@@ -1,6 +1,4 @@
 --- @class GWeapon : GEntity
---- This is a list of all methods only available for weapons. It is also possible to call Entity functions on weapons.  
---- ℹ **NOTE**: A list of available methods has been expanded in your navigation bar.  
 local GWeapon = {}
 --- Returns whether the weapon allows to being switched from when a better ( Weapon:GetWeight ) weapon is being picked up.  
 --- @return boolean @Whether the weapon allows to being switched from.
@@ -12,19 +10,21 @@ end
 function GWeapon:AllowsAutoSwitchTo()
 end
 
---- Calls a SWEP function on client.  
+--- Calls a SWEP function on client. Does nothing on client.  
 --- ⚠ **WARNING**: This uses the usermessage internally, because of that, the combined length of the arguments of this function may not exceed 254 bytes/characters or the function will cease to function!  
 --- @param functionName string @Name of function to call
---- @param arguments string @Arguments for the function, separated by spaces
-function GWeapon:CallOnClient(functionName, arguments)
+--- @param data string @Custom data to be passed to the target SWEP function as the first argument.
+function GWeapon:CallOnClient(functionName, data)
 end
 
 --- Returns how much primary ammo is in the magazine.  
+--- ℹ **NOTE**: This is not shared between clients and will instead return the maximum primary clip size.  
 --- @return number @The amount of primary ammo in the magazine.
 function GWeapon:Clip1()
 end
 
---- Returns how much secondary ammo is in magazine.  
+--- Returns how much secondary ammo is in the magazine.  
+--- ℹ **NOTE**: This is not shared between clients and will instead return the maximum secondary clip size.  
 --- @return number @The amount of secondary ammo in the magazine.
 function GWeapon:Clip2()
 end
@@ -41,6 +41,11 @@ end
 --- 🦟 **BUG**: [This can return inconsistent results between the server and client.](https://github.com/Facepunch/garrysmod-issues/issues/2543)  
 --- @return number @Current activity, see Enums/ACT
 function GWeapon:GetActivity()
+end
+
+--- Returns the weapon deploy speed, as set by Weapon:SetDeploySpeed. If not previously set, the value will be polled from the `sv_defaultdeployspeed` ConVar.  
+--- @return number @The value to set deploy speed to.
+function GWeapon:GetDeploySpeed()
 end
 
 --- Returns the hold type of the weapon.  
@@ -85,8 +90,9 @@ end
 function GWeapon:GetSecondaryAmmoType()
 end
 
---- Returns the slot of the weapon (slot numbers start from 0)  
---- @return number @The slot of the weapon
+--- Returns the slot of the weapon.  
+--- ℹ **NOTE**: The slot numbers start from 0.  
+--- @return number @The slot of the weapon.
 function GWeapon:GetSlot()
 end
 
@@ -122,7 +128,7 @@ function GWeapon:IsCarriedByLocalPlayer()
 end
 
 --- Checks if the weapon is a SWEP or a built-in weapon.  
---- @return boolean @Returns true if weapon is scripted ( SWEP ), false if not ( A built-in HL2 weapon )
+--- @return boolean @Returns true if weapon is scripted ( SWEP ), false if not ( A built-in HL2/HL:S weapon )
 function GWeapon:IsScripted()
 end
 
@@ -141,6 +147,12 @@ end
 function GWeapon:SendWeaponAnim(act)
 end
 
+--- Sets the activity the weapon is playing.  
+--- See also Weapon:GetActivity.  
+--- @param act number @The new activity to set, see Enums/ACT.
+function GWeapon:SetActivity(act)
+end
+
 --- Lets you change the number of bullets in the given weapons primary clip.  
 --- @param ammo number @The amount of bullets the clip should contain
 function GWeapon:SetClip1(ammo)
@@ -151,6 +163,11 @@ end
 function GWeapon:SetClip2(ammo)
 end
 
+--- Sets the weapon deploy speed. This value needs to match on client and server.  
+--- @param speed number @The value to set deploy speed to
+function GWeapon:SetDeploySpeed(speed)
+end
+
 --- Sets the hold type of the weapon. This function also calls WEAPON:SetWeaponHoldType and properly networks it to all clients.  
 --- ℹ **NOTE**: This only works on scripted weapons.  
 --- 🦟 **BUG**: Using this function on weapons held by bots will not network holdtype changes to clients if the world model is set to an empty string (SWEP.WorldModel = "").  
@@ -159,11 +176,12 @@ function GWeapon:SetHoldType(name)
 end
 
 --- Sets the time since this weapon last fired in seconds. Used in conjunction with Weapon:LastShootTime  
---- @param time number @The time in seconds when the last time the weapon was fired.
+--- @param time? number @The time in seconds when the last time the weapon was fired.
 function GWeapon:SetLastShootTime(time)
 end
 
 --- Sets when the weapon can fire again. Time should be based on Global.CurTime.  
+--- ℹ **NOTE**: The standard HL2 Pistol (`weapon_pistol`) bypasses this function due to an [internal implementation](https://github.com/ValveSoftware/source-sdk-2013/blob/master/mp/src/game/server/hl2/weapon_pistol.cpp#L313-L317).  
 --- 🦟 **BUG**: [This will fire extra bullets if the time is set to less than Global.CurTime.](https://github.com/Facepunch/garrysmod-issues/issues/3786)  
 --- @param time number @Time when player should be able to use primary fire again
 function GWeapon:SetNextPrimaryFire(time)

@@ -7,6 +7,16 @@ _G.derma = {}
 function derma.Color(name, pnl, default)
 end
 
+--- This is NOT a function, it's a variable containing all derma controls, registered with derma.DefineControl.  
+--- Use derma.GetControlList to retrieve this list.  
+--- It's a list of tables, each having 3 keys, all from derma.DefineControl arguments:  
+--- * string ClassName - The class name of the panel  
+--- * string Description - The description of the panel  
+--- * string BaseClass - The base class of the panel  
+--- @return table @The list of all registered derma controls.
+function derma.Controls()
+end
+
 --- Defines a new Derma control with an optional base.  
 --- This calls vgui.Register internally, but also does the following:  
 --- * Adds the control to derma.GetControlList  
@@ -21,7 +31,7 @@ end
 function derma.DefineControl(name, description, tab, base)
 end
 
---- Defines a new skin so that it is usable by Derma. The default skin can be found in "garrysmod/lua/skins/default.lua"  
+--- Defines a new skin so that it is usable by Derma. The default skin can be found in `garrysmod/lua/skins/default.lua`  
 --- @param name string @Name of the skin
 --- @param descriptions string @Description of the skin
 --- @param skin table @Table containing skin data
@@ -59,20 +69,28 @@ function derma.SkinChangeIndex()
 end
 
 --- Calls the specified hook for the given panel  
---- @param type string @The type of hook to run
---- @param name string @The name of the hook to run
---- @param panel GPanel @The panel to call the hook for
---- @param w number @The width of the panel
---- @param h number @The height of the panel
+--- @param type? string @The type of hook to run
+--- @param name? string @The name of the hook to run
+--- @param panel? GPanel @The panel to call the hook for
+--- @param vararg1? any @First parameter for the panel hook
+--- @param vararg2? any @Second parameter for the panel hook
+--- @param vararg3? any @Third parameter for the panel hook.
+--- @param vararg4? any @Fourth parameter for the panel hook.
 --- @return any @The returned variable from the skin hook
-function derma.SkinHook(type, name, panel, w, h)
+function derma.SkinHook(type, name, panel, vararg1, vararg2, vararg3, vararg4)
+end
+
+--- This is NOT a function, it's a variable containing all registered via derma.DefineSkin derma skins.  
+--- @return table @The list of all registered derma skins.
+function derma.SkinList()
 end
 
 --- Returns a function to draw a specified texture of panels skin.  
---- @param name string @The identifier of the texture
---- @param pnl GPanel @Panel to get the skin of.
---- @param fallback any @What to return if we failed to retrieve the texture
---- @return function @A function that is created with the GWEN to draw a texture.
+--- These are usually generated via GWEN.CreateTextureBorder and similar.  
+--- @param name? string @The identifier of the texture
+--- @param pnl? GPanel @Panel to get the skin of.
+--- @param fallback? function @What to return if we failed to retrieve the texture
+--- @return function @A function that is created with the GWEN library to draw a texture
 function derma.SkinTexture(name, pnl, fallback)
 end
 

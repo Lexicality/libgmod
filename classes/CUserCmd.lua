@@ -2,6 +2,11 @@
 --- A class used to store the player inputs, such as mouse movement, view angles, Enums/IN buttons pressed and analog movement, the data from this class is then transfered to a CMoveData during actual movement simulation.  
 --- Can be modified during GM:CreateMove, GM:StartCommand and used in read only with GM:SetupMove and Player:GetCurrentCommand.  
 local GCUserCmd = {}
+--- Adds a single key to the active buttons bitflag. See also CUserCmd:SetButtons.  
+--- @param key number @Key to add, see Enums/IN.
+function GCUserCmd:AddKey(key)
+end
+
 --- Removes all keys from the command.  
 --- ℹ **NOTE**: If you are looking to affect player movement, you may need to use CUserCmd:ClearMovement instead of clearing the buttons.  
 function GCUserCmd:ClearButtons()
@@ -28,7 +33,7 @@ end
 function GCUserCmd:GetForwardMove()
 end
 
---- Gets the current impulse from the client, usually 0.  
+--- Gets the current impulse from the client, usually 0. [See impulses list](https://developer.valvesoftware.com/wiki/Impulse) and some GMod specific impulses.  
 --- @return number @The impulse
 function GCUserCmd:GetImpulse()
 end
@@ -59,7 +64,7 @@ function GCUserCmd:GetUpMove()
 end
 
 --- Gets the direction the player is looking in.  
---- @return GAngle @requestDir
+--- @return GAngle @The direction the player is looking in.
 function GCUserCmd:GetViewAngles()
 end
 
@@ -75,7 +80,8 @@ end
 function GCUserCmd:KeyDown(key)
 end
 
---- Removed a key bit from the current key bitflag.  
+--- Removes a key bit from the current key bitflag.  
+--- For movement you will want to use CUserCmd:SetForwardMove, CUserCmd:SetUpMove and CUserCmd:SetSideMove.  
 --- @param button number @Bitflag to be removed from the key bitflag, see Enums/IN.
 function GCUserCmd:RemoveKey(button)
 end
@@ -100,9 +106,15 @@ function GCUserCmd:SetForwardMove(speed)
 end
 
 --- Sets the impulse command to be sent to the server.  
---- For example, 101 is an impulse that will give the player all Half-Life 2 weapons with sv_cheats set to 1. Impulse 100 will toggle their flashlight.  
---- @param speed number @The impulse to send.
-function GCUserCmd:SetImpulse(speed)
+--- Here are a few examples of impulse numbers:  
+--- - `100` toggles their flashlight  
+--- - `101` gives the player all Half-Life 2 weapons with `sv_cheats` set to `1`  
+--- - `200` toggles holstering / restoring the current weapon  
+--- When holstered, the `EF_NODRAW` flag is set on the active weapon.  
+--- - `154` toggles noclip  
+--- [See full list](https://developer.valvesoftware.com/wiki/Impulse)  
+--- @param impulse number @The impulse to send.
+function GCUserCmd:SetImpulse(impulse)
 end
 
 --- Sets the scroll delta.  
@@ -130,12 +142,14 @@ end
 
 --- Sets speed the client wishes to move upwards with, negative to move down.  
 --- See also CUserCmd:SetSideMove and  CUserCmd:SetForwardMove.  
+--- ℹ **NOTE**: This function does **not** move the client up/down ladders. To force ladder movement, consider CUserCMD:SetButtons and use IN_FORWARD from Enums/IN.  
 --- @param speed number @The new speed to request.
 function GCUserCmd:SetUpMove(speed)
 end
 
 --- Sets the direction the client wants to move in.  
---- ℹ **NOTE**: The pitch (vertical) angle should be clamped to +/- 89° to prevent the player's view from glitching.  
+--- ℹ **NOTE**: For human players, the pitch (vertical) angle should be clamped to +/- 89° to prevent the player's view from glitching.  
+--- ℹ **NOTE**: For fake clients (those created with player.CreateNextBot), this functionally dictates the 'move angles' of the bot. This typically functions separately from the colloquial view angles. This can be utilized by CUserCmd:SetForwardMove and its related functions.  
 --- @param viewAngle GAngle @New view angles.
 function GCUserCmd:SetViewAngles(viewAngle)
 end

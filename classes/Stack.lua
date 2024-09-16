@@ -4,8 +4,15 @@
 --- The Stack works like a stack of papers: the first page you put down (push) will be the last one you remove (pop). That also means that the last page you put down, will be the first to be removed.  
 local GStack = {}
 --- Pop an item from the stack  
---- @param amount number @Amount of items you want to pop.
+--- @param amount? number @Amount of items you want to pop.
+--- @return any @Latest popped item.
 function GStack:Pop(amount)
+end
+
+--- Pop an item from the stack  
+--- @param amount? number @Amount of items you want to pop.
+--- @return table @The Popped Items.
+function GStack:PopMulti(amount)
 end
 
 --- Push an item onto the stack  

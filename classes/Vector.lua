@@ -5,7 +5,7 @@
 --- @field y number @The Y component of the vector.
 --- @field z number @The Z component of the vector.
 local GVector = {}
---- Adds the values of the argument vector to the orignal vector. This functions the same as vector1 + vector2 without creating a new vector object, skipping object construction and garbage collection.  
+--- Adds the values of the argument vector to the original vector. This function is the same as vector1 + vector2 without creating a new vector object, skipping object construction and garbage collection.  
 --- @param vector GVector @The vector to add.
 function GVector:Add(vector)
 end
@@ -15,14 +15,14 @@ end
 function GVector:Angle()
 end
 
---- Returns the angle of the vector, but instead of assuming that up is Global.Vector( 0, 0, 1 ) (Like Vector:Angle does) you can specify which direction is 'up' for the angle.  
+--- Returns the angle of this vector (normalized), but instead of assuming that up is Global.Vector( 0, 0, 1 ) (Like Vector:Angle does) you can specify which direction is 'up' for the angle.  
 --- @param up GVector @The up direction vector
 --- @return GAngle @The angle
 function GVector:AngleEx(up)
 end
 
 --- Calculates the cross product of this vector and the passed one.  
---- The cross product of two vectors is a 3-dimensional vector with a direction perpendicular (at right angles) to both of them (according to the right-hand rule), and magnitude equal to the area of parallelogram they span. This is defined as the product of the magnitudes, the sine of the angle between them, and unit (normal) vector `n` defined by the right-hand rule:  
+--- The cross product of two vectors is a 3-dimensional vector with a direction perpendicular (at right angles) to both of them (according to the [right-hand rule](https://en.wikipedia.org/wiki/Right-hand_rule)), and magnitude equal to the area of parallelogram they span. This is defined as the product of the magnitudes, the sine of the angle between them, and unit (normal) vector `n` defined by the right-hand rule:  
 --- :**a** × **b** = |**a**| |**b**| sin(θ) **n̂**  
 --- where **a** and **b** are vectors, and **n̂** is a unit vector (magnitude of 1) perpendicular to both.  
 --- @param otherVector GVector @Vector to calculate the cross product with.
@@ -30,17 +30,34 @@ end
 function GVector:Cross(otherVector)
 end
 
---- Returns the squared distance of 2 vectors, this is faster than Vector:Distance as calculating the square root is an expensive process.  
+--- Returns the squared distance of 2 vectors, this is quicker to call than Vector:Distance as DistToSqr does not need to calculate the square root, which is an expensive process.  
+--- ℹ **NOTE**: Squared distances should not be summed. If you need to sum distances, use Vector:Distance.  
+--- When performing a distance check, ensure the distance being checked against is squared. See example code below.  
 --- @param otherVec GVector @The vector to calculate the distance to.
---- @return number @Squared distance to the vector
+--- @return number @Squared distance to the vector.
 function GVector:DistToSqr(otherVec)
 end
 
---- Returns the euclidean distance between the vector and the other vector.  
---- ⚠ **WARNING**: This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:DistToSqr whenever possible.  
+--- Returns the Euclidean distance between the vector and the other vector.  
+--- ℹ **NOTE**: This function is more expensive than Vector:DistToSqr. However, please see the notes for Vector:DistToSqr before using it as squared distances are not the same as euclidean distances.  
 --- @param otherVector GVector @The vector to get the distance to.
 --- @return number @Distance between the vectors.
 function GVector:Distance(otherVector)
+end
+
+--- Returns the Euclidean distance between the vector and the other vector in 2D space. The Z axis is ignored.  
+--- ℹ **NOTE**: This function is more expensive than Vector:Distance2DSqr. However, please see the notes for Vector:Distance2DSqr before using it as squared distances are not the same as Euclidean distances.  
+--- @param otherVector GVector @The vector to get the distance to.
+--- @return number @Distance between the vectors in 2D space.
+function GVector:Distance2D(otherVector)
+end
+
+--- Returns the squared distance between 2 vectors in 2D space, ignoring the Z axis. This is faster than Vector:Distance2D as calculating the square root is an expensive process.  
+--- ℹ **NOTE**: Squared distances should not be summed. If you need to sum distances, use Vector:Distance2D.  
+--- When performing a distance check, ensure the distance being checked against is squared.  
+--- @param otherVec GVector @The vector to calculate the distance to.
+--- @return number @Squared distance to the vector in 2D space.
+function GVector:Distance2DSqr(otherVec)
 end
 
 --- Divide the vector by the given number, that means x, y and z are divided by that value. This will change the value of the original vector, see example 2 for division without changing the value.  
@@ -64,6 +81,12 @@ end
 --- @param Vector GVector @The other vector.
 --- @return number @Dot Product
 function GVector:DotProduct(Vector)
+end
+
+--- Returns the negative version of this vector, i.e. a vector with every component to the negative value of itself.  
+--- See also Vector:Negate.  
+--- @return GVector @The negative of this vector.
+function GVector:GetNegated()
 end
 
 --- 🛑 **DEPRECATED**: Use Vector:GetNormalized instead.  
@@ -90,12 +113,16 @@ end
 function GVector:IsZero()
 end
 
---- Returns the Euclidean length of the vector: √x² + y² + z²  
+--- Returns the [Euclidean length](https://en.wikipedia.org/wiki/Euclidean_vector#Length) of the vector: √(x² + y² + z²).  
+--- ⚠ **WARNING**:   
+--- This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:LengthSqr whenever possible.  
 --- @return number @Length of the vector.
 function GVector:Length()
 end
 
 --- Returns the length of the vector in two dimensions, without the Z axis.  
+--- ⚠ **WARNING**:   
+--- This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:Length2DSqr whenever possible.  
 --- @return number @Length of the vector in two dimensions, √(x² + y²)
 function GVector:Length2D()
 end
@@ -112,13 +139,23 @@ end
 function GVector:LengthSqr()
 end
 
---- Scales the vector by the given number, that means x, y and z are multiplied by that value.  
+--- Scales the vector by the given number (that means x, y and z are multiplied by that value), a Vector (X, Y, and Z of each vector are multiplied) or a VMatrix (Transforms the vector by the matrix's rotation/translation).  
 --- @param multiplier number @The value to scale the vector with.
 function GVector:Mul(multiplier)
 end
 
+--- Negates this vector, i.e. sets every component to the negative value of itself. Same as `Vector( -vec.x, -vec.y, -vec.z )`  
+function GVector:Negate()
+end
+
 --- Normalizes the given vector. This changes the vector you call it on, if you want to return a normalized copy without affecting the original, use Vector:GetNormalized.  
 function GVector:Normalize()
+end
+
+--- Randomizes each element of this Vector object.  
+--- @param min? number @The minimum value for each component.
+--- @param max? number @The maximum value for each component.
+function GVector:Random(min, max)
 end
 
 --- Rotates a vector by the given angle.  
@@ -174,9 +211,11 @@ function GVector:Unpack()
 end
 
 --- Returns whenever the given vector is in a box created by the 2 other vectors.  
+--- <upload src="22674/8d9276d7e6dd0af.png" size="6279" name="image.png">  
+--- </upload>  
 --- @param boxStart GVector @The first vector.
 --- @param boxEnd GVector @The second vector.
---- @return boolean @Is the vector in the box or not
+--- @return boolean @Is the vector in the box or not.
 function GVector:WithinAABox(boxStart, boxEnd)
 end
 

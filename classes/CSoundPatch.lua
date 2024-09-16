@@ -4,15 +4,15 @@
 local GCSoundPatch = {}
 --- Adjust the pitch, alias the speed at which the sound is being played.  
 --- This invokes the GM:EntityEmitSound.  
---- @param pitch number @The pitch can range from 0-255.
---- @param deltaTime number @The time to fade from previous to the new pitch.
+--- @param pitch? number @The pitch can range from 0-255
+--- @param deltaTime? number @The time to fade from previous to the new pitch.
 function GCSoundPatch:ChangePitch(pitch, deltaTime)
 end
 
 --- Adjusts the volume of the sound played.  
 --- Appears to only work while the sound is being played.  
---- @param volume number @The volume ranges from 0 to 1.
---- @param deltaTime number @Time to fade the volume from previous to new value from.
+--- @param volume? number @The volume ranges from 0 to 1.
+--- @param deltaTime? number @Time to fade the volume from previous to new value from.
 function GCSoundPatch:ChangeVolume(volume, deltaTime)
 end
 
@@ -21,8 +21,8 @@ end
 function GCSoundPatch:FadeOut(seconds)
 end
 
---- Returns the DSP ( Digital Signal Processor ) effect for the sound.  
---- @return number @The DSP effects of the sound
+--- Returns the DSP (Digital Signal Processor) effect ID for the sound.  
+--- @return number @The numerical ID for the DSP effect currently enabled on the sound
 function GCSoundPatch:GetDSP()
 end
 
@@ -56,10 +56,10 @@ end
 function GCSoundPatch:PlayEx(volume, pitch)
 end
 
---- Sets the DSP (Digital Signal Processor) effect for the sound. Similar to Player:SetDSP but for individual sounds.  
---- 🦟 **BUG**: [This will only apply if the sound is not playing.](https://github.com/Facepunch/garrysmod-issues/issues/4086)  
---- @param dsp number @The DSP effect to set
-function GCSoundPatch:SetDSP(dsp)
+--- Sets the DSP (Digital Signal Processor) effect for the sound.  
+--- Similar to Player:SetDSP but for individual sounds.  
+--- @param dspEffectId number @The numerical ID for the DSP effect to be enabled on the sound
+function GCSoundPatch:SetDSP(dspEffectId)
 end
 
 --- Sets the sound level in decibel.  

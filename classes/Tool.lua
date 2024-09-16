@@ -1,9 +1,9 @@
 --- @class GTool
 --- A list of functions available inside a Sandbox Toolgun tool.  
---- You can find the hooks  and members here.  
+--- You can find the hooks here, and members here.  
 local GTool = {}
---- Checks whether the tool is allowed on the server. This will always return true clientside and will not be affected by SANDBOX:CanTool.  
---- This function uses **TOOL.AllowedCVar** which is a ConVar object pointing to  **toolmode_allow_`*toolname***` convar.  
+--- Returns whether the tool is allowed to be used or not. This function ignores the SANDBOX:CanTool hook.  
+--- By default this will always return true clientside and uses `TOOL.AllowedCVar`which is a ConVar object pointing to  `toolmode_allow_*toolname*` convar on the server.  
 --- @return boolean @Returns true if the tool is allowed.
 function GTool:Allowed()
 end
@@ -23,15 +23,22 @@ end
 function GTool:GetBone(id)
 end
 
---- Attempts to grab a clientside tool ConVar.  
+--- Attempts to grab a clientside tool ConVar value as a boolean.  
+--- @param name? string @Name of the ConVar to retrieve
+--- @param default? boolean @The default value to return in case the lookup fails.
+--- @return number @The value of the requested ConVar
+function GTool:GetClientBool(name, default)
+end
+
+--- Attempts to grab a clientside tool ConVar as a string.  
 --- @param name string @Name of the convar to retrieve
 --- @return string @The value of the requested ConVar.
 function GTool:GetClientInfo(name)
 end
 
---- Attempts to grab a clientside tool ConVar.  
---- @param name string @Name of the convar to retrieve
---- @param default number @The default value to return in case the lookup fails.
+--- Attempts to grab a clientside tool ConVar's value as a number.  
+--- @param name? string @Name of the convar to retrieve
+--- @param default? number @The default value to return in case the lookup fails.
 --- @return number @The value of the requested ConVar.
 function GTool:GetClientNumber(name, default)
 end
@@ -71,7 +78,7 @@ function GTool:GetOperation()
 end
 
 --- Returns the owner of this tool.  
---- @return GEntity @Player using the tool
+--- @return GPlayer @Player using the tool
 function GTool:GetOwner()
 end
 
@@ -88,6 +95,12 @@ end
 function GTool:GetPos(id)
 end
 
+--- 🛑 **DEPRECATED**: Use Tool:GetWeapon instead.  
+--- Returns the Tool Gun (`gmod_tool`) Scripted Weapon.  
+--- @return GWeapon @The tool gun weapon
+function GTool:GetSWEP()
+end
+
 --- Attempts to grab a serverside tool ConVar.  
 --- This will not do anything on client, despite the function being defined shared.  
 --- @param name string @Name of the convar to retrieve
@@ -98,6 +111,11 @@ end
 --- Returns the current stage of the tool set by Tool:SetStage.  
 --- @return number @The current stage of the current operation the tool is at.
 function GTool:GetStage()
+end
+
+--- Returns the Tool Gun (`gmod_tool`) Scripted Weapon.  
+--- @return GWeapon @The tool gun weapon
+function GTool:GetWeapon()
 end
 
 --- Initializes the ghost entity with the given model. Removes any old ghost entity if called multiple times.  
@@ -114,7 +132,13 @@ end
 function GTool:NumObjects()
 end
 
+--- Automatically forces the tool's control panel to be rebuilt.  
+--- @vararg any @Any arguments given to this function will be added to TOOL.BuildCPanel's arguments.
+function GTool:RebuildControlPanel(...)
+end
+
 --- Removes any ghost entity created for this tool.  
+--- This is called automatically at various points, including when changing tools, holstering the toolgun, therefore it is a very good idea to implement this callback in your custom tool to cleanup any custom ghost entities.  
 function GTool:ReleaseGhostEntity()
 end
 

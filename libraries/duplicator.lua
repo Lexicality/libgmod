@@ -1,7 +1,7 @@
 --- The duplicator library allows you to specify what should be saved when someone attempts to duplicate your custom entity with the duplicator tool. It can also be used by 3rd party duplicator tools to make use of the built in system.  
 _G.duplicator = {}
---- Allow this entity to be duplicated  
---- @param classname string @An entity's classname
+--- Allow entities with given class name to be duplicated. See duplicator.Disallow for the opposite effect.  
+--- @param classname string @An entity's classname to allow duplicating.
 function duplicator.Allow(classname)
 end
 
@@ -17,15 +17,25 @@ end
 function duplicator.ApplyEntityModifiers(ply, ent)
 end
 
+--- A list of all entity bone modifiers registered with duplicator.RegisterBoneModifier.  
+--- @return table @The list of all entity bone modifiers.
+function duplicator.BoneModifiers()
+end
+
 --- Clears/removes the chosen entity modifier from the entity.  
 --- @param ent GEntity @The entity the modification is stored on
 --- @param key any @The key of the stored entity modifier
 function duplicator.ClearEntityModifier(ent, key)
 end
 
+--- A list of all constraints that can be duplicated. Registered with duplicator.RegisterConstraint.  
+--- @return table @The list of all constraints that can be duplicated
+function duplicator.ConstraintType()
+end
+
 --- Copies the entity, and all of its constraints and entities, then returns them in a table.  
---- @param ent GEntity @The entity to duplicate
---- @param tableToAdd table @A preexisting table to add entities and constraints in from
+--- @param ent? GEntity @The entity to duplicate
+--- @param tableToAdd? table @A preexisting table to add entities and constraints in from
 --- @return table @A table containing duplication info which includes the following members:
 function duplicator.Copy(ent, tableToAdd)
 end
@@ -52,6 +62,12 @@ end
 function duplicator.CreateEntityFromTable(ply, entTable)
 end
 
+--- Disallow this entity to be duplicated. Opposite of duplicator.Allow.  
+--- By default, all classes are disallowed to be duplicated. This function is useful for temporarily disabling duplication of certain entity classes that may have been previously allowed.  
+--- @param classname string @An entity's classname to disallow duplicating.
+function duplicator.Disallow(classname)
+end
+
 --- "Restores the bone's data."  
 --- Loops through Bones and calls Entity:ManipulateBoneScale, Entity:ManipulateBoneAngles and Entity:ManipulateBonePosition on ent with the table keys and the subtable values s, a and p respectively.  
 --- @param ent GEntity @The entity to be bone manipulated
@@ -60,9 +76,9 @@ function duplicator.DoBoneManipulator(ent, bones)
 end
 
 --- Restores the flex data using Entity:SetFlexWeight and Entity:SetFlexScale  
---- @param ent GEntity @The entity to restore the flexes on
---- @param flex table @The flexes to restore
---- @param scale number @The flex scale to apply
+--- @param ent? GEntity @The entity to restore the flexes on
+--- @param flex? table @The flexes to restore
+--- @param scale? number @The flex scale to apply
 function duplicator.DoFlex(ent, flex, scale)
 end
 
@@ -76,10 +92,26 @@ end
 
 --- "Applies bone data, generically."  
 --- If data contains a PhysicsObjects table, it moves, re-angles and if relevent freezes all specified bones, first converting from local coordinates to world coordinates.  
---- @param ent GEntity @The entity to be applied upon
---- @param ply GPlayer @The player who owns the entity
---- @param data table @The data to be applied onto the entity
+--- @param ent? GEntity @The entity to be applied upon
+--- @param ply? GPlayer @The player who owns the entity
+--- @param data? table @The data to be applied onto the entity
 function duplicator.DoGenericPhysics(ent, ply, data)
+end
+
+--- A list of all entity classes have a custom duplication spawn function. Registered with duplicator.RegisterEntityClass.  
+--- If you wish to get a specific entity class table, use duplicator.FindEntityClass.  
+--- @return table @The list of all entity classes with a custom duplication handler
+function duplicator.EntityClasses()
+end
+
+--- A list of all entity modifiers registered with duplicator.RegisterEntityModifier.  
+--- @return table @The list of all entity modifiers.
+function duplicator.EntityModifiers()
+end
+
+--- Checks the given duplication table and tries to figure out any addons that might be required to correctly spawn the duplication. Currently this is limited to models and material overrides saved in the duplication.  
+--- @param dupe table @The duplication table to process, for example from duplicator.Copy
+function duplicator.FigureOutRequiredAddons(dupe)
 end
 
 --- Returns the entity class factory registered with duplicator.RegisterEntityClass.  
@@ -176,8 +208,10 @@ end
 function duplicator.StoreEntityModifier(entity, name, data)
 end
 
---- "Work out the AABB size"  
+--- Works out the AABB size of the duplication  
 --- @param Ents table @A table of entity duplication datums.
+--- @return GVector @AABB mins vector
+--- @return GVector @AABB maxs vector
 function duplicator.WorkoutSize(Ents)
 end
 
