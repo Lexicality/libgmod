@@ -25,6 +25,13 @@ const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/\//g, "_or_"],
     [/[^\w.]/g, "_"],
 ]);
+const TYPE_REPLACEMENTS = new Map<string, string>([
+    ["vector", "GVector"],
+    ["file_class", "GFile"],
+    // Terrible hack until I make enums nice
+    ["Enums/STENCILCOMPARISONFUNCTION", "number"],
+    ["Enums/STENCILOPERATION", "number"],
+]);
 
 // urgh
 const ENTITY_CHILDREN = [
@@ -45,6 +52,8 @@ function getTypeName(ret: string): string {
     } else if (ret == "Global") {
         // I can't think of a better way of handling this rn
         return "_G";
+    } else if (TYPE_REPLACEMENTS.has(ret)) {
+        ret = TYPE_REPLACEMENTS.get(ret)!;
     }
     // Get rid of any creative type names
     ret = ret.replace(/[^\w.]/g, "_");
