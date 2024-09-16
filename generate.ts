@@ -198,7 +198,7 @@ function* matchAll(str: string, regex: RegExp) {
     }
 }
 
-function getArgDoc(arg: FuncArg): string {
+function getArgDoc(arg: FuncArg, forceOptional: boolean): string {
     let desc = "";
     if (arg.description) {
         desc = "@" + trimArg(unpaginate(arg.description));
@@ -208,6 +208,9 @@ function getArgDoc(arg: FuncArg): string {
         return `--- @vararg ${type} ${desc}`;
     }
     let name = getArgName(arg);
+    if (arg.default || forceOptional) {
+        name += "?";
+    }
     return `--- @param ${name} ${type} ${desc}`;
 }
 
@@ -248,6 +251,7 @@ function handleFunc(func: Func, sepr?: string): undefined | string {
         desc = formatDesc(func.description) + "\n";
     }
     let seenArgs = new Set<string>();
+    let forceOptional = false;
     let args = "";
     if (func.arguments) {
         args =
@@ -257,9 +261,13 @@ function handleFunc(func: Func, sepr?: string): undefined | string {
                         return false;
                     }
                     seenArgs.add(arg.name);
+                    // Throwing this in here because I can't think of a better place
+                    if (arg.default) {
+                        forceOptional = true;
+                    }
                     return true;
                 })
-                .map(getArgDoc)
+                .map((arg) => getArgDoc(arg, forceOptional))
                 // Some arguments might be deleted because they're bogus
                 .filter((l) => l)
                 .join("\n") + "\n";
