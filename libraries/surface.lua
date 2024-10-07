@@ -234,8 +234,7 @@ end
 --- @param g number @The green value of color.
 --- @param b number @The blue value of color.
 --- @param a? number @The alpha value of color.
---- @param color? table @A Color object/table to read the color from
-function surface.SetDrawColor(r, g, b, a, color)
+function surface.SetDrawColor(r, g, b, a)
 end
 
 --- Set the current font to be used for text operations later.  
@@ -257,8 +256,7 @@ end
 --- @param g number @The green value of color
 --- @param b number @The blue value of color
 --- @param a? number @The alpha value of color
---- @param color? table @A Color object/table to read the color from
-function surface.SetTextColor(r, g, b, a, color)
+function surface.SetTextColor(r, g, b, a)
 end
 
 --- Set the top-left position to draw any future text at.  

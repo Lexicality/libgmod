@@ -94,8 +94,8 @@ end
 --- 🛑 **DEPRECATED**: You really should just use table.concat.  
 --- Joins the values of a table together to form a string.  
 --- This is the reverse of string.Explode and is functionally identical to table.concat, but with less features.  
---- @param separator string @The separator to insert between each piece.
---- @param pieces table @The table of pieces to concatenate
+--- @param separator? string @The separator to insert between each piece.
+--- @param pieces? table @The table of pieces to concatenate
 --- @return string @Imploded pieces
 function string.Implode(separator, pieces)
 end
@@ -334,7 +334,7 @@ end
 --- Repeats a string by the provided number, with an optional separator.  
 --- @param str string @The string to convert.
 --- @param repetitions number @Times to repeat, this value gets rounded internally.
---- @param separator string @String that will separate the repeated piece
+--- @param separator? string @String that will separate the repeated piece
 --- @return string @Repeated string.
 function string.rep(str, repetitions, separator)
 end

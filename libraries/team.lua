@@ -96,7 +96,7 @@ end
 function team.SetSpawnPoint(index, classes)
 end
 
---- Creates a new team.  
+--- Creates a new team. See GM:CreateTeams for the hook to call this in.  
 --- @param teamIndex number @The team index.
 --- @param teamName string @The team name.
 --- @param teamColor table @The team color

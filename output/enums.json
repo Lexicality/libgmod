@@ -6425,7 +6425,7 @@
       "client",
       "server"
     ],
-    "description": "Enumerations used by functions like <page>Weapon:SendWeaponAnim</page> & <page>Entity:SelectWeightedSequence</page>.\n\nAn activity is a code-friendly identifier for an animation, and can point to multiple sequences (animations) depending on the model.\n\nSee [$sequence](https://developer.valvesoftware.com/wiki/$sequence) `.qc` command documentation on Valve Developer Wiki, specifically the `activity` parameter.",
+    "description": "Enumerations used by functions like <page>Weapon:SendWeaponAnim</page> &amp; <page>Entity:SelectWeightedSequence</page>.\n\nAn activity is a code-friendly identifier for an animation, and can point to multiple sequences (animations) depending on the model.\n\nSee [$sequence](https://developer.valvesoftware.com/wiki/$sequence) `.qc` command documentation on Valve Developer Wiki, specifically the `activity` parameter.",
     "name": "ACT"
   },
   {
@@ -8013,12 +8013,12 @@
       {
         "name": "DMG_CLUB",
         "value": 128,
-        "description": "Blunt attacks such as from the Crowbar, Antlion Guard & Hunter"
+        "description": "Blunt attacks such as from the Crowbar, Antlion Guard &amp; Hunter"
       },
       {
         "name": "DMG_SHOCK",
         "value": 256,
-        "description": "Electrical damage, shows smoke at the damage position and its used by Stalkers & Vortigaunts"
+        "description": "Electrical damage, shows smoke at the damage position and its used by Stalkers &amp; Vortigaunts"
       },
       {
         "name": "DMG_SONIC",
@@ -8063,12 +8063,12 @@
       {
         "name": "DMG_POISON",
         "value": 131072,
-        "description": "Poison damage used by Antlion Workers & Poison Headcrabs."
+        "description": "Poison damage used by Antlion Workers &amp; Poison Headcrabs."
       },
       {
         "name": "DMG_RADIATION",
         "value": 262144,
-        "description": "Radiation damage & it will be ignored by most vehicle passengers"
+        "description": "Radiation damage &amp; it will be ignored by most vehicle passengers"
       },
       {
         "name": "DMG_DROWNRECOVER",
@@ -11079,7 +11079,7 @@
       "client",
       "menu"
     ],
-    "description": "Enumerations used by <page>notification.AddLegacy</page>. Clientside & Menu only.",
+    "description": "Enumerations used by <page>notification.AddLegacy</page>. Clientside &amp; Menu only.",
     "name": "NOTIFY"
   },
   {
@@ -13186,7 +13186,7 @@
       {
         "name": "TASKSTATUS_RUN_MOVE_AND_TASK",
         "value": 1,
-        "description": "Running task & movement."
+        "description": "Running task &amp; movement."
       },
       {
         "name": "TASKSTATUS_RUN_MOVE",

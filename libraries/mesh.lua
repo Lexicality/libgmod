@@ -8,8 +8,7 @@ end
 --- The resulting mesh can be stored in an IMesh if it is intended to be drawn multiple times or on multiple frames.  
 --- @param primitiveType number @An enum that indicates what the format of the mesh's primitives will be
 --- @param primitiveCount number @The quantity of primitives this mesh will contain as a whole integer number.
---- @param mesh GIMesh @The IMesh that the created mesh will be stored in.
-function mesh.Begin(primitiveType, primitiveCount, mesh)
+function mesh.Begin(primitiveType, primitiveCount)
 end
 
 --- Sets the color to be used for the next vertex. See mesh.Begin.  
@@ -26,18 +25,12 @@ end
 
 --- Sets the normal to be used for the next vertex. See mesh.Begin.  
 --- @param normal GVector @The normal of the vertex.
---- @param x number @The X part of the vertex normal.
---- @param y number @The Y part of the vertex normal.
---- @param z number @The Z part of the vertex normal.
-function mesh.Normal(normal, x, y, z)
+function mesh.Normal(normal)
 end
 
 --- Sets the position to be used for the next vertex. See mesh.Begin.  
 --- @param position GVector @The position of the vertex.
---- @param x number @The X position of the vertex.
---- @param y number @The Y position of the vertex.
---- @param z number @The Z position of the vertex.
-function mesh.Position(position, x, y, z)
+function mesh.Position(position)
 end
 
 --- Adds a quad (4 vertices) to the currently built mesh. See mesh.Begin.  
@@ -72,20 +65,14 @@ end
 --- Tangents and binormals are using in bumpmap rendering.  
 --- See also mesh.TangentT and mesh.Begin.  
 --- @param tangentS GVector @The S tangent.
---- @param x number @The X part of the vertex' tangent S.
---- @param y number @The Y part of the vertex' tangent S.
---- @param z number @The Z part of the vertex' tangent S.
-function mesh.TangentS(tangentS, x, y, z)
+function mesh.TangentS(tangentS)
 end
 
 --- Sets the `T` tangent to be used.  
 --- Tangents and binormals are using in bumpmap rendering.  
 --- See also mesh.TangentS and mesh.Begin.  
 --- @param tangentT GVector @The T tangent.
---- @param x number @The X part of the vertex' tangent T.
---- @param y number @The Y part of the vertex' tangent T.
---- @param z number @The Z part of the vertex' tangent T.
-function mesh.TangentT(tangentT, x, y, z)
+function mesh.TangentT(tangentT)
 end
 
 --- Sets the texture coordinates for the next vertex.  

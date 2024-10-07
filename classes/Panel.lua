@@ -32,10 +32,8 @@
 local GPanel = {}
 --- When provided with a string or table, this function will create a new vgui element with that name and set the parent to the panel that this method is called on. When provided with a panel it will use Panel:SetParent on the provided panel to set it to our source panel  
 --- @param object GPanel @The panel to be added (parented).
---- @param class string @The class to be added.
---- @param table table @The table to create the panel from.
 --- @return GPanel @New panel
-function GPanel:Add(object, class, table)
+function GPanel:Add(object)
 end
 
 --- 🛑 **DEPRECATED**: Does nothing  
@@ -1033,12 +1031,11 @@ end
 function GPanel:ResetAllFades(hold, expiredOnly, newSustain)
 end
 
---- Runs/Executes a string as JavaScript code in a panel.  
---- ℹ **NOTE**: This function does **NOT** evaluate expression (i.e. allow you to pass variables from JavaScript (JS) to Lua context).  
---- Because a return value is nil/no value (a.k.a. void).  
+--- Executes a string as JavaScript code on a web document panel.  
+--- ℹ **NOTE**: This function does **NOT** allow you to pass variables from JavaScript (JS) to Lua context.  
 --- If you wish to pass/return values from JS to Lua, you may want to use DHTML:AddFunction function to accomplish that job.  
 --- ℹ **NOTE**: The Awesomium web renderer automatically delays the code execution if the document is not ready, but the Chromium web renderer does not!  
---- This means that with Chromium, you cannot JavaScript run code immediatly after calling Panel:SetHTML or DHTML:OpenURL. You should wait for the events PANEL:OnDocumentReady or PANEL:OnFinishLoadingDocument to be triggered before proceeding, otherwise you may manipulate an empty / incomplete document.  
+--- This means that with Chromium, you cannot JavaScript run code immediatly after calling Panel:SetHTML or Panel:OpenURL. You should wait for the events PANEL:OnDocumentReady or PANEL:OnFinishLoadingDocument to be triggered before proceeding, otherwise you may manipulate an empty / incomplete document.  
 --- @param js string @Specify JavaScript code to be executed.
 function GPanel:RunJavascript(js)
 end

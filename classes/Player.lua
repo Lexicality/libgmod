@@ -225,7 +225,7 @@ end
 function GPlayer:DropNamedWeapon(class, target, velocity)
 end
 
---- Drops any object the player is currently holding with either Gravity Gun or `+use` (E key)  
+--- Drops any object the player is currently holding with either Gravity Gun, Physics Gun or `+use` (E key)  
 --- See also Entity:ForcePlayerDrop.  
 function GPlayer:DropObject()
 end
@@ -1087,11 +1087,6 @@ end
 function GPlayer:SetAmmo(ammoCount, ammoType)
 end
 
---- Sets the player armor to the argument.  
---- @param Amount number @The amount that the player armor is going to be set to.
-function GPlayer:SetArmor(Amount)
-end
-
 --- Pushes the player away from other players whenever the player inside another players' bounding box.  
 --- This avoidance is performed clientside by altering movement sent to server.  
 --- This applies to players within a single team. (Player:Team)  
@@ -1561,6 +1556,7 @@ function GPlayer:UserID()
 end
 
 --- Simulates a push on the client's screen. This **adds** view punch velocity, and does not touch the current view punch angle, for which you can use Player:SetViewPunchAngles.  
+--- ℹ **NOTE**: Despite being defined shared, it only functions when called server-side.  
 --- @param PunchAngle GAngle @The angle in which to push the player's screen.
 function GPlayer:ViewPunch(PunchAngle)
 end

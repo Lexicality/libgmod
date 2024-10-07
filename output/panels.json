@@ -39,7 +39,8 @@
         "arguments": [
           {
             "name": "style",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "hookname",
@@ -47,7 +48,12 @@
             "default": "PopulateContent",
             "description": "A Populate Hook like PopulateEntities"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentheader.lua",
+          "lineStart": 96,
+          "lineEnd": 105
+        }
       },
       {
         "name": "ToTable",
@@ -59,9 +65,15 @@
         "arguments": [
           {
             "name": "bigtable",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentheader.lua",
+          "lineStart": 44,
+          "lineEnd": 53
+        }
       }
     ]
   },
@@ -82,7 +94,11 @@
             "type": "table",
             "description": "See <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 13
+        }
       },
       {
         "name": "GetContentType",
@@ -96,7 +112,11 @@
             "type": "string",
             "description": "The content type, for example \"entity\" or \"weapon\"."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 14
+        }
       },
       {
         "name": "GetNPCWeapon",
@@ -110,7 +130,11 @@
             "type": "table",
             "description": "A table of weapon classes to be chosen from when user tries to spawn the NPC."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 16
+        }
       },
       {
         "name": "GetSpawnName",
@@ -124,7 +148,11 @@
             "type": "string",
             "description": "Internal \"name\" to be used when user left clicks the icon."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 15
+        }
       },
       {
         "name": "OpenMenu",
@@ -132,7 +160,12 @@
         "realms": [
           "client"
         ],
-        "description": "A hook for override, by default does nothing. Called when user right clicks on the content icon, you are supposed to open a <page>Global.DermaMenu</page> here with additional options."
+        "description": "A hook for override, by default does nothing. Called when user right clicks on the content icon, you are supposed to open a <page>Global.DermaMenu</page> here with additional options.",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 104,
+          "lineEnd": 105
+        }
       },
       {
         "name": "SetAdminOnly",
@@ -147,7 +180,11 @@
             "type": "boolean",
             "description": "Whether this content should be admin only or not"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 17
+        }
       },
       {
         "name": "SetColor",
@@ -162,7 +199,11 @@
             "type": "table",
             "description": "The color to set. See <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 13
+        }
       },
       {
         "name": "SetContentType",
@@ -177,7 +218,11 @@
             "type": "string",
             "description": "The content type, for example \"entity\" or \"weapon\""
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 14
+        }
       },
       {
         "name": "SetMaterial",
@@ -192,7 +237,12 @@
             "type": "string",
             "description": "Path to the icon to use."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 66,
+          "lineEnd": 88
+        }
       },
       {
         "name": "SetName",
@@ -207,7 +257,12 @@
             "type": "string",
             "description": "\"Nice\" name to display."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 58,
+          "lineEnd": 64
+        }
       },
       {
         "name": "SetNPCWeapon",
@@ -222,7 +277,11 @@
             "type": "table",
             "description": "A table of weapon classes to be chosen from when user tries to spawn the NPC."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 16
+        }
       },
       {
         "name": "SetSpawnName",
@@ -237,7 +296,11 @@
             "type": "string",
             "description": "Internal \"name\" to be used when user left clicks the icon."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenticon.lua",
+          "lineStart": 15
+        }
       }
     ]
   },
@@ -256,7 +319,8 @@
         "arguments": [
           {
             "name": "style",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "hookname",
@@ -264,7 +328,12 @@
             "default": "PopulateContent",
             "description": "A Populate Hook like PopulateEntities"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentsidebar.lua",
+          "lineStart": 42,
+          "lineEnd": 84
+        }
       },
       {
         "name": "EnableModify",
@@ -272,7 +341,12 @@
         "realms": [
           "client"
         ],
-        "description": "Internally calls <page>ContentSidebar:EnableSearch</page>, <page>ContentSidebar:CreateSaveNotification</page> and creates a ContentSidebarToolbox which is accessible under ContentSidebar.Toolbox. Call the Hook <page>SANDBOX:OpenToolbox</page> to open the created Toolbox"
+        "description": "Internally calls <page>ContentSidebar:EnableSearch</page>, <page>ContentSidebar:CreateSaveNotification</page> and creates a ContentSidebarToolbox which is accessible under ContentSidebar.Toolbox. Call the Hook <page>SANDBOX:OpenToolbox</page> to open the created Toolbox",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentsidebar.lua",
+          "lineStart": 25,
+          "lineEnd": 40
+        }
       },
       {
         "name": "EnableSearch",
@@ -284,7 +358,8 @@
         "arguments": [
           {
             "name": "style",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "hookname",
@@ -292,7 +367,12 @@
             "default": "PopulateContent",
             "description": "A Populate Hook like PopulateEntities"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentsidebar.lua",
+          "lineStart": 20,
+          "lineEnd": 23
+        }
       }
     ]
   },
@@ -319,7 +399,12 @@
             "type": "table",
             "description": "A two-membered table:\n* <page>string</page> convar - The console variable to use. Calls <page>ContextBase:SetConVar</page>.\n* <page>string</page> label - The text to display inside the control's label."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/contextbase.lua",
+          "lineStart": 20,
+          "lineEnd": 25
+        }
       },
       {
         "name": "ConVar",
@@ -333,7 +418,12 @@
             "type": "string",
             "description": "The <page>ConVar</page> for the panel to change."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/contextbase.lua",
+          "lineStart": 16,
+          "lineEnd": 18
+        }
       },
       {
         "name": "SetConVar",
@@ -348,7 +438,12 @@
             "type": "string",
             "description": "The <page>ConVar</page> for the panel to change."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/contextbase.lua",
+          "lineStart": 12,
+          "lineEnd": 14
+        }
       },
       {
         "name": "TestForChanges",
@@ -356,7 +451,12 @@
         "realms": [
           "client"
         ],
-        "description": "You should override this function and use it to check whether your convar value changed."
+        "description": "You should override this function and use it to check whether your convar value changed.",
+        "source": {
+          "file": "lua/vgui/contextbase.lua",
+          "lineStart": 40,
+          "lineEnd": 45
+        }
       }
     ]
   },
@@ -389,7 +489,12 @@
             "type": "Panel",
             "description": "Returns created control"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 148,
+          "lineEnd": 431
+        }
       },
       {
         "name": "AddPanel",
@@ -404,7 +509,12 @@
             "type": "Panel",
             "description": "Panel to add as an item to the control panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 29,
+          "lineEnd": 34
+        }
       },
       {
         "name": "ClearControls",
@@ -412,7 +522,12 @@
         "realms": [
           "client"
         ],
-        "description": "<deprecated></deprecated>\n\nAlias of <page>Panel:Clear</page>."
+        "description": "<deprecated></deprecated>\n\nAlias of <page>Panel:Clear</page>.",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 19,
+          "lineEnd": 21
+        }
       },
       {
         "name": "ColorPicker",
@@ -453,7 +568,12 @@
             "type": "Panel",
             "description": "The created <page>CtrlColor</page> panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 94,
+          "lineEnd": 113
+        }
       },
       {
         "name": "ControlValues",
@@ -468,7 +588,12 @@
             "type": "table",
             "description": "A two-membered table:\n* <page>boolean</page> closed - Sets if the control panel should be unexpanded.\n* <page>string</page> label - The text to display inside the control's label."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 138,
+          "lineEnd": 145
+        }
       },
       {
         "name": "FillViaFunction",
@@ -483,7 +608,12 @@
             "type": "function",
             "description": "The builder function.\n\n<callback>\n<arg type=\"ControlPanel\" name=\"panelToPopulate\"></arg>\n</callback>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 132,
+          "lineEnd": 136
+        }
       },
       {
         "name": "GetEmbeddedPanel",
@@ -497,7 +627,12 @@
             "type": "ControlPanel",
             "description": "The same control panel the function is being called on."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 23,
+          "lineEnd": 27
+        }
       },
       {
         "name": "KeyBinder",
@@ -535,7 +670,12 @@
             "type": "Panel",
             "description": "The created <page>CtrlNumPad</page> panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 76,
+          "lineEnd": 92
+        }
       },
       {
         "name": "MatSelect",
@@ -580,7 +720,12 @@
             "type": "MatSelect",
             "description": "The created MatSelect panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 36,
+          "lineEnd": 57
+        }
       },
       {
         "name": "ToolPresets",
@@ -606,7 +751,12 @@
             "type": "Panel",
             "description": "The created <page>ControlPresets</page> panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
+          "lineStart": 59,
+          "lineEnd": 74
+        }
       }
     ]
   },
@@ -628,7 +778,12 @@
             "type": "string",
             "description": "The convar to add."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 110,
+          "lineEnd": 114
+        }
       },
       {
         "name": "AddOption",
@@ -648,7 +803,12 @@
             "type": "any",
             "description": "data"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 48,
+          "lineEnd": 54
+        }
       },
       {
         "name": "Clear",
@@ -656,7 +816,12 @@
         "realms": [
           "client"
         ],
-        "description": "Runs <page>Panel:Clear</page> on the Internal <page>DComboBox</page>"
+        "description": "Runs <page>Panel:Clear</page> on the Internal <page>DComboBox</page>",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 48,
+          "lineEnd": 54
+        }
       },
       {
         "name": "GetConVars",
@@ -670,7 +835,12 @@
             "type": "table",
             "description": "numbered table of convars"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 116,
+          "lineEnd": 120
+        }
       },
       {
         "name": "OnSelect",
@@ -687,13 +857,20 @@
           },
           {
             "name": "value",
-            "type": "any"
+            "type": "any",
+            "description": ""
           },
           {
             "name": "data",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 62,
+          "lineEnd": 70
+        }
       },
       {
         "name": "OpenPresetEditor",
@@ -701,7 +878,12 @@
         "realms": [
           "client"
         ],
-        "description": "Creates and opens <page>PresetEditor</page>"
+        "description": "Creates and opens <page>PresetEditor</page>",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 97,
+          "lineEnd": 108
+        }
       },
       {
         "name": "QuickSaveInternal",
@@ -712,23 +894,39 @@
         "arguments": [
           {
             "name": "text",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 72,
+          "lineEnd": 80
+        }
       },
       {
         "name": "QuickSavePreset",
         "parent": "ControlPresets",
         "realms": [
           "client"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 82,
+          "lineEnd": 95
+        }
       },
       {
         "name": "ReloadPresets",
         "parent": "ControlPresets",
         "realms": [
           "client"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 129,
+          "lineEnd": 149
+        }
       },
       {
         "name": "SetLabel",
@@ -743,7 +941,12 @@
             "type": "string",
             "description": "The text to put in the label"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 42,
+          "lineEnd": 46
+        }
       },
       {
         "name": "SetOptions",
@@ -758,7 +961,12 @@
             "type": "table",
             "description": "Options"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 56,
+          "lineEnd": 60
+        }
       },
       {
         "name": "SetPreset",
@@ -772,7 +980,12 @@
             "type": "string",
             "description": "Name of preset to set"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 122,
+          "lineEnd": 127
+        }
       },
       {
         "name": "Update",
@@ -780,7 +993,12 @@
         "realms": [
           "client"
         ],
-        "description": "Alias of <page>ControlPresets:ReloadPresets</page>"
+        "description": "Alias of <page>ControlPresets:ReloadPresets</page>",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/control_presets.lua",
+          "lineStart": 48,
+          "lineEnd": 54
+        }
       }
     ]
   },
@@ -800,7 +1018,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal> Used by the panel to perform mouse capture operations when adjusting the model."
+        "description": "<internal></internal> Used by the panel to perform mouse capture operations when adjusting the model.",
+        "source": {
+          "file": "lua/vgui/dadjustablemodelpanel.lua",
+          "lineStart": 61,
+          "lineEnd": 75
+        }
       },
       {
         "name": "FirstPersonControls",
@@ -808,7 +1031,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal> Used to adjust the perspective in the model panel via the keyboard, when the right mouse button is used."
+        "description": "<internal></internal> Used to adjust the perspective in the model panel via the keyboard, when the right mouse button is used.",
+        "source": {
+          "file": "lua/vgui/dadjustablemodelpanel.lua",
+          "lineStart": 92,
+          "lineEnd": 146
+        }
       },
       {
         "name": "GetFirstPerson",
@@ -822,7 +1050,11 @@
             "type": "boolean",
             "description": "Whether first person controls are enabled. See <page>DAdjustableModelPanel:FirstPersonControls</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dadjustablemodelpanel.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetMovementScale",
@@ -836,7 +1068,11 @@
             "type": "number",
             "description": "The movement scale, where `1` is normal, `2` is double, etc."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dadjustablemodelpanel.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "SetFirstPerson",
@@ -851,7 +1087,11 @@
             "type": "boolean",
             "description": "Whether to enable/disable first person controls. See <page>DAdjustableModelPanel:FirstPersonControls</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dadjustablemodelpanel.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetMovementScale",
@@ -866,7 +1106,11 @@
             "type": "number",
             "description": "The movement scale, where `1` is normal, `2` is double, etc."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dadjustablemodelpanel.lua",
+          "lineStart": 5
+        }
       }
     ]
   },
@@ -888,7 +1132,11 @@
             "type": "table",
             "description": "The current base color."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dalphabar.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "GetValue",
@@ -903,7 +1151,11 @@
             "type": "number",
             "description": "The current alpha value."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dalphabar.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "OnChange",
@@ -919,7 +1171,12 @@
             "type": "number",
             "description": "The new alpha value"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dalphabar.lua",
+          "lineStart": 45,
+          "lineEnd": 46
+        }
       },
       {
         "name": "SetBarColor",
@@ -935,7 +1192,11 @@
             "type": "table",
             "description": "The new <page>Color</page> to set. See <page>Global.Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dalphabar.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "SetValue",
@@ -951,7 +1212,11 @@
             "type": "number",
             "description": "The new alpha value to set"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dalphabar.lua",
+          "lineStart": 7
+        }
       }
     ]
   },
@@ -972,7 +1237,11 @@
             "type": "number",
             "description": "The key code of the bound key. See <page>Enums/KEY</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbinder.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetValue",
@@ -986,7 +1255,12 @@
             "type": "number",
             "description": "The key code of the bound key. See <page>Enums/KEY</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbinder.lua",
+          "lineStart": 83,
+          "lineEnd": 87
+        }
       },
       {
         "name": "OnChange",
@@ -1001,7 +1275,12 @@
             "type": "number",
             "description": "The new bound key. See <page>input.GetKeyName</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbinder.lua",
+          "lineStart": 89,
+          "lineEnd": 90
+        }
       },
       {
         "name": "SetSelectedNumber",
@@ -1016,7 +1295,12 @@
             "type": "number",
             "description": "The key code of the key to bind. See <page>Enums/KEY</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbinder.lua",
+          "lineStart": 41,
+          "lineEnd": 48
+        }
       },
       {
         "name": "SetValue",
@@ -1031,7 +1315,12 @@
             "type": "number",
             "description": "The key code of the key to bind. See <page>Enums/KEY</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbinder.lua",
+          "lineStart": 77,
+          "lineEnd": 81
+        }
       },
       {
         "name": "UpdateText",
@@ -1039,7 +1328,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal> Used to set the text of the DBinder to the current key binding, or `NONE`."
+        "description": "<internal></internal> Used to set the text of the DBinder to the current key binding, or `NONE`.",
+        "source": {
+          "file": "lua/vgui/dbinder.lua",
+          "lineStart": 15,
+          "lineEnd": 24
+        }
       }
     ]
   },
@@ -1054,7 +1348,11 @@
         "realms": [
           "client"
         ],
-        "description": "Returns Background Color, See <page>DBubbleContainer:SetBackgroundColor</page>"
+        "description": "Returns Background Color, See <page>DBubbleContainer:SetBackgroundColor</page>",
+        "source": {
+          "file": "lua/vgui/dbubblecontainer.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "OpenForPos",
@@ -1084,7 +1382,12 @@
             "type": "number",
             "description": "The height of the bubble container."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbubblecontainer.lua",
+          "lineStart": 14,
+          "lineEnd": 29
+        }
       },
       {
         "name": "SetBackgroundColor",
@@ -1099,7 +1402,11 @@
             "type": "color",
             "description": "The New Color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbubblecontainer.lua",
+          "lineStart": 4
+        }
       }
     ]
   },
@@ -1121,7 +1428,11 @@
             "type": "boolean",
             "description": "value set by <page>DButton:SetDrawBorder</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "IsDown",
@@ -1136,7 +1447,12 @@
             "type": "boolean",
             "description": "Whether or not the button is depressed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 26,
+          "lineEnd": 30
+        }
       },
       {
         "name": "SetConsoleCommand",
@@ -1158,7 +1474,12 @@
             "default": "nil",
             "description": "The arguments for the command."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 129,
+          "lineEnd": 135
+        }
       },
       {
         "name": "SetDrawBorder",
@@ -1174,7 +1495,11 @@
             "type": "boolean",
             "description": "Does nothing."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetIcon",
@@ -1191,7 +1516,11 @@
             "default": "nil",
             "description": "The image file to use, relative to `/materials`. If this is nil, the image background is removed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 52
+        }
       },
       {
         "name": "SetImage",
@@ -1208,7 +1537,12 @@
             "default": "nil",
             "description": "The image file to use, relative to `/materials`. If this is nil, the image background is removed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 32,
+          "lineEnd": 52
+        }
       },
       {
         "name": "SetMaterial",
@@ -1225,7 +1559,12 @@
             "default": "nil",
             "description": "The material to use. If this is nil, the image background is removed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 54,
+          "lineEnd": 73
+        }
       },
       {
         "name": "UpdateColours",
@@ -1241,7 +1580,12 @@
             "type": "table",
             "description": "A table supposed to contain the color values listed above."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dbutton.lua",
+          "lineStart": 86,
+          "lineEnd": 94
+        }
       }
     ]
   },
@@ -1275,7 +1619,12 @@
             "type": "Panel",
             "description": "The created <page>DCollapsibleCategory</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorylist.lua",
+          "lineStart": 18,
+          "lineEnd": 28
+        }
       },
       {
         "name": "AddItem",
@@ -1291,7 +1640,12 @@
             "type": "Panel",
             "description": "VGUI element to add to the list."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorylist.lua",
+          "lineStart": 10,
+          "lineEnd": 16
+        }
       },
       {
         "name": "UnselectAll",
@@ -1300,7 +1654,12 @@
           "client",
           "menu"
         ],
-        "description": "Calls <page>Panel:UnselectAll</page> on all child elements, if they have it."
+        "description": "Calls <page>Panel:UnselectAll</page> on all child elements, if they have it.",
+        "source": {
+          "file": "lua/vgui/dcategorylist.lua",
+          "lineStart": 37,
+          "lineEnd": 47
+        }
       }
     ]
   },
@@ -1316,7 +1675,12 @@
           "client",
           "menu"
         ],
-        "description": "Calls <page>DCheckBox:Toggle</page>"
+        "description": "Calls <page>DCheckBox:Toggle</page>",
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 39,
+          "lineEnd": 43
+        }
       },
       {
         "name": "GetChecked",
@@ -1331,7 +1695,11 @@
             "type": "boolean",
             "description": "Whether the box is checked or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "IsEditing",
@@ -1346,7 +1714,12 @@
             "type": "boolean",
             "description": "Whether the checkbox is being clicked."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 19,
+          "lineEnd": 21
+        }
       },
       {
         "name": "OnChange",
@@ -1362,7 +1735,12 @@
             "type": "boolean",
             "description": "Whether the CheckBox is checked or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 51,
+          "lineEnd": 55
+        }
       },
       {
         "name": "SetChecked",
@@ -1378,7 +1756,11 @@
             "type": "boolean",
             "description": "Whether the box should be checked or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetValue",
@@ -1394,7 +1776,12 @@
             "type": "boolean",
             "description": "Whether the box should be checked or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 23,
+          "lineEnd": 37
+        }
       },
       {
         "name": "Toggle",
@@ -1403,7 +1790,12 @@
           "client",
           "menu"
         ],
-        "description": "Toggles the checked state of the checkbox, and calls the checkbox's <page>DCheckBox:OnChange</page> and <page>Panel:ConVarChanged</page> methods. <page>DCheckBox:DoClick</page> is an alias of this function."
+        "description": "Toggles the checked state of the checkbox, and calls the checkbox's <page>DCheckBox:OnChange</page> and <page>Panel:ConVarChanged</page> methods. <page>DCheckBox:DoClick</page> is an alias of this function.",
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 45,
+          "lineEnd": 49
+        }
       }
     ]
   },
@@ -1425,7 +1817,12 @@
             "type": "boolean",
             "description": "Whether the box is checked or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 114,
+          "lineEnd": 116
+        }
       },
       {
         "name": "GetIndent",
@@ -1440,7 +1837,11 @@
             "type": "number",
             "description": "How much the content is moved to the right in pixels"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 81
+        }
       },
       {
         "name": "OnChange",
@@ -1456,7 +1857,12 @@
             "type": "boolean",
             "description": "Whether the checkbox is checked or unchecked."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 179,
+          "lineEnd": 183
+        }
       },
       {
         "name": "SetBright",
@@ -1472,7 +1878,12 @@
             "type": "boolean",
             "description": "true makes the text bright."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 98,
+          "lineEnd": 100
+        }
       },
       {
         "name": "SetChecked",
@@ -1488,7 +1899,12 @@
             "type": "boolean",
             "description": "Whether the box should be checked or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 110,
+          "lineEnd": 112
+        }
       },
       {
         "name": "SetConVar",
@@ -1504,7 +1920,12 @@
             "type": "string",
             "description": "The name of the convar to set"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 102,
+          "lineEnd": 104
+        }
       },
       {
         "name": "SetDark",
@@ -1520,7 +1941,12 @@
             "type": "boolean",
             "description": "True to be dark, false to be default"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 94,
+          "lineEnd": 96
+        }
       },
       {
         "name": "SetFont",
@@ -1536,7 +1962,12 @@
             "type": "string",
             "description": "Font name"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 156,
+          "lineEnd": 161
+        }
       },
       {
         "name": "SetIndent",
@@ -1552,7 +1983,11 @@
             "type": "number",
             "description": "How much in pixels to move the content to the right"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 81
+        }
       },
       {
         "name": "SetTextColor",
@@ -1568,7 +2003,12 @@
             "type": "table",
             "description": "The text color. Uses the <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 134,
+          "lineEnd": 138
+        }
       },
       {
         "name": "SetValue",
@@ -1584,7 +2024,12 @@
             "type": "boolean",
             "description": "Whether the box should be checked or not (1 or 0 can also be used)."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 106,
+          "lineEnd": 108
+        }
       },
       {
         "name": "SizeToContents",
@@ -1593,7 +2038,12 @@
           "client",
           "menu"
         ],
-        "description": "Sizes the panel to the size of the internal DLabel and DButton"
+        "description": "Sizes the panel to the size of the internal DLabel and DButton",
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 140,
+          "lineEnd": 147
+        }
       },
       {
         "name": "Toggle",
@@ -1602,7 +2052,12 @@
           "client",
           "menu"
         ],
-        "description": "Toggles the checked state of the <page>DCheckBoxLabel</page>."
+        "description": "Toggles the checked state of the <page>DCheckBoxLabel</page>.",
+        "source": {
+          "file": "lua/vgui/dcheckbox.lua",
+          "lineStart": 118,
+          "lineEnd": 120
+        }
       }
     ]
   },
@@ -1631,7 +2086,12 @@
             "type": "Panel",
             "description": "The <page>DButton</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 75,
+          "lineEnd": 122
+        }
       },
       {
         "name": "AnimSlide",
@@ -1644,17 +2104,25 @@
         "arguments": [
           {
             "name": "anim",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "delta",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "data",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 281,
+          "lineEnd": 307
+        }
       },
       {
         "name": "DoExpansion",
@@ -1670,7 +2138,12 @@
             "type": "boolean",
             "description": "True to open, false to collapse"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 233,
+          "lineEnd": 238
+        }
       },
       {
         "name": "GetAnimTime",
@@ -1685,7 +2158,11 @@
             "type": "number",
             "description": "The animation time in seconds"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 50
+        }
       },
       {
         "name": "GetDrawBackground",
@@ -1700,7 +2177,11 @@
             "type": "boolean",
             "description": "True if the panel background is drawn, false otherwise."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 52
+        }
       },
       {
         "name": "GetExpanded",
@@ -1715,7 +2196,11 @@
             "type": "boolean",
             "description": "If expanded it will return true."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 48
+        }
       },
       {
         "name": "GetHeaderHeight",
@@ -1731,7 +2216,12 @@
             "name": "height",
             "description": "The current height of the header."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 162,
+          "lineEnd": 166
+        }
       },
       {
         "name": "GetList",
@@ -1746,7 +2236,11 @@
             "type": "Panel",
             "description": "The <page>DCategoryList</page> that created us."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 54
+        }
       },
       {
         "name": "GetPadding",
@@ -1760,7 +2254,11 @@
           {
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 53
+        }
       },
       {
         "name": "GetPaintBackground",
@@ -1775,7 +2273,11 @@
             "type": "boolean",
             "description": "If the background is painted or not"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 41
+        }
       },
       {
         "name": "GetStartHeight",
@@ -1789,7 +2291,11 @@
           {
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 49
+        }
       },
       {
         "name": "OnToggle",
@@ -1805,7 +2311,12 @@
             "type": "boolean",
             "description": "If it was expanded or not"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 227,
+          "lineEnd": 231
+        }
       },
       {
         "name": "SetAnimTime",
@@ -1821,7 +2332,11 @@
             "type": "number",
             "description": "The time in seconds it takes to expand"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 50
+        }
       },
       {
         "name": "SetContents",
@@ -1837,7 +2352,12 @@
             "type": "Panel",
             "description": "The panel, containing the contents for the DCollapsibleCategory, mostly an DScrollPanel"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 176,
+          "lineEnd": 196
+        }
       },
       {
         "name": "SetDrawBackground",
@@ -1853,7 +2373,11 @@
             "type": "boolean",
             "description": "True to show the panel's background, false to hide it."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 52
+        }
       },
       {
         "name": "SetExpanded",
@@ -1870,7 +2394,11 @@
             "default": "true",
             "description": "Whether it shall be expanded or not by default"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 48
+        }
       },
       {
         "name": "SetHeaderHeight",
@@ -1886,7 +2414,12 @@
             "type": "number",
             "description": "The new height to set. Default height is 20."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 156,
+          "lineEnd": 160
+        }
       },
       {
         "name": "SetLabel",
@@ -1902,7 +2435,12 @@
             "type": "string",
             "description": "The label/name of the DCollapsibleCategory."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 150,
+          "lineEnd": 154
+        }
       },
       {
         "name": "SetList",
@@ -1918,7 +2456,11 @@
             "type": "Panel",
             "description": "The <page>Panel:UnselectAll</page> that is the \"parent\" of this panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 54
+        }
       },
       {
         "name": "SetPadding",
@@ -1931,9 +2473,14 @@
         "arguments": [
           {
             "name": "padding",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 53
+        }
       },
       {
         "name": "SetPaintBackground",
@@ -1946,9 +2493,14 @@
         "arguments": [
           {
             "name": "paint",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 51
+        }
       },
       {
         "name": "SetStartHeight",
@@ -1961,9 +2513,14 @@
         "arguments": [
           {
             "name": "height",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 49
+        }
       },
       {
         "name": "Toggle",
@@ -1972,7 +2529,12 @@
           "client",
           "menu"
         ],
-        "description": "Toggles the expanded state of the <page>DCollapsibleCategory</page>.\n\nSee <page>DCollapsibleCategory:GetExpanded</page> for a function to retrieve the expanded state."
+        "description": "Toggles the expanded state of the <page>DCollapsibleCategory</page>.\n\nSee <page>DCollapsibleCategory:GetExpanded</page> for a function to retrieve the expanded state.",
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 209,
+          "lineEnd": 225
+        }
       },
       {
         "name": "UpdateAltLines",
@@ -1981,7 +2543,12 @@
           "client",
           "menu"
         ],
-        "description": "<internal></internal>\n\nUsed internally to update the \"AltLine\" property on all \"child\" panels."
+        "description": "<internal></internal>\n\nUsed internally to update the \"AltLine\" property on all \"child\" panels.",
+        "source": {
+          "file": "lua/vgui/dcategorycollapse.lua",
+          "lineStart": 136,
+          "lineEnd": 142
+        }
       }
     ]
   },
@@ -2003,7 +2570,11 @@
             "type": "table",
             "description": "The <page>Color</page> of the button"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 9
+        }
       },
       {
         "name": "GetDrawBorder",
@@ -2018,7 +2589,11 @@
             "type": "boolean",
             "description": "Value set by <page>DColorButton:SetDrawBorder</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetID",
@@ -2033,7 +2608,11 @@
             "type": "number",
             "description": "The unique ID of the button"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 10
+        }
       },
       {
         "name": "GetSelected",
@@ -2047,7 +2626,11 @@
           {
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "IsDown",
@@ -2061,7 +2644,12 @@
           {
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 24,
+          "lineEnd": 28
+        }
       },
       {
         "name": "SetColor",
@@ -2083,7 +2671,12 @@
             "default": "false",
             "description": "If true, the tooltip will not be reset to display the selected color."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 30,
+          "lineEnd": 41
+        }
       },
       {
         "name": "SetDrawBorder",
@@ -2099,7 +2692,11 @@
             "type": "boolean",
             "description": "Does nothing."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "SetID",
@@ -2115,7 +2712,11 @@
             "type": "number",
             "description": "A unique ID to give this button"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorbutton.lua",
+          "lineStart": 10
+        }
       }
     ]
   },
@@ -2130,7 +2731,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal>\n\nCalled internally to create panels necessary for this panel to work."
+        "description": "<internal></internal>\n\nCalled internally to create panels necessary for this panel to work.",
+        "source": {
+          "file": "lua/vgui/dcolorcombo.lua",
+          "lineStart": 14,
+          "lineEnd": 55
+        }
       },
       {
         "name": "GetColor",
@@ -2144,7 +2750,11 @@
             "type": "table",
             "description": "A <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcombo.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "IsEditing",
@@ -2157,7 +2767,12 @@
           {
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcombo.lua",
+          "lineStart": 57,
+          "lineEnd": 61
+        }
       },
       {
         "name": "OnValueChanged",
@@ -2169,9 +2784,15 @@
         "arguments": [
           {
             "name": "newcol",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcombo.lua",
+          "lineStart": 63,
+          "lineEnd": 67
+        }
       },
       {
         "name": "SetColor",
@@ -2186,7 +2807,12 @@
             "type": "table",
             "description": "A <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcombo.lua",
+          "lineStart": 69,
+          "lineEnd": 75
+        }
       }
     ]
   },
@@ -2208,7 +2834,11 @@
             "type": "table",
             "description": "A <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "GetDefaultColor",
@@ -2223,7 +2853,11 @@
             "type": "table",
             "description": "The default <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "GetHue",
@@ -2237,7 +2871,11 @@
           {
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetRGB",
@@ -2252,7 +2890,11 @@
             "type": "table",
             "description": "The set color, uses <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "OnUserChanged",
@@ -2268,7 +2910,12 @@
             "type": "table",
             "description": "The new color, uses <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 89,
+          "lineEnd": 93
+        }
       },
       {
         "name": "ResetToDefaultValue",
@@ -2277,7 +2924,12 @@
           "client",
           "menu"
         ],
-        "description": "Sets the color to whatever <page>DColorCube:GetDefaultColor</page> returns"
+        "description": "Sets the color to whatever <page>DColorCube:GetDefaultColor</page> returns",
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 43,
+          "lineEnd": 48
+        }
       },
       {
         "name": "SetBaseRGB",
@@ -2293,7 +2945,12 @@
             "type": "table",
             "description": "The base color to set, uses <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 107,
+          "lineEnd": 112
+        }
       },
       {
         "name": "SetColor",
@@ -2309,7 +2966,12 @@
             "type": "table",
             "description": "The color to set, uses <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 95,
+          "lineEnd": 105
+        }
       },
       {
         "name": "SetDefaultColor",
@@ -2325,7 +2987,11 @@
             "type": "table",
             "description": "The new default <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "SetHue",
@@ -2338,9 +3004,14 @@
         "arguments": [
           {
             "name": "hue",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetRGB",
@@ -2356,7 +3027,11 @@
             "type": "table",
             "description": "A <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "TranslateValues",
@@ -2389,7 +3064,12 @@
             "type": "number",
             "description": "The given y position."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 65,
+          "lineEnd": 72
+        }
       },
       {
         "name": "UpdateColor",
@@ -2412,7 +3092,12 @@
             "default": "nil",
             "description": "The y position to set color to/the percentage of brightness or value to remove from the color (ranges from 0.0 to 1.0)."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorcube.lua",
+          "lineStart": 74,
+          "lineEnd": 87
+        }
       }
     ]
   },
@@ -2428,7 +3113,12 @@
           "client",
           "menu"
         ],
-        "description": "<internal></internal>"
+        "description": "<internal></internal>",
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 341,
+          "lineEnd": 360
+        }
       },
       {
         "name": "DoConVarThink",
@@ -2441,9 +3131,15 @@
         "arguments": [
           {
             "name": "cvar",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 362,
+          "lineEnd": 374
+        }
       },
       {
         "name": "GetAlphaBar",
@@ -2458,7 +3154,11 @@
             "type": "boolean",
             "description": "Return true if shown, false if not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 10
+        }
       },
       {
         "name": "GetColor",
@@ -2473,7 +3173,12 @@
             "type": "table",
             "description": "The current selected color as a <page>Color</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 317,
+          "lineEnd": 326
+        }
       },
       {
         "name": "GetConVarA",
@@ -2488,7 +3193,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the alpha channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "GetConVarB",
@@ -2503,7 +3212,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the blue channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetConVarG",
@@ -2518,7 +3231,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the green channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "GetConVarR",
@@ -2533,7 +3250,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the red channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetPalette",
@@ -2548,7 +3269,11 @@
             "type": "boolean",
             "description": "Return true if shown, false if not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 9
+        }
       },
       {
         "name": "GetVector",
@@ -2563,7 +3288,12 @@
             "type": "Vector",
             "description": "A vector representing the color of the <page>DColorMixer</page>, each value being in range of 0 to 1. Alpha is not included."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 328,
+          "lineEnd": 333
+        }
       },
       {
         "name": "GetWangs",
@@ -2578,7 +3308,11 @@
             "type": "boolean",
             "description": "Return true if shown, false if not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 11
+        }
       },
       {
         "name": "SetAlphaBar",
@@ -2594,7 +3328,12 @@
             "type": "boolean",
             "description": "Show / Hide the alpha bar"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 166,
+          "lineEnd": 173
+        }
       },
       {
         "name": "SetBaseColor",
@@ -2610,7 +3349,12 @@
             "type": "table",
             "description": "<page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 252,
+          "lineEnd": 255
+        }
       },
       {
         "name": "SetColor",
@@ -2626,7 +3370,11 @@
             "type": "table",
             "description": "The color to set. See <page>Global.Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 13
+        }
       },
       {
         "name": "SetConVarA",
@@ -2642,7 +3390,12 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the alpha channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 198,
+          "lineEnd": 202
+        }
       },
       {
         "name": "SetConVarB",
@@ -2658,7 +3411,12 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the blue channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 193,
+          "lineEnd": 196
+        }
       },
       {
         "name": "SetConVarG",
@@ -2674,7 +3432,12 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the green channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 188,
+          "lineEnd": 191
+        }
       },
       {
         "name": "SetConVarR",
@@ -2690,7 +3453,12 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the red channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 183,
+          "lineEnd": 186
+        }
       },
       {
         "name": "SetLabel",
@@ -2707,7 +3475,12 @@
             "default": "nil",
             "description": "Set to non empty string to show the label and its text.\n\nGive it an empty string or nothing and the label will be hidden."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 144,
+          "lineEnd": 156
+        }
       },
       {
         "name": "SetPalette",
@@ -2723,7 +3496,12 @@
             "type": "boolean",
             "description": "Show or hide the palette panel?"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 158,
+          "lineEnd": 164
+        }
       },
       {
         "name": "SetVector",
@@ -2739,7 +3517,12 @@
             "type": "Vector",
             "description": "The color to set. It is expected that the vector will have values be from 0 to 1. (i.e. be normalized)"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 246,
+          "lineEnd": 250
+        }
       },
       {
         "name": "SetWangs",
@@ -2755,7 +3538,12 @@
             "type": "boolean",
             "description": "Show / Hide the colors indicators"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 175,
+          "lineEnd": 181
+        }
       },
       {
         "name": "UpdateColor",
@@ -2768,9 +3556,15 @@
         "arguments": [
           {
             "name": "clr",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 277,
+          "lineEnd": 311
+        }
       },
       {
         "name": "UpdateConVar",
@@ -2796,7 +3590,12 @@
             "type": "table",
             "description": "The <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 257,
+          "lineEnd": 264
+        }
       },
       {
         "name": "UpdateConVars",
@@ -2812,7 +3611,12 @@
             "type": "table",
             "description": "The <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 266,
+          "lineEnd": 275
+        }
       },
       {
         "name": "UpdateDefaultColor",
@@ -2821,7 +3625,12 @@
           "client",
           "menu"
         ],
-        "description": "sets the default color of the element to the currently selected color"
+        "description": "sets the default color of the element to the currently selected color",
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 204,
+          "lineEnd": 222
+        }
       },
       {
         "name": "ValueChanged",
@@ -2837,7 +3646,12 @@
             "type": "table",
             "description": "The new color. See <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolormixer.lua",
+          "lineStart": 313,
+          "lineEnd": 315
+        }
       }
     ]
   },
@@ -2865,7 +3679,12 @@
             "type": "Panel",
             "description": "The <page>DColorButton</page> that was pressed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 121,
+          "lineEnd": 125
+        }
       },
       {
         "name": "GetButtonSize",
@@ -2880,7 +3699,11 @@
             "type": "number",
             "description": "The size of each palette button"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 11
+        }
       },
       {
         "name": "GetConVarA",
@@ -2895,7 +3718,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the alpha channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 9
+        }
       },
       {
         "name": "GetConVarB",
@@ -2910,7 +3737,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the blue channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "GetConVarG",
@@ -2925,7 +3756,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the green channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "GetConVarR",
@@ -2940,7 +3775,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the red channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetNumRows",
@@ -2955,7 +3794,11 @@
             "type": "number",
             "description": "Number of rows of the DColorPalette."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 13
+        }
       },
       {
         "name": "NetworkColorChange",
@@ -2964,7 +3807,12 @@
           "client",
           "menu"
         ],
-        "description": "<internal></internal>\n\nUsed internally to make sure changes on one palette affect other palettes with same name."
+        "description": "<internal></internal>\n\nUsed internally to make sure changes on one palette affect other palettes with same name.",
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 103,
+          "lineEnd": 119
+        }
       },
       {
         "name": "OnRightClickButton",
@@ -2980,7 +3828,12 @@
             "type": "Panel",
             "description": "The <page>DColorButton</page> that was pressed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 232,
+          "lineEnd": 234
+        }
       },
       {
         "name": "OnValueChanged",
@@ -2996,7 +3849,12 @@
             "type": "table",
             "description": "The new color of the <page>DColorPalette</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 228,
+          "lineEnd": 230
+        }
       },
       {
         "name": "Reset",
@@ -3005,7 +3863,12 @@
           "client",
           "menu"
         ],
-        "description": "Resets this entire color palette to a default preset one, without saving.\n\nSee <page>DColorPalette:ResetSavedColors</page> for version that also saves the changes."
+        "description": "Resets this entire color palette to a default preset one, without saving.\n\nSee <page>DColorPalette:ResetSavedColors</page> for version that also saves the changes.",
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 127,
+          "lineEnd": 131
+        }
       },
       {
         "name": "ResetSavedColors",
@@ -3014,7 +3877,12 @@
           "client",
           "menu"
         ],
-        "description": "Resets this entire color palette to a default preset one and saves the changes.\n\nSee <page>DColorPalette:Reset</page> for version that does not save the changes."
+        "description": "Resets this entire color palette to a default preset one and saves the changes.\n\nSee <page>DColorPalette:Reset</page> for version that does not save the changes.",
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 133,
+          "lineEnd": 148
+        }
       },
       {
         "name": "SaveColor",
@@ -3035,7 +3903,12 @@
             "type": "table",
             "description": "The color to save to this button's index"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 210,
+          "lineEnd": 222
+        }
       },
       {
         "name": "SetButtonSize",
@@ -3051,7 +3924,12 @@
             "type": "number",
             "description": "Sets the new size"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 181,
+          "lineEnd": 191
+        }
       },
       {
         "name": "SetColor",
@@ -3064,9 +3942,15 @@
         "arguments": [
           {
             "name": "clr",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 224,
+          "lineEnd": 226
+        }
       },
       {
         "name": "SetColorButtons",
@@ -3082,7 +3966,12 @@
             "type": "table",
             "description": "A number indexed table where each value is a <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 164,
+          "lineEnd": 179
+        }
       },
       {
         "name": "SetConVarA",
@@ -3098,7 +3987,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the alpha channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 9
+        }
       },
       {
         "name": "SetConVarB",
@@ -3114,7 +4007,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the blue channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "SetConVarG",
@@ -3130,7 +4027,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the green channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "SetConVarR",
@@ -3146,7 +4047,11 @@
             "type": "string",
             "description": "The <page>ConVar</page> name for the red channel of the color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "SetNumRows",
@@ -3162,7 +4067,11 @@
             "type": "number",
             "description": "Scale for the range of colors that the user can pick. Default is 8."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 13
+        }
       },
       {
         "name": "UpdateConVar",
@@ -3188,7 +4097,12 @@
             "type": "table",
             "description": "The <page>Color</page> to retrieve the info from."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 193,
+          "lineEnd": 199
+        }
       },
       {
         "name": "UpdateConVars",
@@ -3204,7 +4118,12 @@
             "type": "table",
             "description": "A <page>Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolorpalette.lua",
+          "lineStart": 201,
+          "lineEnd": 208
+        }
       }
     ]
   },
@@ -3244,7 +4163,12 @@
             "type": "table",
             "description": "A table containing the following keys:\n* <page>Panel</page> Tab - The created tab button that will switch to the given panel\n* <page>Panel</page> Panel - The given panel to switch to when the button is pressed"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolumnsheet.lua",
+          "lineStart": 24,
+          "lineEnd": 62
+        }
       },
       {
         "name": "GetActiveButton",
@@ -3259,7 +4183,11 @@
             "type": "Panel",
             "description": "The active button"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolumnsheet.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetActiveButton",
@@ -3275,7 +4203,12 @@
             "type": "Panel",
             "description": "The button to make active button"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcolumnsheet.lua",
+          "lineStart": 64,
+          "lineEnd": 83
+        }
       },
       {
         "name": "UseButtonOnlyStyle",
@@ -3284,7 +4217,12 @@
           "client",
           "menu"
         ],
-        "description": "Makes the tabs/buttons show only the image and no text."
+        "description": "Makes the tabs/buttons show only the image and no text.",
+        "source": {
+          "file": "lua/vgui/dcolumnsheet.lua",
+          "lineStart": 20,
+          "lineEnd": 22
+        }
       }
     ]
   },
@@ -3331,7 +4269,12 @@
             "type": "number",
             "description": "The index of the new option."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 138,
+          "lineEnd": 158
+        }
       },
       {
         "name": "AddSpacer",
@@ -3340,7 +4283,12 @@
           "client",
           "menu"
         ],
-        "description": "Adds a spacer below the currently last item in the drop down. Recommended to use with <page>DComboBox:SetSortItems</page> set to `false`."
+        "description": "Adds a spacer below the currently last item in the drop down. Recommended to use with <page>DComboBox:SetSortItems</page> set to `false`.",
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 132,
+          "lineEnd": 136
+        }
       },
       {
         "name": "CheckConVarChanges",
@@ -3349,7 +4297,12 @@
           "client",
           "menu"
         ],
-        "description": "<internal></internal>Ran every frame to update the value of this panel to the value of the associated convar. See <page>Panel:SetConvar</page>."
+        "description": "<internal></internal>Ran every frame to update the value of this panel to the value of the associated convar. See <page>Panel:SetConvar</page>.",
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 247,
+          "lineEnd": 258
+        }
       },
       {
         "name": "ChooseOption",
@@ -3370,7 +4323,12 @@
             "type": "number",
             "description": "The option index."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 85,
+          "lineEnd": 97
+        }
       },
       {
         "name": "ChooseOptionID",
@@ -3386,7 +4344,12 @@
             "type": "number",
             "description": "Selects the option with given index."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 99,
+          "lineEnd": 104
+        }
       },
       {
         "name": "Clear",
@@ -3395,7 +4358,12 @@
           "client",
           "menu"
         ],
-        "description": "Clears the combo box's text value, choices, and data values."
+        "description": "Clears the combo box's text value, choices, and data values.",
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 29,
+          "lineEnd": 40
+        }
       },
       {
         "name": "CloseMenu",
@@ -3404,7 +4372,12 @@
           "client",
           "menu"
         ],
-        "description": "Closes the combo box menu. Called when the combo box is clicked while open."
+        "description": "Closes the combo box menu. Called when the combo box is clicked while open.",
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 236,
+          "lineEnd": 244
+        }
       },
       {
         "name": "GetOptionData",
@@ -3426,7 +4399,12 @@
             "type": "any",
             "description": "The option's data value."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 48,
+          "lineEnd": 52
+        }
       },
       {
         "name": "GetOptionText",
@@ -3448,7 +4426,12 @@
             "type": "string",
             "description": "The option's text value."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 42,
+          "lineEnd": 46
+        }
       },
       {
         "name": "GetOptionTextByData",
@@ -3470,7 +4453,12 @@
             "type": "string",
             "description": "The option's text value.\n\nIf no matching data was found, the data itself will be returned. If multiple identical data entries exist, the first instance will be returned."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 54,
+          "lineEnd": 72
+        }
       },
       {
         "name": "GetSelected",
@@ -3489,7 +4477,12 @@
             "type": "any",
             "description": "The option's stored data."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 112,
+          "lineEnd": 118
+        }
       },
       {
         "name": "GetSelectedID",
@@ -3504,7 +4497,12 @@
             "type": "number",
             "description": "The ID of the currently selected option."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 106,
+          "lineEnd": 110
+        }
       },
       {
         "name": "GetSortItems",
@@ -3519,7 +4517,11 @@
             "type": "boolean",
             "description": "True if enabled, false otherwise."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "IsMenuOpen",
@@ -3534,7 +4536,12 @@
             "type": "boolean",
             "description": "True if the menu is open, false otherwise."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 170,
+          "lineEnd": 174
+        }
       },
       {
         "name": "OnMenuOpened",
@@ -3550,7 +4557,12 @@
             "type": "Panel",
             "description": "The <page>DMenu</page> menu panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 126,
+          "lineEnd": 130
+        }
       },
       {
         "name": "OnSelect",
@@ -3576,7 +4588,12 @@
             "type": "any",
             "description": "The data assigned to the option."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 120,
+          "lineEnd": 124
+        }
       },
       {
         "name": "OpenMenu",
@@ -3585,7 +4602,12 @@
           "client",
           "menu"
         ],
-        "description": "Opens the combo box drop down menu. Called when the combo box is clicked."
+        "description": "Opens the combo box drop down menu. Called when the combo box is clicked.",
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 176,
+          "lineEnd": 234
+        }
       },
       {
         "name": "RemoveChoice",
@@ -3613,7 +4635,12 @@
             "name": "data",
             "description": "The data of the removed option that was provided."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 160,
+          "lineEnd": 168
+        }
       },
       {
         "name": "SetSortItems",
@@ -3629,7 +4656,11 @@
             "type": "boolean",
             "description": "true to enable, false to disable"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "SetValue",
@@ -3645,7 +4676,12 @@
             "type": "string",
             "description": "The text in the DComboBox."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dcombobox.lua",
+          "lineStart": 266,
+          "lineEnd": 270
+        }
       }
     ]
   },
@@ -3665,25 +4701,35 @@
         "arguments": [
           {
             "name": "drops",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "bDoDrop",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           },
           {
             "name": "command",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 47,
+          "lineEnd": 51
+        }
       },
       {
         "name": "DropAction_Normal",
@@ -3696,25 +4742,35 @@
         "arguments": [
           {
             "name": "drops",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "bDoDrop",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           },
           {
             "name": "command",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 72,
+          "lineEnd": 137
+        }
       },
       {
         "name": "DropAction_Simple",
@@ -3727,25 +4783,35 @@
         "arguments": [
           {
             "name": "drops",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "bDoDrop",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           },
           {
             "name": "command",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 53,
+          "lineEnd": 70
+        }
       },
       {
         "name": "GetDnD",
@@ -3760,7 +4826,11 @@
             "type": "string",
             "description": "Name of the DnD family."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetReadOnly",
@@ -3776,7 +4846,11 @@
             "name": "name",
             "description": "Whether this panel is read only or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetUseLiveDrag",
@@ -3790,7 +4864,11 @@
           {
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "MakeDroppable",
@@ -3811,7 +4889,12 @@
             "type": "boolean",
             "description": "Whether or not to allow droppable panels to be copied when the <key>Ctrl</key> key is held down."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 34,
+          "lineEnd": 44
+        }
       },
       {
         "name": "OnModified",
@@ -3820,7 +4903,12 @@
           "client",
           "menu"
         ],
-        "description": "Called when anything is dropped on or rearranged within the <page>DDragBase</page>. For Override"
+        "description": "Called when anything is dropped on or rearranged within the <page>DDragBase</page>. For Override",
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 139,
+          "lineEnd": 141
+        }
       },
       {
         "name": "SetDnD",
@@ -3836,7 +4924,11 @@
             "type": "string",
             "description": "Name of the DnD family."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetDropPos",
@@ -3853,7 +4945,12 @@
             "default": "5",
             "description": "Where you're allowed to drop things."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 24,
+          "lineEnd": 32
+        }
       },
       {
         "name": "SetReadOnly",
@@ -3869,7 +4966,11 @@
             "type": "boolean",
             "description": "Whether this panel should be read only or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "SetUseLiveDrag",
@@ -3882,9 +4983,14 @@
         "arguments": [
           {
             "name": "newState",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "UpdateDropTarget",
@@ -3897,13 +5003,20 @@
         "arguments": [
           {
             "name": "drop",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "pnl",
-            "type": "Panel"
+            "type": "Panel",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddragbase.lua",
+          "lineStart": 143,
+          "lineEnd": 168
+        }
       }
     ]
   },
@@ -3919,7 +5032,12 @@
           "client",
           "menu"
         ],
-        "description": "Closes the <page>DDrawer</page>."
+        "description": "Closes the <page>DDrawer</page>.",
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 68,
+          "lineEnd": 76
+        }
       },
       {
         "name": "GetOpenSize",
@@ -3934,7 +5052,11 @@
             "type": "number",
             "description": "Open size."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetOpenTime",
@@ -3949,7 +5071,11 @@
             "type": "number",
             "description": "Time in seconds."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "Open",
@@ -3958,7 +5084,12 @@
           "client",
           "menu"
         ],
-        "description": "Opens the <page>DDrawer</page>."
+        "description": "Opens the <page>DDrawer</page>.",
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 58,
+          "lineEnd": 66
+        }
       },
       {
         "name": "SetOpenSize",
@@ -3974,7 +5105,11 @@
             "type": "number",
             "description": "Height of DDrawer. Default is `100`."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetOpenTime",
@@ -3990,7 +5125,11 @@
             "type": "number",
             "description": "Length in seconds. Default is 0.3"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "Toggle",
@@ -3999,7 +5138,12 @@
           "client",
           "menu"
         ],
-        "description": "Toggles the <page>DDrawer</page>."
+        "description": "Toggles the <page>DDrawer</page>.",
+        "source": {
+          "file": "lua/vgui/ddrawer.lua",
+          "lineStart": 48,
+          "lineEnd": 56
+        }
       }
     ]
   },
@@ -4018,13 +5162,20 @@
         "arguments": [
           {
             "name": "varname",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "editdata",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dentityproperties.lua",
+          "lineStart": 59,
+          "lineEnd": 94
+        }
       },
       {
         "name": "EntityLost",
@@ -4032,7 +5183,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal>\n\nCalled internally when an entity being edited became invalid.\n\nYou should use <page>DEntityProperties:OnEntityLost</page> instead."
+        "description": "<internal></internal>\n\nCalled internally when an entity being edited became invalid.\n\nYou should use <page>DEntityProperties:OnEntityLost</page> instead.",
+        "source": {
+          "file": "lua/vgui/dentityproperties.lua",
+          "lineStart": 99,
+          "lineEnd": 104
+        }
       },
       {
         "name": "OnEntityLost",
@@ -4040,7 +5196,12 @@
         "realms": [
           "client"
         ],
-        "description": "Called when we were editing an entity and then it became invalid (probably removed). For Override"
+        "description": "Called when we were editing an entity and then it became invalid (probably removed). For Override",
+        "source": {
+          "file": "lua/vgui/dentityproperties.lua",
+          "lineStart": 106,
+          "lineEnd": 110
+        }
       },
       {
         "name": "RebuildControls",
@@ -4048,7 +5209,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal>\n\nCalled internally by <page>DEntityProperties:SetEntity</page> to rebuild the controls."
+        "description": "<internal></internal>\n\nCalled internally by <page>DEntityProperties:SetEntity</page> to rebuild the controls.",
+        "source": {
+          "file": "lua/vgui/dentityproperties.lua",
+          "lineStart": 26,
+          "lineEnd": 54
+        }
       },
       {
         "name": "SetEntity",
@@ -4063,7 +5229,12 @@
             "type": "Entity",
             "description": "The entity to edit"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dentityproperties.lua",
+          "lineStart": 14,
+          "lineEnd": 21
+        }
       }
     ]
   },
@@ -4085,7 +5256,11 @@
             "type": "boolean",
             "description": "True if expanded, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dexpandbutton.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "SetExpanded",
@@ -4101,7 +5276,11 @@
             "type": "boolean",
             "description": "True to expand ( visually will show a \"-\" )"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dexpandbutton.lua",
+          "lineStart": 4
+        }
       }
     ]
   },
@@ -4116,7 +5295,12 @@
         "realms": [
           "client"
         ],
-        "description": "Clears the file tree and list, and resets all values."
+        "description": "Clears the file tree and list, and resets all values.",
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 273,
+          "lineEnd": 283
+        }
       },
       {
         "name": "GetBaseFolder",
@@ -4130,7 +5314,11 @@
             "type": "string",
             "description": "The path to the root folder."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "GetCurrentFolder",
@@ -4144,7 +5332,11 @@
             "type": "string",
             "description": "The directory the file list is currently displaying."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "GetFileTypes",
@@ -4158,7 +5350,11 @@
             "type": "string",
             "description": "The current filter applied to the file list."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetFolderNode",
@@ -4172,7 +5368,12 @@
             "type": "Panel",
             "description": "The <page>DTree_Node</page> used for the tree."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 267,
+          "lineEnd": 271
+        }
       },
       {
         "name": "GetModels",
@@ -4186,7 +5387,11 @@
             "type": "boolean",
             "description": "Whether or not files will be displayed using <page>SpawnIcon</page>s."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 10
+        }
       },
       {
         "name": "GetName",
@@ -4200,7 +5405,11 @@
             "type": "string",
             "description": "The name used for the root of the file tree."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetOpen",
@@ -4214,7 +5423,11 @@
             "type": "boolean",
             "description": "Whether or not the file tree is open."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 11
+        }
       },
       {
         "name": "GetPath",
@@ -4228,7 +5441,11 @@
             "type": "string",
             "description": "The current access path i.e. \"GAME\", \"LUA\", \"DATA\" etc."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "GetSearch",
@@ -4242,7 +5459,11 @@
             "type": "string",
             "description": "The filter in use on the file tree."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 9
+        }
       },
       {
         "name": "OnDoubleClick",
@@ -4262,7 +5483,12 @@
             "type": "string",
             "description": "The path to the file that was double-clicked."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 297,
+          "lineEnd": 301
+        }
       },
       {
         "name": "OnRightClick",
@@ -4282,7 +5508,12 @@
             "type": "Panel",
             "description": "The panel that was right-clicked to select this file.\n\nThis will either be a <page>DListView_Line</page> or <page>SpawnIcon</page> depending on whether the model viewer mode is enabled. <br>See <page>DFileBrowser:SetModels</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 303,
+          "lineEnd": 307
+        }
       },
       {
         "name": "OnSelect",
@@ -4302,7 +5533,12 @@
             "type": "string",
             "description": "The path to the file that was selected."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 291,
+          "lineEnd": 295
+        }
       },
       {
         "name": "SetBaseFolder",
@@ -4317,7 +5553,12 @@
             "type": "string",
             "description": "The path to the folder to use as the root."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 50,
+          "lineEnd": 57
+        }
       },
       {
         "name": "SetCurrentFolder",
@@ -4332,7 +5573,12 @@
             "type": "string",
             "description": "The directory to display files from."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 104,
+          "lineEnd": 118
+        }
       },
       {
         "name": "SetFileTypes",
@@ -4348,7 +5594,12 @@
             "default": "*.*",
             "description": "A list of file types to display, separated by spaces e.g.\n```\n\"*.lua *.txt *.mdl\"\n```"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 81,
+          "lineEnd": 90
+        }
       },
       {
         "name": "SetModels",
@@ -4364,7 +5615,12 @@
             "default": "false",
             "description": "Whether or not to display files using <page>SpawnIcon</page>s."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 92,
+          "lineEnd": 102
+        }
       },
       {
         "name": "SetName",
@@ -4380,7 +5636,12 @@
             "default": "`baseFolder`",
             "description": "The name for the root of the file tree. Passing no value causes this to be the base folder name. See <page>DFileBrowser:SetBaseFolder</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 36,
+          "lineEnd": 48
+        }
       },
       {
         "name": "SetOpen",
@@ -4402,7 +5663,12 @@
             "default": "false",
             "description": "If `true`, the <page>DTree</page>'s open/close animation is used."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 120,
+          "lineEnd": 131
+        }
       },
       {
         "name": "SetPath",
@@ -4417,7 +5683,12 @@
             "type": "string",
             "description": "The access path i.e. \"GAME\", \"LUA\", \"DATA\" etc."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 59,
+          "lineEnd": 66
+        }
       },
       {
         "name": "SetSearch",
@@ -4433,7 +5704,12 @@
             "default": "*",
             "description": "The filter to use on the file tree."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 68,
+          "lineEnd": 79
+        }
       },
       {
         "name": "Setup",
@@ -4447,7 +5723,12 @@
             "type": "boolean",
             "description": "Whether or not the variables needed to set up have been defined."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 202,
+          "lineEnd": 208
+        }
       },
       {
         "name": "SetupFiles",
@@ -4461,7 +5742,12 @@
             "type": "boolean",
             "description": "Whether or not the files pane was set up successfully."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 169,
+          "lineEnd": 200
+        }
       },
       {
         "name": "SetupTree",
@@ -4475,7 +5761,12 @@
             "type": "boolean",
             "description": "Whether or not the tree was set up successfully."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 143,
+          "lineEnd": 167
+        }
       },
       {
         "name": "ShowFolder",
@@ -4490,7 +5781,12 @@
             "type": "string",
             "description": "The directory to populate the list from."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dfilebrowser.lua",
+          "lineStart": 210,
+          "lineEnd": 257
+        }
       },
       {
         "name": "SortFiles",
@@ -4535,7 +5831,12 @@
             "default": "nil",
             "description": "Right-hand element to add to the DForm."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 42,
+          "lineEnd": 73
+        }
       },
       {
         "name": "Button",
@@ -4567,7 +5868,12 @@
             "type": "Panel",
             "description": "The created <page>DButton</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 254,
+          "lineEnd": 267
+        }
       },
       {
         "name": "CheckBox",
@@ -4594,7 +5900,12 @@
             "type": "Panel",
             "description": "The created <page>DCheckBoxLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 192,
+          "lineEnd": 203
+        }
       },
       {
         "name": "ComboBox",
@@ -4625,7 +5936,12 @@
             "type": "Panel",
             "description": "The created <page>DLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 134,
+          "lineEnd": 152
+        }
       },
       {
         "name": "ControlHelp",
@@ -4647,7 +5963,12 @@
             "type": "Panel",
             "description": "The created <page>DLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 225,
+          "lineEnd": 247
+        }
       },
       {
         "name": "GetAutoSize",
@@ -4661,7 +5982,11 @@
           {
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetSpacing",
@@ -4675,7 +6000,11 @@
           {
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "Help",
@@ -4697,7 +6026,12 @@
             "type": "Panel",
             "description": "The created <page>DLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 205,
+          "lineEnd": 223
+        }
       },
       {
         "name": "ListBox",
@@ -4723,7 +6057,12 @@
             "type": "Panel",
             "description": "The created <page>DLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 277,
+          "lineEnd": 295
+        }
       },
       {
         "name": "NumberWang",
@@ -4770,7 +6109,12 @@
             "type": "Panel",
             "description": "The created <page>DLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 154,
+          "lineEnd": 172
+        }
       },
       {
         "name": "NumSlider",
@@ -4813,7 +6157,12 @@
             "type": "Panel",
             "description": "The created <page>DNumSlider</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 174,
+          "lineEnd": 190
+        }
       },
       {
         "name": "PanelSelect",
@@ -4828,7 +6177,12 @@
             "type": "Panel",
             "description": "The created DPanelSelect."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 269,
+          "lineEnd": 275
+        }
       },
       {
         "name": "PropSelect",
@@ -4866,7 +6220,12 @@
             "type": "Panel",
             "description": "The created <page>PropSelect</page> panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 91,
+          "lineEnd": 132
+        }
       },
       {
         "name": "Rebuild",
@@ -4875,7 +6234,12 @@
           "client",
           "menu"
         ],
-        "description": "<deprecated></deprecated>\n\nDoes nothing."
+        "description": "<deprecated></deprecated>\n\nDoes nothing.",
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 297,
+          "lineEnd": 298
+        }
       },
       {
         "name": "SetAutoSize",
@@ -4887,9 +6251,14 @@
         "description": "<deprecated></deprecated>\n\nan <page>Global.AccessorFunc</page> that does nothing",
         "arguments": [
           {
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "SetName",
@@ -4905,7 +6274,12 @@
             "type": "string",
             "description": "The new header name."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 24,
+          "lineEnd": 28
+        }
       },
       {
         "name": "SetSpacing",
@@ -4917,9 +6291,14 @@
         "description": "<deprecated></deprecated>\n\nAn <page>Global.AccessorFunc</page> that does nothing.",
         "arguments": [
           {
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "TextEntry",
@@ -4950,7 +6329,12 @@
             "type": "Panel",
             "description": "The created <page>DLabel</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dform.lua",
+          "lineStart": 75,
+          "lineEnd": 89
+        }
       }
     ]
   },
@@ -4966,7 +6350,12 @@
           "client",
           "menu"
         ],
-        "description": "Centers the frame relative to the whole screen and invalidates its layout. This overrides <page>Panel:Center</page>."
+        "description": "Centers the frame relative to the whole screen and invalidates its layout. This overrides <page>Panel:Center</page>.",
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 104,
+          "lineEnd": 110
+        }
       },
       {
         "name": "Close",
@@ -4975,7 +6364,12 @@
           "client",
           "menu"
         ],
-        "description": "Hides or removes the DFrame, and calls <page>DFrame:OnClose</page>.\n\nTo set whether the frame is hidden or removed, use <page>DFrame:SetDeleteOnClose</page>."
+        "description": "Hides or removes the DFrame, and calls <page>DFrame:OnClose</page>.\n\nTo set whether the frame is hidden or removed, use <page>DFrame:SetDeleteOnClose</page>.",
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 89,
+          "lineEnd": 99
+        }
       },
       {
         "name": "GetBackgroundBlur",
@@ -4990,7 +6384,11 @@
             "type": "boolean",
             "description": "Whether or not background blur is enabled."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 14
+        }
       },
       {
         "name": "GetDeleteOnClose",
@@ -5005,7 +6403,11 @@
             "type": "boolean",
             "description": "Whether or not the frame will be removed on close."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 8
+        }
       },
       {
         "name": "GetDraggable",
@@ -5020,7 +6422,11 @@
             "type": "boolean",
             "description": "Whether the frame is draggable or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "GetIsMenu",
@@ -5035,7 +6441,11 @@
             "type": "boolean",
             "description": "Whether or not this frame is a menu component."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 4
+        }
       },
       {
         "name": "GetMinHeight",
@@ -5050,7 +6460,11 @@
             "type": "number",
             "description": "The minimum height the user can resize the frame to."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 12
+        }
       },
       {
         "name": "GetMinWidth",
@@ -5065,7 +6479,11 @@
             "type": "number",
             "description": "The minimum width the user can resize the frame to."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 11
+        }
       },
       {
         "name": "GetPaintShadow",
@@ -5080,7 +6498,11 @@
             "type": "boolean",
             "description": "Whether or not the shadow is being drawn."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 9
+        }
       },
       {
         "name": "GetScreenLock",
@@ -5095,7 +6517,11 @@
             "type": "boolean",
             "description": "Whether or not the frame is restricted."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 7
+        }
       },
       {
         "name": "GetSizable",
@@ -5110,7 +6536,11 @@
             "type": "boolean",
             "description": "Whether the frame can be resized or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 6
+        }
       },
       {
         "name": "GetTitle",
@@ -5125,7 +6555,12 @@
             "type": "string",
             "description": "Title of the frame."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 77,
+          "lineEnd": 81
+        }
       },
       {
         "name": "IsActive",
@@ -5140,7 +6575,12 @@
             "type": "boolean",
             "description": "Whether or not the frame has focus."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 112,
+          "lineEnd": 119
+        }
       },
       {
         "name": "OnClose",
@@ -5149,7 +6589,12 @@
           "client",
           "menu"
         ],
-        "description": "Called when the DFrame is closed with <page>DFrame:Close</page>. This applies when the `close` button in the DFrame's control box is clicked.\n\nThis function does nothing and is safe to override.\n\nThis is **not** called when the DFrame is removed with <page>Panel:Remove</page>, see <page>PANEL:OnRemove</page> for that."
+        "description": "Called when the DFrame is closed with <page>DFrame:Close</page>. This applies when the `close` button in the DFrame's control box is clicked.\n\nThis function does nothing and is safe to override.\n\nThis is **not** called when the DFrame is removed with <page>Panel:Remove</page>, see <page>PANEL:OnRemove</page> for that.",
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 101,
+          "lineEnd": 102
+        }
       },
       {
         "name": "SetBackgroundBlur",
@@ -5213,7 +6658,12 @@
             "type": "string",
             "description": "Set to nil to remove the icon.\n\nOtherwise, set to file path to create the icon."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 121,
+          "lineEnd": 135
+        }
       },
       {
         "name": "SetIsMenu",
@@ -5325,7 +6775,12 @@
             "type": "string",
             "description": "New title of the frame."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 83,
+          "lineEnd": 87
+        }
       },
       {
         "name": "ShowCloseButton",
@@ -5341,7 +6796,12 @@
             "type": "boolean",
             "description": "`false` hides the control box; this is `true` by default."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dframe.lua",
+          "lineStart": 69,
+          "lineEnd": 75
+        }
       }
     ]
   },
@@ -5675,7 +7135,8 @@
         "arguments": [
           {
             "name": "dragonot",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -5689,7 +7150,8 @@
         "arguments": [
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -5869,7 +7331,8 @@
         "arguments": [
           {
             "name": "name",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -5941,7 +7404,8 @@
         "arguments": [
           {
             "name": "newState",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -5956,7 +7420,8 @@
         "arguments": [
           {
             "name": "newState",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       }
@@ -6175,7 +7640,12 @@
             "type": "function",
             "description": "Function called when the JS function is called. Arguments passed to the JS function will be passed here."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 123,
+          "lineEnd": 146
+        }
       },
       {
         "name": "Call",
@@ -6207,7 +7677,12 @@
             "type": "string",
             "description": "The message to be logged (or Lua code to be executed; see above)."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 66,
+          "lineEnd": 97
+        }
       },
       {
         "name": "GetAllowLua",
@@ -6253,7 +7728,12 @@
             "type": "string",
             "description": "The URL of the current page."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 148,
+          "lineEnd": 152
+        }
       },
       {
         "name": "OnCallback",
@@ -6284,7 +7764,12 @@
             "type": "boolean",
             "description": "Return `true` to suppress default engine action."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 107,
+          "lineEnd": 121
+        }
       },
       {
         "name": "OnChangeTargetURL",
@@ -6299,7 +7784,12 @@
             "type": "string",
             "description": "New target URL."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 178,
+          "lineEnd": 182
+        }
       },
       {
         "name": "OnChangeTitle",
@@ -6314,7 +7804,12 @@
             "type": "string",
             "description": "The new title of the page."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 172,
+          "lineEnd": 176
+        }
       },
       {
         "name": "OnChildViewCreated",
@@ -6339,7 +7834,12 @@
             "type": "boolean",
             "description": "True if the requested view is a popup."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 166,
+          "lineEnd": 170
+        }
       },
       {
         "name": "OnDocumentReady",
@@ -6354,7 +7854,12 @@
             "type": "string",
             "description": "The URL of the current page."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 160,
+          "lineEnd": 164
+        }
       },
       {
         "name": "OnFinishLoadingDocument",
@@ -6369,7 +7874,12 @@
             "type": "string",
             "description": "The URL of the current page."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dhtml.lua",
+          "lineStart": 154,
+          "lineEnd": 158
+        }
       },
       {
         "name": "QueueJavascript",
@@ -6488,7 +7998,8 @@
         "arguments": [
           {
             "name": "url",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -6616,7 +8127,8 @@
         "arguments": [
           {
             "name": "manual",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -6631,7 +8143,8 @@
         "arguments": [
           {
             "name": "str",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       }
@@ -6871,7 +8384,8 @@
         "arguments": [
           {
             "name": "do_stretch",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -6886,7 +8400,8 @@
         "arguments": [
           {
             "name": "stretchW",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       }
@@ -7054,7 +8569,8 @@
         "arguments": [
           {
             "name": "backupMat",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -7078,7 +8594,11 @@
             "default": "nil",
             "description": "The path of the backup image."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dimage.lua",
+          "lineStart": 91
+        }
       },
       {
         "name": "SetImageColor",
@@ -7139,7 +8659,8 @@
         "arguments": [
           {
             "name": "mat",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -7154,11 +8675,13 @@
         "arguments": [
           {
             "name": "mat",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "backupMat",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -7359,11 +8882,13 @@
         "arguments": [
           {
             "name": "mat",
-            "type": "string"
+            "type": "string",
+            "description": ""
           },
           {
             "name": "backup",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -7808,7 +9333,7 @@
           "client",
           "menu"
         ],
-        "description": "<deprecated>Use <page>Panel:SetEnabled</page> instead.</deprecated>\n\nSets the disabled state of the <page>DLabel</page>.\n\nWhen disabled, the label does not respond to click, toggle or drag & drop actions.",
+        "description": "<deprecated>Use <page>Panel:SetEnabled</page> instead.</deprecated>\n\nSets the disabled state of the <page>DLabel</page>.\n\nWhen disabled, the label does not respond to click, toggle or drag &amp; drop actions.",
         "arguments": [
           {
             "name": "disable",
@@ -7924,7 +9449,8 @@
         "arguments": [
           {
             "name": "paint",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -7999,7 +9525,12 @@
             "type": "table",
             "description": "A table supposed to contain the color values listed above."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dlabel.lua",
+          "lineStart": 289,
+          "lineEnd": 279
+        }
       },
       {
         "name": "UpdateFGColor",
@@ -8401,7 +9932,7 @@
   {
     "name": "DListLayout",
     "parent": "DDragBase",
-    "description": "A vertical list of panels that optionally allows child elements to be rearranged with the mouse cursor.\n\nChild panels' widths are set to the width of the DListLayout, and it resizes vertically to accommodate the heights of all children. You can place this inside a <page>DScrollPanel</page> when adding many panels.\n\nTo enable the drag & drop rearrangement functionality, call <page>DDragBase:MakeDroppable</page> on the DListLayout with a unique identifier. All panels added following this will be moveable."
+    "description": "A vertical list of panels that optionally allows child elements to be rearranged with the mouse cursor.\n\nChild panels' widths are set to the width of the DListLayout, and it resizes vertically to accommodate the heights of all children. You can place this inside a <page>DScrollPanel</page> when adding many panels.\n\nTo enable the drag &amp; drop rearrangement functionality, call <page>DDragBase:MakeDroppable</page> on the DListLayout with a unique identifier. All panels added following this will be moveable."
   },
   {
     "name": "DListView",
@@ -8791,7 +10322,8 @@
           },
           {
             "name": "size",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -8905,7 +10437,8 @@
         "arguments": [
           {
             "name": "isDirty",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -9007,42 +10540,50 @@
           {
             "name": "column1",
             "type": "number",
-            "default": "nil"
+            "default": "nil",
+            "description": ""
           },
           {
             "name": "descrending1",
             "type": "boolean",
-            "default": "false"
+            "default": "false",
+            "description": ""
           },
           {
             "name": "column2",
             "type": "number",
-            "default": "nil"
+            "default": "nil",
+            "description": ""
           },
           {
             "name": "descrending2",
             "type": "boolean",
-            "default": "false"
+            "default": "false",
+            "description": ""
           },
           {
             "name": "column3",
             "type": "number",
-            "default": "nil"
+            "default": "nil",
+            "description": ""
           },
           {
             "name": "descrending3",
             "type": "boolean",
-            "default": "false"
+            "default": "false",
+            "description": ""
           },
           {
             "name": "column4",
             "type": "number",
-            "default": "nil"
+            "default": "nil",
+            "description": ""
           },
           {
             "name": "descrending4",
             "type": "boolean",
-            "default": "false"
+            "default": "false",
+            "description": ""
           }
         ]
       }
@@ -9060,7 +10601,12 @@
           "client",
           "menu"
         ],
-        "description": "Called when the column is left clicked (on key release) by the client.\n\nSee also <page>DListView_Column:DoRightClick</page>."
+        "description": "Called when the column is left clicked (on key release) by the client.\n\nSee also <page>DListView_Column:DoRightClick</page>.",
+        "source": {
+          "file": "lua/vgui/dlistview_column.lua",
+          "lineStart": 91,
+          "lineEnd": 96
+        }
       },
       {
         "name": "DoRightClick",
@@ -9069,7 +10615,12 @@
           "client",
           "menu"
         ],
-        "description": "Called when the column is right clicked (on key release) by the client.\n\nSee also <page>DListView_Column:DoClick</page>."
+        "description": "Called when the column is right clicked (on key release) by the client.\n\nSee also <page>DListView_Column:DoClick</page>.",
+        "source": {
+          "file": "lua/vgui/dlistview_column.lua",
+          "lineStart": 98,
+          "lineEnd": 100
+        }
       },
       {
         "name": "GetColumnID",
@@ -9696,7 +11247,12 @@
             "type": "Panel",
             "description": "The created <page>DMenuOptionCVar</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dmenu.lua",
+          "lineStart": 49,
+          "lineEnd": 64
+        }
       },
       {
         "name": "AddOption",
@@ -9724,7 +11280,11 @@
             "type": "Panel",
             "description": "Returns the created <page>DMenuOption</page> panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dmenu.lua",
+          "lineStart": 36
+        }
       },
       {
         "name": "AddPanel",
@@ -9740,7 +11300,11 @@
             "type": "Panel",
             "description": "The panel that you want to add."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dmenu.lua",
+          "lineStart": 29
+        }
       },
       {
         "name": "AddSpacer",
@@ -10073,7 +11637,8 @@
         "arguments": [
           {
             "name": "bool",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -11261,7 +12826,8 @@
         "arguments": [
           {
             "name": "spacing",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -11291,39 +12857,48 @@
         "arguments": [
           {
             "name": "level",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "w",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "h",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "range",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "value",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "min",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "max",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -11338,19 +12913,23 @@
         "arguments": [
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "w",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "h",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -11671,7 +13250,8 @@
         "arguments": [
           {
             "name": "shouldDraw",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -11702,7 +13282,8 @@
         "arguments": [
           {
             "name": "zoom",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -11895,7 +13476,8 @@
         "arguments": [
           {
             "name": "val",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -12146,7 +13728,12 @@
             "type": "number",
             "description": "The new value of the DNumSlider."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dnumslider.lua",
+          "lineStart": 193,
+          "lineEnd": 197
+        }
       },
       {
         "name": "ResetToDefaultValue",
@@ -12184,7 +13771,8 @@
         "arguments": [
           {
             "name": "dark",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -12300,11 +13888,13 @@
         "arguments": [
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ],
         "returnValues": [
@@ -12531,7 +14121,8 @@
         "arguments": [
           {
             "name": "draw",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -12746,23 +14337,28 @@
         "arguments": [
           {
             "name": "cola",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "colb",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "colc",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "cold",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "size",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -12777,7 +14373,8 @@
         "arguments": [
           {
             "name": "size",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -12933,11 +14530,13 @@
         "arguments": [
           {
             "name": "x",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "y",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -13339,7 +14938,12 @@
             "type": "table",
             "description": "A table containing the following keys:\n* <page>Panel</page> Tab - The created <page>DTab</page>.\n* <page>string</page> Name - Name of the created tab\n* <page>Panel</page> Panel - The contents panel of the tab"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 175,
+          "lineEnd": 210
+        }
       },
       {
         "name": "CloseTab",
@@ -13366,7 +14970,12 @@
             "type": "Panel",
             "description": "The panel of the tab."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 405,
+          "lineEnd": 441
+        }
       },
       {
         "name": "CrossFade",
@@ -13379,17 +14988,25 @@
         "arguments": [
           {
             "name": "anim",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "delta",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "data",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 254,
+          "lineEnd": 302
+        }
       },
       {
         "name": "GetActiveTab",
@@ -13404,7 +15021,11 @@
             "type": "Panel",
             "description": "The <page>DTab</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 151
+        }
       },
       {
         "name": "GetFadeTime",
@@ -13419,7 +15040,11 @@
             "type": "number",
             "description": "The amount of time (in seconds) it takes to fade between tabs."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 153
+        }
       },
       {
         "name": "GetItems",
@@ -13434,7 +15059,12 @@
             "type": "table",
             "description": "A table of tables.\nEach table contains 3 key-value pairs:\n\n* <page>string</page> Name - The name of the tab.\n* <page>Panel</page> Tab - The <page>DTab</page> associated with the tab.\n* <page>Panel</page> Panel - The <page>Panel</page> associated with the tab."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 248,
+          "lineEnd": 252
+        }
       },
       {
         "name": "GetPadding",
@@ -13449,7 +15079,11 @@
             "type": "number",
             "description": "Padding"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 152
+        }
       },
       {
         "name": "GetShowIcons",
@@ -13463,7 +15097,11 @@
           {
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 155
+        }
       },
       {
         "name": "OnActiveTabChanged",
@@ -13484,7 +15122,12 @@
             "type": "Panel",
             "description": "The newly active <page>DTab</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 238,
+          "lineEnd": 240
+        }
       },
       {
         "name": "SetActiveTab",
@@ -13500,7 +15143,11 @@
             "type": "Panel",
             "description": "The <page>DTab</page> to set active.\n\nSee <page>DPropertySheet:GetItems</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 151
+        }
       },
       {
         "name": "SetFadeTime",
@@ -13517,7 +15164,11 @@
             "default": "0.1",
             "description": "The amount of time it takes (in seconds) to fade between tabs."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 153
+        }
       },
       {
         "name": "SetPadding",
@@ -13534,7 +15185,11 @@
             "default": "8",
             "description": "Amount of padding"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 152
+        }
       },
       {
         "name": "SetShowIcons",
@@ -13547,9 +15202,14 @@
         "arguments": [
           {
             "name": "show",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 155
+        }
       },
       {
         "name": "SetupCloseButton",
@@ -13565,7 +15225,12 @@
             "type": "function",
             "description": "Callback function to be called when the close button is pressed."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 391,
+          "lineEnd": 403
+        }
       },
       {
         "name": "SizeToContentWidth",
@@ -13574,7 +15239,12 @@
           "client",
           "menu"
         ],
-        "description": "Sets the width of the <page>DPropertySheet</page> to fit the contents of all of the tabs."
+        "description": "Sets the width of the <page>DPropertySheet</page> to fit the contents of all of the tabs.",
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 359,
+          "lineEnd": 374
+        }
       },
       {
         "name": "SwitchToName",
@@ -13590,7 +15260,12 @@
             "type": "string",
             "description": "Case sensitive name of the tab."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 376,
+          "lineEnd": 389
+        }
       }
     ]
   },
@@ -13707,7 +15382,12 @@
             "type": "Panel",
             "description": "The panel to add."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dscrollpanel.lua",
+          "lineStart": 33,
+          "lineEnd": 37
+        }
       },
       {
         "name": "GetCanvas",
@@ -13722,7 +15402,12 @@
             "type": "Panel",
             "description": "The canvas"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dscrollpanel.lua",
+          "lineStart": 57,
+          "lineEnd": 61
+        }
       },
       {
         "name": "GetPadding",
@@ -13752,7 +15437,12 @@
             "type": "Panel",
             "description": "The <page>DVScrollBar</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dscrollpanel.lua",
+          "lineStart": 51,
+          "lineEnd": 55
+        }
       },
       {
         "name": "InnerWidth",
@@ -13767,7 +15457,12 @@
             "type": "number",
             "description": "The width of the DScrollPanel's canvas"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dscrollpanel.lua",
+          "lineStart": 63,
+          "lineEnd": 67
+        }
       },
       {
         "name": "PerformLayoutInternal",
@@ -13785,7 +15480,12 @@
           "client",
           "menu"
         ],
-        "description": "<internal></internal>\n\nUsed internally to rebuild the panel's children positioning. You should use <page>Panel:InvalidateLayout</page> instead."
+        "description": "<internal></internal>\n\nUsed internally to rebuild the panel's children positioning. You should use <page>Panel:InvalidateLayout</page> instead.",
+        "source": {
+          "file": "lua/vgui/dscrollpanel.lua",
+          "lineStart": 69,
+          "lineEnd": 80
+        }
       },
       {
         "name": "ScrollToChild",
@@ -13801,7 +15501,12 @@
             "type": "Panel",
             "description": "The panel to scroll to, must be a child of the DScrollPanel."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dscrollpanel.lua",
+          "lineStart": 94,
+          "lineEnd": 106
+        }
       },
       {
         "name": "SetCanvas",
@@ -14265,7 +15970,8 @@
         "arguments": [
           {
             "name": "dragging",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -14348,7 +16054,8 @@
         "arguments": [
           {
             "name": "notches",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -14363,7 +16070,8 @@
         "arguments": [
           {
             "name": "slider",
-            "type": "any"
+            "type": "any",
+            "description": ""
           }
         ]
       },
@@ -14410,7 +16118,8 @@
         "arguments": [
           {
             "name": "trap",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -14532,7 +16241,8 @@
         "arguments": [
           {
             "name": "vec",
-            "type": "Vector"
+            "type": "Vector",
+            "description": ""
           }
         ]
       },
@@ -14586,7 +16296,11 @@
             "type": "Panel",
             "description": "Panel added to the sheet using <page>DPropertySheet:AddSheet</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 5
+        }
       },
       {
         "name": "GetPropertySheet",
@@ -14632,7 +16346,11 @@
             "type": "Boolean",
             "description": "Currently selected tab."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dpropertysheet.lua",
+          "lineStart": 34
+        }
       },
       {
         "name": "SetPanel",
@@ -14719,7 +16437,12 @@
             "type": "string",
             "description": "Text to add to the text entry's history."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 366,
+          "lineEnd": 373
+        }
       },
       {
         "name": "AllowInput",
@@ -14741,7 +16464,12 @@
             "type": "boolean",
             "description": "Return `true` to prevent the value from changing, `false` to allow it."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 321,
+          "lineEnd": 327
+        }
       },
       {
         "name": "CheckNumeric",
@@ -14763,7 +16491,12 @@
             "type": "boolean",
             "description": "Whether the string is numeric or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 296,
+          "lineEnd": 311
+        }
       },
       {
         "name": "GetAutoComplete",
@@ -14873,7 +16606,12 @@
             "type": "number",
             "description": "Text of the DTextEntry as a float, or nil if it cannot be converted to a number using <page>Global.tonumber</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 388,
+          "lineEnd": 392
+        }
       },
       {
         "name": "GetHighlightColor",
@@ -14918,7 +16656,12 @@
             "type": "number",
             "description": "Text of the DTextEntry as a round number, or nil if it cannot be converted to a number."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 379,
+          "lineEnd": 386
+        }
       },
       {
         "name": "GetNumeric",
@@ -15037,7 +16780,12 @@
             "type": "boolean",
             "description": "Whether this DTextEntry is being edited or not"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 64,
+          "lineEnd": 66
+        }
       },
       {
         "name": "OnChange",
@@ -15071,7 +16819,12 @@
           "client",
           "menu"
         ],
-        "description": "Called whenever the <page>DTextEntry</page> gains focus."
+        "description": "Called whenever the <page>DTextEntry</page> gains focus.",
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 336,
+          "lineEnd": 348
+        }
       },
       {
         "name": "OnKeyCode",
@@ -15112,7 +16865,12 @@
             "type": "boolean",
             "description": "Determines whether to remove the autocomplete menu (false) or not (true)."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 188,
+          "lineEnd": 208
+        }
       },
       {
         "name": "OnValueChange",
@@ -15144,7 +16902,12 @@
             "type": "table",
             "description": "Table containing results from <page>DTextEntry:GetAutoComplete</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 213,
+          "lineEnd": 232
+        }
       },
       {
         "name": "SetCursorColor",
@@ -15176,7 +16939,12 @@
             "type": "boolean",
             "description": "Whether the textbox should be disabled"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 313,
+          "lineEnd": 315
+        }
       },
       {
         "name": "SetDrawBackground",
@@ -15189,7 +16957,8 @@
         "arguments": [
           {
             "name": "show",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -15204,7 +16973,8 @@
         "arguments": [
           {
             "name": "bool",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -15222,7 +16992,12 @@
             "type": "boolean",
             "description": "Whether the DTextEntry should be editable"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 329,
+          "lineEnd": 334
+        }
       },
       {
         "name": "SetEnterAllowed",
@@ -15349,7 +17124,8 @@
           {
             "name": "text",
             "type": "string",
-            "default": "nil"
+            "default": "nil",
+            "description": ""
           }
         ]
       },
@@ -15396,7 +17172,8 @@
         "arguments": [
           {
             "name": "updateOnType",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -15414,7 +17191,12 @@
             "type": "string",
             "description": "The value to set."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 277,
+          "lineEnd": 290
+        }
       },
       {
         "name": "UpdateConvarValue",
@@ -15423,7 +17205,12 @@
           "client",
           "menu"
         ],
-        "description": "<internal>Used by <page>DTextEntry:OnTextChanged</page>, <page>DTextEntry:OnEnter</page> and <page>DTextEntry:OnLoseFocus</page></internal>\n\nUpdates the ConVar associated with the TextEntry to its new value."
+        "description": "<internal>Used by <page>DTextEntry:OnTextChanged</page>, <page>DTextEntry:OnEnter</page> and <page>DTextEntry:OnLoseFocus</page></internal>\n\nUpdates the ConVar associated with the TextEntry to its new value.",
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 256,
+          "lineEnd": 262
+        }
       },
       {
         "name": "UpdateFromHistory",
@@ -15736,7 +17523,8 @@
         "arguments": [
           {
             "name": "border",
-            "type": "number"
+            "type": "number",
+            "description": ""
           }
         ]
       },
@@ -15940,7 +17728,8 @@
         "arguments": [
           {
             "name": "bExpand",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -15999,7 +17788,8 @@
         "arguments": [
           {
             "name": "bExpand",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -16058,7 +17848,7 @@
         "returnValues": [
           {
             "type": "Panel",
-            "description": "Curently selected node."
+            "description": "Curently selected <page>DTree_Node</page>."
           }
         ]
       },
@@ -16149,7 +17939,8 @@
         "arguments": [
           {
             "name": "enable",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -16164,7 +17955,8 @@
         "arguments": [
           {
             "name": "bExpand",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -16293,7 +18085,8 @@
           {
             "name": "bDontForceExpandable",
             "type": "boolean",
-            "default": "false"
+            "default": "false",
+            "description": ""
           }
         ],
         "returnValues": [
@@ -16358,15 +18151,18 @@
         "arguments": [
           {
             "name": "anim",
-            "type": "table"
+            "type": "table",
+            "description": ""
           },
           {
             "name": "delta",
-            "type": "number"
+            "type": "number",
+            "description": ""
           },
           {
             "name": "data",
-            "type": "table"
+            "type": "table",
+            "description": ""
           }
         ]
       },
@@ -16381,7 +18177,8 @@
         "arguments": [
           {
             "name": "expanded",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -17102,7 +18899,8 @@
         "arguments": [
           {
             "name": "node",
-            "type": "Panel"
+            "type": "Panel",
+            "description": ""
           }
         ]
       },
@@ -17151,7 +18949,8 @@
         "arguments": [
           {
             "name": "dirty",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -17182,7 +18981,8 @@
         "arguments": [
           {
             "name": "name",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -17197,7 +18997,8 @@
         "arguments": [
           {
             "name": "draw",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -17234,7 +19035,8 @@
         "arguments": [
           {
             "name": "filename",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -17249,7 +19051,8 @@
         "arguments": [
           {
             "name": "folder",
-            "type": "string"
+            "type": "string",
+            "description": ""
           }
         ]
       },
@@ -17264,7 +19067,8 @@
         "arguments": [
           {
             "name": "forceShow",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -17279,7 +19083,8 @@
         "arguments": [
           {
             "name": "hide",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -17310,7 +19115,8 @@
         "arguments": [
           {
             "name": "last",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -17421,7 +19227,8 @@
         "arguments": [
           {
             "name": "showFiles",
-            "type": "boolean"
+            "type": "boolean",
+            "description": ""
           }
         ]
       },
@@ -18157,7 +19964,12 @@
             "type": "boolean",
             "description": "true for checked, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/imagecheckbox.lua",
+          "lineStart": 32,
+          "lineEnd": 36
+        }
       },
       {
         "name": "SetChecked",
@@ -18172,7 +19984,12 @@
             "type": "boolean",
             "description": "true for checked, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/imagecheckbox.lua",
+          "lineStart": 18,
+          "lineEnd": 24
+        }
       },
       {
         "name": "SetMaterial",
@@ -18187,7 +20004,12 @@
             "type": "string",
             "description": "The file path of the material to set (relative to \"garrysmod/materials/\")."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/imagecheckbox.lua",
+          "lineStart": 4,
+          "lineEnd": 16
+        }
       }
     ]
   },
@@ -18236,7 +20058,7 @@
   {
     "name": "MatSelect",
     "parent": "ContextBase",
-    "description": "The panel used by Material & Lamp Sandbox tools for texture selection. Despite being only used in Sandbox, it is **not** exclusive to that gamemode.\n\nSee also <page>PropSelect</page> for the prop selecting alternative.",
+    "description": "The panel used by Material &amp; Lamp Sandbox tools for texture selection. Despite being only used in Sandbox, it is **not** exclusive to that gamemode.\n\nSee also <page>PropSelect</page> for the prop selecting alternative.",
     "functions": [
       {
         "name": "AddMaterial",
@@ -18589,11 +20411,11 @@
         "realms": [
           "client"
         ],
-        "description": "Returns the currently set body groups of the spawn icon. This is set by <page>SpawnIcon:SetBodyGroup</page>.",
+        "description": "Returns the currently active <page text=\"Sub Model IDs\">Structures/BodyGroupData#submodels</page> for each Body Group of the spawn icon.\n\nThis is set by <page>SpawnIcon:SetBodyGroup</page>.",
         "returnValues": [
           {
             "type": "string",
-            "description": "The bodygroups of the spawnicon"
+            "description": "The Body Groups of the spawnicon"
           }
         ]
       },
@@ -18639,17 +20461,17 @@
         "realms": [
           "client"
         ],
-        "description": "<internal>This is done automatically by SpawnIcon. You do not need to call this. Doing so may cause unforeseen consequences.</internal>\n\nSets the bodygroups, so it can be retrieved with <page>SpawnIcon:GetBodyGroup</page>. Use <page>Panel:SetModel</page> instead.",
+        "description": "<internal>This is done automatically by SpawnIcon. You do not need to call this. Doing so may cause unforeseen consequences.</internal>\n\nSets the active <page text=\"Sub Model ID\">Structures/BodyGroupData#submodels</page> for the given <page text=\"Body Group \t\tID\">Structures/BodyGroupData#id</page>, so it can be retrieved with <page>SpawnIcon:GetBodyGroup</page>.\n\nUse <page>Panel:SetModel</page> instead.",
         "arguments": [
           {
-            "name": "bodygroup",
+            "name": "bodyGroupId",
             "type": "number",
-            "description": "The id of the bodygroup you're setting. Starts from 0."
+            "description": "The Body Group ID to set the active Sub Model ID for.\nBody Group IDs start at `0`."
           },
           {
-            "name": "value",
+            "name": "activeSubModelId",
             "type": "number",
-            "description": "The value you're setting the bodygroup to. Starts from 0."
+            "description": "The Sub Model ID to set as active.\nSub Model IDs start at `0`."
           }
         ]
       },
@@ -18703,7 +20525,12 @@
             "type": "string",
             "description": "The Hook name"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/content.lua",
+          "lineStart": 52,
+          "lineEnd": 56
+        }
       },
       {
         "name": "EnableModify",
@@ -18711,7 +20538,12 @@
         "realms": [
           "client"
         ],
-        "description": "Allows the modification of the ContentSidebar"
+        "description": "Allows the modification of the ContentSidebar",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/content.lua",
+          "lineStart": 44,
+          "lineEnd": 46
+        }
       },
       {
         "name": "EnableSearch",
@@ -18731,7 +20563,12 @@
             "type": "string",
             "description": "The Hook name"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/content.lua",
+          "lineStart": 48,
+          "lineEnd": 50
+        }
       },
       {
         "name": "SwitchPanel",
@@ -18746,7 +20583,12 @@
             "type": "Panel",
             "description": "Panel to switch to"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/content.lua",
+          "lineStart": 58,
+          "lineEnd": 75
+        }
       }
     ]
   },

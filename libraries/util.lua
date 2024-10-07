@@ -167,7 +167,7 @@ end
 --- See util.GetAnimEventNameByID for a function that does the opposite.  
 --- @param arg string @The name of an model animation event, as defined in the model's `.qc` at compile time.
 --- @return number @The ID of an animation event, typically for usage with ENTITY:HandleAnimEvent.
-function util.GetAnimEventNameByID(arg)
+function util.GetAnimEventIDByName(arg)
 end
 
 --- Returns a name for given automatically generated numerical animation event ID. This is useful for models that define custom animation events.  
@@ -428,6 +428,7 @@ function util.IsValidRagdoll(ragdollName)
 end
 
 --- Converts a JSON string to a Lua table.  
+--- See util.TableToJSON for the opposite function.  
 --- 🦟 **BUG**: [This will attempt to cast the string keys `"inf"`, `"nan"`, `"true"`, and `"false"` to their respective Lua values. This completely ignores nulls in arrays.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
 --- 🦟 **BUG**: [Colors will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param json string @The JSON string to convert.
@@ -640,8 +641,9 @@ function util.StringToType(str, typename)
 end
 
 --- Converts a table to a JSON string.  
---- ⚠ **WARNING**: All keys are strings in the JSON format, so all keys will be converted to strings!  
---- All integers will be converted to decimals (5 -> 5.0).  
+--- See util.JSONToTable for the opposite function.  
+--- ⚠ **WARNING**: All keys are strings in the JSON format, so all keys of other types will be converted to strings!  
+--- All integers will be output as decimals (5 -> 5.0), since all numbers in Lua are internally floating point values.  
 --- 🦟 **BUG**: [This will produce invalid JSON if the provided table contains nan or inf values.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
 --- @param table table @Table to convert.
 --- @param prettyPrint? boolean @Format and indent the JSON.
@@ -670,14 +672,13 @@ function util.TimerCycle()
 end
 
 --- Runs a trace using the entity's collisionmodel between two points. This does not take the entity's angles into account and will trace its unrotated collisionmodel.  
---- ℹ **NOTE**: Clientside entities will not be hit by traces.  
 --- @param tracedata table @Trace data
 --- @param ent GEntity @The entity to use
 --- @return table @Trace result
 function util.TraceEntity(tracedata, ent)
 end
 
---- Identical to util.TraceHull but uses an entity for `mins`/`maxs` inputs.  
+--- Identical to util.TraceHull but uses an entity's AABB (alis-aligned bounding box) for `mins`/`maxs` inputs. (These 2 keys will be ignored in the provided table)  
 --- @param tracedata table @Trace data
 --- @param ent GEntity @The entity to use mins/maxs of for the hull trace.
 --- @return table @Trace result
@@ -685,6 +686,8 @@ function util.TraceEntityHull(tracedata, ent)
 end
 
 --- Performs an AABB hull (axis-aligned bounding box, aka not rotated) trace with the given trace data.  
+--- This trace type cannot hit hitboxes.  
+--- See util.TraceLine for a simple line ("ray") trace.  
 --- ℹ **NOTE**: This function may not always give desired results clientside due to certain physics mechanisms not existing on the client. Use it serverside for accurate results.  
 --- @param TraceData table @The trace data to use
 --- @return table @Trace result
@@ -695,8 +698,8 @@ end
 --- Traces intersect with the Physics Meshes of Solid, Server-side, Entities (including the Game World) but cannot detect Client-side-only Entities.  
 --- For a way to detect Client-side Entities, see ents.FindAlongRay.  
 --- Traces do not differentiate between the inside and the outside faces of Physics Meshes.  Because of this, if a Trace starts within a Solid Physics Mesh it will hit the inside faces of the Physics Mesh and may return unexpected values as a result.  
---- See Also:  
---- util.TraceHull  
+--- See util.TraceHull for a "box" type trace.  
+--- You can use `r_visualizetraces` set to `1` (requires `sv_cheats` set to `1`) to visualize traces in real time for debugging purposes.  
 --- @param traceConfig table @A table of data that configures the Trace
 --- @return table @A table of information detailing where and what the Trace line intersected, or `nil` if the trace is being done before the GM:InitPostEntity
 function util.TraceLine(traceConfig)

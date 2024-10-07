@@ -9,9 +9,9 @@ _G.construct = {}
 --- @param key number @The key to toggle the magnet, see Enums/KEY
 --- @param maxObjects number @Maximum amount of objects the magnet can hold
 --- @param strength number @Strength of the magnet
---- @param nopull? number @If > 0, disallows the magnet to pull objects towards it
---- @param allowrot? number @If > 0, allows rotation of the objects attached
---- @param startOn? number @If > 0, enabled from spawn
+--- @param nopull? number @If &gt; 0, disallows the magnet to pull objects towards it
+--- @param allowrot? number @If &gt; 0, allows rotation of the objects attached
+--- @param startOn? number @If &gt; 0, enabled from spawn
 --- @param toggle? number @If != 0, pressing the key toggles the magnet, otherwise you'll have to hold the key to keep it enabled
 --- @param vel? GVector @Velocity to set on spawn
 --- @param aVel? GAngle @Angular velocity to set on spawn

@@ -5,6 +5,7 @@
     "main": "src/main.ts",
     "type": "module",
     "dependencies": {
+        "entities": "^5.0.0",
         "gmod-wiki-scraper": "2.0.0-rc.0",
         "lodash": "^4.17.19",
         "tsx": "^4.19.1"

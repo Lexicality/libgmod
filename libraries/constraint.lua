@@ -98,8 +98,8 @@ end
 --- @param constant number @Stiffness of the elastic
 --- @param damping number @How much energy the elastic loses
 --- @param relDamping number @The amount of energy the elastic loses proportional to the relative velocity of the two objects the elastic is attached to.
---- @param material string @The material of the rope
---- @param width number @Width of rope.
+--- @param material? string @The material of the rope
+--- @param width? number @Width of rope.
 --- @param stretchOnly? boolean @Apply physics forces only on stretch.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
@@ -178,7 +178,7 @@ end
 --- @param key number @The key binding, corresponding to an Enums/KEY
 --- @param slider number @Whether the hydraulic is fixed, i.e
 --- @param speed number @How fast it changes the length from `length1` to `length2` and backwards.
---- @param material string @The material of the rope
+--- @param material? string @The material of the rope
 --- @param toggle? boolean @Whether the hydraulic should be a toggle, not a "hold key to extend" action.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
@@ -327,7 +327,7 @@ end
 --- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
 --- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
 --- @param width number @The width of the rope.
---- @param material string @The material of the rope
+--- @param material? string @The material of the rope
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint entity
 --- @return GEntity @The created rope
@@ -359,7 +359,7 @@ end
 --- @param bwdBind number @The key binding for "backwards", corresponding to an Enums/KEY
 --- @param fwdSpeed number @Forward speed.
 --- @param bwdSpeed number @Backwards speed.
---- @param material string @The material of the rope
+--- @param material? string @The material of the rope
 --- @param toggle? boolean @Whether the winch should be on toggle.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint

@@ -423,7 +423,7 @@ function render.GetToneMappingScaleLinear()
 end
 
 --- Returns the current view setup.  
---- @param noPlayer? boolean @If `true`, returns the `view->GetViewSetup`, if `false` - returns `view->GetPlayerViewSetup`
+--- @param noPlayer? boolean @If `true`, returns the `view-&gt;GetViewSetup`, if `false` - returns `view-&gt;GetPlayerViewSetup`
 --- @return table @Current current view setup
 function render.GetViewSetup(noPlayer)
 end
@@ -480,13 +480,7 @@ end
 --- @param sourceMultiplier number @This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Func
 --- @param destinationMultiplier number @This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending
 --- @param blendingFunction number @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
---- @param sourceColorMultiplier number @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
---- @param destinationColorMultiplier number @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
---- @param colorBlendingFunction number @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
---- @param sourceAlphaMultiplier? number @This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function
---- @param destinationAlphaMultiplier? number @This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Fun
---- @param alphaBlendingFunction? number @After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending 
-function render.OverrideBlend(enabled, sourceMultiplier, destinationMultiplier, blendingFunction, sourceColorMultiplier, destinationColorMultiplier, colorBlendingFunction, sourceAlphaMultiplier, destinationAlphaMultiplier, alphaBlendingFunction)
+function render.OverrideBlend(enabled, sourceMultiplier, destinationMultiplier, blendingFunction)
 end
 
 --- 🛑 **DEPRECATED**: Use render.OverrideBlend instead.  

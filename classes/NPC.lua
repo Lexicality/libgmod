@@ -722,6 +722,11 @@ end
 function GNPC:SetIdealActivity(arg)
 end
 
+--- Sets the ideal sequence the NPC currently wants to achieve. This is most useful for custom SNPCs.  
+--- @param sequenceId number @The ideal sequence to set
+function GNPC:SetIdealSequence(sequenceId)
+end
+
 --- Sets the ideal yaw angle (left-right rotation) for the NPC. Does not actually force the NPC to start turning in that direction. See NPC:UpdateYaw, NPC:GetIdealYaw and NPC:SetIdealYawAndUpdate.  
 --- @param angle number @The aim direction to set, the `yaw` component.
 function GNPC:SetIdealYaw(angle)
@@ -733,8 +738,8 @@ end
 function GNPC:SetIdealYawAndUpdate(angle, speed)
 end
 
---- Sets conditions to ignore for the this NPC.  
---- @param conditions table @Conditions to ignore, see Enums/COND.
+--- Sets conditions to ignore, which would normally interrupt an Engine-based schedule. Specified conditions will still be set, will call ENTITY:OnCondition and can be returned by NPC:HasCondition, but they will no longer interrupt the Engine schedule.  
+--- @param conditions table @Conditions to ignore, see Enums/COND
 --- @param size number @Number of conditions to include in the ignored conditions table
 function GNPC:SetIgnoreConditions(conditions, size)
 end

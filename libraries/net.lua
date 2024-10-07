@@ -152,8 +152,8 @@ end
 function net.Send(ply)
 end
 
---- Sends the current message (see net.Start) to all except the specified, or to all except all players in the table.  
---- @param ply GPlayer @The player(s) to **NOT** send the message to
+--- Sends the current message (see net.Start) to all except the player or players specified.  
+--- @param ply GPlayer @The player to **NOT** send the message to.
 function net.SendOmit(ply)
 end
 

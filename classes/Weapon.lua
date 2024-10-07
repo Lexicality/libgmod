@@ -15,7 +15,7 @@ end
 --- Calls a SWEP function on client. Does nothing on client.  
 --- ⚠ **WARNING**: This uses the usermessage internally, because of that, the combined length of the arguments of this function may not exceed 254 bytes/characters or the function will cease to function!  
 --- @param functionName string @Name of function to call
---- @param data string @Custom data to be passed to the target SWEP function as the first argument.
+--- @param data? string @Custom data to be passed to the target SWEP function as the first argument.
 function GWeapon:CallOnClient(functionName, data)
 end
 

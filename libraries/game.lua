@@ -21,9 +21,10 @@ end
 function game.AddParticles(particleFileName)
 end
 
---- If called serverside it will remove **ALL** entities which were not created by the map (not players or weapons held by players).  
---- It won't remove Entities who have the EFL_KEEP_ON_RECREATE_ENTITIES Flag set.  
---- On the client it will remove decals, sounds, gibs, dead NPCs, and entities created via ents.CreateClientProp.  
+--- Removes most entities, and then respawns entities created by the map, as if the map was just loaded.  
+--- There are certain exclusions, such as players or weapons held by players, soundscapes and others.  
+--- EFL_KEEP_ON_RECREATE_ENTITIES can be set on entities to preserve them through a map cleanup.  
+--- On the client it will remove decals, sounds, gibs, dead NPCs, and entities created via ents.CreateClientProp. This function is ran on all clients from server automatically, when it is called on the server.  
 --- This function calls GM:PreCleanupMap before cleaning up the map and GM:PostCleanupMap after cleaning up the map.  
 --- Beware of calling this function in hooks that may be called on map clean up (such as ENTITY:StartTouch) to avoid infinite loops.  
 --- 🦟 **BUG**: [Calling this destroys all BASS streams.](https://github.com/Facepunch/garrysmod-issues/issues/2874)  

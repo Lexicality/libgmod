@@ -263,7 +263,12 @@
             "type": "boolean",
             "description": "Return false to disallow using that property, return true to allow.\n\nYou must return a value. Not returning anything can cause unexpected results."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/shared.lua",
+          "lineStart": 239,
+          "lineEnd": 241
+        }
       },
       {
         "name": "CanTool",
@@ -305,7 +310,11 @@
             "type": "boolean",
             "description": "Return `false` to disallow using that tool on this entity, return `true` to allow."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/shared.lua",
+          "lineStart": 73
+        }
       },
       {
         "name": "CreateSchedulesInternal",
@@ -431,7 +440,11 @@
             "type": "string",
             "description": "The path of the expression."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/init.lua",
+          "lineStart": 94
+        }
       },
       {
         "name": "FireAnimationEvent",
@@ -493,7 +506,11 @@
             "type": "number",
             "description": "The number of degrees of inaccuracy in the NPC's attack."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/init.lua",
+          "lineStart": 135
+        }
       },
       {
         "name": "GetRelationship",
@@ -514,7 +531,11 @@
             "type": "number",
             "description": "How our scripter NPC \"feels\" towards the entity in question. See <page>Enums/D</page>. Not returning any value will make <page>NPC:Disposition</page> return the default disposition for this SNPC's given `m_iClass` by the engine."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/init.lua",
+          "lineStart": 84
+        }
       },
       {
         "name": "GetRenderMesh",
@@ -931,7 +952,7 @@
         "returnValues": [
           {
             "type": "number",
-            "description": "How much damage the entity took. Basically `> 0` means took damage, `0` means did not take damage."
+            "description": "How much damage the entity took. Basically `&gt; 0` means took damage, `0` means did not take damage."
           }
         ]
       },
@@ -990,7 +1011,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called to completely override NPC movement facing.\n\n<note>This hook only exists for `ai` type SENTs.</note>",
+        "description": "Called to completely override the direction NPC will be facing during navigation.\n\n<note>This hook only exists for `ai` type SENTs.</note>\n<note>This hook is called by the default movement hook. Returning `true` inside <page>ENTITY:OverrideMove</page> will prevent engine from calling this hook. </note>",
         "arguments": [
           {
             "name": "interval",
@@ -1221,7 +1242,7 @@
         "realms": [
           "server"
         ],
-        "description": "Set the schedule we should be playing right now. Allows the NPC to start either a Lua schedule or an engine schedule. Despite sharing the same name as `CAI_BaseNPC::SelectSchedule()`, this isn't hooked to that function; this is called by Lua's <page>ENTITY:RunAI</page>, doesn't return an engine function, returning an engine function doesn't help and doesn't make the NPC start an engine schedule. To alter initial engine schedule, it is recommended to use <page>ENT:TranslateSchedule</page>.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>"
+        "description": "Set the schedule we should be playing right now. Allows the NPC to start either a Lua schedule or an engine schedule. Despite sharing the same name as `CAI_BaseNPC::SelectSchedule()`, this isn't hooked to that function; this is called by Lua's <page>ENTITY:RunAI</page>, doesn't return an engine function, returning an engine function doesn't help and doesn't make the NPC start an engine schedule. To alter initial engine schedule, it is recommended to use <page>ENTITY:TranslateSchedule</page>.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>"
       },
       {
         "name": "SetAutomaticFrameAdvance",
@@ -1392,7 +1413,12 @@
             "type": "string",
             "description": "Output info"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_entity/outputs.lua",
+          "lineStart": 10,
+          "lineEnd": 28
+        }
       },
       {
         "name": "TaskFinished",
@@ -1560,7 +1586,12 @@
             "default": "nil",
             "description": "The data to give to the output."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_entity/outputs.lua",
+          "lineStart": 105,
+          "lineEnd": 123
+        }
       },
       {
         "name": "UpdateTransmitState",
@@ -1685,7 +1716,11 @@
             "type": "number",
             "description": "Team of the victim"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_deathnotice.lua",
+          "lineStart": 127
+        }
       },
       {
         "name": "AdjustMouseSensitivity",
@@ -1706,7 +1741,11 @@
             "type": "number",
             "description": "A fraction of the normal sensitivity (0.5 would be half as sensitive).\n\nReturn -1 to not override and prevent subsequent hooks and <page>WEAPON:AdjustMouseSensitivity</page> from running.\nReturn <page>nil</page> to not override and allow subsequent hooks and <page>WEAPON:AdjustMouseSensitivity</page> to run."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 418
+        }
       },
       {
         "name": "AllowPlayerPickup",
@@ -1732,7 +1771,12 @@
             "type": "boolean",
             "description": "Allow the player to pick up the entity or not."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 818,
+          "lineEnd": 828
+        }
       },
       {
         "name": "CalcMainActivity",
@@ -1763,7 +1807,11 @@
             "type": "number",
             "description": "Sequence for the player to use. This takes precedence over the activity (the activity is still used for layering). Return -1 or nil to let the activity determine the sequence."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 296
+        }
       },
       {
         "name": "CalcVehicleView",
@@ -1794,7 +1842,11 @@
             "type": "table",
             "description": "The modified view table containing new values, see <page>Structures/CamData</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 305
+        }
       },
       {
         "name": "CalcView",
@@ -1840,7 +1892,11 @@
             "type": "table",
             "description": "View data table. See <page>Structures/CamData</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 357
+        }
       },
       {
         "name": "CalcViewModelView",
@@ -1890,7 +1946,11 @@
             "type": "Angle",
             "description": "New angle"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 555
+        }
       },
       {
         "name": "CanCreateUndo",
@@ -1957,7 +2017,11 @@
             "type": "boolean",
             "description": "Return true to allow editing."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/variable_edit.lua",
+          "lineStart": 28
+        }
       },
       {
         "name": "CanExitVehicle",
@@ -1983,7 +2047,11 @@
             "type": "boolean",
             "description": "True if the player can exit the vehicle."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 567
+        }
       },
       {
         "name": "CanPlayerEnterVehicle",
@@ -2014,7 +2082,11 @@
             "type": "boolean",
             "description": "`false` if the player is not allowed to enter the vehicle."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 552
+        }
       },
       {
         "name": "CanPlayerSuicide",
@@ -2132,7 +2204,12 @@
         "realms": [
           "menu"
         ],
-        "description": "Called each frame to record demos to video using <page>IVideoWriter</page>.\n\n<note>This hook is called every frame regardless of whether or not a demo is being recorded</note>"
+        "description": "Called each frame to record demos to video using <page>IVideoWriter</page>.\n\n<note>This hook is called every frame regardless of whether or not a demo is being recorded</note>",
+        "source": {
+          "file": "lua/menu/demo_to_video.lua",
+          "lineStart": 286,
+          "lineEnd": 310
+        }
       },
       {
         "name": "ChatText",
@@ -2322,7 +2399,7 @@
         "returnValues": [
           {
             "type": "boolean",
-            "description": "Return true to:\n* Disable Sandbox C menu \"screen clicking\"\n* Disable Teammate nocollide (verification required)\n* Prevent calling of C_BaseHLPlayer::CreateMove & subsequently C_BasePlayer::CreateMove"
+            "description": "Return true to:\n* Disable Sandbox C menu \"screen clicking\"\n* Disable Teammate nocollide (verification required)\n* Prevent calling of C_BaseHLPlayer::CreateMove &amp; subsequently C_BasePlayer::CreateMove"
           }
         ]
       },
@@ -3593,7 +3670,12 @@
             "name": "workshopid",
             "description": "the workshop ID of the missing map (if found). Can be an empty string"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 40,
+          "lineEnd": 50
+        }
       },
       {
         "name": "MenuStart",
@@ -3781,7 +3863,11 @@
             "name": "suppress",
             "description": "Return false to suppress the cleanup notification."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/cl_init.lua",
+          "lineStart": 52
+        }
       },
       {
         "name": "OnCloseCaptionEmit",
@@ -3961,7 +4047,11 @@
             "type": "string",
             "description": "Steam Workshop ID of the addon creating Lua errors, if it is an addon."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/errors.lua",
+          "lineStart": 0
+        }
       },
       {
         "name": "OnNotifyAddonConflict",
@@ -3986,7 +4076,12 @@
             "type": "string",
             "description": "The File the Conflict occurred in."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/problems/problems.lua",
+          "lineStart": 260,
+          "lineEnd": 297
+        }
       },
       {
         "name": "OnNPCKilled",
@@ -4011,7 +4106,12 @@
             "type": "Entity",
             "description": "Death inflictor. The entity that did the killing. Not necessarily a weapon."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/npc.lua",
+          "lineStart": 74,
+          "lineEnd": 138
+        }
       },
       {
         "name": "OnPauseMenuBlockedTooManyTimes",
@@ -4042,7 +4142,12 @@
         "realms": [
           "menu"
         ],
-        "description": "Called when a permission gets Granted or Revoked."
+        "description": "Called when a permission gets Granted or Revoked.",
+        "source": {
+          "file": "lua/menu/problems/permissions.lua",
+          "lineStart": 224,
+          "lineEnd": 230
+        }
       },
       {
         "name": "OnPhysgunFreeze",
@@ -4179,7 +4284,12 @@
             "type": "boolean",
             "description": "Should the message be suppressed?"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 135,
+          "lineEnd": 172
+        }
       },
       {
         "name": "OnPlayerHitGround",
@@ -4352,7 +4462,11 @@
             "type": "Panel",
             "description": "The panel that got focus"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 346
+        }
       },
       {
         "name": "OnTextEntryLoseFocus",
@@ -4432,12 +4546,12 @@
         "description": "Called when a player drops an entity with the Physgun.\n\nSee <page>GM:GravGunOnDropped</page> for the Gravity Gun drop variant.",
         "arguments": [
           {
-            "name": "ply",
+            "name": "player",
             "type": "Player",
-            "description": "The player who dropped an entitiy"
+            "description": "The player who dropped an entity"
           },
           {
-            "name": "ent",
+            "name": "entity",
             "type": "Entity",
             "description": "The dropped entity"
           }
@@ -4828,7 +4942,12 @@
             "type": "number",
             "description": "The network ID of the player class's name string, or `0` if we are clearing a player class from the player.\n\nPass this into <page>util.NetworkIDToString</page> to retrieve the proper name of the player class."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 680,
+          "lineEnd": 695
+        }
       },
       {
         "name": "PlayerConnect",
@@ -4924,7 +5043,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when a player leaves the server. See the <page text=\"player_disconnect gameevent\">gameevent/player_disconnect</page> for a shared version of this hook.\n<note> <page>gameevent/player_disconnect</page> is more reliable. </note>\n\n<bug issue=\"3523\">This is not called in single-player or listen servers for the host.</bug>",
+        "description": "Called when a player leaves the server. See the <page text=\"player_disconnect gameevent\">gameevent/player_disconnect</page> for a shared version of this hook.\n\n<bug issue=\"3523\">This is not called in single-player or listen servers for the host.</bug>",
         "arguments": [
           {
             "name": "ply",
@@ -5057,7 +5176,7 @@
           "client",
           "server"
         ],
-        "description": "Called whenever a player steps. Return true to mute the normal sound.\n<note>This hook is called on all clients.</note>",
+        "description": "Called whenever a player steps. Return true to mute the normal sound.\n\nSee <page>GM:PlayerStepSoundTime</page> for a related hook about footstep frequency.\n<note>This hook is called on all clients.</note>",
         "arguments": [
           {
             "name": "ply",
@@ -5548,7 +5667,12 @@
             "type": "Player",
             "description": "The player to spawn as a spectator"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 219,
+          "lineEnd": 233
+        }
       },
       {
         "name": "PlayerSpray",
@@ -5624,7 +5748,7 @@
           "client",
           "server"
         ],
-        "description": "Allows you to override the time between footsteps.\n<note>This hook is called on all clients.</note>",
+        "description": "Allows you to override the time between footsteps.\n\nSee <page>GM:PlayerFootstep</page> for a related hook about footstep sounds themselves.\n<note>This hook is called on all clients.</note>",
         "arguments": [
           {
             "name": "ply",
@@ -6019,7 +6143,8 @@
           },
           {
             "name": "dmg",
-            "type": "CTakeDamageInfo"
+            "type": "CTakeDamageInfo",
+            "description": ""
           },
           {
             "name": "took",
@@ -6152,7 +6277,11 @@
         "realms": [
           "client"
         ],
-        "description": "Called before rendering the halos. This is the place to call <page>halo.Add</page>. This hook is actually running inside of <page>GM:PostDrawEffects</page>.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>"
+        "description": "Called before rendering the halos. This is the place to call <page>halo.Add</page>. This hook is actually running inside of <page>GM:PostDrawEffects</page>.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
+        "source": {
+          "file": "lua/includes/modules/halo.lua",
+          "lineStart": 148
+        }
       },
       {
         "name": "PreDrawHUD",
@@ -6373,7 +6502,11 @@
             "type": "boolean",
             "description": "Return `false` to prevent the entity from being registered. Returning any other value has no effect."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/modules/scripted_ents.lua",
+          "lineStart": 55
+        }
       },
       {
         "name": "PreRegisterSWEP",
@@ -6400,7 +6533,11 @@
             "type": "boolean",
             "description": "Return `false` to prevent the weapon from being registered. Returning any other value has no effect."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/modules/weapons.lua",
+          "lineStart": 48
+        }
       },
       {
         "name": "PreRender",
@@ -6887,7 +7024,11 @@
         "realms": [
           "client"
         ],
-        "description": "Called when the Spawnmenu is Created."
+        "description": "Called when the Spawnmenu is Created.",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/spawnmenu.lua",
+          "lineStart": 247
+        }
       },
       {
         "name": "StartChat",
@@ -6958,7 +7099,11 @@
         "realms": [
           "menu"
         ],
-        "description": "Called when you start a new game via the menu."
+        "description": "Called when you start a new game via the menu.",
+        "source": {
+          "file": "html/js/menu/control.NewGame.js",
+          "lineStart": 174
+        }
       },
       {
         "name": "Think",
@@ -7132,7 +7277,11 @@
             "type": "number",
             "description": "The key that the player pressed using <page>Enums/MOUSE</page>."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/derma/derma_menus.lua",
+          "lineStart": 71
+        }
       },
       {
         "name": "WeaponEquip",
@@ -7172,7 +7321,12 @@
             "type": "string",
             "description": "Name of addon."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 32,
+          "lineEnd": 38
+        }
       },
       {
         "name": "WorkshopDownloadFile",
@@ -7202,7 +7356,12 @@
             "type": "number",
             "description": "File size of addon in bytes."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 21,
+          "lineEnd": 30
+        }
       },
       {
         "name": "WorkshopDownloadProgress",
@@ -7237,7 +7396,12 @@
             "type": "number",
             "description": "Expected file size of addon in bytes."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 40,
+          "lineEnd": 50
+        }
       },
       {
         "name": "WorkshopDownloadTotals",
@@ -7257,7 +7421,12 @@
             "type": "number",
             "description": "Total addons needing to be downloaded"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 52,
+          "lineEnd": 71
+        }
       },
       {
         "name": "WorkshopEnd",
@@ -7265,7 +7434,12 @@
         "realms": [
           "menu"
         ],
-        "description": "Called when downloading content from Steam workshop ends. Used by default to hide fancy workshop downloading panel."
+        "description": "Called when downloading content from Steam workshop ends. Used by default to hide fancy workshop downloading panel.",
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 13,
+          "lineEnd": 19
+        }
       },
       {
         "name": "WorkshopExtractProgress",
@@ -7295,7 +7469,12 @@
             "type": "number",
             "description": "Current bytes of addon extracted."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 52,
+          "lineEnd": 62
+        }
       },
       {
         "name": "WorkshopStart",
@@ -7303,7 +7482,12 @@
         "realms": [
           "menu"
         ],
-        "description": "Called when downloading content from Steam workshop begins. Used by default to show fancy workshop downloading panel.\n\nThe order of Workshop hooks is this:\n* WorkshopStart\n* WorkshopDownloadTotals\n* * These are called for each new item:\n* WorkshopDownloadFile\n* WorkshopDownloadProgress - This is called until the file is finished\n* WorkshopDownloadedFile\n* WorkshopEnd (this ones called once)"
+        "description": "Called when downloading content from Steam workshop begins. Used by default to show fancy workshop downloading panel.\n\nThe order of Workshop hooks is this:\n* WorkshopStart\n* WorkshopDownloadTotals\n* * These are called for each new item:\n* WorkshopDownloadFile\n* WorkshopDownloadProgress - This is called until the file is finished\n* WorkshopDownloadedFile\n* WorkshopEnd (this ones called once)",
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 5,
+          "lineEnd": 11
+        }
       },
       {
         "name": "WorkshopSubscriptionsChanged",
@@ -7326,7 +7510,12 @@
             "type": "string",
             "description": "The Message from the Workshop. Will be a phrase that needs to be translated."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/menu/mount/mount.lua",
+          "lineStart": 95,
+          "lineEnd": 103
+        }
       },
       {
         "name": "WorkshopSubscriptionsProgress",
@@ -7359,7 +7548,11 @@
         "realms": [
           "server"
         ],
-        "description": "Called to initialize the behaviour.\n\nThis is called automatically when the NextBot is created, you should not call it manually.\n\n<note>You shouldn't override this unless you know what you are doing - it's used to kick off the <page>coroutine</page> that runs the bot's behaviour. See <page>NEXTBOT:RunBehaviour</page> instead.</note>"
+        "description": "Called to initialize the behaviour.\n\nThis is called automatically when the NextBot is created, you should not call it manually.\n\n<note>You shouldn't override this unless you know what you are doing - it's used to kick off the <page>coroutine</page> that runs the bot's behaviour. See <page>NEXTBOT:RunBehaviour</page> instead.</note>",
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 2
+        }
       },
       {
         "name": "BehaveUpdate",
@@ -7374,7 +7567,11 @@
             "type": "number",
             "description": "How long since the last update"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 23
+        }
       },
       {
         "name": "BodyUpdate",
@@ -7382,7 +7579,11 @@
         "realms": [
           "server"
         ],
-        "description": "Called to update the bot's animation."
+        "description": "Called to update the bot's animation.",
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 52
+        }
       },
       {
         "name": "OnContact",
@@ -7450,7 +7651,11 @@
             "type": "CTakeDamageInfo",
             "description": "The damage info"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 130
+        }
       },
       {
         "name": "OnKilled",
@@ -7465,7 +7670,11 @@
             "type": "CTakeDamageInfo",
             "description": "The damage info"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 140
+        }
       },
       {
         "name": "OnLandOnGround",
@@ -7480,7 +7689,11 @@
             "type": "Entity",
             "description": "The entity the nextbot has landed on."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 94
+        }
       },
       {
         "name": "OnLeaveGround",
@@ -7495,7 +7708,11 @@
             "type": "Entity",
             "description": "The entity the bot \"jumped\" from."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 82
+        }
       },
       {
         "name": "OnNavAreaChanged",
@@ -7543,7 +7760,11 @@
         "realms": [
           "server"
         ],
-        "description": "Called when the bot thinks it is stuck."
+        "description": "Called when the bot thinks it is stuck.",
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 106
+        }
       },
       {
         "name": "OnTraceAttack",
@@ -7576,7 +7797,11 @@
         "realms": [
           "server"
         ],
-        "description": "Called when the bot thinks it is un-stuck."
+        "description": "Called when the bot thinks it is un-stuck.",
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
+          "lineStart": 118
+        }
       },
       {
         "name": "RunBehaviour",
@@ -7620,7 +7845,12 @@
             "type": "number",
             "description": "The time the object was hovered over this panel."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/extensions/client/panel/dragdrop.lua",
+          "lineStart": 540,
+          "lineEnd": 541
+        }
       },
       {
         "name": "DroppedOn",
@@ -7635,7 +7865,12 @@
             "type": "Panel",
             "description": "The panel we are dropped onto"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/extensions/client/panel/dragdrop.lua",
+          "lineStart": 375,
+          "lineEnd": 377
+        }
       },
       {
         "name": "GenerateExample",
@@ -7665,7 +7900,11 @@
             "type": "number",
             "description": "Width of the property sheet?"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/derma/derma_example.lua",
+          "lineStart": 20
+        }
       },
       {
         "name": "Init",
@@ -7785,7 +8024,12 @@
             "type": "Panel",
             "description": "The panel to drop instead of us. By default you should return self."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/extensions/client/panel/dragdrop.lua",
+          "lineStart": 379,
+          "lineEnd": 389
+        }
       },
       {
         "name": "OnFocusChanged",
@@ -7994,7 +8238,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal> Called by <page>dragndrop.StartDragging</page> when the panel starts being dragged."
+        "description": "<internal></internal> Called by <page>dragndrop.StartDragging</page> when the panel starts being dragged.",
+        "source": {
+          "file": "lua/includes/extensions/client/panel/dragdrop.lua",
+          "lineStart": 391,
+          "lineEnd": 406
+        }
       },
       {
         "name": "OnStopDragging",
@@ -8002,7 +8251,12 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal> Called by <page>Panel:DragMouseRelease</page> when the panel object is released after being dragged."
+        "description": "<internal></internal> Called by <page>Panel:DragMouseRelease</page> when the panel object is released after being dragged.",
+        "source": {
+          "file": "lua/includes/extensions/client/panel/dragdrop.lua",
+          "lineStart": 408,
+          "lineEnd": 410
+        }
       },
       {
         "name": "OnTextClicked",
@@ -8178,7 +8432,12 @@
         "realms": [
           "server"
         ],
-        "description": "Called when the player dies"
+        "description": "Called when the player dies",
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 74,
+          "lineEnd": 75
+        }
       },
       {
         "name": "FinishMove",
@@ -8190,7 +8449,8 @@
         "arguments": [
           {
             "name": "mv",
-            "type": "CMoveData"
+            "type": "CMoveData",
+            "description": ""
           }
         ],
         "returnValues": [
@@ -8198,7 +8458,11 @@
             "type": "boolean",
             "description": "Return true to prevent default action"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 207
+        }
       },
       {
         "name": "GetHandsModel",
@@ -8212,7 +8476,12 @@
             "type": "table",
             "description": "A table containing info about view model hands model to be set. See examples."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 126,
+          "lineEnd": 133
+        }
       },
       {
         "name": "Init",
@@ -8221,7 +8490,11 @@
           "client",
           "server"
         ],
-        "description": "Called when the class object is created"
+        "description": "Called when the class object is created",
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 40
+        }
       },
       {
         "name": "Loadout",
@@ -8229,7 +8502,12 @@
         "realms": [
           "server"
         ],
-        "description": "Called on spawn to give the player their default loadout"
+        "description": "Called on spawn to give the player their default loadout",
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 60,
+          "lineEnd": 65
+        }
       },
       {
         "name": "Move",
@@ -8250,7 +8528,11 @@
             "type": "boolean",
             "description": "Return true to prevent default action"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 197
+        }
       },
       {
         "name": "PostDrawViewModel",
@@ -8270,7 +8552,11 @@
             "type": "Entity",
             "description": "The weapon"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 112
+        }
       },
       {
         "name": "PreDrawViewModel",
@@ -8290,7 +8576,11 @@
             "type": "Entity",
             "description": "The weapon"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 102
+        }
       },
       {
         "name": "SetModel",
@@ -8307,7 +8597,11 @@
           "client",
           "server"
         ],
-        "description": "Setup the network table accessors."
+        "description": "Setup the network table accessors.",
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 31
+        }
       },
       {
         "name": "Spawn",
@@ -8315,7 +8609,11 @@
         "realms": [
           "server"
         ],
-        "description": "Called when the player spawns"
+        "description": "Called when the player spawns",
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 49
+        }
       },
       {
         "name": "StartMove",
@@ -8327,11 +8625,13 @@
         "arguments": [
           {
             "name": "mv",
-            "type": "CMoveData"
+            "type": "CMoveData",
+            "description": ""
           },
           {
             "name": "cmd",
-            "type": "CUserCmd"
+            "type": "CUserCmd",
+            "description": ""
           }
         ],
         "returnValues": [
@@ -8339,7 +8639,11 @@
             "type": "boolean",
             "description": "Return true to prevent default action"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 197
+        }
       },
       {
         "name": "ViewModelChanged",
@@ -8364,7 +8668,11 @@
             "type": "string",
             "description": "The new model"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 92
+        }
       }
     ]
   },
@@ -8597,7 +8905,11 @@
         "realms": [
           "client"
         ],
-        "description": "Called when the Client reverts spawnlist changes"
+        "description": "Called when the Client reverts spawnlist changes",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentsidebar.lua",
+          "lineStart": 70
+        }
       },
       {
         "name": "OnSaveSpawnlist",
@@ -8605,7 +8917,11 @@
         "realms": [
           "client"
         ],
-        "description": "Called when a player saves his changes made to the spawnmenu"
+        "description": "Called when a player saves his changes made to the spawnmenu",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contentsidebar.lua",
+          "lineStart": 56
+        }
       },
       {
         "name": "OpenToolbox",
@@ -8613,7 +8929,11 @@
         "realms": [
           "client"
         ],
-        "description": "<internal></internal>\nThis hook is called when the player edits a category in the Spawnmenu"
+        "description": "<internal></internal>\nThis hook is called when the player edits a category in the Spawnmenu",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/custom.lua",
+          "lineStart": 50
+        }
       },
       {
         "name": "PaintNotes",
@@ -8667,7 +8987,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when a player attempts to give themselves a weapon from the Q menu. ( Left mouse clicks on an icon )",
+        "description": "Called when a player attempts to give themselves a weapon from the Q menu. (Left mouse clicks on an icon)\n\nNot to be confused with <page>SANDBOX:PlayerSpawnSWEP</page>, which is called when the weapon is spawned as entity on the ground.",
         "arguments": [
           {
             "name": "ply",
@@ -8690,7 +9010,11 @@
             "type": "boolean",
             "description": "Can the SWEP be given to the player"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/commands.lua",
+          "lineStart": 902
+        }
       },
       {
         "name": "PlayerSpawnedEffect",
@@ -9019,7 +9343,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when a player attempts to spawn a weapon from the Q menu. ( Mouse wheel clicks on an icon )",
+        "description": "Called when a player attempts to spawn a weapon from the Q menu as an entity on the ground. (Mouse wheel clicks on an icon)\n\nNot to be confused with <page>SANDBOX:PlayerGiveSWEP</page>, which is called only when the weapon is given to the player directly, if they don't already have it.",
         "arguments": [
           {
             "name": "ply",
@@ -9103,7 +9427,11 @@
             "type": "Panel",
             "description": "The old Spawnlists"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/content.lua",
+          "lineStart": 91
+        }
       },
       {
         "name": "PopulateEntities",
@@ -9128,7 +9456,11 @@
             "type": "Panel",
             "description": "The old Spawnlists"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/entities.lua",
+          "lineStart": 75
+        }
       },
       {
         "name": "PopulateNPCs",
@@ -9153,7 +9485,11 @@
             "type": "Panel",
             "description": "The old Spawnlists"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/npcs.lua",
+          "lineStart": 141
+        }
       },
       {
         "name": "PopulatePropMenu",
@@ -9161,7 +9497,11 @@
         "realms": [
           "client"
         ],
-        "description": "This hook makes the engine load the spawnlist text files.\nIt calls <page>spawnmenu.PopulateFromEngineTextFiles</page> by default."
+        "description": "This hook makes the engine load the spawnlist text files.\nIt calls <page>spawnmenu.PopulateFromEngineTextFiles</page> by default.",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/content.lua",
+          "lineStart": 90
+        }
       },
       {
         "name": "PopulateToolMenu",
@@ -9169,7 +9509,11 @@
         "realms": [
           "client"
         ],
-        "description": "Add the <page text=\"Scripted TOOLs\">TOOL</page> to the tool menu. You want to call <page>spawnmenu.AddToolMenuOption</page> in this hook."
+        "description": "Add the <page text=\"Scripted TOOLs\">TOOL</page> to the tool menu. You want to call <page>spawnmenu.AddToolMenuOption</page> in this hook.",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/spawnmenu.lua",
+          "lineStart": 241
+        }
       },
       {
         "name": "PopulateVehicles",
@@ -9194,7 +9538,11 @@
             "type": "Panel",
             "description": "The old Spawnlists"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/vehicles.lua",
+          "lineStart": 77
+        }
       },
       {
         "name": "PopulateWeapons",
@@ -9219,7 +9567,11 @@
             "type": "Panel",
             "description": "The old Spawnlists"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/weapons.lua",
+          "lineStart": 75
+        }
       },
       {
         "name": "PostReloadToolsMenu",
@@ -9270,7 +9622,11 @@
         "realms": [
           "client"
         ],
-        "description": "Called when changes were made to the spawnmenu like creating a new category."
+        "description": "Called when changes were made to the spawnmenu like creating a new category.",
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/custom.lua",
+          "lineStart": 44
+        }
       },
       {
         "name": "SpawnlistOpenGenericMenu",
@@ -9384,7 +9740,12 @@
             "type": "number",
             "description": "The height of the tool's screen in pixels."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/entities/weapons/gmod_tool/cl_viewscreen.lua",
+          "lineStart": 67,
+          "lineEnd": 69
+        }
       },
       {
         "name": "FreezeMovement",
@@ -9407,7 +9768,7 @@
           "client",
           "server"
         ],
-        "description": "Called when <page>WEAPON:Holster</page> of the toolgun is called, as well as serverside when switching between different toolguns."
+        "description": "Called when <page>WEAPON:Holster</page> of the toolgun is called, when switching between different toolguns."
       },
       {
         "name": "LeftClick",
@@ -10369,7 +10730,12 @@
             "default": "5",
             "description": "Show a tracer on every x bullets"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineStart": 132,
+          "lineEnd": 148
+        }
       },
       {
         "name": "ShootEffects",

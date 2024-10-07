@@ -305,10 +305,11 @@ end
 function GEntity:EyePos()
 end
 
---- Searches for bodygroup with given name.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model will return value form view model.  
---- @param name string @The bodygroup name to search for.
---- @return number @Bodygroup ID, -1 if not found
+--- Searches the Entity's model for a Body Group with a given name.  
+--- ℹ **NOTE**:   
+--- Weapons will return results from their viewmodels.  
+--- @param name string @The name to search for.
+--- @return number @The Body Group's ID or `-1` if no Body Group has the provided name.
 function GEntity:FindBodygroupByName(name)
 end
 
@@ -424,32 +425,35 @@ end
 function GEntity:GetBloodColor()
 end
 
---- Returns a list of all body groups of the entity.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model will return body groups form view model.  
---- @return table @Bodygroups as a table of Structures/BodyGroupDatas if the entity can have bodygroups.
+--- Returns a list of information about each Body Group present on the Entity's model.  
+--- ℹ **NOTE**:   
+--- Weapons will return results from their viewmodels.  
+--- @return table @A table of Body Group information where each value is a Structures/BodyGroupData.
 function GEntity:GetBodyGroups()
 end
 
---- Gets the exact value for specific bodygroup of given entity.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model will return value form view model.  
---- @param id number @The id of bodygroup to get value of
---- @return number @Current bodygroup
-function GEntity:GetBodygroup(id)
+--- Returns the Sub Model ID for the currently active Sub Model of the Body Group corresponding to the given Body Group ID.  
+--- ℹ **NOTE**:   
+--- Weapons will return results from their viewmodels.  
+--- @param bodyGroupId number @The Body Group ID to retrieve the active Sub Model ID for
+--- @return number @The currently active Sub Model ID
+function GEntity:GetBodygroup(bodyGroupId)
 end
 
---- Returns the count of possible values for this bodygroup.  
---- This is **not** the maximum value, since the bodygroups start with 0, not 1.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model will return value form view model.  
---- @param bodygroup number @The ID of bodygroup to retrieve count of.
---- @return number @Count of values of passed bodygroup.
-function GEntity:GetBodygroupCount(bodygroup)
+--- Returns the number of Sub Models in the Body Group corresponding to a given Body Group ID of the Entity's model.  
+--- ℹ **NOTE**:   
+--- Weapons will return results from their viewmodels.  
+--- @param bodyGroupId number @The Body Group ID to retrieve the Sub Model count of
+--- @return number @The number of Sub Models in the Body Group.
+function GEntity:GetBodygroupCount(bodyGroupId)
 end
 
---- Gets the name of specific bodygroup for given entity.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model will return value form view model.  
---- @param id number @The id of bodygroup to get the name of.
---- @return string @The name of the bodygroup
-function GEntity:GetBodygroupName(id)
+--- Retrieves the name of the Body Group corresponding to a given Body Group ID on the Entity's model.  
+--- ℹ **NOTE**:   
+--- Weapons will return results from their viewmodels.  
+--- @param bodyGroupId number @The Body Group ID to get the name of.
+--- @return string @The name of the Body Group.
+function GEntity:GetBodygroupName(bodyGroupId)
 end
 
 --- Returns the contents of the specified bone.  
@@ -853,7 +857,7 @@ end
 --- Returns the jiggle amount of the entity's bone.  
 --- See Entity:ManipulateBoneJiggle for more info.  
 --- @param boneID number @The bone ID
---- @return number @Returns a value ranging from 0 to 255 depending on the value set with Entity:ManipulateBoneJiggle.
+--- @return number @The jiggle bone type, as set by Entity:ManipulateBoneJiggle.
 function GEntity:GetManipulateBoneJiggle(boneID)
 end
 
@@ -1001,7 +1005,7 @@ end
 
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNW2String.  
 --- @param key string @The key that is associated with the value
---- @param fallback any @The value to return if we failed to retrieve the value
+--- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2String(key, fallback)
 end
@@ -1070,7 +1074,7 @@ end
 
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNWString.  
 --- @param key string @The key that is associated with the value
---- @param fallback any @The value to return if we failed to retrieve the value
+--- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNWString(key, fallback)
 end
@@ -1161,7 +1165,7 @@ end
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNetworked2String.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2String instead.  
 --- @param key string @The key that is associated with the value
---- @param fallback any @The value to return if we failed to retrieve the value
+--- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2String(key, fallback)
 end
@@ -1239,7 +1243,7 @@ end
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWString instead.  
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNetworkedString.  
 --- @param key string @The key that is associated with the value
---- @param fallback string @The value to return if we failed to retrieve the value
+--- @param fallback? string @The value to return if we failed to retrieve the value
 --- @return string @The retrieved value
 function GEntity:GetNetworkedString(key, fallback)
 end
@@ -1279,9 +1283,10 @@ end
 function GEntity:GetNoDraw()
 end
 
---- Returns the body group count of the entity.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model will return value form view model.  
---- @return number @Amount of bodygroups the entitys model has
+--- Returns the number of Body Groups that the Entity's model contains.  
+--- ℹ **NOTE**:   
+--- Weapons will return results from their viewmodels.  
+--- @return number @The amount of Body Groups on the Entity's model.
 function GEntity:GetNumBodyGroups()
 end
 
@@ -1383,7 +1388,7 @@ function GEntity:GetPredictable()
 end
 
 --- Called to override the preferred carry angles of this object.  
---- ℹ **NOTE**: This callback is only called for `anim` type entities.  
+--- ℹ **NOTE**: This callback is only called for `anim` and `ai` type entities. For rest use GM:GetPreferredCarryAngles.  
 --- @param ply GPlayer @The player who is holding the object.
 --- @return GAngle @Return an angle to override the carry angles.
 function GEntity:GetPreferredCarryAngles(ply)
@@ -1976,8 +1981,8 @@ end
 
 --- Manipulates the bone's jiggle status. This allows non jiggly bones to become jiggly.  
 --- @param boneID number @Index of the bone you want to manipulate.
---- @param enabled number @* `0` = No Jiggle
-function GEntity:ManipulateBoneJiggle(boneID, enabled)
+--- @param type number @The jiggle bone type
+function GEntity:ManipulateBoneJiggle(boneID, type)
 end
 
 --- Sets custom bone offsets.  
@@ -2053,10 +2058,12 @@ end
 function GEntity:NetworkVarNotify(name, callback)
 end
 
---- In the case of a scripted entity, this will cause the next ENTITY:Think event to be run at the given time.  
---- Does not work clientside! Use Entity:SetNextClientThink instead.  
+--- Controls when, relative to Global.CurTime, the Entity will next run its Think function.  
+--- For Scripted Entities, this is the ENTITY:Think function.  
+--- For engine Entities, this is an internal function whose behavior will depend on the specific Entity type.  
+--- For a Client-side equivalent, see Entity:SetNextClientThink.  
 --- 🦟 **BUG**: [This does not work with SWEPs or Nextbots.](https://github.com/Facepunch/garrysmod-issues/issues/3269)  
---- @param timestamp number @The relative to Global.CurTime timestamp, at which the next think should occur.
+--- @param timestamp number @The timestamp, relative to Global.CurTime, when the next think should occur.
 function GEntity:NextThink(timestamp)
 end
 
@@ -2404,17 +2411,20 @@ end
 function GEntity:SetBloodColor(bloodColor)
 end
 
---- Sets the bodygroups from a string. A convenience function for Entity:SetBodygroup.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model, check will occur by view model.  
---- @param bodygroups string @Body groups to set
-function GEntity:SetBodyGroups(bodygroups)
+--- Sets the Entity's active Sub Models via a string of Sub Model IDs in order from the first Body Group ID to the last.  
+--- This is a convenience function for Entity:SetBodygroup.  
+--- ℹ **NOTE**:   
+--- When used on a Weapon, this will modify its viewmodel.  
+--- @param subModelIds string @The Sub Model IDs to activate for each Body Group on the Entity's model
+function GEntity:SetBodyGroups(subModelIds)
 end
 
---- Sets an entities' bodygroup.  
---- ℹ **NOTE**: If called for Weapon (after Initialize hook) with different body groups on world model and view model, check will occur by view model.  
---- @param bodygroup number @The id of the bodygroup you're setting
---- @param value number @The value you're setting the bodygroup to
-function GEntity:SetBodygroup(bodygroup, value)
+--- Sets the currently active Sub Model ID for the Body Group corresponding to the given Body Group ID of the Entity's model.  
+--- ℹ **NOTE**:   
+--- When used on a Weapon, this will modify its viewmodel.  
+--- @param bodyGroupId number @The Body Group ID to set the Sub Model ID of
+--- @param subModelId number @The Sub Model ID to set as active for this Body Group
+function GEntity:SetBodygroup(bodyGroupId, subModelId)
 end
 
 --- Sets the specified value on the bone controller with the given ID of this entity, it's used in HL1 to change the head rotation of NPCs, turret aiming and so on.  
@@ -3115,7 +3125,7 @@ end
 --- The value then can be accessed with Entity:GetNetworkedString both from client and server.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
 --- @param key string @The key to associate the value with
---- @param value string @The value to set
+--- @param value? string @The value to set
 function GEntity:SetNetworkedString(key, value)
 end
 

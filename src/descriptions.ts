@@ -1,4 +1,5 @@
 import { unpaginate } from "./utils";
+import { decodeHTML } from "entities";
 
 // Time to parse XML with regular expressions
 const WARNINGS_REGEX =
@@ -67,6 +68,6 @@ export function formatDesc(desc: string): string {
         .replace(/\n+/g, "\n")
         .split("\n")
         .filter((line) => line)
-        .map((line) => "--- " + line + "  ")
+        .map((line) => "--- " + decodeHTML(line) + "  ")
         .join("\n");
 }

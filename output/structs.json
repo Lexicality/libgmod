@@ -214,29 +214,29 @@
       {
         "name": "id",
         "type": "number",
-        "description": "Index of the body group."
+        "description": "The Body Group's ID.\nBody Group IDs start at `0`."
       },
       {
         "name": "name",
         "type": "string",
-        "description": "Name of the body group."
+        "description": "The name of the Body Group."
       },
       {
         "name": "num",
         "type": "number",
-        "description": "Amount of subgroups."
+        "description": "The number of Sub Models in this Body Group, and the length of the `submodels` table."
       },
       {
         "name": "submodels",
         "type": "table",
-        "description": "A zero-indexed table that is of length _num_ with values being the name of the smd mesh file of the respective body group value."
+        "description": "A table of the names of the Sub Models within this Body Group.\nSub Model IDs start at `0`."
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "Table returned by <page>Entity:GetBodyGroups</page>.",
+    "description": "The tables that make up the values of the table returned by <page>Entity:GetBodyGroups</page>.",
     "name": "BodyGroupData"
   },
   {
@@ -1064,7 +1064,7 @@
       {
         "name": "BodyG",
         "type": "table",
-        "description": "The entity's body groups, see <page>Entity:GetBodygroup</page>. The key is the bodygroup ID and the value is the assigned bodygroup number. Only body groups with a non-default (> 0) value are listed, and if none exist, this field will be nil."
+        "description": "The entity's body groups, see <page>Entity:GetBodygroup</page>. The key is the bodygroup ID and the value is the assigned bodygroup number. Only body groups with a non-default (&gt; 0) value are listed, and if none exist, this field will be nil."
       },
       {
         "name": "BoneManip",
@@ -1124,7 +1124,7 @@
         "name": "scanlines",
         "type": "number",
         "default": "0",
-        "description": "The \"scanline\" interval\nMust be > 1 to work. This setting is per blursize per font - so if you create a font using \"Arial\" without scanlines, you cannot create an Arial font using scanlines with the same blursize"
+        "description": "The \"scanline\" interval\nMust be &gt; 1 to work. This setting is per blursize per font - so if you create a font using \"Arial\" without scanlines, you cannot create an Arial font using scanlines with the same blursize"
       },
       {
         "name": "antialias",
@@ -2678,12 +2678,12 @@
       {
         "name": "hardThreshold",
         "type": "number",
-        "description": "Hardness threshold for impact sounds. HitSurface.hardnessFactor >= InflictorSurface.hardThreshold - hard impact sound (depends on hardVelocityThreshold's value), HitSurface.hardnessFactor < InflictorSurface.hardThreshold - soft impact sound (always)."
+        "description": "Hardness threshold for impact sounds. HitSurface.hardnessFactor &gt;= InflictorSurface.hardThreshold - hard impact sound (depends on hardVelocityThreshold's value), HitSurface.hardnessFactor &lt; InflictorSurface.hardThreshold - soft impact sound (always)."
       },
       {
         "name": "hardVelocityThreshold",
         "type": "number",
-        "description": "Velocity threshold for impact sounds. impactSpeed >= HitSurface.hardVelocityThreshold - hard impact sound (depends on hardThreshold's value), impactSpeed < HitSurface.hardVelocityThreshold - soft impact sound (always)."
+        "description": "Velocity threshold for impact sounds. impactSpeed &gt;= HitSurface.hardVelocityThreshold - hard impact sound (depends on hardThreshold's value), impactSpeed &lt; HitSurface.hardVelocityThreshold - soft impact sound (always)."
       },
       {
         "name": "reflectivity",
@@ -2698,12 +2698,12 @@
       {
         "name": "roughThreshold",
         "type": "number",
-        "description": "Roughness threshold for friction sounds. HitSurface.roughnessFactor >= InflictorSurface.roughThreshold - rough friction sound, HitSurface.roughnessFactor < InflictorSurface.roughThreshold - soft friction sound."
+        "description": "Roughness threshold for friction sounds. HitSurface.roughnessFactor &gt;= InflictorSurface.roughThreshold - rough friction sound, HitSurface.roughnessFactor &lt; InflictorSurface.roughThreshold - soft friction sound."
       },
       {
         "name": "climbable",
         "type": "number",
-        "description": "Indicates whether or not the surface is a ladder. Used to detect whether a player is on a ladder. 0 - false, > 0 - true."
+        "description": "Indicates whether or not the surface is a ladder. Used to detect whether a player is on a ladder. 0 - false, &gt; 0 - true."
       },
       {
         "name": "jumpFactor",
@@ -2728,7 +2728,7 @@
       {
         "name": "density",
         "type": "number",
-        "description": "Material density in kg / m^3 (water is 1000). If a surface's density is < 1000, it will float in water. This is used to calculate the total mass of an object."
+        "description": "Material density in kg / m^3 (water is 1000). If a surface's density is &lt; 1000, it will float in water. This is used to calculate the total mass of an object."
       },
       {
         "name": "elasticity",

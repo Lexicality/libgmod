@@ -70,10 +70,8 @@ end
 --- @param pitch number @The pitch value of the angle, in degrees.
 --- @param yaw? number @The yaw value of the angle, in degrees.
 --- @param roll? number @The roll value of the angle, in degrees.
---- @param angle? GAngle @Creates a new Angle that is a copy of the Angle passed in.
---- @param angleString? string @Attempts to parse the input string from the Global.print format of an Angle
 --- @return GAngle @The newly created Angle
-function _G.Angle(pitch, yaw, roll, angle, angleString)
+function _G.Angle(pitch, yaw, roll)
 end
 
 --- Returns an angle with a randomized pitch, yaw, and roll between min(inclusive), max(exclusive).  
@@ -508,7 +506,7 @@ function _G.DrawToyTown(Passes, Height)
 end
 
 --- 🛑 **DEPRECATED**: You really should be using Entity:ForcePlayerDrop, which does the same thing.  
---- Drops the specified entity if it is being held by any player with Gravity Gun or `+use` pickup.  
+--- Drops the specified entity if it is being held by any player with Gravity Gun, Physics Gun or `+use` pickup.  
 --- See also Player:DropObject and Entity:ForcePlayerDrop.  
 --- @param ent GEntity @The entity to drop.
 function _G.DropEntityIfHeld(ent)
@@ -746,7 +744,7 @@ end
 
 --- Returns a string that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
---- @param default string @The value to return if the global value is not set.
+--- @param default? string @The value to return if the global value is not set.
 --- @return string @The global value, or the default if the global value is not set.
 function _G.GetGlobal2String(index, default)
 end
@@ -803,7 +801,7 @@ end
 
 --- Returns a string that is shared between the server and all clients.  
 --- @param index string @The unique index to identify the global value with.
---- @param default string @The value to return if the global value is not set.
+--- @param default? string @The value to return if the global value is not set.
 --- @return string @The global value, or the default if the global value is not set.
 function _G.GetGlobalString(index, default)
 end
@@ -1808,10 +1806,8 @@ end
 --- @param x? number @The x component of the vector.
 --- @param y? number @The y component of the vector.
 --- @param z? number @The z component of the vector.
---- @param vector? GVector @Creates a new Vector that is a copy of the given Vector.
---- @param vectorString? string @Attempts to parse the input string from the Global.print format of an Vector
 --- @return GVector @The created vector object.
-function _G.Vector(x, y, z, vector, vectorString)
+function _G.Vector(x, y, z)
 end
 
 --- Returns a random vector whose components are each between min(inclusive), max(exclusive).  
@@ -1965,9 +1961,8 @@ end
 --- 🦟 **BUG**: [Fails under certain conditions when called in coroutines](https://github.com/Facepunch/garrysmod-issues/issues/5299)  
 --- Creates a new userdata object.  
 --- @param addMetatable? boolean @If true, the created userdata will be given its own metatable.
---- @param userData? userdata @Creates a new userdata with the same metatable the userdata passed in had
 --- @return userdata @The newly created userdata.
-function _G.newproxy(addMetatable, userData)
+function _G.newproxy(addMetatable)
 end
 
 --- Returns the next key and value pair in a table.  
