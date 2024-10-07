@@ -90,13 +90,16 @@ interface FuncContainer {
 
 // Time to parse XML with regular expressions
 const INTERNAL_REGEX = /<internal>/;
-const WARNINGS_REGEX = /<(note|warning|deprecated|bug|validate)>((?:.|\n)*?)<\/\1>/g;
+const WARNINGS_REGEX =
+    /<(note|warning|deprecated|bug|validate)>((?:.|\n)*?)<\/\1>/g;
 const USELESS_REGEX = /<br>|<pagelist.+?\/pagelist>|<img.+?>/g;
-const RENDER_REGEX = /<rendercontext hook="(true|false)" type="(\dD)"><\/rendercontext>/;
+const RENDER_REGEX =
+    /<rendercontext hook="(true|false)" type="(\dD)"><\/rendercontext>/;
 const KEY_REGEX = /<key>(.+?)<\/key>/g;
 const PAGE_REGEX = /<page( text="(.+?)")?>(.+?)<\/page>/g;
 const ARG_REGEX = /^(.+?)(\.\s|\n|$)/;
-const BUG_REGEX = /<bug (issue|request|pull)="(.+?)">(.+?)(\n(?:.|\n)*?)?<\/bug>/g;
+const BUG_REGEX =
+    /<bug (issue|request|pull)="(.+?)">(.+?)(\n(?:.|\n)*?)?<\/bug>/g;
 const EMJOI = {
     note: "ℹ",
     warning: "⚠",
@@ -133,11 +136,11 @@ function linkBugs(text: string): string {
             type: "pull" | "issue" | "request",
             issue: string,
             text: string,
-            extra?: string
+            extra?: string,
         ) =>
             `<bug>[${text}](${BUG_URLS[type]}${issue})${
                 extra != null ? "\n" + extra : ""
-            }</bug>`
+            }</bug>`,
     );
 }
 
@@ -147,7 +150,7 @@ function handleRenderContext(text: string): string {
         (_, hook: "true" | "false", type: "3D" | "2D") =>
             `\n${EMJOI[type]} **NOTE**: ${
                 hook == "true" ? "Provides" : "Requires"
-            } a ${type} rendering context\n`
+            } a ${type} rendering context\n`,
     );
 }
 
@@ -156,7 +159,7 @@ function formatWarnings(text: string): string {
         WARNINGS_REGEX,
         (match, type: keyof typeof EMJOI, text: string) => {
             return `\n${EMJOI[type]} **${type.toUpperCase()}**: ${text}\n`;
-        }
+        },
     );
 }
 
@@ -297,7 +300,7 @@ function handleFieldDefinitons(tabs: WikiTable[]): undefined | string {
             tab.headers.length == 3 &&
             tab.headers[0].toLowerCase() == "type" &&
             tab.headers[1].toLowerCase() == "name" &&
-            tab.headers[2].toLowerCase() == "description"
+            tab.headers[2].toLowerCase() == "description",
     );
     if (!tab) {
         return;
@@ -360,7 +363,7 @@ function handleLib(lib: FuncContainer): string {
 
 async function doGlobals(): Promise<void> {
     let data: Func[] = JSON.parse(
-        await fs.readFile("output/global-functions.json", "utf-8")
+        await fs.readFile("output/global-functions.json", "utf-8"),
     );
     data = _.sortBy(data, "name");
     await fs.writeFile("globals.lua", "", "utf-8");
@@ -372,7 +375,7 @@ async function doGlobals(): Promise<void> {
             console.error(
                 "Problem while getting func definition for _G.%s(): %s",
                 func.name,
-                e
+                e,
             );
             throw e;
         }
@@ -385,7 +388,7 @@ async function doGlobals(): Promise<void> {
 
 async function doLibs(): Promise<void> {
     let data: FuncContainer[] = JSON.parse(
-        await fs.readFile("output/libraries.json", "utf-8")
+        await fs.readFile("output/libraries.json", "utf-8"),
     );
     data = _.sortBy(data, "name");
     await mkdirp("libraries");
@@ -397,7 +400,7 @@ async function doLibs(): Promise<void> {
             console.error(
                 "Problem while getting library definition for %s: %s",
                 lib.name,
-                e
+                e,
             );
             throw e;
         }
@@ -416,7 +419,7 @@ async function doLibs(): Promise<void> {
                     "Problem while getting func definition for %s.%s(): %s",
                     lib.name,
                     func.name,
-                    e
+                    e,
                 );
                 throw e;
             }
@@ -430,7 +433,7 @@ async function doLibs(): Promise<void> {
 
 async function getClasses(): Promise<FuncContainer[]> {
     let data: FuncContainer[] = JSON.parse(
-        await fs.readFile("output/classes.json", "utf-8")
+        await fs.readFile("output/classes.json", "utf-8"),
     );
     return data;
 }
@@ -446,7 +449,7 @@ async function doClasses(data: FuncContainer[]): Promise<void> {
             console.error(
                 "Problem while getting class definition for %s: %s",
                 cls.name,
-                e
+                e,
             );
             throw e;
         }
@@ -465,7 +468,7 @@ async function doClasses(data: FuncContainer[]): Promise<void> {
                     "Problem while getting func definition for %s:%s(): %s",
                     cls.name,
                     func.name,
-                    e
+                    e,
                 );
                 throw e;
             }
