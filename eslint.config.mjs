@@ -12,7 +12,7 @@ export default tseslint.config(
                 ...globals.node,
             },
             ecmaVersion: 2022, // Guessed, based on node.green
-            sourceType: "commonjs", // For now
+            sourceType: "module",
         },
 
         rules: {

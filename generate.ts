@@ -1,9 +1,10 @@
-import _ = require("lodash");
-import path = require("path");
-import libfs = require("fs");
+import fs from "node:fs/promises";
+import path from "node:path";
+
+import _ from "lodash";
+import mkdirp from "mkdirp";
+
 import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
-const fs = libfs.promises;
-import mkdirp = require("mkdirp");
 
 const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/^function$/, "func"],
