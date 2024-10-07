@@ -1,0 +1,29 @@
+const TYPE_REPLACEMENTS = new Map<string, string>([
+    ["vector", "GVector"],
+    ["file_class", "GFile"],
+    // Terrible hack until I make enums nice
+    ["Enums/STENCILCOMPARISONFUNCTION", "number"],
+    ["Enums/STENCILOPERATION", "number"],
+]);
+
+let GMOD_TYPES: { [key: string]: string } = {};
+
+export function getTypeName(ret: string): string {
+    if (ret == "vararg") {
+        // TODO: I don't think emmylua lets you mark returns as arbitrary varargs
+        return "any";
+    } else if (ret == "Global") {
+        // I can't think of a better way of handling this rn
+        return "_G";
+    } else if (TYPE_REPLACEMENTS.has(ret)) {
+        ret = TYPE_REPLACEMENTS.get(ret)!;
+    }
+    // Get rid of any creative type names
+    ret = ret.replace(/[^\w.]/g, "_");
+    return GMOD_TYPES[ret] ?? ret;
+}
+
+export function registerGModType(name: string): string {
+    GMOD_TYPES[name] = "G" + name;
+    return name;
+}
