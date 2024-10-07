@@ -4,7 +4,7 @@
     "description": "This is a vain attempt to get sane IDE completion working with Visual Studio Code.",
     "main": "generate.js",
     "dependencies": {
-        "gmod-wiki-scraper": "^1.1.0",
+        "gmod-wiki-scraper": "2.0.0-rc.0",
         "lodash": "^4.17.19",
         "mkdirp": "^1.0.4",
         "ts-node": "^8.10.2"
@@ -21,7 +21,8 @@
         "typescript": "^3.9.5"
     },
     "scripts": {
-        "start": "ts-node generate.ts"
+        "start": "ts-node generate.ts",
+        "download": "gmod-wiki-scraper"
     },
     "repository": {
         "type": "git",
