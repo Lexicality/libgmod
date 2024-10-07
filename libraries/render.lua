@@ -482,6 +482,26 @@ end
 --- @param blendingFunction number @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
 function render.OverrideBlend(enabled, sourceMultiplier, destinationMultiplier, blendingFunction)
 end
+--- Overrides the way that the final color and alpha is calculated for each pixel affected by upcoming draw operations.  
+--- When a draw operation is performed, the rendering system examines each pixel that is affected by the draw operation and determines its new color by combining (or "Blending") the pixel's current color (Called the "Destination" or "Dst" color) with the new color produced by the draw operation (Called the "Source" or "Src" color.)  
+--- This function allows you to control the way that those two colors (The Source and Destination) are combined to produce the final pixel color.  
+--- It's important to know that while Colors use values in the range `(0-255)`, the color and alpha values used here are normalized to the range `(0-1)` so that they can be multiplied together to produce a value that is still in the range `(0-1)`.  
+--- @param enabled boolean @Set to `true` to enable Blend Overrides.
+--- @param sourceColorMultiplier number @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
+--- @param destinationColorMultiplier number @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
+--- @param colorBlendingFunction number @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
+--- @param sourceAlphaMultiplier? number @This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function
+--- @param destinationAlphaMultiplier? number @This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Fun
+--- @param alphaBlendingFunction? number @After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending 
+function render.OverrideBlend(enabled, sourceColorMultiplier, destinationColorMultiplier, colorBlendingFunction, sourceAlphaMultiplier, destinationAlphaMultiplier, alphaBlendingFunction)
+end
+--- Overrides the way that the final color and alpha is calculated for each pixel affected by upcoming draw operations.  
+--- When a draw operation is performed, the rendering system examines each pixel that is affected by the draw operation and determines its new color by combining (or "Blending") the pixel's current color (Called the "Destination" or "Dst" color) with the new color produced by the draw operation (Called the "Source" or "Src" color.)  
+--- This function allows you to control the way that those two colors (The Source and Destination) are combined to produce the final pixel color.  
+--- It's important to know that while Colors use values in the range `(0-255)`, the color and alpha values used here are normalized to the range `(0-1)` so that they can be multiplied together to produce a value that is still in the range `(0-1)`.  
+--- @param enabled boolean @Set to `false` to disable blend overrides.
+function render.OverrideBlend(enabled)
+end
 
 --- 🛑 **DEPRECATED**: Use render.OverrideBlend instead.  
 --- Overrides the internal graphical functions used to determine the final color and alpha of a rendered texture.  

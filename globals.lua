@@ -73,6 +73,24 @@ end
 --- @return GAngle @The newly created Angle
 function _G.Angle(pitch, yaw, roll)
 end
+--- Creates an Angle object, representing a [Euler Angle](https://en.wikipedia.org/wiki/Euler_angles) made up of pitch, yaw, and roll components.  
+--- ⚠ **WARNING**:   
+--- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
+--- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
+--- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
+--- @param angle GAngle @Creates a new Angle that is a copy of the Angle passed in.
+--- @return GAngle @The newly created Angle
+function _G.Angle(angle)
+end
+--- Creates an Angle object, representing a [Euler Angle](https://en.wikipedia.org/wiki/Euler_angles) made up of pitch, yaw, and roll components.  
+--- ⚠ **WARNING**:   
+--- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
+--- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
+--- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
+--- @param angleString string @Attempts to parse the input string from the Global.print format of an Angle
+--- @return GAngle @The newly created Angle
+function _G.Angle(angleString)
+end
 
 --- Returns an angle with a randomized pitch, yaw, and roll between min(inclusive), max(exclusive).  
 --- @param min? number @Min bound inclusive.
@@ -1809,6 +1827,18 @@ end
 --- @return GVector @The created vector object.
 function _G.Vector(x, y, z)
 end
+--- Creates a Vector object.  
+--- ⚠ **WARNING**: Creating Vectors is relatively expensive when used in often running hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the vector in a variable or to use the [default vectors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available. See Vector:Add.  
+--- @param vector GVector @Creates a new Vector that is a copy of the given Vector.
+--- @return GVector @The created vector object.
+function _G.Vector(vector)
+end
+--- Creates a Vector object.  
+--- ⚠ **WARNING**: Creating Vectors is relatively expensive when used in often running hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the vector in a variable or to use the [default vectors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available. See Vector:Add.  
+--- @param vectorString string @Attempts to parse the input string from the Global.print format of an Vector
+--- @return GVector @The created vector object.
+function _G.Vector(vectorString)
+end
 
 --- Returns a random vector whose components are each between min(inclusive), max(exclusive).  
 --- @param min? number @Min bound inclusive.
@@ -1963,6 +1993,12 @@ end
 --- @param addMetatable? boolean @If true, the created userdata will be given its own metatable.
 --- @return userdata @The newly created userdata.
 function _G.newproxy(addMetatable)
+end
+--- 🦟 **BUG**: [Fails under certain conditions when called in coroutines](https://github.com/Facepunch/garrysmod-issues/issues/5299)  
+--- Creates a new userdata object.  
+--- @param userData userdata @Creates a new userdata with the same metatable the userdata passed in had
+--- @return userdata @The newly created userdata.
+function _G.newproxy(userData)
 end
 
 --- Returns the next key and value pair in a table.  

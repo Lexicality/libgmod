@@ -12,7 +12,7 @@ const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/[^\w.]/g, "_"],
 ]);
 
-export function handleFunc(func: Func, sepr?: string): undefined | string {
+export function handleFunc(func: Func, sepr: string): undefined | string {
     if (func.description?.match(INTERNAL_REGEX)) {
         // Hide internal functions
         return;
@@ -24,38 +24,15 @@ export function handleFunc(func: Func, sepr?: string): undefined | string {
     if (func.description) {
         desc = formatDesc(func.description) + "\n";
     }
-    let seenArgs = new Set<string>();
-    let forceOptional = false;
-    let args = "";
-    if (func.arguments) {
-        args =
-            func.arguments
-                .filter((arg) => {
-                    if (seenArgs.has(arg.name)) {
-                        return false;
-                    }
-                    seenArgs.add(arg.name);
-                    return true;
-                })
-                .map((arg) => {
-                    let ret = getArgDoc(arg, forceOptional);
-                    // Once we've seen a default argument, all following ones
-                    // need to be optional
-                    if (arg.default != null) {
-                        forceOptional = true;
-                    }
-                    return ret;
-                })
-                // Some arguments might be deleted because they're bogus
-                .filter((l) => l)
-                .join("\n") + "\n";
+    let overloads = [func, ...(func.overloads ?? [])];
+    let funcret = "";
+    for (let overload of overloads) {
+        let args = getArgDocs(overload);
+        let ret = getRetDoc(overload);
+        let def = getFuncDef(func, overload, sepr);
+        funcret += desc + args + ret + def;
     }
-    let ret = "";
-    if (func.returnValues && func.returnValues.length > 0) {
-        ret = getRetDoc(func.returnValues) + "\n";
-    }
-    let def = getFuncDef(func, sepr);
-    return desc + args + ret + def;
+    return funcret;
 }
 
 function getArgName(arg: FuncArg): string {
@@ -76,25 +53,12 @@ function getArgDef(arg: FuncArg): string {
     return getArgName(arg);
 }
 
-function getFuncDef(func: Func, sepr?: string) {
-    let seenArgs = new Set<string>();
+function getFuncDef(func: Func, funcInstance: FuncInstance, sepr: string) {
     let args = "";
-    if (func.arguments) {
-        args = func.arguments
-            .filter((arg) => {
-                if (seenArgs.has(arg.name)) {
-                    return false;
-                }
-                seenArgs.add(arg.name);
-                return true;
-            })
-            .map(getArgDef)
-            .join(", ");
+    if (funcInstance.arguments) {
+        args = funcInstance.arguments.map(getArgDef).join(", ");
     }
-    let prefix = "";
-    if (sepr) {
-        prefix = getTypeName(func.parent) + sepr;
-    }
+    let prefix = getTypeName(func.parent) + sepr;
     return `function ${prefix}${func.name}(${args})\nend\n`;
 }
 
@@ -114,9 +78,34 @@ function getArgDoc(arg: FuncArg, forceOptional: boolean): string {
     return `--- @param ${name} ${type} ${desc}`;
 }
 
-function getRetDoc(retvals: FuncRet): string {
+function getArgDocs(func: FuncInstance): string {
+    if (!func.arguments) {
+        return "";
+    }
+    let forceOptional = false;
+    return (
+        func.arguments
+            .map((arg) => {
+                let ret = getArgDoc(arg, forceOptional);
+                // Once we've seen a default argument, all following ones
+                // need to be optional
+                if (arg.default != null) {
+                    forceOptional = true;
+                }
+                return ret;
+            })
+            // Some arguments might be deleted because they're bogus
+            .filter((l) => l)
+            .join("\n") + "\n"
+    );
+}
+
+function getRetDoc(func: FuncInstance): string {
+    if (!func.returnValues || func.returnValues.length == 0) {
+        return "";
+    }
     let rets = [];
-    for (let ret of retvals) {
+    for (let ret of func.returnValues) {
         let retType = getTypeName(ret.type);
         let desc = "";
         if (ret.description) {
@@ -124,5 +113,5 @@ function getRetDoc(retvals: FuncRet): string {
         }
         rets.push(`--- @return ${retType} ${desc}`);
     }
-    return rets.join("\n");
+    return rets.join("\n") + "\n";
 }

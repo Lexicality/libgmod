@@ -35,6 +35,16 @@ local GPanel = {}
 --- @return GPanel @New panel
 function GPanel:Add(object)
 end
+--- When provided with a string or table, this function will create a new vgui element with that name and set the parent to the panel that this method is called on. When provided with a panel it will use Panel:SetParent on the provided panel to set it to our source panel  
+--- @param class string @The class to be added.
+--- @return GPanel @New panel
+function GPanel:Add(class)
+end
+--- When provided with a string or table, this function will create a new vgui element with that name and set the parent to the panel that this method is called on. When provided with a panel it will use Panel:SetParent on the provided panel to set it to our source panel  
+--- @param table table @The table to create the panel from.
+--- @return GPanel @New panel
+function GPanel:Add(table)
+end
 
 --- 🛑 **DEPRECATED**: Does nothing  
 --- This function does nothing.  

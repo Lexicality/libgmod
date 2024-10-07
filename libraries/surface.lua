@@ -236,6 +236,12 @@ end
 --- @param a? number @The alpha value of color.
 function surface.SetDrawColor(r, g, b, a)
 end
+--- Set the color of any future shapes to be drawn, can be set by either using R, G, B, A as separate values or by a Color.  
+--- ℹ **NOTE**: The alpha value may not work properly if you're using a material without `$vertexalpha`.  
+--- ℹ **NOTE**: Due to post processing and gamma correction the color you set with this function may appear differently when rendered. This problem does not occur on materials drawn with surface.DrawTexturedRect.  
+--- @param color table @A Color object/table to read the color from
+function surface.SetDrawColor(color)
+end
 
 --- Set the current font to be used for text operations later.  
 --- The fonts must first be created with surface.CreateFont or be one of the Default Fonts.  
@@ -257,6 +263,10 @@ end
 --- @param b number @The blue value of color
 --- @param a? number @The alpha value of color
 function surface.SetTextColor(r, g, b, a)
+end
+--- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by a Color.  
+--- @param color table @A Color object/table to read the color from
+function surface.SetTextColor(color)
 end
 
 --- Set the top-left position to draw any future text at.  

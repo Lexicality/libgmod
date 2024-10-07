@@ -156,6 +156,10 @@ end
 --- @param ply GPlayer @The player to **NOT** send the message to.
 function net.SendOmit(ply)
 end
+--- Sends the current message (see net.Start) to all except the player or players specified.  
+--- @param plys table @A table of players to **NOT** send the message to.
+function net.SendOmit(plys)
+end
 
 --- Sends current net message (see net.Start) to all players that are in the same [Potentially Audible Set (PAS)](https://developer.valvesoftware.com/wiki/PAS) as the position, or simply said, it adds all players that can potentially hear sounds from this position.  
 --- @param position GVector @PAS position.

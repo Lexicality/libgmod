@@ -10,13 +10,17 @@ type FuncRet = {
     description?: string;
 }[];
 
-interface Func {
+interface FuncInstance {
+    arguments?: FuncArg[];
+    returnValues?: FuncRet;
+}
+
+interface Func extends FuncInstance {
     name: string;
     parent: string;
     realms: ("menu" | "client" | "server")[];
     description?: string;
-    arguments?: FuncArg[];
-    returnValues?: FuncRet;
+    overloads?: FuncInstance[];
 }
 
 // Libs, classes etc
