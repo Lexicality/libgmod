@@ -1,5 +1,3 @@
-import { head } from "lodash";
-
 // Every table has to have a header line
 const TABLE_DETECT = /^[|\- ]*- \| -[|\- ]*$/gm;
 // This detects every line or set of lines with ` | ` in it.

@@ -5,19 +5,6 @@ import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
 const fs = libfs.promises;
 import mkdirp = require("mkdirp");
 
-const LUA_TYPES = [
-    "any",
-    "boolean",
-    "function",
-    "nil",
-    "number",
-    "string",
-    "table",
-    "thread",
-    "userdata",
-    "vararg",
-];
-
 const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/^function$/, "func"],
     [/^end$/, "end_"],
@@ -201,13 +188,6 @@ function getFuncDef(func: Func, sepr?: string) {
         prefix = getTypeName(func.parent) + sepr;
     }
     return `function ${prefix}${func.name}(${args})\nend\n`;
-}
-
-function* matchAll(str: string, regex: RegExp) {
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(str)) != null) {
-        yield match;
-    }
 }
 
 function getArgDoc(arg: FuncArg, forceOptional: boolean): string {
