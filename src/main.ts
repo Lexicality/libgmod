@@ -13,7 +13,7 @@ async function doGlobals(): Promise<void> {
         await fs.readFile("output/global-functions.json", "utf-8"),
     );
     data = _.sortBy(data, "name");
-    await fs.writeFile("globals.lua", "", "utf-8");
+    let lua = "";
     for (let func of data) {
         let funcdata: string | undefined;
         try {
@@ -27,9 +27,10 @@ async function doGlobals(): Promise<void> {
             throw e;
         }
         if (funcdata) {
-            await fs.appendFile("globals.lua", funcdata + "\n", "utf-8");
+            lua += funcdata + "\n";
         }
     }
+    await fs.writeFile("globals.lua", lua, "utf-8");
     console.log("Done globals!");
 }
 
@@ -54,26 +55,6 @@ async function doLibs(): Promise<void> {
 
         let filename = path.join("libraries", `${lib.name}.lua`);
         await fs.writeFile(filename, libdata);
-
-        let funcs = lib.functions;
-        funcs = _.sortBy(funcs, "name");
-        for (let func of funcs) {
-            let funcdata: string | undefined;
-            try {
-                funcdata = handleFunc(func, ".");
-            } catch (e) {
-                console.error(
-                    "Problem while getting func definition for %s.%s(): %s",
-                    lib.name,
-                    func.name,
-                    e,
-                );
-                throw e;
-            }
-            if (funcdata) {
-                await fs.appendFile(filename, funcdata + "\n", "utf-8");
-            }
-        }
         console.log("Done %s!", lib.name);
     }
 }
@@ -103,26 +84,6 @@ async function doClasses(data: FuncContainer[]): Promise<void> {
 
         let filename = path.join("classes", `${cls.name}.lua`);
         await fs.writeFile(filename, classdata);
-
-        let funcs = cls.functions;
-        funcs = _.sortBy(funcs, "name");
-        for (let func of funcs) {
-            let funcdata: string | undefined;
-            try {
-                funcdata = handleFunc(func, ":");
-            } catch (e) {
-                console.error(
-                    "Problem while getting func definition for %s:%s(): %s",
-                    cls.name,
-                    func.name,
-                    e,
-                );
-                throw e;
-            }
-            if (funcdata) {
-                await fs.appendFile(filename, funcdata + "\n", "utf-8");
-            }
-        }
         console.log("Done %s!", cls.name);
     }
 }

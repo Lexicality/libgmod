@@ -1,4 +1,7 @@
+import _ from "lodash";
+
 import { formatDesc } from "./descriptions";
+import { handleFunc } from "./functions";
 import { getTypeName } from "./gmod-types";
 import { trimArg, unpaginate } from "./utils";
 import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
@@ -70,5 +73,25 @@ export function handleClass(cls: FuncContainer): string {
     }
     let def = `--- @class ${name}${inherits}\n`;
     let lua = `local ${name} = {}\n`;
+
+    let funcs = cls.functions;
+    funcs = _.sortBy(funcs, "name");
+    for (let func of funcs) {
+        let funcdata: string | undefined;
+        try {
+            funcdata = handleFunc(func, ":");
+        } catch (e) {
+            console.error(
+                "Problem while getting func definition for %s:%s(): %s",
+                cls.name,
+                func.name,
+                e,
+            );
+            throw e;
+        }
+        if (funcdata) {
+            lua += funcdata + "\n";
+        }
+    }
     return def + desc + lua;
 }
