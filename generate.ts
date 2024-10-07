@@ -2,7 +2,6 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import _ from "lodash";
-import mkdirp from "mkdirp";
 
 import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
 
@@ -372,7 +371,7 @@ async function doLibs(): Promise<void> {
         await fs.readFile("output/libraries.json", "utf-8"),
     );
     data = _.sortBy(data, "name");
-    await mkdirp("libraries");
+    await fs.mkdir("libraries", { recursive: true });
     for (let lib of data) {
         let libdata: string;
         try {
@@ -421,7 +420,7 @@ async function getClasses(): Promise<FuncContainer[]> {
 
 async function doClasses(data: FuncContainer[]): Promise<void> {
     data = _.sortBy(data, "name");
-    await mkdirp("classes");
+    await fs.mkdir("classes", { recursive: true });
     for (let cls of data) {
         let classdata: string;
         try {

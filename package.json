@@ -7,14 +7,12 @@
     "dependencies": {
         "gmod-wiki-scraper": "2.0.0-rc.0",
         "lodash": "^4.17.19",
-        "mkdirp": "^1.0.4",
         "tsx": "^4.19.1"
     },
     "devDependencies": {
         "@eslint/js": "^9.12.0",
         "@types/eslint__js": "^8.42.3",
         "@types/lodash": "^4.14.155",
-        "@types/mkdirp": "^1.0.1",
         "@types/node": "^18",
         "eslint": "^9.12.0",
         "eslint-config-prettier": "^9",
