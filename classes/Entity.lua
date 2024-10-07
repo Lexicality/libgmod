@@ -957,6 +957,12 @@ end
 function GEntity:GetMoveType()
 end
 
+--- Gets the NPC classification. Internally gets the `m_iClass` variable which is polled by the engine. This will be equivalent to NPC:Classify.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
+--- @return number @See Enums/CLASS
+function GEntity:GetNPCClass()
+end
+
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNW2Angle.  
 --- @param key? string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -2674,6 +2680,12 @@ end
 function GEntity:SetMaxHealth(maxhealth)
 end
 
+--- Sets the NPC max yaw speed. Internally sets the `m_fMaxYawSpeed` variable which is polled by the engine.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
+--- @param maxyaw number @The new max yaw value to set
+function GEntity:SetMaxYawSpeed(maxyaw)
+end
+
 --- Sets the model of the entity.  
 --- This does not update the physics of the entity - see Entity:PhysicsInit.  
 --- ⚠ **WARNING**: This silently fails when given an empty string.  
@@ -2715,6 +2727,12 @@ end
 --- Despite existing on client, it doesn't actually do anything on client.  
 --- @param movetype number @The new movetype, see Enums/MOVETYPE
 function GEntity:SetMoveType(movetype)
+end
+
+--- Sets the NPC classification. Internally sets the `m_iClass` variable which is polled by the engine.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
+--- @param classification number @The CLASS Enum
+function GEntity:SetNPCClass(classification)
 end
 
 --- Sets a networked angle value on the entity.  

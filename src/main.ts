@@ -3,9 +3,8 @@ import path from "node:path";
 
 import _ from "lodash";
 
-import { handleClass } from "./classes";
+import { handleClass, preProcessClasses } from "./classes";
 import { handleFunc } from "./functions";
-import { registerGModType } from "./gmod-types";
 import { handleLib } from "./libraries";
 
 async function doGlobals(): Promise<void> {
@@ -67,7 +66,6 @@ async function getClasses(): Promise<FuncContainer[]> {
 }
 
 async function doClasses(data: FuncContainer[]): Promise<void> {
-    data = _.sortBy(data, "name");
     await fs.mkdir("classes", { recursive: true });
     for (let cls of data) {
         let classdata: string;
@@ -93,11 +91,7 @@ async function main() {
 
     try {
         let classes = await getClasses();
-        // I'm not entirely sure what EmmyLua does when you have a class and a
-        // function with the same name, so don't have that problem.
-        for (let cls of classes) {
-            registerGModType(cls.name);
-        }
+        classes = preProcessClasses(classes);
 
         await Promise.all([
             doGlobals(),

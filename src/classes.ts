@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import { formatDesc } from "./descriptions";
 import { handleFunc } from "./functions";
-import { getTypeName } from "./gmod-types";
+import { getTypeName, registerGModType } from "./gmod-types";
 import { trimArg, unpaginate } from "./utils";
 import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
 
@@ -94,4 +94,25 @@ export function handleClass(cls: FuncContainer): string {
         }
     }
     return def + desc + lua;
+}
+
+export function preProcessClasses(classes: FuncContainer[]): FuncContainer[] {
+    let alreadySeen = new Map<string, FuncContainer>();
+
+    for (let classData of classes) {
+        let name = registerGModType(classData.name);
+        classData.name = name;
+        let existingData = alreadySeen.get(name);
+        if (existingData) {
+            classData.description =
+                existingData.description ?? classData.description;
+            classData.functions = [
+                ...(existingData.functions ?? []),
+                ...(classData.functions ?? []),
+            ];
+        }
+        alreadySeen.set(name, classData);
+    }
+
+    return _.sortBy(Array.from(alreadySeen.values()), "name");
 }

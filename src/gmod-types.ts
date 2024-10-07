@@ -5,6 +5,10 @@ const TYPE_REPLACEMENTS = new Map<string, string>([
     ["Enums/STENCILCOMPARISONFUNCTION", "number"],
     ["Enums/STENCILOPERATION", "number"],
 ]);
+const JANKY_WIKI_CLASSES = new Map<string, string>([
+    ["ENTITY", "Entity"],
+    ["WEAPON", "Weapon"],
+]);
 
 let GMOD_TYPES: { [key: string]: string } = {};
 
@@ -24,6 +28,7 @@ export function getTypeName(ret: string): string {
 }
 
 export function registerGModType(name: string): string {
-    GMOD_TYPES[name] = "G" + name;
-    return name;
+    let fixedName = JANKY_WIKI_CLASSES.get(name) ?? name;
+    GMOD_TYPES[name] = "G" + fixedName;
+    return fixedName;
 }

@@ -1,4 +1,6 @@
 --- @class GWeapon : GEntity
+--- This is a list of all methods only available for weapons. It is also possible to call Entity functions on weapons.  
+--- ℹ **NOTE**: A list of available methods has been expanded in your navigation bar.  
 local GWeapon = {}
 --- Returns whether the weapon allows to being switched from when a better ( Weapon:GetWeight ) weapon is being picked up.  
 --- @return boolean @Whether the weapon allows to being switched from.
