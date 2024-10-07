@@ -2,7 +2,7 @@
     "name": "libgmod",
     "version": "0.0.1",
     "description": "This is a vain attempt to get sane IDE completion working with Visual Studio Code.",
-    "main": "generate.js",
+    "main": "src/main.ts",
     "type": "module",
     "dependencies": {
         "gmod-wiki-scraper": "2.0.0-rc.0",
@@ -22,7 +22,7 @@
         "typescript-eslint": "^8"
     },
     "scripts": {
-        "start": "tsx generate.ts",
+        "start": "tsx src/main.ts",
         "download": "gmod-wiki-scraper"
     },
     "repository": {
