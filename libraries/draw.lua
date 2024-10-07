@@ -3,7 +3,7 @@ _G.draw = {}
 --- Simple draw text at position, but this will expand newlines and tabs.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
 --- See also MarkupObject for limited width and markup support.  
---- @param text? string @Text to be drawn.
+--- @param text string @Text to be drawn.
 --- @param font? string @Name of font to draw the text in
 --- @param x? number @The X Coordinate.
 --- @param y? number @The Y Coordinate.
@@ -39,12 +39,12 @@ end
 --- Draws a rounded rectangle. This function also lets you specify which corners are drawn rounded.  
 --- ℹ **NOTE**: This function actually draws rectangles with 'gui/cornerX' textures applied to it's rounded corners. It means that this function will fail (or will be drawn not as expected) with any vertex operations, such as model matrices like cam.Start3D2D (corners would be pixelated) or stencil operations. Consider using surface.DrawPoly or mesh library  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param cornerRadius? number @Radius of the rounded corners, works best with a power of 2 number.
---- @param x? number @The x coordinate of the top left of the rectangle.
---- @param y? number @The y coordinate of the top left of the rectangle.
---- @param width? number @The width of the rectangle.
---- @param height? number @The height of the rectangle.
---- @param color? table @The color to fill the rectangle with
+--- @param cornerRadius number @Radius of the rounded corners, works best with a power of 2 number.
+--- @param x number @The x coordinate of the top left of the rectangle.
+--- @param y number @The y coordinate of the top left of the rectangle.
+--- @param width number @The width of the rectangle.
+--- @param height number @The height of the rectangle.
+--- @param color table @The color to fill the rectangle with
 --- @param roundTopLeft? boolean @Whether the top left corner should be rounded.
 --- @param roundTopRight? boolean @Whether the top right corner should be rounded.
 --- @param roundBottomLeft? boolean @Whether the bottom left corner should be rounded.
@@ -55,7 +55,7 @@ end
 --- Draws text on the screen.  
 --- ℹ **NOTE**: This function does not handle newlines properly. See draw.DrawText for a function that does.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param text? string @The text to be drawn.
+--- @param text string @The text to be drawn.
 --- @param font? string @The font
 --- @param x? number @The X Coordinate.
 --- @param y? number @The Y Coordinate.
@@ -69,7 +69,7 @@ end
 
 --- Creates a simple line of text that is outlined.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param Text? string @The text to draw.
+--- @param Text string @The text to draw.
 --- @param font? string @The font name to draw with
 --- @param x? number @The X Coordinate.
 --- @param y? number @The Y Coordinate.
@@ -93,8 +93,8 @@ end
 
 --- Works like draw.Text, but draws the text as a shadow.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param textdata? table @The text properties
---- @param distance? number @How far away the shadow appears.
+--- @param textdata table @The text properties
+--- @param distance number @How far away the shadow appears.
 --- @param alpha? number @How visible the shadow is (0-255).
 --- @return number @The width of drawn text.
 --- @return number @The height of drawn text.
@@ -109,13 +109,13 @@ end
 
 --- Draws a rounded box with text in it.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param bordersize? number @Size of border, should be multiple of 2
---- @param x? number @The X Coordinate.
---- @param y? number @The Y Coordinate.
---- @param text? string @Text to draw.
---- @param font? string @Font to draw in
---- @param boxcolor? table @The box color
---- @param textcolor? table @The text color
+--- @param bordersize number @Size of border, should be multiple of 2
+--- @param x number @The X Coordinate.
+--- @param y number @The Y Coordinate.
+--- @param text string @Text to draw.
+--- @param font string @Font to draw in
+--- @param boxcolor table @The box color
+--- @param textcolor table @The text color
 --- @param xalign? number @The alignment of the X coordinate using Enums/TEXT_ALIGN.
 --- @param yalign? number @The alignment of the Y coordinate using Enums/TEXT_ALIGN.
 --- @return number @The width of the word box.

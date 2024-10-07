@@ -77,7 +77,7 @@ end
 
 --- Returns if the Nextbot NPC can see the give entity or not.  
 --- ⚠ **WARNING**: Using this function creates the nextbot vision interface which will cause a significant performance hit!  
---- @param ent? GEntity @The entity to test if we can see
+--- @param ent GEntity @The entity to test if we can see
 --- @param useFOV? number @Whether to use the Field of View of the Nextbot
 --- @return boolean @If the nextbot can see or not
 function GNextBot:IsAbleToSee(ent, useFOV)
@@ -91,7 +91,7 @@ function GNextBot:MoveToPos(pos, options)
 end
 
 --- To be called in the behaviour coroutine only! Plays an animation sequence and waits for it to end before returning.  
---- @param name? string @The sequence name
+--- @param name string @The sequence name
 --- @param speed? number @Playback Rate of that sequence
 function GNextBot:PlaySequenceAndWait(name, speed)
 end

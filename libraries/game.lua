@@ -162,7 +162,7 @@ function game.IsDedicated()
 end
 
 --- Kicks a player from the server. This can be ran before the player has spawned.  
---- @param id? string @UserID or SteamID of the player to kick.
+--- @param id string @UserID or SteamID of the player to kick.
 --- @param reason? string @Reason to display to the player
 function game.KickID(id, reason)
 end

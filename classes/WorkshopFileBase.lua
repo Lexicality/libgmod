@@ -9,21 +9,21 @@ local GWorkshopFileBase = {}
 --- Fetches all subscriptions for the set namespace and type  
 --- ℹ **NOTE**:   
 --- If you want to use the type `local` you need to implement the `:FetchLocal(offset, perpage)` function!  
---- @param type? string @The type to search for
---- @param offset? number @Skips the first x results.
---- @param perpage? number @How many results per page should be returned.
---- @param extratags? table @additional tags to filter the results.
---- @param searchText? string @text that needs to be in the addon title
+--- @param type string @The type to search for
+--- @param offset number @Skips the first x results.
+--- @param perpage number @How many results per page should be returned.
+--- @param extratags table @additional tags to filter the results.
+--- @param searchText string @text that needs to be in the addon title
 --- @param filter? number @The filter for the results
 --- @param sort? string @How it should be sorted
 function GWorkshopFileBase:Fetch(type, offset, perpage, extratags, searchText, filter, sort)
 end
 
 --- Fetches all subscriptions for the set namespace and passes the result to WorkshopFileBase:FillFileInfo.  
---- @param offset? number @Skips the first x results.
---- @param perpage? number @How many results per page should be returned.
---- @param tags? table @additional tags to filter the results.
---- @param searchText? string @text that needs to be in the addon title
+--- @param offset number @Skips the first x results.
+--- @param perpage number @How many results per page should be returned.
+--- @param tags table @additional tags to filter the results.
+--- @param searchText string @text that needs to be in the addon title
 --- @param isUGC? boolean @if true it will use engine.GetUserContent instead of engine.GetAddons
 --- @param filter? number @The filter for the results
 --- @param sort? string @How it should be sorted

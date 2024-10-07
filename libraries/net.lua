@@ -185,7 +185,7 @@ end
 --- The net library has an internal buffer that sent messages are added to that is capable of holding roughly 256 kb at a time. Trying to send more will lead to the client being kicked because of a buffer overflow. More information on net library limits can be found here.  
 --- The message name must be pooled with util.AddNetworkString beforehand!  
 --- Net messages will not reliably reach the client until the client's GM:InitPostEntity hook is called.  
---- @param messageName? string @The name of the message to send
+--- @param messageName string @The name of the message to send
 --- @param unreliable? boolean @If set to `true`, the message is not guaranteed to reach its destination
 --- @return boolean @`true` if the message has been started.
 function net.Start(messageName, unreliable)
@@ -208,13 +208,13 @@ function net.WriteBool(boolean)
 end
 
 --- Appends a Color to the current net message.  
---- @param Color? table @The Color you want to append to the net message.
+--- @param Color table @The Color you want to append to the net message.
 --- @param writeAlpha? boolean @If we should write the alpha of the color or not.
 function net.WriteColor(Color, writeAlpha)
 end
 
 --- Writes a chunk of binary data to the message.  
---- @param binaryData? string @The binary data to be sent.
+--- @param binaryData string @The binary data to be sent.
 --- @param length? number @The length of the binary data to be sent, in bytes.
 function net.WriteData(binaryData, length)
 end
@@ -267,7 +267,7 @@ end
 
 --- Appends a table to the current net message. Adds **16 extra bits** per key/value pair, so you're better off writing each individual key/value as the exact type if possible.  
 --- ⚠ **WARNING**: All net messages have a **64kb** buffer. This function will not check or error when that buffer is overflown. You might want to consider using util.TableToJSON and util.Compress and send the resulting string in **60kb** chunks, doing the opposite on the receiving end.  
---- @param table? table @The table to be sent
+--- @param table table @The table to be sent
 --- @param sequential? boolean @Set to `true` if the input table is sequential
 function net.WriteTable(table, sequential)
 end

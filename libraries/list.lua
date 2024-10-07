@@ -22,7 +22,7 @@ function list.Get(identifier)
 end
 
 --- Returns the actual table of the list stored at identifier. Modifying this will affect the stored list  
---- @param identifier? string @The list identifier
+--- @param identifier string @The list identifier
 --- @param dontCreate? boolean @If the list at given identifier does not exist, do **not** create it.
 --- @return table @The actual list
 function list.GetForEdit(identifier, dontCreate)

@@ -66,7 +66,7 @@ function input.IsShiftDown()
 end
 
 --- Returns the client's bound key for the specified console command. If the player has multiple keys bound to a single command, then the key with the lowest Enums/BUTTON_CODE will be returned.  
---- @param binding? string @The binding name
+--- @param binding string @The binding name
 --- @param exact? boolean @True to disable automatic stripping of a single leading `+` character
 --- @return string @The first key found with that binding or no value if no key with given binding was found
 function input.LookupBinding(binding, exact)

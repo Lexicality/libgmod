@@ -78,7 +78,7 @@ end
 --- * loc: a string describing the source and currentline, like "<source>:<line>"  
 --- * ffid: the fast function id of the function (if it is one). In this case only upvalues above and addr below are valid  
 --- * addr: the address of the function (if it is not a Lua function). If it's a C function rather than a fast function, only upvalues above is valid*  
---- @param func? function @Function or Proto to retrieve info about.
+--- @param func function @Function or Proto to retrieve info about.
 --- @param pos? number 
 --- @return table @Information about the supplied function/proto.
 function jit.util.funcinfo(func, pos)

@@ -35,7 +35,7 @@ end
 
 --- Encodes the specified string to base64.  
 --- ℹ **NOTE**: Unless disabled with the `inline` argument, the Base64 returned is compliant to the RFC 2045 standard. **This means it will have a line break after every 76th character.**  
---- @param str? string @String to encode.
+--- @param str string @String to encode.
 --- @param inline? boolean @`true` to disable RFC 2045 compliance (newline every 76th character)
 --- @return string @Base 64 encoded string.
 function util.Base64Encode(str, inline)
@@ -80,9 +80,9 @@ function util.DateStamp()
 end
 
 --- Performs a trace and paints a decal to the surface hit.  
---- @param name? string @The name of the decal to paint.
---- @param start? GVector @The start of the trace.
---- @param end_? GVector @The end of the trace.
+--- @param name string @The name of the decal to paint.
+--- @param start GVector @The start of the trace.
+--- @param end_ GVector @The end of the trace.
 --- @param filter? GEntity @If set, the decal will not be able to be placed on given entity
 function util.Decal(name, start, end_, filter)
 end
@@ -110,7 +110,7 @@ end
 --- ℹ **NOTE**: This function expects the compressed input data to have the uncompressed size of the data prepended to it as an 8-byte little-endian integer. [Source](https://github.com/garrynewman/bootil/blob/beb4cec8ad29533965491b767b177dc549e62d23/src/Bootil/Utility/CompressionLZMA.cpp#L101)  
 --- If your compressed input data was compressed by util.Compress, you don't need to worry about this - the uncompressed size of the data is already prepended to its output.  
 --- However, if your compressed data was produced using standard tools **_outside of Garry's Mod_**, you will need to manually prepend the length of the uncompressed data to its compressed form as an 8-byte little endian integer, or use third-party tools such as [gmod-lzma](https://github.com/WilliamVenner/gmod-lzma-rs) to compress your data instead.  
---- @param compressedString? string @The compressed string to decompress.
+--- @param compressedString string @The compressed string to decompress.
 --- @param maxSize? number @The maximum size of uncompressed data in bytes, if greater it fails.
 --- @return string @The original, decompressed string or `nil` on failure or invalid input
 function util.Decompress(compressedString, maxSize)
@@ -131,8 +131,8 @@ end
 --- ℹ **NOTE**:   
 --- When dispatching an effect from the server, some values may be clamped for networking optimizations. Visit the Set accessors on CEffectData to see which ones are affected.  
 --- You will need to couple this function with Global.IsFirstTimePredicted if you want to use it in a predicted hook.  
---- @param effectName? string @The name of the effect to create
---- @param effectData? GCEffectData @The effect data describing the effect.
+--- @param effectName string @The name of the effect to create
+--- @param effectData GCEffectData @The effect data describing the effect.
 --- @param allowOverride? boolean @Whether Lua-defined effects should override engine-defined effects with the same name for this/single function call.
 --- @param ignorePredictionOrRecipientFilter? any @Can either be a boolean to ignore the prediction filter or a CRecipientFilter
 function util.Effect(effectName, effectData, allowOverride, ignorePredictionOrRecipientFilter)
@@ -142,7 +142,7 @@ end
 --- ℹ **NOTE**: In some cases, especially in a chatbox, messages from some players may return an empty string if the context argument used for filtering is `TEXT_FILTER_CHAT` and [if the local player has blocked the sender of the message on Steam](https://github.com/Facepunch/garrysmod-issues/issues/5161#issuecomment-1035153941).  
 --- <upload src="70c/8d9e680b626348b.png" size="50426" name="image.png">  
 --- </upload>  
---- @param str? string @String to filter.
+--- @param str string @String to filter.
 --- @param context? number @Filtering context
 --- @param player? GPlayer @Used to determine if the text should be filtered according to local user's Steam chat filtering settings.
 --- @return string @The filtered text based on given settings.
@@ -198,7 +198,7 @@ end
 --- Returns a table of visual meshes of given model.  
 --- ℹ **NOTE**: This does not work on brush models (`*number` models)  
 --- See also ENTITY:GetRenderMesh.  
---- @param model? string @The full path to a model to get the visual meshes of.
+--- @param model string @The full path to a model to get the visual meshes of.
 --- @param lod? number @Which LOD to retrieve
 --- @param bodygroupMask? number @Bodygroup combination for the model
 --- @return table @A table of tables with the following format:
@@ -224,7 +224,7 @@ end
 
 --- Utility function to quickly generate a trace table that starts at the players view position, and ends `32768` units along a specified direction.  
 --- For usage with util.TraceLine and similar functions.  
---- @param ply? GPlayer @The player the trace should be based on
+--- @param ply GPlayer @The player the trace should be based on
 --- @param dir? GVector @The direction of the trace
 --- @return table @The trace data
 function util.GetPlayerTrace(ply, dir)
@@ -430,7 +430,7 @@ end
 --- Converts a JSON string to a Lua table.  
 --- 🦟 **BUG**: [This will attempt to cast the string keys `"inf"`, `"nan"`, `"true"`, and `"false"` to their respective Lua values. This completely ignores nulls in arrays.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
 --- 🦟 **BUG**: [Colors will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
---- @param json? string @The JSON string to convert.
+--- @param json string @The JSON string to convert.
 --- @param ignoreLimits? boolean @ignore the depth and breadth limits, **use at your own risk!**
 --- @param ignoreConversions? boolean @ignore string to number conversions for table keys
 --- @return table @The table containing converted information
@@ -439,7 +439,7 @@ end
 
 --- Converts a Valve KeyValue string (typically from util.TableToKeyValues) to a Lua table.  
 --- ℹ **NOTE**: Due to how tables work in Lua, keys will not repeat within a table. See util.KeyValuesToTablePreserveOrder for alternative.  
---- @param keyValues? string @The KeyValue string to convert.
+--- @param keyValues string @The KeyValue string to convert.
 --- @param usesEscapeSequences? boolean @If set to true, will replace `\t`, `\n`, `\"` and `\\` in the input text with their escaped variants
 --- @param preserveKeyCase? boolean @Whether we should preserve key case (may fail) or not (always lowercase)
 --- @return table @The converted table
@@ -447,7 +447,7 @@ function util.KeyValuesToTable(keyValues, usesEscapeSequences, preserveKeyCase)
 end
 
 --- Similar to util.KeyValuesToTable but it also preserves order of keys.  
---- @param keyvals? string @The key value string
+--- @param keyvals string @The key value string
 --- @param usesEscapeSequences? boolean @If set to true, will replace `\t`, `\n`, `\"` and `\\` in the input text with their escaped variants
 --- @param preserveKeyCase? boolean @Whether we should preserve key case (may fail) or not (always lowercase)
 --- @return table @The output table
@@ -538,8 +538,8 @@ end
 --- Performs a trace with the given origin, direction, and filter.  
 --- ℹ **NOTE**:   
 --- This function will throw an error in the menu realm because it internally uses util.TraceLine which doesn't exist in the menu realm and thus error.  
---- @param origin? GVector @The origin of the trace.
---- @param dir? GVector @The direction of the trace times the distance of the trace
+--- @param origin GVector @The origin of the trace.
+--- @param dir GVector @The direction of the trace times the distance of the trace
 --- @param filter? GEntity @Entity which should be ignored by the trace
 --- @return table @Trace result
 function util.QuickTrace(origin, dir, filter)
@@ -569,11 +569,11 @@ end
 
 --- Makes the screen shake.  
 --- ℹ **NOTE**: The screen shake effect is rendered by modifying the view origin on the client. If you override the view origin in GM:CalcView you may not be able to see the shake effect.  
---- @param pos? GVector @The origin of the effect
---- @param amplitude? number @The strength of the effect
---- @param frequency? number @How many times per second to change the direction of the camera wobble
---- @param duration? number @The duration of the effect in seconds.
---- @param radius? number @The range from the origin within which views will be affected, in Hammer units
+--- @param pos GVector @The origin of the effect
+--- @param amplitude number @The strength of the effect
+--- @param frequency number @How many times per second to change the direction of the camera wobble
+--- @param duration number @The duration of the effect in seconds.
+--- @param radius number @The range from the origin within which views will be affected, in Hammer units
 --- @param airshake? boolean @Whether players in the air should also be affected
 --- @param filter? GCRecipientFilter @If set, will only network the screen shake event to players present in the filter.
 function util.ScreenShake(pos, amplitude, frequency, duration, radius, airshake, filter)
@@ -591,9 +591,9 @@ end
 
 --- Generates a random float value that should be the same on client and server.  
 --- ℹ **NOTE**: This function is best used in a predicted hook  
---- @param uniqueName? string @The seed for the random value
---- @param min? number @The minimum value of the random range
---- @param max? number @The maximum value of the random range
+--- @param uniqueName string @The seed for the random value
+--- @param min number @The minimum value of the random range
+--- @param max number @The maximum value of the random range
 --- @param additionalSeed? number @The additional seed
 --- @return number @The random float value
 function util.SharedRandom(uniqueName, min, max, additionalSeed)
@@ -643,7 +643,7 @@ end
 --- ⚠ **WARNING**: All keys are strings in the JSON format, so all keys will be converted to strings!  
 --- All integers will be converted to decimals (5 -> 5.0).  
 --- 🦟 **BUG**: [This will produce invalid JSON if the provided table contains nan or inf values.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
---- @param table? table @Table to convert.
+--- @param table table @Table to convert.
 --- @param prettyPrint? boolean @Format and indent the JSON.
 --- @return string @A JSON formatted string containing the serialized data
 function util.TableToJSON(table, prettyPrint)
@@ -652,7 +652,7 @@ end
 --- Converts the given table into a Valve key value string.  
 --- Use util.KeyValuesToTable to perform the opposite transformation.  
 --- You should consider using util.TableToJSON instead.  
---- @param table? table @The table to convert.
+--- @param table table @The table to convert.
 --- @param rootKey? string @The root key name for the output KV table.
 --- @return string @The output.
 function util.TableToKeyValues(table, rootKey)

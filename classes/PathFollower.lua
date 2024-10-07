@@ -2,15 +2,15 @@
 --- Path object for a NextBot NPC and bots created by player.CreateNextbot. Returned by Global.Path.  
 local GPathFollower = {}
 --- If you created your path with type `"Chase"` this functions should be used in place of PathFollower:Update to cause the bot to chase the specified entity.  
---- @param bot? GNextBot @The bot to update along the path
---- @param ent? GEntity @The entity we want to chase
+--- @param bot GNextBot @The bot to update along the path
+--- @param ent GEntity @The entity we want to chase
 --- @param generator? function @A function that allows you to alter the path generation
 function GPathFollower:Chase(bot, ent, generator)
 end
 
 --- Compute shortest path from bot to 'goal' via A* algorithm.  
---- @param bot? GNextBot @The nextbot we're generating for
---- @param goal? GVector @The target location, the goal.
+--- @param bot GNextBot @The nextbot we're generating for
+--- @param goal GVector @The target location, the goal.
 --- @param generator? function @A function that allows you to alter the path generation
 --- @return boolean @* If returns true, path was found to the goal position
 function GPathFollower:Compute(bot, goal, generator)
@@ -118,7 +118,7 @@ function GPathFollower:MoveCursorTo(distance)
 end
 
 --- Moves the cursor of the path to the closest position compared to given vector.  
---- @param pos? GVector 
+--- @param pos GVector 
 --- @param type? number @Seek type
 --- @param alongLimit? number 
 function GPathFollower:MoveCursorToClosestPosition(pos, type, alongLimit)

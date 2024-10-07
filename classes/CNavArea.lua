@@ -8,7 +8,7 @@ end
 
 --- Adds a hiding spot onto this nav area.  
 --- There's a limit of 255 hiding spots per area.  
---- @param pos? GVector @The position on the nav area
+--- @param pos GVector @The position on the nav area
 --- @param flags? number @Flags describing what kind of hiding spot this is
 function GCNavArea:AddHidingSpot(pos, flags)
 end
@@ -327,7 +327,7 @@ function GCNavArea:IsOpenListEmpty()
 end
 
 --- Returns if this position overlaps the Nav Area within the given tolerance.  
---- @param pos? GVector @The overlapping position to test.
+--- @param pos GVector @The overlapping position to test.
 --- @param tolerance? number @The tolerance of the overlapping, set to 0 for no tolerance.
 --- @return boolean @Whether the given position overlaps the Nav Area or not.
 function GCNavArea:IsOverlapping(pos, tolerance)
@@ -340,7 +340,7 @@ function GCNavArea:IsOverlappingArea(navArea)
 end
 
 --- Returns whether this CNavArea can see given position.  
---- @param pos? GVector @The position to test.
+--- @param pos GVector @The position to test.
 --- @param ignoreEnt? GEntity @If set, the given entity will be ignored when doing LOS tests
 --- @return boolean @Whether the given position is visible from this area
 function GCNavArea:IsPartiallyVisible(pos, ignoreEnt)

@@ -8,7 +8,7 @@ function os.clock()
 end
 
 --- Returns the date/time as a formatted string or in a table.  
---- @param format? string @The format string
+--- @param format string @The format string
 --- @param time? number @Time to use for the format.
 --- @return string @Formatted date
 function os.date(format, time)

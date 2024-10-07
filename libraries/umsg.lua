@@ -58,7 +58,7 @@ end
 --- 🛑 **DEPRECATED**: You should be using net instead  
 --- Starts a new usermessage.  
 --- ⚠ **WARNING**: Usermessages have a limit of only 256 bytes!  
---- @param name? string @The name of the message to be sent.
+--- @param name string @The name of the message to be sent.
 --- @param filter? GPlayer @If passed a player object, it will only be sent to the player, if passed a CRecipientFilter of players, it will be sent to all specified pla
 function umsg.Start(name, filter)
 end

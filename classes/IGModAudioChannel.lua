@@ -193,14 +193,14 @@ function GIGModAudioChannel:SetPlaybackRate(rate)
 end
 
 --- Sets position of sound channel in case the sound channel has a 3d option set.  
---- @param pos? GVector @The position to put the sound into
+--- @param pos GVector @The position to put the sound into
 --- @param dir? GVector @The direction of the sound
 function GIGModAudioChannel:SetPos(pos, dir)
 end
 
 --- Sets the sound channel to specified time ( Rewind to that position of the song ). Does not work on online radio streams.  
 --- Streamed sounds must have "noblock" parameter for this to work and IGModAudioChannel:IsBlockStreamed must return false.  
---- @param secs? number @The time to set the stream to, in seconds.
+--- @param secs number @The time to set the stream to, in seconds.
 --- @param dont_decode? boolean @Set to true to skip decoding to set time, and instead just seek to it which is faster
 function GIGModAudioChannel:SetTime(secs, dont_decode)
 end

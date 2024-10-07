@@ -20,7 +20,7 @@ function utf8.charpattern()
 end
 
 --- Returns the codepoints (as numbers) from all characters in the given string that start between byte position startPos and endPos. It raises an error if it meets any invalid byte sequence. This functions similarly to string.byte.  
---- @param string? string @The string that you will get the code(s) from.
+--- @param string string @The string that you will get the code(s) from.
 --- @param startPos? number @The starting byte of the string to get the codepoint of.
 --- @param endPos? number @The ending byte of the string to get the codepoint of.
 --- @return any @The codepoint number(s).
@@ -41,7 +41,7 @@ function utf8.force(string)
 end
 
 --- Returns the number of UTF-8 sequences in the given string between positions startPos and endPos (both inclusive). If it finds any invalid UTF-8 byte sequence, returns false as well as the position of the first invalid byte.  
---- @param string? string @The string to calculate the length of.
+--- @param string string @The string to calculate the length of.
 --- @param startPos? number @The starting position to get the length from.
 --- @param endPos? number @The ending position to get the length from.
 --- @return number @The number of UTF-8 characters in the string
@@ -50,8 +50,8 @@ function utf8.len(string, startPos, endPos)
 end
 
 --- Returns the byte-index of the n'th UTF-8-character after the given startPos (nil if none). startPos defaults to 1 when n is positive and -1 when n is negative. If n is zero, this function instead returns the byte-index of the UTF-8-character startPos lies within.  
---- @param string? string @The string that you will get the byte position from.
---- @param n? number @The position to get the beginning byte position from.
+--- @param string string @The string that you will get the byte position from.
+--- @param n number @The position to get the beginning byte position from.
 --- @param startPos? number @The offset for n.
 --- @return number @Starting byte-index of the given position.
 function utf8.offset(string, n, startPos)
@@ -59,8 +59,8 @@ end
 
 --- A UTF-8 compatible version of string.sub.  
 --- ⚠ **WARNING**: Avoid using this function on large strings every tick/frame, as it may cause lags.  
---- @param string? string @The string you'll take a sub-string out of.
---- @param StartPos? number @The position of the first character that will be included in the sub-string.
+--- @param string string @The string you'll take a sub-string out of.
+--- @param StartPos number @The position of the first character that will be included in the sub-string.
 --- @param EndPos? number @The position of the last character to be included in the sub-string
 --- @return string @The substring.
 function utf8.sub(string, StartPos, EndPos)

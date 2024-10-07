@@ -25,8 +25,8 @@ end
 --- Returns a table of all entities along the ray. The ray does not stop on collisions, meaning it will go through walls/entities.  
 --- This function is capable of detecting clientside only entities.  
 --- This internally uses a Spatial Partition to avoid looping through all entities.  
---- @param start? GVector @The start position of the ray
---- @param end_? GVector @The end position of the ray
+--- @param start GVector @The start position of the ray
+--- @param end_ GVector @The end position of the ray
 --- @param mins? GVector @The mins corner of the ray
 --- @param maxs? GVector @The maxs corner of the ray
 --- @return table @Table of the found entities

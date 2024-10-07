@@ -35,7 +35,7 @@ function bit.bswap(value)
 end
 
 --- Returns the bitwise xor of all values specified.  
---- @param value? number @The value to be manipulated.
+--- @param value number @The value to be manipulated.
 --- @param otherValues? number @Values bit xor with
 --- @return number @bitwiseXOr
 function bit.bxor(value, otherValues)
@@ -78,7 +78,7 @@ function bit.tobit(value)
 end
 
 --- Returns the hexadecimal representation of the number with the specified digits.  
---- @param value? number @The value to be normalized.
+--- @param value number @The value to be normalized.
 --- @param digits? number @The number of digits
 --- @return string @hexString
 function bit.tohex(value, digits)

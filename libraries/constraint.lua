@@ -1,11 +1,11 @@
 --- The constraint library allows you to control the constraint system built into the physics engine (rope, weld, ballsockets, etc).  
 _G.constraint = {}
 --- Creates an advanced ballsocket (ragdoll) constraint. See constraint.Ballsocket for the simpler version.  
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
 --- @param localPos2? GVector @Position relative to the the second physics object to constrain to
 --- @param forceLimit? number @Amount of force until it breaks (0 = unbreakable)
 --- @param torqueLimit? number @Amount of torque (rotation speed) until it breaks (0 = unbreakable)
@@ -25,12 +25,12 @@ function constraint.AdvBallsocket(ent1, ent2, bone1, bone2, localPos1, localPos2
 end
 
 --- Creates an axis constraint.  
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
 --- @param forceLimit? number @Amount of force until it breaks (0 = unbreakable)
 --- @param torqueLimit? number @Amount of torque (rotational force) until it breaks (0 = unbreakable)
 --- @param friction? number @Constraint friction.
@@ -42,11 +42,11 @@ function constraint.Axis(ent1, ent2, bone1, bone2, localPos1, localPos2, forceLi
 end
 
 --- Creates a ballsocket joint. See See constraint.AdvBallsocket if you also wish to limit rotation angles in some way.  
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos? GVector @Center position of the joint, relative to the **second** entity's physics object.
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos GVector @Center position of the joint, relative to the **second** entity's physics object.
 --- @param forcelimit? number @Amount of force until it breaks (0 = unbreakable)
 --- @param torquelimit? number @Amount of torque (rotation speed) until it breaks (0 = unbreakable)
 --- @param nocollide? number @Whether the constrained entities should collided with each other or not.
@@ -62,8 +62,8 @@ function constraint.CanConstrain(ent, bone)
 end
 
 --- Creates a rope without any constraint.  
---- @param pos? GVector @Position for the rope entity
---- @param width? number @Width of the rope.
+--- @param pos GVector @Position for the rope entity
+--- @param width number @Width of the rope.
 --- @param material? string @Material of the rope
 --- @param constraint? GEntity @Constraint for the rope
 --- @param ent1? GEntity @First entity.
@@ -89,17 +89,17 @@ function constraint.CreateStaticAnchorPoint(pos)
 end
 
 --- Creates an elastic rope constraint.  
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param constant? number @Stiffness of the elastic
---- @param damping? number @How much energy the elastic loses
---- @param relDamping? number @The amount of energy the elastic loses proportional to the relative velocity of the two objects the elastic is attached to.
---- @param material? string @The material of the rope
---- @param width? number @Width of rope.
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param constant number @Stiffness of the elastic
+--- @param damping number @How much energy the elastic loses
+--- @param relDamping number @The amount of energy the elastic loses proportional to the relative velocity of the two objects the elastic is attached to.
+--- @param material string @The material of the rope
+--- @param width number @Width of rope.
 --- @param stretchOnly? boolean @Apply physics forces only on stretch.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
@@ -145,7 +145,7 @@ function constraint.ForgetConstraints(ent)
 end
 
 --- Returns a table of all entities recursively constrained to an entitiy.  
---- @param ent? GEntity @The entity to check
+--- @param ent GEntity @The entity to check
 --- @param resultTable? table @Table used to return result
 --- @return table @A table containing all of the constrained entities
 function constraint.GetAllConstrainedEntities(ent, resultTable)
@@ -165,20 +165,20 @@ function constraint.HasConstraints(ent)
 end
 
 --- Creates a controllable constraint.Elastic, aka a Hydraulic constraint.  
---- @param player? GPlayer @The player that will be able to control the constraint
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param length1? number @Minimum length of the constraint.
---- @param length2? number @Maximum length of the constraint.
---- @param width? number @The width of the rope.
---- @param key? number @The key binding, corresponding to an Enums/KEY
---- @param slider? number @Whether the hydraulic is fixed, i.e
---- @param speed? number @How fast it changes the length from `length1` to `length2` and backwards.
---- @param material? string @The material of the rope
+--- @param player GPlayer @The player that will be able to control the constraint
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param length1 number @Minimum length of the constraint.
+--- @param length2 number @Maximum length of the constraint.
+--- @param width number @The width of the rope.
+--- @param key number @The key binding, corresponding to an Enums/KEY
+--- @param slider number @Whether the hydraulic is fixed, i.e
+--- @param speed number @How fast it changes the length from `length1` to `length2` and backwards.
+--- @param material string @The material of the rope
 --- @param toggle? boolean @Whether the hydraulic should be a toggle, not a "hold key to extend" action.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
@@ -198,15 +198,15 @@ function constraint.Keepupright(ent, ang, bone, angularLimit)
 end
 
 --- Creates a motor constraint, a player controllable constraint.Axis.  
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param friction? number @Motor friction.
---- @param torque? number @Motor torque.
---- @param forcetime? number @Automatic shut-off after this time has passed
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param friction number @Motor friction.
+--- @param torque number @Motor torque.
+--- @param forcetime number @Automatic shut-off after this time has passed
 --- @param nocollide? number @Whether the entities should be no-collided.
 --- @param toggle? number @Whether the constraint is on toggle.
 --- @param player? GPlayer @The player that will control the motor
@@ -222,20 +222,20 @@ end
 
 --- Creates a muscle constraint.  
 --- Very similar to constraint.Hydraulic, but instead of a toggle between fully expanded and contracted, it will continuously alternate between the 2 states while enabled.  
---- @param player? GPlayer @The player that will be able to control the constraint
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param length1? number @Minimum length of the constraint.
---- @param length2? number @Maximum length of the constraint.
---- @param width? number @Width of the rope.
---- @param key? number @The key binding, corresponding to an Enums/KEY.
---- @param fixed? number @Whether the constraint is fixed, i.e
---- @param period? number @How often the "contractions" should happen.
---- @param amplitude? number @Amplification of the "contractions"?
+--- @param player GPlayer @The player that will be able to control the constraint
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param length1 number @Minimum length of the constraint.
+--- @param length2 number @Maximum length of the constraint.
+--- @param width number @Width of the rope.
+--- @param key number @The key binding, corresponding to an Enums/KEY.
+--- @param fixed number @Whether the constraint is fixed, i.e
+--- @param period number @How often the "contractions" should happen.
+--- @param amplitude number @Amplification of the "contractions"?
 --- @param startOn? boolean @Whether the constraint should start activated
 --- @param material? string @Material of the rope
 --- @param color? table @The color of the rope
@@ -265,15 +265,15 @@ end
 --- |			|  
 --- Ent1	   Ent4  
 --- ```  
---- @param ent1? GEntity @First entity to constrain.
---- @param ent4? GEntity @The other entity to attach to.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone4? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos4? GVector @Position relative to the the second physics object to constrain to.
---- @param worldPos2? GVector @World position constrain the first entity to
---- @param worldPos3? GVector @World position constrain the second entity to
---- @param forceLimit? number @Amount of force until it breaks (0 = unbreakable)
+--- @param ent1 GEntity @First entity to constrain.
+--- @param ent4 GEntity @The other entity to attach to.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone4 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos4 GVector @Position relative to the the second physics object to constrain to.
+--- @param worldPos2 GVector @World position constrain the first entity to
+--- @param worldPos3 GVector @World position constrain the second entity to
+--- @param forceLimit number @Amount of force until it breaks (0 = unbreakable)
 --- @param rigid? boolean @Whether the constraint is rigid, i.e
 --- @param width? number @Width of the rope
 --- @param material? string @Material of the rope
@@ -301,13 +301,13 @@ function constraint.RemoveConstraints(ent, type)
 end
 
 --- Creates a simple rope (length) based constraint.  
---- @param ent1? GEntity @First entity
---- @param ent2? GEntity @Second entity
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param length? number @Length of the rope.
+--- @param ent1 GEntity @First entity
+--- @param ent2 GEntity @Second entity
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param length number @Length of the rope.
 --- @param addLength? number @Amount to add to the length of the rope
 --- @param forceLimit? number @Amount of force until it breaks (0 = unbreakable).
 --- @param width? number @Width of the rope.
@@ -320,14 +320,14 @@ function constraint.Rope(ent1, ent2, bone1, bone2, localPos1, localPos2, length,
 end
 
 --- Creates a slider constraint. A slider is like a rope, but allows the constrained object to move only in 1 direction.  
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param width? number @The width of the rope.
---- @param material? string @The material of the rope
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param width number @The width of the rope.
+--- @param material string @The material of the rope
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint entity
 --- @return GEntity @The created rope
@@ -335,10 +335,10 @@ function constraint.Slider(ent1, ent2, bone1, bone2, localPos1, localPos2, width
 end
 
 --- Creates a weld constraint.  
---- @param ent1? GEntity @The first entity
---- @param ent2? GEntity @The second entity
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
+--- @param ent1 GEntity @The first entity
+--- @param ent2 GEntity @The second entity
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
 --- @param forceLimit? number @The amount of force appliable to the constraint before it will break (0 is never)
 --- @param noCollide? boolean @Should `ent1` be nocollided to `ent2` via this constraint
 --- @param deleteEnt1OnBreak? boolean @If true, when `ent2` is removed, `ent1` will also be removed
@@ -347,19 +347,19 @@ function constraint.Weld(ent1, ent2, bone1, bone2, forceLimit, noCollide, delete
 end
 
 --- Creates a winch constraint, a player controllable constraint.Elastic, allowing gradually increasing or decreasing the length.  
---- @param player? GPlayer @The player that will be used to call numpad.OnDown and numpad.OnUp.
---- @param ent1? GEntity @First entity.
---- @param ent2? GEntity @Second entity.
---- @param bone1? number @PhysObj number of first entity to constrain to
---- @param bone2? number @PhysObj number of second entity to constrain to
---- @param localPos1? GVector @Position relative to the the first physics object to constrain to.
---- @param localPos2? GVector @Position relative to the the second physics object to constrain to.
---- @param width? number @The width of the rope.
---- @param fwdBind? number @The key binding for "forward", corresponding to an Enums/KEY
---- @param bwdBind? number @The key binding for "backwards", corresponding to an Enums/KEY
---- @param fwdSpeed? number @Forward speed.
---- @param bwdSpeed? number @Backwards speed.
---- @param material? string @The material of the rope
+--- @param player GPlayer @The player that will be used to call numpad.OnDown and numpad.OnUp.
+--- @param ent1 GEntity @First entity.
+--- @param ent2 GEntity @Second entity.
+--- @param bone1 number @PhysObj number of first entity to constrain to
+--- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param localPos1 GVector @Position relative to the the first physics object to constrain to.
+--- @param localPos2 GVector @Position relative to the the second physics object to constrain to.
+--- @param width number @The width of the rope.
+--- @param fwdBind number @The key binding for "forward", corresponding to an Enums/KEY
+--- @param bwdBind number @The key binding for "backwards", corresponding to an Enums/KEY
+--- @param fwdSpeed number @Forward speed.
+--- @param bwdSpeed number @Backwards speed.
+--- @param material string @The material of the rope
 --- @param toggle? boolean @Whether the winch should be on toggle.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint

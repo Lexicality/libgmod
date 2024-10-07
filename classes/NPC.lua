@@ -3,8 +3,8 @@
 local GNPC = {}
 --- Makes the NPC like, hate, feel neutral towards, or fear the entity in question. If you want to setup relationship towards a certain entity `class`, use NPC:AddRelationship.  
 --- ℹ **NOTE**: NPCs do not see NextBots by default. This can be fixed by adding the FL_OBJECT flag to the NextBot.  
---- @param target? GEntity @The entity for the relationship to be applied to.
---- @param disposition? number @A Enums/D representing the relationship type.
+--- @param target GEntity @The entity for the relationship to be applied to.
+--- @param disposition number @A Enums/D representing the relationship type.
 --- @param priority? number @How strong the relationship is
 function GNPC:AddEntityRelationship(target, disposition, priority)
 end
@@ -24,7 +24,7 @@ function GNPC:AlertSound()
 end
 
 --- Executes any movement the current sequence may have.  
---- @param interval? number @This is a good place to use Entity:GetAnimTimeInterval.
+--- @param interval number @This is a good place to use Entity:GetAnimTimeInterval.
 --- @param target? GEntity 
 --- @return boolean @`true` if any movement was performed.
 function GNPC:AutoMovement(interval, target)
@@ -585,7 +585,7 @@ function GNPC:NavSetGoalPos(pos)
 end
 
 --- Set the goal target for an NPC.  
---- @param target? GEntity @The targeted entity to set the goal to.
+--- @param target GEntity @The targeted entity to set the goal to.
 --- @param offset? GVector @The offset to apply to the targeted entity's position.
 --- @return boolean @Whether path generation was successful or not
 function GNPC:NavSetGoalTarget(target, offset)
@@ -620,7 +620,7 @@ function GNPC:PlaySentence(sentence, delay, volume)
 end
 
 --- Makes the NPC remember an entity or an enemy as unreachable, for a specified amount of time. Use NPC:IsUnreachable to check if an entity is still unreachable.  
---- @param ent? GEntity @The entity to mark as unreachable.
+--- @param ent GEntity @The entity to mark as unreachable.
 --- @param time? number @For how long to remember the entity as unreachable
 function GNPC:RememberUnreachable(ent, time)
 end
@@ -697,7 +697,7 @@ function GNPC:SetCurrentWeaponProficiency(proficiency)
 end
 
 --- Sets the target for an NPC.  
---- @param enemy? GEntity @The enemy that the NPC should target
+--- @param enemy GEntity @The enemy that the NPC should target
 --- @param newenemy? boolean @Calls NPC:SetCondition(COND.NEW_ENEMY) if the new enemy is valid and not equal to the last enemy.
 function GNPC:SetEnemy(enemy, newenemy)
 end
@@ -728,7 +728,7 @@ function GNPC:SetIdealYaw(angle)
 end
 
 --- Sets the ideal yaw angle (left-right rotation) for the NPC and forces them to turn to that angle.  
---- @param angle? number @The aim direction to set, the `yaw` component.
+--- @param angle number @The aim direction to set, the `yaw` component.
 --- @param speed? number @The turn speed
 function GNPC:SetIdealYawAndUpdate(angle, speed)
 end
@@ -819,7 +819,7 @@ function GNPC:SetTaskStatus(status)
 end
 
 --- Sets given entity as an unforgettable enemy.  
---- @param enemy? GEntity @The enemy entity to set.
+--- @param enemy GEntity @The enemy entity to set.
 --- @param set? boolean @The entity to set.
 function GNPC:SetUnforgettable(enemy, set)
 end

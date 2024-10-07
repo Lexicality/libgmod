@@ -24,10 +24,10 @@ function navmesh.CreateNavArea(corner, opposite_corner)
 end
 
 --- Creates a new CNavLadder.  
---- @param top? GVector @The top position of the ladder.
---- @param bottom? GVector @The bottom position of the ladder.
---- @param width? number @Width for the new ladder.
---- @param dir? GVector @Directional vector in which way the ladder should be facing
+--- @param top GVector @The top position of the ladder.
+--- @param bottom GVector @The bottom position of the ladder.
+--- @param width number @Width for the new ladder.
+--- @param dir GVector @Directional vector in which way the ladder should be facing
 --- @param maxHeightAboveTopArea? number @If above 0, will limit how much the top of the ladder can be adjusted to the closest CNavArea when automatically connecting the newly create
 --- @return GCNavLadder @The new CNavLadder or nil if we failed for some reason.
 function navmesh.CreateNavLadder(top, bottom, width, dir, maxHeightAboveTopArea)
@@ -110,7 +110,7 @@ end
 
 --- Returns the closest CNavArea to given position at the same height, or beneath it.  
 --- This function will ignore blocked CNavAreas. See navmesh.GetNavArea for a function that does see blocked areas.  
---- @param pos? GVector @The position to look from
+--- @param pos GVector @The position to look from
 --- @param anyZ? boolean @This argument is ignored and has no effect
 --- @param maxDist? number @This is the maximum distance from the given position that the function will look for a CNavArea
 --- @param checkLOS? boolean @If this is set to true then the function will internally do a util.TraceLine from the starting position to each potential CNavArea with a [M

@@ -3,7 +3,7 @@
 _G.vgui = {}
 --- Creates a panel by the specified classname.  
 --- ℹ **NOTE**: Custom VGUI elements are not loaded instantly. Use GM:OnGamemodeLoaded to create them on startup.  
---- @param classname? string @Classname of the panel to create
+--- @param classname string @Classname of the panel to create
 --- @param parent? GPanel @Panel to parent to.
 --- @param name? string @Custom name of the created panel for scripting/debugging purposes
 --- @return GPanel @The created panel, or `nil` if creation failed for whatever reason.
@@ -11,7 +11,7 @@ function vgui.Create(classname, parent, name)
 end
 
 --- Creates a panel from a table, used alongside vgui.RegisterFile and vgui.RegisterTable to efficiently define, register, and instantiate custom panels.  
---- @param metatable? table @Your PANEL table.
+--- @param metatable table @Your PANEL table.
 --- @param parent? GPanel @Which panel to parent the newly created panel to.
 --- @param name? string @Custom name of the created panel for scripting/debugging purposes
 --- @return GPanel @The created panel, or `nil` if creation failed for whatever reason.
@@ -71,8 +71,8 @@ function vgui.IsHoveringWorld()
 end
 
 --- Registers a panel for later creation via vgui.Create.  
---- @param classname? string @Classname of the panel to register
---- @param panelTable? table @The table containing the panel information.
+--- @param classname string @Classname of the panel to register
+--- @param panelTable table @The table containing the panel information.
 --- @param baseName? string @Classname of a panel to inherit functionality from
 --- @return table @The given panel table from second argument
 function vgui.Register(classname, panelTable, baseName)
@@ -96,7 +96,7 @@ end
 
 --- Registers a table to use as a panel, to be used with vgui.CreateFromTable.  
 --- All this function does is assigns Base key to your table and returns the table.  
---- @param panel? table @The PANEL table.
+--- @param panel table @The PANEL table.
 --- @param base? string @A base for the panel.
 --- @return table @The PANEL table
 function vgui.RegisterTable(panel, base)

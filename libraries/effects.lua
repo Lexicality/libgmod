@@ -13,20 +13,20 @@ function effects.BeamRingPoint(pos, lifetime, startRad, endRad, width, amplitude
 end
 
 --- Creates a bubble trail effect, the very same you get when shooting underwater.  
---- @param startPos? GVector @The start position of the effect.
---- @param endPos? GVector @The end position of the effects.
---- @param count? number @How many bubbles to spawn
---- @param height? number @How high the bubbles can fly up before disappearing.
+--- @param startPos GVector @The start position of the effect.
+--- @param endPos GVector @The end position of the effects.
+--- @param count number @How many bubbles to spawn
+--- @param height number @How high the bubbles can fly up before disappearing.
 --- @param speed? number @How quickly the bubbles move.
 --- @param delay? number @Delay in seconds after the function call and before the effect actually spawns.
 function effects.BubbleTrail(startPos, endPos, count, height, speed, delay)
 end
 
 --- Creates a bunch of bubbles inside a defined box.  
---- @param mins? GVector @The lowest extents of the box.
---- @param maxs? GVector @The highest extents of the box.
---- @param count? number @How many bubbles to spawn
---- @param height? number @How high the bubbles can fly up before disappearing.
+--- @param mins GVector @The lowest extents of the box.
+--- @param maxs GVector @The highest extents of the box.
+--- @param count number @How many bubbles to spawn
+--- @param height number @How high the bubbles can fly up before disappearing.
 --- @param speed? number @How quickly the bubbles move.
 --- @param delay? number @Delay in seconds after the function call and before the effect actually spawns.
 function effects.Bubbles(mins, maxs, count, height, speed, delay)

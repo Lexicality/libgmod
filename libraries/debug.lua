@@ -29,7 +29,7 @@ function debug.gethook(thread)
 end
 
 --- Returns debug information about a function.  
---- @param funcOrStackLevel? function @Takes either a function or a number representing the stack level as an argument
+--- @param funcOrStackLevel function @Takes either a function or a number representing the stack level as an argument
 --- @param fields? string @A string whose characters specify the information to be retrieved
 --- @param func? function @Function to use
 --- @return table @A table as a Structures/DebugInfo containing information about the function you passed
@@ -111,8 +111,8 @@ end
 
 --- <removed>This function was removed due to security concerns.</removed>  
 --- Sets the variable indexed from func  
---- @param func? function @The function to index the upvalue from
---- @param index? number @The index from func
+--- @param func function @The function to index the upvalue from
+--- @param index number @The index from func
 --- @param val? any @The value to set the upvalue to.
 --- @return string @Returns nil if there is no upvalue with the given index, otherwise it returns the upvalue's name.
 function debug.setupvalue(func, index, val)

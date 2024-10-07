@@ -11,7 +11,7 @@ function table.Add(target, source)
 end
 
 --- Changes all keys to sequential integers. This creates a new table object and does not affect the original.  
---- @param table? table @The original table to modify.
+--- @param table table @The original table to modify.
 --- @param saveKeys? boolean @Save the keys within each member table
 --- @return table @Table with integer keys.
 function table.ClearKeys(table, saveKeys)
@@ -197,8 +197,8 @@ end
 --- See table.Inherit, which doesn't override existing values.  
 --- See also table.Add, which simply adds values of one table to another.  
 --- ℹ **NOTE**: This function can cause a stack overflow under certain circumstances.  
---- @param destination? table @The table you want the source table to merge with.
---- @param source? table @The table you want to merge with the destination table.
+--- @param destination table @The table you want the source table to merge with.
+--- @param source table @The table you want to merge with the destination table.
 --- @param forceOverride? boolean @If `true`, does not recursively merge sub-tables, and simply replaces them.
 --- @return table @Destination table
 function table.Merge(destination, source, forceOverride)
@@ -250,15 +250,15 @@ end
 
 --- Returns a list of keys sorted based on values of those keys.  
 --- For normal sorting see table.sort.  
---- @param tab? table @Table to sort
+--- @param tab table @Table to sort
 --- @param descending? boolean @Should the order be descending?
 --- @return table @A table of keys sorted by values from supplied table.
 function table.SortByKey(tab, descending)
 end
 
 --- Sorts a table by a named member.  
---- @param tab? table @Table to sort.
---- @param memberKey? any @The key used to identify the member.
+--- @param tab table @Table to sort.
+--- @param memberKey any @The key used to identify the member.
 --- @param ascending? boolean @Whether or not the order should be ascending.
 function table.SortByMember(tab, memberKey, ascending)
 end
@@ -278,7 +278,7 @@ function table.ToString(tbl, displayName, niceFormatting)
 end
 
 --- Concatenates the contents of a table to a string.  
---- @param tbl? table @The table to concatenate.
+--- @param tbl table @The table to concatenate.
 --- @param concatenator? string @A separator to insert between strings
 --- @param startPos? number @The key to start at
 --- @param endPos? number @The key to end at
@@ -325,10 +325,10 @@ function table.maxn(tbl)
 end
 
 --- Moves elements from one part of a table to another part a given table. This is similar to assigning elements from the source table to the destination table in multiple assignments.  
---- @param sourceTbl? table @The source table from which the elements are to be moved.
---- @param from? number @The start index of the source range from which the elements are to be moved.
---- @param to? number @The end index of the source range until which the elements are to be moved.
---- @param dest? number @The index within the destination table where the moved elements should be inserted.
+--- @param sourceTbl table @The source table from which the elements are to be moved.
+--- @param from number @The start index of the source range from which the elements are to be moved.
+--- @param to number @The end index of the source range until which the elements are to be moved.
+--- @param dest number @The index within the destination table where the moved elements should be inserted.
 --- @param destTbl? table @The destination table to which the elements are to be moved
 --- @return table @The modified destination table.
 function table.move(sourceTbl, from, to, dest, destTbl)
@@ -336,7 +336,7 @@ end
 
 --- Removes a value from a table and shifts any other values down to fill the gap.  
 --- ℹ **NOTE**: Does nothing if index is less than 1 or greater than `#tbl`  
---- @param tbl? table @The table to remove the value from.
+--- @param tbl table @The table to remove the value from.
 --- @param index? number @The index of the value to remove.
 --- @return any @The value that was removed.
 function table.remove(tbl, index)
@@ -344,7 +344,7 @@ end
 
 --- Sorts a sequential table either ascending or by the given sort function.  
 --- ℹ **NOTE**: This function modifies the table you give to it and internally uses the [quick sort algorithm](http://www.lua.org/source/5.2/ltablib.c.html#sort).  
---- @param tbl? table @The table to sort.
+--- @param tbl table @The table to sort.
 --- @param sorter? function @If specified, the sorting function
 function table.sort(tbl, sorter)
 end

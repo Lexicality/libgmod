@@ -97,9 +97,9 @@ function team.SetSpawnPoint(index, classes)
 end
 
 --- Creates a new team.  
---- @param teamIndex? number @The team index.
---- @param teamName? string @The team name.
---- @param teamColor? table @The team color
+--- @param teamIndex number @The team index.
+--- @param teamName string @The team name.
+--- @param teamColor table @The team color
 --- @param isJoinable? boolean @Whether the team is joinable or not.
 function team.SetUp(teamIndex, teamName, teamColor, isJoinable)
 end

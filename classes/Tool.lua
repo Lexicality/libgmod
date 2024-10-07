@@ -24,7 +24,7 @@ function GTool:GetBone(id)
 end
 
 --- Attempts to grab a clientside tool ConVar value as a boolean.  
---- @param name? string @Name of the ConVar to retrieve
+--- @param name string @Name of the ConVar to retrieve
 --- @param default? boolean @The default value to return in case the lookup fails.
 --- @return number @The value of the requested ConVar
 function GTool:GetClientBool(name, default)
@@ -37,7 +37,7 @@ function GTool:GetClientInfo(name)
 end
 
 --- Attempts to grab a clientside tool ConVar's value as a number.  
---- @param name? string @Name of the convar to retrieve
+--- @param name string @Name of the convar to retrieve
 --- @param default? number @The default value to return in case the lookup fails.
 --- @return number @The value of the requested ConVar.
 function GTool:GetClientNumber(name, default)

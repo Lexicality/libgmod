@@ -3,8 +3,8 @@ _G.halo = {}
 --- Applies a halo glow effect to one or multiple entities.  
 --- ⚠ **WARNING**: Using this function outside of the GM:PreDrawHalos hook can cause instability or crashes.  
 --- ℹ **NOTE**: The ignoreZ parameter will cause the halos to draw over the player's viewmodel. You can work around this using render.DepthRange in the GM:PreDrawViewModel, GM:PostDrawViewModel, GM:PreDrawPlayerHands and GM:PostDrawPlayerHands hooks.  
---- @param entities? table @A table of entities to add the halo effect to.
---- @param color? table @The desired color of the halo
+--- @param entities table @A table of entities to add the halo effect to.
+--- @param color table @The desired color of the halo
 --- @param blurX? number @The strength of the halo's blur on the x axis.
 --- @param blurY? number @The strength of the halo's blur on the y axis.
 --- @param passes? number @The number of times the halo should be drawn per frame

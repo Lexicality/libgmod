@@ -64,8 +64,8 @@ function GPanel:AlignTop(offset)
 end
 
 --- Uses animation to transition the current alpha value of a panel to a new alpha, over a set period of time and after a specified delay.  
---- @param alpha? number @The alpha value (0-255) to approach.
---- @param duration? number @The time in seconds it should take to reach the alpha.
+--- @param alpha number @The alpha value (0-255) to approach.
+--- @param duration number @The time in seconds it should take to reach the alpha.
 --- @param delay? number @The delay before the animation starts.
 --- @param callback? function @The function to be called once the animation finishes
 function GPanel:AlphaTo(alpha, duration, delay, callback)
@@ -124,8 +124,8 @@ end
 
 --- Fades panels color to specified one.  
 --- ℹ **NOTE**: The panel must have `GetColor` and `SetColor` functions for `ColorTo` to work.  
---- @param color? table @The color to fade to
---- @param length? number @Length of the animation
+--- @param color table @The color to fade to
+--- @param length number @Length of the animation
 --- @param delay? number @Delay before start fading
 --- @param callback? function @Function to execute when finished
 function GPanel:ColorTo(color, length, delay, callback)
@@ -801,7 +801,7 @@ end
 
 --- Loads a .gwen file (created by GWEN Designer) and calls Panel:LoadGWENString with the contents of the loaded file.  
 --- Used to load panel controls from a file.  
---- @param filename? string @The file to open
+--- @param filename string @The file to open
 --- @param path? string @The path used to look up the file
 function GPanel:LoadGWENFile(filename, path)
 end
@@ -847,21 +847,21 @@ function GPanel:MouseCapture(doCapture)
 end
 
 --- Places the panel above the passed panel with the specified offset.  
---- @param panel? GPanel @Panel to position relatively to.
+--- @param panel GPanel @Panel to position relatively to.
 --- @param offset? number @The align offset.
 function GPanel:MoveAbove(panel, offset)
 end
 
 --- Places the panel below the passed panel with the specified offset.  
---- @param panel? GPanel @Panel to position relatively to.
+--- @param panel GPanel @Panel to position relatively to.
 --- @param offset? number @The align offset.
 function GPanel:MoveBelow(panel, offset)
 end
 
 --- Moves the panel by the specified coordinates using animation.  
---- @param moveX? number @The number of pixels to move by in the horizontal (x) direction.
---- @param moveY? number @The number of pixels to move by in the vertical (y) direction.
---- @param time? number @The time (in seconds) in which to perform the animation.
+--- @param moveX number @The number of pixels to move by in the horizontal (x) direction.
+--- @param moveY number @The number of pixels to move by in the vertical (y) direction.
+--- @param time number @The time (in seconds) in which to perform the animation.
 --- @param delay? number @The delay (in seconds) before the animation begins.
 --- @param ease? number @The easing of the start and/or end speed of the animation
 --- @param callback? function @The function to be called once the animation is complete
@@ -869,22 +869,22 @@ function GPanel:MoveBy(moveX, moveY, time, delay, ease, callback)
 end
 
 --- Places the panel left to the passed panel with the specified offset.  
---- @param panel? GPanel @Panel to position relatively to.
+--- @param panel GPanel @Panel to position relatively to.
 --- @param offset? number @The align offset.
 function GPanel:MoveLeftOf(panel, offset)
 end
 
 --- Places the panel right to the passed panel with the specified offset.  
---- @param panel? GPanel @Panel to position relatively to.
+--- @param panel GPanel @Panel to position relatively to.
 --- @param offset? number @The align offset.
 function GPanel:MoveRightOf(panel, offset)
 end
 
 --- Moves the panel to the specified position using animation.  
 --- ℹ **NOTE**: Setting the ease argument to 0 will result in the animation happening instantly, this applies to all MoveTo/SizeTo functions  
---- @param posX? number @The target x coordinate of the panel.
---- @param posY? number @The target y coordinate of the panel.
---- @param time? number @The time to perform the animation within.
+--- @param posX number @The target x coordinate of the panel.
+--- @param posY number @The target y coordinate of the panel.
+--- @param time number @The time to perform the animation within.
 --- @param delay? number @The delay before the animation starts.
 --- @param ease? number @The easing of the start and/or end speed of the animation
 --- @param callback? function @The function to be called once the animation finishes
@@ -921,7 +921,7 @@ end
 --- * Panel:AlphaTo  
 --- * Panel:MoveBy  
 --- * Panel:LerpPositions  
---- @param length? number @The length of the animation in seconds.
+--- @param length number @The length of the animation in seconds.
 --- @param delay? number @The delay before the animation starts.
 --- @param ease? number @The power/index to use for easing
 --- @param callback? function @The function to be called when the animation ends
@@ -1004,8 +1004,8 @@ function GPanel:RebuildSpawnIconEx(data)
 end
 
 --- Allows the panel to receive drag and drop events. Can be called multiple times with different names to receive multiple different draggable panel events.  
---- @param name? string @Name of DnD panels to receive
---- @param func? function @This function is called whenever a panel with valid name is hovering above and dropped on this panel
+--- @param name string @Name of DnD panels to receive
+--- @param func function @This function is called whenever a panel with valid name is hovering above and dropped on this panel
 --- @param menu? table @A table of strings that will act as a menu if drag'n'drop was performed with a right click
 function GPanel:Receiver(name, func, menu)
 end
@@ -1274,7 +1274,7 @@ end
 
 --- Sets the model to be displayed by SpawnIcon.  
 --- ℹ **NOTE**: This must be called after setting size if you wish to use a different size spawnicon  
---- @param ModelPath? string @The path of the model to set
+--- @param ModelPath string @The path of the model to set
 --- @param skin? number @The skin to set
 --- @param bodygroups? string @The body groups to set
 function GPanel:SetModel(ModelPath, skin, bodygroups)
@@ -1318,7 +1318,7 @@ function GPanel:SetParent(parent)
 end
 
 --- Used by AvatarImage to load an avatar for given player.  
---- @param player? GPlayer @The player to use avatar of.
+--- @param player GPlayer @The player to use avatar of.
 --- @param size? number @The size of the avatar to use
 function GPanel:SetPlayer(player, size)
 end
@@ -1577,13 +1577,13 @@ function GPanel:StopLoading()
 end
 
 --- Resizes the panel object's height so that its bottom is aligned with the top of the passed panel. An offset greater than zero will reduce the panel's height to leave a gap between it and the passed panel.  
---- @param tgtPanel? GPanel @The panel to align the bottom of this one with.
+--- @param tgtPanel GPanel @The panel to align the bottom of this one with.
 --- @param offset? number @The gap to leave between this and the passed panel
 function GPanel:StretchBottomTo(tgtPanel, offset)
 end
 
 --- Resizes the panel object's width so that its right edge is aligned with the left of the passed panel. An offset greater than zero will reduce the panel's width to leave a gap between it and the passed panel.  
---- @param tgtPanel? GPanel @The panel to align the right edge of this one with.
+--- @param tgtPanel GPanel @The panel to align the right edge of this one with.
 --- @param offset? number @The gap to leave between this and the passed panel
 function GPanel:StretchRightTo(tgtPanel, offset)
 end

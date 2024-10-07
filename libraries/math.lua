@@ -122,7 +122,7 @@ function math.DistanceSqr(x1, y1, x2, y2)
 end
 
 --- Calculates the progress of a value fraction, taking in to account given easing fractions  
---- @param progress? number @Fraction of the progress to ease, from 0 to 1.
+--- @param progress number @Fraction of the progress to ease, from 0 to 1.
 --- @param easeIn? number @Fraction of how much easing to begin with, from 0 to 1.
 --- @param easeOut? number @Fraction of how much easing to end with, from 0 to 1.
 --- @return number @"Eased" Value, from 0 to 1
@@ -365,7 +365,7 @@ function math.Remap(value, inMin, inMax, outMin, outMax)
 end
 
 --- Rounds the given value to the nearest whole number or to the given decimal places.  
---- @param value? number @The value to round.
+--- @param value number @The value to round.
 --- @param decimals? number @The decimal places to round to.
 --- @return number @The rounded value.
 function math.Round(value, decimals)
@@ -387,7 +387,7 @@ function math.TimeFraction(start, end_, current)
 end
 
 --- Trim unwanted decimal places.  
---- @param num? number @The number to truncate
+--- @param num number @The number to truncate
 --- @param digits? number @The amount of digits to keep after the point.
 --- @return number @The result.
 function math.Truncate(num, digits)
@@ -495,7 +495,7 @@ end
 
 --- With one argument, return the natural logarithm of x (to base e).  
 --- With two arguments, return the logarithm of x to the given base, calculated as log(x)/log(base).  
---- @param x? number @The value to get the base from exponent from.
+--- @param x number @The value to get the base from exponent from.
 --- @param base? number @The logarithmic base.
 --- @return number @Logarithm of x to the given base
 function math.log(x, base)

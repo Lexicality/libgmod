@@ -69,9 +69,9 @@ function derma.SkinChangeIndex()
 end
 
 --- Calls the specified hook for the given panel  
---- @param type? string @The type of hook to run
---- @param name? string @The name of the hook to run
---- @param panel? GPanel @The panel to call the hook for
+--- @param type string @The type of hook to run
+--- @param name string @The name of the hook to run
+--- @param panel GPanel @The panel to call the hook for
 --- @param vararg1? any @First parameter for the panel hook
 --- @param vararg2? any @Second parameter for the panel hook
 --- @param vararg3? any @Third parameter for the panel hook.
@@ -87,8 +87,8 @@ end
 
 --- Returns a function to draw a specified texture of panels skin.  
 --- These are usually generated via GWEN.CreateTextureBorder and similar.  
---- @param name? string @The identifier of the texture
---- @param pnl? GPanel @Panel to get the skin of.
+--- @param name string @The identifier of the texture
+--- @param pnl GPanel @Panel to get the skin of.
 --- @param fallback? function @What to return if we failed to retrieve the texture
 --- @return function @A function that is created with the GWEN library to draw a texture
 function derma.SkinTexture(name, pnl, fallback)

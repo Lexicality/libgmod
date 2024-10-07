@@ -1,8 +1,8 @@
 --- The timer library is a very useful set of functions which allow you to run a function periodically or after a given delay.  
 _G.timer = {}
 --- Adjusts a previously created (timer.Create) timer with the given identifier.  
---- @param identifier? any @Identifier of the timer to adjust.
---- @param delay? number @The delay interval in seconds
+--- @param identifier any @Identifier of the timer to adjust.
+--- @param delay number @The delay interval in seconds
 --- @param repetitions? number @Repetitions
 --- @param func? function @The new function
 --- @return boolean @`true` if succeeded.

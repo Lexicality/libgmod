@@ -1,8 +1,8 @@
 --- The player_manager library lets you manage players, such as setting their models or creating player classes.  
 _G.player_manager = {}
 --- Assigns view model hands to player model.  
---- @param name? string @Player model name
---- @param model? string @Hands model
+--- @param name string @Player model name
+--- @param model string @Hands model
 --- @param skin? number @Skin to apply to the hands
 --- @param bodygroups? string @Bodygroups to apply to the hands
 --- @param matchBodySkin? boolean @If set to `true`, the skin of the hands will be set to the skin of the playermodel
@@ -51,8 +51,8 @@ function player_manager.OnPlayerSpawn(ply, transiton)
 end
 
 --- Register a class metatable to be assigned to players later  
---- @param name? string @Class name
---- @param table? table @Class metatable, see Structures/PLAYER
+--- @param name string @Class name
+--- @param table table @Class metatable, see Structures/PLAYER
 --- @param base? string @Base class name
 function player_manager.RegisterClass(name, table, base)
 end

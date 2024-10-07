@@ -16,9 +16,9 @@ end
 --- Returns the content of a file asynchronously.  
 --- All limitations of file.Read also apply.  
 --- ℹ **NOTE**: This function is currently broken in the Menu State and won't be fixed. [Bug Report](https://github.com/Facepunch/garrysmod-issues/issues/5433)  
---- @param fileName? string @The name of the file.
---- @param gamePath? string @The path to look for the files and directories in
---- @param callback? function @A callback function that will be called when the file read operation finishes
+--- @param fileName string @The name of the file.
+--- @param gamePath string @The path to look for the files and directories in
+--- @param callback function @A callback function that will be called when the file read operation finishes
 --- @param sync? boolean @If `true` the file will be read synchronously.
 --- @return number @FSASYNC_OK on success, FSASYNC_ERR_ on failure.
 function file.AsyncRead(fileName, gamePath, callback, sync)
@@ -31,7 +31,7 @@ end
 
 --- Deletes a file or `empty` folder that is relative to the **data** folder. You can't remove any files outside of **data** folder.  
 --- ℹ **NOTE**: You are able to delete **any** file in the Menu state.  
---- @param name? string @The file name.
+--- @param name string @The file name.
 --- @param path? string @The path to look for the files and directories in
 --- @return boolean 
 function file.Delete(name, path)
@@ -47,8 +47,8 @@ end
 
 --- Returns a list of files and directories inside a single folder.  
 --- ⚠ **WARNING**: It seems that paths with capital letters (e.g. lua/MyFolder/*) don't work as expected on Linux.  
---- @param name? string @The wildcard to search for
---- @param path? string @The path to look for the files and directories in
+--- @param name string @The wildcard to search for
+--- @param path string @The path to look for the files and directories in
 --- @param sorting? string @The sorting to be used, **optional**
 --- @return table @A table of found files, or `nil` if the path is invalid
 --- @return table @A table of found directories, or `nil` if the path is invalid
@@ -72,7 +72,7 @@ end
 
 --- Returns the content of a file.  
 --- ⚠ **WARNING**: Beware of casing -- some filesystems are case-sensitive. SRCDS on Linux seems to force file/directory creation to lowercase, but will not modify read operations.  
---- @param fileName? string @The name of the file.
+--- @param fileName string @The name of the file.
 --- @param gamePath? string @The path to look for the files and directories in
 --- @return string @The data from the file as a string, or `nil` if the file isn't found.
 function file.Read(fileName, gamePath)

@@ -22,12 +22,12 @@ end
 
 --- Draws a hollow circle, made of lines. For a filled circle, see examples for surface.DrawPoly.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param originX? number @The center x integer coordinate.
---- @param originY? number @The center y integer coordinate.
---- @param radius? number @The radius of the circle.
---- @param r? number @The red value of the color to draw the circle with, or a Color.
---- @param g? number @The green value of the color to draw the circle with
---- @param b? number @The blue value of the color to draw the circle with
+--- @param originX number @The center x integer coordinate.
+--- @param originY number @The center y integer coordinate.
+--- @param radius number @The radius of the circle.
+--- @param r number @The red value of the color to draw the circle with, or a Color.
+--- @param g number @The green value of the color to draw the circle with
+--- @param b number @The blue value of the color to draw the circle with
 --- @param a? number @The alpha value of the color to draw the circle with
 function surface.DrawCircle(originX, originY, radius, r, g, b, a)
 end
@@ -43,10 +43,10 @@ end
 
 --- Draws a hollow box with a given border width.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param x? number @The start x integer coordinate.
---- @param y? number @The start y integer coordinate.
---- @param w? number @The integer width.
---- @param h? number @The integer height.
+--- @param x number @The start x integer coordinate.
+--- @param y number @The start y integer coordinate.
+--- @param w number @The integer width.
+--- @param h number @The integer height.
 --- @param thickness? number @The thickness of the outlined box border.
 function surface.DrawOutlinedRect(x, y, w, h, thickness)
 end
@@ -72,7 +72,7 @@ end
 --- Draw the specified text on the screen, using the previously set [position](surface.SetTextPos), [font](surface.SetFont) and [color](surface.SetTextColor). This function does **not** handle newlines.  
 --- This function moves the [text position](surface.SetTextPos) by the length of the drawn text - this can be used to change text properties (such as font or color) without having to manually recalculate the text position. See example #2 for example use of this behavior.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
---- @param text? string @The text to be rendered.
+--- @param text string @The text to be rendered.
 --- @param forceAdditive? boolean @`true` to force text to render additive, `false` to force not additive, `nil` to use font's value
 function surface.DrawText(text, forceAdditive)
 end
@@ -230,9 +230,9 @@ end
 --- Set the color of any future shapes to be drawn, can be set by either using R, G, B, A as separate values or by a Color.  
 --- ℹ **NOTE**: The alpha value may not work properly if you're using a material without `$vertexalpha`.  
 --- ℹ **NOTE**: Due to post processing and gamma correction the color you set with this function may appear differently when rendered. This problem does not occur on materials drawn with surface.DrawTexturedRect.  
---- @param r? number @The red value of color.
---- @param g? number @The green value of color.
---- @param b? number @The blue value of color.
+--- @param r number @The red value of color.
+--- @param g number @The green value of color.
+--- @param b number @The blue value of color.
 --- @param a? number @The alpha value of color.
 --- @param color? table @A Color object/table to read the color from
 function surface.SetDrawColor(r, g, b, a, color)
@@ -253,9 +253,9 @@ function surface.SetMaterial(material)
 end
 
 --- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by a Color.  
---- @param r? number @The red value of color.
---- @param g? number @The green value of color
---- @param b? number @The blue value of color
+--- @param r number @The red value of color.
+--- @param g number @The green value of color
+--- @param b number @The blue value of color
 --- @param a? number @The alpha value of color
 --- @param color? table @A Color object/table to read the color from
 function surface.SetTextColor(r, g, b, a, color)

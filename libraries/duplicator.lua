@@ -34,7 +34,7 @@ function duplicator.ConstraintType()
 end
 
 --- Copies the entity, and all of its constraints and entities, then returns them in a table.  
---- @param ent? GEntity @The entity to duplicate
+--- @param ent GEntity @The entity to duplicate
 --- @param tableToAdd? table @A preexisting table to add entities and constraints in from
 --- @return table @A table containing duplication info which includes the following members:
 function duplicator.Copy(ent, tableToAdd)
@@ -76,8 +76,8 @@ function duplicator.DoBoneManipulator(ent, bones)
 end
 
 --- Restores the flex data using Entity:SetFlexWeight and Entity:SetFlexScale  
---- @param ent? GEntity @The entity to restore the flexes on
---- @param flex? table @The flexes to restore
+--- @param ent GEntity @The entity to restore the flexes on
+--- @param flex table @The flexes to restore
 --- @param scale? number @The flex scale to apply
 function duplicator.DoFlex(ent, flex, scale)
 end
@@ -92,7 +92,7 @@ end
 
 --- "Applies bone data, generically."  
 --- If data contains a PhysicsObjects table, it moves, re-angles and if relevent freezes all specified bones, first converting from local coordinates to world coordinates.  
---- @param ent? GEntity @The entity to be applied upon
+--- @param ent GEntity @The entity to be applied upon
 --- @param ply? GPlayer @The player who owns the entity
 --- @param data? table @The data to be applied onto the entity
 function duplicator.DoGenericPhysics(ent, ply, data)

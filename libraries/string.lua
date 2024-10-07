@@ -29,7 +29,7 @@ function string.CardinalToOrdinal(input)
 end
 
 --- Inserts commas for every third digit of a given number.  
---- @param value? number @The input number to commafy
+--- @param value number @The input number to commafy
 --- @param separator? string @An optional string that will be used instead of the default comma.
 --- @return string @The commafied string
 function string.Comma(value, separator)
@@ -45,15 +45,15 @@ end
 --- Splits a string up wherever it finds the given separator.  
 --- The function string.Split is an alias of this function, except that function doesn't support using patterns.  
 --- See string.Implode for the reverse operation of this function.  
---- @param separator? string @The string will be separated wherever this sequence is found.
---- @param str? string @The string to split up.
+--- @param separator string @The string will be separated wherever this sequence is found.
+--- @param str string @The string to split up.
 --- @param withpattern? boolean @Set this to true if your separator is a pattern.
 --- @return table @Exploded string as a numerical sequential table.
 function string.Explode(separator, str, withpattern)
 end
 
 --- Returns the time as a formatted string or as a table if no format is given.  
---- @param float? number @The time in seconds to format.
+--- @param float number @The time in seconds to format.
 --- @param format? string @An optional formatting to use
 --- @return string @Returns the time as a formatted string only if a format was specified
 function string.FormattedTime(float, format)
@@ -223,21 +223,21 @@ function string.ToTable(str)
 end
 
 --- Removes leading and trailing matches of a string.  
---- @param Inputstring? string @The string to trim.
+--- @param Inputstring string @The string to trim.
 --- @param Char? string @String to match - can be multiple characters
 --- @return string @Modified string
 function string.Trim(Inputstring, Char)
 end
 
 --- Removes leading spaces/characters from a string.  
---- @param str? string @String to trim
+--- @param str string @String to trim
 --- @param char? string @Custom character to remove
 --- @return string @Trimmed string
 function string.TrimLeft(str, char)
 end
 
 --- Removes trailing spaces/passed character from a string.  
---- @param str? string @String to remove from
+--- @param str string @String to remove from
 --- @param char? string @Custom character to remove, default is a space
 --- @return string @Trimmed string
 function string.TrimRight(str, char)
@@ -245,7 +245,7 @@ end
 
 --- Returns the given string's characters in their numeric ASCII representation.  
 --- ⚠ **WARNING**: This function will throw an error if the slice length is greater than 8000 characters.  
---- @param string? string @The string to get the chars from.
+--- @param string string @The string to get the chars from.
 --- @param startPos? number @The first character of the string to get the byte of.
 --- @param endPos? number @The last character of the string to get the byte of.
 --- @return any @Numerical bytes
@@ -260,7 +260,7 @@ end
 
 --- Returns the binary bytecode of the given function.  
 --- ℹ **NOTE**: This does not work with functions created in C/C++. An error will be thrown if it is  
---- @param func? function @The function to get the bytecode of
+--- @param func function @The function to get the bytecode of
 --- @param stripDebugInfo? boolean @True to strip the debug data, false to keep it
 --- @return string @Bytecode
 function string.dump(func, stripDebugInfo)
@@ -268,8 +268,8 @@ end
 
 --- Attempts to find the specified substring in a string.  
 --- ⚠ **WARNING**: This function uses Lua Patterns by default.  
---- @param haystack? string @The string to search in.
---- @param needle? string @The string to find, can contain patterns if enabled.
+--- @param haystack string @The string to search in.
+--- @param needle string @The string to find, can contain patterns if enabled.
 --- @param startPos? number @The position to start the search from, can be negative start position will be relative to the end position.
 --- @param noPatterns? boolean @Disable patterns.
 --- @return number @Starting position of the found text, or nil if the text wasn't found
@@ -301,9 +301,9 @@ function string.gmatch(data, pattern)
 end
 
 --- This functions main purpose is to replace certain character sequences in a string using Patterns.  
---- @param string? string @String which should be modified.
---- @param pattern? string @The pattern that defines what should be matched and eventually be replaced.
---- @param replacement? string @In case of a string the matched sequence will be replaced with it
+--- @param string string @String which should be modified.
+--- @param pattern string @The pattern that defines what should be matched and eventually be replaced.
+--- @param replacement string @In case of a string the matched sequence will be replaced with it
 --- @param maxReplaces? number @Maximum number of replacements to be made.
 --- @return string @replaceResult
 --- @return number @replaceCount
@@ -324,8 +324,8 @@ function string.lower(str)
 end
 
 --- Finds a Pattern in a string.  
---- @param string? string @String which should be searched in for matches.
---- @param pattern? string @The pattern that defines what should be matched.
+--- @param string string @String which should be searched in for matches.
+--- @param pattern string @The pattern that defines what should be matched.
 --- @param startPosition? number @The start index to start the matching from, can be negative to start the match from a position relative to the end.
 --- @return any @Matched text(s)
 function string.match(string, pattern, startPosition)
@@ -346,8 +346,8 @@ function string.reverse(str)
 end
 
 --- Returns a sub-string, starting from the character at position `StartPos` of the string (inclusive), and optionally ending at the character at position `EndPos` of the string (also inclusive). If EndPos is not given, the rest of the string is returned.  
---- @param string? string @The string you'll take a sub-string out of.
---- @param StartPos? number @The position of the first character that will be included in the sub-string
+--- @param string string @The string you'll take a sub-string out of.
+--- @param StartPos number @The position of the first character that will be included in the sub-string
 --- @param EndPos? number @The position of the last character to be included in the sub-string
 --- @return string @The substring.
 function string.sub(string, StartPos, EndPos)

@@ -3,9 +3,9 @@
 local GCNewParticleEffect = {}
 --- Adds a control point to the particle system.  
 --- ℹ **NOTE**: This function will not work if the CNewParticleEffect:GetOwner entity is not valid  
---- @param cpID? number @The control point ID, 0 to 63.
---- @param ent? GEntity @The entity to attach the control point to.
---- @param partAttachment? number @See Enums/PATTACH.
+--- @param cpID number @The control point ID, 0 to 63.
+--- @param ent GEntity @The entity to attach the control point to.
+--- @param partAttachment number @See Enums/PATTACH.
 --- @param entAttachment? number @The attachment ID on the entity to attach the particle system to
 --- @param offset? GVector @The offset from the Entity:GetPos of the entity we are attaching this CP to.
 function GCNewParticleEffect:AddControlPoint(cpID, ent, partAttachment, entAttachment, offset)

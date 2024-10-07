@@ -36,7 +36,7 @@ end
 --- Adds a gesture animation to the entity and plays it.  
 --- See Entity:AddGestureSequence and Entity:AddLayeredSequence for functions that takes sequences instead of Enums/ACT.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
---- @param activity? number @The activity to play as the gesture
+--- @param activity number @The activity to play as the gesture
 --- @param autokill? boolean 
 --- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions.
 function GEntity:AddGesture(activity, autokill)
@@ -46,7 +46,7 @@ end
 --- See Entity:AddGesture for a function that takes Enums/ACT.  
 --- See also Entity:AddLayeredSequence.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
---- @param sequence? number @The sequence ID to play as the gesture
+--- @param sequence number @The sequence ID to play as the gesture
 --- @param autokill? boolean 
 --- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions.
 function GEntity:AddGestureSequence(sequence, autokill)
@@ -99,7 +99,7 @@ end
 
 --- Returns a centered vector of this entity, NPCs use this internally to aim at their targets.  
 --- ℹ **NOTE**: This only works on players and NPCs.  
---- @param origin? GVector @The vector of where the the attack comes from.
+--- @param origin GVector @The vector of where the the attack comes from.
 --- @param noisy? boolean @Decides if it should return the centered vector with a random offset to it.
 --- @return GVector @The centered vector.
 function GEntity:BodyTarget(origin, noisy)
@@ -164,8 +164,8 @@ end
 
 --- Creates a clientside particle system attached to the entity. See also Global.CreateParticleSystem  
 --- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
---- @param particle? string @The particle name to create
---- @param attachment? number @Attachment ID to attach the particle to
+--- @param particle string @The particle name to create
+--- @param attachment number @Attachment ID to attach the particle to
 --- @param options? table @A table of tables ( IDs 1 to 64 ) having the following structure:
 --- @return GCNewParticleEffect @The created particle system.
 function GEntity:CreateParticleEffect(particle, attachment, options)
@@ -205,8 +205,8 @@ end
 --- Performs a trace attack towards the entity this function is called on, as if an invisible bullet is shot towards it. Visually identical to Entity:TakeDamageInfo.  
 --- ⚠ **WARNING**: Calling this function on the victim entity in ENTITY:OnTakeDamage can cause infinite loops.  
 --- ℹ **NOTE**: This function correctly applies damage to [func_breakable_surf](https://developer.valvesoftware.com/wiki/Func_breakable_surf) entities, unlike Entity:TakeDamageInfo.  
---- @param damageInfo? GCTakeDamageInfo @The damage to apply.
---- @param traceRes? table @Trace result to use to deal damage
+--- @param damageInfo GCTakeDamageInfo @The damage to apply.
+--- @param traceRes table @Trace result to use to deal damage
 --- @param dir? GVector @Direction of the attack.
 function GEntity:DispatchTraceAttack(damageInfo, traceRes, dir)
 end
@@ -249,7 +249,7 @@ end
 --- If used on a player or NPC character with the mouth rigged, the character will "lip-sync". This does not work with all sound files.  
 --- ℹ **NOTE**: When using this function with weapons, use the Weapon itself as the entity, not its owner!  
 --- 🦟 **BUG**: [This does not respond to Global.SuppressHostEvents.](https://github.com/Facepunch/garrysmod-issues/issues/2651)  
---- @param soundName? string @The name of the sound to be played
+--- @param soundName string @The name of the sound to be played
 --- @param soundLevel? number @A modifier for the distance this sound will reach, acceptable range is 0 to 511
 --- @param pitchPercent? number @The pitch applied to the sound
 --- @param volume? number @The volume, from 0 to 1.
@@ -322,7 +322,7 @@ end
 
 --- Fires an entity's input, conforming to the map IO event queue system. You can find inputs for most entities on the [Valve Developer Wiki](https://developer.valvesoftware.com/wiki/Output)  
 --- See also Entity:Input for a function that bypasses the event queue and GM:AcceptInput.  
---- @param input? string @The name of the input to fire
+--- @param input string @The name of the input to fire
 --- @param param? string @The value to give to the input, can also be a number or a boolean.
 --- @param delay? number @Delay in seconds before firing
 --- @param activator? GEntity @The entity that caused this input (i.e
@@ -334,7 +334,7 @@ end
 --- When used in a  hook such as WEAPON:Think or WEAPON:PrimaryAttack, it will use Player:LagCompensation internally.  
 --- ℹ **NOTE**: Lag compensation will not work if this function is called in a timer, regardless if the timer was made in a  hook.  
 --- ℹ **NOTE**: Due to how FireBullets is set up internally, bullet tracers will always originate from attachment 1.  
---- @param bulletInfo? table @The bullet data to be used
+--- @param bulletInfo table @The bullet data to be used
 --- @param suppressHostEvents? boolean @Has the effect of encasing the FireBullets call in Global.SuppressHostEvents, only works in multiplayer.
 function GEntity:FireBullets(bulletInfo, suppressHostEvents)
 end
@@ -964,28 +964,28 @@ function GEntity:GetNPCClass()
 end
 
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNW2Angle.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2Angle(key, fallback)
 end
 
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNW2Bool.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2Bool(key, fallback)
 end
 
 --- Retrieves a networked entity value at specified index on the entity that is set by Entity:SetNW2Entity.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2Entity(key, fallback)
 end
 
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNW2Float.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2Float(key, fallback)
@@ -993,7 +993,7 @@ end
 
 --- Retrieves a networked integer (whole number) value that was previously set by Entity:SetNW2Int.  
 --- ⚠ **WARNING**: The integer has a 32 bit limit. Use Entity:SetNWInt and Entity:GetNWInt instead  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value (If it isn't set).
 --- @return any @The value associated with the key
 function GEntity:GetNW2Int(key, fallback)
@@ -1007,7 +1007,7 @@ function GEntity:GetNW2String(key, fallback)
 end
 
 --- Retrieves a networked value at specified index on the entity that is set by Entity:SetNW2Var.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2Var(key, fallback)
@@ -1026,35 +1026,35 @@ function GEntity:GetNW2VarTable()
 end
 
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNW2Vector.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNW2Vector(key, fallback)
 end
 
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNWAngle.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNWAngle(key, fallback)
 end
 
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNWBool.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNWBool(key, fallback)
 end
 
 --- Retrieves a networked entity value at specified index on the entity that is set by Entity:SetNWEntity.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNWEntity(key, fallback)
 end
 
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNWFloat.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNWFloat(key, fallback)
@@ -1062,7 +1062,7 @@ end
 
 --- Retrieves a networked integer (whole number) value that was previously set by Entity:SetNWInt.  
 --- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value (If it isn't set).
 --- @return any @The value associated with the key
 function GEntity:GetNWInt(key, fallback)
@@ -1088,7 +1088,7 @@ function GEntity:GetNWVarTable()
 end
 
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNWVector.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNWVector(key, fallback)
@@ -1119,7 +1119,7 @@ end
 
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNetworked2Angle.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Angle instead.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Angle(key, fallback)
@@ -1127,7 +1127,7 @@ end
 
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNetworked2Bool.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Bool instead.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Bool(key, fallback)
@@ -1135,7 +1135,7 @@ end
 
 --- Retrieves a networked entity value at specified index on the entity that is set by Entity:SetNetworked2Entity.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Entity instead.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Entity(key, fallback)
@@ -1143,7 +1143,7 @@ end
 
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworked2Float.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Float instead.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Float(key, fallback)
@@ -1152,7 +1152,7 @@ end
 --- Retrieves a networked integer (whole number) value that was previously set by Entity:SetNetworked2Int.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Int instead.  
 --- ⚠ **WARNING**: The integer has a 32 bit limit. Use Entity:SetNWInt and Entity:GetNWInt instead  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value (If it isn't set).
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Int(key, fallback)
@@ -1168,7 +1168,7 @@ end
 
 --- Retrieves a networked value at specified index on the entity that is set by Entity:SetNetworked2Var.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Var instead.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Var(key, fallback)
@@ -1189,7 +1189,7 @@ end
 
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNetworked2Vector.  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Vector instead.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworked2Vector(key, fallback)
@@ -1197,7 +1197,7 @@ end
 
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWAngle instead.  
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNetworkedAngle.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? GAngle @The value to return if we failed to retrieve the value
 --- @return GAngle @The retrieved value
 function GEntity:GetNetworkedAngle(key, fallback)
@@ -1205,7 +1205,7 @@ end
 
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWBool instead.  
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNetworkedBool.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? boolean @The value to return if we failed to retrieve the value
 --- @return boolean @The retrieved value
 function GEntity:GetNetworkedBool(key, fallback)
@@ -1213,7 +1213,7 @@ end
 
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWEntity instead.  
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworkedEntity.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? GEntity @The value to return if we failed to retrieve the value
 --- @return GEntity @The retrieved value
 function GEntity:GetNetworkedEntity(key, fallback)
@@ -1222,7 +1222,7 @@ end
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWFloat instead.  
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworkedFloat.  
 --- Seems to be the same as Entity:GetNetworkedInt.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? number @The value to return if we failed to retrieve the value
 --- @return number @The retrieved value
 function GEntity:GetNetworkedFloat(key, fallback)
@@ -1230,7 +1230,7 @@ end
 
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWInt instead.  
 --- Retrieves a networked integer value at specified index on the entity that is set by Entity:SetNetworkedInt.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? number @The value to return if we failed to retrieve the value
 --- @return number @The retrieved value
 function GEntity:GetNetworkedInt(key, fallback)
@@ -1246,7 +1246,7 @@ end
 
 --- Retrieves a networked value at specified index on the entity that is set by Entity:SetNetworkedVar.  
 --- 🛑 **DEPRECATED**:   
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
 --- @return any @The value associated with the key
 function GEntity:GetNetworkedVar(key, fallback)
@@ -1267,7 +1267,7 @@ end
 
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWVector instead.  
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNetworkedVector.  
---- @param key? string @The key that is associated with the value
+--- @param key string @The key that is associated with the value
 --- @param fallback? GVector @The value to return if we failed to retrieve the value
 --- @return GVector @The retrieved value
 function GEntity:GetNetworkedVector(key, fallback)
@@ -1533,7 +1533,7 @@ function GEntity:GetSequenceMoveYaw(seq)
 end
 
 --- Returns the delta movement and angles of a sequence of the entity's model.  
---- @param sequenceId? number @The sequence index
+--- @param sequenceId number @The sequence index
 --- @param startCycle? number @The sequence start cycle
 --- @param endCyclnde? number @The sequence end cycle
 --- @return boolean @Whether the operation was successful
@@ -1639,7 +1639,7 @@ function GEntity:GetUp()
 end
 
 --- Retrieves a value from entity's Entity:GetTable. Set by Entity:SetVar.  
---- @param key? any @Key of the value to retrieve
+--- @param key any @Key of the value to retrieve
 --- @param default? any @A default value to fallback to if we couldn't retrieve the value from entity
 --- @return any @Retrieved value
 function GEntity:GetVar(key, default)
@@ -1672,7 +1672,7 @@ end
 --- ℹ **NOTE**:   
 --- this function will not remove or hide the entity it is called on.  
 --- For more expensive version of this function see Entity:GibBreakServer.  
---- @param force? GVector @The force to apply to the created gibs.
+--- @param force GVector @The force to apply to the created gibs.
 --- @param clr? table @If set, this will be color of the broken gibs instead of the entity's color.
 function GEntity:GibBreakClient(force, clr)
 end
@@ -1721,7 +1721,7 @@ end
 
 --- Sets the entity on fire.  
 --- See also Entity:Extinguish.  
---- @param length? number @How long to keep the entity ignited, in seconds.
+--- @param length number @How long to keep the entity ignited, in seconds.
 --- @param radius? number @The radius of the ignition, will ignite everything around the entity that is in this radius.
 function GEntity:Ignite(length, radius)
 end
@@ -1739,7 +1739,7 @@ end
 --- Fires input to the entity with the ability to make another entity responsible, bypassing the event queue system.  
 --- You should only use this function over Entity:Fire if you know what you are doing.  
 --- See also Entity:Fire for a function that conforms to the internal map IO event queue and GM:AcceptInput for a hook that can intercept inputs.  
---- @param input? string @The name of the input to fire
+--- @param input string @The name of the input to fire
 --- @param activator? GEntity @The entity that caused this input (i.e
 --- @param caller? GEntity @The entity that is triggering this input (i.e
 --- @param param? any @The value to give to the input
@@ -1968,8 +1968,8 @@ end
 
 --- Sets custom bone angles.  
 --- 🦟 **BUG**: [When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced.](https://github.com/Facepunch/garrysmod-issues/issues/5148)  
---- @param boneID? number @Index of the bone you want to manipulate
---- @param ang? GAngle @Angle to apply
+--- @param boneID number @Index of the bone you want to manipulate
+--- @param ang GAngle @Angle to apply
 --- @param networking? boolean @boolean to network these changes (if called from server)
 function GEntity:ManipulateBoneAngles(boneID, ang, networking)
 end
@@ -1981,8 +1981,8 @@ function GEntity:ManipulateBoneJiggle(boneID, enabled)
 end
 
 --- Sets custom bone offsets.  
---- @param boneID? number @Index of the bone you want to manipulate.
---- @param pos? GVector @Position vector to apply
+--- @param boneID number @Index of the bone you want to manipulate.
+--- @param pos GVector @Position vector to apply
 --- @param networking? boolean @boolean to network these changes (if called from server)
 function GEntity:ManipulateBonePosition(boneID, pos, networking)
 end
@@ -2023,9 +2023,9 @@ end
 --- So if you use the **PVS**(**default**), then the NetworkVars can be different for each client.  
 --- ⚠ **WARNING**: Make sure to not call the SetDT* and your custom set methods on the client realm unless you know exactly what you are doing.  
 --- Combining this function with util.TableToJSON can also provide a way to network tables as serialized strings.  
---- @param type? string @Supported choices:
---- @param slot? number @Each network variable has to have a unique slot
---- @param name? string @The name will affect how you access it
+--- @param type string @Supported choices:
+--- @param slot number @Each network variable has to have a unique slot
+--- @param name string @The name will affect how you access it
 --- @param extended? table @A table of extended information
 function GEntity:NetworkVar(type, slot, name, extended)
 end
@@ -2033,10 +2033,10 @@ end
 --- Similarly to Entity:NetworkVar, creates a network variable on the entity and adds Set/Get functions for it. This method stores it's value as a member value of a vector or an angle. This allows to go beyond the normal variable limit of Entity:NetworkVar for `Int` and `Float` types, at the expense of `Vector` and `Angle` limit.  
 --- This function should only be called in ENTITY:SetupDataTables.  
 --- ⚠ **WARNING**: Make sure to not call the SetDT* and your custom set methods on the client realm unless you know exactly what you are doing.  
---- @param type? string @Supported choices:
---- @param slot? number @The slot for this `Vector` or `Angle`, from `0` to `31`
---- @param element? string @Which element of a `Vector` or an `Angle` to store the value on
---- @param name? string @The name will affect how you access it
+--- @param type string @Supported choices:
+--- @param slot number @The slot for this `Vector` or `Angle`, from `0` to `31`
+--- @param element string @Which element of a `Vector` or an `Angle` to store the value on
+--- @param name string @The name will affect how you access it
 --- @param extended? table @A table of extra information
 function GEntity:NetworkVarElement(type, slot, element, name, extended)
 end
@@ -2118,7 +2118,7 @@ end
 --- Initializes the physics mesh of the entity from a triangle soup defined by a table of vertices. The resulting mesh is hollow, may contain holes, and always has a volume of 0.  
 --- While this is very useful for static geometry such as terrain displacements, it is advised to use Entity:PhysicsInitConvex or Entity:PhysicsInitMultiConvex for moving solid objects instead.  
 --- Entity:EnableCustomCollisions needs to be called if you want players to collide with the entity correctly.  
---- @param vertices? table @A table consisting of Structures/MeshVertex (only the `pos` element is taken into account)
+--- @param vertices table @A table consisting of Structures/MeshVertex (only the `pos` element is taken into account)
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
 --- @return boolean @Returns `true` on success, `nil` otherwise.
 function GEntity:PhysicsFromMesh(vertices, surfaceprop)
@@ -2143,8 +2143,8 @@ end
 --- ℹ **NOTE**: If the volume of the resulting box is 0 (the mins and maxs are the same), the mins and maxs will be changed to Global.Vector( -1, -1, -1 ) and Global.Vector( 1, 1, 1 ), respectively.  
 --- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
---- @param mins? GVector @The minimum position of the box
---- @param maxs? GVector @The maximum position of the box
+--- @param mins GVector @The minimum position of the box
+--- @param maxs GVector @The maximum position of the box
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
 --- @return boolean @Returns `true` on success, `nil` otherwise
 function GEntity:PhysicsInitBox(mins, maxs, surfaceprop)
@@ -2166,7 +2166,7 @@ end
 --- end  
 --- end  
 --- ```  
---- @param points? table @A table of eight Vectors, in local coordinates, to be used in the computation of the convex mesh
+--- @param points table @A table of eight Vectors, in local coordinates, to be used in the computation of the convex mesh
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
 --- @return boolean @Returns `true` on success, `false` otherwise.
 function GEntity:PhysicsInitConvex(points, surfaceprop)
@@ -2176,7 +2176,7 @@ end
 --- If successful, the previous physics object will be removed.  
 --- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
---- @param vertices? table @A table consisting of tables of Vectors
+--- @param vertices table @A table consisting of tables of Vectors
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
 --- @return boolean @Returns `true` on success, `nil` otherwise.
 function GEntity:PhysicsInitMultiConvex(vertices, surfaceprop)
@@ -2199,7 +2199,7 @@ end
 --- * Entity:SetMoveType( `MOVETYPE_VPHYSICS` )  
 --- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
---- @param radius? number @The radius of the sphere.
+--- @param radius number @The radius of the sphere.
 --- @param physmat? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
 --- @return boolean @Returns `true` on success, `false` otherwise
 function GEntity:PhysicsInitSphere(radius, physmat)
@@ -2217,7 +2217,7 @@ function GEntity:PhysicsInitStatic(solidType)
 end
 
 --- Makes the entity play a .vcd scene. [All scenes from Half-Life 2](https://developer.valvesoftware.com/wiki/Half-Life_2_Scenes_List).  
---- @param scene? string @Filepath to scene.
+--- @param scene string @Filepath to scene.
 --- @param delay? number @Delay in seconds until the scene starts playing.
 --- @return number @Estimated length of the scene.
 --- @return GEntity @The scene entity, removing which will stop the scene from continuing to play.
@@ -2332,7 +2332,7 @@ end
 
 --- Restarts the entity's animation gesture. If the given gesture is already playing, it will reset it and play it from the beginning.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites.  
---- @param activity? number @The activity number to send to the entity
+--- @param activity number @The activity number to send to the entity
 --- @param addIfMissing? boolean @Add/start the gesture to if it has not been yet started.
 --- @param autokill? boolean 
 function GEntity:RestartGesture(activity, addIfMissing, autokill)
@@ -2706,7 +2706,7 @@ end
 --- If your old scales are wrong, use Entity:SetLegacyTransform as a quick fix.  
 --- ℹ **NOTE**: If you do not want the physics to be affected by Entity:Activate, you can use Entity:ManipulateBoneScale`( 0, Vector( scale, scale, scale ) )` instead.  
 --- 🦟 **BUG**: [This does not scale procedural bones and disables IK.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
---- @param scale? number @A float to scale the model by
+--- @param scale number @A float to scale the model by
 --- @param deltaTime? number @Transition time of the scale change, set to 0 to modify the scale right away
 function GEntity:SetModelScale(scale, deltaTime)
 end
@@ -3061,7 +3061,7 @@ end
 --- Sets a networked angle value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedAngle both from client and server.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
---- @param key? string @The key to associate the value with
+--- @param key string @The key to associate the value with
 --- @param value? GAngle @The value to set
 function GEntity:SetNetworkedAngle(key, value)
 end
@@ -3070,7 +3070,7 @@ end
 --- Sets a networked boolean value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedBool both from client and server.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
---- @param key? string @The key to associate the value with
+--- @param key string @The key to associate the value with
 --- @param value? boolean @The value to set
 function GEntity:SetNetworkedBool(key, value)
 end
@@ -3079,7 +3079,7 @@ end
 --- Sets a networked entity value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedEntity both from client and server.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
---- @param key? string @The key to associate the value with
+--- @param key string @The key to associate the value with
 --- @param value? GEntity @The value to set
 function GEntity:SetNetworkedEntity(key, value)
 end
@@ -3089,7 +3089,7 @@ end
 --- The value then can be accessed with Entity:GetNetworkedFloat both from client and server.  
 --- Seems to be the same as Entity:GetNetworkedInt.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
---- @param key? string @The key to associate the value with
+--- @param key string @The key to associate the value with
 --- @param value? number @The value to set
 function GEntity:SetNetworkedFloat(key, value)
 end
@@ -3098,7 +3098,7 @@ end
 --- Sets a networked integer value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedInt both from client and server.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
---- @param key? string @The key to associate the value with
+--- @param key string @The key to associate the value with
 --- @param value? number @The value to set
 function GEntity:SetNetworkedInt(key, value)
 end
@@ -3152,7 +3152,7 @@ end
 --- Sets a networked vector value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedVector both from client and server.  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on.  
---- @param key? string @The key to associate the value with
+--- @param key string @The key to associate the value with
 --- @param value? GVector @The value to set
 function GEntity:SetNetworkedVector(key, value)
 end
@@ -3209,7 +3209,7 @@ end
 
 --- Sets the player who gets credit if this entity kills something with physics damage within the time limit.  
 --- ℹ **NOTE**: This can only be called on props, "anim" type SENTs and vehicles.  
---- @param ent? GPlayer @Player who gets the kills
+--- @param ent GPlayer @Player who gets the kills
 --- @param timeLimit? number @Time in seconds until the entity forgets its physics attacker and prevents it from getting the kill credit.
 function GEntity:SetPhysicsAttacker(ent, timeLimit)
 end
@@ -3280,15 +3280,15 @@ function GEntity:SetRenderAngles(newAngles)
 end
 
 --- Sets the render bounds for the entity. For world space coordinates see Entity:SetRenderBoundsWS.  
---- @param mins? GVector @The minimum corner of the bounds, relative to origin of the entity.
---- @param maxs? GVector @The maximum corner of the bounds, relative to origin of the entity.
+--- @param mins GVector @The minimum corner of the bounds, relative to origin of the entity.
+--- @param maxs GVector @The maximum corner of the bounds, relative to origin of the entity.
 --- @param add? GVector @If defined, adds this vector to maxs and subtracts this vector from mins.
 function GEntity:SetRenderBounds(mins, maxs, add)
 end
 
 --- Sets the render bounds for the entity in world space coordinates. For relative coordinates see Entity:SetRenderBounds.  
---- @param mins? GVector @The minimum corner of the bounds, relative to origin of the world/map.
---- @param maxs? GVector @The maximum corner of the bounds, relative to origin of the world/map.
+--- @param mins GVector @The minimum corner of the bounds, relative to origin of the world/map.
+--- @param maxs GVector @The maximum corner of the bounds, relative to origin of the world/map.
 --- @param add? GVector @If defined, adds this vector to maxs and subtracts this vector from mins.
 function GEntity:SetRenderBoundsWS(mins, maxs, add)
 end
@@ -3433,7 +3433,7 @@ end
 --- This is used internally when the player switches weapon.  
 --- ℹ **NOTE**: View models are not drawn without a weapons associated to them.  
 --- ⚠ **WARNING**: This will silently fail if the entity is not a viewmodel.  
---- @param viewModel? string @The model string to give to this viewmodel
+--- @param viewModel string @The model string to give to this viewmodel
 --- @param weapon? GWeapon @The weapon entity to associate this viewmodel to.
 function GEntity:SetWeaponModel(viewModel, weapon)
 end
@@ -3526,7 +3526,7 @@ end
 --- Applies the specified amount of damage to the entity with DMG_GENERIC flag.  
 --- ⚠ **WARNING**: Calling this function on the victim entity in ENTITY:OnTakeDamage can cause infinite loops.  
 --- ⚠ **WARNING**: This function does not seem to do any damage if you apply it to a player who is driving a prop_vehicle_jeep or prop_vehicle_jeep_old vehicle. You need to call it on the vehicle instead.  
---- @param damageAmount? number @The amount of damage to be applied.
+--- @param damageAmount number @The amount of damage to be applied.
 --- @param attacker? GEntity @The entity that initiated the attack that caused the damage.
 --- @param inflictor? GEntity @The entity that applied the damage, eg
 function GEntity:TakeDamage(damageAmount, attacker, inflictor)
@@ -3578,7 +3578,7 @@ function GEntity:UpdateShadow()
 end
 
 --- Simulates a `+use` action on an entity.  
---- @param activator? GEntity @The entity that caused this input
+--- @param activator GEntity @The entity that caused this input
 --- @param caller? GEntity @The entity responsible for the input
 --- @param useType? number @Use type, see Enums/USE.
 --- @param value? number @Any value.
@@ -3596,7 +3596,7 @@ end
 --- Valve use trigger boxes for all pickup items. Their bloat size is 24, a surprisingly large figure.  
 --- ℹ **NOTE**: The trigger boxes can be made visible as a light blue box by using the **ent_bbox** console command while looking at the entity. Alternatively a classname or entity index can be used as the first argument.  
 --- This requires **developer** to be set to **1**.  
---- @param enable? boolean @Enable or disable the bounds.
+--- @param enable boolean @Enable or disable the bounds.
 --- @param boundSize? number @The distance/size of the trigger bounds.
 function GEntity:UseTriggerBounds(enable, boundSize)
 end

@@ -35,13 +35,17 @@ export function handleFunc(func: Func, sepr?: string): undefined | string {
                         return false;
                     }
                     seenArgs.add(arg.name);
-                    // Throwing this in here because I can't think of a better place
-                    if (arg.default) {
-                        forceOptional = true;
-                    }
                     return true;
                 })
-                .map((arg) => getArgDoc(arg, forceOptional))
+                .map((arg) => {
+                    let ret = getArgDoc(arg, forceOptional);
+                    // Once we've seen a default argument, all following ones
+                    // need to be optional
+                    if (arg.default != null) {
+                        forceOptional = true;
+                    }
+                    return ret;
+                })
                 // Some arguments might be deleted because they're bogus
                 .filter((l) => l)
                 .join("\n") + "\n";
@@ -104,7 +108,7 @@ function getArgDoc(arg: FuncArg, forceOptional: boolean): string {
         return `--- @vararg ${type} ${desc}`;
     }
     let name = getArgName(arg);
-    if (arg.default || forceOptional) {
+    if (arg.default != null || forceOptional) {
         name += "?";
     }
     return `--- @param ${name} ${type} ${desc}`;

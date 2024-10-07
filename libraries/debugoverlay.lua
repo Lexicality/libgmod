@@ -5,9 +5,9 @@ _G.debugoverlay = {}
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param origin? GVector @Position origin
---- @param ang? GAngle @Angle of the axis
---- @param size? number @Size of the axis
+--- @param origin GVector @Position origin
+--- @param ang GAngle @Angle of the axis
+--- @param size number @Size of the axis
 --- @param lifetime? number @Number of seconds to appear
 --- @param ignoreZ? boolean @If true, will draw on top of everything; ignoring the Z buffer
 function debugoverlay.Axis(origin, ang, size, lifetime, ignoreZ)
@@ -17,9 +17,9 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param origin? GVector @Position origin
---- @param mins? GVector @Minimum bounds of the box
---- @param maxs? GVector @Maximum bounds of the box
+--- @param origin GVector @Position origin
+--- @param mins GVector @Minimum bounds of the box
+--- @param maxs GVector @Maximum bounds of the box
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the box
 function debugoverlay.Box(origin, mins, maxs, lifetime, color)
@@ -29,10 +29,10 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param pos? GVector @World position
---- @param mins? GVector @The mins of the box (lowest corner)
---- @param maxs? GVector @The maxs of the box (highest corner)
---- @param ang? GAngle @The angle to draw the box at
+--- @param pos GVector @World position
+--- @param mins GVector @The mins of the box (lowest corner)
+--- @param maxs GVector @The maxs of the box (highest corner)
+--- @param ang GAngle @The angle to draw the box at
 --- @param lifetime? number @Amount of seconds to show the box
 --- @param color? table @The color of the box
 function debugoverlay.BoxAngles(pos, mins, maxs, ang, lifetime, color)
@@ -42,8 +42,8 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param position? GVector @Position origin
---- @param size? number @Size of the cross
+--- @param position GVector @Position origin
+--- @param size number @Size of the cross
 --- @param lifetime? number @Number of seconds the cross will appear for
 --- @param color? table @The color of the cross
 --- @param ignoreZ? boolean @If true, will draw on top of everything; ignoring the Z buffer
@@ -54,9 +54,9 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param pos? GVector @The position in 3D to display the text.
---- @param line? number @Line of text, will offset text on the to display the new line unobstructed
---- @param text? string @The text to display
+--- @param pos GVector @The position in 3D to display the text.
+--- @param line number @Line of text, will offset text on the to display the new line unobstructed
+--- @param text string @The text to display
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the box
 function debugoverlay.EntityTextAtPosition(pos, line, text, lifetime, color)
@@ -74,8 +74,8 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param pos1? GVector @First position of the line
---- @param pos2? GVector @Second position of the line
+--- @param pos1 GVector @First position of the line
+--- @param pos2 GVector @Second position of the line
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the line
 --- @param ignoreZ? boolean @If true, will draw on top of everything; ignoring the Z buffer
@@ -86,9 +86,9 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param x? number @The position of the text, from 0 ( left ) to 1 ( right ).
---- @param y? number @The position of the text, from 0 ( top ) to 1 ( bottom ).
---- @param text? string @The text to display
+--- @param x number @The position of the text, from 0 ( left ) to 1 ( right ).
+--- @param y number @The position of the text, from 0 ( top ) to 1 ( bottom ).
+--- @param text string @The text to display
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the box
 function debugoverlay.ScreenText(x, y, text, lifetime, color)
@@ -98,8 +98,8 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param origin? GVector @Position origin
---- @param size? number @Size of the sphere
+--- @param origin GVector @Position origin
+--- @param size number @Size of the sphere
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the sphere
 --- @param ignoreZ? boolean @If true, will draw on top of everything; ignoring the Z buffer
@@ -110,11 +110,11 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param vStart? GVector @The start position of the box.
---- @param vEnd? GVector @The end position of the box.
---- @param vMins? GVector @The "minimum" edge of the box.
---- @param vMaxs? GVector @The "maximum" edge of the box.
---- @param ang? GAngle 
+--- @param vStart GVector @The start position of the box.
+--- @param vEnd GVector @The end position of the box.
+--- @param vMins GVector @The "minimum" edge of the box.
+--- @param vMaxs GVector @The "maximum" edge of the box.
+--- @param ang GAngle 
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the box
 function debugoverlay.SweptBox(vStart, vEnd, vMins, vMaxs, ang, lifetime, color)
@@ -124,8 +124,8 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param origin? GVector @Position origin
---- @param text? string @String message to display
+--- @param origin GVector @Position origin
+--- @param text string @String message to display
 --- @param lifetime? number @Number of seconds to appear
 --- @param viewCheck? boolean @Clip text that is obscured
 function debugoverlay.Text(origin, text, lifetime, viewCheck)
@@ -135,9 +135,9 @@ end
 --- ℹ **NOTE**: This function will silently fail if the `developer` ConVar is set to `0`.  
 --- It is not networked to clients, except for the listen server host.  
 --- It will not work when the game is paused.  
---- @param pos1? GVector @First point of the triangle
---- @param pos2? GVector @Second point of the triangle
---- @param pos3? GVector @Third point of the triangle
+--- @param pos1 GVector @First point of the triangle
+--- @param pos2 GVector @Second point of the triangle
+--- @param pos3 GVector @Third point of the triangle
 --- @param lifetime? number @Number of seconds to appear
 --- @param color? table @The color of the box
 --- @param ignoreZ? boolean @If true, will draw on top of everything; ignoring the Z buffer

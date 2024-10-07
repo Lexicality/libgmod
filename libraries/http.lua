@@ -25,7 +25,7 @@ _G.http = {}
 --- origin  
 --- date  
 --- ```  
---- @param url? string @The URL of the website to fetch.
+--- @param url string @The URL of the website to fetch.
 --- @param onSuccess? function @Function to be called on success
 --- @param onFailure? function @Function to be called on failure
 --- @param headers? table @KeyValue table for headers.
@@ -40,8 +40,8 @@ end
 --- ℹ **NOTE**:   
 --- HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
 --- To enable HTTP-requests to destinations on private networks use Command Line Parameters `-allowlocalhttp`. (Dedicated servers only)  
---- @param url? string @The url to of the website to post.
---- @param parameters? table @The post parameters (x-www-form-urlencoded) to be send to the server
+--- @param url string @The url to of the website to post.
+--- @param parameters table @The post parameters (x-www-form-urlencoded) to be send to the server
 --- @param onSuccess? function @Function to be called on success
 --- @param onFailure? function @Function to be called on failure
 --- @param headers? table @KeyValue table for headers.

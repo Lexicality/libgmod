@@ -52,9 +52,9 @@ end
 
 --- Plays a sequence directly from a sequence number, similar to Player:AnimRestartGesture. This function has the advantage to play sequences that haven't been bound to an existing Enums/ACT  
 --- ⚠ **WARNING**: This is not automatically networked. This function has to be called on the client to be seen by said client.  
---- @param slot? number @Gesture slot using Enums/GESTURE_SLOT
---- @param sequenceId? number @The sequence ID to play, can be retrieved with Entity:LookupSequence.
---- @param cycle? number @The cycle to start the animation at, ranges from 0 to 1.
+--- @param slot number @Gesture slot using Enums/GESTURE_SLOT
+--- @param sequenceId number @The sequence ID to play, can be retrieved with Entity:LookupSequence.
+--- @param cycle number @The cycle to start the animation at, ranges from 0 to 1.
 --- @param autokill? boolean @If the animation should not loop
 function GPlayer:AddVCDSequenceToGestureSlot(slot, sequenceId, cycle, autokill)
 end
@@ -81,8 +81,8 @@ end
 
 --- Restart a gesture on a player, within a gesture slot.  
 --- ⚠ **WARNING**: This is not automatically networked. This function has to be called on the client to be seen by said client.  
---- @param slot? number @Gesture slot using Enums/GESTURE_SLOT
---- @param activity? number @The activity ( see Enums/ACT ) or sequence that should be played
+--- @param slot number @Gesture slot using Enums/GESTURE_SLOT
+--- @param activity number @The activity ( see Enums/ACT ) or sequence that should be played
 --- @param autokill? boolean @Whether the animation should be automatically stopped
 function GPlayer:AnimRestartGesture(slot, activity, autokill)
 end
@@ -109,7 +109,7 @@ function GPlayer:Armor()
 end
 
 --- Bans the player from the server for a certain amount of minutes.  
---- @param minutes? number @Duration of the ban in minutes (0 is permanent)
+--- @param minutes number @Duration of the ban in minutes (0 is permanent)
 --- @param kick? boolean @Whether to kick the player after banning them or not
 function GPlayer:Ban(minutes, kick)
 end
@@ -208,7 +208,7 @@ function GPlayer:DoSecondaryAttack()
 end
 
 --- Show/Hide the player's weapon's viewmodel.  
---- @param draw? boolean @Should draw
+--- @param draw boolean @Should draw
 --- @param vm? number @Which view model to show/hide, 0-2.
 function GPlayer:DrawViewModel(draw, vm)
 end
@@ -219,7 +219,7 @@ function GPlayer:DrawWorldModel(draw)
 end
 
 --- Drops the players' weapon of a specific class.  
---- @param class? string @The class to drop.
+--- @param class string @The class to drop.
 --- @param target? GVector @If set, launches the weapon at given position
 --- @param velocity? GVector @If set and previous argument is unset, launches the weapon with given velocity
 function GPlayer:DropNamedWeapon(class, target, velocity)
@@ -356,7 +356,7 @@ end
 --- vehicles  
 --- wheels  
 --- ```  
---- @param type? string @Type to get entity count of.
+--- @param type string @Type to get entity count of.
 --- @param minus? number @If specified, it will reduce the counter by this value
 --- @return number @The returned count.
 function GPlayer:GetCount(type, minus)
@@ -517,7 +517,7 @@ end
 --- Internally uses the sql library. See util.GetPData for cases when the player is not currently on the server.  
 --- ℹ **NOTE**: This function internally uses Player:SteamID64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry). Player:SetPData now replaces all instances of Player:UniqueID with Player:SteamID64 when running Player:SetPData  
 --- ℹ **NOTE**: PData is not networked from servers to clients!  
---- @param key? string @Name of the PData key
+--- @param key string @Name of the PData key
 --- @param default? any @Default value if PData key doesn't exist.
 --- @return string @The data in the SQL database or the default value given.
 function GPlayer:GetPData(key, default)
@@ -700,15 +700,15 @@ end
 
 --- Gives the player a weapon.  
 --- ℹ **NOTE**: While this function is meant for weapons/pickupables only, it is **not** restricted to weapons. Any entity can be spawned using this function, including NPCs and SENTs.  
---- @param weaponClassName? string @Class name of weapon to give the player
+--- @param weaponClassName string @Class name of weapon to give the player
 --- @param bNoAmmo? boolean @Set to true to not give any ammo on weapon spawn
 --- @return GWeapon @The weapon given to the player, if one was given
 function GPlayer:Give(weaponClassName, bNoAmmo)
 end
 
 --- Gives ammo to a player  
---- @param amount? number @Amount of ammo
---- @param type? any @Type of ammo
+--- @param amount number @Amount of ammo
+--- @param type any @Type of ammo
 --- @param hidePopup? boolean @Hide display popup when giving the ammo
 --- @return number @Ammo given.
 function GPlayer:GiveAmmo(amount, type, hidePopup)
@@ -967,7 +967,7 @@ end
 
 --- Forces the player to pickup an existing weapon entity. The player will not pick up the weapon if they already own a weapon of given type, or if the player could not normally have this weapon in their inventory.  
 --- This function **will** bypass GM:PlayerCanPickupWeapon.  
---- @param wep? GWeapon @The weapon to try to pick up.
+--- @param wep GWeapon @The weapon to try to pick up.
 --- @param ammoOnly? boolean @If set to true, the player will only attempt to pick up the ammo from the weapon
 --- @return boolean @Whether the player succeeded in picking up the weapon or not.
 function GPlayer:PickupWeapon(wep, ammoOnly)
@@ -1024,13 +1024,13 @@ end
 
 --- Forces the player to say whatever the first argument is. Works on bots too.  
 --- ℹ **NOTE**: This function ignores the default chat message cooldown  
---- @param text? string @The text to force the player to say.
+--- @param text string @The text to force the player to say.
 --- @param teamOnly? boolean @Whether to send this message to our own team only.
 function GPlayer:Say(text, teamOnly)
 end
 
 --- Fades the screen  
---- @param flags? number @Fade flags defined with Enums/SCREENFADE.
+--- @param flags number @Fade flags defined with Enums/SCREENFADE.
 --- @param clr? number @The color of the screenfade
 --- @param fadeTime? number @Fade(in/out) effect transition time ( From no fade to full fade and vice versa )
 --- @param fadeHold? number @Fade effect hold time
@@ -1152,7 +1152,7 @@ end
 
 --- Set a player's FOV (Field Of View) over a certain amount of time.  
 --- This is meant to be called on the server or shared (for prediction), it will have no effect if called clientside only. You may want to use GM:CalcView for that instead.  
---- @param fov? number @the angle of perception (FOV)
+--- @param fov number @the angle of perception (FOV)
 --- @param time? number @the time it takes to transition to the FOV expressed in a floating point.
 --- @param requester? GEntity @The requester or "owner" of the zoom event
 function GPlayer:SetFOV(fov, time, requester)
@@ -1393,7 +1393,7 @@ function GPlayer:SimulateGravGunDrop(ent)
 end
 
 --- Signals the entity that it was picked up by the gravity gun. This call is only required if you want to simulate the situation of picking up objects.  
---- @param ent? GEntity @The entity picked up
+--- @param ent GEntity @The entity picked up
 --- @param lightning? boolean @Whether or not to show lightning effects around the entity
 function GPlayer:SimulateGravGunPickup(ent, lightning)
 end

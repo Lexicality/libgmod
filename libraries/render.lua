@@ -41,10 +41,10 @@ end
 
 --- Clears the current render target and the specified buffers.  
 --- 🦟 **BUG**: [This sets the alpha incorrectly for surface draw calls for render targets.](https://github.com/Facepunch/garrysmod-issues/issues/2085)  
---- @param r? number @Red component to clear to.
---- @param g? number @Green component to clear to.
---- @param b? number @Blue component to clear to.
---- @param a? number @Alpha component to clear to.
+--- @param r number @Red component to clear to.
+--- @param g number @Green component to clear to.
+--- @param b number @Blue component to clear to.
+--- @param a number @Alpha component to clear to.
 --- @param clearDepth? boolean @Clear the depth.
 --- @param clearStencil? boolean @Clear the stencil.
 function render.Clear(r, g, b, a, clearDepth, clearStencil)
@@ -140,29 +140,29 @@ end
 --- 🧱 **NOTE**: Requires a 3D rendering context  
 --- Draws a single-segment Beam made out of a textured, billboarded quad stretching between two points.  
 --- For more detailed information, including usage examples, see the Beams Render Reference  
---- @param startPos? GVector @The Beam's start position.
---- @param endPos? GVector @The Beam's end position.
---- @param width? number @The width of the Beam.
---- @param textureStart? number @The starting coordinate of the Beam's texture.
---- @param textureEnd? number @The end coordinate of the Beam's texture.
+--- @param startPos GVector @The Beam's start position.
+--- @param endPos GVector @The Beam's end position.
+--- @param width number @The width of the Beam.
+--- @param textureStart number @The starting coordinate of the Beam's texture.
+--- @param textureEnd number @The end coordinate of the Beam's texture.
 --- @param color? GColor @What Color to tint the Beam.
 function render.DrawBeam(startPos, endPos, width, textureStart, textureEnd, color)
 end
 
 --- Draws a box in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position? GVector @Origin of the box.
---- @param angles? GAngle @Orientation of the box.
---- @param mins? GVector @Start position of the box, relative to origin.
---- @param maxs? GVector @End position of the box, relative to origin.
+--- @param position GVector @Origin of the box.
+--- @param angles GAngle @Orientation of the box.
+--- @param mins GVector @Start position of the box, relative to origin.
+--- @param maxs GVector @End position of the box, relative to origin.
 --- @param color? table @The color of the box
 function render.DrawBox(position, angles, mins, maxs, color)
 end
 
 --- Draws a line in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param startPos? GVector @Line start position in world coordinates.
---- @param endPos? GVector @Line end position in world coordinates.
+--- @param startPos GVector @Line start position in world coordinates.
+--- @param endPos GVector @Line end position in world coordinates.
 --- @param color? table @The color to be used
 --- @param writeZ? boolean @Whether or not to consider the Z buffer
 function render.DrawLine(startPos, endPos, color, writeZ)
@@ -170,21 +170,21 @@ end
 
 --- Draws 2 connected triangles. Expects material to be set by render.SetMaterial.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param vert1? GVector @First vertex.
---- @param vert2? GVector @The second vertex.
---- @param vert3? GVector @The third vertex.
---- @param vert4? GVector @The fourth vertex.
+--- @param vert1 GVector @First vertex.
+--- @param vert2 GVector @The second vertex.
+--- @param vert3 GVector @The third vertex.
+--- @param vert4 GVector @The fourth vertex.
 --- @param color? table @The color of the quad
 function render.DrawQuad(vert1, vert2, vert3, vert4, color)
 end
 
 --- Draws a quad.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position? GVector @Origin of the sprite.
---- @param normal? GVector @The face direction of the quad.
---- @param width? number @The width of the quad.
---- @param height? number @The height of the quad.
---- @param color? table @The color of the quad
+--- @param position GVector @Origin of the sprite.
+--- @param normal GVector @The face direction of the quad.
+--- @param width number @The width of the quad.
+--- @param height number @The height of the quad.
+--- @param color table @The color of the quad
 --- @param rotation? number @The rotation of the quad counter-clockwise in degrees around the normal axis
 function render.DrawQuadEasy(position, normal, width, height, color, rotation)
 end
@@ -209,19 +209,19 @@ end
 --- Draws a sphere in 3D space. The material previously set with render.SetMaterial will be applied the sphere's surface.  
 --- See also render.DrawWireframeSphere for a wireframe equivalent.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position? GVector @Position of the sphere.
---- @param radius? number @Radius of the sphere
---- @param longitudeSteps? number @The number of longitude steps
---- @param latitudeSteps? number @The number of latitude steps
+--- @param position GVector @Position of the sphere.
+--- @param radius number @Radius of the sphere
+--- @param longitudeSteps number @The number of longitude steps
+--- @param latitudeSteps number @The number of latitude steps
 --- @param color? table @The color of the sphere
 function render.DrawSphere(position, radius, longitudeSteps, latitudeSteps, color)
 end
 
 --- Draws a sprite in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position? GVector @Position of the sprite.
---- @param width? number @Width of the sprite.
---- @param height? number @Height of the sprite.
+--- @param position GVector @Position of the sprite.
+--- @param width number @Width of the sprite.
+--- @param height number @Height of the sprite.
 --- @param color? table @Color of the sprite
 function render.DrawSprite(position, width, height, color)
 end
@@ -244,10 +244,10 @@ end
 
 --- Draws a wireframe box in 3D space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position? GVector @Position of the box.
---- @param angle? GAngle @Angles of the box.
---- @param mins? GVector @The lowest corner of the box.
---- @param maxs? GVector @The highest corner of the box.
+--- @param position GVector @Position of the box.
+--- @param angle GAngle @Angles of the box.
+--- @param mins GVector @The lowest corner of the box.
+--- @param maxs GVector @The highest corner of the box.
 --- @param color? table @The color of the box
 --- @param writeZ? boolean @Sets whenever to write to the zBuffer.
 function render.DrawWireframeBox(position, angle, mins, maxs, color, writeZ)
@@ -255,10 +255,10 @@ end
 
 --- Draws a wireframe sphere in 3d space.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
---- @param position? GVector @Position of the sphere.
---- @param radius? number @The size of the sphere.
---- @param longitudeSteps? number @The amount of longitude steps
---- @param latitudeSteps? number @The amount of latitude steps
+--- @param position GVector @Position of the sphere.
+--- @param radius number @The size of the sphere.
+--- @param longitudeSteps number @The amount of longitude steps
+--- @param latitudeSteps number @The amount of latitude steps
 --- @param color? table @The color of the wireframe
 --- @param writeZ? boolean @Whether or not to consider the Z buffer
 function render.DrawWireframeSphere(position, radius, longitudeSteps, latitudeSteps, color, writeZ)
@@ -453,7 +453,7 @@ end
 --- Creates a new Global.ClientsideModel, renders it at the specified pos/ang, and removes it. Can also be given an existing CSEnt to reuse instead.  
 --- ℹ **NOTE**: This function is only meant to be used in a single render pass kind of scenario, if you need to render a model continuously, use a cached Global.ClientsideModel and provide it as a second argument.  
 --- 🦟 **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
---- @param settings? table @Requires:
+--- @param settings table @Requires:
 --- @param ent? GCSEnt @If provided, this entity will be reused instead of creating a new one with Global.ClientsideModel
 function render.Model(settings, ent)
 end
@@ -476,13 +476,13 @@ end
 --- When a draw operation is performed, the rendering system examines each pixel that is affected by the draw operation and determines its new color by combining (or "Blending") the pixel's current color (Called the "Destination" or "Dst" color) with the new color produced by the draw operation (Called the "Source" or "Src" color.)  
 --- This function allows you to control the way that those two colors (The Source and Destination) are combined to produce the final pixel color.  
 --- It's important to know that while Colors use values in the range `(0-255)`, the color and alpha values used here are normalized to the range `(0-1)` so that they can be multiplied together to produce a value that is still in the range `(0-1)`.  
---- @param enabled? boolean @Set to `true` to enable Blend Overrides.
---- @param sourceMultiplier? number @This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Func
---- @param destinationMultiplier? number @This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending
---- @param blendingFunction? number @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
---- @param sourceColorMultiplier? number @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
---- @param destinationColorMultiplier? number @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
---- @param colorBlendingFunction? number @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
+--- @param enabled boolean @Set to `true` to enable Blend Overrides.
+--- @param sourceMultiplier number @This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Func
+--- @param destinationMultiplier number @This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending
+--- @param blendingFunction number @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
+--- @param sourceColorMultiplier number @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
+--- @param destinationColorMultiplier number @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
+--- @param colorBlendingFunction number @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
 --- @param sourceAlphaMultiplier? number @This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function
 --- @param destinationAlphaMultiplier? number @This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Fun
 --- @param alphaBlendingFunction? number @After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending 
@@ -493,9 +493,9 @@ end
 --- Overrides the internal graphical functions used to determine the final color and alpha of a rendered texture.  
 --- See also render.OverrideAlphaWriteEnable.  
 --- ℹ **NOTE**: Doing surface draw calls with alpha set to 0 is a no-op and will never have any effect.  
---- @param enabled? boolean @true to enable, false to disable
---- @param srcBlend? number @The source color blend function Enums/BLEND
---- @param destBlend? number 
+--- @param enabled boolean @true to enable, false to disable
+--- @param srcBlend number @The source color blend function Enums/BLEND
+--- @param destBlend number 
 --- @param srcBlendAlpha? number @The source alpha blend function Enums/BLEND
 --- @param destBlendAlpha? number 
 function render.OverrideBlendFunc(enabled, srcBlend, destBlend, srcBlendAlpha, destBlendAlpha)

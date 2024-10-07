@@ -1,8 +1,8 @@
 --- Adds simple Get/Set accessor functions on the specified table.  
 --- Can also force the value to be set to a number, bool or string.  
---- @param tab? table @The table to add the accessor functions to.
---- @param key? any @The key of the table to be get/set.
---- @param name? string @The name of the functions (will be prefixed with Get and Set).
+--- @param tab table @The table to add the accessor functions to.
+--- @param key any @The key of the table to be get/set.
+--- @param name string @The name of the functions (will be prefixed with Get and Set).
 --- @param force? number @The type the setter should force to (uses Enums/FORCE).
 function _G.AccessorFunc(tab, key, name, force)
 end
@@ -67,7 +67,7 @@ end
 --- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
 --- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
 --- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
---- @param pitch? number @The pitch value of the angle, in degrees.
+--- @param pitch number @The pitch value of the angle, in degrees.
 --- @param yaw? number @The yaw value of the angle, in degrees.
 --- @param roll? number @The roll value of the angle, in degrees.
 --- @param angle? GAngle @Creates a new Angle that is a copy of the Angle passed in.
@@ -114,7 +114,7 @@ end
 --- 🦟 **BUG**: [Parented clientside models will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**](https://github.com/Facepunch/garrysmod-issues/issues/861)  
 --- 🦟 **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually. **To workaround this bug, you need to hold a reference (in a variable) to the entity and remove it when necessary.**](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
 --- 🦟 **BUG**: [Clientside models will occasionally delete themselves during high server lag.](https://github.com/Facepunch/garrysmod-issues/issues/3184)  
---- @param model? string @The file path to the model.
+--- @param model string @The file path to the model.
 --- @param renderGroup? number @The render group of the entity for the clientside leaf system, see Enums/RENDERGROUP.
 --- @return GCSEnt @Created client-side model (`C_BaseFlex`).
 function _G.ClientsideModel(model, renderGroup)
@@ -124,7 +124,7 @@ end
 --- ℹ **NOTE**: The ragdoll initially starts as hidden and with shadows disabled, see the example for how to enable it.  
 --- There's no need to call Entity:Spawn on this entity.  
 --- 🦟 **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually.](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
---- @param model? string @The file path to the model.
+--- @param model string @The file path to the model.
 --- @param renderGroup? number @The Enums/RENDERGROUP to assign.
 --- @return GCSEnt @The newly created client-side only ragdoll
 function _G.ClientsideRagdoll(model, renderGroup)
@@ -143,9 +143,9 @@ end
 
 --- Creates a Color.  
 --- ⚠ **WARNING**: This function is relatively expensive when used in rendering hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the color in a variable or to use the [default colors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available.  
---- @param r? number @An integer from `0-255` describing the red value of the color.
---- @param g? number @An integer from `0-255` describing the green value of the color.
---- @param b? number @An integer from `0-255` describing the blue value of the color.
+--- @param r number @An integer from `0-255` describing the red value of the color.
+--- @param g number @An integer from `0-255` describing the green value of the color.
+--- @param b number @An integer from `0-255` describing the blue value of the color.
 --- @param a? number @An integer from `0-255` describing the alpha (transparency) of the color.(default 255)
 --- @return GColor @The created Color.
 function _G.Color(r, g, b, a)
@@ -188,8 +188,8 @@ end
 
 --- This function will compile the code argument as lua code and return a function that will execute that code.  
 --- Please note that this function will not automatically execute the given code after compiling it.  
---- @param code? string @The code to compile.
---- @param identifier? string @An identifier in case an error is thrown
+--- @param code string @The code to compile.
+--- @param identifier string @An identifier in case an error is thrown
 --- @param handleError? boolean @If false this function will return an error string instead of throwing an error.
 --- @return function @A function that, when called, will execute the given code
 function _G.CompileString(code, identifier, handleError)
@@ -204,8 +204,8 @@ end
 --- Makes a clientside-only console variable  
 --- ℹ **NOTE**: This function is a wrapper of Global.CreateConVar, with the difference being that FCVAR_ARCHIVE and FCVAR_USERINFO are added automatically when **shouldsave** and **userinfo** are true, respectively.  
 --- Although this function is shared, it should only be used clientside.  
---- @param name? string @Name of the ConVar to be created and able to be accessed
---- @param default? string @Default value of the ConVar.
+--- @param name string @Name of the ConVar to be created and able to be accessed
+--- @param default string @Default value of the ConVar.
 --- @param shouldsave? boolean @Should the ConVar be saved across sessions in the cfg/client.vdf file.
 --- @param userinfo? boolean @Should the ConVar and its containing data be sent to the server when it has changed
 --- @param helptext? string @Help text to display in the console.
@@ -217,8 +217,8 @@ end
 
 --- Creates a console variable (ConVar), in general these are for things like gamemode/server settings.  
 --- ⚠ **WARNING**: Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.  
---- @param name? string @Name of the ConVar
---- @param value? string @Default value of the convar
+--- @param name string @Name of the ConVar
+--- @param value string @Default value of the convar
 --- @param flags? number @Flags of the convar, see Enums/FCVAR, either as bitflag or as table.
 --- @param helptext? string @The help text to show in the console.
 --- @param min? number @If set, the ConVar cannot be changed to a number lower than this value.
@@ -241,9 +241,9 @@ end
 
 --- Creates a new particle system. See also Entity:CreateParticleEffect, Global.ParticleEffectAttach and Global.CreateParticleSystemNoEntity.  
 --- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
---- @param ent? GEntity @The entity to attach the control point to.
---- @param effect? string @The name of the effect to create
---- @param partAttachment? number @See Enums/PATTACH.
+--- @param ent GEntity @The entity to attach the control point to.
+--- @param effect string @The name of the effect to create
+--- @param partAttachment number @See Enums/PATTACH.
 --- @param entAttachment? number @The attachment ID on the entity to attach the particle system to
 --- @param offset? GVector @The offset from the Entity:GetPos of the entity we are attaching this CP to.
 --- @return GCNewParticleEffect @The created particle system.
@@ -252,8 +252,8 @@ end
 
 --- Creates a new particle system, and sets control points 0 and 1 to given position, as well as optionally orientation of CP0 to the given angles. See also Global.CreateParticleSystem  
 --- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
---- @param effect? string @The name of the effect to create
---- @param pos? GVector @The position for the particle system.
+--- @param effect string @The name of the effect to create
+--- @param pos GVector @The position for the particle system.
 --- @param ang? GAngle @The orientation of the particle system.
 --- @return GCNewParticleEffect @The created particle system.
 function _G.CreateParticleSystemNoEntity(effect, pos, ang)
@@ -279,8 +279,8 @@ end
 --- Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
 --- `Unsupported 32-bit wave file your_sound.wav` and  
 --- `Invalid sample rate (48000) for sound 'your_sound.wav'`  
---- @param targetEnt? GEntity @The target entity.
---- @param soundName? string @The sound to play
+--- @param targetEnt GEntity @The target entity.
+--- @param soundName string @The sound to play
 --- @param filter? GCRecipientFilter @A CRecipientFilter of the players that will have this sound networked to them
 --- @return GCSoundPatch @The sound object
 function _G.CreateSound(targetEnt, soundName, filter)
@@ -419,10 +419,10 @@ function _G.Derma_Query(text, title, btn1text, btn1func, btn2text, btn2func, btn
 end
 
 --- Creates a derma window asking players to input a string.  
---- @param title? string @The title of the created panel.
---- @param subtitle? string @The text above the input box.
---- @param default? string @The default text for the input box.
---- @param confirm? function @The function to be called once the user has confirmed their input
+--- @param title string @The title of the created panel.
+--- @param subtitle string @The text above the input box.
+--- @param default string @The default text for the input box.
+--- @param confirm function @The function to be called once the user has confirmed their input
 --- @param cancel? function @The function to be called once the user has cancelled their input
 --- @param confirmText? string @Allows you to override text of the "OK" button
 --- @param cancelText? string @Allows you to override text of the "Cancel" button
@@ -518,7 +518,7 @@ end
 --- ℹ **NOTE**: Only 32 dlights and 64 elights can be active at once.  
 --- ⚠ **WARNING**: It is not safe to hold a reference to this object after creation since its data can be replaced by another dlight at any time.  
 --- 🦟 **BUG**: [The minlight parameter affects the world and entities differently.](https://github.com/Facepunch/garrysmod-issues/issues/3798)  
---- @param index? number @An unsigned Integer
+--- @param index number @An unsigned Integer
 --- @param elight? boolean @Allocates an elight instead of a dlight
 --- @return table @A DynamicLight structured table
 function _G.DynamicLight(index, elight)
@@ -557,9 +557,9 @@ function _G.Either(condition, truevar, falsevar)
 end
 
 --- Plays a sentence from `scripts/sentences.txt`  
---- @param soundName? string @The sound to play
---- @param position? GVector @The position to play at
---- @param entity? number @The entity to emit the sound from
+--- @param soundName string @The sound to play
+--- @param position GVector @The position to play at
+--- @param entity number @The entity to emit the sound from
 --- @param channel? number @The sound channel, see Enums/CHAN.
 --- @param volume? number @The volume of the sound, from 0 to 1
 --- @param soundLevel? number @The sound level of the sound, see Enums/SNDLVL
@@ -573,8 +573,8 @@ end
 --- Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
 --- `Unsupported 32-bit wave file your_sound.wav` and  
 --- `Invalid sample rate (48000) for sound 'your_sound.wav'`  
---- @param soundName? string @The sound to play
---- @param position? GVector @The position where the sound is meant to play, which is also used for a network filter (`CPASAttenuationFilter`) to decide which players wil
+--- @param soundName string @The sound to play
+--- @param position GVector @The position where the sound is meant to play, which is also used for a network filter (`CPASAttenuationFilter`) to decide which players wil
 --- @param entity? number @The entity to emit the sound from
 --- @param channel? number @The sound channel, see Enums/CHAN.
 --- @param volume? number @The volume of the sound, from 0 to 1
@@ -673,9 +673,9 @@ end
 
 --- This function adds all models from a specified folder to a custom Spawnlist category. Internally uses Global.AddPropsOfParent  
 --- ⚠ **WARNING**: Using this function before SANDBOX:PopulateContent has been called will result in an error  
---- @param folder? string @the folder to search for models
---- @param path? string @The path to look for the files and directories in
---- @param name? string @The Spawnmenu Category name
+--- @param folder string @the folder to search for models
+--- @param path string @The path to look for the files and directories in
+--- @param name string @The Spawnmenu Category name
 --- @param icon? string @The Spawnmenu Category Icon to use
 --- @param appid? number @The AppID which is needed for the Content
 function _G.GenerateSpawnlistFromPath(folder, path, name, icon, appid)
@@ -709,28 +709,28 @@ function _G.GetConVarString(name)
 end
 
 --- Returns an angle that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? GAngle @The value to return if the global value is not set.
 --- @return GAngle @The global value, or default if the global is not set.
 function _G.GetGlobal2Angle(index, default)
 end
 
 --- Returns a boolean that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? boolean @The value to return if the global value is not set.
 --- @return boolean @The global value, or the default if the global value is not set.
 function _G.GetGlobal2Bool(index, default)
 end
 
 --- Returns an entity that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? GEntity @The value to return if the global value is not set.
 --- @return GEntity @The global value, or the default if the global value is not set.
 function _G.GetGlobal2Entity(index, default)
 end
 
 --- Returns a float that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
 function _G.GetGlobal2Float(index, default)
@@ -738,7 +738,7 @@ end
 
 --- Returns an integer that is shared between the server and all clients.  
 --- ⚠ **WARNING**: The integer has a 32 bit limit. Use Global.GetGlobalInt for a higher limit  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
 function _G.GetGlobal2Int(index, default)
@@ -752,7 +752,7 @@ function _G.GetGlobal2String(index, default)
 end
 
 --- Returns a value that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? any @The value to return if the global value is not set.
 --- @return any @The global value, or the default if the global value is not set.
 function _G.GetGlobal2Var(index, default)
@@ -773,21 +773,21 @@ function _G.GetGlobalAngle(index, default)
 end
 
 --- Returns a boolean that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? boolean @The value to return if the global value is not set.
 --- @return boolean @The global value, or the default if the global value is not set.
 function _G.GetGlobalBool(index, default)
 end
 
 --- Returns an entity that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? GEntity @The value to return if the global value is not set.
 --- @return GEntity @The global value, or the default if the global value is not set.
 function _G.GetGlobalEntity(index, default)
 end
 
 --- Returns a float that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
 function _G.GetGlobalFloat(index, default)
@@ -795,7 +795,7 @@ end
 
 --- Returns an integer that is shared between the server and all clients.  
 --- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? number @The value to return if the global value is not set.
 --- @return number @The global value, or the default if the global value is not set.
 function _G.GetGlobalInt(index, default)
@@ -809,7 +809,7 @@ function _G.GetGlobalString(index, default)
 end
 
 --- Returns a value that is shared between the server and all clients.  
---- @param index? string @The unique index to identify the global value with.
+--- @param index string @The unique index to identify the global value with.
 --- @param default? any @The value to return if the global value is not set.
 --- @return any @The global value, or the default if the global value is not set.
 function _G.GetGlobalVar(index, default)
@@ -1072,7 +1072,7 @@ function _G.JS_Workshop(htmlPanel)
 end
 
 --- Convenience function that creates a DLabel, sets the text, and returns it  
---- @param text? string @The string to set the label's text to
+--- @param text string @The string to set the label's text to
 --- @param parent? GPanel @Optional
 --- @return GPanel @The created DLabel
 function _G.Label(text, parent)
@@ -1144,7 +1144,7 @@ end
 --- While images are no longer scaled to Power of 2 (sizes of 8, 16, 32, 64, 128, etc.) sizes since February 2019, it is still a good practice for things like icons, etc.  
 --- ⚠ **WARNING**: Server-side, this function can consistently return an invalid material (with '__error') depending on the file type loaded.  
 --- ⚠ **WARNING**: This function is very expensive when used in rendering hooks or in operations requiring very frequent calls. It is a good idea to cache the material in a variable (like in the examples).  
---- @param materialName? string @The material name or path relative to the `materials/` folder
+--- @param materialName string @The material name or path relative to the `materials/` folder
 --- @param pngParameters? string @A string containing space separated keywords which will be used to add material parameters
 --- @return GIMaterial @Generated material.
 --- @return number @How long it took for the function to run.
@@ -1222,9 +1222,9 @@ end
 
 --- Creates a particle effect. See also Global.CreateParticleSystem.  
 --- ℹ **NOTE**: The particle effect must be precached **serverside** with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
---- @param particleName? string @The name of the particle effect.
---- @param position? GVector @The start position of Control Point 0 for the particle system.
---- @param angles? GAngle @The orientation of Control Point 0 for the particle system
+--- @param particleName string @The name of the particle effect.
+--- @param position GVector @The start position of Control Point 0 for the particle system.
+--- @param angles GAngle @The orientation of Control Point 0 for the particle system
 --- @param parent? GEntity @If set, the particle will be parented to the entity.
 function _G.ParticleEffect(particleName, position, angles, parent)
 end
@@ -1241,7 +1241,7 @@ end
 --- Creates a new CLuaEmitter.  
 --- ℹ **NOTE**: Do not forget to delete the emitter with CLuaEmitter:Finish once you are done with it  
 --- ⚠ **WARNING**: There is a limit of 4097 emitters that can be active at once, exceeding this limit will throw a non-halting error in console!  
---- @param position? GVector @The start position of the emitter
+--- @param position GVector @The start position of the emitter
 --- @param use3D? boolean @Whenever to render the particles in 2D or 3D mode
 --- @return GCLuaEmitter @The new particle emitter.
 function _G.ParticleEmitter(position, use3D)
@@ -1300,7 +1300,7 @@ function _G.PrintMessage(type, message)
 end
 
 --- Recursively prints the contents of a table to the console.  
---- @param tableToPrint? table @The table to be printed
+--- @param tableToPrint table @The table to be printed
 --- @param indent? number @Number of tabs to start indenting at
 --- @param done? table @Internal argument, you shouldn't normally change this
 function _G.PrintTable(tableToPrint, indent, done)
@@ -1320,7 +1320,7 @@ function _G.ProtectedCall(func, ...)
 end
 
 --- Returns an iterator function that can be used to loop through a table in random order  
---- @param table? table @Table to create iterator for
+--- @param table table @Table to create iterator for
 --- @param descending? boolean @Whether the iterator should iterate descending or not
 --- @return function @Iterator function
 function _G.RandomPairs(table, descending)
@@ -1412,7 +1412,7 @@ end
 
 --- Evaluates and executes the given code, will throw an error on failure.  
 --- ℹ **NOTE**: Local variables are not passed to the given code.  
---- @param code? string @The code to execute.
+--- @param code string @The code to execute.
 --- @param identifier? string @The name that should appear in any error messages caused by this code.
 --- @param handleError? boolean @If false, this function will return a string containing any error messages instead of throwing an error.
 --- @return string @If handleError is false, the error message (if any).
@@ -1426,7 +1426,7 @@ end
 
 --- Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless noQuotes is true. Alias of sql.SQLStr  
 --- ℹ **NOTE**: This function is not meant to be used with external database engines such as `MySQL`. Escaping strings with inadequate functions is dangerous!  
---- @param input? string @String to be escaped
+--- @param input string @String to be escaped
 --- @param noQuotes? boolean @Whether the returned value should be surrounded in quotes or not
 --- @return string @Escaped input
 function _G.SQLStr(input, noQuotes)
@@ -1666,7 +1666,7 @@ end
 --- This function can be used in a for loop instead of Global.pairs. It sorts all **keys** alphabetically.  
 --- For sorting by specific **value member**, use Global.SortedPairsByMemberValue.  
 --- For sorting by **value**, use Global.SortedPairsByValue.  
---- @param table? table @The table to sort
+--- @param table table @The table to sort
 --- @param desc? boolean @Reverse the sorting order
 --- @return function @Iterator function
 --- @return table @The table being iterated over
@@ -1676,8 +1676,8 @@ end
 --- Returns an iterator function that can be used to loop through a table in order of member values, when the values of the table are also tables and contain that member.  
 --- To sort by **value**, use Global.SortedPairsByValue.  
 --- To sort by **keys**, use Global.SortedPairs.  
---- @param table? table @Table to create iterator for.
---- @param memberKey? any @Key of the value member to sort by.
+--- @param table table @Table to create iterator for.
+--- @param memberKey any @Key of the value member to sort by.
 --- @param descending? boolean @Whether the iterator should iterate in descending order or not.
 --- @return function @Iterator function
 --- @return table @The table the iterator was created for.
@@ -1687,7 +1687,7 @@ end
 --- Returns an iterator function that can be used to loop through a table in order of its **values**.  
 --- To sort by specific **value member**, use Global.SortedPairsByMemberValue.  
 --- To sort by **keys**, use Global.SortedPairs.  
---- @param table? table @Table to create iterator for
+--- @param table table @Table to create iterator for
 --- @param descending? boolean @Whether the iterator should iterate in descending order or not
 --- @return function @Iterator function
 --- @return table @The table which will be iterated over
@@ -1832,7 +1832,7 @@ function _G.WorldToLocal(position, angle, newSystemOrigin, newSystemAngles)
 end
 
 --- If the result of the first argument is false or nil, an error is thrown with the second argument as the message.  
---- @param expression? any @The expression to assert.
+--- @param expression any @The expression to assert.
 --- @param errorMessage? string @The error message to throw when assertion fails
 --- @vararg any @Any arguments past the error message will be returned by a successful assert.
 --- @return any @If successful, returns the first argument.
@@ -1849,7 +1849,7 @@ function _G.collectgarbage(action, arg)
 end
 
 --- Throws a Lua error and breaks out of the current call stack.  
---- @param message? string @The error message to throw
+--- @param message string @The error message to throw
 --- @param errorLevel? number @The level to throw the error at.
 function _G.error(message, errorLevel)
 end
@@ -1972,7 +1972,7 @@ end
 
 --- Returns the next key and value pair in a table.  
 --- ℹ **NOTE**: Table keys in Lua have no specific order, and will be returned in whatever order they exist in memory. This may not always be in ascending order or alphabetical order. If you need to iterate over an array in order, use Global.ipairs.  
---- @param tab? table @The table
+--- @param tab table @The table
 --- @param prevKey? any @The previous key in the table.
 --- @return any @The next key for the table
 --- @return any @The value associated with that key
@@ -2066,7 +2066,7 @@ function _G.tobool(input)
 end
 
 --- Attempts to convert the value to a number.  
---- @param value? any @The value to convert
+--- @param value any @The value to convert
 --- @param base? number @The base used in the string
 --- @return number @The numeric representation of the value with the given base, or nil if the conversion failed.
 function _G.tonumber(value, base)
@@ -2087,7 +2087,7 @@ function _G.type(var)
 end
 
 --- This function takes a numeric indexed table and return all the members as a vararg. If specified, it will start at the given index and end at end index.  
---- @param tbl? table @The table to generate the vararg from.
+--- @param tbl table @The table to generate the vararg from.
 --- @param startIndex? number @Which index to start from
 --- @param endIndex? number @Which index to end at
 --- @return any @Output values

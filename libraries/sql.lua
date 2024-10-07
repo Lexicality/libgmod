@@ -55,7 +55,7 @@ end
 --- ```lua  
 --- sql.Query(query)[row]  
 --- ```  
---- @param query? string @The query as used in sql.Query
+--- @param query string @The query as used in sql.Query
 --- @param row? number @The row number.
 --- @return table @The returned row.
 function sql.QueryRow(query, row)
@@ -69,7 +69,7 @@ end
 
 --- Escapes dangerous characters and symbols from user input used in an SQLite SQL Query.  
 --- ℹ **NOTE**: This function is not meant to be used with external database engines such as `MySQL`. Escaping strings with inadequate functions is dangerous!  
---- @param string? string @The string to be escaped.
+--- @param string string @The string to be escaped.
 --- @param bNoQuotes? boolean @Set this as `true`, and the function will not wrap the input string in apostrophes.
 --- @return string @The escaped input.
 function sql.SQLStr(string, bNoQuotes)

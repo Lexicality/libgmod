@@ -1,14 +1,14 @@
 --- The construct library is used to control the physical properties of entities.  
 _G.construct = {}
 --- Creates a magnet.  
---- @param ply? GPlayer @Player that will have the numpad control over the magnet
---- @param pos? GVector @The position of the magnet
---- @param ang? GAngle @The angles of the magnet
---- @param model? string @The model of the maget
---- @param material? string @Material of the magnet ( texture )
---- @param key? number @The key to toggle the magnet, see Enums/KEY
---- @param maxObjects? number @Maximum amount of objects the magnet can hold
---- @param strength? number @Strength of the magnet
+--- @param ply GPlayer @Player that will have the numpad control over the magnet
+--- @param pos GVector @The position of the magnet
+--- @param ang GAngle @The angles of the magnet
+--- @param model string @The model of the maget
+--- @param material string @Material of the magnet ( texture )
+--- @param key number @The key to toggle the magnet, see Enums/KEY
+--- @param maxObjects number @Maximum amount of objects the magnet can hold
+--- @param strength number @Strength of the magnet
 --- @param nopull? number @If > 0, disallows the magnet to pull objects towards it
 --- @param allowrot? number @If > 0, allows rotation of the objects attached
 --- @param startOn? number @If > 0, enabled from spawn

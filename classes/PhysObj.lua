@@ -374,7 +374,7 @@ function GPhysObj:SetMaterial(materialName)
 end
 
 --- Sets the position of the physobject.  
---- @param position? GVector @The new position of the physobject in world coordinates
+--- @param position GVector @The new position of the physobject in world coordinates
 --- @param teleport? boolean @If `true`, temporarily disables collisions of the physics objects just before moving it, then enables collisions back again.
 function GPhysObj:SetPos(position, teleport)
 end

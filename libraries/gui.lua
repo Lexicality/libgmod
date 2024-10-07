@@ -6,8 +6,8 @@ end
 
 --- Pushes text to the closed caption box.  
 --- ℹ **NOTE**: The function will not work, if the console command variable "closecaption" is set to 0.  
---- @param text? string @The caption to emit
---- @param duration? number @How long the caption should stay for
+--- @param text string @The caption to emit
+--- @param duration number @How long the caption should stay for
 --- @param fromPlayer? boolean @Is this caption coming from the player?
 function gui.AddCaption(text, duration, fromPlayer)
 end

@@ -1,15 +1,15 @@
 --- The numpad module allows you to execute functions on a key press or release.  
 _G.numpad = {}
 --- Activates numpad key owned by the player  
---- @param ply? GPlayer @The player whose numpad should be simulated
---- @param key? number @The key to press, see Enums/KEY
+--- @param ply GPlayer @The player whose numpad should be simulated
+--- @param key number @The key to press, see Enums/KEY
 --- @param isButton? boolean @Should this keypress pretend to be a from a `gmod_button`? (causes numpad.FromButton to return `true`)
 function numpad.Activate(ply, key, isButton)
 end
 
 --- Deactivates numpad key owned by the player  
---- @param ply? GPlayer @The player whose numpad should be simulated
---- @param key? number @The key to press, corresponding to Enums/KEY
+--- @param ply GPlayer @The player whose numpad should be simulated
+--- @param key number @The key to press, corresponding to Enums/KEY
 --- @param isButton? boolean @Should this keypress pretend to be a from a `gmod_button`? (causes numpad.FromButton to return `true`)
 function numpad.Deactivate(ply, key, isButton)
 end
