@@ -1,6 +1,8 @@
+--- @meta
+
 _G.mysqloo = {
 	VERSION = 9,
-	MINOR_VERSION = 6,
+	MINOR_VERSION = 7,
 	DATABASE_CONNECTED = 0,
 	DATABASE_CONNECTING = 1,
 	DATABASE_CONNECTION_FAILED = 3,
@@ -16,6 +18,9 @@ _G.mysqloo = {
 	QUERY_WAITING = 5,
 }
 
+--- @alias MySQLOOResult table<string | number, any>
+--- @alias MySQLOOResults MySQLOOResult[]
+
 --- @class MySQLOOQuery
 local Query = {}
 
@@ -25,13 +30,15 @@ end
 
 --- True if the query is running or waiting, false if it isn't.
 --- @return boolean
+--- @nodiscard
 function Query:isRunning()
 end
 
 --- Gets the data the query returned from the server
 --- Format: { row1, row2, row3, ... }
 --- Row format: { field_name = field_value } or {first_field, second_field, ...} if OPTION_NUMERIC_FIELDS is enabled
---- @return table
+--- @return MySQLOOResults
+--- @nodiscard
 function Query:getData()
 end
 
@@ -58,31 +65,33 @@ end
 
 --- Changes how the query returns data (mysqloo.OPTION_* enums).
 --- @param option number
-function Query:setOption(option)
+--- @param enabled? boolean
+function Query:setOption(option, enabled)
 end
 
 --- Forces the server to wait for the query to finish.
 --- This should only ever be used if it is really necessary, since it can cause lag and
 --- If shouldSwap is true, the query is being swapped to the front of the queue
 --- making it the next query to be executed
---- @param shouldSwap boolean
+--- @param shouldSwap? boolean
 function Query:wait(shouldSwap)
 end
 
 --- Gets the error caused by the query (if any).
 --- @return string
+--- @nodiscard
 function Query:error()
 end
 
 --- Returns true if the query still has more data associated with it (which means getNextResults() can be called)
 --- @return boolean
+--- @nodiscard
 function Query:hasMoreResults()
 end
 
 --- Pops the current result set, chaning the results of lastInsert() and affectedRows()  and getData()
 --- to those of the next result set. Returns the rows of the next result set in the same format as getData()
 --- Throws an error if attempted to be called when there is no result set left to be popped
---- @return table
 function Query:getNextResults()
 end
 
@@ -103,13 +112,13 @@ end
 
 --- Called when the query is successful, [Table] data is the data the query returned.
 --- @param q MySQLOOQuery
---- @param data table
+--- @param data MySQLOOResults
 function Query.onSuccess(q, data)
 end
 
 --- Called when the query retrieves a row of data, [Table] data is the row.
 --- @param q MySQLOOQuery
---- @param data table
+--- @param data MySQLOOResult
 function Query.onData(q, data)
 end
 
@@ -174,6 +183,7 @@ end
 
 --- Returns all queries that have been added to this transaction.
 --- @return table<number, MySQLOOQuery>
+--- @nodiscard
 function Transaction:getQueries()
 end
 
@@ -196,23 +206,29 @@ function Database:connect()
 end
 
 --- disconnects from the database and waits for all queries to finish if shouldWait is true
---- @param shouldWait boolean
+--- @param shouldWait? boolean
 function Database:disconnect(shouldWait)
 end
 
 --- Initializes a query to the database, [String] sql is the SQL query to run.
+--- @see MySQLOOQuery.start
+--- @param sql string
 --- @return MySQLOOQuery
+--- @nodiscard
 function Database:query(sql)
 end
 
 --- Creates a prepared query associated with the database
+--- @param sql string
 --- @return MySQLOOPreparedQuery
+--- @nodiscard
 function Database:prepare(sql)
 end
 
 --- Creates a transaction that executes multiple statements atomically
 --- Check [url]https://en.wikipedia.org/wiki/ACID[/url] for more information
 --- @return MySQLOOTransaction
+--- @nodiscard
 function Database:createTransaction()
 end
 
@@ -220,6 +236,7 @@ end
 --- If the characterset of the database is changed after connecting, this might not work properly anymore
 --- @param str string
 --- @return string
+--- @nodiscard
 function Database:escape(str)
 end
 
@@ -231,6 +248,7 @@ end
 --- Checks the connection to the database
 --- This shouldn't be used to detect timeouts to the server anymore (it's not possible anymore)
 --- @return number @mysqloo.DATABASE_* enums
+--- @nodiscard
 function Database:status()
 end
 
@@ -260,21 +278,25 @@ end
 
 --- Gets the MySQL servers version
 --- @return number
+--- @nodiscard
 function Database:serverVersion()
 end
 
 --- Fancy string of the MySQL servers version
 --- @return string
+--- @nodiscard
 function Database:serverInfo()
 end
 
 --- Gets information about the connection.
 --- @return string
+--- @nodiscard
 function Database:hostInfo()
 end
 
 --- Gets the amount of queries waiting to be processed
 --- @return number
+--- @nodiscard
 function Database:queueSize()
 end
 
@@ -289,8 +311,21 @@ end
 --- Please note that this does block the main server thread if there is a query currently being ran
 --- Returns true on success, false and an error message on failure
 --- @param charSetName string
---- @return boolean, string
+--- @return boolean success, string error
+--- @nodiscard
 function Database:setCharacterSet(charSetName)
+end
+
+
+--- Sets the SSL configuration of the database object. This allows you to enable secure connections over the internet using TLS.
+--- Every parameter is optional and can be omitted (set to nil) if not required.
+--- See https://dev.mysql.com/doc/c-api/8.0/en/mysql-ssl-set.html for the description of each parameter.
+--- @param key? string The path name of the client private key file.
+--- @param cert? string The path name of the client public key certificate file.
+--- @param ca? string The path name of the Certificate Authority (CA) certificate file. This option, if used, must specify the same certificate used by the server.
+--- @param capath? string The path name of the directory that contains trusted SSL CA certificate files.
+--- @param cipher? string The list of permissible ciphers for SSL encryption.
+function Database:setSSLSettings(key, cert, ca, capath, cipher)
 end
 
 --- Called when the connection to the MySQL server is successful
@@ -310,8 +345,9 @@ end
 --- @param username string
 --- @param password string
 --- @param database string
---- @param port string
---- @param socket string
+--- @param port? integer
+--- @param socket? string
 --- @return MySQLOODatabase
+--- @nodiscard
 function mysqloo.connect(host, username, password, database, port, socket)
 end
