@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GAngle
 --- List of all possible functions to manipulate angles.  
 --- Created by Global.Angle.  

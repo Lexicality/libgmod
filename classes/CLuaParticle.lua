@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCLuaParticle
 --- List of all possible functions available for Lua particles. This is the object returned by the CLuaEmitter:Add function.  
 local GCLuaParticle = {}

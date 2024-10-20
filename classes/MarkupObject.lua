@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GMarkupObject
 --- Object containing parsed markup for later rendering. Created by markup.Parse.  
 local GMarkupObject = {}

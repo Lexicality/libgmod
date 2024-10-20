@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GITexture
 --- An object representing game texture, like a .vtf file. Do not confuse with IMaterial. Returned by IMaterial:GetTexture  
 local GITexture = {}

@@ -4,7 +4,7 @@ import { formatDesc } from "./descriptions";
 import { handleFunc } from "./functions";
 
 export function handleLib(lib: FuncContainer): string {
-    let desc = "";
+    let desc = "--- @meta\n\n";
     if (lib.description) {
         desc = formatDesc(lib.description) + "\n";
     }

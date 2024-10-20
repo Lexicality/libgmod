@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GSurfaceInfo
 --- A brush surface object returned by Entity:GetBrushSurfaces.  
 --- Brush surfaces are a part of what makes up the map geometry aside from displacements. Any primitive brush model, including most breakable windows, can be represented by this object.  

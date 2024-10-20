@@ -1,3 +1,5 @@
+--- @meta
+
 --- Adds simple Get/Set accessor functions on the specified table.  
 --- Can also force the value to be set to a number, bool or string.  
 --- @param tab table @The table to add the accessor functions to.

@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GTool
 --- A list of functions available inside a Sandbox Toolgun tool.  
 --- You can find the hooks here, and members here.  

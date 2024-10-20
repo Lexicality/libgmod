@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCNewParticleEffect
 --- This object represents a .pcf ( Orange Box ) particle system. Created by Entity:CreateParticleEffect and Global.CreateParticleSystem.  
 local GCNewParticleEffect = {}

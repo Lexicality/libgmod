@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GIVideoWriter
 --- This is returned from video.Record.  
 local GIVideoWriter = {}

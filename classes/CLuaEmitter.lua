@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCLuaEmitter
 --- List of all possible functions available for LuaEmitters. This is the object returned by the Global.ParticleEmitter function.  
 local GCLuaEmitter = {}

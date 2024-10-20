@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GColor
 --- List of all possible functions to manipulate colors.  
 --- Colors are implemented in Lua thus Global.type(color) == "table" and Global.TypeID(color) == TYPE_TABLE.  

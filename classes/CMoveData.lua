@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCMoveData
 --- A class used to store the inputs from CUserCmd and other information related to the current movement simulation, such as velocity, position and so on.  
 --- This can only be accessed during GM:SetupMove , GM:Move , GM:PlayerTick and GM:FinishMove.  

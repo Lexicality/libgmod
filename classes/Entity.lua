@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GEntity
 --- This is a list of all available methods for all entities, which includes Players, Weapons, NPCs and Vehicles.  
 --- For a list of possible members of Scripted Entities see ENT Structure  

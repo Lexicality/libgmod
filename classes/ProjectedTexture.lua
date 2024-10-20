@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GProjectedTexture
 --- A client side projected texture, created by Global.ProjectedTexture.  
 local GProjectedTexture = {}

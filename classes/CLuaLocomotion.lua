@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCLuaLocomotion
 --- This class is essentially what controls a NextBot NPC. You can access it in a NextBot NPC by using **self.loco** variable.  
 local GCLuaLocomotion = {}

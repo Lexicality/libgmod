@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GIMaterial
 --- A Material object. It represents a game material, similarly to how a .vmt file does.  
 --- It can be created with Global.Material or Global.CreateMaterial.  

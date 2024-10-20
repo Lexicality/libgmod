@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GPlayer : GEntity
 --- This is a list of all methods only available for players. It is also possible to call Entity functions on the Player.  
 local GPlayer = {}

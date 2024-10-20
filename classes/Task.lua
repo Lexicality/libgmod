@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GTask
 --- A single AI task. Returned by ai_task.New.  
 local GTask = {}

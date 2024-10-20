@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCRecipientFilter
 --- List of all possible functions to manipulate Recipient Filters. Can be created with Global.RecipientFilter.  
 local GCRecipientFilter = {}

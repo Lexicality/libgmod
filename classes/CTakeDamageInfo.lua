@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCTakeDamageInfo
 --- A class used to store and modify all the data concerning a damage event.  
 --- An empty CTakeDamageInfo object can be created with Global.DamageInfo  

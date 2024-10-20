@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCNavLadder
 --- An object that represents a ladder for Nextbots.  
 local GCNavLadder = {}

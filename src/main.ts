@@ -12,7 +12,7 @@ async function doGlobals(): Promise<void> {
         await fs.readFile("output/global-functions.json", "utf-8"),
     );
     data = _.sortBy(data, "name");
-    let lua = "";
+    let lua = "--- @meta\n\n";
     for (let func of data) {
         let funcdata: string | undefined;
         try {

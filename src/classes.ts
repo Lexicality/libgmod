@@ -71,7 +71,7 @@ export function handleClass(cls: FuncContainer): string {
     if (ENTITY_CHILDREN.includes(cls.name)) {
         inherits = " : " + getTypeName("Entity");
     }
-    let def = `--- @class ${name}${inherits}\n`;
+    let def = `--- @meta\n\n--- @class ${name}${inherits}\n`;
     let lua = `local ${name} = {}\n`;
 
     let funcs = cls.functions;

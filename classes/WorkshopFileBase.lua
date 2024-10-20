@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GWorkshopFileBase
 --- <internal></internal>  
 --- This object is created by Global.WorkshopFileBase which is used internally to fetch data of the specific namespace  

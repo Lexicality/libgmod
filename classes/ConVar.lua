@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GConVar
 --- An object returned by Global.CreateConVar, Global.CreateClientConVar (which uses Global.CreateConVar internally), and Global.GetConVar.  
 --- It represents a console variable. See this page for more information.  

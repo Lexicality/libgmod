@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GPanel
 --- This is the base panel for every other [VGUI](vgui) panel.  
 --- It contains all of the basic methods, some of which may only work on certain VGUI elements. See also Panel Hooks.  

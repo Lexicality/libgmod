@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GIGModAudioChannel
 --- A sound channel returned by a callback of sound.PlayURL and sound.PlayFile.  
 local GIGModAudioChannel = {}

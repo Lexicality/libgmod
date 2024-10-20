@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GVector
 --- List of all possible functions to manipulate vectors.  
 --- Created by Global.Vector.  

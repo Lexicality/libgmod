@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GIMesh
 --- Renderable mesh object, can be used to create models on the fly.  
 --- The only way to create your own IMesh object is to call Global.Mesh.  

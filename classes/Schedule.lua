@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GSchedule
 --- The object returned by ai_schedule.New.  
 local GSchedule = {}

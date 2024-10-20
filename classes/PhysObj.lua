@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GPhysObj
 --- This is the object returned by Entity:GetPhysicsObject, Entity:GetPhysicsObjectNum and Vehicle:GetWheel.  
 --- It represents a physics object.  

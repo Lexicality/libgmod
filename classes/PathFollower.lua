@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GPathFollower
 --- Path object for a NextBot NPC and bots created by player.CreateNextbot. Returned by Global.Path.  
 local GPathFollower = {}

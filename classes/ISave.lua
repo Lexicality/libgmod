@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GISave
 --- The object used in the saverestore, mainly in saverestore.AddSaveHook.  
 --- It allows you to write blocks directly into the save game files used by Half-Life 2 save system when such save is being saved.  

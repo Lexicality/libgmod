@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCNavArea
 --- An object returned by navmesh functions.  
 local GCNavArea = {}

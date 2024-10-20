@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GCSoundPatch
 --- CSoundPatch class.  
 --- Created with Global.CreateSound  

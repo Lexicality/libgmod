@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GNextBot
 --- NextBots are a new system to create NPCs in the Source Engine, utilizing the more powerful navmesh system for navigation over the old node based system.  
 --- This page lists all possible functions usable with NextBots.  

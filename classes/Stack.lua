@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class GStack
 --- An object returned by util.Stack.  
 --- Like a Lua table, a Stack is a container. It follows the principle of LIFO (last in, first out).  
