@@ -280,4 +280,3 @@ end
 --- @param textureID number @The ID of the texture to draw with returned by surface.GetTextureID.
 function surface.SetTexture(textureID)
 end
-

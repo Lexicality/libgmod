@@ -22,4 +22,3 @@ end
 --- Stops the drag'n'drop and calls dragndrop.Clear.  
 function dragndrop.StopDragging()
 end
-

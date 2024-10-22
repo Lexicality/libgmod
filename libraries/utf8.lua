@@ -65,4 +65,3 @@ end
 --- @return string @The substring.
 function utf8.sub(string, StartPos, EndPos)
 end
-

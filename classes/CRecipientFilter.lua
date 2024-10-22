@@ -80,4 +80,3 @@ end
 --- @param teamid number @Team index.
 function GCRecipientFilter:RemoveRecipientsNotOnTeam(teamid)
 end
-

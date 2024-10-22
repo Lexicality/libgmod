@@ -21,4 +21,3 @@ end
 --- @param name string @The name of the command to be removed.
 function concommand.Remove(name)
 end
-

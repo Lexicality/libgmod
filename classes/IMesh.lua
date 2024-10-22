@@ -28,4 +28,3 @@ end
 --- @return boolean @Whether this IMesh is valid or not.
 function GIMesh:IsValid()
 end
-

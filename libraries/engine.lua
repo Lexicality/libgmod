@@ -115,4 +115,3 @@ end
 --- @param workshopID? string @The workshop ID for the saves' map.
 function engine.WriteSave(saveData, name, time, map, workshopID)
 end
-

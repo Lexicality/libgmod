@@ -135,4 +135,3 @@ end
 --- @param id number @The tab ID to open
 function spawnmenu.SwitchToolTab(id)
 end
-

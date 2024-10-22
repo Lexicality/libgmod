@@ -73,4 +73,3 @@ end
 --- 🦟 **BUG**: [This will not work if the entity attached to this sound patch (specified by Global.CreateSound) is invalid.](https://github.com/Facepunch/garrysmod-issues/issues/3260)  
 function GCSoundPatch:Stop()
 end
-

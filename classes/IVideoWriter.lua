@@ -27,4 +27,3 @@ end
 --- @return number @width
 function GIVideoWriter:Width()
 end
-

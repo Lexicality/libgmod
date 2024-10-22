@@ -159,4 +159,3 @@ end
 --- @return number @Width of the base texture.
 function GIMaterial:Width()
 end
-

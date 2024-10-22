@@ -51,4 +51,3 @@ end
 --- @return any @Arguments that were set previously by coroutine.resume.
 function coroutine.yield(...)
 end
-

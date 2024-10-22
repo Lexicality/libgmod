@@ -33,4 +33,3 @@ end
 --- @return number @The computed height.
 function GMarkupObject:Size()
 end
-

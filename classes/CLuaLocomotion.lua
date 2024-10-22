@@ -207,4 +207,3 @@ end
 --- @param velocity GVector 
 function GCLuaLocomotion:SetVelocity(velocity)
 end
-

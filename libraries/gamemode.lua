@@ -8,4 +8,3 @@ _G.gamemode = {}
 --- @return any @The result of the hook function - can be up to 6 values
 function gamemode.Call(name, ...)
 end
-

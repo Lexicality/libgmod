@@ -90,4 +90,3 @@ end
 --- @return string @The simplified name for that model
 function player_manager.TranslateToPlayerModelName(model)
 end
-

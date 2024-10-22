@@ -101,4 +101,3 @@ end
 --- @return table @The PANEL table
 function vgui.RegisterTable(panel, base)
 end
-

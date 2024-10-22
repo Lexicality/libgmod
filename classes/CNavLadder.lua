@@ -115,4 +115,3 @@ end
 --- @param area GCNavArea 
 function GCNavLadder:SetTopRightArea(area)
 end
-

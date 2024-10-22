@@ -5,4 +5,3 @@ _G.hammer = {}
 --- @return string @Returns "ok" if command succeeded otherwise returns "badcommand"
 function hammer.SendCommand(cmd)
 end
-

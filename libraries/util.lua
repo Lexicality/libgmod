@@ -727,4 +727,3 @@ end
 --- @param callback function @Function to call after an entity choice has been made
 function util.worldpicker.Start(callback)
 end
-

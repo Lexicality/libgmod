@@ -31,4 +31,3 @@ end
 --- Repopulates the clients cleanup menu  
 function cleanup.UpdateUI()
 end
-

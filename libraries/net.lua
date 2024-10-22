@@ -297,4 +297,3 @@ end
 --- @param vector GVector @The vector to be sent.
 function net.WriteVector(vector)
 end
-

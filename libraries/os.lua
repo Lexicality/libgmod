@@ -26,4 +26,3 @@ end
 --- @return number @Seconds passed since Unix epoch
 function os.time(dateData)
 end
-

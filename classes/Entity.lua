@@ -3686,4 +3686,3 @@ end
 --- @return GAngle @The local angles
 function GEntity:WorldToLocalAngles(ang)
 end
-

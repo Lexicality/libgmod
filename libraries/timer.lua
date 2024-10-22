@@ -100,4 +100,3 @@ end
 --- @return boolean @false if the timer didn't exist or was already running, true otherwise.
 function timer.UnPause(identifier)
 end
-

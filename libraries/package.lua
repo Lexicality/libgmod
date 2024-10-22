@@ -9,4 +9,3 @@ end
 --- @param module table @The module table to be given a metatable
 function package.seeall(module)
 end
-

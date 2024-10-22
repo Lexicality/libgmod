@@ -163,4 +163,3 @@ end
 --- @param spawnPointClass string @The classname of what the player uses to spawn, automatically adds it to the walkable positions during map generation.
 function navmesh.SetPlayerSpawnName(spawnPointClass)
 end
-

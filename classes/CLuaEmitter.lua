@@ -65,4 +65,3 @@ end
 --- @param position GVector @New position.
 function GCLuaEmitter:SetPos(position)
 end
-

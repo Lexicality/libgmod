@@ -119,4 +119,3 @@ end
 --- @param mouseY number @The Y coordinate to move the cursor to.
 function gui.SetMousePos(mouseX, mouseY)
 end
-

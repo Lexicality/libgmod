@@ -18,4 +18,3 @@ end
 --- @return GEntity @If set, the currently rendered entity by the halo library.
 function halo.RenderedEntity()
 end
-

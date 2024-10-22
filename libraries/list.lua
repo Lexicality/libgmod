@@ -47,4 +47,3 @@ end
 --- @param item any @The item to set to the list as key
 function list.Set(identifier, key, item)
 end
-

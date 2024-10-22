@@ -57,4 +57,3 @@ end
 --- Rewinds the bitstream so it can be read again.  
 function Gbf_read:Reset()
 end
-

@@ -35,4 +35,3 @@ end
 --- @param value string @The data stored in the cookie.
 function cookie.Set(key, value)
 end
-

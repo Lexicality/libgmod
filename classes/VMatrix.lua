@@ -230,4 +230,3 @@ end
 --- This function is more efficient than setting each element manually.  
 function GVMatrix:Zero()
 end
-

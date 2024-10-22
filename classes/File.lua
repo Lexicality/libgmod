@@ -146,4 +146,3 @@ end
 --- @param uint16 number @The unsigned 16-bit integer to the file.
 function GFile:WriteUShort(uint16)
 end
-

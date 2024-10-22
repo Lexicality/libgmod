@@ -608,4 +608,3 @@ end
 --- @return number @The mathematical constant, Tau.
 function math.tau()
 end
-

@@ -348,4 +348,3 @@ end
 --- @param sorter? function @If specified, the sorting function
 function table.sort(tbl, sorter)
 end
-

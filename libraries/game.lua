@@ -236,4 +236,3 @@ end
 --- @return GVector @startSpot
 function game.StartSpot()
 end
-

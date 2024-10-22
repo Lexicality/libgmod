@@ -62,4 +62,3 @@ end
 --- @return number @Alpha
 function GColor:Unpack()
 end
-

@@ -118,4 +118,3 @@ end
 --- @param activity number @One of the Enums/ACT
 function GNextBot:StartActivity(activity)
 end
-

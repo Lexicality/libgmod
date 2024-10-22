@@ -48,4 +48,3 @@ end
 --- @return string @The name of the next data block to be read.
 function GIRestore:StartBlock()
 end
-

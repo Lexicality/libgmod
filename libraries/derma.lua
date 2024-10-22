@@ -93,4 +93,3 @@ end
 --- @return function @A function that is created with the GWEN library to draw a texture
 function derma.SkinTexture(name, pnl, fallback)
 end
-

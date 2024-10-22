@@ -214,4 +214,3 @@ end
 --- @return GVector @AABB maxs vector
 function duplicator.WorkoutSize(Ents)
 end
-

@@ -162,4 +162,3 @@ end
 --- @param bot GNextBot @The bot to update along the path
 function GPathFollower:Update(bot)
 end
-

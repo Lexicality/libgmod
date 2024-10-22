@@ -28,4 +28,3 @@ end
 --- @param data table @The table containing properties to apply
 function construct.SetPhysProp(ply, ent, physObjID, physObj, data)
 end
-

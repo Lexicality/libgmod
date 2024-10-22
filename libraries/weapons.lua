@@ -33,4 +33,3 @@ end
 --- @param classname string @Classname to assign to that swep
 function weapons.Register(ENT, classname)
 end
-

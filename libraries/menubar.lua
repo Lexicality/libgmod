@@ -15,4 +15,3 @@ end
 --- @param pnl GPanel @The panel to parent to
 function menubar.ParentTo(pnl)
 end
-

@@ -367,4 +367,3 @@ end
 --- @return GEntity @The winch controller
 function constraint.Winch(player, ent1, ent2, bone1, bone2, localPos1, localPos2, width, fwdBind, bwdBind, fwdSpeed, bwdSpeed, material, toggle, color)
 end
-

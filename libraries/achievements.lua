@@ -33,4 +33,3 @@ end
 --- @return boolean @Returns true if the given achievementID is achieved.
 function achievements.IsAchieved(AchievementID)
 end
-

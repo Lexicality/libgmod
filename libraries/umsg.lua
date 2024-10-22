@@ -80,4 +80,3 @@ end
 --- @param normal GVector @The vector normal to be sent.
 function umsg.VectorNormal(normal)
 end
-

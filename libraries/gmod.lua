@@ -4,4 +4,3 @@ _G.gmod = {}
 --- @return table @GAMEMODE
 function gmod.GetGamemode()
 end
-

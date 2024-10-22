@@ -37,4 +37,3 @@ end
 --- @param tr table @The trace that is passed as second argument to Action callback of a property
 function properties.OpenEntityMenu(ent, tr)
 end
-

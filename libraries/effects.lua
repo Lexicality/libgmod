@@ -31,4 +31,3 @@ end
 --- @param delay? number @Delay in seconds after the function call and before the effect actually spawns.
 function effects.Bubbles(mins, maxs, count, height, speed, delay)
 end
-

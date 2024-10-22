@@ -130,4 +130,3 @@ end
 --- @return number @The amount of vertices.
 function mesh.VertexCount()
 end
-

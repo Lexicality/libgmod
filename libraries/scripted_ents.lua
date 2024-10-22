@@ -48,4 +48,3 @@ end
 --- @param classname string @The classname to register.
 function scripted_ents.Register(ENT, classname)
 end
-

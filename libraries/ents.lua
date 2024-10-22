@@ -151,4 +151,3 @@ end
 --- @return number @The starting index for the table of players
 function ents.Iterator()
 end
-

@@ -83,4 +83,3 @@ end
 --- @return string @hexString
 function bit.tohex(value, digits)
 end
-

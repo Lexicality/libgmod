@@ -233,4 +233,3 @@ end
 --- @param doScale? boolean @Use velocity scaling.
 function GCLuaParticle:SetVelocityScale(doScale)
 end
-

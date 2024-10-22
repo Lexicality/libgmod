@@ -121,4 +121,3 @@ end
 --- @return boolean @Is valid
 function team.Valid(index)
 end
-

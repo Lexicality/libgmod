@@ -462,4 +462,3 @@ end
 --- More information can be found on the Simple Pathfinding page.  
 function GCNavArea:UpdateOnOpenList()
 end
-

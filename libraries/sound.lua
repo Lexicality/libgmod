@@ -80,4 +80,3 @@ end
 --- @param callback function @Callback function that is called as soon as the the stream is loaded
 function sound.PlayURL(url, flags, callback)
 end
-

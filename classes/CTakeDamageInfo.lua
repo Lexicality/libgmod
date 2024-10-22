@@ -185,4 +185,3 @@ end
 --- @param damage number @Value to subtract.
 function GCTakeDamageInfo:SubtractDamage(damage)
 end
-

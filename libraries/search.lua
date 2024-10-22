@@ -13,4 +13,3 @@ end
 --- @return table @A table of results
 function search.GetResults(query, types, maxResults)
 end
-

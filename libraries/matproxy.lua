@@ -10,4 +10,3 @@ end
 --- @return table @The list of all material proxies.
 function matproxy.ProxyList()
 end
-

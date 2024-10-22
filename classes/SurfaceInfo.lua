@@ -32,4 +32,3 @@ end
 --- @return boolean @Returns true if the surface is water.
 function GSurfaceInfo:IsWater()
 end
-

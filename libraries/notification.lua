@@ -18,4 +18,3 @@ end
 --- @param uid any @The unique ID of the notification
 function notification.Kill(uid)
 end
-

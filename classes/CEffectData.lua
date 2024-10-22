@@ -179,4 +179,3 @@ end
 --- @param surfaceProperties number @The surface property index of the effect.
 function GCEffectData:SetSurfaceProp(surfaceProperties)
 end
-

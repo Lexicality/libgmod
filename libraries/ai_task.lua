@@ -4,4 +4,3 @@ _G.ai_task = {}
 --- @return GTask @The new task object.
 function ai_task.New()
 end
-

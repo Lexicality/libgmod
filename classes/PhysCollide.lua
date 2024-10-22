@@ -26,4 +26,3 @@ end
 --- @return number @Fraction of the trace
 function GPhysCollide:TraceBox(origin, angles, rayStart, rayEnd, rayMins, rayMaxs)
 end
-

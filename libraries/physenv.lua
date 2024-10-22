@@ -42,4 +42,3 @@ end
 --- @param performanceSettings table @The new performance settings
 function physenv.SetPerformanceSettings(performanceSettings)
 end
-

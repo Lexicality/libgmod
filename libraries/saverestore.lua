@@ -54,4 +54,3 @@ end
 --- @param save GISave @The save object to write the variable to.
 function saverestore.WriteVar(value, save)
 end
-

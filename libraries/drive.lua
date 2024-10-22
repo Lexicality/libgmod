@@ -30,4 +30,3 @@ end
 --- @param ent GEntity @The entity
 function drive.Start(ply, ent)
 end
-

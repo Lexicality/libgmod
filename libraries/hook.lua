@@ -36,4 +36,3 @@ end
 --- @return any @Return data from called hooks
 function hook.Run(eventName, ...)
 end
-

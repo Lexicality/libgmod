@@ -224,4 +224,3 @@ end
 --- Sets x, y and z to 0.  
 function GVector:Zero()
 end
-

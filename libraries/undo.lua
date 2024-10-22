@@ -50,4 +50,3 @@ end
 --- @param ply GPlayer @The player responsible for undoing the block
 function undo.SetPlayer(ply)
 end
-

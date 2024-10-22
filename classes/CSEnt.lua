@@ -7,4 +7,3 @@ local GCSEnt = {}
 --- Removes the clientside entity  
 function GCSEnt:Remove()
 end
-

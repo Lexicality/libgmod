@@ -422,4 +422,3 @@ end
 --- @return GVector @The corresponding vector relative to the PhysObj
 function GPhysObj:WorldToLocalVector(WorldVec)
 end
-

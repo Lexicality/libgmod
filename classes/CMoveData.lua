@@ -255,4 +255,3 @@ end
 --- @param velocity GVector @The velocity to set
 function GCMoveData:SetVelocity(velocity)
 end
-

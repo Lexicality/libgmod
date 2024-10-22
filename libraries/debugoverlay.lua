@@ -143,4 +143,3 @@ end
 --- @param ignoreZ? boolean @If true, will draw on top of everything; ignoring the Z buffer
 function debugoverlay.Triangle(pos1, pos2, pos3, lifetime, color, ignoreZ)
 end
-

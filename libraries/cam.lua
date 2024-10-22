@@ -105,4 +105,3 @@ end
 --- @param bottomOffset number @The bottom plane offset.
 function cam.StartOrthoView(leftOffset, topOffset, rightOffset, bottomOffset)
 end
-

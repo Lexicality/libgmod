@@ -939,4 +939,3 @@ end
 --- @param mat? GIMaterial 
 function render.WorldMaterialOverride(mat)
 end
-

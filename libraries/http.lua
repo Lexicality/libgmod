@@ -47,4 +47,3 @@ end
 --- @param headers? table @KeyValue table for headers.
 function http.Post(url, parameters, onSuccess, onFailure, headers)
 end
-

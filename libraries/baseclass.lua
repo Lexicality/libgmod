@@ -25,4 +25,3 @@ end
 --- @param tab table @The base class.
 function baseclass.Set(name, tab)
 end
-

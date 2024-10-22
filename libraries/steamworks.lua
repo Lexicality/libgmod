@@ -76,4 +76,3 @@ end
 --- @param resultCallback function @The function to process retrieved data
 function steamworks.VoteInfo(workshopItemID, resultCallback)
 end
-

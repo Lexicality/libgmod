@@ -195,4 +195,3 @@ end
 --- @param time number @Time when player should be able to use secondary fire again
 function GWeapon:SetNextSecondaryFire(time)
 end
-

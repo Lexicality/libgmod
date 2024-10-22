@@ -16,4 +16,3 @@ end
 --- @return boolean @Whether the permission is granted or not.
 function permissions.IsGranted(permission)
 end
-

@@ -216,4 +216,3 @@ end
 --- 🦟 **BUG**: [Calling this invalidates the IGModAudioChannel object rendering it unusable for further functions.](https://github.com/Facepunch/garrysmod-issues/issues/1497)  
 function GIGModAudioChannel:Stop()
 end
-

@@ -11,4 +11,3 @@ end
 --- @return string @The translated phrase, or the input string if no translation was found
 function language.GetPhrase(phrase)
 end
-

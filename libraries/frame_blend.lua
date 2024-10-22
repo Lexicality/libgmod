@@ -9,4 +9,3 @@ end
 --- @return boolean @Should the frame be skipped or not
 function frame_blend.ShouldSkipFrame()
 end
-

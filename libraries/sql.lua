@@ -80,4 +80,3 @@ end
 --- @return boolean @exists
 function sql.TableExists(tableName)
 end
-

@@ -179,4 +179,3 @@ end
 --- @return number @The version number
 function jit.version_num()
 end
-

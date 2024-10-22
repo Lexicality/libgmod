@@ -55,4 +55,3 @@ end
 --- @return number @width
 function GITexture:Width()
 end
-

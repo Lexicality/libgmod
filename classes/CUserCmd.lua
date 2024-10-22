@@ -162,4 +162,3 @@ end
 --- @return number @The amount of ticks passed since joining the server.
 function GCUserCmd:TickCount()
 end
-

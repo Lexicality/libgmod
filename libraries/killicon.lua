@@ -64,4 +64,3 @@ end
 --- @param dontEqualizeHeight? number @Do not rescale the icon to match the default kill icon font.
 function killicon.Render(x, y, name, alpha, dontEqualizeHeight)
 end
-

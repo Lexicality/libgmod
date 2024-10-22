@@ -359,4 +359,3 @@ end
 --- @return string @A string representing the value of a string converted to upper-case.
 function string.upper(str)
 end
-

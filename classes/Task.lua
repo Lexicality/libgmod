@@ -33,4 +33,3 @@ end
 --- @param target GNPC @The NPC to start the task on.
 function GTask:Start(target)
 end
-

@@ -9,4 +9,3 @@ _G.gameevent = {}
 --- @param eventName string @The event to listen to
 function gameevent.Listen(eventName)
 end
-

@@ -60,4 +60,3 @@ end
 --- @return number @The amount of seconds since the Steam user last moved their mouse.
 function system.UpTime()
 end
-

@@ -18,4 +18,3 @@ end
 --- @return GMarkupObject @The parsed markup object ready to be drawn via MarkupObject:Draw.
 function markup.Parse(markup, maxWidth)
 end
-

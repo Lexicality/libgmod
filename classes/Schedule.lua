@@ -33,4 +33,3 @@ end
 --- @return number @The number of tasks in this schedule.
 function GSchedule:NumTasks()
 end
-

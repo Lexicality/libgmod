@@ -142,4 +142,3 @@ end
 --- @return boolean @True if the mouse key was released the same frame that this function was called, false otherwise.
 function input.WasMouseReleased(key)
 end
-

@@ -2138,4 +2138,3 @@ end
 --- @return any @The returns of the first function if execution succeeded, otherwise the **first** return value of the error callback.
 function _G.xpcall(func, errorCallback, ...)
 end
-

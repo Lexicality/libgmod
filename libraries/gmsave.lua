@@ -31,4 +31,3 @@ end
 --- @return boolean @Should save entity or not
 function gmsave.ShouldSaveEntity(ent, t)
 end
-

@@ -16,4 +16,3 @@ end
 --- @vararg any @Arguments that are passed to the callback function when the hook is called.
 function usermessage.Hook(name, callback, ...)
 end
-

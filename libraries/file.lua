@@ -105,4 +105,3 @@ end
 --- @param content string @The content that will be written into the file.
 function file.Write(fileName, content)
 end
-

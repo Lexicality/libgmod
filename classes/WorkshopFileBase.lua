@@ -49,4 +49,3 @@ end
 --- @param callback function @Callback function
 function GWorkshopFileBase:RetrieveUserName(steamid, callback)
 end
-

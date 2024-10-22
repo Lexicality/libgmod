@@ -32,4 +32,3 @@ end
 --- @param newname string @New preset name
 function presets.Rename(groupname, oldname, newname)
 end
-

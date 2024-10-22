@@ -122,4 +122,3 @@ end
 --- @return number @The height of the word box.
 function draw.WordBox(bordersize, x, y, text, font, boxcolor, textcolor, xalign, yalign)
 end
-

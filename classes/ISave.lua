@@ -48,4 +48,3 @@ end
 --- @param vec GVector @The vector to write.
 function GISave:WriteVector(vec)
 end
-

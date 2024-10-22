@@ -1572,4 +1572,3 @@ end
 --- @return number @The voice volume.
 function GPlayer:VoiceVolume()
 end
-

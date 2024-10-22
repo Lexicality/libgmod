@@ -34,4 +34,3 @@ end
 --- Stops the motion capture.  
 function motionsensor.Stop()
 end
-

@@ -270,4 +270,3 @@ end
 --- The best place to call this function is in GM:PreDrawOpaqueRenderables.  
 function GProjectedTexture:Update()
 end
-

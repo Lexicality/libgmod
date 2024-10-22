@@ -1634,4 +1634,3 @@ end
 --- @return boolean @Whether the panel is valid or not, true being it is, false being it isn't.
 function GPanel:Valid()
 end
-

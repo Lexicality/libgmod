@@ -31,4 +31,3 @@ end
 --- @return any @The item at the top of the stack
 function GStack:Top()
 end
-

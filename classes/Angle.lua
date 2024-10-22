@@ -112,4 +112,3 @@ end
 --- This function is faster than doing it manually.  
 function GAngle:Zero()
 end
-

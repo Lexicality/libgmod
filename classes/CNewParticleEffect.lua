@@ -140,4 +140,3 @@ end
 --- Consider using CNewParticleEffect:StopEmission( false, true ) instead, which has same effect, but doesn't require owner entity, and does't detach the particle system from its entity.  
 function GCNewParticleEffect:StopEmissionAndDestroyImmediately()
 end
-

@@ -43,4 +43,3 @@ end
 --- @return string @Retrieved value
 function cvars.String(cvar, default)
 end
-

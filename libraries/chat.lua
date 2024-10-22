@@ -29,4 +29,3 @@ end
 --- Plays the chat "tick" sound.  
 function chat.PlaySound()
 end
-

@@ -264,4 +264,3 @@ end
 --- @param start boolean @True to start, false to stop.
 function GVehicle:StartEngine(start)
 end
-

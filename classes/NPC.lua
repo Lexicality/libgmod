@@ -910,4 +910,3 @@ end
 --- ℹ **NOTE**: This function only works on `ai` type [SENTs](Scripted_Entities).  
 function GNPC:UseNoBehavior()
 end
-

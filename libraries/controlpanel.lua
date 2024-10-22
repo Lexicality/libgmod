@@ -9,4 +9,3 @@ end
 --- @return GPanel @The ControlPanel panel.
 function controlpanel.Get(name)
 end
-

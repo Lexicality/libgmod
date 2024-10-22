@@ -86,4 +86,3 @@ end
 --- @return number @The starting index for the table of players
 function player.Iterator()
 end
-

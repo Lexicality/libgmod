@@ -6,4 +6,3 @@ _G.video = {}
 --- @return string @The error string, if there is an error
 function video.Record(config)
 end
-

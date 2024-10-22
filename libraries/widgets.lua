@@ -5,4 +5,3 @@ _G.widgets = {}
 --- @param ent GEntity @Widget entity to render
 function widgets.RenderMe(ent)
 end
-

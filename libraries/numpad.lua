@@ -56,4 +56,3 @@ end
 --- @param key number @The key to press, corresponding to Enums/KEY
 function numpad.Toggle(ply, key)
 end
-

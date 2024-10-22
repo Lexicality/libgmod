@@ -43,4 +43,3 @@ end
 --- @return table @The color of the point on the skin as a Color.
 function GWEN.TextureColor(x, y)
 end
-

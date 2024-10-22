@@ -26,4 +26,3 @@ end
 --- @param workshopid string @The workshop id of the file
 function resource.AddWorkshop(workshopid)
 end
-
