@@ -1,0 +1,23 @@
+# Copyright 2024 Lexi Robinson
+# Licensed under the LGPLv3
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-illegal-windows-names
+      - id: check-executables-have-shebangs
+      - id: check-json
+        # The pre-commit guy doesn't believe in json5 :/
+        exclude: "tsconfig.json"
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+        # The lua files have markdown embedded in them which rather
+        # unfortunately relies on trailing spaces to indicate newlines,
+        # so we need to preserve it in them
+        exclude: ".lua$"

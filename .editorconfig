@@ -11,6 +11,6 @@ indent_style = space
 indent_style = tab
 trim_trailing_whitespace = false
 
-[*.json]
+[*.{json,yml,yaml}]
 indent_size = 2
 tab_width = 2
