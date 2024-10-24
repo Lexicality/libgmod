@@ -1,3 +1,5 @@
+--- @meta
+
 --- GWEN is a system that allows you to load a spritesheet and generate a skin out of it.  
 _G.GWEN = {}
 --- Used in derma skins to create a bordered rectangle drawing function from an image.  

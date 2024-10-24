@@ -1,3 +1,5 @@
+--- @meta
+
 --- Performs bone merge on client side
 EF_BONEMERGE = 1
 --- For use with EF_BONEMERGE. If this is set, then it places this ents origin at its parent and uses the parent's bbox + the max extents of the aiment. Otherwise, it sets up the parent's bones every frame to figure out where to place the aiment, which is inefficient because it'll setup the parent's bones even if the parent is not in the PVS.

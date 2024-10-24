@@ -1,3 +1,5 @@
+--- @meta
+
 --- A library that allows implementing custom [material proxies](https://developer.valvesoftware.com/wiki/Material_proxies) for materials.  
 --- Material proxies allow programmatically setting specific `.vmt` shader parameters on a per-entity basis, rather being global across all instances of a material.  
 _G.matproxy = {}

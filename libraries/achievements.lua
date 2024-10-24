@@ -1,3 +1,5 @@
+--- @meta
+
 --- This library is used internally by Garry's Mod to help keep track of achievement progress and unlock the appropriate achievements once a certain number is reached.  
 _G.achievements = {}
 --- Returns the amount of achievements in Garry's Mod.  

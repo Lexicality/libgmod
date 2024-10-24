@@ -1,3 +1,5 @@
+--- @meta
+
 --- The debug library is intended to help you debug your scripts, however it also has several other powerful uses. Some builtin debug function were removed in GMod due to security reasons  
 _G.debug = {}
 --- Prints out the lua function call stack to the console.  

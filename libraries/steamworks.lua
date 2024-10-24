@@ -1,3 +1,5 @@
+--- @meta
+
 --- Steamworks related functions.  
 _G.steamworks = {}
 --- ℹ **NOTE**: You really should be using steamworks.DownloadUGC. This is a legacy function.  

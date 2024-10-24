@@ -1,3 +1,5 @@
+--- @meta
+
 --- Functions to persist data on a user's computer.  
 --- The data will be read / written to / from a database  
 --- corresponding to the realm the library was used in.  

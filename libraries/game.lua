@@ -1,3 +1,5 @@
+--- @meta
+
 --- The game library provides functions to access various features in the game's engine, most of it's functions are related to controlling the map.  
 _G.game = {}
 --- Adds a new ammo type to the game.  

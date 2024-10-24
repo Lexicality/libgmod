@@ -1,3 +1,5 @@
+--- @meta
+
 --- The draw library's purpose is to simplify the usage of the surface library.  
 _G.draw = {}
 --- Simple draw text at position, but this will expand newlines and tabs.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- Used to ask player for various potentially dangerous permissions.  
 _G.permissions = {}
 --- Requests the player to connect to a specified server. The player will be prompted with a confirmation window.  

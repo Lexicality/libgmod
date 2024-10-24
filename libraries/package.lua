@@ -1,3 +1,5 @@
+--- @meta
+
 --- The package library is a standard Lua library, it's mainly for use with the module system built into Lua.  
 _G.package = {}
 --- A list of all loaded packages.  

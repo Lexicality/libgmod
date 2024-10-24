@@ -1,3 +1,5 @@
+--- @meta
+
 --- The team library gives you access to the team system built into the Source engine, and allows you to create custom teams and get information about them.  
 _G.team = {}
 --- Increases the score of the given team  

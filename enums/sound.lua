@@ -1,3 +1,5 @@
+--- @meta
+
 --- Used when playing sounds through console commands.
 CHAN_REPLACE = -1
 --- Automatic channel

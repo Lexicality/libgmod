@@ -1,3 +1,5 @@
+--- @meta
+
 ---
 BUTTON_CODE_INVALID = -1
 ---

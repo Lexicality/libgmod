@@ -1,3 +1,5 @@
+--- @meta
+
 --- The net library is one of a number of ways to send data between the client and server.  
 --- The major advantages of the net library are the large size limit (64kb/message) and the ability to send data backwards - from the client to the server.  
 --- Refer to Net Library Usage for a short introduction.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The gui library is similar to the input but features functions that are more focused on the mouse's interaction with GUI panels.  
 _G.gui = {}
 --- Opens the game menu overlay.  

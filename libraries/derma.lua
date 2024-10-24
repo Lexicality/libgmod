@@ -1,3 +1,5 @@
+--- @meta
+
 --- The derma library allows you to add custom derma controls and create & modify derma skins.  
 _G.derma = {}
 --- Gets the color from a Derma skin of a panel and returns default color if not found  

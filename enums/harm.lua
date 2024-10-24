@@ -1,3 +1,5 @@
+--- @meta
+
 --- Generic damage (used by weapon_fists)
 DMG_GENERIC = 0
 --- Caused by physics interaction and ignored by airboat drivers. This is used by the Rollermine and an unused animation attack called 'Fireattack' by the Antlion Guard ACT_RANGE_ATTACK1 4202501 is the same DMG type as 1 but has a different value and its only used by the Barnacle when it kills an NPC 8197 is the same DMG type as 1 but has a different value and its only used by the Barnacle when its hurting a player

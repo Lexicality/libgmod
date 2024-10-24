@@ -1,3 +1,5 @@
+--- @meta
+
 --- The string *type* is a sequence of characters.  
 --- The string *library* is a standard Lua library which provides functions for the manipulation of strings.[[1]](https://www.lua.org/pil/20.html)  
 --- In Garry's Mod there are several extra useful functions and features added to this library.  

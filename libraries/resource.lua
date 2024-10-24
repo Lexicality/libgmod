@@ -1,3 +1,5 @@
+--- @meta
+
 --- The resource library is used to control what files are sent to clients who join a server, this includes models, materials, sounds, text files but not Lua files.  
 _G.resource = {}
 --- Adds the specified and all related files to the files the client should download from the server.  

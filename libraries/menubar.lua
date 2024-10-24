@@ -1,3 +1,5 @@
+--- @meta
+
 --- The menubar library.  
 _G.menubar = {}
 --- Creates the menu bar ( The bar at the top of the screen when holding C or Q in sandbox ) and docks it to the top of the screen. It will not appear.  

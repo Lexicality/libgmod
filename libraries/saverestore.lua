@@ -1,3 +1,5 @@
+--- @meta
+
 --- The saverestore library contains functions relating to the singleplayer save system built into the game.  
 _G.saverestore = {}
 --- Adds a restore/load hook for the Half-Life 2 save system.  

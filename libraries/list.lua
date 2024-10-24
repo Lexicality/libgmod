@@ -1,3 +1,5 @@
+--- @meta
+
 --- The list library allows you add and retrieve values to and from lists. The list library is basically a fancy wrapper for a table, but with much more limited functionality. See Default Lists for a page of default Sandbox lists.  
 _G.list = {}
 --- Adds an item to a named list  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The timer library is a very useful set of functions which allow you to run a function periodically or after a given delay.  
 _G.timer = {}
 --- Adjusts a previously created (timer.Create) timer with the given identifier.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The duplicator library allows you to specify what should be saved when someone attempts to duplicate your custom entity with the duplicator tool. It can also be used by 3rd party duplicator tools to make use of the built in system.  
 _G.duplicator = {}
 --- Allow entities with given class name to be duplicated. See duplicator.Disallow for the opposite effect.  

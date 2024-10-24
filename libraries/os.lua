@@ -1,3 +1,5 @@
+--- @meta
+
 --- The os library is a standard Lua library originally intended to allow Lua access to various features of the Operating System it's running on, however many of the features and functions have been removed in Garry's Mod due to security issues. It's only used in Garry's Mod for date & time operations.  
 _G.os = {}
 --- Returns the approximate cpu time the application ran.  

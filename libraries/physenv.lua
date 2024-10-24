@@ -1,3 +1,5 @@
+--- @meta
+
 --- The physenv library allows you to control the physics environment created by the engine, and lets you modify constants such as gravity and maximum velocity.  
 _G.physenv = {}
 --- Adds surface properties to the game's physics environment.  

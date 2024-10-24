@@ -1,3 +1,5 @@
+--- @meta
+
 --- The player_manager library lets you manage players, such as setting their models or creating player classes.  
 _G.player_manager = {}
 --- Assigns view model hands to player model.  

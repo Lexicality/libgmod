@@ -1,3 +1,5 @@
+--- @meta
+
 --- This directs all drawing to be done to a certain 2D or 3D plane or position, until the corresponding "End" function is called.  
 --- The matrix functions exist, but are mostly unusable unless you're familiar with the source engine's layout for each aspect.  
 _G.cam = {}

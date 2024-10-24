@@ -1,3 +1,5 @@
+--- @meta
+
 --- Used primarily for adding new soundscript entries.  
 _G.sound = {}
 --- Creates a sound script. It can also override sounds, which seems to only work when set on the server.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The mesh library allows you to create meshes. A mesh is a set of vertices that define a 3D shape, for constant meshes you should use the IMesh object instead.  
 _G.mesh = {}
 --- Pushes the currently set vertex data (via other `mesh.*` functions) into the mesh stack. See example on mesh.Begin.  

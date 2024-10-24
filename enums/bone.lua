@@ -1,3 +1,5 @@
+--- @meta
+
 ---
 BONE_PHYSICALLY_SIMULATED = 1
 ---

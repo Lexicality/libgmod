@@ -1,3 +1,5 @@
+--- @meta
+
 --- The concommand library is used to create console commands which can be used to network (basic) information & events between the client and the server.  
 _G.concommand = {}
 --- Creates a console command that runs a function in lua with optional autocompletion function and help text.  

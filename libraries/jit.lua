@@ -1,3 +1,5 @@
+--- @meta
+
 --- Library to work with the [LuaJIT](http://luajit.org/) functionality of gmod.  
 _G.jit = {}
 --- A variable containing the target architecture name: `x86`, `x64`, `arm`, `ppc`, `ppcspe`, or `mips`. This will be `x86` or `x64` in GMod.  

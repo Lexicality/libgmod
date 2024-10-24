@@ -1,3 +1,5 @@
+--- @meta
+
 --- Used to display notifications on the screen (mid-right).  
 _G.notification = {}
 --- Adds a standard notification to your screen.  

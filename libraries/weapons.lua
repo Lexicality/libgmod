@@ -1,3 +1,5 @@
+--- @meta
+
 --- The weapons library allows you to access information about any scripted weapons loaded into the game, as well as register your own weapons.  
 _G.weapons = {}
 --- Get a `copy` of weapon table by name. This function also inherits fields from the weapon's base class, unlike weapons.GetStored.  

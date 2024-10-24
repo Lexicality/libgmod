@@ -1,3 +1,5 @@
+--- @meta
+
 --- The ai library.  
 _G.ai = {}
 --- Translates a schedule name to its corresponding ID.  

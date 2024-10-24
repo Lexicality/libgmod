@@ -1,3 +1,5 @@
+--- @meta
+
 --- `util.worldpicker` is for picking an entity in the world while [GUI](gui) is open.  
 _G.util = {}
 --- Adds the specified string to a string table, which will cache it and network it to all clients automatically.  

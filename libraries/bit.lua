@@ -1,3 +1,5 @@
+--- @meta
+
 --- The bitwise library contains useful functions for bitwise operations.  
 --- Make sure you're familiar with [Bitwise Operators](https://code.tutsplus.com/articles/understanding-bitwise-operators--active-11301)  
 _G.bit = {}

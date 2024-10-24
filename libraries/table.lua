@@ -1,3 +1,5 @@
+--- @meta
+
 --- The table `type` is an object that can store multiple values.  
 --- The table `library` is a standard Lua library which provides functions to manipulate tables. In Garry's Mod there are several extra useful functions added to this library.  
 --- This category lists the functions available in the table `library`.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The player library is used to get the Lua objects that represent players in-game.  
 _G.player = {}
 --- Similar to the serverside command "bot", this function creates a new Player bot with the given name. This bot will not obey to the usual "bot_*" commands, and it's the same bot base used in TF2 and CS:S.  

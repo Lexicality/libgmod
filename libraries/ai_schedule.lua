@@ -1,3 +1,5 @@
+--- @meta
+
 --- Allows you to set up a schedule for NPCs to follow. This lets you dictate their actions.  
 _G.ai_schedule = {}
 --- Creates a schedule for scripted NPC.  

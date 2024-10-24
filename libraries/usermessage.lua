@@ -1,3 +1,5 @@
+--- @meta
+
 --- 🛑 **DEPRECATED**: You should be using the net instead  
 --- The usermessage library is used to receive user messages from the server on the client.  
 --- ⚠ **WARNING**: Usermessages have a limit of only 256 bytes!  

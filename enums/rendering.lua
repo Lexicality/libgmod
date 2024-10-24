@@ -1,3 +1,5 @@
+--- @meta
+
 ---
 BLEND_ZERO = 0
 ---

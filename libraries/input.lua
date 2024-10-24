@@ -1,3 +1,5 @@
+--- @meta
+
 --- The input library allows you to gather information about the clients input devices (mouse & keyboard), such as the cursor position and whether a key is pressed or not.  
 _G.input = {}
 --- Returns the last key captured by key trapping.  

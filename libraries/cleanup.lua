@@ -1,3 +1,5 @@
+--- @meta
+
 --- The cleanup library allows you to control what happens to custom entities when the clean-up buttons are pressed in the Utilities tab of the Spawn menu (default Q).  
 _G.cleanup = {}
 --- Adds an entity to a player's cleanup list.  

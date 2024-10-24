@@ -1,3 +1,5 @@
+--- @meta
+
 --- Don't dock
 NODOCK = 0
 --- Fill parent

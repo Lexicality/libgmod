@@ -1,3 +1,5 @@
+--- @meta
+
 --- The language library is used for translation.  
 _G.language = {}
 --- Adds a language item. Language placeholders preceded with "#" are replaced with full text in Garry's Mod once registered with this function.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The navigation mesh library. To be used with CNavArea.  
 --- The navigation mesh is used by NextBot to calculate path to its target.  
 _G.navmesh = {}

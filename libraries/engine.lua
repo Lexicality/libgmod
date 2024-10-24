@@ -1,3 +1,5 @@
+--- @meta
+
 --- The engine library provides functions to access various features in the game's engine, most are related to the demo and save systems.  
 _G.engine = {}
 --- Returns non paused Global.FrameTime.  

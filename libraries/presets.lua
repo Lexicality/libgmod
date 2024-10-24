@@ -1,3 +1,5 @@
+--- @meta
+
 --- The presets library lets you add and modify the pre-set options for scripted tools (selected via the white bar at the top of each tools control panel).  
 _G.presets = {}
 --- Adds preset to a preset group.  

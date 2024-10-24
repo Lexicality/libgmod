@@ -1,3 +1,5 @@
+--- @meta
+
 --- The halo library is used to draw glowing outlines around entities, an example of this can be seen by picking up props with the physgun in Garry's Mod 13.  
 _G.halo = {}
 --- Applies a halo glow effect to one or multiple entities.  

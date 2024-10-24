@@ -1,3 +1,5 @@
+--- @meta
+
 --- The scripted_ents library allows you to access information about any scripted entities loaded into the game, as well as register your own entities.  
 _G.scripted_ents = {}
 --- Defines an alias string that can be used to refer to another classname  

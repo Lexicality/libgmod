@@ -1,3 +1,5 @@
+--- @meta
+
 --- The constraint library allows you to control the constraint system built into the physics engine (rope, weld, ballsockets, etc).  
 _G.constraint = {}
 --- Creates an advanced ballsocket (ragdoll) constraint. See constraint.Ballsocket for the simpler version.  

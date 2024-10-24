@@ -1,3 +1,5 @@
+--- @meta
+
 --- The debugoverlay library is mainly useful for 3D debugging, it can be used to draw shapes on the screen for debug purposes.  
 --- ℹ **NOTE**: These functions will not do anything unless the **developer** console variable is set to non 0.  
 _G.debugoverlay = {}

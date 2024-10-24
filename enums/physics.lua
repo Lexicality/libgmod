@@ -1,3 +1,5 @@
+--- @meta
+
 --- Does not collide with anything. No physics object will be created when using this with Entity:PhysicsInit.
 SOLID_NONE = 0
 --- The entity has a brush model defined by the map. Does not collide with other SOLID_BSP entities.

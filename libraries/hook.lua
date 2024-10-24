@@ -1,3 +1,5 @@
+--- @meta
+
 --- The hook library allows you to add hooks called by the game engine, allowing multiple scripts to modify game function.  
 _G.hook = {}
 --- Add a hook to be called upon the given event occurring.  

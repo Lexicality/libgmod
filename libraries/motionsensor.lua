@@ -1,3 +1,5 @@
+--- @meta
+
 --- Functions related to Kinect for Windows usage in GMod.  
 --- ⚠ **WARNING**: Kinect feature works only on 32-bit version of the game.  
 _G.motionsensor = {}

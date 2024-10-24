@@ -1,3 +1,5 @@
+--- @meta
+
 --- Coroutines are similar to threads, however they do not run simultaneously. They offer a way to split up tasks and dynamically pause & resume functions.  
 _G.coroutine = {}
 --- Creates a coroutine of the given function.  

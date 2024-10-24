@@ -1,3 +1,5 @@
+--- @meta
+
 --- The drive library is for adding custom control modes to the new "remote control" entity piloting system in Garry's Mod 13. See Entity Driving.  
 _G.drive = {}
 --- Player has stopped driving the entity.  

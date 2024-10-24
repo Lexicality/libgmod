@@ -1,3 +1,5 @@
+--- @meta
+
 --- The system library provides functions that allow you to gather information about the system running the game, such as operating system, uptime and battery level.  
 _G.system = {}
 --- Returns the total uptime of the current application as reported by Steam.  

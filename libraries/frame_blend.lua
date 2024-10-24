@@ -1,3 +1,5 @@
+--- @meta
+
 --- The frame blending library.  
 _G.frame_blend = {}
 --- Returns whether frame blend post processing effect is enabled or not.  

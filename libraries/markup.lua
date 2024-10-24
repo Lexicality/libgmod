@@ -1,3 +1,5 @@
+--- @meta
+
 --- The markup library only contains a single function to create a MarkupObject.  
 _G.markup = {}
 --- A convenience function that converts a Color into its markup ready string representation.  

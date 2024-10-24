@@ -1,3 +1,5 @@
+--- @meta
+
 --- The file library provides functions for finding, reading and writing to files.   
 --- The following path values are most commonly used:  
 --- * `LUA` searches the lua files (in /lua/, in your gamemodes, in all the addons).  

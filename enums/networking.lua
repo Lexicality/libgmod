@@ -1,3 +1,5 @@
+--- @meta
+
 --- Invalid type
 TYPE_NONE = -1
 --- We advise against using this. It may be changed or removed in a future update. Use TYPE_NONE

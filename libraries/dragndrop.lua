@@ -1,3 +1,5 @@
+--- @meta
+
 --- The drag'n'drop library, used internally by certain base panels to allow for drag'n'drop functionality, like spawnmenu's customizations.  
 _G.dragndrop = {}
 --- Clears all the internal drag'n'drop variables.  

@@ -6,7 +6,7 @@ import { handleFunc } from "./functions";
 export function handleLib(lib: FuncContainer): string {
     let desc = "--- @meta\n\n";
     if (lib.description) {
-        desc = formatDesc(lib.description) + "\n";
+        desc += formatDesc(lib.description) + "\n";
     }
     let lua = `_G.${lib.name} = {}\n`;
 

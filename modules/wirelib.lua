@@ -1,3 +1,5 @@
+--- @meta
+
 WireLib = {}
 
 
@@ -8,7 +10,6 @@ WireLib = {}
 --- @return boolean
 function WireLib.HasPorts(ent)
 end
-
 
 --- @param ent GEntity
 --- @return table,table
@@ -45,7 +46,6 @@ end
 function WireLib.AdjustSpecialInputs(ent, names, types, descs)
 end
 
-
 --- @param ent GEntity
 --- @param names table
 --- @param types table
@@ -67,7 +67,6 @@ end
 function WireLib.RetypeInputs(ent, iname, itype, descs)
 end
 
-
 --- @param ent GEntity
 --- @param oname string
 --- @param otype any
@@ -75,20 +74,17 @@ end
 function WireLib.RetypeOutputs(ent, oname, otype, descs)
 end
 
-
 --- force_outputs is only needed for existing components to allow them to be updated
 --- @param ent GEntity
 --- @param force_outputs boolean
 function WireLib.Restored(ent, force_outputs)
 end
 
-
 --- Set DontUnList to true, if you want to call WireLib._RemoveWire(eid) manually.
 --- @param ent GEntity
 --- @param DontUnList boolean
 function WireLib.Remove(ent, DontUnList)
 end
-
 
 --- @param ent GEntity
 --- @param oname string
@@ -108,14 +104,12 @@ end
 function WireLib.CreateInputs(ent, names, descs)
 end
 
-
 --- @param ent GEntity
 --- @param names table
 --- @param descs table
 --- @return table
 function WireLib.CreateOutputs(ent, names, descs)
 end
-
 
 --- @param ent GEntity
 --- @param names table
@@ -124,14 +118,12 @@ end
 function WireLib.AdjustInputs(ent, names, descs)
 end
 
-
 --- @param ent GEntity
 --- @param names table
 --- @param descs table
 --- @return table
 function WireLib.AdjustOutputs(ent, names, descs)
 end
-
 
 --- @param ent GEntity
 --- @param iname string
@@ -140,11 +132,11 @@ function WireLib.Link_Clear(ent, iname, DontSendToCL)
 end
 
 -- Backwards compatibility
-Wire_CreateInputs				= WireLib.CreateInputs
-Wire_CreateOutputs				= WireLib.CreateOutputs
-Wire_AdjustInputs				= WireLib.AdjustInputs
-Wire_AdjustOutputs				= WireLib.AdjustOutputs
-Wire_Restored					= WireLib.Restored
-Wire_Remove						= WireLib.Remove
-Wire_TriggerOutput				= WireLib.TriggerOutput
-Wire_Link_Clear					= WireLib.Link_Clear
+Wire_CreateInputs  = WireLib.CreateInputs
+Wire_CreateOutputs = WireLib.CreateOutputs
+Wire_AdjustInputs  = WireLib.AdjustInputs
+Wire_AdjustOutputs = WireLib.AdjustOutputs
+Wire_Restored      = WireLib.Restored
+Wire_Remove        = WireLib.Remove
+Wire_TriggerOutput = WireLib.TriggerOutput
+Wire_Link_Clear    = WireLib.Link_Clear

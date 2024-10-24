@@ -1,3 +1,5 @@
+--- @meta
+
 --- An easing library that allows you to interpolate with various kinds of smoothing [functions](https://easings.net/). To use with Global.Lerp, input what you would to the fraction argument in one of these easing functions and then the output of that into the Global.Lerp fraction argument.  
 --- <example>  
 --- <description>Example usage with Lerp and math.ease.InSine</description>  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The cvars library allows you to control what happens when a cvar (console variable) is changed.  
 _G.cvars = {}
 --- Adds a callback to be called when the named convar changes.  

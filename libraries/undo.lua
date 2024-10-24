@@ -1,3 +1,5 @@
+--- @meta
+
 --- The undo library allows you to add custom entities to the undo list, allowing users to "undo" their creation with their undo (default: `Z`) key.  
 _G.undo = {}
 --- Adds an entity to the current undo block  

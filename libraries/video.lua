@@ -1,3 +1,5 @@
+--- @meta
+
 --- The video library.  
 _G.video = {}
 --- Attempts to create an IVideoWriter.  

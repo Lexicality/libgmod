@@ -1,3 +1,5 @@
+--- @meta
+
 --- The **vgui** library allows you to script and create your own panels using **V**alve's **G**raphical **U**ser **I**nterface (VGUI) system.  
 --- For an alphabetically ordered list of VGUI panels, see VGUI Element List.  
 _G.vgui = {}

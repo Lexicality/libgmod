@@ -1,3 +1,5 @@
+--- @meta
+
 --- The baseclass library. Used to lookup a field from a metatable.  
 _G.baseclass = {}
 --- Gets the base class of an an object.  

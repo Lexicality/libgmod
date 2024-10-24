@@ -1,3 +1,5 @@
+--- @meta
+
 --- Save the ConVar value into config.cfg Reported as "a" by cvarlist, except Lua ConVars
 FCVAR_ARCHIVE = 128
 --- Save the ConVar value into config.cfg on XBox

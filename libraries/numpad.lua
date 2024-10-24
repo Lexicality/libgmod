@@ -1,3 +1,5 @@
+--- @meta
+
 --- The numpad module allows you to execute functions on a key press or release.  
 _G.numpad = {}
 --- Activates numpad key owned by the player  

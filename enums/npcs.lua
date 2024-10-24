@@ -1,3 +1,5 @@
+--- @meta
+
 --- When hit by an explosion, we'll simply block it instead of spilling it to entities behind us, the sv_robust_explosions cvar can also enable this globally when set to 0
 CAP_SIMPLE_RADIUS_DAMAGE = -2147483648
 --- Walk/Run

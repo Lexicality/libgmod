@@ -1,3 +1,5 @@
+--- @meta
+
 --- The gamemode library provides functions relating to the gamemode system in Garry's Mod. This entire library also passes through the C -> Lua bridge.  
 _G.gamemode = {}
 --- Called by the engine to call a hook within the loaded gamemode.  

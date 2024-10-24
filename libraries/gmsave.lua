@@ -1,3 +1,5 @@
+--- @meta
+
 --- The gmsave library provides functions relating to the singleplayer save system in Garry's Mod.  
 _G.gmsave = {}
 --- Loads a saved map.  

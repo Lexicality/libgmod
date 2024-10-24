@@ -1,3 +1,5 @@
+--- @meta
+
 --- The ents library provides functions for creating and finding entities in the game.  
 _G.ents = {}
 --- Creates an entity. This function will fail and return `NULL` if the networked-edict limit is hit (around **8176**), or the provided entity class doesn't exist.  

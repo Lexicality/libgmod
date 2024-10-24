@@ -1,3 +1,5 @@
+--- @meta
+
 --- The construct library is used to control the physical properties of entities.  
 _G.construct = {}
 --- Creates a magnet.  

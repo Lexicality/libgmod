@@ -1,3 +1,5 @@
+--- @meta
+
 --- The properties library gives you access to the menu that shows up when right clicking entities while holding C.  
 _G.properties = {}
 --- Add properties to the properties module. Properties can be blocked via GM:CanProperty.  

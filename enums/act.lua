@@ -1,3 +1,5 @@
+--- @meta
+
 ACT_INVALID = -1
 ACT_RESET = 0
 ACT_IDLE = 1

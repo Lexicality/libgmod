@@ -1,3 +1,5 @@
+--- @meta
+
 --- The surface library allows you to draw text and shapes on the screen. Primarily used for making HUDs & custom GUI panels.  
 _G.surface = {}
 --- Creates a new font.  

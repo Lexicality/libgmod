@@ -1,3 +1,5 @@
+--- @meta
+
 --- The spawnmenu library is a set of functions that allow you to control the spawn (Q) menu.  
 _G.spawnmenu = {}
 --- Activates a tool, opens context menu and brings up the tool gun.  

@@ -1,3 +1,5 @@
+--- @meta
+
 --- The effects library allows you to manually add scripted effects.  
 _G.effects = {}
 --- Creates a "beam ring point" effect.  

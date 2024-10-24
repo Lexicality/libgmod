@@ -1,3 +1,5 @@
+--- @meta
+
 --- Fire a USE_ON signal every tick as long as the player holds their use key and aims at the target.
 CONTINUOUS_USE = 0
 --- Fires a USE_ON signal when starting to use an entity, and a USE_OFF signal when letting go.

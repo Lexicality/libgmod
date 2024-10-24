@@ -1,3 +1,5 @@
+--- @meta
+
 --- The controlpanel library.  
 _G.controlpanel = {}
 --- Clears ALL the control panels ( for tools )  
