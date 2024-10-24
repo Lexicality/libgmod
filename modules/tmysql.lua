@@ -96,8 +96,7 @@ end
 --- @param socket? string
 --- @param flags? number
 --- @param callback? fun(db: TMySQLDB): nil
---- @return TMySQLDB db # The database is returned on success
---- @return false success, string error # False and an error is returned on failure
+--- @return TMySQLDB | false db, string? error # The database is returned on success otherwise, false and an error is returned
 --- @nodiscard
 function tmysql.Connect(host, username, password, database, port, socket, flags, callback)
 end
