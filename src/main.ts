@@ -30,7 +30,7 @@ async function doGlobals(): Promise<void> {
             lua += funcdata + "\n";
         }
     }
-    await fs.writeFile("globals.lua", lua, "utf-8");
+    await fs.writeFile("globals.lua", lua.trimEnd() + "\n", "utf-8");
     console.log("Done globals!");
 }
 
@@ -54,7 +54,7 @@ async function doLibs(): Promise<void> {
         }
 
         let filename = path.join("libraries", `${lib.name}.lua`);
-        await fs.writeFile(filename, libdata);
+        await fs.writeFile(filename, libdata.trimEnd() + "\n");
         console.log("Done %s!", lib.name);
     }
 }
@@ -82,7 +82,7 @@ async function doClasses(data: FuncContainer[]): Promise<void> {
         }
 
         let filename = path.join("classes", `${cls.name}.lua`);
-        await fs.writeFile(filename, classdata);
+        await fs.writeFile(filename, classdata.trimEnd() + "\n");
         console.log("Done %s!", cls.name);
     }
 }
@@ -128,7 +128,7 @@ async function doStructs(): Promise<void> {
         }
 
         let filename = path.join("structs", `${struct.name}.lua`);
-        await fs.writeFile(filename, structdata);
+        await fs.writeFile(filename, structdata.trimEnd() + "\n");
         console.log("Done %s!", struct.name);
     }
     //
