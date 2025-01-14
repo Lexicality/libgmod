@@ -1,3 +1,5 @@
+type Realm = "menu" | "client" | "server";
+
 interface FuncArg {
     name: string;
     type: string;
@@ -18,7 +20,7 @@ interface FuncInstance {
 interface Func extends FuncInstance {
     name: string;
     parent: string;
-    realms: ("menu" | "client" | "server")[];
+    realms: Realm[];
     description?: string;
     overloads?: FuncInstance[];
 }
@@ -28,4 +30,18 @@ interface FuncContainer {
     name: string;
     description?: string;
     functions: Func[];
+}
+
+interface Field {
+    name: string;
+    type: string;
+    default?: string;
+    description?: string;
+}
+
+interface Struct {
+    name: string;
+    description?: string;
+    realms: Realm[];
+    fields: Field[];
 }

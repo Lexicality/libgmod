@@ -1,0 +1,11 @@
+--- @meta
+
+--- Used for render.Capture.  
+--- @class SRenderCaptureData
+--- @field format string @Format of the capture
+--- @field x number @X coordinate of the capture origin
+--- @field y number @Y coordinate of the capture origin
+--- @field w number @Width of the capture
+--- @field h number @Height of the capture
+--- @field quality number @The quality of the capture
+--- @field alpha? boolean @Set to false to capture an image with alpha channel set to fully opaque

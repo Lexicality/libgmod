@@ -1,0 +1,18 @@
+--- @meta
+
+--- Tables used for bullets see Entity:FireBullets and GM:EntityFireBullets.  
+--- @class SBullet
+--- @field Attacker? GEntity @The entity that should be reported as attacker eg
+--- @field Callback? function @Function to be called **after** the bullet was fired but **before** the damage is applied (the callback is called even if no damage is appli
+--- @field Damage? number @The damage dealt by the bullet
+--- @field Force? number @The force of the bullets
+--- @field Distance? number @Maximum distance the bullet can travel
+--- @field HullSize? number @The hull size of the bullet
+--- @field Num? number @The amount of bullets to fire
+--- @field Tracer? number @Show tracer for every x bullets
+--- @field AmmoType? string @The ammunition name
+--- @field TracerName? string @The tracer name
+--- @field Dir? GVector @The fire direction
+--- @field Spread? GVector @The spread, only x and y are needed
+--- @field Src? GVector @The position to fire the bullets from
+--- @field IgnoreEntity? GEntity @The entity that the bullet will ignore when it will be shot.

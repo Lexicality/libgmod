@@ -1,0 +1,28 @@
+--- @meta
+
+--- Table structure used as trace result. Default values are when the trace hits nothing.  
+--- See util.TraceLine and util.TraceHull.  
+--- @class STraceResult
+--- @field Entity? GEntity @The entity hit by the trace.
+--- @field Fraction? number @This indicates the how much of your trace length was used from 0-1 (resultLength/originalLength).
+--- @field FractionLeftSolid? number @Given the trace started in a solid enviroment, this will return at what distance the trace left the solid from 0-1
+--- @field Hit? boolean @Indicates whether the trace hit something.
+--- @field HitBox? number @The ID of the hitbox hit by the trace.
+--- @field HitGroup? number @Enums/HITGROUP describing what hitgroup the trace hit (not the same as HitBox).
+--- @field HitNoDraw? boolean @Indicates whenever the trace hit a no-draw brush.
+--- @field HitNonWorld? boolean @Indicates whenever the trace did not hit the world.
+--- @field HitNormal? GVector @The direction of the surface that was hit as a normal vector (vector with length of 1).
+--- @field HitPos GVector @The position the trace stopped
+--- @field HitSky? boolean @Indicates whenever the trace hit the sky.
+--- @field HitTexture? string @The surface material (not texture) of whatever the trace hit
+--- @field HitWorld? boolean @Indicates whenever the trace hit the world.
+--- @field MatType? number @Enums/MAT of the material hit by the trace.
+--- @field Normal GVector @The direction of the trace as a normal vector (vector with length of 1)
+--- @field PhysicsBone? number @The PhysObj ID that was hit
+--- @field StartPos GVector @The origin of the trace
+--- @field SurfaceProps? number @ID of hit surface property from `scripts/surfaceproperties.txt`
+--- @field StartSolid? boolean @Indicates whenever the trace started in a solid enviroment.
+--- @field AllSolid? boolean @True if the entire trace is inside a solid.
+--- @field SurfaceFlags? number @The surface flags of the hit surface
+--- @field DispFlags? number @The displacement flags of the hit surface
+--- @field Contents number @The contents of the hit surface

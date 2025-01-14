@@ -1,0 +1,25 @@
+--- @meta
+
+--- The structure used by Structures/VehicleParams.  
+--- @class SVehicleParamsAxle
+--- @field brakeFactor number
+--- @field offset GVector
+--- @field raytraceCenterOffset GVector
+--- @field raytraceOffset GVector
+--- @field suspension_maxBodyForce number
+--- @field suspension_springConstant number
+--- @field suspension_springDamping number
+--- @field suspension_springDampingCompression number
+--- @field suspension_stabilizerConstant number
+--- @field torqueFactor number
+--- @field wheelOffset GVector
+--- @field wheels_brakeMaterialIndex number @Material index of braking material of the wheels
+--- @field wheels_damping number
+--- @field wheels_frictionScale number
+--- @field wheels_inertia number
+--- @field wheels_mass number @Mass of each wheel.
+--- @field wheels_materialIndex number @Material index of the wheels by default.
+--- @field wheels_radius number @Radius of the wheels.
+--- @field wheels_rotdamping number
+--- @field wheels_skidMaterialIndex number @Material index of skid material of the wheels
+--- @field wheels_springAdditionalLength number

@@ -1,0 +1,20 @@
+--- @meta
+
+--- Used for cam.Start.  
+--- Unless stated otherwise, the default values for all these keys would be inherited from the engine's current `CViewSetup` and do not have static representations.  
+--- @class SRenderCamData
+--- @field x? number @The x position of the view port
+--- @field y? number @The y position of the view port
+--- @field w? number @The width of the view port
+--- @field h? number @The height of the view port
+--- @field type? string @The type of cam
+--- @field origin? GVector @The position to render from
+--- @field angles? GAngle @The angles to render from
+--- @field fov? number @The field of view
+--- @field aspect? number @The aspect ratio of the view port (Note that this is NOT set to w/h by default)
+--- @field zfar? number @The distance to the far clipping plane
+--- @field znear? number @The distance to the near clipping plane
+--- @field subrect? boolean @Set to true if this is to draw into a subrect of the larger screen.
+--- @field bloomtone? boolean @m_bDoBloomAndToneMapping
+--- @field offcenter? table @A table having these keys: ( all floats )
+--- @field ortho? table @If set, makes the view/camera orthogonal

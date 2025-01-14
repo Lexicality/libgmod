@@ -1,0 +1,30 @@
+--- @meta
+
+--- Table returned by util.GetSurfaceData.  
+--- @class SSurfacePropertyData
+--- @field name string @The name of the surface property, identical to util.GetSurfacePropName.
+--- @field hardnessFactor number @How hard a surface is
+--- @field hardThreshold number @Hardness threshold for impact sounds
+--- @field hardVelocityThreshold number @Velocity threshold for impact sounds
+--- @field reflectivity number @Amount of sound reflected from the surface represented as a number 0.0 - 1.0
+--- @field roughnessFactor number @How rough a surface is
+--- @field roughThreshold number @Roughness threshold for friction sounds
+--- @field climbable number @Indicates whether or not the surface is a ladder
+--- @field jumpFactor number @Scalar multiplier for player jump height - or more accurately, applied z-axis velocity on a surface
+--- @field material number @The surface material
+--- @field maxSpeedFactor number @Scalar multiplier for player speed
+--- @field dampening number @This is the physical drag on an object when in contact with this surface (0 - x, 0 none to x a lot).
+--- @field density number @Material density in kg / m^3 (water is 1000)
+--- @field elasticity number @Collision elasticity - used to compute coefficient of restitution represented as a number 0.0 - 1.0
+--- @field friction number @Physical friction used to slow entities touching the surface represented as a number 0.0 - 1.0
+--- @field thickness number @Material thickness
+--- @field breakSound string @Sound to play when a prop or func_breakable is broken.
+--- @field bulletImpactSound string @Bullet impact sound with this surface.
+--- @field impactHardSound string @Physical impact sound when hitting surfaces hard.
+--- @field impactSoftSound string @Physical impact sound when hitting surfaces softly.
+--- @field rollingSound string @Unused sound.
+--- @field scrapeRoughSound string @Friction sound when roughly scraping against an entity.
+--- @field scrapeSmoothSound string @Friction sound when smoothly scraping against an entity.
+--- @field stepLeftSound string @Footstep sound for left foot.
+--- @field stepRightSound string @Footstep sound for right foot.
+--- @field strainSound string @Unused sound.

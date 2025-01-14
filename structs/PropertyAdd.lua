@@ -1,0 +1,15 @@
+--- @meta
+
+--- Structure used for properties.Add.  
+--- @class SPropertyAdd
+--- @field Type? string @Can be set to "toggle" to make this property a toggle property.
+--- @field MenuLabel string @Label to show on opened menu
+--- @field MenuIcon string @Icon to show on opened menu for this item
+--- @field Order number @Where in the list should the property be positioned, relative to other properties
+--- @field PrependSpacer? boolean @Whether to add a spacer before this property
+--- @field Filter function @Used **clientside** to decide whether this property should be shown for an entity
+--- @field Checked function @Required for toggle properties (clientside)
+--- @field Action function @Called **clientside** when the property is clicked
+--- @field Receive function @Called **serverside** if the client sends a message in the `Action` function (see above)
+--- @field MenuOpen function @Called **clientside** when the property option has been created in the right-click menu
+--- @field OnCreate function @Same as `MenuOpen`, but also called for toggle properties and has different arguments

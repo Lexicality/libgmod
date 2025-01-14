@@ -1,0 +1,28 @@
+--- @meta
+
+--- Passed as argument of ENTITY:PhysicsCollide, EFFECT:PhysicsCollide and used with Entity:AddCallback.  
+--- ℹ **NOTE**: Sometimes, the value of `Speed` can be different from getting the length calculated from `OurOldVelocity`, even though they should be the same, or close to same. It's recommended to do `OurOldVelocity:Length()` instead.  
+--- ```  
+--- function ENT:PhysicsCollide( colData, collider )  
+--- -- you may get two completely different values, and the second one should be more accurate.  
+--- print(colData.Speed)  
+--- print(colData.OurOldVelocity:Length())  
+--- end  
+--- ```  
+--- @class SCollisionData
+--- @field HitPos GVector @The collision position
+--- @field HitEntity GEntity @The other collision entity
+--- @field OurOldVelocity GVector @The entity's velocity before the collision
+--- @field HitObject GPhysObj @Other entity's physics object
+--- @field DeltaTime number @Time since the last collision with the `HitEntity`
+--- @field TheirOldVelocity GVector @Speed of the other entity before the collision
+--- @field Speed number @The speed of the entity before the collision
+--- @field HitNormal GVector @Normal of the surface that hit the other entity
+--- @field PhysObject GPhysObj @Entity's physics object
+--- @field OurSurfaceProps number @Surface Property ID of `this` entity
+--- @field TheirSurfaceProps number @Surface Property ID of the entity we collided with
+--- @field HitSpeed GVector @The speed at which the impact happened
+--- @field OurNewVelocity GVector @Our new velocity after the impact
+--- @field TheirNewVelocity GVector @The new velocity after the impact of the entity we collided with
+--- @field OurOldAngularVelocity GVector @Old angular velocity of this entity
+--- @field TheirOldAngularVelocity GVector @Old angular velocity of the entity we collided with

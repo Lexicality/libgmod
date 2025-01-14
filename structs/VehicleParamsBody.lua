@@ -1,0 +1,12 @@
+--- @meta
+
+--- The structure used by Structures/VehicleParams.  
+--- @class SVehicleParamsBody
+--- @field addGravity number @Additional gravity to be applied to the vehicle
+--- @field counterTorqueFactor number
+--- @field keepUprightTorque number
+--- @field massCenterOverride GVector @Mass center override
+--- @field massOverride number @Mass override
+--- @field maxAngularVelocity number @Maximum angular velocity
+--- @field tiltForce number
+--- @field tiltForceHeight number

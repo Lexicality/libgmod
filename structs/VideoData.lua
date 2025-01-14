@@ -1,0 +1,14 @@
+--- @meta
+
+--- Table structure used by video.Record.  
+--- @class SVideoData
+--- @field container string @The video container format
+--- @field video string @The video codec
+--- @field audio string @The audio codec
+--- @field quality number @The video quality
+--- @field bitrate number @The record bitrate
+--- @field fps number @Frames per second
+--- @field lockfps boolean @Lock the frame count per second
+--- @field name string @The file name for the video
+--- @field width number @The videos width
+--- @field height number @The videos height

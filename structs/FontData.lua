@@ -1,0 +1,19 @@
+--- @meta
+
+--- Used for surface.CreateFont.  
+--- @class SFontData
+--- @field font? string @The font source
+--- @field extended? boolean @Allow the font to display glyphs that are outside of the Latin-1 range
+--- @field size? number @The font height in pixels
+--- @field weight? number @The font boldness
+--- @field blursize? number @The strength of the font blurring
+--- @field scanlines? number @The "scanline" interval
+--- @field antialias? boolean @Smooth the font
+--- @field underline? boolean @Add an underline to the font
+--- @field italic? boolean @Make the font italic
+--- @field strikeout? boolean @Add a strike through
+--- @field symbol? boolean @Enables the use of symbolic fonts such as Webdings
+--- @field rotary? boolean @Seems to add a line in the middle of each letter
+--- @field shadow? boolean @Add shadow casting to the font
+--- @field additive? boolean @Additive rendering
+--- @field outline? boolean @Add a black outline to the font

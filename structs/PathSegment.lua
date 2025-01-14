@@ -1,0 +1,15 @@
+--- @meta
+
+--- Structure represents a path segment, returned by PathFollower:GetCurrentGoal, PathFollower:FirstSegment and PathFollower:LastSegment.  
+--- @class SPathSegment
+--- @field area GCNavArea @The navmesh area this segment occupies.
+--- @field curvature number @How much of a curve should the bot execute when navigating this segment
+--- @field distanceFromStart number @Distance of this segment from the start of the path.
+--- @field forward GVector @The direction of travel to reach the end of this segment from the start, represented as a normalised vector.
+--- @field how number @The direction of travel to reach the end of this segment from the start, represented as a cardinal direction integer 0 to 3, or 9 for vertic
+--- @field ladder GCNavLadder @The navmesh ladder this segment occupies, if any.
+--- @field length number @Length of this segment.
+--- @field m_portalCenter GVector
+--- @field m_portalHalfWidth number
+--- @field pos GVector @The position of the end of this segment.
+--- @field type number @The movement type of this segment, indicating how bots are expected to move along this segment

@@ -1,0 +1,29 @@
+--- @meta
+
+--- Information about the NPC data structure, used to define spawnable NPCs for the Sandbox gamemode.  
+--- Example usage:  
+--- ```  
+--- list.Set( "NPC", "npc_tf2_ghost", {  
+--- Name = "Example NPC",  
+--- Class = "npc_tf2_ghost",  
+--- Category = "Nextbot"  
+--- } )  
+--- ```  
+--- @class SNPCData
+--- @field Name string @The nice name of the NPC for UI display.
+--- @field Class string @Class name of the entity to spawn.
+--- @field Category? string @Spawnmenu category to put the NPCinto.
+--- @field Weapons? table @A list of weapons this NPC is typically meant to use
+--- @field KeyValues? table @Key-value pairs to apply to the NPC on spawn
+--- @field Model? string @Model override for this NPC.
+--- @field SpawnFlags? number @Additional spawnflags for this NPC
+--- @field TotalSpawnFlags? number @Total spawnflags override for this NPC.
+--- @field OnCeiling? boolean @If set to `true`, this NPC can only be spawned on the ceiling
+--- @field OnFloor? boolean @If set to `true`, this NPC can only be spawned on the floor
+--- @field Offset? number @Offset, in Hammer units, away from the surface where the player is looking at for the NPC spawn position.
+--- @field Material string @Material override for this NPC
+--- @field Skin? number @Skin override for the NPC
+--- @field NoDrop? boolean @If set to `true`, do not try to teleport the NPC to the ground.
+--- @field Rotate? GAngle @Used to add additional rotation the NPC post spawn
+--- @field Health? number @Health override for this NPC
+--- @field OnDuplicated? function @If set, a function to be called when the NPC is pasted using the duplicator library.

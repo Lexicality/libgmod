@@ -2184,7 +2184,7 @@
         "description": "Icon to show on opened menu for this item. Optional for simple properties and unused for toggle properties."
       },
       {
-        "name": "StructureField (Order)",
+        "name": "Order",
         "type": "number",
         "description": "Where in the list should the property be positioned, relative to other properties.\n\nFor reference, here are the default properties and their Order values:\n\nProperty |  Order |\n---------|-------|\n| Bone Manipulate | 500 |\n| Bodygroups | 600 |\n| Skin | 601 |\n| Keep Upright | 900 |\n| Ignite/Extinguish | 999 |\n| Remove | 1000 |\n| Gravity | 1001 |\n| Drive | 1100 |\n| Collision | 1500 |\n| Statue | 1501 |\n| NPC Biggify/Smallify | 1799, 1800 |\n| Motion Control (Kinect) | 2500 |\n| <page text=\"Edit Properties\">Editable_Entities</page> | 90001 |"
       },

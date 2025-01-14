@@ -1,0 +1,14 @@
+--- @meta
+
+--- Table structure representing a mesh vertex used by various functions, such as IMesh:BuildFromTriangles and Entity:PhysicsFromMesh and returned by functions such as util.GetModelMeshes and  PhysObj:GetMesh.  
+--- @class SMeshVertex
+--- @field color table @The vertex color
+--- @field normal GVector @The triangles normal required to calculate lighting (Optional).
+--- @field tangent GVector @The triangles tangent
+--- @field binormal GVector @The triangles binormal
+--- @field pos GVector @The vertex position.
+--- @field u number @The U texture coordinate.
+--- @field v number @The V texture coordinate.
+--- @field u1 number @The secondary U texture coordinate
+--- @field v1 number @The secondary V texture coordinate
+--- @field userdata table @A table of four numbers

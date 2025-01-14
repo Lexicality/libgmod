@@ -1,0 +1,12 @@
+--- @meta
+
+--- Table describing a sound hint, used by NPC:GetBestSoundHint and sound.GetLoudestSoundHint.  
+--- @class SSoundHintData
+--- @field origin GVector @Origin of the sound hint
+--- @field owner GEntity @Owner of the sound hint, if any (emitting entity, like a thumper)
+--- @field target GEntity @Target of the sound hint, if any
+--- @field volume number @Volume of the sound hint
+--- @field type number @SOUND_ enums
+--- @field expiration number @CurTime based expiration date
+--- @field expires boolean @Does this sound hint expire?
+--- @field channel number @CHAN_ enums

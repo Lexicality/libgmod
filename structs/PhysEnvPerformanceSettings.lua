@@ -1,0 +1,13 @@
+--- @meta
+
+--- Table used by physenv.SetPerformanceSettings and physenv.GetPerformanceSettings.  
+--- When setting the settings, omitting any key will fallback to its current value. (can be retrieved via the get function)  
+--- @class SPhysEnvPerformanceSettings
+--- @field LookAheadTimeObjectsVsObject? number @Maximum amount of seconds to precalculate collisions with objects
+--- @field LookAheadTimeObjectsVsWorld? number @Maximum amount of seconds to precalculate collisions with world
+--- @field MaxCollisionChecksPerTimestep? number @Maximum collision checks per tick
+--- @field MaxCollisionsPerObjectPerTimestep? number @Maximum collision per object per tick
+--- @field MaxVelocity? number @Maximum world-space speed of an object in inches per second
+--- @field MaxAngularVelocity? number @Maximum world-space rotational velocity in degrees per second
+--- @field MinFrictionMass? number @Minimum mass of an object to be affected by friction
+--- @field MaxFrictionMass? number @Maximum mass of an object to be affected by friction

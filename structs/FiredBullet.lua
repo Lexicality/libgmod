@@ -1,0 +1,11 @@
+--- @meta
+
+--- The table structure used for bullets that have already been fired.  
+--- See GM:PostEntityFireBullets for more information.  
+--- @class SFiredBullet
+--- @field AmmoType? string @The type of ammo that was fired
+--- @field Attacker GEntity @The Entity that fired the bullet
+--- @field Damage number @The amount of damage dealt by the bullet
+--- @field Force number @The physics impact force of the bullet.
+--- @field Tracer number @A whole integer number that controls the frequency of visible bullet tracers
+--- @field Trace table @The Structures/TraceResult from the Trace that determined where and what the bullet hit.

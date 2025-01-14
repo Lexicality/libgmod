@@ -1,0 +1,22 @@
+--- @meta
+
+--- Structure for Global.DynamicLight.  
+--- All members are case insensitive.  
+--- ℹ **NOTE**: This is an actual class named **dlight_t**, not a table.  
+--- @class SDynamicLight
+--- @field brightness number @The brightness of the light.
+--- @field decay number @Fade out speed
+--- @field dietime number @Time after which light will be removed
+--- @field dir? GVector @The light direction
+--- @field innerangle? number @The closer this is to zero, the smoother the light will be
+--- @field outerangle? number @The angle of the Dynamic Light
+--- @field key number @Makes the light brighter and flicker? Changing the value does not seem to affect anything.
+--- @field minlight? number @Minimum light
+--- @field noworld? boolean @Don't light the world
+--- @field nomodel? boolean @Don't light models
+--- @field pos GVector @Position of the light
+--- @field size number @Radius of the light
+--- @field style number @Flicker style, see [this page](https://developer.valvesoftware.com/wiki/Light_dynamic#Appearances) for examples.
+--- @field b number @The blue part of the color
+--- @field g number @The green part of the color
+--- @field r number @The red part of the color

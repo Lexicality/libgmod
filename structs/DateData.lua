@@ -1,0 +1,13 @@
+--- @meta
+
+--- Table returned by os.date and used by os.time.  
+--- @class SDateData
+--- @field day number @Day of the month
+--- @field hour number @Hour
+--- @field isdst boolean @Daylight saving enabled
+--- @field min number @Minute
+--- @field month number @Month
+--- @field sec number @Second
+--- @field wday number @Day of the week
+--- @field yday number @Day of the year
+--- @field year number @Year

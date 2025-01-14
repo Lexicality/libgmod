@@ -1,0 +1,11 @@
+--- @meta
+
+--- A structure containing vertex information for use with surface.DrawPoly.  
+--- UV coordinates describe which part of a given texture should be drawn at a vertex - your graphics card's interpolator will fill in space between vertices. UV coords range from `0-1`, with `0` being top/left and `1` being bottom/right. If you're using a texture these are mandatory.  
+--- ℹ **NOTE**: You must pass a table of tables with this structure to the function. **You need to pass at least 3 points.**  
+--- Your points must be defined in a **clockwise order.** Otherwise, your shape will not render properly.  
+--- @class SPolygonVertex
+--- @field x number @The x coordinate of the vertex.
+--- @field y number @The y coordinate of the vertex.
+--- @field u number @The u texture coordinate of the vertex
+--- @field v number @The v texture coordinate of the vertex

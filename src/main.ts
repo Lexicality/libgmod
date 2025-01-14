@@ -6,6 +6,7 @@ import _ from "lodash";
 import { handleClass, preProcessClasses } from "./classes";
 import { handleFunc } from "./functions";
 import { handleLib } from "./libraries";
+import { handleStruct } from "./structs";
 
 async function doGlobals(): Promise<void> {
     let data: Func[] = JSON.parse(
@@ -86,6 +87,53 @@ async function doClasses(data: FuncContainer[]): Promise<void> {
     }
 }
 
+async function doStructs(): Promise<void> {
+    let structs: Struct[] = JSON.parse(
+        await fs.readFile("output/structs.json", "utf-8"),
+    );
+    structs = _.sortBy(structs, "name");
+    let hooks: FuncContainer[] = JSON.parse(
+        await fs.readFile("output/hooks.json", "utf-8"),
+    );
+    let hookup: { [t: string]: FuncContainer } = {};
+    for (let hook of hooks) {
+        let name = hook.name;
+        if (name == "ENTITY") {
+            name = "ENT";
+            for (let fn of hook.functions) {
+                fn.parent = "ENT";
+            }
+        } else if (name == "WEAPON") {
+            name = "SWEP";
+            for (let fn of hook.functions) {
+                fn.parent = "SWEP";
+            }
+        }
+        hookup[name] = hook;
+    }
+
+    await fs.mkdir("structs", { recursive: true });
+
+    for (let struct of structs) {
+        let structdata: string;
+        try {
+            structdata = handleStruct(struct, hookup[struct.name]);
+        } catch (e) {
+            console.error(
+                "Problem while getting library definition for %s: %s",
+                struct.name,
+                e,
+            );
+            throw e;
+        }
+
+        let filename = path.join("structs", `${struct.name}.lua`);
+        await fs.writeFile(filename, structdata);
+        console.log("Done %s!", struct.name);
+    }
+    //
+}
+
 async function main() {
     console.log("hello");
 
@@ -97,7 +145,7 @@ async function main() {
             doGlobals(),
             doLibs(),
             doClasses(classes),
-            //
+            doStructs(),
         ]);
         console.log("woop");
     } catch (e) {

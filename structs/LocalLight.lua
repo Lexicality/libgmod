@@ -1,0 +1,17 @@
+--- @meta
+
+--- Table structure used for render.SetLocalModelLights.  
+--- @class SLocalLight
+--- @field type? number @The type of the light source, see Enums/MATERIAL_LIGHT.
+--- @field color? GVector @The color of the light source (x is red, y is green, z is blue)
+--- @field pos? GVector @The origin of the light in world coordinates.
+--- @field dir? GVector @The direction of the light
+--- @field range? number @The maximum range of the light source
+--- @field angularFalloff? number @Angular falloff exponent for spot lights
+--- @field innerAngle? number @The inner cone angle for spot lights, in degrees
+--- @field outerAngle? number @The outer cone angle for spot lights, in degrees.
+--- @field fiftyPercentDistance number @The distance at which the light will fade to 50% of its brightness.
+--- @field zeroPercentDistance number @The distance at which the light will completely fade out.
+--- @field quadraticFalloff? number @The quadratic term of the light falloff
+--- @field linearFalloff? number @The linear term of the light falloff
+--- @field constantFalloff? number @The constant term of the light falloff

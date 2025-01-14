@@ -1,0 +1,14 @@
+--- @meta
+
+--- Structure used in storing/restoring physics object attributes.  
+--- duplicator.GenericDuplicatorFunction and duplicator.DoGenericPhysics use a table of **PhysicsObjectSave**s with the struct's index in the table being the physics object ID.  
+--- Pos and Angle are set by the following:  
+--- ```  
+--- Pos, Angle = WorldToLocal(phys:GetPos(), phys:GetAngle(), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ))  
+--- ```  
+--- @class SPhysicsObjectSave
+--- @field Pos GVector @The entity's world position made local with Global.WorldToLocal
+--- @field Angle GAngle @The entity's world angles made local with Global.WorldToLocal
+--- @field Frozen boolean @Whether the entity is moveable
+--- @field NoGrav boolean @Whether the entity's gravity is affected by gravity or not
+--- @field Sleep boolean @Whether the entity is dormant or not

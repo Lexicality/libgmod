@@ -1,0 +1,21 @@
+--- @meta
+
+--- Table used by panel animation methods, primarily Panel:AnimationThinkInternal, and returned by Panel:NewAnimation.  
+--- @class SAnimationData
+--- @field StartTime number @The system time value returned by Global.SysTime when the animation starts/will start.
+--- @field EndTime number @The system time value returned by Global.SysTime when the animation ends/will end.
+--- @field Ease? number @The ease in/out level of the animation.
+--- @field OnEnd function @The callback function that will be called upon completion of the animation
+--- @field Think function @The `think` function called every frame that will animate the panel object
+--- @field Pos GVector @The target position, or target translation of the panel object
+--- @field StartPos GVector @The position of the panel object when the animation started
+--- @field SizeX boolean @Whether to resize the panel horizontally or not
+--- @field SizeY boolean @Whether to resize the panel vertically or not
+--- @field Size? GVector @The target size of the panel object
+--- @field StartSize GVector @The size of the panel object when the animation started
+--- @field Color table @The target colour of the panel object
+--- @field StartColor table @The colour of the panel object when the animation started
+--- @field Alpha number @The target alpha (0-255) of the panel object
+--- @field StartAlpha number @The alpha (0-255) of the panel object when the animation started
+--- @field Speed number @The speed to use for transitions when using linear interpolation (Lerp) animations
+--- @field UseGravity boolean @Whether or not to use easing to make the panel 'jump' at its target, slowing as it approaches

@@ -1,0 +1,13 @@
+--- @meta
+
+--- Table used by Global.HTTP function.  
+--- @class SHTTPRequest
+--- @field failed function @Function to be called on failure
+--- @field success function @Function to be called on success
+--- @field method string @Request method, case insensitive
+--- @field url string @The target url
+--- @field parameters table @KeyValue table for parameters
+--- @field headers table @KeyValue table for headers
+--- @field body string @Body string for POST data
+--- @field type? string @Content type for body.
+--- @field timeout? number @The timeout for the connection.

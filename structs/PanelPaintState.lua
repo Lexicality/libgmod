@@ -1,0 +1,11 @@
+--- @meta
+
+--- This table is returned by surface.GetPanelPaintState.  
+--- @class SPanelPaintState
+--- @field translate_x number @The X coordinate for the top-left corner of the Panel currently being drawn.
+--- @field translate_y number @The Y coordinate for the top-left corner of the Panel currently being drawn.
+--- @field scissor_left number @The X coordinate for the left edge of the ScissorRect that surrounds the Panel that is currently being drawn.
+--- @field scissor_top number @The Y coordinate for the top edge of the ScissorRect that surrounds the Panel that is currently being drawn.
+--- @field scissor_right number @The X coordinate for the right edge of the ScissorRect that surrounds the Panel that is currently being drawn.
+--- @field scissor_bottom number @The Y coordinate for the bottom edge of the ScissorRect that surrounds the Panel that is currently being drawn.
+--- @field scissor_enabled boolean @Whether or not the Panel currently being drawn has render.SetScissorRect active.

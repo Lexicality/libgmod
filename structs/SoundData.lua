@@ -1,0 +1,12 @@
+--- @meta
+
+--- Table used in sound.Add and sound.GetProperties.  
+--- @class SSoundData
+--- @field sound string @Path to the sound file to be used in this sound effect, relative to `sound/` directory (so exclude the `sound/` part)
+--- @field name string @The name of the soundscript, to be referenced by in functions such as Entity:EmitSound.
+--- @field channel number @The sound channel to play in
+--- @field level number @The soundlevel of the sound in dB
+--- @field volume? number @The volume of the sound as a decimal between `0` and `1`
+--- @field pitch? number @The pitch of the sound
+--- @field pitchstart number @The initial pitch
+--- @field pitchend number @The pitch end

@@ -1,0 +1,22 @@
+--- @meta
+
+--- The structure used by Structures/VehicleParams.  
+--- @class SVehicleParamsEngine
+--- @field autobrakeSpeedFactor number
+--- @field autobrakeSpeedGain number
+--- @field axleRatio number @This acts as the final ratio of the gearbox
+--- @field boostDelay number @Amount of seconds between being able to use the boost ( by pressing Shift key by default )
+--- @field boostDuration number @Duration of the boost in seconds
+--- @field boostForce number
+--- @field boostMaxSpeed number @Maximum speed while boosting
+--- @field gearCount number @Amount of gears this vehicle has.
+--- @field gearRatio table @A table of numbers, of gear rations
+--- @field horsepower number @The HP amount of the vehicle
+--- @field isAutoTransmission boolean @If `true`, the gearbox shifts gears, if `false` the gearbox stays stuck to the 1st gear (gear number 0).
+--- @field maxRPM number @Maximum RPM of the vehicle
+--- @field maxRevSpeed number @Maximum reverse speed of the vehicle
+--- @field maxSpeed number @Maximum forward going speed of the vehicle without boosting
+--- @field shiftDownRPM number @Amount of RPM to automatically shift one gear down
+--- @field shiftUpRPM number @Amount of RPM to automatically shift one gear up
+--- @field throttleTime number
+--- @field torqueBoost boolean

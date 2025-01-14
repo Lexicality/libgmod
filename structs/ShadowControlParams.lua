@@ -1,0 +1,14 @@
+--- @meta
+
+--- Table used by PhysObj:ComputeShadowControl. Default values are given if the table element is omitted.  
+--- @class SShadowControlParams
+--- @field secondstoarrive? number @How long it takes to move to the set pos and angle
+--- @field delta? number @The time it should use - just use the one from ENTITY:PhysicsSimulate.
+--- @field pos? GVector @Where you want to move to.
+--- @field angle? GAngle @Angle you want to move to.
+--- @field maxangular? number @What should be the maximal angular force applied.
+--- @field maxangulardamp? number @At which force/speed should it start damping the rotation.
+--- @field maxspeed? number @Maximum linear force applied
+--- @field maxspeeddamp? number @Maximum linear force/speed before damping.
+--- @field dampfactor? number @The percentage it should damp the linear/angular force if it reaches it's max amount
+--- @field teleportdistance? number @If it's further away than this it'll teleport (Set to 0 to not teleport)
