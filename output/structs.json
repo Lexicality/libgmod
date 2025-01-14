@@ -980,6 +980,12 @@
         "type": "number",
         "default": "nil",
         "description": "If set, a bitflag for the physics solidity of the entity. See <page>Enums/CONTENTS</page>.\n\nCan be used to make the entity pass though certain otherwise solid meshes, such as grates, or special clip brushes.\n\n<note>This only works for `nextbot`, `anim` and `ai` type SENTs.</note>"
+      },
+      {
+        "name": "PhysicsSounds",
+        "type": "boolean",
+        "default": "false",
+        "description": "For `anim` type entities, if set, enables physics collision sounds."
       }
     ],
     "realms": [
@@ -1087,6 +1093,47 @@
     ],
     "description": "Data structure used by the <page>duplicator</page> to store and load entity data.\n\nIt is created by <page>duplicator.CopyEntTable</page> and can be loaded by <page>duplicator.CreateEntityFromTable</page>.\n\nIt also shows up in several other contexts:\n* <page>duplicator.RegisterEntityClass</page>\n* <page>ENTITY:OnEntityCopyTableFinish</page>\n* <page>ENTITY:OnDuplicated</page>\n\n<note>In addition to all fields listed here, any field saved on the entity will be saved as-is to this table. For example, if you set `ent.FavoriteFood = \"Steak\"` before duplicating it, this structure will also contain the field `FavoriteFood` with the value `\"Steak\"`.</note>",
     "name": "EntityCopyData"
+  },
+  {
+    "fields": [
+      {
+        "name": "AmmoType",
+        "type": "string",
+        "default": "<Empty String>",
+        "description": "The type of ammo that was fired.\n\nShould be one of the values from the <page>game.GetAmmoTypes</page> table."
+      },
+      {
+        "name": "Attacker",
+        "type": "Entity",
+        "description": "The <page>Entity</page> that fired the bullet.\n\nThis is usually the <page>Player</page> that is holding the <page>Weapon</page>."
+      },
+      {
+        "name": "Damage",
+        "type": "number",
+        "description": "The amount of damage dealt by the bullet.\n\nWhen set to `0`, damage should be determined based on the values set in the <page>Structures/AmmoData</page> of the bullet's Ammo Type."
+      },
+      {
+        "name": "Force",
+        "type": "number",
+        "description": "The physics impact force of the bullet."
+      },
+      {
+        "name": "Tracer",
+        "type": "number",
+        "description": "A whole integer number that controls the frequency of visible bullet tracers.\n\nA tracer will be fired once after this many non-tracer bullets have been fired.\n\nSet to `1` to always fire a tracer."
+      },
+      {
+        "name": "Trace",
+        "type": "table",
+        "description": "The <page>Structures/TraceResult</page> from the <page text=\"Trace\">util.TraceLine</page> that determined where and what the bullet hit."
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "The table structure used for bullets that have already been fired.\n\nSee <page>GM:PostEntityFireBullets</page> for more information.",
+    "name": "FiredBullet"
   },
   {
     "fields": [
@@ -3060,8 +3107,8 @@
       {
         "name": "IconOverride",
         "type": "string",
-        "default": "materials/entities/<ClassName>.png",
-        "description": "If set,\noverrides the icon path to be displayed in the Spawnmenu for this entity."
+        "default": "entities/<ClassName>.png",
+        "description": "If set,\noverrides the icon path to be displayed in the Spawnmenu for this entity. The path is relative to the `materials/` folder."
       }
     ],
     "realms": [
@@ -3594,7 +3641,7 @@
       {
         "name": "error",
         "type": "number",
-        "description": "If this key is set, no other data will be present in the response.\n\nValues above 0 represent Steam Error codes, values below 0 mean the following:\n* -1 means Failed to create query\n* -2 means Failed to send query\n* -3 means Received 0 or more than 1 result\n* -4 means Failed to get item data from the response\n* -5 means Workshop item ID in the response is invalid\n* -6 means Workshop item ID in response is mismatching the requested file ID"
+        "description": "If this key is set, no other data will be present in the response.\n\nValues above 0 represent Steam Error codes (https://steamerrors.com/), values below 0 mean the following:\n* -1 means Failed to create query\n* -2 means Failed to send query\n* -3 means Received 0 or more than 1 result\n* -4 means Failed to get item data from the response\n* -5 means Workshop item ID in the response is invalid\n* -6 means Workshop item ID in response is mismatching the requested file ID"
       },
       {
         "name": "up",

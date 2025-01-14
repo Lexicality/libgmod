@@ -8205,7 +8205,7 @@
       {
         "name": "EF_BONEMERGE",
         "value": 1,
-        "description": "Performs bone merge on client side"
+        "description": "Performs bone merge on client side, merging bone positions of child entities (<page>Entity:SetParent</page>) with those of the parent, by bone names. The skeletons should have identical proportions, however it is not a requirement."
       },
       {
         "name": "EF_BONEMERGE_FASTCULL",
@@ -10487,41 +10487,49 @@
     "fields": [
       {
         "name": "MATERIAL_POINTS",
-        "value": 0
+        "value": 0,
+        "description": "<warning>\nThe primitive type `MATERIAL_POINTS` does not currently work and will not produce any visual effect if used.\n</warning>\n\nFor more information, see <page text=\"Point Primitives\">mesh_primitives#points</page>"
       },
       {
         "name": "MATERIAL_LINES",
-        "value": 1
+        "value": 1,
+        "description": "<warning>\nThe primitive type `MATERIAL_LINES` does not currently work and will not produce any visual effect if used.\n</warning>\n\nFor more information, see <page text=\"Line Primitives\">mesh_primitives#lines</page>"
       },
       {
         "name": "MATERIAL_TRIANGLES",
-        "value": 2
+        "value": 2,
+        "description": "Creates triangles from groupings of 3 vertices.\n\nTThe `primitiveCount` argument of <page>mesh.Begin</page> should be the total number of triangles that the Mesh will contain.\nE.g. `(vertexCount / 3)`\n\nFor more information, see <page text=\"Triangle Primitives\">mesh_primitives#triangles</page>"
       },
       {
         "name": "MATERIAL_TRIANGLE_STRIP",
-        "value": 3
+        "value": 3,
+        "description": "Creates a set of triangles that each share two vertices with the previous triangle in the sequence.\n\nThe `primitiveCount` argument of <page>mesh.Begin</page> should be the total number of triangles that the Mesh will contain.\nE.g. `(vertexCount - 2)`\n\nFor more information, see <page text=\"Triangle Strip Primitives\">mesh_primitives#trianglestrips</page>"
       },
       {
         "name": "MATERIAL_LINE_STRIP",
-        "value": 4
+        "value": 4,
+        "description": "<warning>\nThe primitive type `MATERIAL_LINE_STRIP` does not currently work and will not produce any visual effect if used.\n</warning>\n\n\nFor more information, see <page text=\"Line Strip Primitives\">mesh_primitives#linestrips</page>"
       },
       {
         "name": "MATERIAL_LINE_LOOP",
-        "value": 5
+        "value": 5,
+        "description": "<warning>\nThe primitive type `MATERIAL_LINE_LOOP` does not currently work and will not produce any visual effect if used.\n</warning>\n\n\nFor more information, see <page text=\"Line Loop Primitives\">mesh_primitives#lineloops</page>"
       },
       {
         "name": "MATERIAL_POLYGON",
-        "value": 6
+        "value": 6,
+        "description": "Creates a set of triangles that all share a single vertex and each share a vertex with the previous triangle.\n\nThe `primitiveCount` argument of <page>mesh.Begin</page> should be the total number of vertices that the Mesh will contain.\nE.g. `(vertexCount)`\n\nFor more information, see <page text=\"Polygon Primitives\">mesh_primitives#polygons</page>"
       },
       {
         "name": "MATERIAL_QUADS",
-        "value": 7
+        "value": 7,
+        "description": "Creates pairs of triangles that share two vertices.\n\nThe `primitiveCount` argument of <page>mesh.Begin</page> should be the total number of quads that the Mesh will contain.\nE.g. `(vertexCount / 4)`\n\nFor more information, see <page text=\"Quad Primitives\">mesh_primitives#quads</page>"
       }
     ],
     "realms": [
       "client"
     ],
-    "description": "Enumerations used by <page>mesh.Begin</page>. Clientside only.",
+    "description": "Enumerations used by <page>mesh.Begin</page> to control what type of vertex information it should expect. Clientside only.\n\nFor more information, see the <page text=\"Mesh Primitives\">mesh_primitives</page> reference page.",
     "name": "MATERIAL"
   },
   {
@@ -10921,6 +10929,11 @@
         "name": "NAV_MESH_BLOCKED_PROPDOOR",
         "value": 268435456,
         "description": "Whether the area has a `prop_door_rotating` that is blocking it (because the door is closed)"
+      },
+      {
+        "name": "NAV_MESH_BLOCKED_LUA",
+        "value": null,
+        "description": "Whether the area is blocked via <page>CNavArea:MarkAsBlocked</page>."
       },
       {
         "name": "NAV_MESH_HAS_ELEVATOR",
@@ -13083,7 +13096,7 @@
     "realms": [
       "client"
     ],
-    "description": "Used by <page>ENTITY:Draw</page> <page>GM:PostPlayerDraw</page>, <page>GM:PrePlayerDraw</page> and <page>ENTITY:DrawTranslucent</page>.",
+    "description": "Used by <page>ENTITY:Draw</page>, <page>ENTITY:DrawTranslucent</page>, <page>GM:PostPlayerDraw</page>, <page>GM:PrePlayerDraw</page> and <page>Entity:DrawModel</page>.",
     "name": "STUDIO"
   },
   {

@@ -246,6 +246,7 @@
       {
         "name": "pitch",
         "type": "number",
+        "default": "0",
         "description": "The pitch value of the angle, in degrees."
       },
       {
@@ -990,7 +991,7 @@
       "client",
       "server"
     ],
-    "description": "Creates a console variable (<page>ConVar</page>), in general these are for things like gamemode/server settings.\n<warning>Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.</warning>",
+    "description": "Creates a console variable (<page>ConVar</page>).\n\nGenerally these are used for settings, which can be stored automatically across sessions if desired. They are usually set via an accompanying user interface clientside, or listed somewhere for dedicated server usage, in which case they might be set via `server.cfg` on server start up.\n\n<warning>Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.</warning>",
     "arguments": [
       {
         "name": "name",
@@ -1030,7 +1031,7 @@
     "returnValues": [
       {
         "type": "ConVar",
-        "description": "The convar created."
+        "description": "The convar created, or `nil` if convar could not be created. (such as when there's a console command with the same name)\n\nIf a ConVar already exists (including engine ones), it will simply return the already existing ConVar without modifying it in any way."
       }
     ]
   },
@@ -1325,7 +1326,7 @@
       "client",
       "server"
     ],
-    "description": "A preprocessor keyword that is directly replaced with the following text:\n```lua\nlocal BaseClass = baseclass.Get\n```\n\nBecause this is a simple preprocessor keyword and not a function, it will cause problems if not used properly\n\nSee <page>baseclass.Get</page> for more information.\n<warning>The preprocessor is not smart enough to know when substitution doesn't make sense, such as: table keys and strings.\n\nRunning `print(\"DEFINE_BASECLASS\")` will result in `local BaseClass = baseclass.Get`</warning>\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
+    "description": "A preprocessor keyword that is directly replaced with the following text:\n```lua\nlocal BaseClass = baseclass.Get\n```\n\nBecause this is a simple preprocessor keyword and not a function, it will cause problems if not used properly\n\nSee <page>baseclass.Get</page> for more information.\n<warning>The preprocessor is not smart enough to know when substitution doesn't make sense, such as: table keys and strings.\n\nRunning `print(\"DEFINE_BASECLASS\")` is the same as `print(\"local BaseClass = baseclass.Get\")`</warning>\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
     "arguments": [
       {
         "name": "value",
@@ -2545,7 +2546,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the meta table for the class with the matching name.\n\nInternally returns <page>debug.getregistry</page>()[metaName]\n\nYou can learn more about meta tables on the <page>Meta Tables</page> page.\n\nYou can find a list of meta tables that can be retrieved with this function on <page>Enums/TYPE</page>. The name in the description is the string to use with this function.",
+    "description": "Returns the meta table for the class with the matching name.\n\nYou can learn more about meta tables on the <page>Meta Tables</page> page.\n\nYou can find a list of meta tables that can be retrieved with this function on <page>Enums/TYPE</page>. The name in the description is the string to use with this function.",
     "arguments": [
       {
         "name": "metaName",
@@ -6038,7 +6039,7 @@
       "client",
       "menu"
     ],
-    "description": "Saves position of your cursor on screen. You can restore it by using\n<page>Global.RestoreCursorPosition</page>.",
+    "description": "Saves position of your cursor on screen. You can restore it by using <page>Global.RestoreCursorPosition</page>. This is used internally by the spawn menu/context menu",
     "source": {
       "file": "lua/includes/util.lua",
       "lineStart": 427,
@@ -6490,18 +6491,18 @@
     "realms": [
       "client"
     ],
-    "description": "Returns a number based on the `size` argument and the players' screen width. The width is scaled in relation to `640x480` resolution.  This function is primarily used for scaling font sizes.\n\nSee <page>Global.ScreenScaleH</page> for a function that scales from height.",
+    "description": "Returns a number based on the `size` argument and the players' screen width. This is used to scale user interface (UI) elements to be consistently sized and positioned across all screen resolutions.\n\nThe width is scaled in relation to `640x480` resolution, and does **not** take into account non the aspect ratio. See example below for how to adjust or that.\n\nThis function can also be used for scaling font sizes.\n\nSee <page>Global.ScreenScaleH</page> for a function that scales from height.",
     "arguments": [
       {
         "name": "size",
         "type": "number",
-        "description": "The number you want to scale."
+        "description": "The position or size you want to scale within 640 pixel wide screen."
       }
     ],
     "returnValues": [
       {
         "type": "number",
-        "description": "The scaled number based on your screen's width"
+        "description": "The scaled number based on the player's screen width."
       }
     ],
     "source": {
@@ -6965,7 +6966,7 @@
       "client",
       "server"
     ],
-    "description": "Sets an integer that is shared between the server and all clients.\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Int</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>\n<bug issue=\"3374\">This function will not round decimal values as it actually networks a float internally.</bug>",
+    "description": "Sets an integer that is shared between the server and all clients.\n\n<warning>There's a 4095 slots Network limit. If you need more, consider using the <page>net</page> library or <page>Global.SetGlobal2Int</page>. You should also consider the fact that you have way too many variables. You can learn more about this limit here: <page>Networking_Usage</page></warning>\n<note>Running this function clientside will only set it clientside for the client it is called on!</note>\n<bug issue=\"3374\">This function will not round decimal values as it actually networks a 64 bit float internally.</bug>",
     "arguments": [
       {
         "name": "index",
@@ -7240,7 +7241,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the approximate duration of the specified sound in seconds, for `.wav` and `.mp3` sounds.",
+    "description": "Returns the approximate duration of the specified sound in seconds, for `.wav` and `.mp3` sounds.\n<bug>This function only works on mp3 files if the file is encoded with constant bitrate.</bug>",
     "arguments": [
       {
         "name": "soundName",
@@ -7282,7 +7283,12 @@
         "type": "string",
         "description": "Escaped input"
       }
-    ]
+    ],
+    "source": {
+      "file": "lua/includes/util/sql.lua",
+      "lineStart": 27,
+      "lineEnd": 27
+    }
   },
   {
     "name": "SScale",
@@ -7376,7 +7382,12 @@
         "type": "table",
         "description": "TauntCamera"
       }
-    ]
+    ],
+    "source": {
+      "file": "gamemodes/base/gamemode/player_class/taunt_camera.lua",
+      "lineStart": 14,
+      "lineEnd": 126
+    }
   },
   {
     "name": "TextEntryLoseFocus",
@@ -7385,7 +7396,12 @@
       "client",
       "menu"
     ],
-    "description": "Clears focus from any text entries player may have focused."
+    "description": "Clears focus from any text entries player may have focused.",
+    "source": {
+      "file": "lua/vgui/dtextentry.lua",
+      "lineStart": 410,
+      "lineEnd": 429
+    }
   },
   {
     "name": "TimedCos",

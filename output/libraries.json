@@ -952,7 +952,7 @@
           {
             "name": "y",
             "type": "number",
-            "default": "<<current view Y>",
+            "default": "<current view Y>",
             "description": "Y coordinate of where to start the new view port."
           },
           {
@@ -1855,7 +1855,7 @@
         "returnValues": [
           {
             "type": "Entity",
-            "description": "The crated constraint. ([phys_ballsocket](https://developer.valvesoftware.com/wiki/Phys_ballsocket)) Will return `false` if the constraint could not be created."
+            "description": "The created constraint. ([phys_ballsocket](https://developer.valvesoftware.com/wiki/Phys_ballsocket)) Will return `false` if the constraint could not be created."
           }
         ],
         "source": {
@@ -2096,7 +2096,7 @@
           },
           {
             "type": "Entity",
-            "description": "The crated rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
+            "description": "The created rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
           }
         ],
         "source": {
@@ -2447,7 +2447,7 @@
           },
           {
             "type": "Entity",
-            "description": "The crated rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
+            "description": "The created rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
           },
           {
             "type": "Entity",
@@ -2727,7 +2727,7 @@
           },
           {
             "type": "Entity",
-            "description": "The crated rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
+            "description": "The created rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
           },
           {
             "type": "Entity",
@@ -2771,6 +2771,12 @@
             "name": "bone2",
             "type": "number",
             "description": "<page>PhysObj</page> number of second entity to constrain to. (0 for non-ragdolls).\n\nSee <page>Entity:TranslateBoneToPhysBone</page>."
+          },
+          {
+            "name": "disableOnRemove",
+            "type": "boolean",
+            "default": "false",
+            "description": "If set, the nocollide will be reversed if the constraint is removed."
           }
         ],
         "returnValues": [
@@ -3170,7 +3176,7 @@
         "returnValues": [
           {
             "type": "Entity",
-            "description": "The crated constraint entity. ([phys_constraint](https://developer.valvesoftware.com/wiki/Phys_constraint))"
+            "description": "The created constraint entity. ([phys_constraint](https://developer.valvesoftware.com/wiki/Phys_constraint))"
           }
         ],
         "source": {
@@ -3273,7 +3279,7 @@
           },
           {
             "type": "Entity",
-            "description": "The crated rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
+            "description": "The created rope. ([keyframe_rope](https://developer.valvesoftware.com/wiki/Keyframe_rope)) Will return `nil` if the constraint could not be created."
           },
           {
             "type": "Entity",
@@ -7832,7 +7838,7 @@
         "realms": [
           "client"
         ],
-        "description": "Saves a duplication as a file.",
+        "description": "<internal>Do not use.</internal>\n\nSaves a duplication as a file.",
         "arguments": [
           {
             "name": "dupe",
@@ -7852,7 +7858,7 @@
         "realms": [
           "client"
         ],
-        "description": "Stores savedata into the game (can be loaded using the LoadGame menu)",
+        "description": "<internal>Do not use.</internal>\nStores savedata into the game (can be loaded using the LoadGame menu)",
         "arguments": [
           {
             "name": "saveData",
@@ -8020,7 +8026,7 @@
           "client",
           "server"
         ],
-        "description": "Finds all entities that are of given class and are children of given entity. This works internally by iterating over <page>ents.GetAll</page>.",
+        "description": "Finds all entities that are of given class and are children of given entity. This works internally by iterating over <page>ents.FindByClass</page>.",
         "arguments": [
           {
             "name": "class",
@@ -8737,7 +8743,7 @@
           {
             "name": "fileName",
             "type": "string",
-            "description": "The name of the file being written into. The path is relative to the **data/** folder.\n\nThis argument will be forced lowercase.\n\nThe filename **must** end with one of the following:\n* .txt\n* .dat\n* .json\n* .xml\n* .csv\n* .dem\n* .vcd\n* .gma\n* .mdl\n* .phy\n* .vvd\n* .vtx\n* .ani\n* .vtf\n* .vmt\n* .png\n* .jpg\n* .jpeg\n* .mp3\n* .wav\n* .ogg\n\nRestricted symbols are: `\" :`"
+            "description": "The name of the file being written into. The path is relative to the `data/` folder.\n\nThis argument will be forced lowercase.\n\nThe filename **must** end with one of the following:\n* .txt\n* .dat\n* .json\n* .xml\n* .csv\n* .dem\n* .vcd\n* .gma\n* .mdl\n* .phy\n* .vvd\n* .vtx\n* .ani\n* .vtf\n* .vmt\n* .png\n* .jpg\n* .jpeg\n* .mp3\n* .wav\n* .ogg\n\nRestricted symbols are: `\":`, and multiple consecutive spaces"
           },
           {
             "name": "content",
@@ -8936,7 +8942,7 @@
           "client",
           "server"
         ],
-        "description": "Removes most entities, and then respawns entities created by the map, as if the map was just loaded.\n\nThere are certain exclusions, such as players or weapons held by players, soundscapes and others.\n<page text=\"EFL_KEEP_ON_RECREATE_ENTITIES\">enums/EFL</page> can be set on entities to preserve them through a map cleanup.\n\nOn the client it will remove decals, sounds, gibs, dead NPCs, and entities created via <page>ents.CreateClientProp</page>. This function is ran on all clients from server automatically, when it is called on the server.\n\nThis function calls <page>GM:PreCleanupMap</page> before cleaning up the map and <page>GM:PostCleanupMap</page> after cleaning up the map.\n\nBeware of calling this function in hooks that may be called on map clean up (such as <page>ENTITY:StartTouch</page>) to avoid infinite loops.\n\n<bug issue=\"2874\">Calling this destroys all BASS streams.</bug>\n\n<bug issue=\"3637\">This can crash when removing `_firesmoke` entities. **You can use the example below to workaround this issue.**</bug>",
+        "description": "Removes most entities, and then respawns entities created by the map, as if the map was just loaded.\n\nThere are certain exclusions, such as players or weapons held by players, soundscapes and others.\n<page text=\"EFL_KEEP_ON_RECREATE_ENTITIES\">enums/EFL</page> can be set on entities to preserve them through a map cleanup.\n\nOn the client it will remove decals, sounds, gibs, dead NPCs, and entities created via <page>ents.CreateClientProp</page>. This function is ran on all clients from server automatically, when it is called on the server.\n\nThis function calls <page>GM:PreCleanupMap</page> before cleaning up the map and <page>GM:PostCleanupMap</page> after cleaning up the map.\n\nBeware of calling this function in hooks that may be called on map clean up (such as <page>ENTITY:StartTouch</page>) to avoid infinite loops.\n\n<bug issue=\"2874\">Calling this destroys all BASS streams.</bug>\n<bug issue=\"3637\">This can crash when removing `_firesmoke` entities. **You can use the example below to workaround this issue.**</bug>\n<bug issue=\"6105\">The EFL_KEEP_ON_RECREATE_ENTITIES flag doesn't prevent an entity from being recreated, which means flagged entities will be duplicated since they are both kept and recreated.</bug>",
         "arguments": [
           {
             "name": "dontSendToClients",
@@ -9333,7 +9339,7 @@
           {
             "name": "id",
             "type": "string",
-            "description": "UserID or SteamID of the player to kick."
+            "description": "UserID or SteamID of the player to kick. Uses SteamID32 eg STEAM_0:0:00000000"
           },
           {
             "name": "reason",
@@ -9504,7 +9510,6 @@
         "name": "StartSpot",
         "parent": "game",
         "realms": [
-          "client",
           "server"
         ],
         "description": "Returns position the player should start from, this is not the same thing as spawn points, it is used to properly transit the player between maps.",
@@ -10508,7 +10513,7 @@
           "client",
           "server"
         ],
-        "description": "Add a hook to be called upon the given event occurring.",
+        "description": "Registers a function (or \"callback\") with the <page>Hook</page> system so that it will be called automatically whenever a specific event (or \"hook\") occurs.",
         "arguments": [
           {
             "name": "eventName",
@@ -10523,7 +10528,7 @@
           {
             "name": "func",
             "type": "function",
-            "description": "The function to be called, arguments given to it depend on the identifier used.\n<warning>Returning any value besides nil from the hook's function will stop other hooks of the same event down the loop from being executed. Only return a value when absolutely necessary and when you know what you are doing.\n\nIt WILL break other addons.</warning>"
+            "description": "The function to be called, arguments given to it depend on the identifier used.\n<warning>\nReturning any value besides nil from the hook's function will stop other hooks of the same event down the loop from being executed. Only return a value when absolutely necessary and when you know what you are doing.\n\nIt WILL break other addons.\n</warning>"
           }
         ],
         "source": {
@@ -14838,7 +14843,7 @@
         "realms": [
           "client"
         ],
-        "description": "Register a material proxy. See <page>matproxy</page> for more general explanation of what they are.",
+        "description": "Register a material proxy. See <page>matproxy</page> for more general explanation of what they are.\n<note>The `bind` function is required. The `init` function won't run without it set.</note>",
         "arguments": [
           {
             "name": "matProxyData",
@@ -15051,7 +15056,7 @@
           {
             "name": "primitiveCount",
             "type": "number",
-            "description": "The quantity of primitives this mesh will contain as a whole integer number."
+            "description": "The quantity of primitives this mesh will contain as a whole integer number.\n\nThe expected value of this argument is dependent on the primitive type used.\nFor a full list of the primitive counts expected by each primitive type, see <page>Enums/MATERIAL</page>."
           }
         ],
         "overloads": [
@@ -15070,7 +15075,7 @@
               {
                 "name": "primitiveCount",
                 "type": "number",
-                "description": "The quantity of primitives this mesh will contain, as a whole integer number."
+                "description": "The quantity of primitives this mesh will contain as a whole integer number.\n\nThe expected value of this argument is dependent on the primitive type used.\nFor a full list of the primitive counts expected by each primitive type, see <page>Enums/MATERIAL</page>."
               }
             ]
           }
@@ -16736,12 +16741,32 @@
         "realms": [
           "server"
         ],
-        "description": "Sends the current net message (see <page>net.Start</page>) to the specified player, or to all players listed in the table.",
+        "description": "Sends the current net message to the specified player(s)",
         "arguments": [
           {
             "name": "ply",
             "type": "Player",
-            "description": "The player(s) to send the message to. Can be a table of players or a <page>CRecipientFilter</page>."
+            "description": "The player to send the message to."
+          }
+        ],
+        "overloads": [
+          {
+            "arguments": [
+              {
+                "name": "plys",
+                "type": "table",
+                "description": "A table of players to send the message to."
+              }
+            ]
+          },
+          {
+            "arguments": [
+              {
+                "name": "filter",
+                "type": "CRecipientFilter",
+                "description": "A recipient filter specifying message targets."
+              }
+            ]
           }
         ]
       },
@@ -17009,7 +17034,7 @@
           {
             "name": "bitCount",
             "type": "number",
-            "description": "The amount of bits the number consists of. This must be **32** or less.\n\nIf you are unsure what to set, just set it to `32`.\n\nConsult the table below to determine the bit count you need:\n\n| Bit Count |  Minimum value |  Maximum value |\n|-----------|:--------------:|:--------------:|\n| 3 | -4 | 3 |\n| 4 | -8 | 7 |\n| 5 | -16 | 15 |\n| 6 | -32 | 31 |\n| 7 | -64 | 63 |\n| 8 | -128 | 127 |\n| 9 | -256 | 255 |\n| 10 | -512 | 511 |\n| 11 | -1024 | 1023 |\n| 12 | -2048 | 2047 |\n| 13 | -4096 | 4095 |\n| 14 | -8192 | 8191 |\n| 15 | -16384 | 16383 |\n| 16 | -32768 | 32767 |\n| 17 | -65536 | 65535 |\n| 18 | -131072 | 131071 |\n| 19 | -262144 | 262143 |\n| 20 | -524288 | 524287 |\n| 21 | -1048576 | 1048575 |\n| 22 | -2097152 | 2097151 |\n| 23 | -4194304 | 4194303 |\n| 24 | -8388608 | 8388607 |\n| 25 | -16777216 | 16777215 |\n| 26 | -33554432 | 33554431 |\n| 27 | -67108864 | 67108863 |\n| 28 | -134217728 | 134217727 |\n| 29 | -268435456 | 268435455 |\n| 30 | -536870912 | 536870911 |\n| 31 | -1073741824 | 1073741823 |\n| 32 | -2147483648 | 2147483647 |"
+            "description": "The amount of bits the number consists of. This must be **32** or less.\n\nIf you are unsure what to set, just set it to `32`.\n\nConsult the table below to determine the bit count you need:\n\n| Bit Count |  Minimum value |  Maximum value |\n|-----------|:--------------:|:--------------:|\n| 3 | -4 | 3 |\n| 4 | -8 | 7 |\n| 5 | -16 | 15 |\n| 6 | -32 | 31 |\n| 7 | -64 | 63 |\n| 8 | -128 | 127 |\n| 9 | -256 | 255 |\n| 10 | -512 | 511 |\n| 11 | -1,024 | 1,023 |\n| 12 | -2,048 | 2,047 |\n| 13 | -4,096 | 4,095 |\n| 14 | -8,192 | 8,191 |\n| 15 | -16,384 | 16,383 |\n| 16 | -32,768 | 32,767 |\n| 17 | -65,536 | 65,535 |\n| 18 | -131,072 | 131,071 |\n| 19 | -262,144 | 262,143 |\n| 20 | -524,288 | 524,287 |\n| 21 | -1,048,576 | 1,048,575 |\n| 22 | -2,097,152 | 2,097,151 |\n| 23 | -4,194,304 | 4,194,303 |\n| 24 | -8,388,608 | 8,388,607 |\n| 25 | -16,777,216 | 16,777,215 |\n| 26 | -33,554,432 | 33,554,431 |\n| 27 | -67,108,864 | 67,108,863 |\n| 28 | -134,217,728 | 134,217,727 |\n| 29 | -268,435,456 | 268,435,455 |\n| 30 | -536,870,912 | 536,870,911 |\n| 31 | -1,073,741,824 | 1,073,741,823 |\n| 32 | -2,147,483,648 | 2,147,483,647 |"
           }
         ]
       },
@@ -17147,7 +17172,7 @@
           {
             "name": "bitCount",
             "type": "number",
-            "description": "The size of the integer to be sent, in bits. Acceptable values range from any number `1` to `32` inclusive.\n\nFor reference: `1` = bit, `4` = nibble, `8` = byte, `16` = short, `32` = long.\n\nConsult the table below to determine the bit count you need. The minimum value for all bit counts is `0`.\n\n| Bit Count |  Maximum value |\n|-----------|:--------------:|\n| 1 | 1  |\n| 2 | 3  |\n| 3 | 7  |\n| 4 | 15 |\n| 5 | 31 |\n| 6 | 63 |\n| 7 | 127 |\n| 8 | 255 |\n| 9 | 511 |\n| 10 | 1023 |\n| 11 | 2047 |\n| 12 | 4095 |\n| 13 | 8191 |\n| 14 | 16383 |\n| 15 | 32767 |\n| 16 | 65535 |\n| 17 | 131071 |\n| 18 | 262143 |\n| 19 | 524287  |\n| 20 | 1048575  |\n| 21 | 2097151  |\n| 22 | 4194303  |\n| 23 | 8388607  |\n| 24 | 16777215  |\n| 25 | 33554431  |\n| 26 | 67108863  |\n| 27 | 134217727  |\n| 28 | 268435455  |\n| 29 | 536870911  |\n| 30 | 1073741823 |\n| 31 | 2147483647 |\n| 32 | 4294967295 |"
+            "description": "The size of the integer to be sent, in bits. Acceptable values range from any number `1` to `32` inclusive.\n\nFor reference: `1` = bit, `4` = nibble, `8` = byte, `16` = short, `32` = long.\n\nConsult the table below to determine the bit count you need. The minimum value for all bit counts is `0`.\n\n| Bit Count |  Maximum value |\n|-----------|:--------------:|\n| 1 | 1  |\n| 2 | 3  |\n| 3 | 7  |\n| 4 | 15 |\n| 5 | 31 |\n| 6 | 63 |\n| 7 | 127 |\n| 8 | 255 |\n| 9 | 511 |\n| 10 | 1,023 |\n| 11 | 2,047 |\n| 12 | 4,095 |\n| 13 | 8,191 |\n| 14 | 16,383 |\n| 15 | 32,767 |\n| 16 | 65,535 |\n| 17 | 131,071 |\n| 18 | 262,143 |\n| 19 | 524,287  |\n| 20 | 1,048,575  |\n| 21 | 2,097,151  |\n| 22 | 4,194,303  |\n| 23 | 8,388,607  |\n| 24 | 16,777,215  |\n| 25 | 33,554,431  |\n| 26 | 67,108,863  |\n| 27 | 134,217,727  |\n| 28 | 268,435,455  |\n| 29 | 536,870,911  |\n| 30 | 1,073,741,823 |\n| 31 | 2,147,483,647 |\n| 32 | 4,294,967,295 |"
           }
         ]
       },
@@ -17562,7 +17587,7 @@
           {
             "name": "format",
             "type": "string",
-            "description": "The format string.\n\nIf this is equal to `*t` or `!*t` then this function will return a <page>Structures/DateData</page>, otherwise it will return a string.\n\nIf this starts with an `!`, the returned data will use the UTC timezone rather than the local timezone.\n\nSee http://www.mkssoftware.com/docs/man3/strftime.3.asp for available format flags.\n\n<bug issue=\"329\">**Not all flags are available on all operating systems** and the result of using an invalid flag is undefined. This currently crashes the game on Windows. Most or all flags are available on OS X and Linux but considerably fewer are available on Windows. See http://msdn.microsoft.com/en-us/library/fe06s4ak.aspx for a list of available flags on Windows. Note that the **#** flags also crashes the game on Windows.</bug>\n\nKnown formats that work on all platforms:\n\n| Format | Description | Example of the output |\n|:------:|:-----------:|:---------------------:|\n| `%a` | Abbreviated weekday name | `Wed` |\n| `%A` | Full weekday name | `Wednesday` |\n| `%b` | Abbreviated month name | `Sep` |\n| `%B` | Full month name | `September` |\n| `%c` | Locale-appropriate date and time | Varies by platform and language settings |\n| `%d` | Day of the month [01-31] | `16` |\n| `%H` | Hour, using a 24-hour clock [00-23] | `23` |\n| `%I` | Hour, using a 12-hour clock [01-12] | `11` |\n| `%j` | Day of the year [001-365] | `259` |\n| `%m` | Month [01-12] | `09` |\n| `%M` | Minute [00-59] | `48` |\n| `%p` | Either `am` or `pm` | `pm` |\n| `%S` | Second [00-60] | `10` |\n| `%w` | Weekday [0-6 = Sunday-Saturday] | `3` |\n| `%W` | Week of the year [00-53] | `37` |\n| `%x` | Date (Same as `%m/%d/%y`) | `09/16/98` |\n| `%X` | Time (Same as `%H:%M:%S`) | `24:48:10` |\n| `%y` | Two-digit year [00-99] | `98` |\n| `%Y` | Full year | `1998` |\n| `%z` | Timezone | `-0300` |\n| `%%` | A percent sign | `%` |"
+            "description": "The format string.\n\nIf this is equal to `*t` or `!*t` then this function will return a <page>Structures/DateData</page>, otherwise it will return a string.\n\nIf this starts with an `!`, the returned data will use the UTC timezone rather than the local timezone.\n\nSee http://www.mkssoftware.com/docs/man3/strftime.3.asp for available format flags.\n\n<bug issue=\"329\">**Not all flags are available on all operating systems** and the result of using an invalid flag is undefined. This currently crashes the game on Windows. Most or all flags are available on OS X and Linux but considerably fewer are available on Windows. See http://msdn.microsoft.com/en-us/library/fe06s4ak.aspx for a list of available flags on Windows. Note that the **#** flags also crashes the game on Windows.</bug>\n\nKnown formats that work on all platforms:\n\n| Format | Description | Example of the output |\n|:------:|:-----------:|:---------------------:|\n| `%a` | Abbreviated weekday name | `Wed` |\n| `%A` | Full weekday name | `Wednesday` |\n| `%b` | Abbreviated month name | `Sep` |\n| `%B` | Full month name | `September` |\n| `%c` | Locale-appropriate date and time | Varies by platform and language settings |\n| `%d` | Day of the month [01-31] | `16` |\n| `%H` | Hour, using a 24-hour clock [00-23] | `23` |\n| `%I` | Hour, using a 12-hour clock [01-12] | `11` |\n| `%j` | Day of the year [001-365] | `259` |\n| `%m` | Month [01-12] | `09` |\n| `%M` | Minute [00-59] | `48` |\n| `%p` | Either `am` or `pm` | `pm` |\n| `%S` | Second [00-60] | `10` |\n| `%w` | Weekday [0-6 = Sunday-Saturday] | `3` |\n| `%W` | Week of the year [00-53] | `37` |\n| `%x` | Date (Same as `%m/%d/%y`) | `09/16/98` |\n| `%X` | Time (Same as `%H:%M:%S`) | `23:48:10` |\n| `%y` | Two-digit year [00-99] | `98` |\n| `%Y` | Full year | `1998` |\n| `%z` | Timezone | `-0300` |\n| `%%` | A percent sign | `%` |"
           },
           {
             "name": "time",
@@ -17846,7 +17871,7 @@
         "returnValues": [
           {
             "type": "Vector",
-            "description": "gravAccel"
+            "description": "Gravity direction and strength."
           }
         ]
       },
@@ -17881,6 +17906,21 @@
         ]
       },
       {
+        "name": "GetPhysicsPaused",
+        "parent": "physenv",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Returns the pause status of global physics simulation. See <page>physenv.SetPhysicsPaused</page> for the setter.",
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "`true` if paused."
+          }
+        ]
+      },
+      {
         "name": "SetAirDensity",
         "parent": "physenv",
         "realms": [
@@ -17903,7 +17943,7 @@
           "client",
           "server"
         ],
-        "description": "Sets the gravitational acceleration used for physics objects.\n<note>Does not work on players.</note>",
+        "description": "Sets the gravitational acceleration used for physics objects. Does not affect players.",
         "arguments": [
           {
             "name": "gravAccel",
@@ -17925,6 +17965,22 @@
             "name": "performanceSettings",
             "type": "table",
             "description": "The new performance settings. See <page>Structures/PhysEnvPerformanceSettings</page>"
+          }
+        ]
+      },
+      {
+        "name": "SetPhysicsPaused",
+        "parent": "physenv",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Pauses or unpauses the physics simulation globally. See <page>physenv.GetPhysicsPaused</page> for the getter.",
+        "arguments": [
+          {
+            "name": "pause",
+            "type": "boolean",
+            "description": "`true` to pause, `false` to unpause."
           }
         ]
       }
@@ -18469,7 +18525,7 @@
             "description": "Player to set class"
           },
           {
-            "name": "classname",
+            "name": "className",
             "type": "string",
             "description": "Name of class to set"
           }
@@ -18903,6 +18959,22 @@
           "lineStart": 74,
           "lineEnd": 91
         }
+      },
+      {
+        "name": "Remove",
+        "parent": "properties",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Remove an entity right-click property. See <page>properties.Add</page> for details.",
+        "arguments": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "A unique name used to identify the property to be removed."
+          }
+        ]
       }
     ]
   },
@@ -21002,7 +21074,7 @@
         "realms": [
           "client"
         ],
-        "description": "Sets the alpha blending (or transparency) for upcoming render operations.\n\nBy itself, this will cause visible overlapping on parts of a model that are in front of other parts of the same model.\nFor a solution to this, see the examples below.\n\n<bug issue=\"3166\">This does not affect non-model `render.Draw*` functions.</bug>\n<note>If a material has the [$alphatest](https://developer.valvesoftware.com/wiki/$alphatest) flag enabled then this function might not behave as expected because alpha will be binary, this has a default cutoff of `0.7`.</note>",
+        "description": "Sets the alpha blending (or transparency) for upcoming render operations.\n\nSee <page>render.SetColorModulation</page> for the function to affect RGB color channels.\n\nBy itself, this will cause visible overlapping on parts of a model that are in front of other parts of the same model.\nFor a solution to this, see the examples below.\n\n<bug issue=\"3166\">This does not affect non-model `render.Draw*` functions.</bug>\n<note>If a material has the [$alphatest](https://developer.valvesoftware.com/wiki/$alphatest) flag enabled then this function might not behave as expected because alpha will be binary, this has a default cutoff of `0.7`.</note>",
         "arguments": [
           {
             "name": "blending",
@@ -21043,7 +21115,7 @@
         "realms": [
           "client"
         ],
-        "description": "Sets the color modulation.",
+        "description": "Sets the color modulation for upcoming render operations, such as rendering models.\n\nThe values can exceed 1 for stronger effect.\n\nSee <page>render.SetBlend</page> for the function to affect alpha channel.",
         "arguments": [
           {
             "name": "r",
@@ -22403,7 +22475,14 @@
         "realms": [
           "menu"
         ],
-        "description": "<internal></internal>Adds current server the player is on to their favorites."
+        "description": "<internal></internal>Adds current server the player is on to their favorites.",
+        "arguments": [
+          {
+            "name": "addOrRemove",
+            "type": "boolean",
+            "description": "`true` if to add, or `false` if to remove from favorites."
+          }
+        ]
       },
       {
         "name": "AddServerToFavorites",
@@ -22792,6 +22871,27 @@
             "name": "callback",
             "type": "function",
             "description": "Callback function that is called as soon as the the stream is loaded.\n<callback>\n<arg type=\"IGModAudioChannel\" name=\"channel\">The sound channel. Will be nil if an error occurred.</arg>\n<arg type=\"number\" name=\"errorID\">ID of an error if an error has occurred. Will be nil, otherwise.</arg>\n<arg type=\"string\" name=\"errorName\">Name of an error if an error has occurred. Will be nil, otherwise.</arg>\n</callback>"
+          }
+        ]
+      },
+      {
+        "name": "SetActorGender",
+        "parent": "sound",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Sets the gender of a specific actor (model). This is a system from [base Half-Life 2](https://developer.valvesoftware.com/wiki/Global_actors) - `global_actors.txt`.\n\nThis will affect what voice lines `npc_citizen` will use when they have the given model set.\n\nIt is not limited to `npc_citizens` - any sound played on any entity with given model can have gender specific sounds playing, including soundscripts, by including `$gender` token in the sound file path.\n\n<warning>Internally the gender is stored by model file name only (i.e. `models/alyx.mdl` would be stored as `alyx`), not the full path! Be aware of potential collisions.</warning>",
+        "arguments": [
+          {
+            "name": "modelPath",
+            "type": "string",
+            "description": "Path to the model file to set the gender of."
+          },
+          {
+            "name": "gender",
+            "type": "string",
+            "description": "Gender to set. Only 2 options are permitted: `female` and `male`. Any other option will be ignored."
           }
         ]
       }
@@ -27232,7 +27332,7 @@
           "client",
           "server"
         ],
-        "description": "Returns whether or not the given table is empty.\n\nThis works on both sequential and non-sequential tables, and is a lot faster for non-sequential tables than `table.Count(tbl) == 0`.\nIf you want to check if a table is not empty, use `next(tbl) ~= nil`, as it is slightly faster.",
+        "description": "Returns whether or not the given table is empty.\n\nThis works on both sequential and non-sequential tables, and is a lot faster for non-sequential tables than `table.Count(tbl) == 0`.\nIf you want to check if a table is not empty, use `next(tbl) ~= nil`, as it is slightly faster.\n\nFor sequential tables it is better to use `tab[1] ~= nil`.",
         "arguments": [
           {
             "name": "tab",
@@ -30049,25 +30149,25 @@
         "realms": [
           "menu"
         ],
-        "description": "Converts the Full path of the given GMA file to the Relative Path.\nYou can use <page>util.RelativePathToFull_Menu</page> to convert the Relative path back to the Full Path.",
+        "description": "Converts the full path of the given file to a relative path.\nYou can use <page>util.RelativePathToFull_Menu</page> to convert the relative path back to the full path.",
         "arguments": [
           {
-            "name": "gma",
+            "name": "fullPath",
             "type": "string",
-            "description": "The **Full** path to the GMA file. **like: \"[Steam folder]\\common\\garrysmod\\garrysmod\\addons\\[Name].gma\"**"
+            "description": "The **full** path to a file."
           },
           {
-            "name": "gamePath",
+            "name": "fsPath",
             "type": "string",
-            "default": "GAME",
+            "default": "MOD",
             "description": "The path to look for the files and directories in. See <page text=\"this list\">File_Search_Paths</page> for a list of valid paths."
           }
         ],
         "returnValues": [
           {
             "type": "string",
-            "name": "relativepath",
-            "description": "The relative path to the GMA file."
+            "name": "relativePath",
+            "description": "The relative path to the given file."
           }
         ]
       },
@@ -30563,8 +30663,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/util.lua",
-          "lineStart": 382,
-          "lineEnd": 410
+          "lineStart": 394,
+          "lineEnd": 418
         }
       },
       {
@@ -31369,7 +31469,7 @@
           "client",
           "server"
         ],
-        "description": "Precaches a model for later use. Model is cached after being loaded once.\n<warning>\nModelprecache is limited to 4096 unique models. When it reaches the limit the game will crash.\n</warning>",
+        "description": "Precaches a model for later use. Model is cached after being loaded once.\n<warning>\nModelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.\n</warning>",
         "arguments": [
           {
             "name": "modelName",
@@ -31439,17 +31539,17 @@
         "realms": [
           "menu"
         ],
-        "description": "Converts the relative path of the given GMA file to the Full Path.\nYou can use <page>util.FullPathToRelative_Menu</page> to convert the Full path back to the Relative Path.",
+        "description": "Converts the relative path of a given file to the full path on disk.\nYou can use <page>util.FullPathToRelative_Menu</page> to convert the full path back to the relative path.",
         "arguments": [
           {
-            "name": "gma",
+            "name": "filePath",
             "type": "string",
-            "description": "The Relative path to the GMA file. **like: \"addons/[Name].gma\"**"
+            "description": "The relative path of a file, for example: `addons/[Name].gma`"
           },
           {
-            "name": "gamePath",
+            "name": "mountPath",
             "type": "string",
-            "default": "GAME",
+            "default": "MOD",
             "description": "The path to look for the files and directories in. See <page text=\"this list\">File_Search_Paths</page> for a list of valid paths."
           }
         ],
@@ -31457,7 +31557,7 @@
           {
             "type": "string",
             "name": "fullpath",
-            "description": "The full path to the GMA file."
+            "description": "The full path to the file."
           }
         ]
       },
@@ -31467,19 +31567,19 @@
         "realms": [
           "menu"
         ],
-        "description": "Returns the AddonInfo of the Addon the given file belongs to.",
+        "description": "Returns which Workshop addon the given file belongs to.",
         "arguments": [
           {
-            "name": "gma",
+            "name": "filePath",
             "type": "string",
-            "description": "The **Full** path to the GMA file. **like: \"[Steam folder]\\common\\garrysmod\\garrysmod\\addons\\[Name].gma\"**"
+            "description": "The relative path to a file, such as `materials/myMaterial.vmt`."
           }
         ],
         "returnValues": [
           {
             "type": "table",
-            "name": "addoninfo",
-            "description": "The AddonInfo of the GMA file. Will return nil if the File doesn't belongs to an addon. Table Structure:\n```lua\nAuthor\t=\t[Addon Author]\nFile\t=\t[Steam folder]\\workshop\\content\\4000\\[Addon ID]/[GMA Name].gma\nID\t=\t[Addon ID]\nTitle\t=\t[Addon Title]\n```"
+            "name": "addonInfo",
+            "description": "The info about owner addon. Will return nil if the file doesn't belong to an addon. Table Structure:\n```lua\nAuthor\t=\t[Addon Author]\nFile\t=\t[Steam folder]\\workshop\\content\\4000\\[Addon ID]/[GMA Name].gma\nID\t=\t[Addon ID]\nTitle\t=\t[Addon Title]\n```"
           }
         ]
       },
@@ -31566,7 +31666,7 @@
           "client",
           "server"
         ],
-        "description": "Sets persistent data for offline player using their SteamID.\n\nSee also <page>Player:SetPData</page> for a more convenient version of this function for online players, <page>util.RemovePData</page> and\n<page>util.GetPData</page> for the other accompanying functions.\n<note>This function internally uses <page>util.SteamIDTo64</page>, it previously utilized <page>Player:UniqueID</page> which can cause collisions (two or more players sharing the same PData entry).</note>",
+        "description": "Sets persistent data for offline player using their SteamID.\n\nSee also <page>Player:SetPData</page> for a more convenient version of this function for online players, <page>util.RemovePData</page> and\n<page>util.GetPData</page> for the other accompanying functions.\n<note>This function internally uses <page>util.SteamIDTo64</page>, it previously utilized <page>Player:UniqueID</page> which could have caused collisions (two or more players sharing the same PData entry).</note>",
         "arguments": [
           {
             "name": "steamID",
@@ -31909,7 +32009,7 @@
         "returnValues": [
           {
             "type": "table",
-            "description": "A timer object. It has the following methods:\n* `Reset()` - Resets and stops the timer.\n* `Start( duration )` - (Re)starts the timer with given duration\n* `Started()` - Returns `true` if the timer has been started. It will continue to return true even after the duration has passed.\n* `Elapsed()` - Returns `true` if the timer duration has elapsed since its creation or the call to `Start()`"
+            "description": "A timer object. It has the following methods:\n* `Reset()` - Resets and stops the timer.\n* `Start( duration = 0 )` - (Re)starts the timer with given duration\n* `Started()` - Returns `true` if the timer has been started. It will continue to return true even after the duration has passed.\n* `Elapsed()` - Returns `true` if the timer duration has elapsed since its creation or the call to `Start()`\n* `GetElaspedTime()` - Returns amount of time since timer started."
           }
         ],
         "source": {
@@ -31991,7 +32091,7 @@
           "client",
           "server"
         ],
-        "description": "Identical to <page>util.TraceHull</page> but uses an entity's AABB (alis-aligned bounding box) for `mins`/`maxs` inputs. (These 2 keys will be ignored in the provided table)",
+        "description": "Identical to <page>util.TraceHull</page> but uses an entity's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) for `mins`/`maxs` inputs. (These 2 keys will be ignored in the provided table)",
         "arguments": [
           {
             "name": "tracedata",
@@ -32737,7 +32837,12 @@
             "type": "CMoveData",
             "description": "Player move data"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/modules/widget.lua",
+          "lineStart": 92,
+          "lineEnd": 105
+        }
       },
       {
         "name": "RenderMe",
@@ -32752,7 +32857,12 @@
             "type": "Entity",
             "description": "Widget entity to render"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/modules/widget.lua",
+          "lineStart": 114,
+          "lineEnd": 130
+        }
       }
     ]
   }

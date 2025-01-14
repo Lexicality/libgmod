@@ -245,7 +245,7 @@
           "client",
           "server"
         ],
-        "description": "Controls if a property can be used on this entity or not.\n\nThis hook will only work in Sandbox derived gamemodes that do not have <page>SANDBOX:CanProperty</page> overridden.\n\n<note>This hook will work on ALL entities, not just the scripted ones (SENTs)</note>",
+        "description": "Controls if a property can be used on this entity or not.\n\nThis hook will only work in Sandbox derived gamemodes that do not have <page>GM:CanProperty</page> overridden.\n\n<note>This hook will work on ALL entities, not just the scripted ones (SENTs)</note>",
         "arguments": [
           {
             "name": "ply",
@@ -302,7 +302,7 @@
           {
             "name": "button",
             "type": "number",
-            "description": "The tool button pressed."
+            "description": "The tool button pressed.\n* 1 - left click\n* 2 - right click\n* 3 - reload"
           }
         ],
         "returnValues": [
@@ -331,7 +331,7 @@
           "client",
           "server"
         ],
-        "description": "Called so the entity can override the bullet impact effects it makes. This is called when the entity itself fires bullets via <page>Entity:FireBullets</page>, not when it gets hit.\n\n<note>This hook only works for the \"anim\" type entities.</note>",
+        "description": "Called so the entity can override the bullet impact effects it makes. This is called when the entity itself fires bullets via <page>Entity:FireBullets</page>, not when it gets hit.\n\n<note>This hook only works for the `anim` type entities.</note>",
         "arguments": [
           {
             "name": "tr",
@@ -347,7 +347,7 @@
         "returnValues": [
           {
             "type": "boolean",
-            "description": "Return true to not do the default thing - which is to call UTIL_ImpactTrace in C++"
+            "description": "Return true to not do the default thing - which is to call `UTIL_ImpactTrace` in C++"
           }
         ]
       },
@@ -1538,6 +1538,56 @@
           {
             "type": "number",
             "description": "The activity that should override the incoming activity. See <page>Enums/ACT</page>.\n\nDo not return anything to not override."
+          }
+        ]
+      },
+      {
+        "name": "TranslateNavGoal",
+        "parent": "ENTITY",
+        "realms": [
+          "server"
+        ],
+        "description": "Called by the engine to alter NPC's final position to reach its enemy or target.\n\n<note>This hook only exists for `ai` type SENTs.</note>",
+        "arguments": [
+          {
+            "name": "enemy",
+            "type": "Entity",
+            "default": "GetEnemy()",
+            "description": "The enemy being chased."
+          },
+          {
+            "name": "currentGoal",
+            "type": "Vector",
+            "default": "GetEnemyLastKnownPos()",
+            "description": "The enemy's chase position."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "Vector",
+            "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nDo not return anything to not override."
+          }
+        ],
+        "overloads": [
+          {
+            "arguments": [
+              {
+                "name": "target",
+                "type": "Entity",
+                "description": "The path_corner in query."
+              },
+              {
+                "name": "currentGoal",
+                "type": "Vector",
+                "description": "path_corner's origin."
+              }
+            ],
+            "returnValues": [
+              {
+                "type": "Vector",
+                "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nDo not return anything to not override."
+              }
+            ]
           }
         ]
       },
@@ -2873,7 +2923,7 @@
           "client",
           "server"
         ],
-        "description": "Called when the game(server) needs to update the text shown in the server browser as the gamemode.\n\n<note>This hook (and the `sv_gamename_override` command) may not work on some popular gamemodes like DarkRP or Trouble Terrorist Town. This is not a bug, it's just how it works. See [here](https://github.com/Facepunch/garrysmod-issues/issues/4637#issuecomment-677884989) for more information.\n\nAlso, it **only** works on dedicated servers and is called at regular intervals (about one second) **even** if the server has no players and the hibernation function is enabled.</note>",
+        "description": "Called when the game(server) needs to update the text shown in the server browser as the gamemode. Runs at a ~2s interval, runs even when the server is hibernating.\n\n<note>This hook (and the `sv_gamename_override` command) may not work on some popular gamemodes like DarkRP or Trouble Terrorist Town. This is not a bug, it's just how it works. See [here](https://github.com/Facepunch/garrysmod-issues/issues/4637#issuecomment-677884989) for more information.\n\nAlso, it **only** works on dedicated servers and is called at regular intervals (about one second) **even** if the server has no players and the hibernation function is enabled.</note>",
         "returnValues": [
           {
             "type": "string",
@@ -3224,7 +3274,7 @@
           },
           {
             "name": "velocity",
-            "type": "number",
+            "type": "Vector",
             "description": "Players velocity"
           }
         ],
@@ -3251,7 +3301,7 @@
           },
           {
             "name": "velocity",
-            "type": "number",
+            "type": "Vector",
             "description": "Players velocity"
           }
         ],
@@ -3278,7 +3328,7 @@
           },
           {
             "name": "velocity",
-            "type": "number",
+            "type": "Vector",
             "description": "Players velocity"
           },
           {
@@ -3310,7 +3360,7 @@
           },
           {
             "name": "velocity",
-            "type": "number",
+            "type": "Vector",
             "description": "Players velocity"
           }
         ],
@@ -3337,7 +3387,7 @@
           },
           {
             "name": "velocity",
-            "type": "number",
+            "type": "Vector",
             "description": "Players velocity"
           }
         ],
@@ -3364,7 +3414,7 @@
           },
           {
             "name": "velocity",
-            "type": "number",
+            "type": "Vector",
             "description": "Players velocity"
           }
         ],
@@ -3763,7 +3813,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when a player's SteamID has been validated by Steam.\n\nSee also <page>GM:PlayerAuthed</page>.\n\n<note>This hook doesn't work intentionally in singleplayer [because the SteamID is not validated](https://github.com/Facepunch/garrysmod-issues/issues/4906#issuecomment-819337130) in that case. This also applies to `sv_lan 1` servers for every duplicate `-multirun` client.</note>",
+        "description": "Called when a player's SteamID has been validated by Steam.\n\nSee also <page>GM:PlayerAuthed</page> and <page>Player:IsFullyAuthenticated</page>.\n\n<note>This hook doesn't work intentionally in singleplayer [because the SteamID is not validated](https://github.com/Facepunch/garrysmod-issues/issues/4906#issuecomment-819337130) in that case. This also applies to `sv_lan 1` servers for every duplicate `-multirun` client.</note>",
         "arguments": [
           {
             "name": "name",
@@ -4020,7 +4070,7 @@
           "client",
           "server"
         ],
-        "description": "Called when a Lua error occurs. Doesn't run for <page>Global.ErrorNoHalt</page> or <page>Global.Error</page>.\n<note>On the <page text=\"server realm\">States</page>, this hook will only account for server-side errors, not client-side ones.</note>",
+        "description": "Called when a Lua error occurs.\n<note>On the <page text=\"server realm\">States</page>, this hook will only account for server-side errors, not client-side ones.</note>",
         "arguments": [
           {
             "name": "error",
@@ -4040,7 +4090,7 @@
           {
             "name": "name",
             "type": "string",
-            "description": "Title of the addon that is creating the Lua errors."
+            "description": "Title of the addon that is creating the Lua errors, or nil if addon is not found."
           },
           {
             "name": "id",
@@ -4256,7 +4306,7 @@
         "realms": [
           "client"
         ],
-        "description": "Called whenever a player sends a chat message. For the serverside equivalent, see <page>GM:PlayerSay</page>.\n<note>The text input of this hook depends on <page>GM:PlayerSay</page>. If it is suppressed on the server, it will be suppressed on the client. This also means, that a message surpressed with this hook will be still visible to other clients.</note>",
+        "description": "Called whenever a player sends a chat message. For the serverside equivalent, see <page>GM:PlayerSay</page>.\n<note>The input (or suppression) of this hook is based on the output from <page>GM:PlayerSay</page>. Chat events suppressed serverside do not call this hook.</note>",
         "arguments": [
           {
             "name": "ply",
@@ -4621,7 +4671,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called after the player is authenticated by Steam. This hook will also be called in singleplayer. See also <page>GM:NetworkIDValidated</page>\n\n<bug issue=\"3026\"><page>Global.CurTime</page> returns 0 in this hook.</bug>\n<bug issue=\"5988\">Calling <page>Player:UniqueID</page> before <page>GM:PlayerAuthed</page> causes <page>GM:PlayerAuthed</page> to be triggered prematurely. As a result, <page>Player:IsFullyAuthenticated</page> returns false when checked within this hook.</bug>",
+        "description": "Called after the player gets their <page>Player:UniqueID</page> set for the first time. This hook will also be called in singleplayer.\n\nSee <page>GM:NetworkIDValidated</page> for a hook that is called with the player's SteamID is validated by Steam.",
         "arguments": [
           {
             "name": "ply",
@@ -4631,12 +4681,12 @@
           {
             "name": "steamid",
             "type": "string",
-            "description": "The player's SteamID"
+            "description": "The player's SteamID.\n<warning>This will always be an empty string `\"\"` in singleplayer.</warning>"
           },
           {
             "name": "uniqueid",
             "type": "string",
-            "description": "The player's UniqueID"
+            "description": "The player's UniqueID.\n<warning>This will always be `\"1\"` in singleplayer.</warning>"
           }
         ]
       },
@@ -4806,7 +4856,7 @@
         "realms": [
           "server"
         ],
-        "description": "Returns whether or not a player is allowed to pick up a weapon.",
+        "description": "Returns whether or not a player is allowed to pick up a weapon.\n\nIf this returns false, <page>Player:Give</page> won't work.",
         "arguments": [
           {
             "name": "ply",
@@ -6118,7 +6168,7 @@
           {
             "name": "data",
             "type": "table",
-            "description": "The bullet data. Contains the following keys:\n* <page>table</page> **Trace** - The bullet pellet trace result. See <page>Structures/TraceResult</page>\n\nFrom <page>Structures/Bullet</page>:\n* `AmmoType`, `Tracer`, `Damage`, `Force`, `Attacker`, `TracerName`."
+            "description": "A table of data about the bullet that was fired.\n\nSee <page>Structures/FiredBullet</page>."
           }
         ],
         "returnValues": [
@@ -6206,7 +6256,7 @@
         "description": "Allows you to suppress post processing effect drawing.",
         "arguments": [
           {
-            "name": "ppeffect",
+            "name": "effect_name",
             "type": "string",
             "description": "The classname of Post Processing effect"
           }
@@ -7263,7 +7313,8 @@
         "name": "VGUIMousePressed",
         "parent": "GM",
         "realms": [
-          "client"
+          "client",
+          "menu"
         ],
         "description": "Called when a mouse button is pressed on a VGUI element or menu.",
         "arguments": [
@@ -7822,7 +7873,7 @@
         "realms": [
           "client"
         ],
-        "description": "Called every frame unless <page>Panel:IsVisible</page> is set to false. Similar to <page>PANEL:Think</page>, but can be disabled by <page>Panel:SetAnimationEnabled</page> as explained below.\n\nIf you are overriding this, you must call <page>Panel:AnimationThinkInternal</page> every frame, else animations will cease to work.\n\nIf you want to \"disable\" this hook with <page>Panel:SetAnimationEnabled</page>, you must call it after defining this hook. Once disabled, a custom hook **will not** be re-enabled by <page>Panel:SetAnimationEnabled</page> again - the hook will have to be re-defined."
+        "description": "Called every frame unless the panel is not visible (<page>Panel:IsVisible</page>). Similar to <page>PANEL:Think</page>, but can be disabled by <page>Panel:SetAnimationEnabled</page> as explained below.\n\nIf you are overriding this, you must call <page>Panel:AnimationThinkInternal</page> every frame, else animations will cease to work.\n\nIf you want to \"disable\" this hook with <page>Panel:SetAnimationEnabled</page>, you must call it after defining this hook. Once disabled, a custom hook **will not** be re-enabled by <page>Panel:SetAnimationEnabled</page> again - the hook will have to be re-defined."
       },
       {
         "name": "ApplySchemeSettings",
@@ -9002,7 +9053,7 @@
           {
             "name": "spawninfo",
             "type": "table",
-            "description": "The weapon list table of this weapon, see https://github.com/Facepunch/garrysmod/blob/c3801c10e1aacc4c114d81331f301c57bdcf5a52/garrysmod/gamemodes/sandbox/gamemode/commands.lua#L893 and https://github.com/Facepunch/garrysmod/blob/c3801c10e1aacc4c114d81331f301c57bdcf5a52/garrysmod/lua/includes/modules/weapons.lua#L58"
+            "description": "The weapon list table of this weapon, see [CCGiveSWEP](https://github.com/Facepunch/garrysmod/blob/c3801c10e1aacc4c114d81331f301c57bdcf5a52/garrysmod/gamemodes/sandbox/gamemode/commands.lua#L893) and [weapons.Register](https://github.com/Facepunch/garrysmod/blob/c3801c10e1aacc4c114d81331f301c57bdcf5a52/garrysmod/lua/includes/modules/weapons.lua#L58)"
           }
         ],
         "returnValues": [
@@ -10125,7 +10176,7 @@
           "client",
           "server"
         ],
-        "description": "Called so the weapon can override the impact effects it makes.",
+        "description": "Called so the weapon can override the impact effects it makes.\n<note>If the bullet was fired in a predicted environment, the hook will not be called on the `CLIENT` realm. </note>\n<note>This hook will also be called when `WEAPON:GetOwner():FireBullets` is called. While in `MULTIPLAYER`, this hook will be called on the respective state, but in `SINGLEPLAYER`, this hook will always be called on the `CLIENT` realm even if `FireBullets` was called on the `SERVER`. </note>",
         "arguments": [
           {
             "name": "tr",
@@ -10247,7 +10298,7 @@
         "realms": [
           "server"
         ],
-        "description": "The player has picked up the weapon and has taken the ammo from it.\nThe weapon will be removed immidiately after this call.",
+        "description": "The player has picked up the weapon and has taken the ammo from it.\nThe weapon will be removed immediately after this call.",
         "arguments": [
           {
             "name": "ply",
@@ -10318,7 +10369,7 @@
         "realms": [
           "server"
         ],
-        "description": "This hook is for NPCs, you return what they should try to do with it.",
+        "description": "This hook is for NPCs, you return what they should try to do with it.\n<warning>Calling <page>NPC:CapabilitiesGet</page> in this hook on the same entity can cause infinite loops since that function adds the result of <page>WEAPON:GetCapabilities</page> on top of the return value. </warning>",
         "returnValues": [
           {
             "type": "number",

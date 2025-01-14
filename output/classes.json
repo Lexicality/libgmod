@@ -4867,9 +4867,9 @@
           },
           {
             "name": "entAttachment",
-            "type": "number",
-            "default": "0",
-            "description": "The attachment ID on the entity to attach the particle system to"
+            "type": "string",
+            "default": "nil",
+            "description": "The attachment name on the entity to attach the particle system to"
           },
           {
             "name": "offset",
@@ -5287,7 +5287,12 @@
             "type": "Color",
             "description": "The result of linear interpolation."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/util/color.lua",
+          "lineStart": 93,
+          "lineEnd": 97
+        }
       },
       {
         "name": "SetUnpacked",
@@ -7281,6 +7286,27 @@
         ]
       },
       {
+        "name": "AddSpawnFlags",
+        "parent": "Entity",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Adds onto the current SpawnFlags of an Entity.\n\nSpawnFlags can easily be found on https://developer.valvesoftware.com/wiki/.\n\n<note>See also <page>Entity:RemoveSpawnFlags</page>, <page>Entity:SetSpawnFlags</page>\n\nUsing <page text=\"SF Enumerations\">Enums/SF</page> won't work, if this function is ran clientside due to the enumerations being defined only Serverside. Use the actual SpawnFlag number.\n</note>",
+        "arguments": [
+          {
+            "name": "flag",
+            "type": "number",
+            "description": "The SpawnFlag to add to the Entity"
+          }
+        ],
+        "source": {
+          "file": "lua/includes/extensions/entity.lua",
+          "lineStart": 11,
+          "lineEnd": 13
+        }
+      },
+      {
         "name": "AddToMotionController",
         "parent": "Entity",
         "realms": [
@@ -7818,12 +7844,12 @@
           "client",
           "server"
         ],
-        "description": "Plays a sound on an entity. If run clientside, the sound will only be heard locally.\n\nIf used on a player or NPC character with the mouth rigged, the character will \"lip-sync\". This does not work with all sound files.\n\n<note>When using this function with weapons, use the <page>Weapon</page> itself as the entity, not its owner!</note>\n\n<bug issue=\"2651\">This does not respond to <page>Global.SuppressHostEvents</page>.</bug>",
+        "description": "Plays a sound on an entity.\n\nIf run clientside, the sound will only be heard locally.\nIf used on a player or NPC character with the mouth rigged, the character will \"lip-sync\" if the sound file contains lipsync data. See [this page](https://developer.valvesoftware.com/wiki/Choreography_creation/Lip_syncing) for more information.\n\n<note>When using this function with weapons, use the <page>Weapon</page> itself as the entity, not its owner!</note>\n\n<bug issue=\"2651\">This does not respond to <page>Global.SuppressHostEvents</page>.</bug>",
         "arguments": [
           {
             "name": "soundName",
             "type": "string",
-            "description": "The name of the sound to be played.\n\nThis should either be a sound script name (<page>sound.Add</page>) or a file path relative to the `sound/` folder. (Make note that it's not sound**s**)\n\n<warning>The string cannot have whitespace at the start or end. You can remove this with <page>string.Trim</page>.</warning>"
+            "description": "The name of the sound to be played.\n\nThis should either be a sound script name (<page>sound.Add</page>) or a file path relative to the `sound/` folder. (so don't include `sound/`, and make note that it's not sound**s** when moving the sound file itself)\n\n<warning>The string cannot have whitespace at the start or end. You can remove this with <page>string.Trim</page>.</warning>"
           },
           {
             "name": "soundLevel",
@@ -9671,7 +9697,7 @@
           "client",
           "server"
         ],
-        "description": "Returns entity's position relative to it's parent.",
+        "description": "Returns entity's position relative to it's <page>Entity:GetParent</page>.\n\nSee <page>Entity:GetPos</page> for the absolute position.",
         "returnValues": [
           {
             "type": "Vector",
@@ -9833,7 +9859,7 @@
           "client",
           "server"
         ],
-        "description": "Gets the model of given entity.\n\n<bug>This does not necessarily return the model's path, as is the case for brush and virtual models. This is intentional behaviour, however, there is currently no way to retrieve the actual file path.</bug>",
+        "description": "Gets the model of given entity.\n\n<bug>This does not necessarily return the model's path, as is the case for brush and virtual models. This is intentional behaviour, however, there is currently no way to retrieve the actual file path.\n\nThis also affects certain models that are edited by 3rd party programs after being compiled.</bug>",
         "returnValues": [
           {
             "type": "string",
@@ -10575,7 +10601,7 @@
         "returnValues": [
           {
             "type": "Vector",
-            "description": "origin"
+            "description": "The last received origin of the entity."
           }
         ]
       },
@@ -11324,7 +11350,7 @@
           "client",
           "server"
         ],
-        "description": "Gets the position of entity in world.",
+        "description": "Gets the position of given entity in the world.\n\nSee <page>Entity:GetLocalPos</page> for the position relative to the entity's <page>Entity:GetParent</page>.",
         "returnValues": [
           {
             "type": "Vector",
@@ -12443,7 +12469,7 @@
         "realms": [
           "server"
         ],
-        "description": "Returns if entity is constraint or not",
+        "description": "Returns if entity is constraint or not.\n\nThis also means that <page>Entity:GetConstrainedPhysObjects</page>. <page>Entity:GetConstrainedEntities</page> and  <page>Entity:SetPhysConstraintObjects</page> can be used on this entity.\n\n<warning>Some constraint entities, such as `phys_spring`, will return false!</warning>",
         "returnValues": [
           {
             "type": "boolean",
@@ -13056,7 +13082,7 @@
           "client",
           "server"
         ],
-        "description": "Sets custom bone angles.\n\n<bug issue=\"5148\">When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced.</bug>",
+        "description": "Sets custom bone angles.\n\n<bug issue=\"5148\">When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced\n\nAs of update `2024.10.29` this has been resolved. However, network traffic is still generated and should be taken into consideration.\n</bug>",
         "arguments": [
           {
             "name": "boneID",
@@ -13141,7 +13167,7 @@
           {
             "name": "scale",
             "type": "Vector",
-            "description": "Scale vector to apply. Note that the scale is relative to the original bone scale, not relative to the world or the entity.\n\n<bug issue=\"1249\">The vector will be normalised if its longer than 32 units.</bug>"
+            "description": "Scale vector to apply. Note that the scale is relative to the original bone scale, not relative to the world or the entity."
           }
         ]
       },
@@ -13152,7 +13178,7 @@
           "client",
           "server"
         ],
-        "description": "Returns entity's map creation ID. Unlike <page>Entity:EntIndex</page> or <page>Entity:GetCreationID</page>, it will always be the same on same map, no matter how much you clean up or restart it.\n\nTo be used in conjunction with <page>ents.GetMapCreatedEntity</page>.",
+        "description": "Returns entity's map creation ID. Unlike <page>Entity:EntIndex</page> or <page>Entity:GetCreationID</page>, it will always be the same on same map, no matter how much you clean up or restart it.\n\nTo be used in conjunction with <page>ents.GetMapCreatedEntity</page>. See also <page>Entity:CreatedByMap</page>.",
         "returnValues": [
           {
             "type": "number",
@@ -13460,6 +13486,12 @@
             "type": "string",
             "default": "default",
             "description": "Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) or added with <page>physenv.AddSurfaceData</page>."
+          },
+          {
+            "name": "massCenterOveride",
+            "type": "Vector",
+            "default": "nil",
+            "description": "If set, overwrites the center of mass for the created physics object."
           }
         ],
         "returnValues": [
@@ -13482,6 +13514,12 @@
             "name": "solidType",
             "type": "number",
             "description": "The solid type of the physics object to create, see <page>Enums/SOLID</page>. Should be `SOLID_VPHYSICS` in most cases.\n\n<note>Using `SOLID_NONE` will only delete the current physics object - it does not create a new one.</note>"
+          },
+          {
+            "name": "massCenterOverride",
+            "type": "Vector",
+            "default": "nil",
+            "description": "If set, overwrites the center of mass for the created physics object."
           }
         ],
         "returnValues": [
@@ -13515,6 +13553,12 @@
             "type": "string",
             "default": "default",
             "description": "Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) or added with <page>physenv.AddSurfaceData</page>."
+          },
+          {
+            "name": "massCenterOverride",
+            "type": "Vector",
+            "default": "nil",
+            "description": "If set, overwrites the center of mass for the created physics object."
           }
         ],
         "returnValues": [
@@ -13543,6 +13587,12 @@
             "type": "string",
             "default": "default",
             "description": "Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) or added with <page>physenv.AddSurfaceData</page>."
+          },
+          {
+            "name": "massCenterOverride",
+            "type": "Vector",
+            "default": "nil",
+            "description": "If set, overwrites the center of mass for the created physics object."
           }
         ],
         "returnValues": [
@@ -13571,6 +13621,12 @@
             "type": "string",
             "default": "default",
             "description": "Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) or added with <page>physenv.AddSurfaceData</page>."
+          },
+          {
+            "name": "massCenterOverride",
+            "type": "Vector",
+            "default": "nil",
+            "description": "If set, overwrites the center of mass for the created physics object."
           }
         ],
         "returnValues": [
@@ -13936,6 +13992,27 @@
             "description": "The flag(s) to remove, see <page>Enums/FSOLID</page>."
           }
         ]
+      },
+      {
+        "name": "RemoveSpawnFlags",
+        "parent": "Entity",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Removes a SpawnFlag from the current SpawnFlags of an Entity.\n\nSpawnFlags can easily be found on https://developer.valvesoftware.com/wiki/.\n\n<note>See also <page>Entity:AddSpawnFlags</page>, <page>Entity:SetSpawnFlags</page>\n\nUsing <page text=\"SF Enumerations\">Enums/SF</page> won't work, if this function is ran clientside due to the enumerations being defined only Serverside. Use the actual SpawnFlag number.\n</note>",
+        "arguments": [
+          {
+            "name": "flag",
+            "type": "number",
+            "description": "The SpawnFlag to remove from the Entity"
+          }
+        ],
+        "source": {
+          "file": "lua/includes/extensions/entity.lua",
+          "lineStart": 15,
+          "lineEnd": 17
+        }
       },
       {
         "name": "ResetSequence",
@@ -14369,7 +14446,7 @@
           "client",
           "server"
         ],
-        "description": "Sets the color of an entity.\n\nSome entities may need a custom [render mode](Enums/RENDERMODE) set for transparency to work. See example 2.<br>\nEntities also must have a proper [render group](Enums/RENDERGROUP) set for transparency to work.",
+        "description": "Sets the color of an entity.\n\nSome entities may need a custom [render mode](Enums/RENDERMODE) set for transparency to work. See example 2.<br>\nEntities also must have a proper [render group](Enums/RENDERGROUP) set for transparency to work.\n\nWhen rendering a model manually via <page>Entity:SetNoDraw</page> inside <page>ENTITY:Draw</page>, you may need to use <page>render.SetColorModulation</page> in the render hook (where you call <page>Entity:DrawModel</page>) instead.",
         "arguments": [
           {
             "name": "color",
@@ -14442,7 +14519,7 @@
           "client",
           "server"
         ],
-        "description": "Marks the entity to call <page>GM:ShouldCollide</page>. Not to be confused with <page>Entity:EnableCustomCollisions</page>.",
+        "description": "Marks the entity to call <page>GM:ShouldCollide</page>. Not to be confused with <page>Entity:EnableCustomCollisions</page>.\n<note>\nMake sure to use <page>Entity:CollisionRulesChanged</page> after changing this value.\nOtherwise it can cause crashes.\n</note>",
         "arguments": [
           {
             "name": "enable",
@@ -15719,7 +15796,7 @@
           "client",
           "server"
         ],
-        "description": "Virtually changes entity position for clients. Does the same thing as <page>Entity:SetPos</page> when used serverside.",
+        "description": "Virtually changes entity position for clients. Does almost the same thing as <page>Entity:SetPos</page> when used serverside.\n<note>\nUnlike <page>Entity:SetPos</page> it directly changes the position without checking for any unreasonable position.\n</note>",
         "arguments": [
           {
             "name": "origin",
@@ -15750,7 +15827,7 @@
           "client",
           "server"
         ],
-        "description": "Sets if the entity's model should render at all.\n\nIf set on the server, this entity will no longer network to clients, and for all intents and purposes cease to exist clientside.",
+        "description": "Sets if the entity's model should render at all.\n\nIf set on the server, this entity will no longer network to clients, and for all intents and purposes cease to exist clientside.\n\nThe entity can still be manually rendered via <page>Entity:DrawModel</page> in appropriate hooks.",
         "arguments": [
           {
             "name": "shouldNotDraw",
@@ -16506,7 +16583,7 @@
           "client",
           "server"
         ],
-        "description": "Sets entity's render FX.",
+        "description": "Sets entity's render FX. Requires the entitys rendermode to support transparency.",
         "arguments": [
           {
             "name": "renderFX",
@@ -16623,7 +16700,7 @@
           "client",
           "server"
         ],
-        "description": "Sets if entity should create a server ragdoll on death or a client one.\n\n<note>Player ragdolls created with this enabled will have an owner set, see <page>Entity:SetOwner</page> for more information on what effects this has.\n\nThis is reset for players when they respawn (<page>Entity:Spawn</page>).</note>",
+        "description": "Sets if entity should create a server ragdoll on death or a client one.\n\n<note>\nThis is reset for players when they respawn (<page>Entity:Spawn</page>).\n\nPlayer ragdolls created with this enabled will have an owner set, see <page>Entity:SetOwner</page> for more information on what effects this has.\n</note>",
         "arguments": [
           {
             "name": "serverragdoll",
@@ -16695,6 +16772,27 @@
             "description": "Sets if we should show a spawn effect."
           }
         ]
+      },
+      {
+        "name": "SetSpawnFlags",
+        "parent": "Entity",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Sets the SpawnFlags to set of an Entity\n\nSpawnFlags can easily be found on https://developer.valvesoftware.com/wiki/.\n\n<note>See also <page>Entity:RemoveSpawnFlags</page>, <page>Entity:AddSpawnFlags</page>\n\nUsing <page text=\"SF Enumerations\">Enums/SF</page> won't work, if this function is ran clientside due to the enumerations being defined only Serverside. Use the actual SpawnFlag number.\n</note>",
+        "arguments": [
+          {
+            "name": "flags",
+            "type": "number",
+            "description": "The SpawnFlag to remove from the Entity"
+          }
+        ],
+        "source": {
+          "file": "lua/includes/extensions/entity.lua",
+          "lineStart": 7,
+          "lineEnd": 9
+        }
       },
       {
         "name": "SetSubMaterial",
@@ -17410,13 +17508,13 @@
           {
             "name": "act",
             "type": "number",
-            "description": "The activity to translate"
+            "description": "The NPC activity to translate"
           }
         ],
         "returnValues": [
           {
             "type": "number",
-            "description": "The translated activity"
+            "description": "The translated activity. Defaults to `act` input when a translation doesn't exist."
           }
         ]
       },
@@ -18589,7 +18687,7 @@
         "realms": [
           "client"
         ],
-        "description": "Sets the sound channel to specified time ( Rewind to that position of the song ). Does not work on online radio streams.\n\nStreamed sounds must have \"noblock\" parameter for this to work and <page>IGModAudioChannel:IsBlockStreamed</page> must return false.",
+        "description": "Sets the sound channel to specified time ( Rewind to that position of the song ). Does not work on online radio streams.\n\nStreamed sounds must have \"noblock\" parameter for this to work and <page>IGModAudioChannel:IsBlockStreamed</page> must return false.\n\n<note> Streamed sounds can only have their time set to up to the current <page>IGModAudioChannel:GetBufferedTime</page>.</note>",
         "arguments": [
           {
             "name": "secs",
@@ -20253,7 +20351,7 @@
   },
   {
     "name": "NPC",
-    "description": "This is a list of all methods only available for NPCs. It is also possible to call [Entity](https://wiki.facepunch.com/gmod/Entity) functions on NPCs.",
+    "description": "This is a list of all methods only available for NPCs. It is also possible to call <page>Entity</page> functions on NPCs.",
     "functions": [
       {
         "name": "AddEntityRelationship",
@@ -20893,6 +20991,21 @@
         ]
       },
       {
+        "name": "GetFOV",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Returns the Field Of View of the NPC. See <page>NPC:SetFOV</page>.",
+        "returnValues": [
+          {
+            "type": "number",
+            "name": "fov",
+            "description": "The FOV for the NPC in degrees."
+          }
+        ]
+      },
+      {
         "name": "GetGoalPos",
         "parent": "NPC",
         "realms": [
@@ -21033,6 +21146,21 @@
         ]
       },
       {
+        "name": "GetLastPosition",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Returns the last registered or memorized position of the NPC. When using scheduling, the NPC will focus on navigating to the last position via nodes.\n\nSee <page>NPC:SetLastPosition</page>.",
+        "returnValues": [
+          {
+            "type": "Vector",
+            "name": "position",
+            "description": "Where the NPC's last position was set to."
+          }
+        ]
+      },
+      {
         "name": "GetLastTimeTookDamageFromEnemy",
         "parent": "NPC",
         "realms": [
@@ -21102,6 +21230,20 @@
           {
             "type": "number",
             "description": "The minimum stop distance."
+          }
+        ]
+      },
+      {
+        "name": "GetMoveDelay",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Returns the movement delay for given NPC.\n\nSee <page>NPC:SetMoveDelay</page>.",
+        "returnValues": [
+          {
+            "type": "number",
+            "description": "The movement delay."
           }
         ]
       },
@@ -21252,7 +21394,7 @@
         "realms": [
           "server"
         ],
-        "description": "Returns the shooting position of the NPC.\n\n<note>This only works properly when called on an NPC that can hold weapons, otherwise it will return the same value as <page>Entity:GetPos</page>.</note>",
+        "description": "Returns the shooting position of the NPC, i.e. where their bullets would come from, etc.\n\nIf the NPC does not overwrite this, it will return <page>Entity:GetPos</page>.",
         "returnValues": [
           {
             "type": "Vector",
@@ -21581,6 +21723,44 @@
             "type": "boolean",
             "name": "act",
             "description": "Whether the NPC has an active goal or not."
+          }
+        ]
+      },
+      {
+        "name": "IsInViewCone",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Tests whether a position or an NPC is in the view cone of the NPC.",
+        "arguments": [
+          {
+            "name": "position",
+            "type": "Vector",
+            "description": "The position to test."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "If the given position is in the view cone."
+          }
+        ],
+        "overloads": [
+          {
+            "arguments": [
+              {
+                "name": "ent",
+                "type": "Entity",
+                "description": "The entity to test. Will use the entity's position."
+              }
+            ],
+            "returnValues": [
+              {
+                "type": "boolean",
+                "description": "If the given position is in the view cone."
+              }
+            ]
           }
         ]
       },
@@ -22319,6 +22499,21 @@
         ]
       },
       {
+        "name": "SetFOV",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Sets the Field Of View of the NPC, for use with such functions as <page>NPC:IsInViewCone</page>. it is also used internally by the NPC for enemy detection, etc.",
+        "arguments": [
+          {
+            "name": "fov",
+            "type": "number",
+            "description": "The new FOV for the NPC in degrees."
+          }
+        ]
+      },
+      {
         "name": "SetHullSizeNormal",
         "parent": "NPC",
         "realms": [
@@ -22433,10 +22628,10 @@
         "realms": [
           "server"
         ],
-        "description": "Sets the last registered or memorized position for an npc. When using scheduling, the NPC will focus on navigating to the last position via nodes.\n\n<note>The navigation requires ground nodes to function properly, otherwise the NPC could only navigate in a small area. (https://developer.valvesoftware.com/wiki/Info_node)</note>",
+        "description": "Sets the last registered or memorized position for this NPC. When using scheduling, the NPC will focus on navigating to the last position via nodes.\n\n<note>The navigation requires ground nodes to function properly, otherwise the NPC could only navigate in a small area. (https://developer.valvesoftware.com/wiki/Info_node)</note>",
         "arguments": [
           {
-            "name": "Position",
+            "name": "position",
             "type": "Vector",
             "description": "Where the NPC's last position will be set."
           }
@@ -22469,6 +22664,21 @@
             "name": "time",
             "type": "number",
             "description": "How long to try rebuilding path before failing task"
+          }
+        ]
+      },
+      {
+        "name": "SetMoveDelay",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Sets the movement delay for given NPC.\n\nSee <page>NPC:GetMoveDelay</page>.",
+        "arguments": [
+          {
+            "name": "delay",
+            "type": "number",
+            "description": "The amount of time in seconds to delay movement by."
           }
         ]
       },
@@ -23839,7 +24049,7 @@
           "client",
           "menu"
         ],
-        "description": "Draws a coloured rectangle to fill the panel object this method is called on. The colour is set using <page>surface.SetDrawColor</page>. This should only be called within the object's <page>PANEL:Paint</page> or <page>PANEL:PaintOver</page> hooks, as a shortcut for <page>surface.DrawRect</page>."
+        "description": "Draws a coloured rectangle to fill the panel object this method is called on. The colour is set using <page>surface.SetDrawColor</page>. This should only be called within the object's <page>PANEL:Paint</page> or <page>PANEL:PaintOver</page> hooks, as a shortcut for <page>surface.DrawRect</page>.\n\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>"
       },
       {
         "name": "DrawOutlinedRect",
@@ -23848,7 +24058,7 @@
           "client",
           "menu"
         ],
-        "description": "Draws a hollow rectangle the size of the panel object this method is called on, with a border width of 1 px. The border colour is set using <page>surface.SetDrawColor</page>. This should only be called within the object's <page>PANEL:Paint</page> or <page>PANEL:PaintOver</page> hooks, as a shortcut for <page>surface.DrawOutlinedRect</page>."
+        "description": "Draws a hollow rectangle the size of the panel object this method is called on, with a border width of 1 px. The border colour is set using <page>surface.SetDrawColor</page>. This should only be called within the object's <page>PANEL:Paint</page> or <page>PANEL:PaintOver</page> hooks, as a shortcut for <page>surface.DrawOutlinedRect</page>.\n\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>"
       },
       {
         "name": "DrawSelections",
@@ -23871,7 +24081,7 @@
           "client",
           "menu"
         ],
-        "description": "Used to draw the text in a <page>DTextEntry</page> within a derma skin. This should be called within the <page>SKIN:PaintTextEntry</page> skin hook.\n<note>Will silently fail if any of arguments are not <page>Color</page>.</note>",
+        "description": "Used to draw the text in a <page>DTextEntry</page> within a derma skin. This is usually called within the <page>SKIN:PaintTextEntry</page> skin hook.\n<note>Will silently fail if any of arguments are not given.</note>\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>",
         "arguments": [
           {
             "name": "textCol",
@@ -23897,7 +24107,7 @@
           "client",
           "menu"
         ],
-        "description": "Draws a textured rectangle to fill the panel object this method is called on. The texture is set using <page>surface.SetTexture</page> or <page>surface.SetMaterial</page>. This should only be called within the object's <page>PANEL:Paint</page> or <page>PANEL:PaintOver</page> hooks, as a shortcut for <page>surface.DrawTexturedRect</page>."
+        "description": "Draws a textured rectangle to fill the panel object this method is called on. The texture is set using <page>surface.SetTexture</page> or <page>surface.SetMaterial</page>. This should only be called within the object's <page>PANEL:Paint</page> or <page>PANEL:PaintOver</page> hooks, as a shortcut for <page>surface.DrawTexturedRect</page>.\n\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>"
       },
       {
         "name": "Droppable",
@@ -24186,11 +24396,11 @@
           "client",
           "menu"
         ],
-        "description": "Returns the class name of the panel.",
+        "description": "Returns the class name of the panel. This would be the class name of the base engine-level panel, not Lua classname. The latter is stored usually in <page>Panel:GetName</page>.",
         "returnValues": [
           {
             "type": "string",
-            "description": "className"
+            "description": "The panel's class name."
           }
         ]
       },
@@ -26312,9 +26522,9 @@
         "description": "Sets whether this panel's drawings should be clipped within the parent panel's bounds.\n\n<note>\nThis only disabled clipping for the Paint Related functions (as far as i can tell at the current moment, more testing should be done) so things like the text of a <page>DLabel</page> will still be clipped to the parent.\n\nTo fully disable the clipping of any children see <page>Global.DisableClipping</page>.\n</note>",
         "arguments": [
           {
-            "name": "clip",
+            "name": "noclip",
             "type": "boolean",
-            "description": "Whether to clip or not. True to enable, false to disable clipping."
+            "description": "Whether to disable clipping or not. True to disable clipping, false to enable clipping."
           }
         ]
       },
@@ -27751,7 +27961,7 @@
           "client",
           "menu"
         ],
-        "description": "Sets the text value of a panel object containing text, such as a <page>Label</page>, <page>TextEntry</page> or  <page>RichText</page> and their derivatives, such as <page>DLabel</page>, <page>DTextEntry</page> or <page>DButton</page>.\n\n<warning>When used on a <page>Label</page> or its derivatives ( <page>DLabel</page> and <page>DButton</page> ), it will automatically call <page>Panel:InvalidateLayout</page>, meaning that you should avoid running this function every frame on these panels to avoid unnecessary performance loss.</warning>",
+        "description": "Sets the text value of a panel object containing text, such as a <page>Label</page>, <page>TextEntry</page> or  <page>RichText</page> and their derivatives, such as <page>DLabel</page>, <page>DTextEntry</page> or <page>DButton</page>.\n\n<warning>When used on a <page>Label</page> or its derivatives ( <page>DLabel</page> and <page>DButton</page> ), it will automatically call <page>Panel:InvalidateLayout</page>, meaning that you should avoid running this function every frame on these panels to avoid unnecessary performance loss.</warning>\n\n<warning><page>Label</page> &amp; its derivatives has hard length limit, maximum 1023 ascii characters.</warning>",
         "arguments": [
           {
             "name": "text",
@@ -28006,7 +28216,7 @@
           "client",
           "menu"
         ],
-        "description": "This makes it so that when you're hovering over this panel you can \"click\" on the world. Your weapon aim (and its viewmodel) will follow the cursor. This is primarily used for the Sandbox context menu.\n\n<bug issue=\"3467\">This function doesn't scale with custom FOV specified by <page>GM:CalcView</page> or <page>WEAPON:TranslateFOV</page>.</bug>",
+        "description": "This makes it so that when you're hovering over this panel you can \"click\" on the world. Your weapon aim (and its viewmodel) will follow the cursor. This is primarily used for the Sandbox context menu.",
         "arguments": [
           {
             "name": "enable",
@@ -29465,6 +29675,21 @@
           {
             "type": "table",
             "description": "A table of tables containing the following data:\n* <page>PhysObj</page> Other - The other physics object we came in contact with\n* <page>number</page> EnergyAbsorbed -\n* <page>number</page> FrictionCoefficient -\n* <page>number</page> NormalForce -\n* <page>Vector</page> Normal - Direction of the friction event\n* <page>Vector</page> ContactPoint - Contact point of the friction event\n* <page>number</page> Material - Surface Property ID of our physics obj\n* <page>number</page> MaterialOther - Surface Property ID of the physics obj we came in contact with"
+          }
+        ]
+      },
+      {
+        "name": "GetIndex",
+        "parent": "PhysObj",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "Returns the index this physics object is on its <page>PhysObj:GetEntity</page>.\n\nUseful for <page>Entity:TranslateBoneToPhysBone</page>.",
+        "returnValues": [
+          {
+            "type": "number",
+            "description": "The physics object index on its parent entity."
           }
         ]
       },
@@ -31559,15 +31784,17 @@
           "client",
           "server"
         ],
-        "description": "Gets the bottom base and the top base size of the player's hull.",
+        "description": "Retrieves the minimum and maximum <page text=\"Vectors\">Vector</page> of the [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for the <page text=\"Player's\">Player</page> physics and movement <page text=\"Hull Traces\">util.TraceHull</page>.\n\nSee also: <page>Player:SetHull</page>, <page>Player:SetHullDuck</page>, <page>Player:GetHullDuck</page>",
         "returnValues": [
           {
             "type": "Vector",
-            "description": "Player's hull bottom base size."
+            "name": "mins",
+            "description": "The hull mins, the lowest corner of the Player's bounding box."
           },
           {
             "type": "Vector",
-            "description": "Player's hull top base size."
+            "name": "maxs",
+            "description": "The hull maxs, the highest corner of the Player's bounding box, opposite of the mins."
           }
         ]
       },
@@ -31578,15 +31805,17 @@
           "client",
           "server"
         ],
-        "description": "Gets the bottom base and the top base size of the player's crouch hull.",
+        "description": "Retrieves the minimum and maximum <page text=\"Vectors\">Vector</page> of the [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for the <page text=\"Player's\">Player</page> physics and movement <page text=\"Hull Traces\">util.TraceHull</page> while they are crouching (or \"Ducking\").\n\nSee also: <page>Player:SetHullDuck</page>, <page>Player:GetHull</page>, <page>Player:SetHull</page>",
         "returnValues": [
           {
             "type": "Vector",
-            "description": "Player's crouch hull bottom base size."
+            "name": "mins",
+            "description": "The hull mins, the lowest corner of the Player's bounding box while crouching."
           },
           {
             "type": "Vector",
-            "description": "Player's crouch hull top base size."
+            "name": "maxs",
+            "description": "The hull maxs, the highest corner of the Player's crouching bounding box, opposite of the mins."
           }
         ]
       },
@@ -31608,7 +31837,7 @@
         "returnValues": [
           {
             "type": "string",
-            "description": "The value of the <page>ConVar</page>."
+            "description": "The value of the <page>ConVar</page>. Or an empty string if the convar doesn't exist."
           }
         ]
       },
@@ -31917,7 +32146,7 @@
           "client",
           "server"
         ],
-        "description": "Returns players death ragdoll. The ragdoll is created by <page>Player:CreateRagdoll</page>.\n<bug>Calling <page>Entity:GetPos</page> server-side with this function then will return the position when <page>Player:CreateRagdoll</page> was used.</bug>",
+        "description": "Returns players death ragdoll. The ragdoll is created by <page>Player:CreateRagdoll</page>.\n<note>Calling <page>Entity:GetPos</page> server-side with this function then will return the position where <page>Player:CreateRagdoll</page> was used, as it is a hl2mp_ragdoll which is a serverside point entity that creates a clientside ragdoll for everyone (opposed to prop_ragdoll that is serverside and networks).</note>",
         "returnValues": [
           {
             "type": "Entity",
@@ -32281,7 +32510,7 @@
           "client",
           "server"
         ],
-        "description": "Returns a player's weapon color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is Vector(r,g,b), and each color should be between 0 and 1.",
+        "description": "Returns a player's weapon color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is `Vector(r,g,b)`, and each color should be between 0 and 1.",
         "returnValues": [
           {
             "type": "Vector",
@@ -32346,7 +32575,7 @@
           },
           {
             "name": "type",
-            "type": "any",
+            "type": "string",
             "description": "Type of ammo.\nThis is a string for named ammo types, and a number for ammo ID.\n\nYou can find a list of default ammo types <page text=\"here\">Default_Ammo_Types</page>."
           },
           {
@@ -32551,7 +32780,7 @@
         "realms": [
           "server"
         ],
-        "description": "Returns whether the player identity was confirmed by the steam network.\n\nSee also <page>GM:PlayerAuthed</page>.",
+        "description": "Returns whether the player identity was confirmed by the Steam network.\n\nSee also <page>GM:NetworkIDValidated</page>.",
         "returnValues": [
           {
             "type": "boolean",
@@ -33451,8 +33680,17 @@
       {
         "name": "SetArmor",
         "parent": "Player",
-        "realms": [],
-        "description": "Sets the player armor to the argument.\n<realm>Server</realm>\n<args>\n<arg name=\"Amount\" type=\"number\">The amount that the player armor is going to be set to.</arg>\n</args>"
+        "realms": [
+          "server"
+        ],
+        "description": "Sets the player armor to the argument.",
+        "arguments": [
+          {
+            "name": "Amount",
+            "type": "number",
+            "description": "The amount that the player armor is going to be set to."
+          }
+        ]
       },
       {
         "name": "SetAvoidPlayers",
@@ -33723,17 +33961,17 @@
           "client",
           "server"
         ],
-        "description": "Sets the mins and maxs of the AABB of the players collision.\n\nSee <page>Player:SetHullDuck</page> for the hull while crouching/ducking.\n\n<note>Not replicated, need to be call on server and client.</note>",
+        "description": "Sets the size of the <page text=\"Player's\">Player</page> [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for physics and movement <page text=\"Hull Traces\">util.TraceHull</page>.\n\nSee also: <page>Player:GetHull</page>, <page>Player:SetHullDuck</page>, <page>Player:GetHullDuck</page>\n\n<note>\nThis value is **not** replicated automatically to clients and must be manually called in both the Server and Client <page text=\"Realms\">States</page>.\n</note>",
         "arguments": [
           {
-            "name": "hullMins",
+            "name": "mins",
             "type": "Vector",
-            "description": "The min coordinates of the hull."
+            "description": "The hull mins, the lowest corner of the Player's bounding box."
           },
           {
-            "name": "hullMaxs",
+            "name": "maxs",
             "type": "Vector",
-            "description": "The max coordinates of the hull."
+            "description": "The hull maxs, the highest corner of the Player's bounding box, opposite of the mins."
           }
         ]
       },
@@ -33744,17 +33982,17 @@
           "client",
           "server"
         ],
-        "description": "Sets the mins and maxs of the AABB of the players collision when ducked.\n\nSee <page>Player:SetHull</page> for setting the hull while standing.\n<note>Not replicated, need to be call on server and client.</note>",
+        "description": "Sets the size of the <page text=\"Player's\">Player</page> [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for physics and movement <page text=\"Hull Traces\">util.TraceHull</page> while they are crouching (or \"Ducking\").\n\nSee also: <page>Player:GetHullDuck</page>, <page>Player:GetHull</page>, <page>Player:SetHull</page>\n\n<note>\nThis value is **not** replicated automatically to clients and must be manually called in both the Server and Client <page text=\"Realms\">States</page>.\n</note>",
         "arguments": [
           {
-            "name": "hullMins",
+            "name": "mins",
             "type": "Vector",
-            "description": "The min coordinates of the hull."
+            "description": "The hull mins, the lowest corner of the Player's bounding box while crouching."
           },
           {
-            "name": "hullMaxs",
+            "name": "maxs",
             "type": "Vector",
-            "description": "The max coordinates of the hull."
+            "description": "The hull maxs, the highest corner of the Player's crouching bounding box, opposite of the mins."
           }
         ]
       },
@@ -33920,7 +34158,7 @@
           "client",
           "server"
         ],
-        "description": "Writes a **P**ersistent **Data** key-value pair to the SQL database. (`sv.db` when called on server, `cl.db` when called on client)\n\nInternally uses the <page>sql</page> library. See <page>util.SetPData</page> for cases when the player is not currently on the server.\n\n<note>This function internally uses <page>Player:SteamID64</page>, it previously utilized <page>Player:UniqueID</page> which can cause collisions (two or more players sharing the same PData entry). <page>Player:SetPData</page> now replaces all instances of <page>Player:UniqueID</page> with <page>Player:SteamID64</page> when running <page>Player:SetPData</page></note>\n\n<note>PData is not networked from servers to clients!</note>",
+        "description": "Writes a **P**ersistent **Data** key-value pair to the SQL database. (`sv.db` when called on server, `cl.db` when called on client)\n\nInternally uses the <page>sql</page> library. See <page>util.SetPData</page> for cases when the player is not currently on the server.\n\n<note>This function internally uses <page>Player:SteamID64</page>, it previously utilized <page>Player:UniqueID</page> which could have caused collisions (two or more players sharing the same PData entry). <page>Player:SetPData</page> now replaces all instances of <page>Player:UniqueID</page> with <page>Player:SteamID64</page> when running <page>Player:SetPData</page></note>\n\n<note>PData is not networked from servers to clients!</note>",
         "arguments": [
           {
             "name": "key",
@@ -34080,10 +34318,10 @@
         "realms": [
           "server"
         ],
-        "description": "Sets the player to the chosen team.",
+        "description": "Sets the player to the chosen team. The value is networked to clients at reduced bit count (16 bits) as as a signed value, so the real range is [-32768, 32767].\n\nCan be retrieved via <page>Player:Team</page>",
         "arguments": [
           {
-            "name": "Team",
+            "name": "team",
             "type": "number",
             "description": "The team that the player is being set to."
           }
@@ -34111,11 +34349,12 @@
         "realms": [
           "server"
         ],
-        "description": "Sets up the players view model hands. Calls <page>GM:PlayerSetHandsModel</page> to set the model of the hands.",
+        "description": "Sets up the player's hands for the viewmodel. Calls <page>GM:PlayerSetHandsModel</page> to determine the model. If no entity is provided, uses the player's own hands model. If spectating another entity, pass that entity to use its hands model instead.",
         "arguments": [
           {
             "name": "ent",
             "type": "Entity",
+            "default": "nil",
             "description": "If the player is spectating an entity, this should be the entity the player is spectating, so we can use its hands model instead."
           }
         ],
@@ -34246,7 +34485,7 @@
           "client",
           "server"
         ],
-        "description": "Sets the player's normal walking speed. Not sprinting, not slow walking <key>+walk</key>.\n\nSee also <page>Player:SetSlowWalkSpeed</page>, <page>Player:GetWalkSpeed</page>, <page>Player:SetCrouchedWalkSpeed</page>, <page>Player:SetMaxSpeed</page> and <page>Player:SetRunSpeed</page>.\n\n<bug issue=\"2030\">Using a speed of `0` can lead to prediction errors.</bug>\n\n<note>`player_default` class walk speed is: `160`.</note>",
+        "description": "Sets the player's normal walking speed. Not sprinting, not slow walking <key>+walk</key>.\n\nSee also <page>Player:SetSlowWalkSpeed</page>, <page>Player:GetWalkSpeed</page>, <page>Player:SetCrouchedWalkSpeed</page>, <page>Player:SetMaxSpeed</page> and <page>Player:SetRunSpeed</page>.\n\n<bug issue=\"2030\">Using a speed of `0` can lead to prediction errors.</bug>\n\n<note>`player_default` class walk speed is: `200`.</note>",
         "arguments": [
           {
             "name": "walkSpeed",
@@ -34555,7 +34794,7 @@
           "client",
           "server"
         ],
-        "description": "Returns the player's team ID.\n\nReturns 0 clientside when the game is not fully loaded.",
+        "description": "Returns the player's team ID, set by <page>Player:SetTeam</page>\n\nReturns 0 clientside when the game is not fully loaded.",
         "returnValues": [
           {
             "type": "number",
@@ -34937,6 +35176,21 @@
         ]
       },
       {
+        "name": "GetNoCull",
+        "parent": "ProjectedTexture",
+        "realms": [
+          "client"
+        ],
+        "description": "Returns the state of projected texture view-frustum culling. See <page>ProjectedTexture:SetNoCull</page>.",
+        "returnValues": [
+          {
+            "type": "boolean",
+            "name": "enable",
+            "description": "`false` if culling is enabled (default), `true` if disabled."
+          }
+        ]
+      },
+      {
         "name": "GetOrthographic",
         "parent": "ProjectedTexture",
         "realms": [
@@ -35141,7 +35395,7 @@
           {
             "name": "brightness",
             "type": "number",
-            "description": "The brightness to give the projected texture."
+            "description": "The brightness to give the projected texture. A float from 0 to 1, where 1 is 100% brightness. Can be higher."
           }
         ]
       },
@@ -35277,6 +35531,21 @@
             "name": "nearZ",
             "type": "number",
             "description": ""
+          }
+        ]
+      },
+      {
+        "name": "SetNoCull",
+        "parent": "ProjectedTexture",
+        "realms": [
+          "client"
+        ],
+        "description": "Allows disabling of projected texture view-frustum culling for cases where said culling creates unwanted side effects. Disabling culling will have a negative effect on performance.",
+        "arguments": [
+          {
+            "name": "enable",
+            "type": "boolean",
+            "description": "`false` to enable culling (default), `true` to disable."
           }
         ]
       },
@@ -37355,7 +37624,7 @@
   },
   {
     "name": "Vehicle",
-    "description": "This is a list of all methods only available for vehicles. It is also possible to call [Entity](https://wiki.facepunch.com/gmod/Entity) functions on vehicles.",
+    "description": "This is a list of all methods only available for vehicles. It is also possible to call <page>Entity</page> functions on vehicles.",
     "functions": [
       {
         "name": "BoostTimeLeft",

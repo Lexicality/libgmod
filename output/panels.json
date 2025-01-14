@@ -5860,6 +5860,7 @@
           {
             "name": "args",
             "type": "vararg",
+            "default": "nil",
             "description": "The arguments to pass on to the concommand when the button is clicked"
           }
         ],
@@ -7298,7 +7299,7 @@
           "client",
           "menu"
         ],
-        "description": "Returns the overlap set by <page>DHorizontalScroller:GetOverlap</page>.",
+        "description": "Returns the overlap set by <page>DHorizontalScroller:SetOverlap</page>.",
         "returnValues": [
           {
             "type": "number",
@@ -11758,36 +11759,6 @@
         ]
       },
       {
-        "name": "GetBackgroundColor",
-        "parent": "DMenuBar",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "description": "Returns the DMenuBar's background color",
-        "returnValues": [
-          {
-            "type": "table",
-            "description": "The background's color. See <page>Color</page>"
-          }
-        ]
-      },
-      {
-        "name": "GetDisabled",
-        "parent": "DMenuBar",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "description": "Returns whether or not the DMenuBar is disabled",
-        "returnValues": [
-          {
-            "type": "boolean",
-            "description": "Is disabled"
-          }
-        ]
-      },
-      {
         "name": "GetDrawBackground",
         "parent": "DMenuBar",
         "realms": [
@@ -11844,38 +11815,6 @@
           {
             "type": "boolean",
             "description": "Should the background be painted"
-          }
-        ]
-      },
-      {
-        "name": "SetBackgroundColor",
-        "parent": "DMenuBar",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "description": "Sets the background color",
-        "arguments": [
-          {
-            "name": "color",
-            "type": "table",
-            "description": "See <page>Color</page>"
-          }
-        ]
-      },
-      {
-        "name": "SetDisabled",
-        "parent": "DMenuBar",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "description": "Sets whether or not the panel is disabled",
-        "arguments": [
-          {
-            "name": "disable",
-            "type": "boolean",
-            "description": "Should be disabled or not"
           }
         ]
       },
@@ -20111,6 +20050,21 @@
         ]
       },
       {
+        "name": "FindAndSelectMaterial",
+        "parent": "MatSelect",
+        "realms": [
+          "client"
+        ],
+        "description": "Find a material and selects it, if it exists in this panel.",
+        "arguments": [
+          {
+            "name": "mat",
+            "type": "string",
+            "description": "The material to find and select within this <page>MatSelect</page>."
+          }
+        ]
+      },
+      {
         "name": "FindMaterialByValue",
         "parent": "MatSelect",
         "realms": [
@@ -20207,7 +20161,7 @@
         "realms": [
           "client"
         ],
-        "description": "Selects a given material panel.",
+        "description": "<internal>Use <page>MatSelect:FindAndSelectMaterial</page> instead.</internal>\n\nSelects a given material panel.",
         "arguments": [
           {
             "name": "mat",
@@ -20344,6 +20298,42 @@
         ]
       },
       {
+        "name": "FindAndSelectButton",
+        "parent": "PropSelect",
+        "realms": [
+          "client"
+        ],
+        "description": "Find and select a <page>SpawnIcon</page> panel based on the input model path.",
+        "arguments": [
+          {
+            "name": "mdl",
+            "type": "string",
+            "description": "The model to find and select within this <page>PropSelect</page>."
+          }
+        ]
+      },
+      {
+        "name": "FindModelByValue",
+        "parent": "PropSelect",
+        "realms": [
+          "client"
+        ],
+        "description": "Find a <page>SpawnIcon</page> panel based on the input model path.",
+        "arguments": [
+          {
+            "name": "mdl",
+            "type": "string",
+            "description": "The model to find within this <page>PropSelect</page>."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "SpawnIcon",
+            "description": "The found spawnicon, or `nil`."
+          }
+        ]
+      },
+      {
         "name": "OnRightClick",
         "parent": "PropSelect",
         "realms": [
@@ -20367,14 +20357,29 @@
         "description": "Called when the player selects a model.",
         "arguments": [
           {
-            "name": "model",
-            "type": "string",
-            "description": "Path of the selected model, or its \"value\"."
-          },
-          {
             "name": "pnl",
             "type": "Panel",
             "description": "The <page>Spawnicon</page> that was clicked."
+          },
+          {
+            "name": "model",
+            "type": "String",
+            "description": "Path of the selected model, or its \"value\"."
+          }
+        ]
+      },
+      {
+        "name": "SelectModel",
+        "parent": "PropSelect",
+        "realms": [
+          "client"
+        ],
+        "description": "<internal>Use <page>PropSelect:FindAndSelectButton</page> instead.</internal>\n\nSelects a given spawnicon panel.",
+        "arguments": [
+          {
+            "name": "icon",
+            "type": "SpawnIcon",
+            "description": "The spawnicon to select, retrieved via <page>PropSelect:FindModelByValue</page>."
           }
         ]
       }
