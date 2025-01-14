@@ -52,7 +52,7 @@ end
 --- @param forcelimit? number @Amount of force until it breaks (0 = unbreakable)
 --- @param torquelimit? number @Amount of torque (rotation speed) until it breaks (0 = unbreakable)
 --- @param nocollide? number @Whether the constrained entities should collided with each other or not.
---- @return GEntity @The crated constraint
+--- @return GEntity @The created constraint
 function constraint.Ballsocket(ent1, ent2, bone1, bone2, localPos, forcelimit, torquelimit, nocollide)
 end
 
@@ -105,7 +105,7 @@ end
 --- @param stretchOnly? boolean @Apply physics forces only on stretch.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
---- @return GEntity @The crated rope
+--- @return GEntity @The created rope
 function constraint.Elastic(ent1, ent2, bone1, bone2, localPos1, localPos2, constant, damping, relDamping, material, width, stretchOnly, color)
 end
 
@@ -184,7 +184,7 @@ end
 --- @param toggle? boolean @Whether the hydraulic should be a toggle, not a "hold key to extend" action.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
---- @return GEntity @The crated rope
+--- @return GEntity @The created rope
 --- @return GEntity @The muscle controller
 --- @return GEntity @The slider ([phys_slideconstraint](https://developer.valvesoftware.com/wiki/Phys_slideconstraint)) if `fixed` was exactly `1`
 function constraint.Hydraulic(player, ent1, ent2, bone1, bone2, localPos1, localPos2, length1, length2, width, key, slider, speed, material, toggle, color)
@@ -242,7 +242,7 @@ end
 --- @param material? string @Material of the rope
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
---- @return GEntity @The crated rope
+--- @return GEntity @The created rope
 --- @return GEntity @The muscle controller
 --- @return GEntity @The slider ([phys_slideconstraint](https://developer.valvesoftware.com/wiki/Phys_slideconstraint)) if `fixed` was exactly `1`
 function constraint.Muscle(player, ent1, ent2, bone1, bone2, localPos1, localPos2, length1, length2, width, key, fixed, period, amplitude, startOn, material, color)
@@ -254,8 +254,9 @@ end
 --- @param ent2 GEntity @Second entity.
 --- @param bone1 number @PhysObj number of first entity to constrain to
 --- @param bone2 number @PhysObj number of second entity to constrain to
+--- @param disableOnRemove? boolean @If set, the nocollide will be reversed if the constraint is removed.
 --- @return GEntity @The created constraint
-function constraint.NoCollide(ent1, ent2, bone1, bone2)
+function constraint.NoCollide(ent1, ent2, bone1, bone2, disableOnRemove)
 end
 
 --- Creates a pulley constraint.  
@@ -344,7 +345,7 @@ end
 --- @param forceLimit? number @The amount of force appliable to the constraint before it will break (0 is never)
 --- @param noCollide? boolean @Should `ent1` be nocollided to `ent2` via this constraint
 --- @param deleteEnt1OnBreak? boolean @If true, when `ent2` is removed, `ent1` will also be removed
---- @return GEntity @The crated constraint entity
+--- @return GEntity @The created constraint entity
 function constraint.Weld(ent1, ent2, bone1, bone2, forceLimit, noCollide, deleteEnt1OnBreak)
 end
 
@@ -365,7 +366,7 @@ end
 --- @param toggle? boolean @Whether the winch should be on toggle.
 --- @param color? table @The color of the rope
 --- @return GEntity @The created constraint
---- @return GEntity @The crated rope
+--- @return GEntity @The created rope
 --- @return GEntity @The winch controller
 function constraint.Winch(player, ent1, ent2, bone1, bone2, localPos1, localPos2, width, fwdBind, bwdBind, fwdSpeed, bwdSpeed, material, toggle, color)
 end

@@ -54,6 +54,11 @@ end
 function GProjectedTexture:GetNearZ()
 end
 
+--- Returns the state of projected texture view-frustum culling. See ProjectedTexture:SetNoCull.  
+--- @return boolean @`false` if culling is enabled (default), `true` if disabled.
+function GProjectedTexture:GetNoCull()
+end
+
 --- Returns the current orthographic settings of the Projected Texture. To set these values, use ProjectedTexture:SetOrthographic.  
 --- @return boolean @Whether or not this projected texture is orthographic
 --- @return number @left
@@ -133,7 +138,7 @@ end
 
 --- Sets the brightness of the projected texture.  
 --- You must call ProjectedTexture:Update after using this function for it to take effect.  
---- @param brightness number @The brightness to give the projected texture.
+--- @param brightness number @The brightness to give the projected texture
 function GProjectedTexture:SetBrightness(brightness)
 end
 
@@ -196,6 +201,11 @@ end
 --- ℹ **NOTE**: This seems to affect the rendering of shadows - a higher Near Z value will have shadows begin to render closer to their casting object. Comparing a low Near Z value (like 1) with a normal one (12) or high one (1000) is the easiest way to understand this artifact  
 --- @param nearZ number 
 function GProjectedTexture:SetNearZ(nearZ)
+end
+
+--- Allows disabling of projected texture view-frustum culling for cases where said culling creates unwanted side effects. Disabling culling will have a negative effect on performance.  
+--- @param enable boolean @`false` to enable culling (default), `true` to disable.
+function GProjectedTexture:SetNoCull(enable)
 end
 
 --- Changes the current projected texture between orthographic and perspective projection.  

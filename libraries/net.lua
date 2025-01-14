@@ -149,9 +149,17 @@ end
 function net.Receive(messageName, callback)
 end
 
---- Sends the current net message (see net.Start) to the specified player, or to all players listed in the table.  
---- @param ply GPlayer @The player(s) to send the message to
+--- Sends the current net message to the specified player(s)  
+--- @param ply GPlayer @The player to send the message to.
 function net.Send(ply)
+end
+--- Sends the current net message to the specified player(s)  
+--- @param plys table @A table of players to send the message to.
+function net.Send(plys)
+end
+--- Sends the current net message to the specified player(s)  
+--- @param filter GCRecipientFilter @A recipient filter specifying message targets.
+function net.Send(filter)
 end
 
 --- Sends the current message (see net.Start) to all except the player or players specified.  

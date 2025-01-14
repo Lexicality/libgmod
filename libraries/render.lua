@@ -660,6 +660,7 @@ function render.SetAmbientLight(r, g, b)
 end
 
 --- Sets the alpha blending (or transparency) for upcoming render operations.  
+--- See render.SetColorModulation for the function to affect RGB color channels.  
 --- By itself, this will cause visible overlapping on parts of a model that are in front of other parts of the same model.  
 --- For a solution to this, see the examples below.  
 --- 🦟 **BUG**: [This does not affect non-model `render.Draw*` functions.](https://github.com/Facepunch/garrysmod-issues/issues/3166)  
@@ -699,7 +700,9 @@ end
 function render.SetColorMaterialIgnoreZ()
 end
 
---- Sets the color modulation.  
+--- Sets the color modulation for upcoming render operations, such as rendering models.  
+--- The values can exceed 1 for stronger effect.  
+--- See render.SetBlend for the function to affect alpha channel.  
 --- @param r number @The red channel multiplier normal ranging from 0-1.
 --- @param g number @The green channel multiplier normal ranging from 0-1.
 --- @param b number @The blue channel multiplier normal ranging from 0-1.

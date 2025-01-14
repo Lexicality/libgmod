@@ -2,7 +2,7 @@
 
 --- The hook library allows you to add hooks called by the game engine, allowing multiple scripts to modify game function.  
 _G.hook = {}
---- Add a hook to be called upon the given event occurring.  
+--- Registers a function (or "callback") with the Hook system so that it will be called automatically whenever a specific event (or "hook") occurs.  
 --- @param eventName string @The event to hook on to
 --- @param identifier any @The unique identifier, usually a string
 --- @param func function @The function to be called, arguments given to it depend on the identifier used

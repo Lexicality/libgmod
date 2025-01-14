@@ -31,6 +31,7 @@ end
 --- Beware of calling this function in hooks that may be called on map clean up (such as ENTITY:StartTouch) to avoid infinite loops.  
 --- 🦟 **BUG**: [Calling this destroys all BASS streams.](https://github.com/Facepunch/garrysmod-issues/issues/2874)  
 --- 🦟 **BUG**: [This can crash when removing `_firesmoke` entities. **You can use the example below to workaround this issue.**](https://github.com/Facepunch/garrysmod-issues/issues/3637)  
+--- 🦟 **BUG**: [The EFL_KEEP_ON_RECREATE_ENTITIES flag doesn't prevent an entity from being recreated, which means flagged entities will be duplicated since they are both kept and recreated.](https://github.com/Facepunch/garrysmod-issues/issues/6105)  
 --- @param dontSendToClients? boolean @If set to `true`, don't run this functions on all clients.
 --- @param extraFilters? table @Entity classes not to reset during cleanup.
 --- @param callback? function @If set, delays the map cleanup until the end of a server tick, allowing bypassing the entity limit on maps with large amounts of them
@@ -165,7 +166,7 @@ function game.IsDedicated()
 end
 
 --- Kicks a player from the server. This can be ran before the player has spawned.  
---- @param id string @UserID or SteamID of the player to kick.
+--- @param id string @UserID or SteamID of the player to kick
 --- @param reason? string @Reason to display to the player
 function game.KickID(id, reason)
 end

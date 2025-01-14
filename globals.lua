@@ -69,7 +69,7 @@ end
 --- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
 --- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
 --- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
---- @param pitch number @The pitch value of the angle, in degrees.
+--- @param pitch? number @The pitch value of the angle, in degrees.
 --- @param yaw? number @The yaw value of the angle, in degrees.
 --- @param roll? number @The roll value of the angle, in degrees.
 --- @return GAngle @The newly created Angle
@@ -233,7 +233,8 @@ end
 function _G.CreateClientConVar(name, default, shouldsave, userinfo, helptext, min, max)
 end
 
---- Creates a console variable (ConVar), in general these are for things like gamemode/server settings.  
+--- Creates a console variable (ConVar).  
+--- Generally these are used for settings, which can be stored automatically across sessions if desired. They are usually set via an accompanying user interface clientside, or listed somewhere for dedicated server usage, in which case they might be set via `server.cfg` on server start up.  
 --- ⚠ **WARNING**: Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.  
 --- @param name string @Name of the ConVar
 --- @param value string @Default value of the convar
@@ -241,7 +242,7 @@ end
 --- @param helptext? string @The help text to show in the console.
 --- @param min? number @If set, the ConVar cannot be changed to a number lower than this value.
 --- @param max? number @If set, the ConVar cannot be changed to a number higher than this value.
---- @return GConVar @The convar created.
+--- @return GConVar @The convar created, or `nil` if convar could not be created
 function _G.CreateConVar(name, value, flags, helptext, min, max)
 end
 
@@ -328,7 +329,7 @@ end
 --- Because this is a simple preprocessor keyword and not a function, it will cause problems if not used properly  
 --- See baseclass.Get for more information.  
 --- ⚠ **WARNING**: The preprocessor is not smart enough to know when substitution doesn't make sense, such as: table keys and strings.  
---- Running `print("DEFINE_BASECLASS")` will result in `local BaseClass = baseclass.Get`  
+--- Running `print("DEFINE_BASECLASS")` is the same as `print("local BaseClass = baseclass.Get")`  
 --- For more information, including usage examples, see the BaseClasses reference page.  
 --- @param value string @Baseclass name
 function _G.DEFINE_BASECLASS(value)
@@ -655,7 +656,6 @@ function _G.EyeVector()
 end
 
 --- Returns the meta table for the class with the matching name.  
---- Internally returns debug.getregistry()[metaName]  
 --- You can learn more about meta tables on the Meta Tables page.  
 --- You can find a list of meta tables that can be retrieved with this function on Enums/TYPE. The name in the description is the string to use with this function.  
 --- @param metaName string @The object type to retrieve the meta table of.
@@ -1377,8 +1377,7 @@ end
 function _G.RegisterMetaTable(metaName, metaTable)
 end
 
---- Saves position of your cursor on screen. You can restore it by using  
---- Global.RestoreCursorPosition.  
+--- Saves position of your cursor on screen. You can restore it by using Global.RestoreCursorPosition. This is used internally by the spawn menu/context menu  
 function _G.RememberCursorPosition()
 end
 
@@ -1490,10 +1489,12 @@ end
 function _G.ScrW()
 end
 
---- Returns a number based on the `size` argument and the players' screen width. The width is scaled in relation to `640x480` resolution.  This function is primarily used for scaling font sizes.  
+--- Returns a number based on the `size` argument and the players' screen width. This is used to scale user interface (UI) elements to be consistently sized and positioned across all screen resolutions.  
+--- The width is scaled in relation to `640x480` resolution, and does **not** take into account non the aspect ratio. See example below for how to adjust or that.  
+--- This function can also be used for scaling font sizes.  
 --- See Global.ScreenScaleH for a function that scales from height.  
---- @param size number @The number you want to scale.
---- @return number @The scaled number based on your screen's width
+--- @param size number @The position or size you want to scale within 640 pixel wide screen.
+--- @return number @The scaled number based on the player's screen width.
 function _G.ScreenScale(size)
 end
 
@@ -1635,7 +1636,7 @@ end
 --- Sets an integer that is shared between the server and all clients.  
 --- ⚠ **WARNING**: There's a 4095 slots Network limit. If you need more, consider using the net library or Global.SetGlobal2Int. You should also consider the fact that you have way too many variables. You can learn more about this limit here: Networking_Usage  
 --- ℹ **NOTE**: Running this function clientside will only set it clientside for the client it is called on!  
---- 🦟 **BUG**: [This function will not round decimal values as it actually networks a float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
+--- 🦟 **BUG**: [This function will not round decimal values as it actually networks a 64 bit float internally.](https://github.com/Facepunch/garrysmod-issues/issues/3374)  
 --- @param index string @The unique index to identify the global value with.
 --- @param value number @The value to set the global value to
 function _G.SetGlobalInt(index, value)
@@ -1720,6 +1721,7 @@ function _G.Sound(soundPath)
 end
 
 --- Returns the approximate duration of the specified sound in seconds, for `.wav` and `.mp3` sounds.  
+--- 🦟 **BUG**: This function only works on mp3 files if the file is encoded with constant bitrate.  
 --- @param soundName string @The sound file path.
 --- @return number @Sound duration in seconds.
 function _G.SoundDuration(soundName)

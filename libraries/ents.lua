@@ -43,7 +43,7 @@ end
 function ents.FindByClass(class)
 end
 
---- Finds all entities that are of given class and are children of given entity. This works internally by iterating over ents.GetAll.  
+--- Finds all entities that are of given class and are children of given entity. This works internally by iterating over ents.FindByClass.  
 --- @param class string @The class of entities to search for
 --- @param parent GEntity @Parent of entities that are being searched for
 --- @return table @A table of found entities or nil if none are found

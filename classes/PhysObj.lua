@@ -137,6 +137,12 @@ end
 function GPhysObj:GetFrictionSnapshot()
 end
 
+--- Returns the index this physics object is on its PhysObj:GetEntity.  
+--- Useful for Entity:TranslateBoneToPhysBone.  
+--- @return number @The physics object index on its parent entity.
+function GPhysObj:GetIndex()
+end
+
 --- Returns the principal moments of inertia `(Ixx, Iyy, Izz)` of the physics object, in the local frame, with respect to the center of mass.  
 --- @return GVector @The moment of inertia in `kg * m^2`
 function GPhysObj:GetInertia()

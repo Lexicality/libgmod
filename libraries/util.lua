@@ -525,7 +525,7 @@ end
 
 --- Precaches a model for later use. Model is cached after being loaded once.  
 --- ⚠ **WARNING**:   
---- Modelprecache is limited to 4096 unique models. When it reaches the limit the game will crash.  
+--- Modelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.  
 --- @param modelName string @The model to precache.
 function util.PrecacheModel(modelName)
 end
@@ -585,7 +585,7 @@ end
 --- Sets persistent data for offline player using their SteamID.  
 --- See also Player:SetPData for a more convenient version of this function for online players, util.RemovePData and  
 --- util.GetPData for the other accompanying functions.  
---- ℹ **NOTE**: This function internally uses util.SteamIDTo64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry).  
+--- ℹ **NOTE**: This function internally uses util.SteamIDTo64, it previously utilized Player:UniqueID which could have caused collisions (two or more players sharing the same PData entry).  
 --- @param steamID string @SteamID of the player, in the `STEAM_0:0:0` format
 --- @param name string @Variable name to store the value in.
 --- @param value any @The value to store.
@@ -680,7 +680,7 @@ end
 function util.TraceEntity(tracedata, ent)
 end
 
---- Identical to util.TraceHull but uses an entity's AABB (alis-aligned bounding box) for `mins`/`maxs` inputs. (These 2 keys will be ignored in the provided table)  
+--- Identical to util.TraceHull but uses an entity's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) for `mins`/`maxs` inputs. (These 2 keys will be ignored in the provided table)  
 --- @param tracedata table @Trace data
 --- @param ent GEntity @The entity to use mins/maxs of for the hull trace.
 --- @return table @Trace result

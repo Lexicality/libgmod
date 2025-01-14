@@ -15,7 +15,7 @@ function physenv.GetAirDensity()
 end
 
 --- Gets the gravitational acceleration used for physics objects in `source_unit/s^2`.  
---- @return GVector @gravAccel
+--- @return GVector @Gravity direction and strength.
 function physenv.GetGravity()
 end
 
@@ -29,13 +29,17 @@ end
 function physenv.GetPerformanceSettings()
 end
 
+--- Returns the pause status of global physics simulation. See physenv.SetPhysicsPaused for the setter.  
+--- @return boolean @`true` if paused.
+function physenv.GetPhysicsPaused()
+end
+
 --- Sets the air density.  
 --- @param airDensity number @The new air density.
 function physenv.SetAirDensity(airDensity)
 end
 
---- Sets the gravitational acceleration used for physics objects.  
---- ℹ **NOTE**: Does not work on players.  
+--- Sets the gravitational acceleration used for physics objects. Does not affect players.  
 --- @param gravAccel GVector @The new gravity in `source_unit/s^2`.
 function physenv.SetGravity(gravAccel)
 end
@@ -43,4 +47,9 @@ end
 --- Sets the performance settings.  
 --- @param performanceSettings table @The new performance settings
 function physenv.SetPerformanceSettings(performanceSettings)
+end
+
+--- Pauses or unpauses the physics simulation globally. See physenv.GetPhysicsPaused for the getter.  
+--- @param pause boolean @`true` to pause, `false` to unpause.
+function physenv.SetPhysicsPaused(pause)
 end

@@ -270,10 +270,12 @@ function GPanel:DragMouseRelease(mouseCode)
 end
 
 --- Draws a coloured rectangle to fill the panel object this method is called on. The colour is set using surface.SetDrawColor. This should only be called within the object's PANEL:Paint or PANEL:PaintOver hooks, as a shortcut for surface.DrawRect.  
+--- 🟥 **NOTE**: Requires a 2D rendering context  
 function GPanel:DrawFilledRect()
 end
 
 --- Draws a hollow rectangle the size of the panel object this method is called on, with a border width of 1 px. The border colour is set using surface.SetDrawColor. This should only be called within the object's PANEL:Paint or PANEL:PaintOver hooks, as a shortcut for surface.DrawOutlinedRect.  
+--- 🟥 **NOTE**: Requires a 2D rendering context  
 function GPanel:DrawOutlinedRect()
 end
 
@@ -281,8 +283,9 @@ end
 function GPanel:DrawSelections()
 end
 
---- Used to draw the text in a DTextEntry within a derma skin. This should be called within the SKIN:PaintTextEntry skin hook.  
---- ℹ **NOTE**: Will silently fail if any of arguments are not Color.  
+--- Used to draw the text in a DTextEntry within a derma skin. This is usually called within the SKIN:PaintTextEntry skin hook.  
+--- ℹ **NOTE**: Will silently fail if any of arguments are not given.  
+--- 🟥 **NOTE**: Requires a 2D rendering context  
 --- @param textCol table @The colour of the main text.
 --- @param highlightCol table @The colour of the selection highlight (when selecting text).
 --- @param cursorCol table @The colour of the text cursor (or caret).
@@ -290,6 +293,7 @@ function GPanel:DrawTextEntryText(textCol, highlightCol, cursorCol)
 end
 
 --- Draws a textured rectangle to fill the panel object this method is called on. The texture is set using surface.SetTexture or surface.SetMaterial. This should only be called within the object's PANEL:Paint or PANEL:PaintOver hooks, as a shortcut for surface.DrawTexturedRect.  
+--- 🟥 **NOTE**: Requires a 2D rendering context  
 function GPanel:DrawTexturedRect()
 end
 
@@ -370,8 +374,8 @@ end
 function GPanel:GetChildrenInRect(x, y, w, h)
 end
 
---- Returns the class name of the panel.  
---- @return string @className
+--- Returns the class name of the panel. This would be the class name of the base engine-level panel, not Lua classname. The latter is stored usually in Panel:GetName.  
+--- @return string @The panel's class name.
 function GPanel:GetClassName()
 end
 
@@ -943,8 +947,8 @@ end
 --- ℹ **NOTE**:   
 --- This only disabled clipping for the Paint Related functions (as far as i can tell at the current moment, more testing should be done) so things like the text of a DLabel will still be clipped to the parent.  
 --- To fully disable the clipping of any children see Global.DisableClipping.  
---- @param clip boolean @Whether to clip or not
-function GPanel:NoClipping(clip)
+--- @param noclip boolean @Whether to disable clipping or not
+function GPanel:NoClipping(noclip)
 end
 
 --- Returns the number of children of the panel object that are selected. This is equivalent to calling Panel:IsSelected on all child objects and counting the number of returns that are `true`.  
@@ -1410,6 +1414,7 @@ end
 
 --- Sets the text value of a panel object containing text, such as a Label, TextEntry or  RichText and their derivatives, such as DLabel, DTextEntry or DButton.  
 --- ⚠ **WARNING**: When used on a Label or its derivatives ( DLabel and DButton ), it will automatically call Panel:InvalidateLayout, meaning that you should avoid running this function every frame on these panels to avoid unnecessary performance loss.  
+--- ⚠ **WARNING**: Label & its derivatives has hard length limit, maximum 1023 ascii characters.  
 --- @param text string @The text value to set.
 function GPanel:SetText(text)
 end
@@ -1491,7 +1496,6 @@ function GPanel:SetWidth(width)
 end
 
 --- This makes it so that when you're hovering over this panel you can "click" on the world. Your weapon aim (and its viewmodel) will follow the cursor. This is primarily used for the Sandbox context menu.  
---- 🦟 **BUG**: [This function doesn't scale with custom FOV specified by GM:CalcView or WEAPON:TranslateFOV.](https://github.com/Facepunch/garrysmod-issues/issues/3467)  
 --- @param enable boolean @Whether to enable or disable the feature for this panel.
 function GPanel:SetWorldClicker(enable)
 end

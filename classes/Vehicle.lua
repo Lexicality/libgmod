@@ -1,7 +1,7 @@
 --- @meta
 
 --- @class GVehicle : GEntity
---- This is a list of all methods only available for vehicles. It is also possible to call [Entity](https://wiki.facepunch.com/gmod/Entity) functions on vehicles.  
+--- This is a list of all methods only available for vehicles. It is also possible to call Entity functions on vehicles.  
 local GVehicle = {}
 --- Returns the remaining boosting time left.  
 --- @return number @The remaining boosting time left

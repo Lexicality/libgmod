@@ -69,8 +69,8 @@ end
 
 --- Sets a player's class  
 --- @param ply GPlayer @Player to set class
---- @param classname string @Name of class to set
-function player_manager.SetPlayerClass(ply, classname)
+--- @param className string @Name of class to set
+function player_manager.SetPlayerClass(ply, className)
 end
 
 --- Retrieves correct hands for given player model. By default returns citizen hands.  

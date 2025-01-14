@@ -1,7 +1,7 @@
 --- @meta
 
 --- @class GNPC : GEntity
---- This is a list of all methods only available for NPCs. It is also possible to call [Entity](https://wiki.facepunch.com/gmod/Entity) functions on NPCs.  
+--- This is a list of all methods only available for NPCs. It is also possible to call Entity functions on NPCs.  
 local GNPC = {}
 --- Makes the NPC like, hate, feel neutral towards, or fear the entity in question. If you want to setup relationship towards a certain entity `class`, use NPC:AddRelationship.  
 --- ℹ **NOTE**: NPCs do not see NextBots by default. This can be fixed by adding the FL_OBJECT flag to the NextBot.  
@@ -223,6 +223,11 @@ end
 function GNPC:GetExpression()
 end
 
+--- Returns the Field Of View of the NPC. See NPC:SetFOV.  
+--- @return number @The FOV for the NPC in degrees.
+function GNPC:GetFOV()
+end
+
 --- Returns the position we are trying to reach, if any.  
 --- @return GVector @The position we are trying to reach.
 function GNPC:GetGoalPos()
@@ -275,6 +280,12 @@ end
 function GNPC:GetKnownEnemyCount()
 end
 
+--- Returns the last registered or memorized position of the NPC. When using scheduling, the NPC will focus on navigating to the last position via nodes.  
+--- See NPC:SetLastPosition.  
+--- @return GVector @Where the NPC's last position was set to.
+function GNPC:GetLastPosition()
+end
+
 --- Returns Global.CurTime based time since this NPC last received damage from given enemy. The last damage time is set when NPC:MarkTookDamageFromEnemy is called.  
 --- @param enemy? GEntity @The enemy to test
 --- @return number @Time since this NPC last received damage from given enemy.
@@ -295,6 +306,12 @@ end
 --- @param minResult_? number @The minimum value that will be returned by this function.
 --- @return number @The minimum stop distance.
 function GNPC:GetMinMoveStopDist(minResult_)
+end
+
+--- Returns the movement delay for given NPC.  
+--- See NPC:SetMoveDelay.  
+--- @return number @The movement delay.
+function GNPC:GetMoveDelay()
 end
 
 --- Returns the current timestep the internal NPC motor is working on.  
@@ -347,8 +364,8 @@ end
 function GNPC:GetPathTimeToGoal()
 end
 
---- Returns the shooting position of the NPC.  
---- ℹ **NOTE**: This only works properly when called on an NPC that can hold weapons, otherwise it will return the same value as Entity:GetPos.  
+--- Returns the shooting position of the NPC, i.e. where their bullets would come from, etc.  
+--- If the NPC does not overwrite this, it will return Entity:GetPos.  
 --- @return GVector @The NPC's shooting position.
 function GNPC:GetShootPos()
 end
@@ -454,6 +471,17 @@ end
 --- Returns whether the NPC has an active goal.  
 --- @return boolean @Whether the NPC has an active goal or not.
 function GNPC:IsGoalActive()
+end
+
+--- Tests whether a position or an NPC is in the view cone of the NPC.  
+--- @param position GVector @The position to test.
+--- @return boolean @If the given position is in the view cone.
+function GNPC:IsInViewCone(position)
+end
+--- Tests whether a position or an NPC is in the view cone of the NPC.  
+--- @param ent GEntity @The entity to test
+--- @return boolean @If the given position is in the view cone.
+function GNPC:IsInViewCone(ent)
 end
 
 --- Returns if the current movement is locked on the Yaw axis.  
@@ -710,6 +738,11 @@ end
 function GNPC:SetExpression(expression)
 end
 
+--- Sets the Field Of View of the NPC, for use with such functions as NPC:IsInViewCone. it is also used internally by the NPC for enemy detection, etc.  
+--- @param fov number @The new FOV for the NPC in degrees.
+function GNPC:SetFOV(fov)
+end
+
 --- Updates the NPC's hull and physics hull in order to match its model scale. Entity:SetModelScale seems to take care of this regardless.  
 function GNPC:SetHullSizeNormal()
 end
@@ -746,10 +779,10 @@ end
 function GNPC:SetIgnoreConditions(conditions, size)
 end
 
---- Sets the last registered or memorized position for an npc. When using scheduling, the NPC will focus on navigating to the last position via nodes.  
+--- Sets the last registered or memorized position for this NPC. When using scheduling, the NPC will focus on navigating to the last position via nodes.  
 --- ℹ **NOTE**: The navigation requires ground nodes to function properly, otherwise the NPC could only navigate in a small area. (https://developer.valvesoftware.com/wiki/Info_node)  
---- @param Position GVector @Where the NPC's last position will be set.
-function GNPC:SetLastPosition(Position)
+--- @param position GVector @Where the NPC's last position will be set.
+function GNPC:SetLastPosition(position)
 end
 
 --- Sets NPC's max view distance. An NPC will not be able to see enemies outside of this distance.  
@@ -760,6 +793,12 @@ end
 --- Sets how long to try rebuilding path before failing task.  
 --- @param time number @How long to try rebuilding path before failing task
 function GNPC:SetMaxRouteRebuildTime(time)
+end
+
+--- Sets the movement delay for given NPC.  
+--- See NPC:GetMoveDelay.  
+--- @param delay number @The amount of time in seconds to delay movement by.
+function GNPC:SetMoveDelay(delay)
 end
 
 --- Sets the timestep the internal NPC motor is working on.  

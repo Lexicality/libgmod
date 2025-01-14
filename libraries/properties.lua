@@ -39,3 +39,8 @@ end
 --- @param tr table @The trace that is passed as second argument to Action callback of a property
 function properties.OpenEntityMenu(ent, tr)
 end
+
+--- Remove an entity right-click property. See properties.Add for details.  
+--- @param name string @A unique name used to identify the property to be removed.
+function properties.Remove(name)
+end

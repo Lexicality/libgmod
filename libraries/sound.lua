@@ -82,3 +82,12 @@ end
 --- @param callback function @Callback function that is called as soon as the the stream is loaded
 function sound.PlayURL(url, flags, callback)
 end
+
+--- Sets the gender of a specific actor (model). This is a system from [base Half-Life 2](https://developer.valvesoftware.com/wiki/Global_actors) - `global_actors.txt`.  
+--- This will affect what voice lines `npc_citizen` will use when they have the given model set.  
+--- It is not limited to `npc_citizens` - any sound played on any entity with given model can have gender specific sounds playing, including soundscripts, by including `$gender` token in the sound file path.  
+--- ⚠ **WARNING**: Internally the gender is stored by model file name only (i.e. `models/alyx.mdl` would be stored as `alyx`), not the full path! Be aware of potential collisions.  
+--- @param modelPath string @Path to the model file to set the gender of.
+--- @param gender string @Gender to set
+function sound.SetActorGender(modelPath, gender)
+end

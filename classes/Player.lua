@@ -439,15 +439,17 @@ end
 function GPlayer:GetHoveredWidget()
 end
 
---- Gets the bottom base and the top base size of the player's hull.  
---- @return GVector @Player's hull bottom base size.
---- @return GVector @Player's hull top base size.
+--- Retrieves the minimum and maximum Vectors of the [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for the Player's physics and movement Hull Traces.  
+--- See also: Player:SetHull, Player:SetHullDuck, Player:GetHullDuck  
+--- @return GVector @The hull mins, the lowest corner of the Player's bounding box.
+--- @return GVector @The hull maxs, the highest corner of the Player's bounding box, opposite of the mins.
 function GPlayer:GetHull()
 end
 
---- Gets the bottom base and the top base size of the player's crouch hull.  
---- @return GVector @Player's crouch hull bottom base size.
---- @return GVector @Player's crouch hull top base size.
+--- Retrieves the minimum and maximum Vectors of the [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for the Player's physics and movement Hull Traces while they are crouching (or "Ducking").  
+--- See also: Player:SetHullDuck, Player:GetHull, Player:SetHull  
+--- @return GVector @The hull mins, the lowest corner of the Player's bounding box while crouching.
+--- @return GVector @The hull maxs, the highest corner of the Player's crouching bounding box, opposite of the mins.
 function GPlayer:GetHullDuck()
 end
 
@@ -455,7 +457,7 @@ end
 --- ⚠ **WARNING**: The returned value is truncated to 31 bytes.  
 --- ⚠ **WARNING**: On client this function will return value of the local player, regardless of which player the function was called on!  
 --- @param cVarName string @The name of the client-side ConVar.
---- @return string @The value of the ConVar.
+--- @return string @The value of the ConVar
 function GPlayer:GetInfo(cVarName)
 end
 
@@ -561,7 +563,7 @@ function GPlayer:GetPunchAngle()
 end
 
 --- Returns players death ragdoll. The ragdoll is created by Player:CreateRagdoll.  
---- 🦟 **BUG**: Calling Entity:GetPos server-side with this function then will return the position when Player:CreateRagdoll was used.  
+--- ℹ **NOTE**: Calling Entity:GetPos server-side with this function then will return the position where Player:CreateRagdoll was used, as it is a hl2mp_ragdoll which is a serverside point entity that creates a clientside ragdoll for everyone (opposed to prop_ragdoll that is serverside and networks).  
 --- @return GEntity @The ragdoll
 function GPlayer:GetRagdollEntity()
 end
@@ -688,7 +690,7 @@ end
 function GPlayer:GetWeapon(className)
 end
 
---- Returns a player's weapon color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is Vector(r,g,b), and each color should be between 0 and 1.  
+--- Returns a player's weapon color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is `Vector(r,g,b)`, and each color should be between 0 and 1.  
 --- @return GVector @color
 function GPlayer:GetWeaponColor()
 end
@@ -710,7 +712,7 @@ end
 
 --- Gives ammo to a player  
 --- @param amount number @Amount of ammo
---- @param type any @Type of ammo
+--- @param type string @Type of ammo
 --- @param hidePopup? boolean @Hide display popup when giving the ammo
 --- @return number @Ammo given.
 function GPlayer:GiveAmmo(amount, type, hidePopup)
@@ -772,8 +774,8 @@ end
 function GPlayer:IsFrozen()
 end
 
---- Returns whether the player identity was confirmed by the steam network.  
---- See also GM:PlayerAuthed.  
+--- Returns whether the player identity was confirmed by the Steam network.  
+--- See also GM:NetworkIDValidated.  
 --- @return boolean @Whether the player has been fully authenticated or not
 function GPlayer:IsFullyAuthenticated()
 end
@@ -1089,6 +1091,11 @@ end
 function GPlayer:SetAmmo(ammoCount, ammoType)
 end
 
+--- Sets the player armor to the argument.  
+--- @param Amount number @The amount that the player armor is going to be set to.
+function GPlayer:SetArmor(Amount)
+end
+
 --- Pushes the player away from other players whenever the player inside another players' bounding box.  
 --- This avoidance is performed clientside by altering movement sent to server.  
 --- This applies to players within a single team. (Player:Team)  
@@ -1172,20 +1179,22 @@ end
 function GPlayer:SetHoveredWidget(widget)
 end
 
---- Sets the mins and maxs of the AABB of the players collision.  
---- See Player:SetHullDuck for the hull while crouching/ducking.  
---- ℹ **NOTE**: Not replicated, need to be call on server and client.  
---- @param hullMins GVector @The min coordinates of the hull.
---- @param hullMaxs GVector @The max coordinates of the hull.
-function GPlayer:SetHull(hullMins, hullMaxs)
+--- Sets the size of the Player's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for physics and movement Hull Traces.  
+--- See also: Player:GetHull, Player:SetHullDuck, Player:GetHullDuck  
+--- ℹ **NOTE**:   
+--- This value is **not** replicated automatically to clients and must be manually called in both the Server and Client Realms.  
+--- @param mins GVector @The hull mins, the lowest corner of the Player's bounding box.
+--- @param maxs GVector @The hull maxs, the highest corner of the Player's bounding box, opposite of the mins.
+function GPlayer:SetHull(mins, maxs)
 end
 
---- Sets the mins and maxs of the AABB of the players collision when ducked.  
---- See Player:SetHull for setting the hull while standing.  
---- ℹ **NOTE**: Not replicated, need to be call on server and client.  
---- @param hullMins GVector @The min coordinates of the hull.
---- @param hullMaxs GVector @The max coordinates of the hull.
-function GPlayer:SetHullDuck(hullMins, hullMaxs)
+--- Sets the size of the Player's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for physics and movement Hull Traces while they are crouching (or "Ducking").  
+--- See also: Player:GetHullDuck, Player:GetHull, Player:SetHull  
+--- ℹ **NOTE**:   
+--- This value is **not** replicated automatically to clients and must be manually called in both the Server and Client Realms.  
+--- @param mins GVector @The hull mins, the lowest corner of the Player's bounding box while crouching.
+--- @param maxs GVector @The hull maxs, the highest corner of the Player's crouching bounding box, opposite of the mins.
+function GPlayer:SetHullDuck(mins, maxs)
 end
 
 --- Sets the jump power, eg. the velocity that will be applied to the player when they jump.  
@@ -1248,7 +1257,7 @@ end
 
 --- Writes a **P**ersistent **Data** key-value pair to the SQL database. (`sv.db` when called on server, `cl.db` when called on client)  
 --- Internally uses the sql library. See util.SetPData for cases when the player is not currently on the server.  
---- ℹ **NOTE**: This function internally uses Player:SteamID64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry). Player:SetPData now replaces all instances of Player:UniqueID with Player:SteamID64 when running Player:SetPData  
+--- ℹ **NOTE**: This function internally uses Player:SteamID64, it previously utilized Player:UniqueID which could have caused collisions (two or more players sharing the same PData entry). Player:SetPData now replaces all instances of Player:UniqueID with Player:SteamID64 when running Player:SetPData  
 --- ℹ **NOTE**: PData is not networked from servers to clients!  
 --- @param key string @Name of the PData key
 --- @param value any @Value to write to the key (**must** be an SQL valid data type, such as a string or integer)
@@ -1301,9 +1310,10 @@ end
 function GPlayer:SetSuppressPickupNotices(doSuppress)
 end
 
---- Sets the player to the chosen team.  
---- @param Team number @The team that the player is being set to.
-function GPlayer:SetTeam(Team)
+--- Sets the player to the chosen team. The value is networked to clients at reduced bit count (16 bits) as as a signed value, so the real range is [-32768, 32767].  
+--- Can be retrieved via Player:Team  
+--- @param team number @The team that the player is being set to.
+function GPlayer:SetTeam(team)
 end
 
 --- Sets how quickly a player un-ducks  
@@ -1354,7 +1364,7 @@ end
 --- Sets the player's normal walking speed. Not sprinting, not slow walking `+walk`.  
 --- See also Player:SetSlowWalkSpeed, Player:GetWalkSpeed, Player:SetCrouchedWalkSpeed, Player:SetMaxSpeed and Player:SetRunSpeed.  
 --- 🦟 **BUG**: [Using a speed of `0` can lead to prediction errors.](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
---- ℹ **NOTE**: `player_default` class walk speed is: `160`.  
+--- ℹ **NOTE**: `player_default` class walk speed is: `200`.  
 --- @param walkSpeed number @The new walk speed when `sv_friction` is below `10`
 function GPlayer:SetWalkSpeed(walkSpeed)
 end
@@ -1364,8 +1374,8 @@ end
 function GPlayer:SetWeaponColor(Color)
 end
 
---- Sets up the players view model hands. Calls GM:PlayerSetHandsModel to set the model of the hands.  
---- @param ent GEntity @If the player is spectating an entity, this should be the entity the player is spectating, so we can use its hands model instead.
+--- Sets up the player's hands for the viewmodel. Calls GM:PlayerSetHandsModel to determine the model. If no entity is provided, uses the player's own hands model. If spectating another entity, pass that entity to use its hands model instead.  
+--- @param ent? GEntity @If the player is spectating an entity, this should be the entity the player is spectating, so we can use its hands model instead.
 function GPlayer:SetupHands(ent)
 end
 
@@ -1490,7 +1500,7 @@ end
 function GPlayer:SwitchToDefaultWeapon()
 end
 
---- Returns the player's team ID.  
+--- Returns the player's team ID, set by Player:SetTeam  
 --- Returns 0 clientside when the game is not fully loaded.  
 --- @return number @The player's team's index number, as in the Enums/TEAM or a custom team defined in team.SetUp.
 function GPlayer:Team()

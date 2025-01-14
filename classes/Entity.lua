@@ -69,6 +69,14 @@ end
 function GEntity:AddSolidFlags(flags)
 end
 
+--- Adds onto the current SpawnFlags of an Entity.  
+--- SpawnFlags can easily be found on https://developer.valvesoftware.com/wiki/.  
+--- ℹ **NOTE**: See also Entity:RemoveSpawnFlags, Entity:SetSpawnFlags  
+--- Using SF Enumerations won't work, if this function is ran clientside due to the enumerations being defined only Serverside. Use the actual SpawnFlag number.  
+--- @param flag number @The SpawnFlag to add to the Entity
+function GEntity:AddSpawnFlags(flag)
+end
+
 --- Adds a PhysObject to the entity's motion controller so that ENTITY:PhysicsSimulate will be called for given PhysObject as well.  
 --- You must first create a motion controller with Entity:StartMotionController.  
 --- You can remove added PhysObjects by using Entity:RemoveFromMotionController.  
@@ -247,8 +255,9 @@ end
 function GEntity:DropToFloor()
 end
 
---- Plays a sound on an entity. If run clientside, the sound will only be heard locally.  
---- If used on a player or NPC character with the mouth rigged, the character will "lip-sync". This does not work with all sound files.  
+--- Plays a sound on an entity.  
+--- If run clientside, the sound will only be heard locally.  
+--- If used on a player or NPC character with the mouth rigged, the character will "lip-sync" if the sound file contains lipsync data. See [this page](https://developer.valvesoftware.com/wiki/Choreography_creation/Lip_syncing) for more information.  
 --- ℹ **NOTE**: When using this function with weapons, use the Weapon itself as the entity, not its owner!  
 --- 🦟 **BUG**: [This does not respond to Global.SuppressHostEvents.](https://github.com/Facepunch/garrysmod-issues/issues/2651)  
 --- @param soundName string @The name of the sound to be played
@@ -845,7 +854,8 @@ end
 function GEntity:GetLocalAngularVelocity()
 end
 
---- Returns entity's position relative to it's parent.  
+--- Returns entity's position relative to it's Entity:GetParent.  
+--- See Entity:GetPos for the absolute position.  
 --- @return GVector @Relative position
 function GEntity:GetLocalPos()
 end
@@ -901,6 +911,7 @@ end
 
 --- Gets the model of given entity.  
 --- 🦟 **BUG**: This does not necessarily return the model's path, as is the case for brush and virtual models. This is intentional behaviour, however, there is currently no way to retrieve the actual file path.  
+--- This also affects certain models that are edited by 3rd party programs after being compiled.  
 --- @return string @The entity's model
 function GEntity:GetModel()
 end
@@ -1111,7 +1122,7 @@ function GEntity:GetNetworkAngles()
 end
 
 --- Gets networked origin for entity.  
---- @return GVector @origin
+--- @return GVector @The last received origin of the entity.
 function GEntity:GetNetworkOrigin()
 end
 
@@ -1359,7 +1370,8 @@ end
 function GEntity:GetPlaybackRate()
 end
 
---- Gets the position of entity in world.  
+--- Gets the position of given entity in the world.  
+--- See Entity:GetLocalPos for the position relative to the entity's Entity:GetParent.  
 --- @return GVector @The position of the entity.
 function GEntity:GetPos()
 end
@@ -1765,7 +1777,9 @@ end
 function GEntity:IsConstrained()
 end
 
---- Returns if entity is constraint or not  
+--- Returns if entity is constraint or not.  
+--- This also means that Entity:GetConstrainedPhysObjects. Entity:GetConstrainedEntities and  Entity:SetPhysConstraintObjects can be used on this entity.  
+--- ⚠ **WARNING**: Some constraint entities, such as `phys_spring`, will return false!  
 --- @return boolean @Is the entity a constraint or not
 function GEntity:IsConstraint()
 end
@@ -1974,7 +1988,8 @@ function GEntity:MakePhysicsObjectAShadow(allowPhysicsMovement, allowPhysicsRota
 end
 
 --- Sets custom bone angles.  
---- 🦟 **BUG**: [When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced.](https://github.com/Facepunch/garrysmod-issues/issues/5148)  
+--- 🦟 **BUG**: [When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced](https://github.com/Facepunch/garrysmod-issues/issues/5148)  
+--- As of update `2024.10.29` this has been resolved. However, network traffic is still generated and should be taken into consideration.  
 --- @param boneID number @Index of the bone you want to manipulate
 --- @param ang GAngle @Angle to apply
 --- @param networking? boolean @boolean to network these changes (if called from server)
@@ -2003,7 +2018,7 @@ function GEntity:ManipulateBoneScale(boneID, scale)
 end
 
 --- Returns entity's map creation ID. Unlike Entity:EntIndex or Entity:GetCreationID, it will always be the same on same map, no matter how much you clean up or restart it.  
---- To be used in conjunction with ents.GetMapCreatedEntity.  
+--- To be used in conjunction with ents.GetMapCreatedEntity. See also Entity:CreatedByMap.  
 --- @return number @The map creation ID or -1 if the entity is not compiled into the map.
 function GEntity:MapCreationID()
 end
@@ -2129,8 +2144,9 @@ end
 --- Entity:EnableCustomCollisions needs to be called if you want players to collide with the entity correctly.  
 --- @param vertices table @A table consisting of Structures/MeshVertex (only the `pos` element is taken into account)
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
+--- @param massCenterOveride? GVector @If set, overwrites the center of mass for the created physics object.
 --- @return boolean @Returns `true` on success, `nil` otherwise.
-function GEntity:PhysicsFromMesh(vertices, surfaceprop)
+function GEntity:PhysicsFromMesh(vertices, surfaceprop, massCenterOveride)
 end
 
 --- Initializes the physics object of the entity using its current model. Deletes the previous physics object if it existed and the new object creation was successful.  
@@ -2140,8 +2156,9 @@ end
 --- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param solidType number @The solid type of the physics object to create, see Enums/SOLID
+--- @param massCenterOverride? GVector @If set, overwrites the center of mass for the created physics object.
 --- @return boolean @Returns `true` on success, `false` otherwise.
-function GEntity:PhysicsInit(solidType)
+function GEntity:PhysicsInit(solidType, massCenterOverride)
 end
 
 --- Makes the physics object of the entity a AABB.  
@@ -2155,8 +2172,9 @@ end
 --- @param mins GVector @The minimum position of the box
 --- @param maxs GVector @The maximum position of the box
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
+--- @param massCenterOverride? GVector @If set, overwrites the center of mass for the created physics object.
 --- @return boolean @Returns `true` on success, `nil` otherwise
-function GEntity:PhysicsInitBox(mins, maxs, surfaceprop)
+function GEntity:PhysicsInitBox(mins, maxs, surfaceprop, massCenterOverride)
 end
 
 --- Initializes the physics mesh of the entity with a convex mesh defined by a table of points. The resulting mesh is the  of all the input points. If successful, the previous physics object will be removed.  
@@ -2177,8 +2195,9 @@ end
 --- ```  
 --- @param points table @A table of eight Vectors, in local coordinates, to be used in the computation of the convex mesh
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
+--- @param massCenterOverride? GVector @If set, overwrites the center of mass for the created physics object.
 --- @return boolean @Returns `true` on success, `false` otherwise.
-function GEntity:PhysicsInitConvex(points, surfaceprop)
+function GEntity:PhysicsInitConvex(points, surfaceprop, massCenterOverride)
 end
 
 --- An advanced version of Entity:PhysicsInitConvex which initializes a physics object from multiple convex meshes. This should be used for physics objects with a custom shape which cannot be represented by a single convex mesh.  
@@ -2187,8 +2206,9 @@ end
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param vertices table @A table consisting of tables of Vectors
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
+--- @param massCenterOverride? GVector @If set, overwrites the center of mass for the created physics object.
 --- @return boolean @Returns `true` on success, `nil` otherwise.
-function GEntity:PhysicsInitMultiConvex(vertices, surfaceprop)
+function GEntity:PhysicsInitMultiConvex(vertices, surfaceprop, massCenterOverride)
 end
 
 --- Initializes the entity's physics object as a physics shadow. Removes the previous physics object if successful. This is used internally for the Player's and NPC's physics object, and certain HL2 entities such as the crane.  
@@ -2318,6 +2338,14 @@ end
 --- Removes solid flag(s) from the entity.  
 --- @param flags number @The flag(s) to remove, see Enums/FSOLID.
 function GEntity:RemoveSolidFlags(flags)
+end
+
+--- Removes a SpawnFlag from the current SpawnFlags of an Entity.  
+--- SpawnFlags can easily be found on https://developer.valvesoftware.com/wiki/.  
+--- ℹ **NOTE**: See also Entity:AddSpawnFlags, Entity:SetSpawnFlags  
+--- Using SF Enumerations won't work, if this function is ran clientside due to the enumerations being defined only Serverside. Use the actual SpawnFlag number.  
+--- @param flag number @The SpawnFlag to remove from the Entity
+function GEntity:RemoveSpawnFlags(flag)
 end
 
 --- Plays an animation on the entity. This may not always work on engine entities.  
@@ -2474,6 +2502,7 @@ end
 --- Sets the color of an entity.  
 --- Some entities may need a custom [render mode](Enums/RENDERMODE) set for transparency to work. See example 2.  
 --- Entities also must have a proper [render group](Enums/RENDERGROUP) set for transparency to work.  
+--- When rendering a model manually via Entity:SetNoDraw inside ENTITY:Draw, you may need to use render.SetColorModulation in the render hook (where you call Entity:DrawModel) instead.  
 --- @param color? table @The color to set
 function GEntity:SetColor(color)
 end
@@ -2484,6 +2513,9 @@ function GEntity:SetCreator(ply)
 end
 
 --- Marks the entity to call GM:ShouldCollide. Not to be confused with Entity:EnableCustomCollisions.  
+--- ℹ **NOTE**:   
+--- Make sure to use Entity:CollisionRulesChanged after changing this value.  
+--- Otherwise it can cause crashes.  
 --- @param enable boolean @Enable or disable the custom collision check
 function GEntity:SetCustomCollisionCheck(enable)
 end
@@ -2949,7 +2981,9 @@ end
 function GEntity:SetNetworkAngles(angle)
 end
 
---- Virtually changes entity position for clients. Does the same thing as Entity:SetPos when used serverside.  
+--- Virtually changes entity position for clients. Does almost the same thing as Entity:SetPos when used serverside.  
+--- ℹ **NOTE**:   
+--- Unlike Entity:SetPos it directly changes the position without checking for any unreasonable position.  
 --- @param origin GVector @The position to make clients think this entity is at.
 function GEntity:SetNetworkOrigin(origin)
 end
@@ -3176,6 +3210,7 @@ end
 
 --- Sets if the entity's model should render at all.  
 --- If set on the server, this entity will no longer network to clients, and for all intents and purposes cease to exist clientside.  
+--- The entity can still be manually rendered via Entity:DrawModel in appropriate hooks.  
 --- @param shouldNotDraw boolean @true disables drawing
 function GEntity:SetNoDraw(shouldNotDraw)
 end
@@ -3316,7 +3351,7 @@ end
 function GEntity:SetRenderClipPlaneEnabled(enabled)
 end
 
---- Sets entity's render FX.  
+--- Sets entity's render FX. Requires the entitys rendermode to support transparency.  
 --- @param renderFX number @The new render FX to set, see Enums/kRenderFx
 function GEntity:SetRenderFX(renderFX)
 end
@@ -3355,8 +3390,9 @@ function GEntity:SetShouldPlayPickupSound(playsound)
 end
 
 --- Sets if entity should create a server ragdoll on death or a client one.  
---- ℹ **NOTE**: Player ragdolls created with this enabled will have an owner set, see Entity:SetOwner for more information on what effects this has.  
+--- ℹ **NOTE**:   
 --- This is reset for players when they respawn (Entity:Spawn).  
+--- Player ragdolls created with this enabled will have an owner set, see Entity:SetOwner for more information on what effects this has.  
 --- @param serverragdoll boolean @Set `true` if ragdoll should be created on server, `false` if on client.
 function GEntity:SetShouldServerRagdoll(serverragdoll)
 end
@@ -3382,6 +3418,14 @@ end
 --- ℹ **NOTE**: This function will only have an effect when the entity spawns. After that it will do nothing even is set to true.  
 --- @param spawnEffect boolean @Sets if we should show a spawn effect.
 function GEntity:SetSpawnEffect(spawnEffect)
+end
+
+--- Sets the SpawnFlags to set of an Entity  
+--- SpawnFlags can easily be found on https://developer.valvesoftware.com/wiki/.  
+--- ℹ **NOTE**: See also Entity:RemoveSpawnFlags, Entity:AddSpawnFlags  
+--- Using SF Enumerations won't work, if this function is ran clientside due to the enumerations being defined only Serverside. Use the actual SpawnFlag number.  
+--- @param flags number @The SpawnFlag to remove from the Entity
+function GEntity:SetSpawnFlags(flags)
 end
 
 --- Overrides a single material on the model of this entity.  
@@ -3659,7 +3703,7 @@ end
 
 --- Calls and returns WEAPON:TranslateActivity on the weapon the entity ( player or NPC ) carries.  
 --- Despite existing on client, it doesn't actually do anything on client.  
---- @param act number @The activity to translate
+--- @param act number @The NPC activity to translate
 --- @return number @The translated activity
 function GEntity:Weapon_TranslateActivity(act)
 end
