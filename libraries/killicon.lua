@@ -36,6 +36,7 @@ function killicon.AddTexCoord(class, texture, color, x, y, w, h)
 end
 
 --- Draws a kill icon.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function applies unpredictable vertical offsets, you should use killicon.Render instead, which does not suffer from this issue.  
 --- @param x number @X coordinate of the icon
 --- @param y number @Y coordinate of the icon

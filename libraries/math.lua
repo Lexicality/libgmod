@@ -95,6 +95,7 @@ end
 function math.CubicBezier(frac, p0, p1, p2, p3)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use math.Distance instead  
 --- Returns the difference between two points in 2D space. Alias of math.Distance.  
 --- @param x1 number @X position of first point
@@ -521,6 +522,7 @@ end
 function math.min(...)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This is removed in Lua versions later than what GMod is currently using. You should use the % operator or math.fmod instead.  
 --- Returns the modulus of the specified values. Same as math.fmod.  
 --- @param base number @The base value

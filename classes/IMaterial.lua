@@ -117,6 +117,7 @@ end
 function GIMaterial:SetMatrix(materialMatrix, matrix)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function does nothing  
 --- The functionality of this function was removed due to the amount of crashes it caused.  
 --- @param shaderName string @Name of the shader

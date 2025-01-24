@@ -57,6 +57,7 @@ end
 function engine.GetGames()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Used internally for in-game menus, may be merged in the future into engine.GetAddons.  
 --- Returns the UGC (demos, saves and dupes) the player have subscribed to on the workshop.  
 --- @return table @Returns a table with 5 keys (title, type, tags, wsid, timeadded)

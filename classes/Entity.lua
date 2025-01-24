@@ -754,6 +754,7 @@ end
 function GEntity:GetHitBoxCount(set)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetHitboxSetCount instead.  
 --- Returns the number of hit box sets that an entity has. Functionally identical to Entity:GetHitboxSetCount  
 --- @return number @number of hit box sets
@@ -1135,6 +1136,7 @@ function GEntity:GetNetworkVars()
 end
 
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNetworked2Angle.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Angle instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1143,6 +1145,7 @@ function GEntity:GetNetworked2Angle(key, fallback)
 end
 
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNetworked2Bool.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Bool instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1151,6 +1154,7 @@ function GEntity:GetNetworked2Bool(key, fallback)
 end
 
 --- Retrieves a networked entity value at specified index on the entity that is set by Entity:SetNetworked2Entity.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Entity instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1159,6 +1163,7 @@ function GEntity:GetNetworked2Entity(key, fallback)
 end
 
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworked2Float.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Float instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1167,6 +1172,7 @@ function GEntity:GetNetworked2Float(key, fallback)
 end
 
 --- Retrieves a networked integer (whole number) value that was previously set by Entity:SetNetworked2Int.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Int instead.  
 --- ⚠ **WARNING**: The integer has a 32 bit limit. Use Entity:SetNWInt and Entity:GetNWInt instead  
 --- @param key string @The key that is associated with the value
@@ -1176,6 +1182,7 @@ function GEntity:GetNetworked2Int(key, fallback)
 end
 
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNetworked2String.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2String instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1184,6 +1191,7 @@ function GEntity:GetNetworked2String(key, fallback)
 end
 
 --- Retrieves a networked value at specified index on the entity that is set by Entity:SetNetworked2Var.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Var instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1191,6 +1199,7 @@ end
 function GEntity:GetNetworked2Var(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2VarProxy instead.  
 --- Returns callback function for given NWVar of this entity. Alias of Entity:GetNW2VarProxy  
 --- @param key any @The key of the NWVar to get callback of.
@@ -1199,12 +1208,14 @@ function GEntity:GetNetworked2VarProxy(key)
 end
 
 --- Returns all the networked2 variables in an entity.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2VarTable instead.  
 --- @return table @Key-Value table of all networked2 variables.
 function GEntity:GetNetworked2VarTable()
 end
 
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNetworked2Vector.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNW2Vector instead.  
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1212,6 +1223,7 @@ end
 function GEntity:GetNetworked2Vector(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWAngle instead.  
 --- Retrieves a networked angle value at specified index on the entity that is set by Entity:SetNetworkedAngle.  
 --- @param key string @The key that is associated with the value
@@ -1220,6 +1232,7 @@ end
 function GEntity:GetNetworkedAngle(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWBool instead.  
 --- Retrieves a networked boolean value at specified index on the entity that is set by Entity:SetNetworkedBool.  
 --- @param key string @The key that is associated with the value
@@ -1228,6 +1241,7 @@ end
 function GEntity:GetNetworkedBool(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWEntity instead.  
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworkedEntity.  
 --- @param key string @The key that is associated with the value
@@ -1236,6 +1250,7 @@ end
 function GEntity:GetNetworkedEntity(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWFloat instead.  
 --- Retrieves a networked float value at specified index on the entity that is set by Entity:SetNetworkedFloat.  
 --- Seems to be the same as Entity:GetNetworkedInt.  
@@ -1245,6 +1260,7 @@ end
 function GEntity:GetNetworkedFloat(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWInt instead.  
 --- Retrieves a networked integer value at specified index on the entity that is set by Entity:SetNetworkedInt.  
 --- @param key string @The key that is associated with the value
@@ -1253,6 +1269,7 @@ end
 function GEntity:GetNetworkedInt(key, fallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWString instead.  
 --- Retrieves a networked string value at specified index on the entity that is set by Entity:SetNetworkedString.  
 --- @param key string @The key that is associated with the value
@@ -1262,6 +1279,7 @@ function GEntity:GetNetworkedString(key, fallback)
 end
 
 --- Retrieves a networked value at specified index on the entity that is set by Entity:SetNetworkedVar.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- @param key string @The key that is associated with the value
 --- @param fallback? any @The value to return if we failed to retrieve the value
@@ -1276,12 +1294,14 @@ end
 function GEntity:GetNetworkedVarProxy(name)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNWVarTable instead.  
 --- Returns all the networked variables in an entity.  
 --- @return table @Key-Value table of all networked variables.
 function GEntity:GetNetworkedVarTable()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:GetNWVector instead.  
 --- Retrieves a networked vector value at specified index on the entity that is set by Entity:SetNetworkedVector.  
 --- @param key string @The key that is associated with the value
@@ -1671,6 +1691,7 @@ end
 function GEntity:GetVelocity()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: The function **currently** does nothing and always returns nil  
 --- Returns ID of workshop addon that the entity is from.  
 --- @return number @The workshop ID
@@ -1745,6 +1766,7 @@ end
 function GEntity:Ignite(length, radius)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- This function got disabled and will always throw an error if it's used. This is the error:  
 --- ```  
@@ -2427,6 +2449,7 @@ end
 function GEntity:SetAnimation(playerAnim)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetParent instead.  
 --- Parents the sprite to an attachment on another model.  
 --- Works only on `env_sprite` entities.  
@@ -2990,6 +3013,7 @@ end
 
 --- Sets a networked angle value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2Angle both from client and server.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**:  You should be using Entity:SetNW2Angle instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS. use Entity:SetNWAngle instead  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
@@ -3002,6 +3026,7 @@ end
 
 --- Sets a networked boolean value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2Bool both from client and server.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNW2Bool instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS. use Entity:SetNWBool instead  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
@@ -3014,6 +3039,7 @@ end
 
 --- Sets a networked entity value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2Entity both from client and server.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNW2Entity instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS. use Entity:SetNWEntity instead  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
@@ -3039,6 +3065,7 @@ end
 --- Sets a networked integer (whole number) value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2Int both from client and server.  
 --- See Entity:SetNW2Float for numbers that aren't integers.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNW2Int instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS.  
 --- The integer has a 32 bit limit. Use Entity:SetNWInt instead  
@@ -3052,6 +3079,7 @@ end
 
 --- Sets a networked string value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2String both from client and server.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNW2String instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS. use Entity:SetNWString instead  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
@@ -3073,6 +3101,7 @@ end
 --- | Int             |  
 --- | String          |  
 --- | Vector          |  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNW2Var instead.  
 --- ⚠ **WARNING**: Trying to network a type that is not listed above leads to the value not being networked!  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
@@ -3093,6 +3122,7 @@ end
 
 --- Sets a networked vector value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2Vector both from client and server.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNW2Vector instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS. use Entity:SetNWVector instead  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
@@ -3103,6 +3133,7 @@ end
 function GEntity:SetNetworked2Vector(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWAngle instead.  
 --- Sets a networked angle value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedAngle both from client and server.  
@@ -3112,6 +3143,7 @@ end
 function GEntity:SetNetworkedAngle(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWBool instead.  
 --- Sets a networked boolean value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedBool both from client and server.  
@@ -3121,6 +3153,7 @@ end
 function GEntity:SetNetworkedBool(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWEntity instead.  
 --- Sets a networked entity value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedEntity both from client and server.  
@@ -3130,6 +3163,7 @@ end
 function GEntity:SetNetworkedEntity(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWFloat instead.  
 --- Sets a networked float value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedFloat both from client and server.  
@@ -3140,6 +3174,7 @@ end
 function GEntity:SetNetworkedFloat(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWInt instead.  
 --- Sets a networked integer value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedInt both from client and server.  
@@ -3149,6 +3184,7 @@ end
 function GEntity:SetNetworkedInt(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNWFloat instead.  
 --- Sets a networked number at the specified index on the entity.  
 --- @param index any @The index that the value is stored in.
@@ -3156,6 +3192,7 @@ end
 function GEntity:SetNetworkedNumber(index, number)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWString instead.  
 --- Sets a networked string value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedString both from client and server.  
@@ -3176,6 +3213,7 @@ end
 --- | Int             |  
 --- | String          |  
 --- | Vector          |  
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- ⚠ **WARNING**: Trying to network a type that is not listed above leads to the value not being networked!  
 --- the value will only be updated clientside if the entity is or enters the clients PVS.  
@@ -3187,6 +3225,7 @@ end
 function GEntity:SetNetworkedVar(key, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:SetNWVarProxy instead.  
 --- Sets callback function to be called when given NWVar changes.  
 --- @param name string @The name of the NWVar to add callback for.
@@ -3194,6 +3233,7 @@ end
 function GEntity:SetNetworkedVarProxy(name, callback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Entity:SetNWVector instead.  
 --- Sets a networked vector value at specified index on the entity.  
 --- The value then can be accessed with Entity:GetNetworkedVector both from client and server.  

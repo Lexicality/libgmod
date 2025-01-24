@@ -6,6 +6,7 @@
     "duplicate-set-field",
     "missing-fields",
     "redundant-parameter",
-    "undefined-field"
+    "undefined-field",
+    "deprecated"
   ]
 }

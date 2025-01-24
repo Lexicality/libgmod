@@ -56,7 +56,11 @@ function formatWarnings(text: string): string {
     return text.replace(
         WARNINGS_REGEX,
         (match, type: keyof typeof EMJOI, text: string) => {
-            return `\n${EMJOI[type]} **${type.toUpperCase()}**: ${text}\n`;
+            let deprecated = "";
+            if (type == "deprecated") {
+                deprecated = "@deprecated\n";
+            }
+            return `\n${deprecated}${EMJOI[type]} **${type.toUpperCase()}**: ${text}\n`;
         },
     );
 }

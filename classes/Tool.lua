@@ -97,6 +97,7 @@ end
 function GTool:GetPos(id)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use Tool:GetWeapon instead.  
 --- Returns the Tool Gun (`gmod_tool`) Scripted Weapon.  
 --- @return GWeapon @The tool gun weapon

@@ -556,6 +556,7 @@ end
 function GPlayer:GetPreviousWeapon()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Player:GetViewPunchAngles instead.  
 --- Returns players screen punch effect angle. See Player:ViewPunch and Player:SetViewPunchAngles  
 --- @return GAngle @The punch angle
@@ -1430,11 +1431,13 @@ end
 function GPlayer:SprintEnable()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This appears to be a direct binding to internal functionality that is overridden by the engine every frame so calling these functions may not have any or expected effect.  
 --- Doesn't appear to do anything.  
 function GPlayer:StartSprinting()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This appears to be a direct binding to internal functionality that is overridden by the engine every frame so calling these functions may not have any or expected effect.  
 --- When used in a GM:SetupMove hook, this function will force the player to walk, as well as preventing the player from sprinting.  
 function GPlayer:StartWalking()
@@ -1458,12 +1461,14 @@ end
 function GPlayer:SteamID64()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This appears to be a direct binding to internal functionality that is overridden by the engine every frame so calling these functions may not have any or expected effect.  
 --- When used in a GM:SetupMove hook, this function will prevent the player from sprinting.  
 --- When +walk is engaged, the player will still be able to sprint to half speed (normal run speed) as opposed to full sprint speed without this function.  
 function GPlayer:StopSprinting()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This appears to be a direct binding to internal functionality that is overridden by the engine every frame so calling these functions may not have any or expected effect.  
 --- When used in a GM:SetupMove hook, this function behaves unexpectedly by preventing the player from sprinting similar to Player:StopSprinting.  
 function GPlayer:StopWalking()
@@ -1474,6 +1479,7 @@ end
 function GPlayer:StopZooming()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Alias of Player:RemoveAllAmmo  
 --- Removes all ammo from the player.  
 function GPlayer:StripAmmo()
@@ -1545,6 +1551,7 @@ end
 function GPlayer:UnfreezePhysicsObjects()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- **This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use Player:SteamID64 or Player:SteamID instead, which are guaranteed to be unique to each player.  
 --- Returns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.  
@@ -1553,6 +1560,7 @@ end
 function GPlayer:UniqueID()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This is based on Player:UniqueID which is deprecated and vulnerable to collisions.  
 --- Returns a table that will stay allocated for the specific player serveside between connects until the server shuts down. On client it has no such special behavior.  
 --- ℹ **NOTE**: This table is not synchronized (networked) between client and server.  

@@ -412,6 +412,7 @@ end
 function GCNavArea:RemoveAttributes(attribs)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Does nothing  
 --- Removes this node from the Closed List.  
 --- Used in pathfinding via the [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm).  

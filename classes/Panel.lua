@@ -48,6 +48,7 @@ end
 function GPanel:Add(table)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Does nothing  
 --- This function does nothing.  
 function GPanel:AddText()
@@ -985,6 +986,7 @@ end
 function GPanel:ParentToHUD()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Due to privacy concerns, this function has been disabled  
 --- Only works for TextEntries.  
 --- Pastes the contents of the clipboard into the TextEntry.  
@@ -1080,6 +1082,7 @@ end
 function GPanel:SelectAllOnFocus()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Duplicate of Panel:SelectAll.  
 --- Selects all the text in a panel object. Will not select non-text items; for this, use Panel:SelectAll.  
 --- @param resetCursorPos boolean @Reset cursor pos?
@@ -1255,6 +1258,7 @@ end
 function GPanel:SetHeight(height)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Alias of Panel:SetKeyboardInputEnabled  
 --- Enables or disables the keyboard input for the panel.  
 --- @param keyboardInput boolean @Whether to enable or disable keyboard input.
@@ -1633,6 +1637,7 @@ end
 function GPanel:UpdateHTMLTexture()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use Panel:IsValid instead.  
 --- Returns if a given panel is valid or not.  
 --- @return boolean @Whether the panel is valid or not, true being it is, false being it isn't.

@@ -794,6 +794,7 @@ end
 function GM:OnPhysgunReload(physgun, ply)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use GM:PlayerChangedTeam instead, which works for every Player:SetTeam call.  
 --- Called when a player has changed team using GM:PlayerJoinTeam.  
 --- ⚠ **WARNING**: This hook will not work with hook.Add and it is only called manually from GM:PlayerJoinTeam by the base gamemode  

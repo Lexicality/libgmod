@@ -6,6 +6,7 @@ _G.debug = {}
 function debug.Trace()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- ℹ **NOTE**:  This only works on the source dedicated server.   
 --- Enters an interactive mode with the user, running each string that the user enters. Using simple commands and other debug facilities, the user can inspect global and local variables, change their values, evaluate expressions, and so on. A line containing only the word cont finishes this function, so that the caller continues its execution.  
@@ -14,6 +15,7 @@ end
 function debug.debug()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Returns the environment of the passed object. This can be set with debug.setfenv  
 --- @param object table @Object to get environment of
@@ -21,6 +23,7 @@ end
 function debug.getfenv(object)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Returns the current hook settings of the passed thread. The thread argument can be omitted. This is completely different to gamemode hooks. More information on hooks can be found at http://www.lua.org/pil/23.2.html. This function will simply return the function, mask, and count of the last called debug.sethook.  
 --- @param thread? thread @Which thread to retrieve it's hook from, doesn't seem to actually work.
@@ -38,6 +41,7 @@ end
 function debug.getinfo(funcOrStackLevel, fields, func)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Gets the name and value of a local variable indexed from the level.  
 --- ⚠ **WARNING**: When a function has a tailcall return, you cannot access the locals of this function.  
@@ -49,6 +53,7 @@ end
 function debug.getlocal(thread, level, index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Returns the metatable of an object. This function ignores the metatable's __metatable field.  
 --- @param object any @The object to retrieve the metatable from.
@@ -56,6 +61,7 @@ end
 function debug.getmetatable(object)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- This function **will** return an empty table.  
 --- If you get an error because of this see the example below for a workaround  
@@ -66,6 +72,7 @@ end
 function debug.getregistry()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Used for getting variable values in an index from the passed function. This does nothing for C functions.  
 --- @param func function @Function to get the upvalue indexed from.
@@ -75,6 +82,7 @@ end
 function debug.getupvalue(func, index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Sets the environment of the passed object.  
 --- @param object table @Object to set environment of
@@ -83,6 +91,7 @@ end
 function debug.setfenv(object, env)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Sets the given function as a Lua hook. This is completely different to gamemode hooks. The thread argument can be completely omitted and calling this function with no arguments will remove the current hook. This is used by default for infinite loop detection. More information on hooks can be found at http://www.lua.org/pil/23.2.html and https://www.gammon.com.au/scripts/doc.php?lua=debug.sethook  
 --- Hooks are not always ran when code that has been compiled by LuaJIT's JIT compiler is being executed, this is due to Intermediate Representation internally storing constantly running bytecode for performance reasons.  
@@ -103,6 +112,7 @@ end
 function debug.setlocal(thread, level, index, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Sets the object's metatable. Unlike Global.setmetatable, this function works regardless of whether the first object passed is a valid table or not; this function even works on primitive datatypes such as numbers, functions, and even nil.  
 --- @param object any @Object to set the metatable for.
@@ -120,6 +130,7 @@ end
 function debug.setupvalue(func, index, val)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Returns a full execution stack trace.  
 --- @param thread? thread @Thread (ie

@@ -87,6 +87,7 @@ function jit.util.funcinfo(func, pos)
 end
 
 --- Gets a constant at a certain index in a function.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- ⚠ **WARNING**: This function isn't officially documented on LuaJIT wiki, use it at your own risk.  
 --- ℹ **NOTE**: Numbers constants goes from 0 (included) to n-1, n being the value of nconsts in jit.util.funcinfo in other words, the consts goes from (nconsts-1) to -n  
@@ -97,6 +98,7 @@ end
 function jit.util.funck(func, index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- Does the exact same thing as debug.getupvalue except it only returns the name, not the name and the object. The upvalue indexes also start at 0 rather than 1, so doing `jit.util.funcuvname(func, 0)` will get you the same name as `debug.getupvalue(func, 1)`  
 --- ⚠ **WARNING**: This function isn't officially documented on LuaJIT wiki, use it at your own risk.  
@@ -106,6 +108,7 @@ end
 function jit.util.funcuvname(func, index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- Previously got the address of a function from a set list of functions, but now always returns `0` as it is deprecated.  
 --- @param index number @This arugment is ignored.
@@ -113,6 +116,7 @@ end
 function jit.util.ircalladdr(index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns. It will always return 0.  
 --- Grabs the address of a function based on it's trace exit number. Grabbed via jit.attach (with the texit event).  
 --- @param exitno number @exit number to retrieve exit stub address from (gotten via jit.attach with the texit event)
@@ -120,6 +124,7 @@ end
 function jit.util.traceexitstub(exitno)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- Return table fields:  
 --- * link (number): the linked trace (0 for link types: none, return, interpreter)  
@@ -132,6 +137,7 @@ end
 function jit.util.traceinfo(trace)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- @param tr number 
 --- @param index number 
@@ -143,6 +149,7 @@ end
 function jit.util.traceir(tr, index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- @param tr number 
 --- @param index number 
@@ -152,6 +159,7 @@ end
 function jit.util.tracek(tr, index)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns. It will always return 3 `0`s.  
 --- @param tr number 
 --- @return string @mcode
@@ -160,6 +168,7 @@ end
 function jit.util.tracemc(tr)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- Return table fields:  
 --- * 0 (ref) (number): first IR ref for the snapshot  

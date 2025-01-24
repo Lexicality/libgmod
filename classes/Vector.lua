@@ -78,6 +78,7 @@ end
 function GVector:Dot(otherVector)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This is an alias of Vector:Dot. Use that instead.  
 --- Returns the dot product of the two vectors.  
 --- @param Vector GVector @The other vector.
@@ -91,6 +92,7 @@ end
 function GVector:GetNegated()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use Vector:GetNormalized instead.  
 --- Returns a normalized version of the vector. This is a alias of Vector:GetNormalized.  
 --- @return GVector @Normalized version of the vector.

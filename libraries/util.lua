@@ -713,6 +713,7 @@ end
 function util.TypeToString(input)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Global.tobool instead.  
 --- Converts string or a number to a bool, if possible. Alias of Global.tobool.  
 --- @param input any @A string or a number to convert.

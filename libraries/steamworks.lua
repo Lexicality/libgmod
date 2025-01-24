@@ -37,6 +37,7 @@ end
 function steamworks.GetList(type, tags, offset, numRetrieve, days, userID, resultCallback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use the callback of steamworks.RequestPlayerInfo instead.  
 --- Retrieves players name by their 64bit SteamID.  
 --- You must call steamworks.RequestPlayerInfo a decent amount of time before calling this function.  
@@ -72,6 +73,7 @@ end
 function steamworks.ViewFile(workshopItemID)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use data steamworks.FileInfo instead.  
 --- Retrieves vote info of supplied addon.  
 --- @param workshopItemID string @The ID of workshop item.

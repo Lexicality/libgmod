@@ -526,6 +526,7 @@ end
 function _G.DrawToyTown(Passes, Height)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You really should be using Entity:ForcePlayerDrop, which does the same thing.  
 --- Drops the specified entity if it is being held by any player with Gravity Gun, Physics Gun or `+use` pickup.  
 --- See also Player:DropObject and Entity:ForcePlayerDrop.  
@@ -712,6 +713,7 @@ end
 function _G.GetConVar(name)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetInt or ConVar:GetFloat on it.  
 --- Gets the numeric value ConVar with the specified name.  
 --- @param name string @Name of the ConVar to get.
@@ -719,6 +721,7 @@ end
 function _G.GetConVarNumber(name)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Store the ConVar object retrieved with Global.GetConVar and call ConVar:GetString on it.  
 --- Gets the string value ConVar with the specified name.  
 --- @param name string @Name of the ConVar to get.
@@ -934,6 +937,7 @@ end
 function _G.HTTP(parameters)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: To send the target file to the client simply call AddCSLuaFile() in the target file itself.  
 --- This function works exactly the same as Global.include both clientside and serverside.  
 --- The only difference is that on the serverside it also calls Global.AddCSLuaFile on the filename, so that it gets sent to the client.  
@@ -1437,6 +1441,7 @@ function _G.RunString(code, identifier, handleError)
 end
 
 --- Alias of Global.RunString.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use Global.RunString instead.  
 function _G.RunStringEx()
 end
@@ -1449,6 +1454,7 @@ end
 function _G.SQLStr(input, noQuotes)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Global.ScreenScale instead.  
 --- Returns a number based on the Size argument and your screen's width. Alias of Global.ScreenScale.  
 --- @param Size number @The number you want to scale.
@@ -1506,6 +1512,7 @@ function _G.ScreenScaleH(size)
 end
 
 --- Send a usermessage  
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- This uses the umsg internally, which has been deprecated. Use the net instead.  
 --- ℹ **NOTE**:   
@@ -1775,6 +1782,7 @@ end
 function _G.TypeID(variable)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Global.IsUselessModel instead.  
 --- This function is an alias of Global.IsUselessModel.  
 --- Returns whether or not a model is useless by checking that the file path is that of a proper model.  
@@ -1817,6 +1825,7 @@ end
 function _G.VGUIRect(x, y, w, h)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Global.IsValid instead  
 --- Returns if a panel is safe to use.  
 --- @param panel GPanel @The panel to validate.
@@ -1884,6 +1893,7 @@ end
 function _G.error(message, errorLevel)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was deprecated in Lua 5.1 and is removed in Lua 5.2. Use Global.collectgarbage( "count" ) instead.  
 ---  Returns the current floored dynamic memory usage of Lua in kilobytes.  
 --- @return number @The current floored dynamic memory usage of Lua, in kilobytes.

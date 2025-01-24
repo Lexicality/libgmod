@@ -11,6 +11,7 @@ _G.timer = {}
 function timer.Adjust(identifier, delay, repetitions, func)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: If you want to check if whether or not a timer exists, use timer.Exists.  
 ---  This function does nothing.  
 function timer.Check()
@@ -27,6 +28,7 @@ end
 function timer.Create(identifier, delay, repetitions, func)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using timer.Remove instead.  
 ---  Stops and destroys the given timer. Alias of timer.Remove.  
 --- @param identifier string @Identifier of the timer to destroy.

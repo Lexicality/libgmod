@@ -45,3 +45,10 @@ interface Struct {
     realms: Realm[];
     fields: Field[];
 }
+
+interface Panel {
+    name: string;
+    parent: string;
+    description: string;
+    functions?: func[];
+}

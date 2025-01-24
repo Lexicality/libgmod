@@ -22,6 +22,7 @@ function gui.EnableScreenClicker(enabled)
 end
 
 --- Hides the game menu overlay.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Will be disabled in a future patch. Use GM:OnPauseMenuShow instead.  
 function gui.HideGameUI()
 end
@@ -84,6 +85,7 @@ end
 function gui.IsGameUIVisible()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use input.GetCursorPos instead.  
 --- Returns the cursor's position on the screen, or 0, 0 if cursor is not visible.  
 --- @return number @mouseX
@@ -115,6 +117,7 @@ end
 function gui.ScreenToVector(x, y)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use input.SetCursorPos instead.  
 --- Sets the cursor's position on the screen, relative to the topleft corner of the window  
 --- @param mouseX number @The X coordinate to move the cursor to.

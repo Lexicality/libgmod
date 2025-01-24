@@ -13,6 +13,7 @@ _G.surface = {}
 function surface.CreateFont(fontName, fontData)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Alias of Global.DisableClipping so use that instead.  
 --- Enables or disables the clipping used by the VGUI that limits the drawing operations to a panels bounds.  
@@ -211,12 +212,14 @@ end
 function surface.PlaySound(soundfile)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Global.ScrH instead.  
 --- Returns the height of the current client's screen.  
 --- @return number @screenHeight
 function surface.ScreenHeight()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should use Global.ScrW instead.  
 --- Returns the width of the current client's screen.  
 --- @return number @screenWidth

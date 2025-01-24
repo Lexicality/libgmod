@@ -56,6 +56,7 @@ end
 function table.Empty(tbl)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Instead, iterate the table using ipairs or increment from the previous index using Global.next. Non-numerically indexed tables are not ordered.  
 --- Returns the value positioned after the supplied value in a table. If it isn't found then the first element in the table is returned  
 --- @param tbl table @Table to search
@@ -64,6 +65,7 @@ end
 function table.FindNext(tbl, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Instead, iterate your table with ipairs, storing the previous value and checking for the target. Non-numerically indexed tables are not ordered.  
 --- Returns the value positioned before the supplied value in a table. If it isn't found then the last element in the table is returned  
 --- @param tbl table @Table to search
@@ -92,6 +94,7 @@ end
 function table.ForceInsert(tab, value)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Instead, expect the first key to be 1.  
 --- Non-numerically indexed tables are not ordered and do not have a first key.  
 --- Returns the first key found in the given table  
@@ -100,6 +103,7 @@ end
 function table.GetFirstKey(tab)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Instead, index the table with a key of 1.  
 --- Non-numerically indexed tables are not ordered and do not have a first key.  
 --- Returns the first value found in the given table  
@@ -114,6 +118,7 @@ end
 function table.GetKeys(tabl)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Instead, use the result of the length (#) operator, ensuring it is not zero. Non-numerically indexed tables are not ordered and do not have a last key.  
 --- Returns the last key found in the given table  
 --- @param tab table @Table to retrieve key from
@@ -121,6 +126,7 @@ end
 function table.GetLastKey(tab)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Instead, index the table with the result of the length (#) operator, ensuring it is not zero. Non-numerically indexed tables are not ordered and do not have a last key.  
 --- Returns the last value found in the given table  
 --- @param tab table @Table to retrieve value from
@@ -289,6 +295,7 @@ end
 function table.concat(tbl, concatenator, startPos, endPos)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This was deprecated in Lua 5.1 and removed in 5.2. You should use Global.pairs instead.  
 ---  Iterates for each key-value pair in the table, calling the function with the key and value of the pair. If the function returns anything, the loop is broken.  
 --- The GLua interpretation of this is table.ForEach.  
@@ -297,6 +304,7 @@ end
 function table.foreach(tbl, callback)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This was deprecated in Lua 5.1 and removed in 5.2. You should use Global.ipairs() instead.  
 ---  Iterates for each numeric index in the table in order.  
 --- This is inherited from the original Lua implementation and is deprecated in Lua as of 5.1; see [here](http://lua-users.org/wiki/TableLibraryTutorial). You should use Global.ipairs() instead.  
@@ -305,6 +313,7 @@ end
 function table.foreachi(table, func)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function was deprecated in Lua 5.1 and is removed in 5.2. Use the length (#) operator instead.  
 ---  Returns the length of the table.  
 --- @param tbl table @The table to check.

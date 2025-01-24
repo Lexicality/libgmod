@@ -67,6 +67,7 @@ end
 function string.FromColor(color)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use either string.sub(str, index, index) or str[index].  
 ---  Returns char value from the specified index in the supplied string.  
 --- @param str string @The string that you will be searching with the supplied index.
@@ -93,6 +94,7 @@ end
 function string.GetPathFromFilename(path)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You really should just use table.concat.  
 --- Joins the values of a table together to form a string.  
 --- This is the reverse of string.Explode and is functionally identical to table.concat, but with less features.  
@@ -178,6 +180,7 @@ end
 function string.Split(Inputstring, Separator)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use string.StartsWith.  
 --- Returns whether or not the first string starts with the second. This is a alias of string.StartsWith.  
 --- @param inputStr string @String to check.
@@ -287,6 +290,7 @@ end
 function string.format(format, ...)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This function is removed in Lua versions later than what GMod is currently using. Use string.gmatch instead.  
 --- Returns an iterator function that is called for every complete match of the pattern, all sub matches will be passed as to the loop.  
 --- @param data string @The string to search in

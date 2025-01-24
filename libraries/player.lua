@@ -54,6 +54,7 @@ end
 function player.GetBySteamID64(steamID64)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use player.GetBySteamID64, player.GetBySteamID or player.GetByAccountID to get a player by a unique identifier instead.  
 --- Gets the player with the specified uniqueID (not recommended way to identify players).  
 --- ⚠ **WARNING**: It is highly recommended to use player.GetByAccountID, player.GetBySteamID or player.GetBySteamID64 instead as this function can have collisions ( be same for different people ) while SteamID is guaranteed to unique to each player.  

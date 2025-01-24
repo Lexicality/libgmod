@@ -367,6 +367,7 @@ end
 function render.GetPowerOfTwoTexture()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Alias of render.GetPowerOfTwoTexture.  
 --- Alias of render.GetPowerOfTwoTexture.  
 --- @return GITexture @The render.GetPowerOfTwoTexture.
@@ -505,6 +506,7 @@ end
 function render.OverrideBlend(enabled)
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: Use render.OverrideBlend instead.  
 --- Overrides the internal graphical functions used to determine the final color and alpha of a rendered texture.  
 --- See also render.OverrideAlphaWriteEnable.  
@@ -585,6 +587,7 @@ function render.PushFilterMin(texFilterType)
 end
 
 --- Enables the flashlight projection for the upcoming rendering.  
+--- @deprecated  
 --- 🛑 **DEPRECATED**: This will leave models lit under specific conditions. You should use render.RenderFlashlights which is meant as a direct replacement for this function.  
 --- @param enable? boolean @Whether the flashlight mode should be enabled or disabled.
 function render.PushFlashlightMode(enable)

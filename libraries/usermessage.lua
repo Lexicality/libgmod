@@ -1,15 +1,18 @@
 --- @meta
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using the net instead  
 --- The usermessage library is used to receive user messages from the server on the client.  
 --- ⚠ **WARNING**: Usermessages have a limit of only 256 bytes!  
 _G.usermessage = {}
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using net instead  
 --- Returns a table of every usermessage hook  
 --- @return table @User message hooks
 function usermessage.GetTable()
 end
 
+--- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using net instead  
 --- Sets a hook for the specified to be called when a usermessage with the specified name arrives.  
 --- ⚠ **WARNING**: Usermessages have a limit of only 256 bytes!  
