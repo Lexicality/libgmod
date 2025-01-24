@@ -7,6 +7,7 @@ import { handleClass, preProcessClasses } from "./classes";
 import { handleFunc } from "./functions";
 import { handleLib } from "./libraries";
 import { handleStruct } from "./structs";
+import { handlePanel, preProcessPanels } from "./panels";
 
 async function doGlobals(): Promise<void> {
     let data: Func[] = JSON.parse(
@@ -134,18 +135,48 @@ async function doStructs(): Promise<void> {
     //
 }
 
+async function getPanels(): Promise<Panel[]> {
+    return JSON.parse(await fs.readFile("output/panels.json", "utf-8"));
+}
+
+async function doPanels(data: Panel[]): Promise<void> {
+    await fs.mkdir("panels", { recursive: true });
+    for (let panel of data) {
+        let paneldata: string | undefined;
+        try {
+            paneldata = handlePanel(panel);
+        } catch (e) {
+            console.error(
+                "Problem while getting library definition for %s: %s",
+                panel.name,
+                e,
+            );
+            throw e;
+        }
+
+        if (paneldata) {
+            let filename = path.join("panels", `${panel.name}.lua`);
+            await fs.writeFile(filename, paneldata.trimEnd() + "\n");
+            console.log("Done %s!", panel.name);
+        }
+    }
+}
+
 async function main() {
     console.log("hello");
 
     try {
         let classes = await getClasses();
         classes = preProcessClasses(classes);
+        let panels = await getPanels();
+        panels = preProcessPanels(panels);
 
         await Promise.all([
             doGlobals(),
             doLibs(),
             doClasses(classes),
             doStructs(),
+            doPanels(panels),
         ]);
         console.log("woop");
     } catch (e) {
