@@ -1,7 +1,7 @@
 --- @meta
 
 --- @class GWorkshopFileBase
---- <internal></internal>  
+--- 🚷 **INTERNAL**:   
 --- This object is created by Global.WorkshopFileBase which is used internally to fetch data of the specific namespace  
 --- or to publish saves and dupes.  
 --- This also exists on the Server but most functions may throw an error. It's meant to be used clientside.  
