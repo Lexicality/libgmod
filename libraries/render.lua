@@ -54,8 +54,7 @@ end
 
 --- Tests every pixel of the active Render Target against the current Stencil configuration and sets the Color Channel values and, optionally, the Depth Buffer values for every pixel that passes.  
 --- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
---- ℹ **NOTE**:   
---- This function does **not** clear the Stencil Buffer on its own.  
+--- ℹ **NOTE**: This function does **not** clear the Stencil Buffer on its own.  
 --- If you would like to clear the Stencil Buffer, you can use render.ClearStencil  
 --- @param red number @The red Color Channel value for each pixel that is cleared
 --- @param green number @The green Color Channel value for each pixel that is cleared

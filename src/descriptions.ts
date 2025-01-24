@@ -60,7 +60,7 @@ function formatWarnings(text: string): string {
             if (type == "deprecated") {
                 deprecated = "@deprecated\n";
             }
-            return `\n${deprecated}${EMJOI[type]} **${type.toUpperCase()}**: ${text}\n`;
+            return `\n${deprecated}${EMJOI[type]} **${type.toUpperCase()}**: ${text.trim()}\n`;
         },
     );
 }

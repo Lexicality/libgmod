@@ -5,12 +5,10 @@
 --- This object is created by Global.WorkshopFileBase which is used internally to fetch data of the specific namespace  
 --- or to publish saves and dupes.  
 --- This also exists on the Server but most functions may throw an error. It's meant to be used clientside.  
---- ℹ **NOTE**:   
---- You need to set the `HTML` field to a DHTML panel that is set up correctly like [here](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/dupes.lua#L12), or else you might get errors.  
+--- ℹ **NOTE**: You need to set the `HTML` field to a DHTML panel that is set up correctly like [here](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/gamemodes/sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/dupes.lua#L12), or else you might get errors.  
 local GWorkshopFileBase = {}
 --- Fetches all subscriptions for the set namespace and type  
---- ℹ **NOTE**:   
---- If you want to use the type `local` you need to implement the `:FetchLocal(offset, perpage)` function!  
+--- ℹ **NOTE**: If you want to use the type `local` you need to implement the `:FetchLocal(offset, perpage)` function!  
 --- @param type string @The type to search for
 --- @param offset number @Skips the first x results.
 --- @param perpage number @How many results per page should be returned.

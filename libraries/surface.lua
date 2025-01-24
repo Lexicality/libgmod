@@ -173,8 +173,7 @@ function surface.GetTextPos()
 end
 
 --- Returns the width and height (in pixels) of the given text with the font that has been set with surface.SetFont.  
---- ⁉ **VALIDATE**:   
---- Does not take into account new lines, the returned height is for the entire font (as specified by the font), not maximum of individual characters.  
+--- ⁉ **VALIDATE**: Does not take into account new lines, the returned height is for the entire font (as specified by the font), not maximum of individual characters.  
 --- @param text string @The string to check the size of.
 --- @return number @Width of the provided text.
 --- @return number @Height of the provided text.
@@ -204,8 +203,7 @@ function surface.GetTextureSize(textureID)
 end
 
 --- Play a sound file directly on the client (such as UI sounds, etc).  
---- ℹ **NOTE**:   
---- Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
+--- ℹ **NOTE**: Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
 --- `Unsupported 32-bit wave file your_sound.wav` and  
 --- `Invalid sample rate (48000) for sound 'your_sound.wav'`  
 --- @param soundfile string @The path to the sound file

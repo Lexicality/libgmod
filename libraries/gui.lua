@@ -15,8 +15,7 @@ function gui.AddCaption(text, duration, fromPlayer)
 end
 
 --- Enables the mouse cursor without restricting player movement, like using Sandbox's context menu. See vgui.CursorVisible for a function to see if the cursor is visible or not.  
---- ℹ **NOTE**:   
---- Some CUserCmd functions will return incorrect values when this function is active because [the user input is getting overtaken by the vgui system](https://github.com/Facepunch/garrysmod-issues/issues/982#issuecomment-505671531).  
+--- ℹ **NOTE**: Some CUserCmd functions will return incorrect values when this function is active because [the user input is getting overtaken by the vgui system](https://github.com/Facepunch/garrysmod-issues/issues/982#issuecomment-505671531).  
 --- @param enabled boolean @Whether the cursor should be enabled or not
 function gui.EnableScreenClicker(enabled)
 end

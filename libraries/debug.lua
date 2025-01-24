@@ -8,7 +8,7 @@ end
 
 --- @deprecated  
 --- 🛑 **DEPRECATED**:   
---- ℹ **NOTE**:  This only works on the source dedicated server.   
+--- ℹ **NOTE**: This only works on the source dedicated server.  
 --- Enters an interactive mode with the user, running each string that the user enters. Using simple commands and other debug facilities, the user can inspect global and local variables, change their values, evaluate expressions, and so on. A line containing only the word cont finishes this function, so that the caller continues its execution.  
 --- * Commands for debug.debug are not lexically nested within any function, and so have no direct access to local variables.  
 --- * To exit this interactive mode, you can press Ctrl + Z then Enter OR type the word 'cont' on a single line and press enter.  
@@ -62,8 +62,7 @@ function debug.getmetatable(object)
 end
 
 --- @deprecated  
---- 🛑 **DEPRECATED**:   
---- This function **will** return an empty table.  
+--- 🛑 **DEPRECATED**: This function **will** return an empty table.  
 --- If you get an error because of this see the example below for a workaround  
 --- Returns the internal Lua registry table.  
 --- The Lua registry is used by the engine and binary modules to create references to Lua values. The registry contains every global ran and used in the Lua environment. Avoid creating entries into the registry with a number as the key, as they are reserved for the reference system.  

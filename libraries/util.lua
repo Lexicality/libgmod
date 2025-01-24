@@ -60,8 +60,7 @@ function util.BlastDamageInfo(dmg, damageOrigin, damageRadius)
 end
 
 --- Generates the [CRC Checksum](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) of the specified string.  
---- ⚠ **WARNING**:   
---- This is NOT a hashing function. It is a checksum, typically used for error detection/data corruption detection. It is possible for this function to generate "collisions", where two different strings will produce the same CRC. If you need a hashing function, use util.SHA256.  
+--- ⚠ **WARNING**: This is NOT a hashing function. It is a checksum, typically used for error detection/data corruption detection. It is possible for this function to generate "collisions", where two different strings will produce the same CRC. If you need a hashing function, use util.SHA256.  
 --- @param stringToChecksum string @The string to calculate the checksum of.
 --- @return string @The unsigned 32 bit checksum.
 function util.CRC(stringToChecksum)
@@ -130,8 +129,7 @@ end
 
 --- Creates an effect with the specified data.  
 --- For Orange Box `.pcf` particles, see Global.ParticleEffect, Global.ParticleEffectAttach and  Global.CreateParticleSystem.  
---- ℹ **NOTE**:   
---- When dispatching an effect from the server, some values may be clamped for networking optimizations. Visit the Set accessors on CEffectData to see which ones are affected.  
+--- ℹ **NOTE**: When dispatching an effect from the server, some values may be clamped for networking optimizations. Visit the Set accessors on CEffectData to see which ones are affected.  
 --- You will need to couple this function with Global.IsFirstTimePredicted if you want to use it in a predicted hook.  
 --- @param effectName string @The name of the effect to create
 --- @param effectData GCEffectData @The effect data describing the effect.
@@ -524,8 +522,7 @@ function util.PointContents(position)
 end
 
 --- Precaches a model for later use. Model is cached after being loaded once.  
---- ⚠ **WARNING**:   
---- Modelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.  
+--- ⚠ **WARNING**: Modelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.  
 --- @param modelName string @The model to precache.
 function util.PrecacheModel(modelName)
 end
@@ -539,8 +536,7 @@ function util.PrecacheSound(soundName)
 end
 
 --- Performs a trace with the given origin, direction, and filter.  
---- ℹ **NOTE**:   
---- This function will throw an error in the menu realm because it internally uses util.TraceLine which doesn't exist in the menu realm and thus error.  
+--- ℹ **NOTE**: This function will throw an error in the menu realm because it internally uses util.TraceLine which doesn't exist in the menu realm and thus error.  
 --- @param origin GVector @The origin of the trace.
 --- @param dir GVector @The direction of the trace times the distance of the trace
 --- @param filter? GEntity @Entity which should be ignored by the trace

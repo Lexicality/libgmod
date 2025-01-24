@@ -202,8 +202,7 @@ end
 
 --- Removes the shadow for the entity.  
 --- The shadow will be recreated as soon as the entity wakes.  
---- ℹ **NOTE**:   
---- Doesn't affect shadows from flashlight/lamps/env_projectedtexture.  
+--- ℹ **NOTE**: Doesn't affect shadows from flashlight/lamps/env_projectedtexture.  
 function GEntity:DestroyShadow()
 end
 
@@ -317,8 +316,7 @@ function GEntity:EyePos()
 end
 
 --- Searches the Entity's model for a Body Group with a given name.  
---- ℹ **NOTE**:   
---- Weapons will return results from their viewmodels.  
+--- ℹ **NOTE**: Weapons will return results from their viewmodels.  
 --- @param name string @The name to search for.
 --- @return number @The Body Group's ID or `-1` if no Body Group has the provided name.
 function GEntity:FindBodygroupByName(name)
@@ -437,31 +435,27 @@ function GEntity:GetBloodColor()
 end
 
 --- Returns a list of information about each Body Group present on the Entity's model.  
---- ℹ **NOTE**:   
---- Weapons will return results from their viewmodels.  
+--- ℹ **NOTE**: Weapons will return results from their viewmodels.  
 --- @return table @A table of Body Group information where each value is a Structures/BodyGroupData.
 function GEntity:GetBodyGroups()
 end
 
 --- Returns the Sub Model ID for the currently active Sub Model of the Body Group corresponding to the given Body Group ID.  
---- ℹ **NOTE**:   
---- Weapons will return results from their viewmodels.  
+--- ℹ **NOTE**: Weapons will return results from their viewmodels.  
 --- @param bodyGroupId number @The Body Group ID to retrieve the active Sub Model ID for
 --- @return number @The currently active Sub Model ID
 function GEntity:GetBodygroup(bodyGroupId)
 end
 
 --- Returns the number of Sub Models in the Body Group corresponding to a given Body Group ID of the Entity's model.  
---- ℹ **NOTE**:   
---- Weapons will return results from their viewmodels.  
+--- ℹ **NOTE**: Weapons will return results from their viewmodels.  
 --- @param bodyGroupId number @The Body Group ID to retrieve the Sub Model count of
 --- @return number @The number of Sub Models in the Body Group.
 function GEntity:GetBodygroupCount(bodyGroupId)
 end
 
 --- Retrieves the name of the Body Group corresponding to a given Body Group ID on the Entity's model.  
---- ℹ **NOTE**:   
---- Weapons will return results from their viewmodels.  
+--- ℹ **NOTE**: Weapons will return results from their viewmodels.  
 --- @param bodyGroupId number @The Body Group ID to get the name of.
 --- @return string @The name of the Body Group.
 function GEntity:GetBodygroupName(bodyGroupId)
@@ -1317,8 +1311,7 @@ function GEntity:GetNoDraw()
 end
 
 --- Returns the number of Body Groups that the Entity's model contains.  
---- ℹ **NOTE**:   
---- Weapons will return results from their viewmodels.  
+--- ℹ **NOTE**: Weapons will return results from their viewmodels.  
 --- @return number @The amount of Body Groups on the Entity's model.
 function GEntity:GetNumBodyGroups()
 end
@@ -1709,8 +1702,7 @@ end
 --- Causes the entity to break into its current models gibs, if it has any.  
 --- You must call Entity:PrecacheGibs on the entity before using this function, or it will not create any gibs.  
 --- If called on server, the gibs will be spawned on the currently connected clients and will not be synchronized. Otherwise the gibs will be spawned only for the client the function is called on.  
---- ℹ **NOTE**:   
---- this function will not remove or hide the entity it is called on.  
+--- ℹ **NOTE**: this function will not remove or hide the entity it is called on.  
 --- For more expensive version of this function see Entity:GibBreakServer.  
 --- @param force GVector @The force to apply to the created gibs.
 --- @param clr? table @If set, this will be color of the broken gibs instead of the entity's color.
@@ -1767,8 +1759,7 @@ function GEntity:Ignite(length, radius)
 end
 
 --- @deprecated  
---- 🛑 **DEPRECATED**:   
---- This function got disabled and will always throw an error if it's used. This is the error:  
+--- 🛑 **DEPRECATED**: This function got disabled and will always throw an error if it's used. This is the error:  
 --- ```  
 --- [ERROR] InitializeAsClientEntity is deprecated and should no longer be used.  
 --- ```  
@@ -2062,8 +2053,7 @@ end
 
 --- Creates a network variable on the entity and adds Set/Get functions for it. This function should only be called in ENTITY:SetupDataTables.  
 --- See Entity:NetworkVarNotify for a function to hook NetworkVar changes.  
---- ℹ **NOTE**:   
---- Entity NetworkVars are influenced by the return value of ENTITY:UpdateTransmitState.  
+--- ℹ **NOTE**: Entity NetworkVars are influenced by the return value of ENTITY:UpdateTransmitState.  
 --- So if you use the **PVS**(**default**), then the NetworkVars can be different for each client.  
 --- ⚠ **WARNING**: Make sure to not call the SetDT* and your custom set methods on the client realm unless you know exactly what you are doing.  
 --- Combining this function with util.TableToJSON can also provide a way to network tables as serialized strings.  
@@ -2466,15 +2456,13 @@ end
 
 --- Sets the Entity's active Sub Models via a string of Sub Model IDs in order from the first Body Group ID to the last.  
 --- This is a convenience function for Entity:SetBodygroup.  
---- ℹ **NOTE**:   
---- When used on a Weapon, this will modify its viewmodel.  
+--- ℹ **NOTE**: When used on a Weapon, this will modify its viewmodel.  
 --- @param subModelIds string @The Sub Model IDs to activate for each Body Group on the Entity's model
 function GEntity:SetBodyGroups(subModelIds)
 end
 
 --- Sets the currently active Sub Model ID for the Body Group corresponding to the given Body Group ID of the Entity's model.  
---- ℹ **NOTE**:   
---- When used on a Weapon, this will modify its viewmodel.  
+--- ℹ **NOTE**: When used on a Weapon, this will modify its viewmodel.  
 --- @param bodyGroupId number @The Body Group ID to set the Sub Model ID of
 --- @param subModelId number @The Sub Model ID to set as active for this Body Group
 function GEntity:SetBodygroup(bodyGroupId, subModelId)
@@ -2536,8 +2524,7 @@ function GEntity:SetCreator(ply)
 end
 
 --- Marks the entity to call GM:ShouldCollide. Not to be confused with Entity:EnableCustomCollisions.  
---- ℹ **NOTE**:   
---- Make sure to use Entity:CollisionRulesChanged after changing this value.  
+--- ℹ **NOTE**: Make sure to use Entity:CollisionRulesChanged after changing this value.  
 --- Otherwise it can cause crashes.  
 --- @param enable boolean @Enable or disable the custom collision check
 function GEntity:SetCustomCollisionCheck(enable)
@@ -2597,8 +2584,7 @@ function GEntity:SetGroundEntity(ground)
 end
 
 --- Sets the health of the entity.  
---- ℹ **NOTE**:   
---- You may want to take Entity:GetMaxHealth into account when calculating what to set health to, in case a gamemode has a different max health than 100.  
+--- ℹ **NOTE**: You may want to take Entity:GetMaxHealth into account when calculating what to set health to, in case a gamemode has a different max health than 100.  
 --- In some cases, setting health only serverside can cause hitches in movement, for example if something is modifying the player speed based on health.  
 --- To solve this issue, it is better to set it shared in a predicted hook.  
 --- @param newHealth number @New health value.
@@ -3005,8 +2991,7 @@ function GEntity:SetNetworkAngles(angle)
 end
 
 --- Virtually changes entity position for clients. Does almost the same thing as Entity:SetPos when used serverside.  
---- ℹ **NOTE**:   
---- Unlike Entity:SetPos it directly changes the position without checking for any unreasonable position.  
+--- ℹ **NOTE**: Unlike Entity:SetPos it directly changes the position without checking for any unreasonable position.  
 --- @param origin GVector @The position to make clients think this entity is at.
 function GEntity:SetNetworkOrigin(origin)
 end
@@ -3014,7 +2999,7 @@ end
 --- Sets a networked angle value on the entity.  
 --- The value can then be accessed with Entity:GetNetworked2Angle both from client and server.  
 --- @deprecated  
---- 🛑 **DEPRECATED**:  You should be using Entity:SetNW2Angle instead.  
+--- 🛑 **DEPRECATED**: You should be using Entity:SetNW2Angle instead.  
 --- ⚠ **WARNING**: The value will only be updated clientside if the entity is or enters the clients PVS. use Entity:SetNWAngle instead  
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- The value will only be networked if it isn't the same as the current value and unlike SetNW*  
@@ -3430,8 +3415,7 @@ function GEntity:SetShouldPlayPickupSound(playsound)
 end
 
 --- Sets if entity should create a server ragdoll on death or a client one.  
---- ℹ **NOTE**:   
---- This is reset for players when they respawn (Entity:Spawn).  
+--- ℹ **NOTE**: This is reset for players when they respawn (Entity:Spawn).  
 --- Player ragdolls created with this enabled will have an owner set, see Entity:SetOwner for more information on what effects this has.  
 --- @param serverragdoll boolean @Set `true` if ragdoll should be created on server, `false` if on client.
 function GEntity:SetShouldServerRagdoll(serverragdoll)

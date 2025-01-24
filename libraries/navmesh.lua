@@ -138,8 +138,7 @@ function navmesh.IsLoaded()
 end
 
 --- Loads a new navmesh from the .nav file for current map discarding any changes made to the navmesh previously.  
---- ⚠ **WARNING**:   
---- Calling this function too soon, causes the Server to crash!  
+--- ⚠ **WARNING**: Calling this function too soon, causes the Server to crash!  
 function navmesh.Load()
 end
 

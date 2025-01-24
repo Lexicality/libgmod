@@ -223,8 +223,7 @@ end
 --- Sets the time scale of the game.  
 --- This function is supposed to remove the need of using the host_timescale convar, which is cheat protected.  
 --- To slow down or speed up the movement of a specific player, use Player:SetLaggedMovementValue instead.  
---- ℹ **NOTE**:   
---- Like host_timescale, this method does not affect sounds, if you wish to change that, look into GM:EntityEmitSound.  
+--- ℹ **NOTE**: Like host_timescale, this method does not affect sounds, if you wish to change that, look into GM:EntityEmitSound.  
 --- The true timescale will be `host_timescale` multiplied by game.GetTimeScale  
 --- @param timeScale number @The new timescale, minimum value is 0.001 and maximum is 5.
 function game.SetTimeScale(timeScale)

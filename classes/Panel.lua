@@ -945,8 +945,7 @@ function GPanel:NewAnimation(length, delay, ease, callback)
 end
 
 --- Sets whether this panel's drawings should be clipped within the parent panel's bounds.  
---- ℹ **NOTE**:   
---- This only disabled clipping for the Paint Related functions (as far as i can tell at the current moment, more testing should be done) so things like the text of a DLabel will still be clipped to the parent.  
+--- ℹ **NOTE**: This only disabled clipping for the Paint Related functions (as far as i can tell at the current moment, more testing should be done) so things like the text of a DLabel will still be clipped to the parent.  
 --- To fully disable the clipping of any children see Global.DisableClipping.  
 --- @param noclip boolean @Whether to disable clipping or not
 function GPanel:NoClipping(noclip)
@@ -964,8 +963,7 @@ function GPanel:OpenURL(URL)
 end
 
 --- Paints a ghost copy of the panel at the given position.  
---- ⚠ **WARNING**:   
---- This function sets Z pos of panel's children (PANEL:SetZPos)  
+--- ⚠ **WARNING**: This function sets Z pos of panel's children (PANEL:SetZPos)  
 --- @param posX number @The x coordinate to draw the panel from.
 --- @param posY number @The y coordinate to draw the panel from.
 function GPanel:PaintAt(posX, posY)
@@ -1453,8 +1451,7 @@ end
 
 --- Sets the panel to be displayed as contents of a DTooltip when a player hovers over the panel object with their cursor. See Panel:SetTooltipPanelOverride if you are looking to override DTooltip itself.  
 --- ℹ **NOTE**: Panel:SetTooltip will override this functionality.  
---- ⚠ **WARNING**:   
---- Calling this from PANEL:OnCursorEntered is too late! The tooltip will not be displayed or be updated.  
+--- ⚠ **WARNING**: Calling this from PANEL:OnCursorEntered is too late! The tooltip will not be displayed or be updated.  
 --- Given panel or the previously set one will **NOT** be automatically removed.  
 --- @param tooltipPanel? GPanel @The panel to use as the tooltip.
 function GPanel:SetTooltipPanel(tooltipPanel)

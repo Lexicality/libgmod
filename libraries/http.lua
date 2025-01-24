@@ -12,8 +12,7 @@ _G.http = {}
 --- * `unsuccessful` - OnComplete's first argument, `pResult->m_bRequestSuccessful`, returned `false`  
 --- 🦟 **BUG**: [This cannot send or receive multiple headers with the same name.](https://github.com/Facepunch/garrysmod-issues/issues/2232)  
 --- ℹ **NOTE**: HTTP-requests that respond with a large body may return an `unsuccessful` error. Try using the [Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range) header to download the file in chunks.  
---- ℹ **NOTE**:   
---- HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
+--- ℹ **NOTE**: HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
 --- To enable HTTP-requests to destinations on private networks use Command Line Parameters `-allowlocalhttp`. (Dedicated servers only)  
 --- **Not all headers are allowed in the client realm, here is a list of known blacklisted headers inside the client realm:**  
 --- ```  
@@ -39,8 +38,7 @@ end
 --- The onFailure callback is usually only called on DNS or TCP errors (e.g. the website is unavailable or the domain does not exist).  
 --- 🦟 **BUG**: [This cannot send or receive multiple headers with the same name.](https://github.com/Facepunch/garrysmod-issues/issues/2232)  
 --- ℹ **NOTE**: HTTP-requests that respond with a large body may return an `unsuccessful` error. Try using the [Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range) header to download the file in chunks.  
---- ℹ **NOTE**:   
---- HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
+--- ℹ **NOTE**: HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
 --- To enable HTTP-requests to destinations on private networks use Command Line Parameters `-allowlocalhttp`. (Dedicated servers only)  
 --- @param url string @The url to of the website to post.
 --- @param parameters table @The post parameters (x-www-form-urlencoded) to be send to the server

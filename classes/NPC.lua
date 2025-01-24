@@ -89,7 +89,7 @@ function GNPC:ConditionName(cond)
 end
 
 --- Returns the way the NPC "feels" about a given entity. See NPC:AddEntityRelationship.  
---- ℹ **NOTE**: For `ai` type entities, this will return ENTITY:GetRelationship. If it returns `nil` or for engine NPCs, this will return whatever was last set by NPC:AddEntityRelationship. As a last resort, engine will decide on the disposition based on this NPC's NPC:Classify.   
+--- ℹ **NOTE**: For `ai` type entities, this will return ENTITY:GetRelationship. If it returns `nil` or for engine NPCs, this will return whatever was last set by NPC:AddEntityRelationship. As a last resort, engine will decide on the disposition based on this NPC's NPC:Classify.  
 --- @param ent GEntity @The entity to test our disposition towards.
 --- @return number @The NPCs disposition, see Enums/D.
 --- @return number @The NPCs disposition priority.

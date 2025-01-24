@@ -3,7 +3,7 @@
 --- The weapons library allows you to access information about any scripted weapons loaded into the game, as well as register your own weapons.  
 _G.weapons = {}
 --- Get a `copy` of weapon table by name. This function also inherits fields from the weapon's base class, unlike weapons.GetStored.  
---- ℹ **NOTE**:  This will only work on SWEP's, this means that this will not return anything for HL2/HL:S weapons.   
+--- ℹ **NOTE**: This will only work on SWEP's, this means that this will not return anything for HL2/HL:S weapons.  
 --- @param classname string @Class name of weapon to retrieve
 --- @return table @The retrieved table or nil
 function weapons.Get(classname)

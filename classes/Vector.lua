@@ -118,15 +118,13 @@ function GVector:IsZero()
 end
 
 --- Returns the [Euclidean length](https://en.wikipedia.org/wiki/Euclidean_vector#Length) of the vector: √(x² + y² + z²).  
---- ⚠ **WARNING**:   
---- This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:LengthSqr whenever possible.  
+--- ⚠ **WARNING**: This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:LengthSqr whenever possible.  
 --- @return number @Length of the vector.
 function GVector:Length()
 end
 
 --- Returns the length of the vector in two dimensions, without the Z axis.  
---- ⚠ **WARNING**:   
---- This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:Length2DSqr whenever possible.  
+--- ⚠ **WARNING**: This is a relatively expensive process since it uses the square root. It is recommended that you use Vector:Length2DSqr whenever possible.  
 --- @return number @Length of the vector in two dimensions, √(x² + y²)
 function GVector:Length2D()
 end

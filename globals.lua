@@ -12,8 +12,7 @@ end
 --- Marks a Lua file to be sent to clients when they join the server. Doesn't do anything on the client - this means you can use it in a shared file without problems.  
 --- ⚠ **WARNING**: If the file trying to be added is empty, an error will occur, and the file will not be sent to the client  
 --- The string cannot have whitespace.  
---- ℹ **NOTE**:   
---- This function is not needed for scripts located in these paths because they are automatically sent to clients.  
+--- ℹ **NOTE**: This function is not needed for scripts located in these paths because they are automatically sent to clients.  
 --- **lua/matproxy/**  
 --- **lua/postprocess/**  
 --- **lua/vgui/**  
@@ -65,8 +64,7 @@ function _G.AddonMaterial(name)
 end
 
 --- Creates an Angle object, representing a [Euler Angle](https://en.wikipedia.org/wiki/Euler_angles) made up of pitch, yaw, and roll components.  
---- ⚠ **WARNING**:   
---- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
+--- ⚠ **WARNING**: This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
 --- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
 --- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
 --- @param pitch? number @The pitch value of the angle, in degrees.
@@ -76,8 +74,7 @@ end
 function _G.Angle(pitch, yaw, roll)
 end
 --- Creates an Angle object, representing a [Euler Angle](https://en.wikipedia.org/wiki/Euler_angles) made up of pitch, yaw, and roll components.  
---- ⚠ **WARNING**:   
---- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
+--- ⚠ **WARNING**: This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
 --- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
 --- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
 --- @param angle GAngle @Creates a new Angle that is a copy of the Angle passed in.
@@ -85,8 +82,7 @@ end
 function _G.Angle(angle)
 end
 --- Creates an Angle object, representing a [Euler Angle](https://en.wikipedia.org/wiki/Euler_angles) made up of pitch, yaw, and roll components.  
---- ⚠ **WARNING**:   
---- This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
+--- ⚠ **WARNING**: This function is relatively expensive, in terms of performance, in situations where it is being called multiple times every frame (Like a loop, for example.) This is due to the overhead associated with object creation and garbage collection.  
 --- Where possible, it is generally better to store an Angle in a variable and re-use that variable rather than re-creating it repeatedly.  
 --- In cases where an empty Angle is needed, the global variable `angle_zero` is the preferred solution instead of `Angle( 0, 0, 0 )`.  
 --- @param angleString string @Attempts to parse the input string from the Global.print format of an Angle
@@ -110,8 +106,7 @@ function _G.BRANCH()
 end
 
 --- Sends the specified Lua code to all connected clients and executes it.  
---- ℹ **NOTE**:   
---- If you need to use this function more than once, consider using net library.  
+--- ℹ **NOTE**: If you need to use this function more than once, consider using net library.  
 --- Send net message and make the entire code you want to execute in net.Receive on client.  
 --- If executed **clientside** it won't do anything.  
 --- @param code string @The code to be executed
@@ -294,8 +289,7 @@ end
 
 --- Returns a sound parented to the specified entity.  
 --- ℹ **NOTE**: You can only create one CSoundPatch per audio file, per entity at the same time.  
---- ℹ **NOTE**:   
---- Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
+--- ℹ **NOTE**: Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
 --- `Unsupported 32-bit wave file your_sound.wav` and  
 --- `Invalid sample rate (48000) for sound 'your_sound.wav'`  
 --- @param targetEnt GEntity @The target entity.
@@ -589,8 +583,7 @@ function _G.EmitSentence(soundName, position, entity, channel, volume, soundLeve
 end
 
 --- Emits the specified sound at the specified position. See also Entity:EmitSound if you wish to play sounds on a specific entity.  
---- ℹ **NOTE**:   
---- Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
+--- ℹ **NOTE**: Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
 --- `Unsupported 32-bit wave file your_sound.wav` and  
 --- `Invalid sample rate (48000) for sound 'your_sound.wav'`  
 --- @param soundName string @The sound to play
@@ -864,8 +857,7 @@ end
 --- 🦟 **BUG**: [This crashes when used on a cubemap texture.](https://github.com/Facepunch/garrysmod-issues/issues/2885)  
 --- ⚠ **WARNING**: Rendertargets are not garbage-collected, which means they will remain in memory until you disconnect. So make sure to avoid creating new ones unecessarily and re-use as many of your existing rendertargets as possible to avoid filling up all your memory.  
 --- ⚠ **WARNING**: Drawing rendertargets on themself can produce odd and unexpected results.  
---- ℹ **NOTE**:   
---- Calling this function is equivalent to  
+--- ℹ **NOTE**: Calling this function is equivalent to  
 --- ```lua  
 --- GetRenderTargetEx(name,  
 --- width, height,  
@@ -929,8 +921,7 @@ end
 --- Launches an asynchronous http request with the given parameters.  
 --- 🦟 **BUG**: [This cannot send or receive multiple headers with the same name.](https://github.com/Facepunch/garrysmod-issues/issues/2232)  
 --- ℹ **NOTE**: HTTP-requests that respond with a large body may return an `unsuccessful` error. Try using the [Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range) header to download the file in chunks.  
---- ℹ **NOTE**:   
---- HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
+--- ℹ **NOTE**: HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
 --- To enable HTTP-requests to destinations on private networks use Command Line Parameters `-allowlocalhttp`. (Dedicated servers only)  
 --- @param parameters table @The request parameters
 --- @return boolean @`true` if we made a request, `nil` if we failed.
@@ -1513,10 +1504,8 @@ end
 
 --- Send a usermessage  
 --- @deprecated  
---- 🛑 **DEPRECATED**:   
---- This uses the umsg internally, which has been deprecated. Use the net instead.  
---- ℹ **NOTE**:   
---- This does nothing clientside.  
+--- 🛑 **DEPRECATED**: This uses the umsg internally, which has been deprecated. Use the net instead.  
+--- ℹ **NOTE**: This does nothing clientside.  
 --- @param name string @The name of the usermessage
 --- @param recipients any @Can be a CRecipientFilter, table or Player object.
 --- @vararg any @Data to send in the usermessage
@@ -2076,8 +2065,7 @@ end
 --- First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.  
 --- 🦟 **BUG**: [Running this function with Global.pcall or Global.xpcall will still print an error that counts towards sv_kickerrornum.](https://github.com/Facepunch/garrysmod-issues/issues/1041" request="813)  
 --- ℹ **NOTE**: This function will try to load local client file if `sv_allowcslua` is set to `1`  
---- ℹ **NOTE**:   
---- Binary modules can't be installed as part of an addon and have to be put directly into ``garrysmod/lua/bin/`` to be detected.  
+--- ℹ **NOTE**: Binary modules can't be installed as part of an addon and have to be put directly into ``garrysmod/lua/bin/`` to be detected.  
 --- This is a safety measure, because modules can be malicious and harm the system.  
 --- @param name string @The name of the module to be loaded.
 function _G.require(name)

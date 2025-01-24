@@ -302,8 +302,7 @@ end
 
 --- Called when an NW2Var is changed.  
 --- 🦟 **BUG**: [If a NW2Var is set on an entity that is based on a Lua Entity could result in the NW2Var being mixed up with other ones and being updated multiple times.](https://github.com/Facepunch/garrysmod-issues/issues/5455)  
---- ℹ **NOTE**:   
---- This hook is fired before the client value is actually changed. Calling the GetNW2 function for the specified variable name within this hook will return the old value, not the current/updated one.  
+--- ℹ **NOTE**: This hook is fired before the client value is actually changed. Calling the GetNW2 function for the specified variable name within this hook will return the old value, not the current/updated one.  
 --- This hook gets called for all NW2Vars on all Entities in a full update. The old value will be nil in this case.  
 --- If this hook seems to be called for no apparent reason, check if it's caused by a full update.  
 --- @param ent GEntity @The owner entity of changed NW2Var
@@ -664,8 +663,7 @@ function GM:NetworkIDValidated(name, steamID, ownerID)
 end
 
 --- Called whenever this entity changes its transmission state for this Global.LocalPlayer, such as exiting or re entering the [PVS (Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS "PVS - Valve Developer Community").  
---- ℹ **NOTE**:   
---- This is the best place to handle the reset of Entity:SetPredictable, as this would be usually called when the player lags and requests a full packet update.  
+--- ℹ **NOTE**: This is the best place to handle the reset of Entity:SetPredictable, as this would be usually called when the player lags and requests a full packet update.  
 --- When the entity stops transmitting, Entity:IsDormant will only return true **after** this hook.  
 --- @param entity GEntity @The entity that changed its transmission state.
 --- @param shouldtransmit boolean @`True` if we started transmitting to this client and `false` if we stopped.
@@ -1211,8 +1209,7 @@ function GM:PlayerRequestTeam(ply, team)
 end
 
 --- Called when a player dispatched a chat message. For the clientside equivalent, see GM:OnPlayerChat.  
---- ℹ **NOTE**:   
---- It may be more reliable to use gameevent/player_say to read messages serverside because addons commonly return values in this hook to change chat messages.  
+--- ℹ **NOTE**: It may be more reliable to use gameevent/player_say to read messages serverside because addons commonly return values in this hook to change chat messages.  
 --- @param sender GPlayer @The player which sent the message.
 --- @param text string @The message's content.
 --- @param teamChat boolean @Return false when the message is for everyone, true when the message is for the sender's team.
@@ -1711,8 +1708,7 @@ end
 
 --- Called to determine if the Global.LocalPlayer should be drawn.  
 --- If you're using this hook to draw a player for a GM:CalcView hook, then you may want to consider using the `drawviewer` variable you can use in your Structures/CamData table instead.  
---- ℹ **NOTE**:   
---- This hook has an internal cache that is reset at the start of every frame. This will prevent this hook from running in certain cases. This cache is reset in cam.Start and in a future update in render.RenderView when rendering extra views.  
+--- ℹ **NOTE**: This hook has an internal cache that is reset at the start of every frame. This will prevent this hook from running in certain cases. This cache is reset in cam.Start and in a future update in render.RenderView when rendering extra views.  
 --- @param ply GPlayer @The player.
 --- @return boolean @`true` to draw the player, `false` to hide.
 function GM:ShouldDrawLocalPlayer(ply)

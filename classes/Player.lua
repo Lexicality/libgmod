@@ -268,7 +268,7 @@ function GPlayer:FlashlightIsOn()
 end
 
 --- Returns the amount of frags a player has.  
---- ℹ **NOTE**: The value will change depending on the player's kill or suicide: +1 for a kill, -1 for a suicide.   
+--- ℹ **NOTE**: The value will change depending on the player's kill or suicide: +1 for a kill, -1 for a suicide.  
 --- @return number @frags
 function GPlayer:Frags()
 end
@@ -697,8 +697,7 @@ function GPlayer:GetWeaponColor()
 end
 
 --- Returns a table of the player's weapons.  
---- ℹ **NOTE**:   
---- This function returns a sequential table. Prefer to loop it with Global.ipairs instead of the Global.pairs function.  
+--- ℹ **NOTE**: This function returns a sequential table. Prefer to loop it with Global.ipairs instead of the Global.pairs function.  
 --- @return table @All the weapons the player currently has.
 function GPlayer:GetWeapons()
 end
@@ -1182,8 +1181,7 @@ end
 
 --- Sets the size of the Player's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for physics and movement Hull Traces.  
 --- See also: Player:GetHull, Player:SetHullDuck, Player:GetHullDuck  
---- ℹ **NOTE**:   
---- This value is **not** replicated automatically to clients and must be manually called in both the Server and Client Realms.  
+--- ℹ **NOTE**: This value is **not** replicated automatically to clients and must be manually called in both the Server and Client Realms.  
 --- @param mins GVector @The hull mins, the lowest corner of the Player's bounding box.
 --- @param maxs GVector @The hull maxs, the highest corner of the Player's bounding box, opposite of the mins.
 function GPlayer:SetHull(mins, maxs)
@@ -1191,8 +1189,7 @@ end
 
 --- Sets the size of the Player's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) used for physics and movement Hull Traces while they are crouching (or "Ducking").  
 --- See also: Player:GetHullDuck, Player:GetHull, Player:SetHull  
---- ℹ **NOTE**:   
---- This value is **not** replicated automatically to clients and must be manually called in both the Server and Client Realms.  
+--- ℹ **NOTE**: This value is **not** replicated automatically to clients and must be manually called in both the Server and Client Realms.  
 --- @param mins GVector @The hull mins, the lowest corner of the Player's bounding box while crouching.
 --- @param maxs GVector @The hull maxs, the highest corner of the Player's crouching bounding box, opposite of the mins.
 function GPlayer:SetHullDuck(mins, maxs)

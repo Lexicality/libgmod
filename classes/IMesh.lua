@@ -3,8 +3,7 @@
 --- @class GIMesh
 --- Renderable mesh object, can be used to create models on the fly.  
 --- The only way to create your own IMesh object is to call Global.Mesh.  
---- ℹ **NOTE**:   
---- IMeshes only respond to one projected texture.  
+--- ℹ **NOTE**: IMeshes only respond to one projected texture.  
 --- See the render.RenderFlashlights function and example that solves this problem.  
 local GIMesh = {}
 --- Builds the mesh from a table mesh vertexes.  

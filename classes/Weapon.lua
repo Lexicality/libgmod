@@ -34,8 +34,7 @@ function GWeapon:Clip2()
 end
 
 --- Forces the weapon to reload while playing given animation.  
---- ℹ **NOTE**:   
---- This will stop the Weapon:Think function from getting called while the weapon is reloading!  
+--- ℹ **NOTE**: This will stop the Weapon:Think function from getting called while the weapon is reloading!  
 --- @param act number @Sequence to use as reload animation
 --- @return boolean @Did reloading actually take place
 function GWeapon:DefaultReload(act)

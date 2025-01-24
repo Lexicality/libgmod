@@ -202,7 +202,7 @@ end
 
 --- Sets the sound channel to specified time ( Rewind to that position of the song ). Does not work on online radio streams.  
 --- Streamed sounds must have "noblock" parameter for this to work and IGModAudioChannel:IsBlockStreamed must return false.  
---- ℹ **NOTE**:  Streamed sounds can only have their time set to up to the current IGModAudioChannel:GetBufferedTime.  
+--- ℹ **NOTE**: Streamed sounds can only have their time set to up to the current IGModAudioChannel:GetBufferedTime.  
 --- @param secs number @The time to set the stream to, in seconds.
 --- @param dont_decode? boolean @Set to true to skip decoding to set time, and instead just seek to it which is faster
 function GIGModAudioChannel:SetTime(secs, dont_decode)

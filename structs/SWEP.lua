@@ -136,8 +136,8 @@ function SWEP:DoDrawCrosshair(x, y)
 end
 
 --- Called so the weapon can override the impact effects it makes.  
---- ℹ **NOTE**: If the bullet was fired in a predicted environment, the hook will not be called on the `CLIENT` realm.   
---- ℹ **NOTE**: This hook will also be called when `WEAPON:GetOwner():FireBullets` is called. While in `MULTIPLAYER`, this hook will be called on the respective state, but in `SINGLEPLAYER`, this hook will always be called on the `CLIENT` realm even if `FireBullets` was called on the `SERVER`.   
+--- ℹ **NOTE**: If the bullet was fired in a predicted environment, the hook will not be called on the `CLIENT` realm.  
+--- ℹ **NOTE**: This hook will also be called when `WEAPON:GetOwner():FireBullets` is called. While in `MULTIPLAYER`, this hook will be called on the respective state, but in `SINGLEPLAYER`, this hook will always be called on the `CLIENT` realm even if `FireBullets` was called on the `SERVER`.  
 --- @param tr table @A Structures/TraceResult from player's eyes to the impact point
 --- @param damageType number @The damage type of bullet
 --- @return boolean @Return true to not do the default thing - which is to call `UTIL_ImpactTrace` in C++
@@ -201,7 +201,7 @@ function SWEP:FreezeMovement()
 end
 
 --- This hook is for NPCs, you return what they should try to do with it.  
---- ⚠ **WARNING**: Calling NPC:CapabilitiesGet in this hook on the same entity can cause infinite loops since that function adds the result of WEAPON:GetCapabilities on top of the return value.   
+--- ⚠ **WARNING**: Calling NPC:CapabilitiesGet in this hook on the same entity can cause infinite loops since that function adds the result of WEAPON:GetCapabilities on top of the return value.  
 --- @return number @A number defining what NPC should do with the weapon
 function SWEP:GetCapabilities()
 end

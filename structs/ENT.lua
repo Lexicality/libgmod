@@ -129,7 +129,7 @@ end
 
 --- Called whenever an engine schedule is finished; either the last task within the engine schedule has been finished or the schedule has been interrupted by an interrupt condition.  
 --- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
---- ℹ **NOTE**: This hook isn't called when the engine schedule is failed, the schedule is cleared with NPC:ClearSchedule or NPC:SetSchedule has been called.   
+--- ℹ **NOTE**: This hook isn't called when the engine schedule is failed, the schedule is cleared with NPC:ClearSchedule or NPC:SetSchedule has been called.  
 function ENT:EngineScheduleFinish()
 end
 
@@ -350,7 +350,7 @@ end
 
 --- Called to completely override the direction NPC will be facing during navigation.  
 --- ℹ **NOTE**: This hook only exists for `ai` type SENTs.  
---- ℹ **NOTE**: This hook is called by the default movement hook. Returning `true` inside ENTITY:OverrideMove will prevent engine from calling this hook.   
+--- ℹ **NOTE**: This hook is called by the default movement hook. Returning `true` inside ENTITY:OverrideMove will prevent engine from calling this hook.  
 --- @param interval number @Time interval for the movement, in seconds
 --- @param data table @Extra data for the movement
 --- @return boolean @Return `true` to disable the default movement facing code.

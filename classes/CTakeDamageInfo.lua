@@ -148,8 +148,7 @@ function GCTakeDamageInfo:SetDamageCustom(DamageType)
 end
 
 --- Sets the directional force of the damage.  
---- ℹ **NOTE**:   
---- This function seems to have no effect on player knockback. To disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use workaround example below.  
+--- ℹ **NOTE**: This function seems to have no effect on player knockback. To disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use workaround example below.  
 --- @param force GVector @The vector to set the force to.
 function GCTakeDamageInfo:SetDamageForce(force)
 end
