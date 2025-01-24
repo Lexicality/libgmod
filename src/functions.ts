@@ -36,7 +36,7 @@ export function handleFunc(func: Func, sepr: string): undefined | string {
 }
 
 function getArgName(arg: FuncArg): string {
-    let name = arg.name;
+    let name = arg.name ?? "arg";
     for (let [find, replace] of KEYWORD_REPLACEMENTS) {
         name = name.replace(find, replace);
     }
