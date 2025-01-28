@@ -88,10 +88,19 @@ async function doClasses(data: FuncContainer[]): Promise<void> {
     }
 }
 
+// The wiki doesn't have a page for this but we still need it to exist because
+// of how I wrote this thing
+const EFFECT_STRUCT: Struct = {
+    name: "EFFECT",
+    realms: ["client"],
+    fields: [],
+};
+
 async function doStructs(): Promise<void> {
     let structs: Struct[] = JSON.parse(
         await fs.readFile("output/structs.json", "utf-8"),
     );
+    structs.push(EFFECT_STRUCT);
     structs = _.sortBy(structs, "name");
     let hooks: FuncContainer[] = JSON.parse(
         await fs.readFile("output/hooks.json", "utf-8"),
