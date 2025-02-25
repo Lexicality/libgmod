@@ -51,7 +51,7 @@
 --- @field ScriptedEntityType? string @Sets the spawnmenu content icon type
 --- @field m_bPlayPickupSound? boolean @If set to false, the weapon will not play the
 --- @field IconOverride? string @If set,
-local SWEP = {}
+_G.SWEP = {}
 
 --- Called when another entity fires an event to this entity.  
 --- @param inputName string @The name of the input that was triggered.

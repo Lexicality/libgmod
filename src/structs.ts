@@ -5,7 +5,7 @@ import { handleFunc } from "./functions";
 import { getTypeName } from "./gmod-types";
 import { trimArg, unpaginate } from "./utils";
 
-const GLOBALS = new Set(["ENT", "GM", "WEAPON", "TOOL", "EFFECT"]);
+const GLOBALS = new Set(["ENT", "GM", "SWEP", "TOOL", "EFFECT"]);
 const BASES: { [t: string]: string } = {
     EFFECT: "GEntity",
     ENT: "GEntity",
