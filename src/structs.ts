@@ -41,7 +41,9 @@ export function handleStruct(struct: Struct, hook?: FuncContainer): string {
     }
     desc += "\n";
 
-    desc += struct.fields.map(handleField).join("\n") + "\n";
+    if (struct.fields.length > 0) {
+        desc += struct.fields.map(handleField).join("\n") + "\n";
+    }
 
     if (hook == null) {
         return desc;

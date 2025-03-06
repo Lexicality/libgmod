@@ -1,7 +1,6 @@
 --- @meta
 
 --- @class SEFFECT : GEntity
-
 _G.EFFECT = {}
 
 --- Effect alternative to ENTITY:EndTouch.  
