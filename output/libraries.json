@@ -412,7 +412,7 @@
           "client",
           "server"
         ],
-        "description": "Add a new base class that can be derived by others. This is done automatically for:\n* widgets\n* panels\n* drive modes\n* entities\n* weapons\n* gamemodes (with prefix \"gamemode_\")\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
+        "description": "Add a new base class that can be derived by others. This is done automatically for:\n* [panels](vgui.Register)\n* [drive modes](drive.Register)\n* [entities and widgets](scripted_ents.Register)\n* [weapons](weapons.Register)\n* [gamemodes](gamemode.Register) (with prefix \"gamemode_\")\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
         "arguments": [
           {
             "name": "name",
@@ -501,7 +501,7 @@
           "client",
           "server"
         ],
-        "description": "Returns the bitwise not of the value.",
+        "description": "Returns the bitwise not of the value. Inverts every bit of the 32bit integer.",
         "arguments": [
           {
             "name": "value",
@@ -512,7 +512,7 @@
         "returnValues": [
           {
             "type": "number",
-            "description": "bitwiseNot"
+            "description": "The result of bitwise not. 0101 becomes 1010, etc."
           }
         ]
       },
@@ -727,7 +727,7 @@
         "returnValues": [
           {
             "type": "number",
-            "description": "swapped"
+            "description": "The 32 bits of the provided value."
           }
         ]
       },
@@ -739,7 +739,7 @@
           "client",
           "server"
         ],
-        "description": "Returns the hexadecimal representation of the number with the specified digits.",
+        "description": "Returns the hexadecimal representation of the number with the specified number of characters.",
         "arguments": [
           {
             "name": "value",
@@ -747,16 +747,16 @@
             "description": "The value to be normalized."
           },
           {
-            "name": "digits",
+            "name": "characters",
             "type": "number",
             "default": "8",
-            "description": "The number of digits. Optional"
+            "description": "Maximum number of characters, if set. The absolute maximum is 8."
           }
         ],
         "returnValues": [
           {
             "type": "string",
-            "description": "hexString"
+            "description": "The hexadecimal representation, such as \"00000001\"."
           }
         ]
       }
@@ -1285,7 +1285,7 @@
         "realms": [
           "server"
         ],
-        "description": "Replaces one entity in the cleanup module with another",
+        "description": "Replaces one entity in the cleanup module with another.\n\nYou very likely want to call <page>undo.ReplaceEntity</page> with the same entities as well.",
         "arguments": [
           {
             "name": "from",
@@ -1295,7 +1295,7 @@
           {
             "name": "to",
             "type": "Entity",
-            "description": "New entity"
+            "description": "New entity. Can be a `NULL` entity to remove the old entity from the cleanup system."
           }
         ],
         "returnValues": [
@@ -1363,7 +1363,7 @@
           },
           {
             "name": "flags",
-            "type": "number",
+            "type": "number{FCVAR}|table<number>",
             "default": "0",
             "description": "Console command modifier flags. Either a bitflag, or a table of enums. See <page>Enums/FCVAR</page>."
           }
@@ -1418,11 +1418,11 @@
         "description": "Returns the tables of all console command callbacks, and autocomplete functions, that were added to the game with <page>concommand.Add</page>.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<string,function>",
             "description": "Table of command callback functions."
           },
           {
-            "type": "table",
+            "type": "table<string,function>",
             "description": "Table of command autocomplete functions."
           }
         ],
@@ -4119,7 +4119,7 @@
           },
           {
             "name": "function",
-            "type": "function",
+            "type": "function|nil",
             "description": "Function to use. (Only used by the `&gt;` field)"
           }
         ],
@@ -4205,7 +4205,12 @@
             "type": "table",
             "description": "The Lua registry"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/util.lua",
+          "lineStart": 2,
+          "lineEnd": 19
+        }
       },
       {
         "name": "getupvalue",
@@ -6074,7 +6079,7 @@
           "client",
           "server"
         ],
-        "description": "<internal></internal>\nOptionally alter the view.",
+        "description": "<internal></internal>\n\nUsed internally to make <page>DRIVE:CalcView</page> work, called by default from `base` gamemode's <page>GM:CalcView</page> hook.",
         "arguments": [
           {
             "name": "ply",
@@ -6083,7 +6088,7 @@
           },
           {
             "name": "view",
-            "type": "table",
+            "type": "table{ViewData}",
             "description": "The view, see <page>Structures/ViewData</page>"
           }
         ],
@@ -6323,23 +6328,23 @@
           "client",
           "server"
         ],
-        "description": "Registers a new entity drive.",
+        "description": "Registers a new entity drive mode/method.",
         "arguments": [
           {
             "name": "name",
             "type": "string",
-            "description": "The name of the drive."
+            "description": "The name of the drive mode/method."
           },
           {
             "name": "data",
             "type": "table",
-            "description": "The data required to create the drive. This includes the functions used by the drive."
+            "description": "The data required to create the drive mode/method. This includes the functions used by the drive. See <page>DRIVE_Hooks</page>."
           },
           {
             "name": "base",
             "type": "string",
             "default": "nil",
-            "description": "The base of the drive."
+            "description": "The name of a drive mode/method to inherit code from."
           }
         ],
         "source": {
@@ -7279,12 +7284,12 @@
         ],
         "returnValues": [
           {
-            "type": "vector",
+            "type": "Vector",
             "name": "Mins",
             "description": "AABB mins vector"
           },
           {
-            "type": "vector",
+            "type": "Vector",
             "name": "Maxs",
             "description": "AABB maxs vector"
           }
@@ -7751,8 +7756,7 @@
         "name": "ServerFrameTime",
         "parent": "engine",
         "realms": [
-          "client",
-          "menu"
+          "client"
         ],
         "description": "Returns an estimate of the server's performance. Equivalent to calling <page>Global.FrameTime</page> from the server, according to source code.",
         "returnValues": [
@@ -7965,7 +7969,7 @@
           "client",
           "server"
         ],
-        "description": "Returns a table of all entities along the ray. The ray does not stop on collisions, meaning it will go through walls/entities.\n\nThis function is capable of detecting clientside only entities.\n\nThis internally uses a Spatial Partition to avoid looping through all entities.",
+        "description": "Returns a table of all entities along the ray. The ray does not stop on collisions, meaning it will go through walls/entities.\n\nThis function is capable of detecting clientside only entities by default.\n\nThis internally uses [spatial partitioning](https://en.wikipedia.org/wiki/Space_partitioning) to avoid looping through all entities.",
         "arguments": [
           {
             "name": "start",
@@ -7992,7 +7996,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "Table of the found entities. There's a limit of 1024 entities."
           }
         ]
@@ -8014,7 +8018,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table containing all found entities"
           }
         ]
@@ -8041,7 +8045,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table of found entities or nil if none are found"
           }
         ],
@@ -8068,7 +8072,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table of all found entities."
           }
         ]
@@ -8090,7 +8094,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table of all found entities"
           }
         ]
@@ -8117,7 +8121,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table of all found entities."
           }
         ]
@@ -8154,7 +8158,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table of all found <page>Entity</page>s."
           }
         ]
@@ -8169,13 +8173,13 @@
         "arguments": [
           {
             "name": "viewPoint",
-            "type": "any",
+            "type": "Entity|Vector",
             "description": "<page>Entity</page> or <page>Vector</page> to find entities within the PVS of. If a player is given, this function will use the player's view entity."
           }
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "The found <page>Entity</page>s."
           }
         ]
@@ -8187,7 +8191,7 @@
           "client",
           "server"
         ],
-        "description": "Gets all entities within the specified sphere.\n\nServerside, this uses a Spatial Partition internally to avoid looping through all entities, so it is more efficient than using <page>ents.GetAll</page> for this purpose.\n\nClientside, this function internally calls <page>util.IsBoxIntersectingSphere</page>",
+        "description": "Gets all entities within the specified sphere.\n\nThis function internally calls <page>util.IsBoxIntersectingSphere</page> for every entity on the map based on their Orientated Bounding Box.",
         "arguments": [
           {
             "name": "origin",
@@ -8202,7 +8206,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "A table of all found <page>Entity</page>s."
           }
         ]
@@ -8232,7 +8236,7 @@
           },
           {
             "name": "usetype",
-            "type": "number",
+            "type": "number{USE}",
             "description": "Use type. See the <page>Enums/USE</page>."
           },
           {
@@ -8252,7 +8256,7 @@
         "description": "Returns a table of all existing entities.\n\nConsider using <page>ents.Iterator</page> instead for better performance.\n\nThis function returns a sequential table, meaning it should be looped with <page>Global.ipairs</page> instead of <page>Global.pairs</page> for efficiency reasons.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "Table of all existing <page>Entity</page>s."
           }
         ]
@@ -8275,7 +8279,7 @@
         "returnValues": [
           {
             "type": "Entity",
-            "description": "The entity if it exists."
+            "description": "The entity if it exists, or `NULL` if it doesn't."
           }
         ]
       },
@@ -8328,13 +8332,13 @@
           {
             "name": "id",
             "type": "number",
-            "description": "Entity's creation id"
+            "description": "Entity's creation id."
           }
         ],
         "returnValues": [
           {
-            "type": "Entity",
-            "description": "Found entity"
+            "type": "Entity|nil",
+            "description": "Found entity, `nil` otherwise."
           }
         ]
       },
@@ -8352,7 +8356,7 @@
             "description": "The Iterator Function from <page text=\"ipairs\">Global.ipairs</page>"
           },
           {
-            "type": "table",
+            "type": "table<Entity>",
             "description": "Table of all existing <page text=\"Entities\">Entity</page>.  This is a cached copy of <page>ents.GetAll</page>\n<warning>This table is intended to be read-only.\n\nModifying the return table will affect all subsequent calls to this function until the cache is refreshed, replacing all of your ents.GetAll usages may come with unintended side effects because of this.</warning>"
           },
           {
@@ -8393,6 +8397,12 @@
             "description": "The content which should be appended to the file."
           }
         ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "If the operation was successful"
+          }
+        ],
         "source": {
           "file": "lua/includes/extensions/file.lua",
           "lineStart": 31,
@@ -8406,7 +8416,7 @@
           "client",
           "server"
         ],
-        "description": "Returns the content of a file asynchronously.\n\nAll limitations of <page>file.Read</page> also apply.\n<note>This function is currently broken in the Menu State and won't be fixed. [Bug Report](https://github.com/Facepunch/garrysmod-issues/issues/5433)</note>",
+        "description": "Returns the content of a file asynchronously.\n\nAll limitations of <page>file.Read</page> also apply.",
         "arguments": [
           {
             "name": "fileName",
@@ -8751,6 +8761,12 @@
             "description": "The content that will be written into the file."
           }
         ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "If the operation was successful"
+          }
+        ],
         "source": {
           "file": "lua/includes/extensions/file.lua",
           "lineStart": 21,
@@ -9018,7 +9034,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{AmmoData}",
             "description": "The <page>Structures/AmmoData</page> containing all ammo data"
           }
         ]
@@ -9162,7 +9178,7 @@
         "description": "Returns a list of all ammo types currently registered.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<number,string>",
             "description": "A table containing all ammo types. The keys are ammo IDs, the values are the names associated with those IDs."
           }
         ]
@@ -9654,7 +9670,7 @@
         "description": "Returns <page>GAMEMODE</page>.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{GM}",
             "description": "GAMEMODE"
           }
         ]
@@ -10683,7 +10699,7 @@
             "name": "onSuccess",
             "type": "function",
             "default": "nil",
-            "description": "Function to be called on success.\n<callback>\n<arg type=\"string\" name=\"body\"></arg>\n<arg type=\"string\" name=\"size\">equal to <page>string.len</page>(body).</arg>\n<arg type=\"table\" name=\"headers\"></arg>\n<arg type=\"number\" name=\"code\">The HTTP success code.</arg>\n</callback>"
+            "description": "Function to be called on success.\n<callback>\n<arg type=\"string\" name=\"body\"></arg>\n<arg type=\"number\" name=\"size\">equal to <page>string.len</page>(body).</arg>\n<arg type=\"table\" name=\"headers\"></arg>\n<arg type=\"number\" name=\"code\">The HTTP success code.</arg>\n</callback>"
           },
           {
             "name": "onFailure",
@@ -12353,7 +12369,7 @@
   },
   {
     "name": "math",
-    "description": "An easing library that allows you to interpolate with various kinds of smoothing [functions](https://easings.net/). To use with <page>Global.Lerp</page>, input what you would to the fraction argument in one of these easing functions and then the output of that into the <page>Global.Lerp</page> fraction argument.\n<example>\n<description>Example usage with Lerp and <page>math.ease.InSine</page></description>\n<code>\n-- Define a wrapper function to make it easier to work with\nlocal function easedLerp(fraction, from, to)\nreturn Lerp(math.ease.InSine(fraction), from, to)\nend\n\n-- Compare with the non-eased version of Lerp\nprint(easedLerp(0.25, 0, 1))\nprint(Lerp(0.25, 0, 1))\n\nprint(easedLerp(0.25, 0, 5))\nprint(Lerp(0.25, 0, 5))\n</code>\n<output>\n```\n0.076120467488713\n0.25\n\n0.38060233744357\n1.25\n```\n</output>\n\n</example>\n<example>\nA brief visual example of different easing methods\n<upload src=\"ab571/8dc38906fb4cfbe.gif\" size=\"4162886\" name=\"easing_examples.gif\">\n</upload></example>",
+    "description": "An easing library that allows you to interpolate with various kinds of smoothing [functions](https://easings.net/). To use with <page>Global.Lerp</page>, input what you would to the fraction argument in one of these easing functions and then the output of that into the <page>Global.Lerp</page> fraction argument.\n<example>\n<description>Example usage with Lerp and <page>math.ease.InSine</page></description>\n<code>\n-- Define a wrapper function to make it easier to work with\nlocal function easedLerp(fraction, from, to)\nreturn Lerp(math.ease.InSine(fraction), from, to)\nend\n\n-- Compare with the non-eased version of Lerp\nprint(easedLerp(0.25, 0, 1))\nprint(Lerp(0.25, 0, 1))\n\nprint(easedLerp(0.25, 0, 5))\nprint(Lerp(0.25, 0, 5))\n</code>\n<output>\n```\n0.076120467488713\n0.25\n\n0.38060233744357\n1.25\n```\n</output>\n\n</example>\n\n<example>\n<description>\nA brief visual example of different easing methods\n<upload src=\"ab571/8dc38906fb4cfbe.gif\" size=\"4162886\" name=\"easing_examples.gif\">\n</upload></description>\n</example>",
     "functions": [
       {
         "name": "abs",
@@ -14009,7 +14025,7 @@
           "client",
           "server"
         ],
-        "description": "Returns the modulus of the specified values.\n\nWhile this is similar to the % operator, **it will return a negative value if the first argument is negative**, whereas the % operator will return a `positive` value **even if the first operand is negative**.",
+        "description": "Returns the modulus of the specified values.\n\nWhile this is similar to the `%` operator, **it will return a negative value if the first argument is negative**, whereas the % operator will return a **positive** value **even if the first operand is negative**.\n\nThis function is also slower than the `%` operator.",
         "arguments": [
           {
             "name": "base",
@@ -14098,6 +14114,45 @@
           "file": "lua/includes/extensions/math.lua",
           "lineStart": 44,
           "lineEnd": 47
+        }
+      },
+      {
+        "name": "IsNearlyEqual",
+        "parent": "math",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "description": "Checks if two floating point numbers are nearly equal.\n\nThis is useful to mitigate  [accuracy issues in floating point numbers](https://en.wikipedia.org/wiki/Floating-point_arithmetic#Accuracy_problems). See examples below.",
+        "arguments": [
+          {
+            "name": "a",
+            "type": "number",
+            "description": "The first number to compare."
+          },
+          {
+            "name": "b",
+            "type": "number",
+            "description": "The second number to compare."
+          },
+          {
+            "name": "tolerance",
+            "type": "number",
+            "default": "1e-8",
+            "description": "The maximum difference between the two numbers to consider them equal."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "True if the difference between the two numbers is less than or equal to the tolerance."
+          }
+        ],
+        "source": {
+          "file": "lua/includes/extensions/math.lua",
+          "lineStart": 275,
+          "lineEnd": 281
         }
       },
       {
@@ -15046,7 +15101,7 @@
         "realms": [
           "client"
         ],
-        "description": "Starts constructing a new 3D mesh constructed from a given number of primitives in a given primitive format.\n\nThe resulting mesh can be stored in an <page>IMesh</page> if it is intended to be drawn multiple times or on multiple frames.",
+        "description": "<warning>Maximum of 32768 vertices.</warning>\nStarts constructing a new 3D mesh constructed from a given number of primitives in a given primitive format.\n\nThe resulting mesh can be stored in an <page>IMesh</page> if it is intended to be drawn multiple times or on multiple frames.",
         "arguments": [
           {
             "name": "primitiveType",
@@ -15902,7 +15957,7 @@
         "description": "Returns an integer indexed table of all <page>CNavArea</page>s on the current map. If the map doesn't have a navmesh generated then this will return an empty table.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<CNavArea>",
             "description": "A table of all the <page>CNavArea</page>s on the current map."
           }
         ]
@@ -16701,12 +16756,12 @@
           "client",
           "server"
         ],
-        "description": "Adds a net message handler. Only one receiver can be used to receive the net message.\n\nYou can use the `net.Read*` functions within the message handler callback.\n\n<note>The message-name is converted to lower-case so the message-names \"`BigBlue`\" and \"`bigblue`\" would be equal.</note>\n<warning>You **should** put this function **outside** of any other function or hook for it to work properly unless you know what you are doing!\n\nYou **must** read information in the same order as you write it.\n\nEach net message has a length limit of **64KB**!</warning>",
+        "description": "Adds a net message handler. Only one receiver can be used to receive the net message.\n\nYou can use the `net.Read*` functions within the message handler callback.\n\n<warning>You **should** put this function **outside** of any other function or hook for it to work properly unless you know what you are doing!\n\nYou **must** read information in the same order as you write it.\n\nEach net message has a length limit of **64KB**!</warning>",
         "arguments": [
           {
             "name": "messageName",
             "type": "string",
-            "description": "The message name to hook to."
+            "description": "The message name to hook to.\n\n<note>The message-name is converted to lower-case so the message-names \"`BigBlue`\" and \"`bigblue`\" would be equal.</note>"
           },
           {
             "name": "callback",
@@ -16754,7 +16809,7 @@
             "arguments": [
               {
                 "name": "plys",
-                "type": "table",
+                "type": "table<Player>",
                 "description": "A table of players to send the message to."
               }
             ]
@@ -16789,7 +16844,7 @@
             "arguments": [
               {
                 "name": "plys",
-                "type": "table",
+                "type": "table<Player>",
                 "description": "A table of players to **NOT** send the message to."
               }
             ]
@@ -17754,7 +17809,7 @@
         "description": "Returns all permissions per server. Permanent permissions are stored in `settings/permissions.bin`.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<string,table>",
             "name": "permissions",
             "description": "A table of permanent and temporary permissions granted for servers.\n\nExample structure:\n```lua\npermanent = {\n[\"123.123.123.123\"] = \"connect\" -- this server has a permission to connect player to any server even after restarting the game\n},\ntemporary = {\n[\"111.111.111.111\"] = \"voicerecord\" -- this server can enable voice activity on player during this game session\n}\n```"
           }
@@ -18021,7 +18076,7 @@
         "description": "Gets all the current players in the server (not including connecting clients).\n\nThis function returns bots as well as human players. See <page>player.GetBots</page> and  <page>player.GetHumans</page>.\n\n<note>This function returns a sequential table, meaning it should be looped with <page>Global.ipairs</page> instead of <page>Global.pairs</page> for efficiency reasons.</note>",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Player>",
             "description": "All <page>Player</page>s currently in the server."
           }
         ]
@@ -18036,7 +18091,7 @@
         "description": "Returns a table of all bots on the server.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Player>",
             "description": "A table only containing bots ( AI / non human players )"
           }
         ]
@@ -18058,8 +18113,8 @@
         ],
         "returnValues": [
           {
-            "type": "Player",
-            "description": "Player if one is found, false otherwise."
+            "type": "Player|boolean",
+            "description": "Player if one is found, `false` otherwise."
           }
         ],
         "source": {
@@ -18085,8 +18140,8 @@
         ],
         "returnValues": [
           {
-            "type": "Player",
-            "description": "Player if one is found, nil otherwise"
+            "type": "Player|nil",
+            "description": "Player if one is found, `nil` otherwise."
           }
         ]
       },
@@ -18107,8 +18162,8 @@
         ],
         "returnValues": [
           {
-            "type": "Player",
-            "description": "Player if one is found, false otherwise."
+            "type": "Player|boolean",
+            "description": "Player if one is found, `false` otherwise."
           }
         ],
         "source": {
@@ -18134,8 +18189,8 @@
         ],
         "returnValues": [
           {
-            "type": "Player",
-            "description": "Player if one is found, false otherwise."
+            "type": "Player|boolean",
+            "description": "Player if one is found, `false` otherwise."
           }
         ],
         "source": {
@@ -18161,8 +18216,8 @@
         ],
         "returnValues": [
           {
-            "type": "Player",
-            "description": "Player if one is found, false otherwise."
+            "type": "Player|boolean",
+            "description": "Player if one is found, `false` otherwise."
           }
         ],
         "source": {
@@ -18196,7 +18251,7 @@
         "description": "Returns a table containing all human players (non-bot/AI).\n\nUnlike <page>player.GetAll</page>, this does not include bots.\n<note>This function returns a sequential table, meaning it should be looped with <page>Global.ipairs</page> instead of <page>Global.pairs</page> for efficiency reasons.</note>",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Player>",
             "description": "A table containing all human (non-bot/AI) players."
           }
         ]
@@ -18215,7 +18270,7 @@
             "description": "The Iterator Function from <page text=\"ipairs\">Global.ipairs</page>"
           },
           {
-            "type": "table",
+            "type": "table<Player>",
             "description": "Table of all existing <page text=\"Players\">Player</page>.  This is a cached copy of <page>player.GetAll</page>\n<warning>This table is intended to be read-only.\n\nModifying the return table will affect all subsequent calls to this function until the cache is refreshed, replacing all of your player.GetAll usages may come with unintended side effects because of this.\n\nExample of bad code:\n```\n-- NEVER DO THIS!!!\n\nlocal scan_ents = select(2, player.Iterator())\n\ntable.Add(scan_ents, ents.FindByClass(\"ttt_decoy\"))\n```\n</warning>"
           },
           {
@@ -19950,7 +20005,7 @@
         "arguments": [
           {
             "name": "fogMode",
-            "type": "number",
+            "type": "number{MATERIAL_FOG}",
             "description": "Fog mode, see <page>Enums/MATERIAL_FOG</page>."
           }
         ]
@@ -20433,9 +20488,9 @@
         "arguments": [
           {
             "name": "material",
-            "type": "IMaterial",
+            "type": "IMaterial|nil",
             "default": "nil",
-            "description": "The material to use as override, use nil to disable."
+            "description": "The material to use as override, use `nil` to disable."
           }
         ]
       },
@@ -21140,7 +21195,7 @@
         "realms": [
           "client"
         ],
-        "description": "If the fog mode is set to <page text=\"MATERIAL_FOG_LINEAR_BELOW_FOG_Z\">Enums/MATERIAL_FOG</page>, the fog will only be rendered below the specified height.",
+        "description": "If the <page text=\"fog mode\">render.FogMode</page> is set to <page text=\"MATERIAL_FOG_LINEAR_BELOW_FOG_Z\">Enums/MATERIAL_FOG</page>, the fog will only be rendered below the specified height.",
         "arguments": [
           {
             "name": "fogZ",
@@ -21312,27 +21367,27 @@
           "client",
           "menu"
         ],
-        "description": "Sets a scissoring rect which limits(otherwise known as clipping) the drawing area.",
+        "description": "Sets a scissoring rectangle which limits the drawing area. (otherwise known as clipping)",
         "arguments": [
           {
             "name": "startX",
             "type": "number",
-            "description": "X start coordinate of the scissor rect."
+            "description": "X start coordinate of the scissor rectangle in screen-space coordinates."
           },
           {
             "name": "startY",
             "type": "number",
-            "description": "Y start coordinate of the scissor rect."
+            "description": "Y start coordinate of the scissor rectangle in screen-space coordinates."
           },
           {
             "name": "endX",
             "type": "number",
-            "description": "X end coordinate of the scissor rect."
+            "description": "X end coordinate of the scissor rectangle in screen-space coordinates."
           },
           {
             "name": "endY",
             "type": "number",
-            "description": "Y end coordinate of the scissor rect."
+            "description": "Y end coordinate of the scissor rectangle in screen-space coordinates."
           },
           {
             "name": "enable",
@@ -21422,7 +21477,7 @@
         "arguments": [
           {
             "name": "compareFunction",
-            "type": "Enums/STENCILCOMPARISONFUNCTION",
+            "type": "number{STENCILCOMPARISONFUNCTION}",
             "description": "The Compare Function that each affected pixel's Stencil Buffer value will be evaluated against during a draw operation."
           }
         ]
@@ -21454,7 +21509,7 @@
         "arguments": [
           {
             "name": "failOperation",
-            "type": "Enums/STENCILOPERATION",
+            "type": "number{STENCILOPERATION}",
             "description": "The Stencil Operation to be performed if the Compare Function does not Pass a pixel."
           }
         ]
@@ -21470,7 +21525,7 @@
         "arguments": [
           {
             "name": "passOperation",
-            "type": "Enums/STENCILOPERATION",
+            "type": "number{STENCILOPERATION}",
             "description": "The Stencil Operation to be performed if the Compare Function Passes a pixel."
           }
         ]
@@ -21534,7 +21589,7 @@
         "arguments": [
           {
             "name": "zFailOperation",
-            "type": "Enums/STENCILOPERATION",
+            "type": "number{STENCILOPERATION}",
             "description": "The Stencil Operation to be performed if the Compare Function Passes a pixel, but the pixel fails the Depth Test."
           }
         ]
@@ -22689,9 +22744,9 @@
         "description": "Creates a sound from a function.",
         "arguments": [
           {
-            "name": "indentifier",
+            "name": "identifier",
             "type": "string",
-            "description": "An unique identified for the sound.\n\n<warning>You cannot override already existing ones.</warning>"
+            "description": "A unique identifier for the sound.\n\n<warning>You cannot override already existing ones.</warning>"
           },
           {
             "name": "samplerate",
@@ -23824,7 +23879,7 @@
           "client",
           "server"
         ],
-        "description": "<note>A serverside implementation of this function can be provided by binary modules, such as [gmsv_workshop](https://github.com/WilliamVenner/gmsv_workshop).</note>\nRetrieves info about supplied Steam Workshop addon.",
+        "description": "Retrieves info about supplied Steam Workshop addon.",
         "arguments": [
           {
             "name": "workshopItemID",
@@ -26586,7 +26641,7 @@
   },
   {
     "name": "table",
-    "description": "The table `type` is an object that can store multiple values.\n\nThe table `library` is a standard Lua library which provides functions to manipulate tables. In Garry's Mod there are several extra useful functions added to this library.\n\nThis category lists the functions available in the table `library`.",
+    "description": "The <page text=\"table\">Beginner_Tutorial_Tables</page> **type** is an object that can store multiple values.\n\nThe table **library** is a standard Lua library which provides functions to manipulate tables. In Garry's Mod there are several extra useful functions added to this library.\n\nThis category lists the functions available in the table `library`.",
     "functions": [
       {
         "name": "Add",
@@ -26843,7 +26898,7 @@
           "client",
           "server"
         ],
-        "description": "Removes all values from a table.",
+        "description": "Removes all values from a table. If your table is not a metatable, it is almost always better to use `tab = {}` to preserve performance.",
         "arguments": [
           {
             "name": "tbl",
@@ -29194,7 +29249,7 @@
         "realms": [
           "server"
         ],
-        "description": "Replaces any instance of the \"from\" reference with the \"to\" reference, in any existing undo block. Returns true if something was replaced",
+        "description": "Replaces any instance of the \"from\" reference with the \"to\" reference, in any existing undo block.\n\nYou very likely want to call <page>cleanup.ReplaceEntity</page> with the same entities as well.",
         "arguments": [
           {
             "name": "from",
@@ -29204,13 +29259,13 @@
           {
             "name": "to",
             "type": "Entity",
-            "description": "The new entity to replace the old one"
+            "description": "The new entity to replace the old one. Can also be a `NULL` to remove the entity from the undo system."
           }
         ],
         "returnValues": [
           {
             "type": "boolean",
-            "description": "somethingReplaced"
+            "description": "Whether the entity was replaced"
           }
         ],
         "source": {
@@ -30032,7 +30087,7 @@
         ],
         "returnValues": [
           {
-            "type": "string",
+            "type": "string|nil",
             "description": "The original, decompressed string or `nil` on failure or invalid input. Also returns empty string if the input string was zero length (\"\")."
           }
         ]
@@ -30104,7 +30159,7 @@
           },
           {
             "name": "ignorePredictionOrRecipientFilter",
-            "type": "any",
+            "type": "boolean|CRecipientFilter",
             "default": "nil",
             "description": "Can either be a boolean to ignore the prediction filter or a <page>CRecipientFilter</page>.\n\nSet this to true if you wish to call this function in multiplayer from server."
           }
@@ -31130,8 +31185,8 @@
         ],
         "returnValues": [
           {
-            "type": "table",
-            "description": "The table containing converted information. Returns nothing on failure."
+            "type": "table|nil",
+            "description": "The table containing converted information. Returns `nil` on failure."
           }
         ]
       },
@@ -31939,7 +31994,7 @@
           "client",
           "server"
         ],
-        "description": "Converts a table to a JSON string.\n\nSee <page>util.JSONToTable</page> for the opposite function.\n\n<warning>All keys are strings in the JSON format, so all keys of other types will be converted to strings!\n\nAll integers will be output as decimals (5 -&gt; 5.0), since all numbers in Lua are internally floating point values.\n</warning>\n\n<bug issue=\"3561\">This will produce invalid JSON if the provided table contains nan or inf values.</bug>",
+        "description": "Converts a table to a JSON string.\n\nSee <page>util.JSONToTable</page> for the opposite function.\n\n<warning>All keys are strings in the JSON format, so all keys of other types will be converted to strings!\nThis can lead to loss of data where a number key could be converted into an already existing string key! (for example in a table like this: `{[\"5\"] = \"ok\", [5] = \"BBB\"}`)\n\nAll integers will be output as decimals (5 -&gt; 5.0), since all numbers in Lua are internally floating point values.\n</warning>\n\n<bug issue=\"3561\">This will produce invalid JSON if the provided table contains nan or inf values.</bug>",
         "arguments": [
           {
             "name": "table",
@@ -32140,18 +32195,18 @@
           "client",
           "server"
         ],
-        "description": "Performs an infinitely thin, invisible Ray Trace (or \"Trace\") in a line based on an input <page text=\"Trace Structure table\">Structures/Trace</page> and returns a <page text=\"Trace Result table\">Structures/TraceResult</page> that contains information about what, if anything, the Trace line hit or intersected.\n\nTraces intersect with the Physics Meshes of <page text=\"Solid\">enums/SOLID</page>, <page text=\"Server-side\">States</page>, <page text=\"Entities\">Entity</page> (including the <page text=\"Game World\">game.GetWorld</page>) but cannot detect Client-side-only Entities.\nFor a way to detect Client-side Entities, see <page>ents.FindAlongRay</page>.\n\nTraces do not differentiate between the inside and the outside faces of Physics Meshes.  Because of this, if a Trace starts within a Solid Physics Mesh it will hit the inside faces of the Physics Mesh and may return unexpected values as a result.\n\nSee <page>util.TraceHull</page> for a \"box\" type trace.\n\nYou can use `r_visualizetraces` set to `1` (requires `sv_cheats` set to `1`) to visualize traces in real time for debugging purposes.",
+        "description": "Performs an infinitely thin, invisible ray trace (or \"trace\") in a line based on the input and returns a table that contains information about what, if anything, the trace line hit or intersected.\n\nTraces intersect with the physics meshes of <page text=\"solid\">enums/SOLID</page>, <page text=\"server-side\">States</page>, <page text=\"entities\">Entity</page> (including the <page text=\"game world\">game.GetWorld</page>) but cannot detect client-side only entities unless <page text=\"hitclientonly\">Structures/Trace#hitclientonly</page> is set to true.\n\nSee <page>ents.FindAlongRay</page> if you wish for the trace to not stop on first intersection.\nSee <page>util.TraceHull</page> for a \"box\" type trace.\n\nTraces do not differentiate between the inside and the outside faces of physics meshes. Because of this, if a trace starts within a solid physics mesh it will hit the inside faces of the physics mesh and may return unexpected values as a result.\n\n\nYou can use `r_visualizetraces` set to `1` (requires `sv_cheats` set to `1`) to visualize traces in real time for debugging purposes.",
         "arguments": [
           {
             "name": "traceConfig",
-            "type": "table",
-            "description": "A table of data that configures the Trace.\n\nFor the table's format and available options see the <page>Structures/Trace</page> page."
+            "type": "table{Trace}",
+            "description": "A table of data that configures the trace. See <page>Structures/Trace</page> for available options."
           }
         ],
         "returnValues": [
           {
-            "type": "table",
-            "description": "A table of information detailing where and what the Trace line intersected, or `nil` if the trace is being done before the <page>GM:InitPostEntity</page> hook.\n\nFor the table's format and available options see the <page>Structures/TraceResult</page> page."
+            "type": "table{TraceResult}",
+            "description": "A table of information detailing where and what the trace line intersected, or `nil` if the trace is being done before the <page>GM:InitPostEntity</page> hook.\n\nFor the table's format and available options see the <page>Structures/TraceResult</page> page."
           }
         ]
       },
@@ -32438,7 +32493,7 @@
         "description": "Returns all Lua-created panels.\n\nUsed internally for <page>PANEL:PreAutoRefresh</page> and <page>PANEL:PostAutoRefresh</page>.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<Panel>",
             "description": "List of all Lua created panels."
           }
         ]
@@ -32542,7 +32597,7 @@
           {
             "name": "classname",
             "type": "string",
-            "description": "Classname of the panel to register. This is what you will need to pass to <page>vgui.Create</page>'s first argument."
+            "description": "Classname of the panel to register. This is what you will need to pass to <page>vgui.Create</page>'s first argument.\n\nThis must be unique, including classnames of entities due to internal usage of <page>baseclass.Set</page>."
           },
           {
             "name": "panelTable",

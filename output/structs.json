@@ -34,13 +34,13 @@
         "name": "npcdmg",
         "type": "number",
         "default": "10",
-        "description": "The damage dealt to NPCs.\n\nRelated function is <page>game.GetAmmoNPCDamage</page>.\n\nCan also be a string pointing to a <page>convar</page>. The value will automatically update with the convar's."
+        "description": "The damage dealt to NPCs.\n\nRelated function is <page>game.GetAmmoNPCDamage</page>.\n\nCan also be a string with the name of a <page>convar</page>. The value will automatically update with the convar's."
       },
       {
         "name": "plydmg",
         "type": "number",
         "default": "10",
-        "description": "The damage dealt to players.\n\nRelated function is <page>game.GetAmmoPlayerDamage</page>.\n\nCan also be a string pointing to a <page>convar</page>. The value will automatically update with the convar's."
+        "description": "The damage dealt to players.\n\nRelated function is <page>game.GetAmmoPlayerDamage</page>.\n\nCan also be a string with the name of a <page>convar</page>. The value will automatically update with the convar's."
       },
       {
         "name": "tracer",
@@ -52,7 +52,7 @@
         "name": "maxcarry",
         "type": "number",
         "default": "9999",
-        "description": "Maximum amount of ammo of this type the player should be able to carry in reserve. `-2` makes this ammo type infinite.\n\nRelated function is <page>game.GetAmmoMax</page>.\n\nCan also be a string pointing to a <page>convar</page>. The value will automatically update with the convar's.\n<warning>`gmod_maxammo` convar will override this value if set to above 0, **which it is by default**.</warning>"
+        "description": "Maximum amount of ammo of this type the player should be able to carry in reserve. `-2` makes this ammo type infinite.\n\nRelated function is <page>game.GetAmmoMax</page>.\n\nCan also be a string with the name of a <page>convar</page>. The value will automatically update with the convar's.\n<warning>`gmod_maxammo` convar will override this value if set to above 0, **which it is by default**.</warning>"
       },
       {
         "name": "flags",
@@ -958,22 +958,10 @@
         "description": "Sets the spawnmenu content icon type for the entity, used by spawnmenu in the Sandbox-derived gamemodes.\nSee <page>spawnmenu.AddContentType</page> for more information."
       },
       {
-        "name": "DoNotDuplicate",
-        "type": "boolean",
-        "default": "false",
-        "description": "If set, the entity will not be duplicated via the built-in duplicator system."
-      },
-      {
         "name": "IconOverride",
         "type": "string",
         "default": "entities/<ClassName>.png",
         "description": "If set, overrides the icon path to be displayed in the Spawnmenu for this entity.\n\nLike many functions, this expects a path relative to the `materials/` folder, do not include `materials/` in the provided string."
-      },
-      {
-        "name": "PhysgunDisabled",
-        "type": "boolean",
-        "default": "false",
-        "description": "If set, the entity forbid physgun interaction."
       },
       {
         "name": "PhysicsSolidMask",
@@ -1273,11 +1261,6 @@
         "description": "Set this to true if your gamemode is team-based. Used to enable/disable the base gamemode team system."
       },
       {
-        "name": "IsSandboxDerived",
-        "type": "boolean",
-        "description": "True if the gamemode is derived from sandbox."
-      },
-      {
         "name": "ThisClass",
         "type": "string",
         "description": "The name of the gamemode folder prepended with \"gamemode_\" (such as \"gamemode_sandbox\"), automatically set."
@@ -1286,6 +1269,11 @@
         "name": "BaseClass",
         "type": "table",
         "description": "The table of the base gamemode to derive from, set automatically by <page>Global.DeriveGamemode</page>.\n\n<note>It is recommended to use <page>Global.DEFINE_BASECLASS</page> when referencing the gamemode's BaseClass to prevent unintended behavior</note>\n\n<note><page>Global.DeriveGamemode</page> modifies the main gamemode's BaseClass, which is shared with parent gamemodes. Because of this, in parent gamemodes the BaseClass can be incorrect, so for instance you need to use `self.BaseClass.BaseClass` in the 1st parent instead</note>"
+      },
+      {
+        "name": "IsSandboxDerived",
+        "type": "boolean",
+        "description": "Whether the gamemode is Sandbox, or derived from Sandbox. This is not really part of the `GM` structure, and listed here only for convenience."
       }
     ],
     "realms": [
@@ -2197,7 +2185,7 @@
       {
         "name": "Filter",
         "type": "function",
-        "description": "Used **clientside** to decide whether this property should be shown for an entity.\n\nIt's good practice to call <page>GM:CanProperty</page> in this hook via <page>gamemode.Call</page> or <page>hook.Run</page>.\n\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"Entity\" name=\"ent\">the entity the player clicked</arg>\n<arg type=\"Global.LocalPlayer\" name=\"player\">the localplayer</arg>\n<ret type=\"boolean\" name=\"check\">Return true if the property should be shown for this entity.</ret>\n</callback>"
+        "description": "Used **clientside** to decide whether this property should be shown for an entity.\n\nIt's good practice to call <page>GM:CanProperty</page> in this hook via <page>gamemode.Call</page> or <page>hook.Run</page>.\n\n<callback>\n<arg type=\"table\" name=\"self\">the property table</arg>\n<arg type=\"Entity\" name=\"ent\">the entity the player clicked</arg>\n<arg type=\"Player\" name=\"player\">the <page>Global.LocalPlayer</page></arg>\n<ret type=\"boolean\" name=\"check\">Return true if the property should be shown for this entity.</ret>\n</callback>"
       },
       {
         "name": "Checked",
@@ -3699,7 +3687,7 @@
         "description": "A custom undo text to show the client"
       },
       {
-        "name": "NiceName",
+        "name": "NiceText",
         "type": "string",
         "description": "A \"nice\" name of the undo, which will be used for the UI"
       }
@@ -4251,6 +4239,12 @@
         "description": "The weapon's viewmodel"
       },
       {
+        "name": "drawviewer",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether to force draw the local player or not."
+      },
+      {
         "name": "viewmodelfov",
         "type": "number",
         "description": "The viewmodel's FOV"
@@ -4337,6 +4331,11 @@
   },
   {
     "fields": [
+      {
+        "name": "viewid",
+        "type": "number",
+        "description": "The view's id"
+      },
       {
         "name": "origin",
         "type": "Vector",

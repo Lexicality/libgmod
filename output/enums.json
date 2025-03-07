@@ -8445,7 +8445,7 @@
       {
         "name": "FCVAR_ARCHIVE",
         "value": 128,
-        "description": "Save the <page>ConVar</page> value into client.vdf\n\nReported as \"a\" by `cvarlist`, except Lua <page>ConVar</page>s"
+        "description": "Save the <page>ConVar</page> value into either client.vdf or server.vdf\n\nReported as \"a\" by `cvarlist`, except Lua <page>ConVar</page>s"
       },
       {
         "name": "FCVAR_ARCHIVE_XBOX",
@@ -10921,9 +10921,9 @@
         "description": "This nav area is adjacent to a drop of at least `CliffHeight` (300 hammer units). Unused by base game."
       },
       {
-        "name": "NAV_MESH_FUNC_COST",
-        "value": 536870912,
-        "description": "Area has designer specified cost controlled by `func_nav_cost` entities"
+        "name": "NAV_MESH_BLOCKED_LUA",
+        "value": 65536,
+        "description": "Whether the area is blocked via <page>CNavArea:MarkAsBlocked</page>."
       },
       {
         "name": "NAV_MESH_BLOCKED_PROPDOOR",
@@ -10931,9 +10931,9 @@
         "description": "Whether the area has a `prop_door_rotating` that is blocking it (because the door is closed)"
       },
       {
-        "name": "NAV_MESH_BLOCKED_LUA",
-        "value": 65536,
-        "description": "Whether the area is blocked via <page>CNavArea:MarkAsBlocked</page>."
+        "name": "NAV_MESH_FUNC_COST",
+        "value": 536870912,
+        "description": "Area has designer specified cost controlled by `func_nav_cost` entities"
       },
       {
         "name": "NAV_MESH_HAS_ELEVATOR",
@@ -12028,42 +12028,47 @@
     "realms": [
       "server"
     ],
-    "description": "Enumerations for NPC schedules, used by <page>ENTITY:StartEngineSchedule</page> and <page>NPC:SetSchedule</page>. Serverside only.",
+    "description": "Enumerations for NPC schedules, used by <page>ENTITY:StartEngineSchedule</page>, <page>ENTITY:TranslateSchedule</page> and <page>NPC:SetSchedule</page>. Serverside only.",
     "name": "SCHED"
   },
   {
     "fields": [
       {
+        "name": "",
+        "value": 0,
+        "description": "Instant fade in, wait for hold time AND fade time, instant fade out.\n\nNot a real flag, but rather describes what happens when given none."
+      },
+      {
         "name": "SCREENFADE.IN",
         "value": 1,
-        "description": "Fade out after the hold time has passed"
+        "description": "Instant fade in, slowly fade out (based on fade time given) after the hold time has passed"
       },
       {
         "name": "SCREENFADE.OUT",
         "value": 2,
-        "description": "Fade in, hold time passes, disappear"
+        "description": "Slowly fade in (based on fade time given), hold time passes, instantly disappear"
       },
       {
         "name": "SCREENFADE.MODULATE",
         "value": 4,
-        "description": "With white color, turns the screen black"
+        "description": "Instead of blending multiple active screen fades, modulate them. (TODO: What does this mean?) Internally this flag switches what material will be used to render the screen fade. Practically it forces the color to black."
       },
       {
         "name": "SCREENFADE.STAYOUT",
         "value": 8,
-        "description": "No effects, never disappear"
+        "description": "Never disappear. Does nothing by itself, as if no flags were given."
       },
       {
         "name": "SCREENFADE.PURGE",
         "value": 16,
-        "description": "Appear, Disappear, no effects"
+        "description": "Used to purge all currently active screen fade effects, meant to be used in conjunction with flags above as a \"priority effect\".\n\nDoes nothing by itself, acts as if no flags were given"
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "Enumerations used by <page>Player:ScreenFade</page>.",
+    "description": "Bitflags used by <page>Player:ScreenFade</page>.",
     "name": "SCREENFADE"
   },
   {
@@ -12628,7 +12633,7 @@
       "client",
       "server"
     ],
-    "description": "The sound's attenuation; how fast it drops away, enumerations used by <page>Global.EmitSound</page> and <page>Entity:EmitSound</page>.\n\n\n\nThe engine starts running into trouble below 60dB.\n\n<warning>These enumerations do not exist in Lua and are listed here only for reference. These values and descriptions are taken from [soundflags.h in Source SDK 2013](https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/public/soundflags.h#L53)</warning>",
+    "description": "The sound's attenuation; how fast it drops away, enumerations used by <page>Global.EmitSound</page> and <page>Entity:EmitSound</page>. Information taken from [soundflags.h in Source SDK 2013](https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/public/soundflags.h#L53)\n\nThe engine starts running into trouble below 60dB.\n\n<warning>These enumerations do not exist in game and are listed here only for reference</warning>",
     "name": "SNDLVL"
   },
   {
@@ -13500,7 +13505,7 @@
     "realms": [
       "client"
     ],
-    "description": "Bit flags used by <page>Global.GetRenderTargetEx</page>. Information taken from [here](https://developer.valvesoftware.com/wiki/Valve_Texture_Format#Image_flags)\n\n<warning>These enumerations do not exist in game and are listed here only for reference</warning>",
+    "description": "Bit flags used by <page>Global.GetRenderTargetEx</page>. Information taken from [VTF (Valve Texture Format) - Texture flags](https://developer.valvesoftware.com/wiki/Valve_Texture_Format#Texture_flags)\n\n<warning>These enumerations do not exist in game and are listed here only for reference</warning>",
     "name": "TEXTUREFLAGS"
   },
   {

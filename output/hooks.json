@@ -1,5 +1,25 @@
 [
   {
+    "name": "DRIVE",
+    "functions": [
+      {
+        "name": "CalcView",
+        "parent": "DRIVE",
+        "realms": [
+          "client"
+        ],
+        "description": "Optionally alter the player's view if they are using this <page>drive</page> mode.\n\nThis hook is called from the default implementation of <page>GM:CalcView</page> which is [here](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/gamemodes/base/gamemode/cl_init.lua#L387-L395). Therefore, it will not be called if any other hook added to `CalcView` returns any value, or if the current gamemode overrides the default hook and does not call <page>drive.CalcView</page>.",
+        "arguments": [
+          {
+            "name": "view_in",
+            "type": "table{ViewData}",
+            "description": "The view, see <page>Structures/ViewData</page>. Modify this table."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "EFFECT",
     "functions": [
       {
@@ -467,7 +487,7 @@
           {
             "name": "event",
             "type": "number",
-            "description": "The event ID of happened even. See [this page](http://developer.valvesoftware.com/wiki/Animation_Events)."
+            "description": "The event ID of happened even. See [this page](http://developer.valvesoftware.com/wiki/Animation_Events). Only event IDs above 5000 will appear in this hook. (Are considered the \"new\" system in-engine)"
           },
           {
             "name": "name",
@@ -492,12 +512,12 @@
         "arguments": [
           {
             "name": "wep",
-            "type": "Entity",
+            "type": "Weapon",
             "description": "The weapon being used by the NPC."
           },
           {
             "name": "target",
-            "type": "Entity",
+            "type": "NPC",
             "description": "The target the NPC is attacking"
           }
         ],
@@ -740,7 +760,7 @@
         "returnValues": [
           {
             "type": "boolean",
-            "description": "Return true if this jump should be allowed to be performed, false otherwise.\n\nNot returning anything, or returning a non boolean will perform the default action."
+            "description": "Return true if this jump should be allowed to be performed, false otherwise.\n\nNot returning anything, or returning a non boolean will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_basenpc_movement.cpp#L319)."
           }
         ]
       },
@@ -1529,15 +1549,16 @@
         "description": "Called by the engine to alter NPC activities, if desired by the NPC.\n\n<note>This hook only exists for `ai` type SENTs.</note>",
         "arguments": [
           {
-            "name": "act",
-            "type": "number",
-            "description": "The activity to translate. See <page>Enums/ACT</page>."
+            "name": "oldAct",
+            "type": "number{ACT}",
+            "description": "The activity to translate."
           }
         ],
         "returnValues": [
           {
-            "type": "number",
-            "description": "The activity that should override the incoming activity. See <page>Enums/ACT</page>.\n\nDo not return anything to not override."
+            "type": "number{ACT}",
+            "name": "newAct",
+            "description": "The activity that should override the incoming activity.\n\nNot returning anything, or returning a non value will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_basenpc.cpp#L5976)."
           }
         ]
       },
@@ -1547,47 +1568,25 @@
         "realms": [
           "server"
         ],
-        "description": "Called by the engine to alter NPC's final position to reach its enemy or target.\n\n<note>This hook only exists for `ai` type SENTs.</note>",
+        "description": "Called by the engine to alter NPC's final position to reach its enemy or target. This is called twice for `GOALTYPE_PATHCORNER`; first is for the first path_corner and second for the next connected path_corner.\n\n<note>This hook only exists for `ai` type SENTs.</note>",
         "arguments": [
           {
-            "name": "enemy",
-            "type": "Entity",
-            "default": "GetEnemy()",
-            "description": "The enemy being chased."
+            "name": "target",
+            "type": "NPC|Entity",
+            "default": "GetEnemy() or m_hGoalEnt",
+            "description": "The enemy being chased or the path_corner in query."
           },
           {
             "name": "currentGoal",
             "type": "Vector",
-            "default": "GetEnemyLastKnownPos()",
-            "description": "The enemy's chase position."
+            "default": "GetEnemyLastKnownPos() or m_hGoalEnt:GetPos()",
+            "description": "The target's origin."
           }
         ],
         "returnValues": [
           {
             "type": "Vector",
-            "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nDo not return anything to not override."
-          }
-        ],
-        "overloads": [
-          {
-            "arguments": [
-              {
-                "name": "target",
-                "type": "Entity",
-                "description": "The path_corner in query."
-              },
-              {
-                "name": "currentGoal",
-                "type": "Vector",
-                "description": "path_corner's origin."
-              }
-            ],
-            "returnValues": [
-              {
-                "type": "Vector",
-                "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nDo not return anything to not override."
-              }
-            ]
+            "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nNot returning anything, or returning a non vector will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_basenpc_schedule.cpp#L4251)."
           }
         ]
       },
@@ -1601,14 +1600,14 @@
         "arguments": [
           {
             "name": "schedule",
-            "type": "number",
+            "type": "number{SCHED}",
             "description": "The schedule to translate. See <page>Enums/SCHED</page>."
           }
         ],
         "returnValues": [
           {
-            "type": "number",
-            "description": "The schedule that should override the incoming schedule. See <page>Enums/SCHED</page>.\n\nDo not return anything to not override."
+            "type": "number{SCHED}",
+            "description": "The schedule that should override the incoming schedule.\n\nNot returning anything, or returning a non value will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_default.cpp#L253)."
           }
         ]
       },
@@ -1673,11 +1672,11 @@
           {
             "name": "caller",
             "type": "Entity",
-            "description": "The entity responsible for the input. This will typically be the same as `activator` unless some other entity is acting as a proxy"
+            "description": "The entity responsible for the input. This will typically be the same as `activator` unless some other entity is acting as a proxy."
           },
           {
             "name": "useType",
-            "type": "number",
+            "type": "number{USE}",
             "description": "Use type, see <page>Enums/USE</page>."
           },
           {
@@ -2653,7 +2652,7 @@
           "client",
           "server"
         ],
-        "description": "Called every time a bullet is fired from an entity.\n\n<warning>This hook is called directly from <page>Entity:FireBullets</page>. Due to this, you cannot call <page>Entity:FireBullets</page> inside this hook or an infinite loop will occur crashing the game.</warning>",
+        "description": "Called every time a bullet is about to be fired from an entity, which allows to completely modify the bullet structure before the bullet is actually fired.\n\nSee <page>GM:PostEntityFireBullets</page> if you wish to hook the final bullet values, such as the aim direction post spread calculations.\n\n<warning>This hook is called directly from <page>Entity:FireBullets</page>. Due to this, you cannot call <page>Entity:FireBullets</page> inside this hook or an infinite loop will occur crashing the game.</warning>",
         "arguments": [
           {
             "name": "entity",
@@ -2763,7 +2762,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when an entity takes damage. You can modify all parts of the damage info in this hook.\n\n<warning>Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.</warning>",
+        "description": "Called when an entity takes damage. You can modify all parts of the damage info in this hook.\n\nSee <page>GM:PostEntityTakeDamage</page> if you wish to hook the final damage event.\n\n<warning>Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.</warning>",
         "arguments": [
           {
             "name": "target",
@@ -2773,7 +2772,7 @@
           {
             "name": "dmg",
             "type": "CTakeDamageInfo",
-            "description": "Damage info"
+            "description": "Detailed information about the damage event."
           }
         ],
         "returnValues": [
@@ -4796,7 +4795,12 @@
             "type": "boolean",
             "description": "3D sound. If set to `true`, will fade out the sound the further away listener is from the  talker, the voice will also be in stereo, and not mono."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 761,
+          "lineEnd": 768
+        }
       },
       {
         "name": "PlayerCanJoinTeam",
@@ -5608,7 +5612,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called whenever a player spawns and must choose a model. A good place to assign a model to a player.\n<note>This function may not work in your custom gamemode if you have overridden your <page>GM:PlayerSpawn</page> and you do not use self.BaseClass.PlayerSpawn or <page>hook.Call</page>.</note>",
+        "description": "Called whenever a player spawns and must choose a model. A good place to assign a model to a player.\n<note>This function may not work in your custom gamemode if you have overridden your <page>GM:PlayerSpawn</page> and you do not use <page text=\"self.BaseClass.PlayerSpawn\">Global.DEFINE_BASECLASS</page> in it, or <page>hook.Call</page> this hook from <page>GM:PlayerSpawn</page>.</note>",
         "arguments": [
           {
             "name": "ply",
@@ -6158,7 +6162,7 @@
           "client",
           "server"
         ],
-        "description": "Called every time a bullet pellet is fired from an entity.\n\n<warning>This hook is called directly from <page>Entity:FireBullets</page>. Due to this, you cannot call <page>Entity:FireBullets</page> inside this hook or an infinite loop will occur crashing the game.</warning>",
+        "description": "Called every time a bullet pellet (i.e. this hook is called multiple times for a shotgun shot) is fired from an entity. Notably this hook will have the final damage and aim direction for the bullet pellet.\n\nSee <page>GM:EntityFireBullets</page> if you wish to modify the bullets before they are fired.\n\n<warning>This hook is called directly from <page>Entity:FireBullets</page>. Due to this, you cannot call <page>Entity:FireBullets</page> inside this hook or an infinite loop will occur crashing the game.</warning>",
         "arguments": [
           {
             "name": "entity",
@@ -6184,7 +6188,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when an entity receives a damage event, after passing damage filters, etc.\n\n<warning>Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.</warning>",
+        "description": "Called when an entity receives a damage event, after passing damage filters, etc.\n\nSee <page>GM:EntityTakeDamage</page> if you wish to prevent damage events, or otherwise alter them.\n\n<warning>Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.</warning>",
         "arguments": [
           {
             "name": "ent",
@@ -6192,12 +6196,12 @@
             "description": "The entity that took the damage."
           },
           {
-            "name": "dmg",
+            "name": "dmginfo",
             "type": "CTakeDamageInfo",
-            "description": ""
+            "description": "Detailed information about the damage event."
           },
           {
-            "name": "took",
+            "name": "wasDamageTaken",
             "type": "boolean",
             "description": "Whether the entity actually took the damage. (For example, shooting a Strider will generate this event, but it won't take bullet damage)."
           }
@@ -6799,17 +6803,17 @@
         "arguments": [
           {
             "name": "attacker",
-            "type": "Entity",
+            "type": "Entity|string|nil",
             "description": "The entity that caused the death."
           },
           {
             "name": "inflictor",
-            "type": "Entity",
-            "description": "The attacker's weapon or the attacker itself if no weapon was equipped."
+            "type": "string",
+            "description": "The attacker's weapon class name or the attacker itself if no weapon was equipped."
           },
           {
             "name": "victim",
-            "type": "Entity",
+            "type": "Entity|string",
             "description": "The entity that died."
           },
           {
@@ -7041,7 +7045,7 @@
           "client",
           "server"
         ],
-        "description": "Called whenever the Lua environment is about to be shut down, for example on map change, or when the server is going to shut down.\n<warning><page>Player:SteamID</page>, <page>Player:SteamID64</page>, and the like will return nil for the listen host here but work fine for other players.</warning>"
+        "description": "Called whenever the Lua environment is about to be shut down, for example on map change, or when the server is going to shut down."
       },
       {
         "name": "SpawniconGenerated",
@@ -9690,7 +9694,7 @@
           {
             "name": "canvas",
             "type": "Panel",
-            "description": "The canvas that has the selection. (<page>SANDBOX:SpawnlistOpenGenericMenu</page>)"
+            "description": "The canvas that has the selection. (<page>Panel:GetSelectionCanvas</page>)"
           }
         ]
       },
@@ -10566,7 +10570,14 @@
         "realms": [
           "server"
         ],
-        "description": "Called when weapon is dropped by <page>Player:DropWeapon</page>.\n\nSee also <page>WEAPON:OwnerChanged</page>."
+        "description": "Called when weapon is dropped by <page>Player:DropWeapon</page>.\n\nSee also <page>WEAPON:OwnerChanged</page>.",
+        "arguments": [
+          {
+            "name": "owner",
+            "type": "Entity",
+            "description": "The entity that dropped the weapon."
+          }
+        ]
       },
       {
         "name": "OnReloaded",
@@ -10865,6 +10876,15 @@
           "server"
         ],
         "description": "Called when the weapon thinks.\n\nThis hook won't be called during the deploy animation and when using <page>Weapon:DefaultReload</page>.\n\nDespite being a predicted hook, this hook is called clientside in single player (for your convenience), however it will not be recognized as a predicted hook via <page>Player:GetCurrentCommand</page>, and will run more often in this case.\n\nThis hook will be called before Player movement is processed on the client, and after on the server.\n\n<note>This hook only runs while the weapon is in players hands. It does not run while it is carried by an NPC.</note>\n<bug issue=\"2855\">This will not be run during deploy animations after a serverside-only deploy. This usually happens after picking up and dropping an object with +use.</bug>"
+      },
+      {
+        "name": "Tick",
+        "parent": "WEAPON",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "description": "<deprecated>Use <page>Weapon:Think</page> instead.</deprecated>\n\nAlias of <page>Weapon:Think</page>."
       },
       {
         "name": "TranslateActivity",

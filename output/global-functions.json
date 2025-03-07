@@ -33,8 +33,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineStart": 182,
-      "lineEnd": 220
+      "lineStart": 201,
+      "lineEnd": 239
     }
   },
   {
@@ -700,8 +700,8 @@
     ],
     "source": {
       "file": "lua/includes/util/color.lua",
-      "lineStart": 11,
-      "lineEnd": 19
+      "lineStart": 13,
+      "lineEnd": 22
     }
   },
   {
@@ -733,8 +733,8 @@
     ],
     "source": {
       "file": "lua/includes/util/color.lua",
-      "lineStart": 21,
-      "lineEnd": 28
+      "lineStart": 27,
+      "lineEnd": 31
     }
   },
   {
@@ -841,6 +841,12 @@
         "name": "path",
         "type": "string",
         "description": "Path to the file, relative to the `garrysmod/lua/` directory."
+      },
+      {
+        "name": "showError",
+        "type": "boolean",
+        "default": "true",
+        "description": "Decides whether or not a non-halting error should be thrown on compile failure."
       }
     ],
     "returnValues": [
@@ -1206,7 +1212,7 @@
     ],
     "returnValues": [
       {
-        "type": "table",
+        "type": "table<PhysCollide>",
         "description": "Table of <page>PhysCollide</page> objects. The number of entries will match the model's physics object count. See also <page>Entity:GetPhysicsObjectCount</page>. Returns no value if the model doesn't exist, or has not been precached."
       }
     ]
@@ -1273,7 +1279,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the uptime of the server in seconds (to at least 4 decimal places)\n\nThis is a synchronised value and affected by various factors such as host_timescale (or <page>game.GetTimeScale</page>) and the server being paused - either by `sv_pausable` or all players disconnecting.\n\nYou should use this function for timing in-game events but not for real-world events.\n\nSee also: <page>Global.RealTime</page>, <page>Global.SysTime</page>\n\n<note>This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).\n\n\n\nThis is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this</note>\n\n<bug issue=\"3026\">This returns 0 in <page>GM:PlayerAuthed</page>.</bug>",
+    "description": "Returns the uptime of the server in seconds (to at least 4 decimal places)\n\nThis is a synchronised value and affected by various factors such as host_timescale (or <page>game.GetTimeScale</page>) and the server being paused - either by `sv_pausable` or all players disconnecting.\n\nYou should use this function for timing in-game events but not for real-world events.\n\nSee also: <page>Global.RealTime</page>, <page>Global.SysTime</page>\n\n<note>This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).\n\n\n\nThis is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this</note>",
     "returnValues": [
       {
         "type": "number",
@@ -2317,7 +2323,7 @@
       "client",
       "server"
     ],
-    "description": "Emits the specified sound at the specified position. See also <page>Entity:EmitSound</page> if you wish to play sounds on a specific entity.\n\n<note>\nValid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:\n\n`Unsupported 32-bit wave file your_sound.wav` and\n`Invalid sample rate (48000) for sound 'your_sound.wav'`\n</note>",
+    "description": "Emits the specified sound at the specified position. See also <page>Entity:EmitSound</page> if you wish to play sounds on a specific entity.\n\n<note>\nValid 16 bit sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:\n\n`Unsupported 32-bit wave file your_sound.wav` and\n`Invalid sample rate (48000) for sound 'your_sound.wav'`\n</note>",
     "arguments": [
       {
         "name": "soundName",
@@ -2418,7 +2424,7 @@
     "returnValues": [
       {
         "type": "Entity",
-        "description": "The entity if it exists, or NULL if it doesn't."
+        "description": "The entity if it exists, or `NULL` if it doesn't."
       }
     ]
   },
@@ -2546,7 +2552,7 @@
       "client",
       "server"
     ],
-    "description": "Returns the meta table for the class with the matching name.\n\nYou can learn more about meta tables on the <page>Meta Tables</page> page.\n\nYou can find a list of meta tables that can be retrieved with this function on <page>Enums/TYPE</page>. The name in the description is the string to use with this function.",
+    "description": "Returns the meta table for the class with the matching name.\n\nYou can learn more about meta tables on the <page>Meta Tables</page> page.\n\nYou can find a list of meta tables that can be retrieved with this function on <page>Enums/TYPE</page>. The name in the description is the string to use with this function.\n\nCustom meta tables should be registered via <page>Global.RegisterMetaTable</page>.",
     "arguments": [
       {
         "name": "metaName",
@@ -2556,8 +2562,8 @@
     ],
     "returnValues": [
       {
-        "type": "table",
-        "description": "The corresponding meta table."
+        "type": "table|nil",
+        "description": "The corresponding meta table or `nil` if it doesn't exist."
       }
     ]
   },
@@ -2619,7 +2625,7 @@
     "arguments": [
       {
         "name": "problem",
-        "type": "Structures/Problem",
+        "type": "table{Problem}",
         "description": "The problem's definition."
       }
     ],
@@ -2860,7 +2866,7 @@
       "client",
       "server"
     ],
-    "description": "Gets the <page>ConVar</page> with the specified name.\n\n<note>This function uses <page>Global.GetConVar_Internal</page> internally, but caches the result in Lua for quicker lookups.</note>\n<warning>Due to this function using <page>Global.GetConVar_Internal</page> internally it tends to be relatively slow. Please attempt to 'cache' the return of what you used to make it instead of using this function.\n\nExample:\n```\nlocal exampleConvar = CreateClientConVar(\"exampleConvar\", \"hi\")\n\nprint(exampleConvar:GetString())\n```\n\n</warning>",
+    "description": "Gets the <page>ConVar</page> with the specified name.\n\n<note>This function uses <page>Global.GetConVar_Internal</page> internally, but caches the result in Lua for quicker lookups.</note>",
     "arguments": [
       {
         "name": "name",
@@ -2876,8 +2882,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineStart": 472,
-      "lineEnd": 484
+      "lineStart": 495,
+      "lineEnd": 507
     }
   },
   {
@@ -3003,7 +3009,7 @@
     "description": "Returns a table with the names of files needed from the server you are currently joining.",
     "returnValues": [
       {
-        "type": "table",
+        "type": "table<string>",
         "description": "table of file names"
       }
     ]
@@ -3845,7 +3851,12 @@
         "type": "table",
         "description": "The <page>Color</page> created from the HSL color space."
       }
-    ]
+    ],
+    "source": {
+      "file": "lua/includes/util/color.lua",
+      "lineStart": 76,
+      "lineEnd": 105
+    }
   },
   {
     "name": "HSVToColor",
@@ -3878,7 +3889,12 @@
         "type": "table",
         "description": "The <page>Color</page> created from the HSV color space."
       }
-    ]
+    ],
+    "source": {
+      "file": "lua/includes/util/color.lua",
+      "lineStart": 45,
+      "lineEnd": 74
+    }
   },
   {
     "name": "HTTP",
@@ -3902,6 +3918,44 @@
         "description": "`true` if we made a request, `nil` if we failed."
       }
     ]
+  },
+  {
+    "name": "HWBToColor",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "description": "Converts a color from [HWB color space](https://en.wikipedia.org/wiki/HWB_color_model) (Hue-Whiteness-Blackness) into RGB color space and returns a <page>Color</page>.",
+    "arguments": [
+      {
+        "name": "hue",
+        "type": "number",
+        "description": "The hue of the color in degrees from 0-360."
+      },
+      {
+        "name": "whiteness",
+        "type": "number",
+        "description": "The whiteness of the color from 0-1."
+      },
+      {
+        "name": "blackness",
+        "type": "number",
+        "description": "The blackness of the color from 0-1."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "Color",
+        "description": "The <page>Color</page> created from the HWB color space."
+      }
+    ],
+    "source": {
+      "file": "lua/includes/util/color.lua",
+      "lineStart": 107,
+      "lineEnd": 117
+    }
   },
   {
     "name": "include",
@@ -4055,8 +4109,8 @@
     ],
     "source": {
       "file": "lua/includes/util/color.lua",
-      "lineStart": 30,
-      "lineEnd": 37
+      "lineStart": 36,
+      "lineEnd": 40
     }
   },
   {
@@ -5133,7 +5187,7 @@
     "realms": [
       "client"
     ],
-    "description": "Returns named color defined in resource/ClientScheme.res.",
+    "description": "Returns named color defined in `resource/ClientScheme.res`.",
     "arguments": [
       {
         "name": "name",
@@ -5692,7 +5746,7 @@
       "client",
       "server"
     ],
-    "description": "Writes every given argument to the console.\nAutomatically attempts to convert each argument to a string. (See <page>Global.tostring</page>)\n\nSeperates lines with a line break (`\"\\n\"`)\n\nSeparates arguments with a tab character (`\"\\t\"`).",
+    "description": "Writes every given argument to the console.\nAutomatically attempts to convert each argument to a string. (See <page>Global.tostring</page>)\n\nSeparates lines with a line break (`\"\\n\"`)\n\nSeparates arguments with a tab character (`\"\\t\"`).",
     "arguments": [
       {
         "name": "args",
@@ -5729,7 +5783,7 @@
       "client",
       "server"
     ],
-    "description": "Recursively prints the contents of a table to the console.",
+    "description": "Recursively prints the contents of a table to the console.\n\nThe table keys will be sorted alphabetically or numerically when printed to the console.",
     "arguments": [
       {
         "name": "tableToPrint",
