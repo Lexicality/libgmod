@@ -10932,7 +10932,7 @@
       },
       {
         "name": "NAV_MESH_BLOCKED_LUA",
-        "value": null,
+        "value": 65536,
         "description": "Whether the area is blocked via <page>CNavArea:MarkAsBlocked</page>."
       },
       {
