@@ -4,6 +4,7 @@ import path from "node:path";
 import _ from "lodash";
 
 import { handleClass, preProcessClasses } from "./classes";
+import { handleEnum } from "./enums";
 import { handleFunc } from "./functions";
 import { handleLib } from "./libraries";
 import { handlePanel, preProcessPanels } from "./panels";
@@ -171,6 +172,31 @@ async function doPanels(data: Panel[]): Promise<void> {
     }
 }
 
+async function doEnums(): Promise<void> {
+    let data: Enum[] = JSON.parse(
+        await fs.readFile("output/enums.json", "utf-8"),
+    );
+    data = _.sortBy(data, "name");
+    await fs.mkdir("enums", { recursive: true });
+    for (let enumData of data) {
+        let libdata: string;
+        try {
+            libdata = handleEnum(enumData);
+        } catch (e) {
+            console.error(
+                "Problem while getting enum definition for %s: %s",
+                enumData.name,
+                e,
+            );
+            throw e;
+        }
+
+        let filename = path.join("enums", `${enumData.name}.lua`);
+        await fs.writeFile(filename, libdata.trimEnd() + "\n");
+        console.log("Done %s!", enumData.name);
+    }
+}
+
 async function main() {
     console.log("hello");
 
@@ -186,6 +212,7 @@ async function main() {
             doClasses(classes),
             doStructs(),
             doPanels(panels),
+            doEnums(),
         ]);
         console.log("woop");
     } catch (e) {

@@ -52,3 +52,16 @@ interface Panel {
     description: string;
     functions?: func[];
 }
+
+interface EnumValue {
+    name: string;
+    value: any;
+    description?: string;
+}
+
+interface Enum {
+    name: string;
+    description?: string;
+    realms: Realm[];
+    fields: EnumValue[];
+}

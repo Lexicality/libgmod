@@ -5,8 +5,8 @@ const TYPE_REPLACEMENTS = new Map<string, string>([
     ["Boolean", "boolean"],
     ["color", "Color"],
     // Terrible hack until I make enums nice
-    ["Enums/STENCILCOMPARISONFUNCTION", "number"],
-    ["Enums/STENCILOPERATION", "number"],
+    ["Enums/STENCILCOMPARISONFUNCTION", "ESTENCILCOMPARISONFUNCTION"],
+    ["Enums/STENCILOPERATION", "ESTENCILOPERATION"],
 ]);
 const JANKY_WIKI_CLASSES = new Map<string, string>([
     ["ENTITY", "Entity"],

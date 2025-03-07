@@ -807,7 +807,7 @@ end
 --- Pixels that **Pass** the Compare Function check move on to the Depth Test, which determines if the draw operation will ultimately be allowed to overwrite the pixel's Color Channel, Stencil Buffer, and Depth Buffer values.  
 --- Pixels that **Fail** the Compare Function check have the Fail Operation performed on their Stencil Buffer value and do **not** have any of their Render Target layers modified by the draw operation.  
 --- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
---- @param compareFunction number @The Compare Function that each affected pixel's Stencil Buffer value will be evaluated against during a draw operation.
+--- @param compareFunction ESTENCILCOMPARISONFUNCTION @The Compare Function that each affected pixel's Stencil Buffer value will be evaluated against during a draw operation.
 function render.SetStencilCompareFunction(compareFunction)
 end
 
@@ -824,13 +824,13 @@ end
 
 --- Sets the Stencil Operation that will be performed on the Stencil Buffer values of pixels affected by draw operations if the Compare Function did **not** Pass the pixel.  
 --- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
---- @param failOperation number @The Stencil Operation to be performed if the Compare Function does not Pass a pixel.
+--- @param failOperation ESTENCILOPERATION @The Stencil Operation to be performed if the Compare Function does not Pass a pixel.
 function render.SetStencilFailOperation(failOperation)
 end
 
 --- Sets the Stencil Operation that will be performed on the Stencil Buffer values of pixels affected by draw operations if the Compare Function Passes the pixel.  
 --- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
---- @param passOperation number @The Stencil Operation to be performed if the Compare Function Passes a pixel.
+--- @param passOperation ESTENCILOPERATION @The Stencil Operation to be performed if the Compare Function Passes a pixel.
 function render.SetStencilPassOperation(passOperation)
 end
 
@@ -858,7 +858,7 @@ end
 
 --- Sets the Stencil Operation that will be performed on the Stencil Buffer values of pixels affected by draw operations if the Compare Function Passed a given pixel, but it did **not** Pass the Depth Test.  
 --- For more detailed information on the Stencil system, including usage examples, see the Stencils Render Reference page  
---- @param zFailOperation number @The Stencil Operation to be performed if the Compare Function Passes a pixel, but the pixel fails the Depth Test.
+--- @param zFailOperation ESTENCILOPERATION @The Stencil Operation to be performed if the Compare Function Passes a pixel, but the pixel fails the Depth Test.
 function render.SetStencilZFailOperation(zFailOperation)
 end
 

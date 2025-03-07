@@ -1,0 +1,50 @@
+--- @meta
+
+_G.SOUND_NONE = 0
+_G.SOUND_COMBAT = 1
+_G.SOUND_WORLD = 2
+_G.SOUND_PLAYER = 4
+_G.SOUND_DANGER = 8
+_G.SOUND_BULLET_IMPACT = 16
+--- Considered a scent.  
+_G.SOUND_CARCASS = 32
+--- Considered a scent.  
+_G.SOUND_MEAT = 64
+--- Considered a scent.  
+_G.SOUND_GARBAGE = 128
+--- Keeps certain creatures at bay, such as Antlions.  
+_G.SOUND_THUMPER = 256
+--- Gets the antlion's attention.  
+_G.SOUND_BUGBAIT = 512
+_G.SOUND_PHYSICS_DANGER = 1024
+--- Only scares the sniper NPC.  
+_G.SOUND_DANGER_SNIPERONLY = 2048
+_G.SOUND_MOVE_AWAY = 4096
+_G.SOUND_PLAYER_VEHICLE = 8192
+--- Changes listener's readiness (Player Companion only)  
+_G.SOUND_READINESS_LOW = 16384
+_G.SOUND_READINESS_MEDIUM = 32768
+_G.SOUND_READINESS_HIGH = 65536
+--- Additional context for SOUND_DANGER  
+_G.SOUND_CONTEXT_FROM_SNIPER = 1048576
+--- Added to SOUND_COMBAT  
+_G.SOUND_CONTEXT_GUNFIRE = 2097152
+--- Explosion going to happen here.  
+_G.SOUND_CONTEXT_MORTAR = 4194304
+--- Only combine can hear sounds marked this way.  
+_G.SOUND_CONTEXT_COMBINE_ONLY = 8388608
+--- React to sound source's origin, not sound's location  
+_G.SOUND_CONTEXT_REACT_TO_SOURCE = 16777216
+--- Context added to SOUND_COMBAT, usually.  
+_G.SOUND_CONTEXT_EXPLOSION = 33554432
+--- Combine do NOT hear this  
+_G.SOUND_CONTEXT_EXCLUDE_COMBINE = 67108864
+--- Treat as a normal danger sound if you see the source, otherwise turn to face source.  
+_G.SOUND_CONTEXT_DANGER_APPROACH = 134217728
+--- Only player allies can hear this sound.  
+_G.SOUND_CONTEXT_ALLIES_ONLY = 268435456
+--- HACK: need this because we're not treating the SOUND_xxx values as true bit values! See switch in OnListened.  
+_G.SOUND_CONTEXT_PLAYER_VEHICLE = 536870912
+
+--- Enumerations used by sound.EmitHint.  
+--- @alias ESOUND `SOUND_NONE`|`SOUND_COMBAT`|`SOUND_WORLD`|`SOUND_PLAYER`|`SOUND_DANGER`|`SOUND_BULLET_IMPACT`|`SOUND_CARCASS`|`SOUND_MEAT`|`SOUND_GARBAGE`|`SOUND_THUMPER`|`SOUND_BUGBAIT`|`SOUND_PHYSICS_DANGER`|`SOUND_DANGER_SNIPERONLY`|`SOUND_MOVE_AWAY`|`SOUND_PLAYER_VEHICLE`|`SOUND_READINESS_LOW`|`SOUND_READINESS_MEDIUM`|`SOUND_READINESS_HIGH`|`SOUND_CONTEXT_FROM_SNIPER`|`SOUND_CONTEXT_GUNFIRE`|`SOUND_CONTEXT_MORTAR`|`SOUND_CONTEXT_COMBINE_ONLY`|`SOUND_CONTEXT_REACT_TO_SOURCE`|`SOUND_CONTEXT_EXPLOSION`|`SOUND_CONTEXT_EXCLUDE_COMBINE`|`SOUND_CONTEXT_DANGER_APPROACH`|`SOUND_CONTEXT_ALLIES_ONLY`|`SOUND_CONTEXT_PLAYER_VEHICLE`
