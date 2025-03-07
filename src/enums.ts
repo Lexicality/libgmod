@@ -16,7 +16,9 @@ function handleValue(value: EnumValue): string {
 export function handleEnum(enumData: Enum) {
     let lua = "--- @meta\n\n";
 
-    lua += enumData.fields.map(handleValue).join("\n");
+    let fields = enumData.fields.filter((f) => f.name);
+
+    lua += fields.map(handleValue).join("\n");
     lua += "\n\n";
 
     if (enumData.description) {
@@ -24,7 +26,7 @@ export function handleEnum(enumData: Enum) {
         lua += "\n";
     }
     lua += "--- @alias E" + enumData.name + " ";
-    lua += enumData.fields.map((f) => "`" + f.name + "`").join("|");
+    lua += fields.map((f) => "`" + f.name + "`").join("|");
     lua += "\n";
 
     return lua;

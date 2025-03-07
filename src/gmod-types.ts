@@ -13,11 +13,36 @@ const JANKY_WIKI_CLASSES = new Map<string, string>([
     ["WEAPON", "Weapon"],
 ]);
 
+const TABLE_REGEX = /^table<([^,]+)(,\s*([^,]+))?>$/;
+const STRUCT_REGEX = /^table\{([^,]+)\}$/;
+const ENUM_REGEX = /^number\{(.+)\}$/;
+
 let GMOD_TYPES: { [key: string]: string } = {};
 let PANEL_TYPES: { [key: string]: string } = {};
 
 export function getTypeName(ret: string): string {
-    if (ret == "vararg") {
+    let tableMatch = ret.match(TABLE_REGEX);
+    let enumMatch = ret.match(ENUM_REGEX);
+    let structMatch = ret.match(STRUCT_REGEX);
+    if (tableMatch) {
+        if (tableMatch[2]) {
+            let key = tableMatch[1];
+            let value = tableMatch[3];
+            return `{[${getTypeName(key)}]: ${getTypeName(value)}}`;
+        } else {
+            let value = tableMatch[1];
+            return getTypeName(value) + "[]";
+        }
+    } else if (enumMatch) {
+        return "E" + enumMatch[1];
+    } else if (structMatch) {
+        return "S" + structMatch[1];
+    } else if (ret.includes("|")) {
+        return ret
+            .split("|")
+            .map((value) => getTypeName(value))
+            .join("|");
+    } else if (ret == "vararg") {
         // TODO: I don't think emmylua lets you mark returns as arbitrary varargs
         return "any";
     } else if (ret == "Global") {
