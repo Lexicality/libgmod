@@ -1,7 +1,7 @@
 --- @meta
 
---- The table `type` is an object that can store multiple values.  
---- The table `library` is a standard Lua library which provides functions to manipulate tables. In Garry's Mod there are several extra useful functions added to this library.  
+--- The table **type** is an object that can store multiple values.  
+--- The table **library** is a standard Lua library which provides functions to manipulate tables. In Garry's Mod there are several extra useful functions added to this library.  
 --- This category lists the functions available in the table `library`.  
 _G.table = {}
 --- Adds all values from `source` table into the `target` table. This is most useful for sequential tables, not "dictionary" or "map" tables. See table.Merge if you want to merge 2 tables into one.  
@@ -51,7 +51,7 @@ end
 function table.DeSanitise(tbl)
 end
 
---- Removes all values from a table.  
+--- Removes all values from a table. If your table is not a metatable, it is almost always better to use `tab = {}` to preserve performance.  
 --- @param tbl table @The table to empty.
 function table.Empty(tbl)
 end

@@ -11,7 +11,7 @@ end
 --- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param x number @The X coordinate.
 --- @param y number @The Y coordinate.
---- @return table @The color of the pixel as a Color.
+--- @return GColor @The color of the pixel as a Color.
 function GITexture:GetColor(x, y)
 end
 

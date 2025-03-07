@@ -76,7 +76,7 @@ end
 --- @param convar string @The console variable to change when the slider is changed
 --- @param min number @The minimum value of the slider
 --- @param max number @The maximum value of the slider
---- @param decimals? number @The number of decimals to allow on the slider
+--- @param decimals? number @The number of decimals to allow on the slider.
 --- @return GPanel @The created DNumSlider
 function PANEL:NumSlider(label, convar, min, max, decimals)
 end

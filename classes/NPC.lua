@@ -409,7 +409,7 @@ function GNPC:GetWeapon(class)
 end
 
 --- Returns a table of the NPC's weapons.  
---- @return table @A list of the weapons the NPC currently has.
+--- @return GWeapon[] @A list of the weapons the NPC currently has.
 function GNPC:GetWeapons()
 end
 
@@ -608,6 +608,7 @@ function GNPC:NavSetGoal(pos, length, dir)
 end
 
 --- Creates a path to closest node at given position. This won't actually force the NPC to move.  
+--- ℹ **NOTE**: This will call either NPC:TaskComplete or NPC:TaskFail for the current schedule and task, forcing the current task to progress to next task or fail.  
 --- See also NPC:NavSetRandomGoal.  
 --- @param pos GVector @The position to calculate a path to.
 --- @return boolean @Whether path generation was successful or not.
@@ -615,6 +616,7 @@ function GNPC:NavSetGoalPos(pos)
 end
 
 --- Set the goal target for an NPC.  
+--- This will call either NPC:TaskComplete or NPC:TaskFail for the current schedule and task, forcing the current task to progress to next task or fail.  
 --- @param target GEntity @The targeted entity to set the goal to.
 --- @param offset? GVector @The offset to apply to the targeted entity's position.
 --- @return boolean @Whether path generation was successful or not

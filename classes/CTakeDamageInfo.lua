@@ -76,8 +76,8 @@ end
 --- Returns the inflictor of the damage. This is not necessarily a weapon.  
 --- For hitscan weapons this is the weapon.  
 --- For projectile weapons this is the projectile.  
---- For a more reliable method of getting the weapon that damaged an entity, use GetAttacker with GetActiveWeapon.  
---- @return GEntity @The inflictor
+--- For a more reliable method of getting the weapon that damaged an entity, use CTakeDamageInfo:GetWeapon or GetAttacker with GetActiveWeapon.  
+--- @return GEntity @The inflictor entity.
 function GCTakeDamageInfo:GetInflictor()
 end
 
@@ -89,6 +89,13 @@ end
 --- Returns the initial, unmodified position where the damage occured.  
 --- @return GVector @position
 function GCTakeDamageInfo:GetReportedPosition()
+end
+
+--- Returns the inflicting weapon of the damage event, if there is any.  
+--- This is not necessarily a Weapon entity, but it is very likely to be one.  
+--- See CTakeDamageInfo:GetInflictor for the actual entity that did the damage.  
+--- @return GEntity @The damage-inflicting weapon or NULL.
+function GCTakeDamageInfo:GetWeapon()
 end
 
 --- Returns true if the damage was caused by a bullet.  
@@ -165,7 +172,7 @@ end
 
 --- Sets the inflictor of the damage for example a weapon.  
 --- For hitscan/bullet weapons this should the weapon.  
---- For projectile ( rockets, etc ) weapons this should be the projectile.  
+--- For projectile (rocket launchers, grenades, etc) weapons this should be the projectile and CTakeDamageInfo:SetWeapon should be the weapon.  
 --- @param inflictor GEntity @The new inflictor.
 function GCTakeDamageInfo:SetInflictor(inflictor)
 end
@@ -178,6 +185,12 @@ end
 --- Sets the origin of the damage.  
 --- @param pos GVector @The location of where the damage is originating
 function GCTakeDamageInfo:SetReportedPosition(pos)
+end
+
+--- Sets the damage-inflicting weapon of the damage event.  
+--- This should be a Weapon entity, not a projectile. See also CTakeDamageInfo:SetInflictor.  
+--- @param arg GEntity @The damage-inflicting weapon or NULL.
+function GCTakeDamageInfo:SetWeapon(arg)
 end
 
 --- Subtracts the specified amount from the damage.  

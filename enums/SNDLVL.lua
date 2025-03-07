@@ -55,7 +55,7 @@ _G.SNDLVL_150dB = 150
 --- Rocket launching  
 _G.SNDLVL_180dB = 180
 
---- The sound's attenuation; how fast it drops away, enumerations used by Global.EmitSound and Entity:EmitSound.  
+--- The sound's attenuation; how fast it drops away, enumerations used by Global.EmitSound and Entity:EmitSound. Information taken from [soundflags.h in Source SDK 2013](https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/public/soundflags.h#L53)  
 --- The engine starts running into trouble below 60dB.  
---- ⚠ **WARNING**: These enumerations do not exist in Lua and are listed here only for reference. These values and descriptions are taken from [soundflags.h in Source SDK 2013](https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/public/soundflags.h#L53)  
+--- ⚠ **WARNING**: These enumerations do not exist in game and are listed here only for reference  
 --- @alias ESNDLVL `SNDLVL_NONE`|`SNDLVL_20dB`|`SNDLVL_25dB`|`SNDLVL_30dB`|`SNDLVL_35dB`|`SNDLVL_40dB`|`SNDLVL_45dB`|`SNDLVL_50dB`|`SNDLVL_55dB`|`SNDLVL_60dB`|`SNDLVL_IDLE`|`SNDLVL_65dB`|`SNDLVL_STATIC`|`SNDLVL_70dB`|`SNDLVL_75dB`|`SNDLVL_NORM`|`SNDLVL_80dB`|`SNDLVL_TALKING`|`SNDLVL_85dB`|`SNDLVL_90dB`|`SNDLVL_95dB`|`SNDLVL_100dB`|`SNDLVL_105dB`|`SNDLVL_110dB`|`SNDLVL_120dB`|`SNDLVL_130dB`|`SNDLVL_140dB`|`SNDLVL_GUNFIRE`|`SNDLVL_150dB`|`SNDLVL_180dB`

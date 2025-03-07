@@ -48,7 +48,7 @@ function GVehicle:GetMaxSpeed()
 end
 
 --- Returns some info about the vehicle.  
---- @return table @The operating params
+--- @return SOperatingParams @The operating parameters.
 function GVehicle:GetOperatingParams()
 end
 
@@ -101,7 +101,7 @@ function GVehicle:GetVehicleClass()
 end
 
 --- Returns the vehicle parameters of given vehicle.  
---- @return table @The vehicle parameters
+--- @return SVehicleParams @The vehicle parameters.
 function GVehicle:GetVehicleParams()
 end
 

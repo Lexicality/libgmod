@@ -26,7 +26,7 @@ function GIMaterial:GetInt(materialInt)
 end
 
 --- Gets all the key values defined for the material.  
---- @return table @The material's key values.
+--- @return {[string]: any} @The material's key values.
 function GIMaterial:GetKeyValues()
 end
 

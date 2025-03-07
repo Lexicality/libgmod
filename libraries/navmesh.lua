@@ -52,7 +52,7 @@ function navmesh.FindInBox(pos1, pos2)
 end
 
 --- Returns an integer indexed table of all CNavAreas on the current map. If the map doesn't have a navmesh generated then this will return an empty table.  
---- @return table @A table of all the CNavAreas on the current map.
+--- @return GCNavArea[] @A table of all the CNavAreas on the current map.
 function navmesh.GetAllNavAreas()
 end
 

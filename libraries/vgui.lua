@@ -39,7 +39,7 @@ end
 
 --- Returns all Lua-created panels.  
 --- Used internally for PANEL:PreAutoRefresh and PANEL:PostAutoRefresh.  
---- @return table @List of all Lua created panels.
+--- @return GPanel[] @List of all Lua created panels.
 function vgui.GetAll()
 end
 

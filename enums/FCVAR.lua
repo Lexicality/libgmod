@@ -1,6 +1,6 @@
 --- @meta
 
---- Save the ConVar value into client.vdf  
+--- Save the ConVar value into either client.vdf or server.vdf  
 --- Reported as "a" by `cvarlist`, except Lua ConVars  
 _G.FCVAR_ARCHIVE = 128
 --- Save the ConVar value into config.vdf on XBox  

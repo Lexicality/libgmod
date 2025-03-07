@@ -36,7 +36,7 @@ end
 --- Returns debug information about a function.  
 --- @param funcOrStackLevel function @Takes either a function or a number representing the stack level as an argument
 --- @param fields? string @A string whose characters specify the information to be retrieved
---- @param func? function @Function to use
+--- @param func? function|nil @Function to use
 --- @return table @A table as a Structures/DebugInfo containing information about the function you passed
 function debug.getinfo(funcOrStackLevel, fields, func)
 end

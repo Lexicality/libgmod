@@ -17,9 +17,9 @@ end
 function bit.band(value, ...)
 end
 
---- Returns the bitwise not of the value.  
+--- Returns the bitwise not of the value. Inverts every bit of the 32bit integer.  
 --- @param value number @The value to be inverted.
---- @return number @bitwiseNot
+--- @return number @The result of bitwise not
 function bit.bnot(value)
 end
 
@@ -75,13 +75,13 @@ end
 
 --- Normalizes the specified value and clamps it in the range of a signed 32bit integer.  
 --- @param value number @The value to be normalized.
---- @return number @swapped
+--- @return number @The 32 bits of the provided value.
 function bit.tobit(value)
 end
 
---- Returns the hexadecimal representation of the number with the specified digits.  
+--- Returns the hexadecimal representation of the number with the specified number of characters.  
 --- @param value number @The value to be normalized.
---- @param digits? number @The number of digits
---- @return string @hexString
-function bit.tohex(value, digits)
+--- @param characters? number @Maximum number of characters, if set
+--- @return string @The hexadecimal representation, such as "00000001".
+function bit.tohex(value, characters)
 end

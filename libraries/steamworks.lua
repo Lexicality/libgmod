@@ -19,7 +19,6 @@ end
 function steamworks.DownloadUGC(workshopID, resultCallback)
 end
 
---- ℹ **NOTE**: A serverside implementation of this function can be provided by binary modules, such as [gmsv_workshop](https://github.com/WilliamVenner/gmsv_workshop).  
 --- Retrieves info about supplied Steam Workshop addon.  
 --- @param workshopItemID string @The ID of Steam Workshop item.
 --- @param resultCallback function @The function to process retrieved data

@@ -113,7 +113,7 @@ end
 --- However, if your compressed data was produced using standard tools **_outside of Garry's Mod_**, you will need to manually prepend the length of the uncompressed data to its compressed form as an 8-byte little endian integer, or use third-party tools such as [gmod-lzma](https://github.com/WilliamVenner/gmod-lzma-rs) to compress your data instead.  
 --- @param compressedString string @The compressed string to decompress.
 --- @param maxSize? number @The maximum size of uncompressed data in bytes, if greater it fails.
---- @return string @The original, decompressed string or `nil` on failure or invalid input
+--- @return string|nil @The original, decompressed string or `nil` on failure or invalid input
 function util.Decompress(compressedString, maxSize)
 end
 
@@ -134,7 +134,7 @@ end
 --- @param effectName string @The name of the effect to create
 --- @param effectData GCEffectData @The effect data describing the effect.
 --- @param allowOverride? boolean @Whether Lua-defined effects should override engine-defined effects with the same name for this/single function call.
---- @param ignorePredictionOrRecipientFilter? any @Can either be a boolean to ignore the prediction filter or a CRecipientFilter
+--- @param ignorePredictionOrRecipientFilter? boolean|GCRecipientFilter @Can either be a boolean to ignore the prediction filter or a CRecipientFilter
 function util.Effect(effectName, effectData, allowOverride, ignorePredictionOrRecipientFilter)
 end
 
@@ -434,7 +434,7 @@ end
 --- @param json string @The JSON string to convert.
 --- @param ignoreLimits? boolean @ignore the depth and breadth limits, **use at your own risk!**
 --- @param ignoreConversions? boolean @ignore string to number conversions for table keys
---- @return table @The table containing converted information
+--- @return table|nil @The table containing converted information
 function util.JSONToTable(json, ignoreLimits, ignoreConversions)
 end
 
@@ -641,6 +641,7 @@ end
 --- Converts a table to a JSON string.  
 --- See util.JSONToTable for the opposite function.  
 --- ⚠ **WARNING**: All keys are strings in the JSON format, so all keys of other types will be converted to strings!  
+--- This can lead to loss of data where a number key could be converted into an already existing string key! (for example in a table like this: `{["5"] = "ok", [5] = "BBB"}`)  
 --- All integers will be output as decimals (5 -> 5.0), since all numbers in Lua are internally floating point values.  
 --- 🦟 **BUG**: [This will produce invalid JSON if the provided table contains nan or inf values.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
 --- @param table table @Table to convert.
@@ -692,14 +693,14 @@ end
 function util.TraceHull(TraceData)
 end
 
---- Performs an infinitely thin, invisible Ray Trace (or "Trace") in a line based on an input Trace Structure table and returns a Trace Result table that contains information about what, if anything, the Trace line hit or intersected.  
---- Traces intersect with the Physics Meshes of Solid, Server-side, Entities (including the Game World) but cannot detect Client-side-only Entities.  
---- For a way to detect Client-side Entities, see ents.FindAlongRay.  
---- Traces do not differentiate between the inside and the outside faces of Physics Meshes.  Because of this, if a Trace starts within a Solid Physics Mesh it will hit the inside faces of the Physics Mesh and may return unexpected values as a result.  
+--- Performs an infinitely thin, invisible ray trace (or "trace") in a line based on the input and returns a table that contains information about what, if anything, the trace line hit or intersected.  
+--- Traces intersect with the physics meshes of solid, server-side, entities (including the game world) but cannot detect client-side only entities unless hitclientonly is set to true.  
+--- See ents.FindAlongRay if you wish for the trace to not stop on first intersection.  
 --- See util.TraceHull for a "box" type trace.  
+--- Traces do not differentiate between the inside and the outside faces of physics meshes. Because of this, if a trace starts within a solid physics mesh it will hit the inside faces of the physics mesh and may return unexpected values as a result.  
 --- You can use `r_visualizetraces` set to `1` (requires `sv_cheats` set to `1`) to visualize traces in real time for debugging purposes.  
---- @param traceConfig table @A table of data that configures the Trace
---- @return table @A table of information detailing where and what the Trace line intersected, or `nil` if the trace is being done before the GM:InitPostEntity
+--- @param traceConfig STrace @A table of data that configures the trace
+--- @return STraceResult @A table of information detailing where and what the trace line intersected, or `nil` if the trace is being done before the GM:InitPostEntity
 function util.TraceLine(traceConfig)
 end
 

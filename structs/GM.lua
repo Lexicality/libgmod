@@ -10,9 +10,9 @@
 --- @field FolderName string @The name of the gamemode folder, automatically set.
 --- @field Folder string @The name of the gamemode folder prepended with "gamemodes/" (such as "gamemodes/sandbox"), automatically set.
 --- @field TeamBased boolean @Set this to true if your gamemode is team-based
---- @field IsSandboxDerived boolean @True if the gamemode is derived from sandbox.
 --- @field ThisClass string @The name of the gamemode folder prepended with "gamemode_" (such as "gamemode_sandbox"), automatically set.
 --- @field BaseClass table @The table of the base gamemode to derive from, set automatically by Global.DeriveGamemode
+--- @field IsSandboxDerived boolean @Whether the gamemode is Sandbox, or derived from Sandbox
 _G.GM = {}
 
 --- Called when a map I/O event occurs.  
@@ -283,7 +283,8 @@ end
 function GM:EntityEmitSound(data)
 end
 
---- Called every time a bullet is fired from an entity.  
+--- Called every time a bullet is about to be fired from an entity, which allows to completely modify the bullet structure before the bullet is actually fired.  
+--- See GM:PostEntityFireBullets if you wish to hook the final bullet values, such as the aim direction post spread calculations.  
 --- ⚠ **WARNING**: This hook is called directly from Entity:FireBullets. Due to this, you cannot call Entity:FireBullets inside this hook or an infinite loop will occur crashing the game.  
 --- @param entity GEntity @The entity that fired the bullet
 --- @param data table @The bullet data
@@ -321,9 +322,10 @@ function GM:EntityRemoved(ent, fullUpdate)
 end
 
 --- Called when an entity takes damage. You can modify all parts of the damage info in this hook.  
+--- See GM:PostEntityTakeDamage if you wish to hook the final damage event.  
 --- ⚠ **WARNING**: Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.  
 --- @param target GEntity @The entity taking damage
---- @param dmg GCTakeDamageInfo @Damage info
+--- @param dmg GCTakeDamageInfo @Detailed information about the damage event.
 --- @return boolean @Return true to completely block the damage event
 function GM:EntityTakeDamage(target, dmg)
 end
@@ -1239,7 +1241,7 @@ function GM:PlayerSetHandsModel(ply, ent)
 end
 
 --- Called whenever a player spawns and must choose a model. A good place to assign a model to a player.  
---- ℹ **NOTE**: This function may not work in your custom gamemode if you have overridden your GM:PlayerSpawn and you do not use self.BaseClass.PlayerSpawn or hook.Call.  
+--- ℹ **NOTE**: This function may not work in your custom gamemode if you have overridden your GM:PlayerSpawn and you do not use self.BaseClass.PlayerSpawn in it, or hook.Call this hook from GM:PlayerSpawn.  
 --- @param ply GPlayer @The player being chosen
 function GM:PlayerSetModel(ply)
 end
@@ -1428,7 +1430,8 @@ end
 function GM:PostDrawViewModel(viewmodel, player, weapon)
 end
 
---- Called every time a bullet pellet is fired from an entity.  
+--- Called every time a bullet pellet (i.e. this hook is called multiple times for a shotgun shot) is fired from an entity. Notably this hook will have the final damage and aim direction for the bullet pellet.  
+--- See GM:EntityFireBullets if you wish to modify the bullets before they are fired.  
 --- ⚠ **WARNING**: This hook is called directly from Entity:FireBullets. Due to this, you cannot call Entity:FireBullets inside this hook or an infinite loop will occur crashing the game.  
 --- @param entity GEntity @The entity that fired the bullet
 --- @param data table @A table of data about the bullet that was fired
@@ -1437,11 +1440,12 @@ function GM:PostEntityFireBullets(entity, data)
 end
 
 --- Called when an entity receives a damage event, after passing damage filters, etc.  
+--- See GM:EntityTakeDamage if you wish to prevent damage events, or otherwise alter them.  
 --- ⚠ **WARNING**: Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.  
 --- @param ent GEntity @The entity that took the damage.
---- @param dmg GCTakeDamageInfo 
---- @param took boolean @Whether the entity actually took the damage
-function GM:PostEntityTakeDamage(ent, dmg, took)
+--- @param dmginfo GCTakeDamageInfo @Detailed information about the damage event.
+--- @param wasDamageTaken boolean @Whether the entity actually took the damage
+function GM:PostEntityTakeDamage(ent, dmginfo, wasDamageTaken)
 end
 
 --- Called after the gamemode has loaded.  
@@ -1654,9 +1658,9 @@ function GM:ScoreboardShow()
 end
 
 --- An internal function used to send a death notice event to all clients.  
---- @param attacker GEntity @The entity that caused the death.
---- @param inflictor GEntity @The attacker's weapon or the attacker itself if no weapon was equipped.
---- @param victim GEntity @The entity that died.
+--- @param attacker GEntity|string|nil @The entity that caused the death.
+--- @param inflictor string @The attacker's weapon class name or the attacker itself if no weapon was equipped.
+--- @param victim GEntity|string @The entity that died.
 --- @param flags number @Death notice flags
 function GM:SendDeathNotice(attacker, inflictor, victim, flags)
 end
@@ -1735,7 +1739,6 @@ function GM:ShowTeam(ply)
 end
 
 --- Called whenever the Lua environment is about to be shut down, for example on map change, or when the server is going to shut down.  
---- ⚠ **WARNING**: Player:SteamID, Player:SteamID64, and the like will return nil for the listen host here but work fine for other players.  
 function GM:ShutDown()
 end
 

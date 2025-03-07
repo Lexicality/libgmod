@@ -15,19 +15,19 @@ end
 --- Gets all the current players in the server (not including connecting clients).  
 --- This function returns bots as well as human players. See player.GetBots and  player.GetHumans.  
 --- ℹ **NOTE**: This function returns a sequential table, meaning it should be looped with Global.ipairs instead of Global.pairs for efficiency reasons.  
---- @return table @All Players currently in the server.
+--- @return GPlayer[] @All Players currently in the server.
 function player.GetAll()
 end
 
 --- Returns a table of all bots on the server.  
---- @return table @A table only containing bots ( AI / non human players )
+--- @return GPlayer[] @A table only containing bots ( AI / non human players )
 function player.GetBots()
 end
 
 --- Tried to get the player with the specified Player:AccountID.  
 --- ⚠ **WARNING**: Internally this function iterates over all players in the server, meaning it can be quite expensive in a performance-critical context.  
 --- @param accountID number @The Player:AccountID to find the player by.
---- @return GPlayer @Player if one is found, false otherwise.
+--- @return GPlayer|boolean @Player if one is found, `false` otherwise.
 function player.GetByAccountID(accountID)
 end
 
@@ -36,21 +36,21 @@ end
 --- For a function that returns a player based on their Entity:EntIndex, see Global.Entity.  
 --- For a function that returns a player based on their Player:UserID, see Global.Player.  
 --- @param connectionID number @The connection ID to find the player by.
---- @return GPlayer @Player if one is found, nil otherwise
+--- @return GPlayer|nil @Player if one is found, `nil` otherwise.
 function player.GetByID(connectionID)
 end
 
 --- Gets the player with the specified SteamID.  
 --- ⚠ **WARNING**: Internally this function iterates over all players in the server, meaning it can be quite expensive in a performance-critical context.  
 --- @param steamID string @The Player:SteamID to find the player by.
---- @return GPlayer @Player if one is found, false otherwise.
+--- @return GPlayer|boolean @Player if one is found, `false` otherwise.
 function player.GetBySteamID(steamID)
 end
 
 --- Gets the player with the specified SteamID64.  
 --- ⚠ **WARNING**: Internally this function iterates over all players in the server, meaning it can be quite expensive in a performance-critical context.  
 --- @param steamID64 string @The Player:SteamID64 to find the player by.
---- @return GPlayer @Player if one is found, false otherwise.
+--- @return GPlayer|boolean @Player if one is found, `false` otherwise.
 function player.GetBySteamID64(steamID64)
 end
 
@@ -60,7 +60,7 @@ end
 --- ⚠ **WARNING**: It is highly recommended to use player.GetByAccountID, player.GetBySteamID or player.GetBySteamID64 instead as this function can have collisions ( be same for different people ) while SteamID is guaranteed to unique to each player.  
 --- ⚠ **WARNING**: Internally this function iterates over all players in the server, meaning it can be quite expensive in a performance-critical context.  
 --- @param uniqueID string @The Player:UniqueID to find the player by.
---- @return GPlayer @Player if one is found, false otherwise.
+--- @return GPlayer|boolean @Player if one is found, `false` otherwise.
 function player.GetByUniqueID(uniqueID)
 end
 
@@ -73,7 +73,7 @@ end
 --- Returns a table containing all human players (non-bot/AI).  
 --- Unlike player.GetAll, this does not include bots.  
 --- ℹ **NOTE**: This function returns a sequential table, meaning it should be looped with Global.ipairs instead of Global.pairs for efficiency reasons.  
---- @return table @A table containing all human (non-bot/AI) players.
+--- @return GPlayer[] @A table containing all human (non-bot/AI) players.
 function player.GetHumans()
 end
 
@@ -85,7 +85,7 @@ end
 --- ℹ **NOTE**: The GM:OnEntityCreated and GM:EntityRemoved hooks are used internally to invalidate this function's cache. Using this function inside those hooks is not guaranteed to use an up-to-date cache because hooks are currently executed in an arbitrary order.  
 --- ⚠ **WARNING**: An error being thrown inside the GM:OnEntityCreated or GM:EntityRemoved hooks is likely to break this function. Make it certain that no addons are causing any errors in those hooks.  
 --- @return function @The Iterator Function from ipairs
---- @return table @Table of all existing Players
+--- @return GPlayer[] @Table of all existing Players
 --- @return number @The starting index for the table of players
 function player.Iterator()
 end

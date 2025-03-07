@@ -20,10 +20,10 @@ end
 function drive.PlayerStopDriving(ply)
 end
 
---- Registers a new entity drive.  
---- @param name string @The name of the drive.
---- @param data table @The data required to create the drive
---- @param base? string @The base of the drive.
+--- Registers a new entity drive mode/method.  
+--- @param name string @The name of the drive mode/method.
+--- @param data table @The data required to create the drive mode/method
+--- @param base? string @The name of a drive mode/method to inherit code from.
 function drive.Register(name, data, base)
 end
 

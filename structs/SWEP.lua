@@ -271,7 +271,8 @@ end
 
 --- Called when weapon is dropped by Player:DropWeapon.  
 --- See also WEAPON:OwnerChanged.  
-function SWEP:OnDrop()
+--- @param owner GEntity @The entity that dropped the weapon.
+function SWEP:OnDrop(owner)
 end
 
 --- Called whenever the weapons Lua script is reloaded.  
@@ -392,6 +393,12 @@ end
 --- ℹ **NOTE**: This hook only runs while the weapon is in players hands. It does not run while it is carried by an NPC.  
 --- 🦟 **BUG**: [This will not be run during deploy animations after a serverside-only deploy. This usually happens after picking up and dropping an object with +use.](https://github.com/Facepunch/garrysmod-issues/issues/2855)  
 function SWEP:Think()
+end
+
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Use Weapon:Think instead.  
+--- Alias of Weapon:Think.  
+function SWEP:Tick()
 end
 
 --- Translate a player's Activity into a weapon's activity, depending on how you want the player to be holding the weapon.  

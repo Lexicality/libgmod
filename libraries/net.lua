@@ -140,11 +140,10 @@ end
 
 --- Adds a net message handler. Only one receiver can be used to receive the net message.  
 --- You can use the `net.Read*` functions within the message handler callback.  
---- ℹ **NOTE**: The message-name is converted to lower-case so the message-names "`BigBlue`" and "`bigblue`" would be equal.  
 --- ⚠ **WARNING**: You **should** put this function **outside** of any other function or hook for it to work properly unless you know what you are doing!  
 --- You **must** read information in the same order as you write it.  
 --- Each net message has a length limit of **64KB**!  
---- @param messageName string @The message name to hook to.
+--- @param messageName string @The message name to hook to
 --- @param callback function @The function to be called if the specified message was received
 function net.Receive(messageName, callback)
 end
@@ -154,7 +153,7 @@ end
 function net.Send(ply)
 end
 --- Sends the current net message to the specified player(s)  
---- @param plys table @A table of players to send the message to.
+--- @param plys GPlayer[] @A table of players to send the message to.
 function net.Send(plys)
 end
 --- Sends the current net message to the specified player(s)  
@@ -167,7 +166,7 @@ end
 function net.SendOmit(ply)
 end
 --- Sends the current message (see net.Start) to all except the player or players specified.  
---- @param plys table @A table of players to **NOT** send the message to.
+--- @param plys GPlayer[] @A table of players to **NOT** send the message to.
 function net.SendOmit(plys)
 end
 

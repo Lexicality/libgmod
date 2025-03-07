@@ -188,7 +188,7 @@ end
 --- y * 255 -> g  
 --- z * 255 -> b  
 --- This is the opposite of Color:ToVector  
---- @return table @The created Color.
+--- @return GColor @The created Color.
 function GVector:ToColor()
 end
 
@@ -196,7 +196,7 @@ end
 --- ℹ **NOTE**: Should be called from a 3D rendering environment or after cam.Start3D or it may not work correctly.  
 --- 🦟 **BUG**: [Errors in a render hook can make this value incorrect until the player restarts their game.](https://github.com/Facepunch/garrysmod-issues/issues/462)  
 --- 🦟 **BUG**: [cam.Start3D or 3D context cam.Start with non-default parameters incorrectly sets the reference FOV for this function, causing incorrect return values. This can be fixed by creating and ending a default 3D context (cam.Start3D with no arguments).](https://github.com/Facepunch/garrysmod-issues/issues/1404)  
---- @return table @The created Structures/ToScreenData.
+--- @return SToScreenData @The created Structures/ToScreenData.
 function GVector:ToScreen()
 end
 

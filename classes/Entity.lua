@@ -93,6 +93,12 @@ end
 function GEntity:AlignAngles(from, to)
 end
 
+--- Checks if the entity is considered alive.  
+--- Checks entity's internal life state variable. Does not check health, but it is generally expected the health to be 0 or below at the point of an entity being considered dead.  
+--- @return boolean @Whether the entity is considered alive.
+function GEntity:Alive()
+end
+
 --- Spawns a clientside ragdoll for the entity, positioning it in place of the original entity, and makes the entity invisible. It doesn't preserve flex values (face posing) as CSRagdolls don't support flex.  
 --- It does not work on players. Use Player:CreateRagdoll instead.  
 --- The original entity is not removed, and neither are any ragdolls previously generated with this function.  
@@ -134,10 +140,10 @@ function GEntity:BoundingRadius()
 end
 
 --- Calls all Entity:NetworkVarNotify functions with the given new value, but doesn't change the real value.  
---- @param Type string @The NetworkVar Type
---- @param index number @The NetworkVar index.
---- @param new_value any @The new value.
-function GEntity:CallDTVarProxies(Type, index, new_value)
+--- @param type string @The NetworkVar Type
+--- @param slot number @The NetworkVar slot
+--- @param newValue any @The new value.
+function GEntity:CallDTVarProxies(type, slot, newValue)
 end
 
 --- Causes a specified function to be run if the entity is removed by any means. This can later be undone by Entity:RemoveCallOnRemove if you need it to not run.  
@@ -221,6 +227,7 @@ function GEntity:DispatchTraceAttack(damageInfo, traceRes, dir)
 end
 
 --- Dissolves the entity.  
+--- This function creates `env_entity_dissolver` entity internally.  
 --- @param type? number @Dissolve type
 --- @param magnitude? number @Magnitude of the dissolve effect, its effect depends on the dissolve type.
 --- @param origin? GVector @The origin for the dissolve effect, its effect depends on the dissolve type
@@ -393,8 +400,8 @@ end
 
 --- Returns a table containing the number of frames, flags, name, and FPS of an entity's animation ID.  
 --- ℹ **NOTE**: Animation ID is not the same as sequence ID. See Entity:GetAnimCount  
---- @param animIndex number @The animation ID to look up
---- @return table @Information about the animation, or nil if the index is out of bounds
+--- @param animIndex number @The animation ID to look up, starting at 0.
+--- @return table|nil @Information about the animation, or `nil` if the index is out of bounds
 function GEntity:GetAnimInfo(animIndex)
 end
 
@@ -490,6 +497,7 @@ function GEntity:GetBoneMatrix(boneID)
 end
 
 --- Returns name of given bone id.  
+--- See Entity:LookupBone for the inverse of this function.  
 --- @param index number @ID of bone to lookup name of, starting at index 0.
 --- @return string @The name of given bone
 function GEntity:GetBoneName(index)
@@ -569,7 +577,7 @@ end
 --- Entity:SetParent however also calls Entity:SetMoveParent.  
 --- This means that some entities in the returned list might have a NULL Entity:GetParent.  
 --- This also means that using this function on players will return their weapons on the client but not the server.  
---- @return table @A list of movement children entities
+--- @return GEntity[] @A list of movement children entities
 function GEntity:GetChildren()
 end
 
@@ -591,7 +599,7 @@ function GEntity:GetCollisionGroup()
 end
 
 --- Returns the color the entity is set to.  
---- @return table @The color of the entity as a Color.
+--- @return GColor @The color of the entity as a Color.
 function GEntity:GetColor()
 end
 
@@ -660,7 +668,8 @@ end
 function GEntity:GetFlags()
 end
 
---- Returns acceptable value range for the flex.  
+--- Returns acceptable value range for the flex controller, as defined by the model.  
+--- Used with Entity:SetFlexWeight.  
 --- @param flex number @The ID of the flex to look up bounds of
 --- @return number @The minimum value for this flex
 --- @return number @The maximum value for this flex
@@ -673,7 +682,7 @@ end
 function GEntity:GetFlexIDByName(name)
 end
 
---- Returns flex name.  
+--- Returns the flex controller name at given index.  
 --- @param id number @The flex index to look up name of
 --- @return string @The flex name, or no value if the requested ID is out of bounds.
 function GEntity:GetFlexName(id)
@@ -907,7 +916,7 @@ end
 --- Gets the model of given entity.  
 --- 🦟 **BUG**: This does not necessarily return the model's path, as is the case for brush and virtual models. This is intentional behaviour, however, there is currently no way to retrieve the actual file path.  
 --- This also affects certain models that are edited by 3rd party programs after being compiled.  
---- @return string @The entity's model
+--- @return string|nil @The entity's model
 function GEntity:GetModel()
 end
 
@@ -1095,7 +1104,7 @@ function GEntity:GetNWVarProxy(key)
 end
 
 --- Returns all the networked variables in an entity.  
---- @return table @Key-Value table of all networked variables.
+--- @return {[string]: any} @Key-Value table of all networked variables.
 function GEntity:GetNWVarTable()
 end
 
@@ -1117,6 +1126,7 @@ function GEntity:GetNetworkAngles()
 end
 
 --- Gets networked origin for entity.  
+--- ℹ **NOTE**: On the Client, this seems to return the position relative to the parent (if it has one). On the server-side this will return what you expect even if it has a parent.  
 --- @return GVector @The last received origin of the entity.
 function GEntity:GetNetworkOrigin()
 end
@@ -1291,7 +1301,7 @@ end
 --- @deprecated  
 --- 🛑 **DEPRECATED**: You should be using Entity:GetNWVarTable instead.  
 --- Returns all the networked variables in an entity.  
---- @return table @Key-Value table of all networked variables.
+--- @return {[string]: any} @Key-Value table of all networked variables.
 function GEntity:GetNetworkedVarTable()
 end
 
@@ -1578,7 +1588,7 @@ end
 --- Refer to Entity:GetSequence to find the current active sequence on this entity.  
 --- See Entity:LookupSequence for a function that does the opposite.  
 --- @param index number @The index of the sequence to look up.
---- @return string @Name of the sequence.
+--- @return string @Name of the sequence, or `"Unknown"` if it was out of bounds.
 function GEntity:GetSequenceName(index)
 end
 
@@ -1633,7 +1643,7 @@ function GEntity:GetSubMaterial(index)
 end
 
 --- Returns a list of models included into the entity's model in the .qc file.  
---- @return table @The list of models included into the entity's model in the .qc file.
+--- @return table[] @The list of models included into the entity's model in the .qc file.
 function GEntity:GetSubModels()
 end
 
@@ -1678,7 +1688,8 @@ function GEntity:GetVar(key, default)
 end
 
 --- Returns the entity's velocity.  
---- ℹ **NOTE**: Actually binds to `CBaseEntity::GetAbsVelocity()` on the server and `C_BaseEntity::EstimateAbsVelocity()` on the client. This returns the total velocity of the entity and is equal to local velocity + base velocity.  
+--- This returns the total velocity of the entity and is equal to local velocity + base velocity.  
+--- Clientside the velocity may be estimated for certain entities, such as physics based entities, instead of returning the "real" velocity from the server.  
 --- 🦟 **BUG**: [This can become out-of-sync on the client if the server has been up for a long time.](https://github.com/Facepunch/garrysmod-issues/issues/774)  
 --- @return GVector @The velocity of the entity.
 function GEntity:GetVelocity()
@@ -1770,7 +1781,7 @@ end
 
 --- Fires input to the entity with the ability to make another entity responsible, bypassing the event queue system.  
 --- You should only use this function over Entity:Fire if you know what you are doing.  
---- See also Entity:Fire for a function that conforms to the internal map IO event queue and GM:AcceptInput for a hook that can intercept inputs.  
+--- See Entity:Fire for a function that conforms to the internal map IO event queue and GM:AcceptInput for a hook that can intercept inputs.  
 --- @param input string @The name of the input to fire
 --- @param activator? GEntity @The entity that caused this input (i.e
 --- @param caller? GEntity @The entity that is triggering this input (i.e
@@ -1973,6 +1984,7 @@ function GEntity:LookupAttachment(attachmentName)
 end
 
 --- Gets the bone index of the given bone name, returns `nil` if the bone does not exist.  
+--- See Entity:GetBoneName for the inverse of this function.  
 --- @param boneName string @The name of the bone
 --- @return number @Index of the given bone name, or `nil` if the bone doesn't exist on the Entity
 function GEntity:LookupBone(boneName)
@@ -2063,6 +2075,17 @@ end
 --- @param extended? table @A table of extended information
 function GEntity:NetworkVar(type, slot, name, extended)
 end
+--- Creates a network variable on the entity and adds Set/Get functions for it. This function should only be called in ENTITY:SetupDataTables.  
+--- See Entity:NetworkVarNotify for a function to hook NetworkVar changes.  
+--- ℹ **NOTE**: Entity NetworkVars are influenced by the return value of ENTITY:UpdateTransmitState.  
+--- So if you use the **PVS**(**default**), then the NetworkVars can be different for each client.  
+--- ⚠ **WARNING**: Make sure to not call the SetDT* and your custom set methods on the client realm unless you know exactly what you are doing.  
+--- Combining this function with util.TableToJSON can also provide a way to network tables as serialized strings.  
+--- @param type string @Supported choices:
+--- @param name string @The name will affect how you access it
+--- @param extended? table @A table of extended information
+function GEntity:NetworkVar(type, name, extended)
+end
 
 --- Similarly to Entity:NetworkVar, creates a network variable on the entity and adds Set/Get functions for it. This method stores it's value as a member value of a vector or an angle. This allows to go beyond the normal variable limit of Entity:NetworkVar for `Int` and `Float` types, at the expense of `Vector` and `Angle` limit.  
 --- This function should only be called in ENTITY:SetupDataTables.  
@@ -2073,6 +2096,15 @@ end
 --- @param name string @The name will affect how you access it
 --- @param extended? table @A table of extra information
 function GEntity:NetworkVarElement(type, slot, element, name, extended)
+end
+--- Similarly to Entity:NetworkVar, creates a network variable on the entity and adds Set/Get functions for it. This method stores it's value as a member value of a vector or an angle. This allows to go beyond the normal variable limit of Entity:NetworkVar for `Int` and `Float` types, at the expense of `Vector` and `Angle` limit.  
+--- This function should only be called in ENTITY:SetupDataTables.  
+--- ⚠ **WARNING**: Make sure to not call the SetDT* and your custom set methods on the client realm unless you know exactly what you are doing.  
+--- @param type string @Supported choices:
+--- @param element string @Which element of a `Vector` or an `Angle` to store the value on
+--- @param name string @The name will affect how you access it
+--- @param extended? table @A table of extra information
+function GEntity:NetworkVarElement(type, element, name, extended)
 end
 
 --- Creates a callback that will execute when the given network variable changes - that is, when the `Set<name>()` function is run.  
@@ -2514,11 +2546,11 @@ end
 --- Some entities may need a custom [render mode](Enums/RENDERMODE) set for transparency to work. See example 2.  
 --- Entities also must have a proper [render group](Enums/RENDERGROUP) set for transparency to work.  
 --- When rendering a model manually via Entity:SetNoDraw inside ENTITY:Draw, you may need to use render.SetColorModulation in the render hook (where you call Entity:DrawModel) instead.  
---- @param color? table @The color to set
+--- @param color? GColor @The color to set
 function GEntity:SetColor(color)
 end
 
---- Sets the creator of the Entity. This is set automatically in Sandbox gamemode when spawning SENTs, but is never used/read by default.  
+--- Sets the creator of this entity. This is set automatically in Sandbox gamemode when spawning SENTs, but is never used/read by default.  
 --- @param ply GPlayer @The creator
 function GEntity:SetCreator(ply)
 end
@@ -2558,6 +2590,7 @@ function GEntity:SetFlexScale(scale)
 end
 
 --- Sets the weight/value of given flex controller.  
+--- Setting flex weights spawns an internal networked entity (one per entity face posed) to accommodate networking to clients.  
 --- ℹ **NOTE**: Only `96` flex controllers can be set! Flex controllers on models with higher amounts will not be accessible.  
 --- @param flex number @The ID of the flex to modify weight of
 --- @param weight number @The new weight to set
@@ -3324,7 +3357,7 @@ end
 --- ℹ **NOTE**: You must also call this function on all entity's children. See Entity:GetChildren.  
 --- [issue tracker](https://github.com/Facepunch/garrysmod-issues/issues/1736)  
 --- Entity:SetFlexScale and other flex/bone manipulation functions will create a child entity.  
---- @param player GPlayer @The player to stop networking the entity to
+--- @param player GPlayer|GCRecipientFilter|GPlayer[] @The player to stop networking the entity to
 --- @param stopTransmitting boolean @true to stop the entity from networking, false to make it network again.
 function GEntity:SetPreventTransmit(player, stopTransmitting)
 end
@@ -3405,8 +3438,8 @@ end
 --- ℹ **NOTE**: This will not work properly if called directly after calling Entity:SetModel. Consider waiting until the next Tick.  
 --- Will not work on players due to the animations being reset every frame by the base gamemode animation system. See GM:CalcMainActivity.  
 --- For custom scripted entities you will want to apply example from ENTITY:Think to make animations work.  
---- @param sequenceId number @The sequence to play
-function GEntity:SetSequence(sequenceId)
+--- @param sequence number @The sequence to play
+function GEntity:SetSequence(sequence)
 end
 
 --- Sets whether or not the entity should make a physics contact sound when it's been picked up by a player.  
@@ -3491,7 +3524,7 @@ function GEntity:SetUnFreezable(freezable)
 end
 
 --- Sets the use type of an entity, affecting how often ENTITY:Use will be called for Lua entities.  
---- @param useType number @The use type to apply to the entity
+--- @param useType E_USE @The use type to apply to the entity
 function GEntity:SetUseType(useType)
 end
 
@@ -3660,7 +3693,7 @@ end
 --- Simulates a `+use` action on an entity.  
 --- @param activator GEntity @The entity that caused this input
 --- @param caller? GEntity @The entity responsible for the input
---- @param useType? number @Use type, see Enums/USE.
+--- @param useType? EUSE @Use type, see Enums/USE.
 --- @param value? number @Any value.
 function GEntity:Use(activator, caller, useType, value)
 end

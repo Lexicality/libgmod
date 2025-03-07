@@ -6,12 +6,14 @@ _G.mesh = {}
 function mesh.AdvanceVertex()
 end
 
+--- ⚠ **WARNING**: Maximum of 32768 vertices.  
 --- Starts constructing a new 3D mesh constructed from a given number of primitives in a given primitive format.  
 --- The resulting mesh can be stored in an IMesh if it is intended to be drawn multiple times or on multiple frames.  
 --- @param primitiveType number @An enum that indicates what the format of the mesh's primitives will be
 --- @param primitiveCount number @The quantity of primitives this mesh will contain as a whole integer number
 function mesh.Begin(primitiveType, primitiveCount)
 end
+--- ⚠ **WARNING**: Maximum of 32768 vertices.  
 --- Starts constructing a new 3D mesh constructed from a given number of primitives in a given primitive format.  
 --- The resulting mesh can be stored in an IMesh if it is intended to be drawn multiple times or on multiple frames.  
 --- @param mesh GIMesh @The IMesh that the created mesh will be stored in.

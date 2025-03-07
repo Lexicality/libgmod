@@ -36,10 +36,11 @@ end
 function undo.GetTable()
 end
 
---- Replaces any instance of the "from" reference with the "to" reference, in any existing undo block. Returns true if something was replaced  
+--- Replaces any instance of the "from" reference with the "to" reference, in any existing undo block.  
+--- You very likely want to call cleanup.ReplaceEntity with the same entities as well.  
 --- @param from GEntity @The old entity
 --- @param to GEntity @The new entity to replace the old one
---- @return boolean @somethingReplaced
+--- @return boolean @Whether the entity was replaced
 function undo.ReplaceEntity(from, to)
 end
 

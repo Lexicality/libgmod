@@ -8,13 +8,13 @@ _G.concommand = {}
 --- @param callback function @The function to run when the concommand is executed
 --- @param autoComplete? function @The function to call which should return a table of options for autocompletion
 --- @param helpText? string @The text to display should a user run 'help cmdName'.
---- @param flags? number @Console command modifier flags
+--- @param flags? EFCVAR|number[] @Console command modifier flags
 function concommand.Add(name, callback, autoComplete, helpText, flags)
 end
 
 --- Returns the tables of all console command callbacks, and autocomplete functions, that were added to the game with concommand.Add.  
---- @return table @Table of command callback functions.
---- @return table @Table of command autocomplete functions.
+--- @return {[string]: function} @Table of command callback functions.
+--- @return {[string]: function} @Table of command autocomplete functions.
 function concommand.GetTable()
 end
 

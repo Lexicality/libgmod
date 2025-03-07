@@ -9,7 +9,7 @@ local GWeapon = {}
 function GWeapon:AllowsAutoSwitchFrom()
 end
 
---- Returns whether the weapon allows to being switched to when a better ( Weapon:GetWeight ) weapon is being picked up.  
+--- Returns whether the weapon allows to being switched to when a better (Weapon:GetWeight) weapon is being picked up.  
 --- @return boolean @Whether the weapon allows to being switched to.
 function GWeapon:AllowsAutoSwitchTo()
 end

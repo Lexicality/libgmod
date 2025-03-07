@@ -33,7 +33,7 @@ function GPathFollower:GetAge()
 end
 
 --- Returns all of the segments of the given path.  
---- @return table @A table of tables with Structures/PathSegment.
+--- @return SPathSegment @A table of tables with Structures/PathSegment.
 function GPathFollower:GetAllSegments()
 end
 

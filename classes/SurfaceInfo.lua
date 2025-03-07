@@ -11,7 +11,7 @@ function GSurfaceInfo:GetMaterial()
 end
 
 --- Returns a list of vertices the brush surface is built from.  
---- @return table @A list of Vector points
+--- @return GVector[] @A list of Vector points
 function GSurfaceInfo:GetVertices()
 end
 

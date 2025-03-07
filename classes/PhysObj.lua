@@ -225,7 +225,7 @@ function GPhysObj:GetStress()
 end
 
 --- Returns the surface area of the physics object in source-units². Or nil if the PhysObj is a generated sphere or box.  
---- @return number @The surface area or nil if the PhysObj is a generated sphere or box.
+--- @return number|nil @The surface area or `nil` if the PhysObj is a generated sphere or box.
 function GPhysObj:GetSurfaceArea()
 end
 
@@ -241,7 +241,7 @@ function GPhysObj:GetVelocityAtPoint(point)
 end
 
 --- Returns the volume in source units³. Or nil if the PhysObj is a generated sphere or box.  
---- @return number @The volume or nil if the PhysObj is a generated sphere or box.
+--- @return number|nil @The volume or `nil` if the PhysObj is a generated sphere or box.
 function GPhysObj:GetVolume()
 end
 

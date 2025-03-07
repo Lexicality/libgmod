@@ -54,7 +54,7 @@ end
 
 --- Returns the Structures/AmmoData for given ID.  
 --- @param id number @ID of the ammo type to look up the data for
---- @return table @The Structures/AmmoData containing all ammo data
+--- @return SAmmoData @The Structures/AmmoData containing all ammo data
 function game.GetAmmoData(id)
 end
 
@@ -97,7 +97,7 @@ function game.GetAmmoPlayerDamage(id)
 end
 
 --- Returns a list of all ammo types currently registered.  
---- @return table @A table containing all ammo types
+--- @return {[number]: string} @A table containing all ammo types
 function game.GetAmmoTypes()
 end
 

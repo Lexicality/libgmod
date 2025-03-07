@@ -30,8 +30,8 @@ end
 
 --- Returns if the angle is equal to another angle with the given tolerance.  
 --- @param compare GAngle @The angle to compare to.
---- @param tolerance number @The tolerance range.
---- @return boolean @Are the angles equal or not.
+--- @param tolerance number @The tolerance range for each component.
+--- @return boolean @Are each of the the angle components equal or not within given tolerance.
 function GAngle:IsEqualTol(compare, tolerance)
 end
 

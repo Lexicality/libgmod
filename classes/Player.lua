@@ -62,6 +62,7 @@ function GPlayer:AddVCDSequenceToGestureSlot(slot, sequenceId, cycle, autokill)
 end
 
 --- Checks if the player is alive.  
+--- Player specific implementation of Entity:Alive, the value is synchronized to the client.  
 --- @return boolean @Whether the player is alive
 function GPlayer:Alive()
 end
@@ -138,7 +139,7 @@ end
 
 --- Runs the concommand on the player. This does not work on bots. If used clientside, always runs the command on the local player.  
 --- If you wish to directly modify the movement input of bots, use GM:StartCommand instead.  
---- ℹ **NOTE**: Some commands/convars are blocked from being ran/changed using this function, usually to prevent harm/annoyance to clients. For a list of blocked commands, see Blocked ConCommands.  
+--- ℹ **NOTE**: Some commands/convars are blocked from being run/changed using this function, usually to prevent harm/annoyance to clients. For a list of blocked commands, see Blocked ConCommands.  
 --- @param command string @command to run
 function GPlayer:ConCommand(command)
 end
@@ -250,6 +251,10 @@ end
 --- The player also emits a flatline sound on death, which can be overridden with GM:PlayerDeathSound.  
 --- The player is automatically equipped with the suit on spawn, if you wish to stop that, use Player:RemoveSuit.  
 function GPlayer:EquipSuit()
+end
+
+--- Forces the player off the current ladder if they are on one.  
+function GPlayer:ExitLadder()
 end
 
 --- Forces the player to exit the vehicle if they're in one.  
@@ -454,8 +459,8 @@ function GPlayer:GetHullDuck()
 end
 
 --- Retrieves the value of a client-side ConVar. The ConVar must have a FCVAR_USERINFO flag for this to work.  
---- ⚠ **WARNING**: The returned value is truncated to 31 bytes.  
---- ⚠ **WARNING**: On client this function will return value of the local player, regardless of which player the function was called on!  
+--- On client this function will return value of the local player, regardless of which player the function was called on!  
+--- See Player:GetInfoNum for the same function that automatically converts the string to a number.  
 --- @param cVarName string @The name of the client-side ConVar.
 --- @return string @The value of the ConVar
 function GPlayer:GetInfo(cVarName)
@@ -632,8 +637,8 @@ end
 function GPlayer:GetUserGroup()
 end
 
---- Gets the vehicle the player is driving, returns NULL ENTITY if the player is not driving.  
---- @return GVehicle @vehicle
+--- Returns the vehicle the player is driving.  
+--- @return GVehicle @The vehicle the player is currently driving, if any
 function GPlayer:GetVehicle()
 end
 
@@ -755,7 +760,7 @@ function GPlayer:IsAdmin()
 end
 
 --- Returns if the player is an bot or not  
---- @return boolean @True if the player is a bot.
+--- @return boolean @`true` if the player is a bot.
 function GPlayer:IsBot()
 end
 
@@ -830,10 +835,10 @@ end
 function GPlayer:IsTyping()
 end
 
---- Returns true/false if the player is in specified group or not. See Player:GetUserGroup for a way to get player's usergroup.  
---- @param groupname string @Group to check the player for.
---- @return boolean @isInUserGroup
-function GPlayer:IsUserGroup(groupname)
+--- Returns whether the player is in specified group or not. See Player:GetUserGroup for a way to get player's user group.  
+--- @param groupName string @Group to check the player for.
+--- @return boolean @`true` if the player has the given user group.
+function GPlayer:IsUserGroup(groupName)
 end
 
 --- Returns if the player can be heard by the local player.  
@@ -842,7 +847,7 @@ function GPlayer:IsVoiceAudible()
 end
 
 --- Returns if the player currently walking. (`+walk` keybind)  
---- @return boolean @True if the player is currently walking.
+--- @return boolean @`true` if the player is currently walking.
 function GPlayer:IsWalking()
 end
 
@@ -1035,10 +1040,10 @@ end
 
 --- Fades the screen  
 --- @param flags number @Fade flags defined with Enums/SCREENFADE.
---- @param clr? number @The color of the screenfade
+--- @param color? GColor @The color of the screenfade
 --- @param fadeTime? number @Fade(in/out) effect transition time ( From no fade to full fade and vice versa )
 --- @param fadeHold? number @Fade effect hold time
-function GPlayer:ScreenFade(flags, clr, fadeTime, fadeHold)
+function GPlayer:ScreenFade(flags, color, fadeTime, fadeHold)
 end
 
 --- Sets the active weapon of the player by its class name.  
@@ -1091,9 +1096,10 @@ end
 function GPlayer:SetAmmo(ammoCount, ammoType)
 end
 
---- Sets the player armor to the argument.  
---- @param Amount number @The amount that the player armor is going to be set to.
-function GPlayer:SetArmor(Amount)
+--- Sets the player armor value.  
+--- See GM:HandlePlayerArmorReduction for a hook that allows manipulating what armor does.  
+--- @param amount number @The amount to set the armor value of the player to.
+function GPlayer:SetArmor(amount)
 end
 
 --- Pushes the player away from other players whenever the player inside another players' bounding box.  
@@ -1103,23 +1109,18 @@ end
 function GPlayer:SetAvoidPlayers(avoidPlayers)
 end
 
---- Set if the player should be allowed to walk using the (default) alt key.  
---- @param abletowalk boolean @True allows the player to walk.
-function GPlayer:SetCanWalk(abletowalk)
+--- Set if the player should be allowed to walk using the (default) alt key. (`+walk` keybind)  
+--- @param canWalk boolean @`true` allows the player to walk.
+function GPlayer:SetCanWalk(canWalk)
 end
 
---- Sets whether the player can use the HL2 suit zoom ("+zoom" bind) or not.  
+--- Sets whether the player can use the HL2 suit zoom (`+zoom` bind) or not.  
 --- @param canZoom boolean @Whether to make the player able or unable to zoom.
 function GPlayer:SetCanZoom(canZoom)
 end
 
---- Sets the player's class id.  
---- @param classID number @The class id the player is being set with.
-function GPlayer:SetClassID(classID)
-end
-
 --- Sets the crouched walk speed multiplier.  
---- Doesn't work for values above 1.  
+--- Has no effect for values above 1.  
 --- See also Player:SetWalkSpeed and Player:GetCrouchedWalkSpeed.  
 --- @param speed number @The walk speed multiplier that crouch speed should be.
 function GPlayer:SetCrouchedWalkSpeed(speed)
@@ -1139,8 +1140,8 @@ function GPlayer:SetDSP(dspEffectId, fastReset)
 end
 
 --- Sets a player's death count  
---- @param deathcount number @Number of deaths (positive or negative)
-function GPlayer:SetDeaths(deathcount)
+--- @param deathCount number @Number of deaths (positive or negative)
+function GPlayer:SetDeaths(deathCount)
 end
 
 --- Sets how quickly a player ducks.  
@@ -1163,8 +1164,8 @@ function GPlayer:SetFOV(fov, time, requester)
 end
 
 --- Sets a player's frags (kills)  
---- @param fragcount number @Number of frags (positive or negative)
-function GPlayer:SetFrags(fragcount)
+--- @param fragCount number @Number of frags (positive or negative)
+function GPlayer:SetFrags(fragCount)
 end
 
 --- Sets the hands entity of a player.  
@@ -1510,8 +1511,8 @@ function GPlayer:Team()
 end
 
 --- Returns the time in seconds since the player connected.  
---- ℹ **NOTE**: Bots will always return value 0.  
---- @return number 
+--- Bots will always return value 0.  
+--- @return number @How long this player was connected to the server for, in seconds.
 function GPlayer:TimeConnected()
 end
 
@@ -1544,7 +1545,7 @@ end
 function GPlayer:UnSpectate()
 end
 
---- Unfreezes all objects the player has frozen with their Physics Gun. Same as double pressing R while holding Physics Gun.  
+--- Unfreezes all objects the player has frozen with their Physics Gun. Same as double pressing `R` while holding Physics Gun.  
 function GPlayer:UnfreezePhysicsObjects()
 end
 
@@ -1557,25 +1558,23 @@ end
 function GPlayer:UniqueID()
 end
 
---- @deprecated  
---- 🛑 **DEPRECATED**: This is based on Player:UniqueID which is deprecated and vulnerable to collisions.  
---- Returns a table that will stay allocated for the specific player serveside between connects until the server shuts down. On client it has no such special behavior.  
+--- Returns a table that will stay allocated for the specific player serverside between connects until the server shuts down. On client it has no such special behavior.  
 --- ℹ **NOTE**: This table is not synchronized (networked) between client and server.  
 --- @param key any @Unique table key.
 --- @return table @The table that contains any info you have put in it.
 function GPlayer:UniqueIDTable(key)
 end
 
---- Returns the player's ID.  
---- You can use Global.Player() to get the player by their ID.  
+--- Returns the player's user ID. This number will always be unique, but will reset if the player reconnects. (Always increments for each connecting player)  
+--- You can use Global.Player global function to get a player by their user ID.  
 --- @return number @The player's user ID
 function GPlayer:UserID()
 end
 
---- Simulates a push on the client's screen. This **adds** view punch velocity, and does not touch the current view punch angle, for which you can use Player:SetViewPunchAngles.  
+--- Simulates a push on the client's screen. This **adds** view punch velocity, and does not reset the current view punch angle, for which you can use Player:SetViewPunchAngles.  
 --- ℹ **NOTE**: Despite being defined shared, it only functions when called server-side.  
---- @param PunchAngle GAngle @The angle in which to push the player's screen.
-function GPlayer:ViewPunch(PunchAngle)
+--- @param punchAngle GAngle @The angle in which to push the player's screen.
+function GPlayer:ViewPunch(punchAngle)
 end
 
 --- Resets the player's view punch (and the view punch velocity, read more at Player:ViewPunch) effect back to normal.  
@@ -1583,7 +1582,8 @@ end
 function GPlayer:ViewPunchReset(tolerance)
 end
 
---- Returns the players voice volume, how loud the player's voice communication currently is, as a normal number. Doesn't work on local player unless the voice_loopback convar is set to 1.  
+--- Returns the players voice volume, how loud the player's voice communication currently is, as a normal number.  
+--- Doesn't work on local player unless the `voice_loopback` convar is set to `1`.  
 --- @return number @The voice volume.
 function GPlayer:VoiceVolume()
 end

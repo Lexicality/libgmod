@@ -24,9 +24,11 @@
 --- </output>  
 --- </example>  
 --- <example>  
+--- <description>  
 --- A brief visual example of different easing methods  
 --- <upload src="ab571/8dc38906fb4cfbe.gif" size="4162886" name="easing_examples.gif">  
---- </upload></example>  
+--- </upload></description>  
+--- </example>  
 _G.math = {}
 --- Calculates the difference between two angles.  
 --- @param a number @The first angle.
@@ -270,6 +272,15 @@ end
 function math.IntToBin(int)
 end
 
+--- Checks if two floating point numbers are nearly equal.  
+--- This is useful to mitigate  [accuracy issues in floating point numbers](https://en.wikipedia.org/wiki/Floating-point_arithmetic#Accuracy_problems). See examples below.  
+--- @param a number @The first number to compare.
+--- @param b number @The second number to compare.
+--- @param tolerance? number @The maximum difference between the two numbers to consider them equal.
+--- @return boolean @True if the difference between the two numbers is less than or equal to the tolerance.
+function math.IsNearlyEqual(a, b, tolerance)
+end
+
 --- Normalizes angle, so it returns value between -180 and 180.  
 --- @param angle number @The angle to normalize, in degrees.
 --- @return number @The normalized angle, in the range of -180 to 180 degrees.
@@ -465,7 +476,8 @@ function math.floor(number)
 end
 
 --- Returns the modulus of the specified values.  
---- While this is similar to the % operator, **it will return a negative value if the first argument is negative**, whereas the % operator will return a `positive` value **even if the first operand is negative**.  
+--- While this is similar to the `%` operator, **it will return a negative value if the first argument is negative**, whereas the % operator will return a **positive** value **even if the first operand is negative**.  
+--- This function is also slower than the `%` operator.  
 --- @param base number @The base value.
 --- @param modulator number @The modulator.
 --- @return number @The calculated modulus.

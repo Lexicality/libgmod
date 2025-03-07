@@ -173,7 +173,7 @@ end
 --- Returns a table of all the CNavAreas that have a one-way connection **to** this CNavArea.  
 --- If a CNavArea has a two-way connection **to or from** this CNavArea then it will not be returned from this function, use CNavArea:GetAdjacentAreas to get outgoing ( one and two way ) connections.  
 --- See CNavArea:GetIncomingConnectionsAtSide for a function that returns one-way incoming connections from  only one side/direction.  
---- @return table @A table of all CNavAreas with one-way connection **to** this CNavArea
+--- @return GCNavArea[] @A table of all CNavAreas with one-way connection **to** this CNavArea
 function GCNavArea:GetIncomingConnections()
 end
 
@@ -187,7 +187,7 @@ end
 
 --- Returns all CNavLadders that have a ( one or two way ) connection **from** this CNavArea.  
 --- See CNavArea:GetLaddersAtSide for a function that only returns CNavLadders in given direction.  
---- @return table @The CNavLadders that have a ( one or two way ) connection **from** this CNavArea.
+--- @return GCNavLadder[] @The CNavLadders that have a ( one or two way ) connection **from** this CNavArea.
 function GCNavArea:GetLadders()
 end
 

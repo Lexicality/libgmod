@@ -23,7 +23,8 @@ end
 function cleanup.Register(type)
 end
 
---- Replaces one entity in the cleanup module with another  
+--- Replaces one entity in the cleanup module with another.  
+--- You very likely want to call undo.ReplaceEntity with the same entities as well.  
 --- @param from GEntity @Old entity
 --- @param to GEntity @New entity
 --- @return boolean @Whether any action was taken.

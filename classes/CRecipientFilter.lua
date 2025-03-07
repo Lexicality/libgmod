@@ -38,7 +38,7 @@ function GCRecipientFilter:GetCount()
 end
 
 --- Returns a table of all valid players currently in the recipient filter.  
---- @return table @A table of all valid players currently in the recipient filter.
+--- @return GPlayer[] @A table of all valid players currently in the recipient filter.
 function GCRecipientFilter:GetPlayers()
 end
 

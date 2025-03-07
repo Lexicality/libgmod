@@ -13,6 +13,7 @@
 --- @field drawhud? boolean @Draw the HUD and call the hud painting related hooks
 --- @field drawmonitors? boolean @Draw monitors
 --- @field drawviewmodel? boolean @The weapon's viewmodel
+--- @field drawviewer? boolean @Whether to force draw the local player or not.
 --- @field viewmodelfov number @The viewmodel's FOV
 --- @field fov number @The main view's FOV
 --- @field ortho table @If set, renders the view orthogonally

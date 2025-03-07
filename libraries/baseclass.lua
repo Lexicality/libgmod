@@ -16,12 +16,11 @@ function baseclass.Get(name)
 end
 
 --- Add a new base class that can be derived by others. This is done automatically for:  
---- * widgets  
---- * panels  
---- * drive modes  
---- * entities  
---- * weapons  
---- * gamemodes (with prefix "gamemode_")  
+--- * [panels](vgui.Register)  
+--- * [drive modes](drive.Register)  
+--- * [entities and widgets](scripted_ents.Register)  
+--- * [weapons](weapons.Register)  
+--- * [gamemodes](gamemode.Register) (with prefix "gamemode_")  
 --- For more information, including usage examples, see the BaseClasses reference page.  
 --- @param name string @The name of this base class
 --- @param tab table @The base class.

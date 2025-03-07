@@ -25,9 +25,7 @@
 --- @field WantsTranslucency? boolean @If set and RenderGroup is not, will switch the render group to RENDERGROUP_BOTH when appropriate.
 --- @field DisableDuplicator? boolean @Disable the ability for players to duplicate this entity.
 --- @field ScriptedEntityType string @Sets the spawnmenu content icon type for the entity, used by spawnmenu in the Sandbox-derived gamemodes
---- @field DoNotDuplicate? boolean @If set, the entity will not be duplicated via the built-in duplicator system.
 --- @field IconOverride? string @If set, overrides the icon path to be displayed in the Spawnmenu for this entity
---- @field PhysgunDisabled? boolean @If set, the entity forbid physgun interaction.
 --- @field PhysicsSolidMask? number @If set, a bitflag for the physics solidity of the entity
 --- @field PhysicsSounds? boolean @For `anim` type entities, if set, enables physics collision sounds.
 _G.ENT = {}
@@ -152,8 +150,8 @@ end
 
 --- Called to determine how good an NPC is at using a particular weapon.  
 --- ℹ **NOTE**: "ai" base only  
---- @param wep GEntity @The weapon being used by the NPC.
---- @param target GEntity @The target the NPC is attacking
+--- @param wep GWeapon @The weapon being used by the NPC.
+--- @param target GNPC @The target the NPC is attacking
 --- @return number @The number of degrees of inaccuracy in the NPC's attack.
 function ENT:GetAttackSpread(wep, target)
 end
@@ -558,30 +556,23 @@ end
 
 --- Called by the engine to alter NPC activities, if desired by the NPC.  
 --- ℹ **NOTE**: This hook only exists for `ai` type SENTs.  
---- @param act number @The activity to translate
---- @return number @The activity that should override the incoming activity
-function ENT:TranslateActivity(act)
+--- @param oldAct EACT @The activity to translate.
+--- @return EACT @The activity that should override the incoming activity
+function ENT:TranslateActivity(oldAct)
 end
 
---- Called by the engine to alter NPC's final position to reach its enemy or target.  
+--- Called by the engine to alter NPC's final position to reach its enemy or target. This is called twice for `GOALTYPE_PATHCORNER`; first is for the first path_corner and second for the next connected path_corner.  
 --- ℹ **NOTE**: This hook only exists for `ai` type SENTs.  
---- @param enemy? GEntity @The enemy being chased.
---- @param currentGoal? GVector @The enemy's chase position.
---- @return GVector @The actual point that NPC will move to reach its enemy or target
-function ENT:TranslateNavGoal(enemy, currentGoal)
-end
---- Called by the engine to alter NPC's final position to reach its enemy or target.  
---- ℹ **NOTE**: This hook only exists for `ai` type SENTs.  
---- @param target GEntity @The path_corner in query.
---- @param currentGoal GVector @path_corner's origin.
+--- @param target? GNPC|GEntity @The enemy being chased or the path_corner in query.
+--- @param currentGoal? GVector @The target's origin.
 --- @return GVector @The actual point that NPC will move to reach its enemy or target
 function ENT:TranslateNavGoal(target, currentGoal)
 end
 
 --- Called by the engine to alter NPC schedules, if desired by the NPC.  
 --- ℹ **NOTE**: This hook only exists for `ai` type SENTs.  
---- @param schedule number @The schedule to translate
---- @return number @The schedule that should override the incoming schedule
+--- @param schedule ESCHED @The schedule to translate
+--- @return ESCHED @The schedule that should override the incoming schedule
 function ENT:TranslateSchedule(schedule)
 end
 
@@ -602,7 +593,7 @@ end
 --- ℹ **NOTE**: This hook only works for `nextbot`, `ai` and `anim` scripted entity types.  
 --- @param activator GEntity @The entity that caused this input
 --- @param caller GEntity @The entity responsible for the input
---- @param useType number @Use type, see Enums/USE.
+--- @param useType EUSE @Use type, see Enums/USE.
 --- @param value number @Any passed value.
 function ENT:Use(activator, caller, useType, value)
 end

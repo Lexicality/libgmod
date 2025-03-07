@@ -25,13 +25,13 @@ function ents.CreateClientside(class)
 end
 
 --- Returns a table of all entities along the ray. The ray does not stop on collisions, meaning it will go through walls/entities.  
---- This function is capable of detecting clientside only entities.  
---- This internally uses a Spatial Partition to avoid looping through all entities.  
+--- This function is capable of detecting clientside only entities by default.  
+--- This internally uses [spatial partitioning](https://en.wikipedia.org/wiki/Space_partitioning) to avoid looping through all entities.  
 --- @param start GVector @The start position of the ray
 --- @param end_ GVector @The end position of the ray
 --- @param mins? GVector @The mins corner of the ray
 --- @param maxs? GVector @The maxs corner of the ray
---- @return table @Table of the found entities
+--- @return GEntity[] @Table of the found entities
 function ents.FindAlongRay(start, end_, mins, maxs)
 end
 
@@ -39,28 +39,28 @@ end
 --- This function returns a sequential table, meaning it should be looped with Global.ipairs instead of Global.pairs for efficiency reasons.  
 --- This works internally by iterating over ents.GetAll. `ents.FindByClass` is always faster than ents.GetAll or ents.Iterator.  
 --- @param class string @The class of the entities to find, supports wildcards
---- @return table @A table containing all found entities
+--- @return GEntity[] @A table containing all found entities
 function ents.FindByClass(class)
 end
 
 --- Finds all entities that are of given class and are children of given entity. This works internally by iterating over ents.FindByClass.  
 --- @param class string @The class of entities to search for
 --- @param parent GEntity @Parent of entities that are being searched for
---- @return table @A table of found entities or nil if none are found
+--- @return GEntity[] @A table of found entities or nil if none are found
 function ents.FindByClassAndParent(class, parent)
 end
 
 --- Gets all entities with the given model, supports wildcards.  
 --- This works internally by iterating over ents.GetAll.  
 --- @param model string @The model of the entities to find.
---- @return table @A table of all found entities.
+--- @return GEntity[] @A table of all found entities.
 function ents.FindByModel(model)
 end
 
 --- Gets all entities with the given hammer targetname. This works internally by iterating over ents.GetAll.  
 --- Doesn't do anything on client.  
 --- @param name string @The targetname to look for
---- @return table @A table of all found entities
+--- @return GEntity[] @A table of all found entities
 function ents.FindByName(name)
 end
 
@@ -69,7 +69,7 @@ end
 --- ℹ **NOTE**: Clientside entities will not be returned by this function. Serverside only entities without networked edicts (entity indexes), such as point logic or Constraints are not returned either  
 --- @param boxMins GVector @The box minimum coordinates.
 --- @param boxMaxs GVector @The box maximum coordinates.
---- @return table @A table of all found entities.
+--- @return GEntity[] @A table of all found entities.
 function ents.FindInBox(boxMins, boxMaxs)
 end
 
@@ -80,23 +80,22 @@ end
 --- @param normal GVector @Direction of the cone.
 --- @param range number @The range of the cone/box around the origin
 --- @param angle_cos number @The cosine of the angle between the center of the cone to its edges, which is half the overall angle of the cone
---- @return table @A table of all found Entitys.
+--- @return GEntity[] @A table of all found Entitys.
 function ents.FindInCone(origin, normal, range, angle_cos)
 end
 
 --- Finds all entities that lie within a [PVS (Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS "PVS - Valve Developer Community").  
 --- ℹ **NOTE**: The function won't take in to account Global.AddOriginToPVS and the like.  
---- @param viewPoint any @Entity or Vector to find entities within the PVS of
---- @return table @The found Entitys.
+--- @param viewPoint GEntity|GVector @Entity or Vector to find entities within the PVS of
+--- @return GEntity[] @The found Entitys.
 function ents.FindInPVS(viewPoint)
 end
 
 --- Gets all entities within the specified sphere.  
---- Serverside, this uses a Spatial Partition internally to avoid looping through all entities, so it is more efficient than using ents.GetAll for this purpose.  
---- Clientside, this function internally calls util.IsBoxIntersectingSphere  
+--- This function internally calls util.IsBoxIntersectingSphere for every entity on the map based on their Orientated Bounding Box.  
 --- @param origin GVector @Center of the sphere.
 --- @param radius number @Radius of the sphere.
---- @return table @A table of all found Entitys.
+--- @return GEntity[] @A table of all found Entitys.
 function ents.FindInSphere(origin, radius)
 end
 
@@ -104,7 +103,7 @@ end
 --- @param target string @Name of the target entity.
 --- @param activator GEntity @Activator of the event.
 --- @param caller GEntity @Caller of the event.
---- @param usetype number @Use type
+--- @param usetype EUSE @Use type
 --- @param value number @This value is passed to ENTITY:Use, but isn't used by any default entities in the engine.
 function ents.FireTargets(target, activator, caller, usetype, value)
 end
@@ -112,13 +111,13 @@ end
 --- Returns a table of all existing entities.  
 --- Consider using ents.Iterator instead for better performance.  
 --- This function returns a sequential table, meaning it should be looped with Global.ipairs instead of Global.pairs for efficiency reasons.  
---- @return table @Table of all existing Entitys.
+--- @return GEntity[] @Table of all existing Entitys.
 function ents.GetAll()
 end
 
 --- Returns an entity by its index. Same as Global.Entity.  
 --- @param entIdx number @The index of the entity.
---- @return GEntity @The entity if it exists.
+--- @return GEntity @The entity if it exists, or `NULL` if it doesn't.
 function ents.GetByIndex(entIdx)
 end
 
@@ -136,8 +135,8 @@ function ents.GetEdictCount()
 end
 
 --- Returns entity that has given Entity:MapCreationID.  
---- @param id number @Entity's creation id
---- @return GEntity @Found entity
+--- @param id number @Entity's creation id.
+--- @return GEntity|nil @Found entity, `nil` otherwise.
 function ents.GetMapCreatedEntity(id)
 end
 
@@ -149,7 +148,7 @@ end
 --- ℹ **NOTE**: The GM:OnEntityCreated and GM:EntityRemoved hooks are used internally to invalidate this function's cache. Using this function inside those hooks is not guaranteed to use an up-to-date cache because hooks are currently executed in an arbitrary order.  
 --- ⚠ **WARNING**: An error being thrown inside the GM:OnEntityCreated or GM:EntityRemoved hooks is likely to break this function. Make it certain that no addons are causing any errors in those hooks.  
 --- @return function @The Iterator Function from ipairs
---- @return table @Table of all existing Entities
+--- @return GEntity[] @Table of all existing Entities
 --- @return number @The starting index for the table of players
 function ents.Iterator()
 end

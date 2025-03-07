@@ -24,12 +24,12 @@ function sound.EmitHint(hint, pos, volume, duration, owner)
 end
 
 --- Creates a sound from a function.  
---- @param indentifier string @An unique identified for the sound
+--- @param identifier string @A unique identifier for the sound
 --- @param samplerate number @The sample rate of the sound
 --- @param length number @The length in seconds of the sound to generate.
 --- @param callbackOrData function @A function which will be called to generate every sample on the sound
 --- @param loopStart? number @Sample ID of the loop start
-function sound.Generate(indentifier, samplerate, length, callbackOrData, loopStart)
+function sound.Generate(identifier, samplerate, length, callbackOrData, loopStart)
 end
 
 --- Returns the most dangerous/closest sound hint based on given location and types of sounds to sense.  

@@ -14,7 +14,7 @@ end
 --- **Visualization protip:** For a size N DFT, bin k (1-indexed) corresponds to a frequency of (k - 1) / N * sampleRate.  
 --- **Visualization protip:** Sound energy is proportional to the square of the magnitudes. Adding magnitudes together makes no sense physically, but adding energies does.  
 --- **Visualization protip:** The human ear works on a logarithmic amplitude scale. You can convert to [decibels](https://en.wikipedia.org/wiki/Decibel) by taking 20 * math.log10 of frequency magnitudes, or 10 * math.log10 of energy. The decibel values will range from -infinity to 0.  
---- @param tbl table @The table to output the DFT magnitudes (numbers between 0 and 1) into
+--- @param tbl number[] @The table to output the DFT magnitudes (numbers between 0 and 1) into
 --- @param size number @The number of samples to use
 --- @return number @The number of frequency bins that have been filled in the output table.
 function GIGModAudioChannel:FFT(tbl, size)

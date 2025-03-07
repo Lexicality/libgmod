@@ -195,8 +195,9 @@ end
 
 --- Attempts to compile the given file. If successful, returns a function that can be called to perform the actual execution of the script.  
 --- @param path string @Path to the file, relative to the `garrysmod/lua/` directory.
+--- @param showError? boolean @Decides whether or not a non-halting error should be thrown on compile failure.
 --- @return function @The function which executes the script.
-function _G.CompileFile(path)
+function _G.CompileFile(path, showError)
 end
 
 --- This function will compile the code argument as lua code and return a function that will execute that code.  
@@ -283,7 +284,7 @@ end
 
 --- Creates PhysCollide objects for every physics object the model has. The model must be precached with util.PrecacheModel before being used with this function.  
 --- @param modelName string @Model path to get the collision objects of.
---- @return table @Table of PhysCollide objects
+--- @return GPhysCollide[] @Table of PhysCollide objects
 function _G.CreatePhysCollidesFromModel(modelName)
 end
 
@@ -311,7 +312,6 @@ end
 --- See also: Global.RealTime, Global.SysTime  
 --- ℹ **NOTE**: This is internally defined as a float, and as such it will be affected by precision loss if your server uptime is more than 6 hours, which will cause jittery movement of players and props and inaccuracy of timers, it is highly encouraged to refresh or change the map when that happens (a server restart is not necessary).  
 --- This is **NOT** easy as it sounds to fix in the engine, so please refrain from posting issues about this  
---- 🦟 **BUG**: [This returns 0 in GM:PlayerAuthed.](https://github.com/Facepunch/garrysmod-issues/issues/3026)  
 --- @return number @Time synced with the game server.
 function _G.CurTime()
 end
@@ -583,7 +583,7 @@ function _G.EmitSentence(soundName, position, entity, channel, volume, soundLeve
 end
 
 --- Emits the specified sound at the specified position. See also Entity:EmitSound if you wish to play sounds on a specific entity.  
---- ℹ **NOTE**: Valid sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
+--- ℹ **NOTE**: Valid 16 bit sample rates: **11025 Hz, 22050 Hz and 44100 Hz**, otherwise you may see this kind of message:  
 --- `Unsupported 32-bit wave file your_sound.wav` and  
 --- `Invalid sample rate (48000) for sound 'your_sound.wav'`  
 --- @param soundName string @The sound to play
@@ -608,7 +608,7 @@ end
 --- Indices `1` through game.MaxPlayers() are always reserved for players.  
 --- ℹ **NOTE**: In examples on this wiki, `Entity( 1 )` is used when a player entity is needed (see ). In singleplayer and listen servers, `Entity( 1 )` will always be the first player. In dedicated servers, however, `Entity( 1 )` won't always be a valid player if there is no one currently on the server.  
 --- @param entityIndex number @The entity index.
---- @return GEntity @The entity if it exists, or NULL if it doesn't.
+--- @return GEntity @The entity if it exists, or `NULL` if it doesn't.
 function _G.Entity(entityIndex)
 end
 
@@ -652,8 +652,9 @@ end
 --- Returns the meta table for the class with the matching name.  
 --- You can learn more about meta tables on the Meta Tables page.  
 --- You can find a list of meta tables that can be retrieved with this function on Enums/TYPE. The name in the description is the string to use with this function.  
+--- Custom meta tables should be registered via Global.RegisterMetaTable.  
 --- @param metaName string @The object type to retrieve the meta table of.
---- @return table @The corresponding meta table.
+--- @return table|nil @The corresponding meta table or `nil` if it doesn't exist.
 function _G.FindMetaTable(metaName)
 end
 
@@ -695,12 +696,6 @@ end
 
 --- Gets the ConVar with the specified name.  
 --- ℹ **NOTE**: This function uses Global.GetConVar_Internal internally, but caches the result in Lua for quicker lookups.  
---- ⚠ **WARNING**: Due to this function using Global.GetConVar_Internal internally it tends to be relatively slow. Please attempt to 'cache' the return of what you used to make it instead of using this function.  
---- Example:  
---- ```  
---- local exampleConvar = CreateClientConVar("exampleConvar", "hi")  
---- print(exampleConvar:GetString())  
---- ```  
 --- @param name string @Name of the ConVar to get
 --- @return GConVar @The ConVar object, or nil if no such ConVar was found.
 function _G.GetConVar(name)
@@ -926,6 +921,14 @@ end
 --- @param parameters table @The request parameters
 --- @return boolean @`true` if we made a request, `nil` if we failed.
 function _G.HTTP(parameters)
+end
+
+--- Converts a color from [HWB color space](https://en.wikipedia.org/wiki/HWB_color_model) (Hue-Whiteness-Blackness) into RGB color space and returns a Color.  
+--- @param hue number @The hue of the color in degrees from 0-360.
+--- @param whiteness number @The whiteness of the color from 0-1.
+--- @param blackness number @The blackness of the color from 0-1.
+--- @return GColor @The Color created from the HWB color space.
+function _G.HWBToColor(hue, whiteness, blackness)
 end
 
 --- @deprecated  
@@ -1207,7 +1210,7 @@ end
 function _G.MsgN(...)
 end
 
---- Returns named color defined in resource/ClientScheme.res.  
+--- Returns named color defined in `resource/ClientScheme.res`.  
 --- @param name string @Name of color
 --- @return table @A Color or nil
 function _G.NamedColor(name)
@@ -1313,6 +1316,7 @@ function _G.PrintMessage(type, message)
 end
 
 --- Recursively prints the contents of a table to the console.  
+--- The table keys will be sorted alphabetically or numerically when printed to the console.  
 --- @param tableToPrint table @The table to be printed
 --- @param indent? number @Number of tabs to start indenting at
 --- @param done? table @Internal argument, you shouldn't normally change this
@@ -2035,7 +2039,7 @@ end
 
 --- Writes every given argument to the console.  
 --- Automatically attempts to convert each argument to a string. (See Global.tostring)  
---- Seperates lines with a line break (`"\n"`)  
+--- Separates lines with a line break (`"\n"`)  
 --- Separates arguments with a tab character (`"\t"`).  
 --- @vararg any @List of values to print.
 function _G.print(...)

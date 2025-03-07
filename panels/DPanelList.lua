@@ -44,6 +44,11 @@ end
 function PANEL:InsertAtTop(insert, strLineState)
 end
 
+--- Sets the DPanelList to size its height to its contents. This is set to false by default.  
+--- @param shouldSizeToContents boolean @Whether to size to the height of the DPanelList contents.
+function PANEL:SetAutoSize(shouldSizeToContents)
+end
+
 --- Sets the offset of the lists items from the panel borders  
 --- @param Offset number @Offset from panel borders
 function PANEL:SetPadding(Offset)

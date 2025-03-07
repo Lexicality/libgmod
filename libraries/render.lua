@@ -295,7 +295,7 @@ function render.FogMaxDensity(maxDensity)
 end
 
 --- Sets the mode of fog.  
---- @param fogMode number @Fog mode, see Enums/MATERIAL_FOG.
+--- @param fogMode EMATERIAL_FOG @Fog mode, see Enums/MATERIAL_FOG.
 function render.FogMode(fogMode)
 end
 
@@ -431,7 +431,7 @@ function render.GetViewSetup(noPlayer)
 end
 
 --- Sets the render material override for all next calls of Entity:DrawModel. Also overrides render.MaterialOverrideByIndex.  
---- @param material? GIMaterial @The material to use as override, use nil to disable.
+--- @param material? GIMaterial|nil @The material to use as override, use `nil` to disable.
 function render.MaterialOverride(material)
 end
 
@@ -771,11 +771,11 @@ end
 function render.SetRenderTargetEx(rtIndex, texture)
 end
 
---- Sets a scissoring rect which limits(otherwise known as clipping) the drawing area.  
---- @param startX number @X start coordinate of the scissor rect.
---- @param startY number @Y start coordinate of the scissor rect.
---- @param endX number @X end coordinate of the scissor rect.
---- @param endY number @Y end coordinate of the scissor rect.
+--- Sets a scissoring rectangle which limits the drawing area. (otherwise known as clipping)  
+--- @param startX number @X start coordinate of the scissor rectangle in screen-space coordinates.
+--- @param startY number @Y start coordinate of the scissor rectangle in screen-space coordinates.
+--- @param endX number @X end coordinate of the scissor rectangle in screen-space coordinates.
+--- @param endY number @Y end coordinate of the scissor rectangle in screen-space coordinates.
 --- @param enable boolean @Enable or disable the scissor rect.
 function render.SetScissorRect(startX, startY, endX, endY, enable)
 end

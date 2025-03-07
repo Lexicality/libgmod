@@ -12,12 +12,12 @@ _G.file = {}
 --- Appends a file relative to the `data` folder.  
 --- @param name string @The file's name.
 --- @param content string @The content which should be appended to the file.
+--- @return boolean @If the operation was successful
 function file.Append(name, content)
 end
 
 --- Returns the content of a file asynchronously.  
 --- All limitations of file.Read also apply.  
---- ℹ **NOTE**: This function is currently broken in the Menu State and won't be fixed. [Bug Report](https://github.com/Facepunch/garrysmod-issues/issues/5433)  
 --- @param fileName string @The name of the file.
 --- @param gamePath string @The path to look for the files and directories in
 --- @param callback function @A callback function that will be called when the file read operation finishes
@@ -105,5 +105,6 @@ end
 --- Writes the given string to a file. Erases all previous data in the file. To add data without deleting previous data, use file.Append.  
 --- @param fileName string @The name of the file being written into
 --- @param content string @The content that will be written into the file.
+--- @return boolean @If the operation was successful
 function file.Write(fileName, content)
 end

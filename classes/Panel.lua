@@ -511,8 +511,9 @@ end
 function GPanel:GetSelectedTextRange()
 end
 
---- Returns the panel object (`self`) if it has been enabled as a selection canvas. This is achieved using Panel:SetSelectionCanvas.  
---- @return GPanel @The panel object this method was called on if enabled as a selection canvas, otherwise `nil`.
+--- Returns the selection canvas for this panel. This will be the first parent that has Panel:SetSelectionCanvas set to true (or `self` if this panel is the selection canvas)  
+--- A selection canvas would be the panel that contains a bunch of selectable panels (Panel:SetSelectable), usually for the drag'n'drop system. Calling this function on any of the selectable items, or any of their children, will return the first parent that can contain selectable panels.  
+--- @return GPanel @The selection canvas, otherwise `nil`.
 function GPanel:GetSelectionCanvas()
 end
 
@@ -945,10 +946,11 @@ function GPanel:NewAnimation(length, delay, ease, callback)
 end
 
 --- Sets whether this panel's drawings should be clipped within the parent panel's bounds.  
+--- See render.SetScissorRect if you wish to set the clipping rect instead.  
 --- ℹ **NOTE**: This only disabled clipping for the Paint Related functions (as far as i can tell at the current moment, more testing should be done) so things like the text of a DLabel will still be clipped to the parent.  
 --- To fully disable the clipping of any children see Global.DisableClipping.  
---- @param noclip boolean @Whether to disable clipping or not
-function GPanel:NoClipping(noclip)
+--- @param disableClipping boolean @Whether to disable clipping or not
+function GPanel:NoClipping(disableClipping)
 end
 
 --- Returns the number of children of the panel object that are selected. This is equivalent to calling Panel:IsSelected on all child objects and counting the number of returns that are `true`.  
