@@ -6,8 +6,8 @@ import _ from "lodash";
 import { handleClass, preProcessClasses } from "./classes";
 import { handleFunc } from "./functions";
 import { handleLib } from "./libraries";
-import { handleStruct } from "./structs";
 import { handlePanel, preProcessPanels } from "./panels";
+import { handleStruct } from "./structs";
 
 async function doGlobals(): Promise<void> {
     let data: Func[] = JSON.parse(

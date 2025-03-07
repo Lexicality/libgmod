@@ -1,5 +1,6 @@
-import { unpaginate } from "./utils";
 import { decodeHTML } from "entities";
+
+import { unpaginate } from "./utils";
 
 // Time to parse XML with regular expressions
 const WARNINGS_REGEX =
