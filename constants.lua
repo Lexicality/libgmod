@@ -22,3 +22,10 @@ _G.NULL = nil
 
 --- @type unknown
 _G.BaseClass = {}
+
+_G.vector_origin = Vector(0, 0, 0)
+_G.vector_up = Vector(0, 0, 1)
+_G.angle_zero = Angle(0, 0, 0)
+_G.color_white = Color(255, 255, 255, 255)
+_G.color_black = Color(0, 0, 0, 255)
+_G.color_transparent = Color(255, 255, 255, 0)
