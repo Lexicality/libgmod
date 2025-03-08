@@ -4,7 +4,7 @@
 --- @class STrace
 --- @field start? GVector @The start position of the trace
 --- @field endpos? GVector @The end position of the trace
---- @field filter? GEntity @Things the trace should not hit
+--- @field filter? GEntity|GEntity[]|string[]|function @Things the trace should not hit
 --- @field mask? number @The trace mask Enums/MASK
 --- @field collisiongroup? number @The collision group Enums/COLLISION_GROUP
 --- @field ignoreworld? boolean @Should the trace ignore world or not

@@ -41,6 +41,16 @@ export function handleStruct(struct: Struct, hook?: FuncContainer): string {
     }
     desc += "\n";
 
+    // filty hack until the wiki supports complex types on struct fields
+    if (name == "Trace") {
+        for (let field of struct.fields) {
+            if (field.name == "filter") {
+                field.type = "Entity|table<Entity>|table<string>|function";
+                break;
+            }
+        }
+    }
+
     if (struct.fields.length > 0) {
         desc += struct.fields.map(handleField).join("\n") + "\n";
     }
