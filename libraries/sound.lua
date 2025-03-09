@@ -5,7 +5,7 @@ _G.sound = {}
 --- Creates a sound script. It can also override sounds, which seems to only work when set on the server.  
 --- You can find a list of common sound scripts that are shipped with the game by default here: Common Sounds.  
 --- A list of sound scripts can be retrieved with sound.GetTable.  
---- @param soundData table @The sounds properties
+--- @param soundData SSoundData @The sounds properties
 function sound.Add(soundData)
 end
 
@@ -41,13 +41,13 @@ end
 
 --- Returns properties of the soundscript.  
 --- @param name string @The name of the sound script
---- @return table @The properties of the soundscript
+--- @return SSoundData @The properties of the soundscript
 function sound.GetProperties(name)
 end
 
 --- Returns a list of all registered sound scripts.  
 --- New ones can be registered using sound.Add, and detailed information about each one can be retrieved via sound.GetProperties.  
---- @return table @The list/array of all registered sound scripts ( No other information is provided )
+--- @return string[] @The list/array of all registered sound scripts ( No other information is provided )
 function sound.GetTable()
 end
 

@@ -8,5 +8,5 @@
 --- @field level number @The soundlevel of the sound in dB
 --- @field volume? number @The volume of the sound as a decimal between `0` and `1`
 --- @field pitch? number @The pitch of the sound
---- @field pitchstart number @The initial pitch
---- @field pitchend number @The pitch end
+--- @field pitchstart? number @The initial pitch
+--- @field pitchend? number @The pitch end

@@ -8491,7 +8491,7 @@
         "arguments": [
           {
             "name": "bulletInfo",
-            "type": "table",
+            "type": "table{Bullet}",
             "description": "The bullet data to be used. See the <page>Structures/Bullet</page>."
           },
           {
@@ -12502,7 +12502,7 @@
         "description": "Returns the last trace used in the collision callbacks such as <page>ENTITY:StartTouch</page>, <page>ENTITY:Touch</page> and <page>ENTITY:EndTouch</page>.\n\n<note>This returns the last collision trace used, regardless of the entity that caused it. As such, it's only reliable when used in the hooks mentioned above</note>",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "The <page>Structures/TraceResult</page>"
           }
         ]
@@ -32146,7 +32146,7 @@
         "description": "Returns a table with information of what the player is looking at.\n\nThe results of this function are **cached** clientside every frame.\n\nUses <page>util.GetPlayerTrace</page> internally and is therefore bound by its limits.\n\nSee also <page>Player:GetEyeTraceNoCursor</page>.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "Trace information, see <page>Structures/TraceResult</page>."
           }
         ],
@@ -32166,7 +32166,7 @@
         "description": "Returns the trace according to the players view direction, ignoring their mouse (holding <key>C</key> and moving the mouse in Sandbox).\n\nThe results of this function are **cached** clientside every frame.\n\nUses <page>util.GetPlayerTrace</page> internally and is therefore bound by its limits.\n\nSee also <page>Player:GetEyeTrace</page>.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "Trace result. See <page>Structures/TraceResult</page>."
           }
         ],

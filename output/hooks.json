@@ -2236,7 +2236,7 @@
           },
           {
             "name": "undo",
-            "type": "table",
+            "type": "table{Undo}",
             "description": "The undo table as a <page>Structures/Undo</page>."
           }
         ],
@@ -2661,7 +2661,7 @@
           },
           {
             "name": "data",
-            "type": "table",
+            "type": "table{Bullet}",
             "description": "The bullet data. See <page>Structures/Bullet</page>."
           }
         ],
@@ -5932,7 +5932,7 @@
           },
           {
             "name": "trace",
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "The trace of the bullet's path, see <page>Structures/TraceResult</page>"
           }
         ],
@@ -6171,7 +6171,7 @@
           },
           {
             "name": "data",
-            "type": "table",
+            "type": "table{FiredBullet}",
             "description": "A table of data about the bullet that was fired.\n\nSee <page>Structures/FiredBullet</page>."
           }
         ],

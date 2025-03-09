@@ -918,7 +918,7 @@ end
 --- ℹ **NOTE**: HTTP-requests that respond with a large body may return an `unsuccessful` error. Try using the [Range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range) header to download the file in chunks.  
 --- ℹ **NOTE**: HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
 --- To enable HTTP-requests to destinations on private networks use Command Line Parameters `-allowlocalhttp`. (Dedicated servers only)  
---- @param parameters table @The request parameters
+--- @param parameters SHTTPRequest @The request parameters
 --- @return boolean @`true` if we made a request, `nil` if we failed.
 function _G.HTTP(parameters)
 end

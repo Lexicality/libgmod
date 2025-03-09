@@ -226,7 +226,7 @@ end
 --- For usage with util.TraceLine and similar functions.  
 --- @param ply GPlayer @The player the trace should be based on
 --- @param dir? GVector @The direction of the trace
---- @return table @The trace data
+--- @return STrace @The trace data
 function util.GetPlayerTrace(ply, dir)
 end
 
@@ -539,8 +539,8 @@ end
 --- ℹ **NOTE**: This function will throw an error in the menu realm because it internally uses util.TraceLine which doesn't exist in the menu realm and thus error.  
 --- @param origin GVector @The origin of the trace.
 --- @param dir GVector @The direction of the trace times the distance of the trace
---- @param filter? GEntity @Entity which should be ignored by the trace
---- @return table @Trace result
+--- @param filter? GEntity|GEntity[]|string[]|function @Entity which should be ignored by the trace
+--- @return STraceResult @Trace result
 function util.QuickTrace(origin, dir, filter)
 end
 
@@ -671,16 +671,16 @@ function util.TimerCycle()
 end
 
 --- Runs a trace using the entity's collisionmodel between two points. This does not take the entity's angles into account and will trace its unrotated collisionmodel.  
---- @param tracedata table @Trace data
+--- @param tracedata STrace @Trace data
 --- @param ent GEntity @The entity to use
---- @return table @Trace result
+--- @return STraceResult @Trace result
 function util.TraceEntity(tracedata, ent)
 end
 
 --- Identical to util.TraceHull but uses an entity's [Axis-Aligned Bounding Box (AABB)](https://en.wikipedia.org/wiki/Minimum_bounding_box) for `mins`/`maxs` inputs. (These 2 keys will be ignored in the provided table)  
---- @param tracedata table @Trace data
+--- @param tracedata SHullTrace @Trace data
 --- @param ent GEntity @The entity to use mins/maxs of for the hull trace.
---- @return table @Trace result
+--- @return STraceResult @Trace result
 function util.TraceEntityHull(tracedata, ent)
 end
 
@@ -688,8 +688,8 @@ end
 --- This trace type cannot hit hitboxes.  
 --- See util.TraceLine for a simple line ("ray") trace.  
 --- ℹ **NOTE**: This function may not always give desired results clientside due to certain physics mechanisms not existing on the client. Use it serverside for accurate results.  
---- @param TraceData table @The trace data to use
---- @return table @Trace result
+--- @param TraceData SHullTrace @The trace data to use
+--- @return STraceResult @Trace result
 function util.TraceHull(TraceData)
 end
 

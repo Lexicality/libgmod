@@ -13,8 +13,8 @@
 --- @field updated number @Unix timestamp of when the file was last updated
 --- @field banned boolean @Whether the file is banned or not
 --- @field tags string @Comma (,) separated list of tags, may be truncated to some length
---- @field size number @File size of the workshop item contents
---- @field previewsize number @Filesize of the preview file
+--- @field size number @File size of the workshop item contents in bytes
+--- @field previewsize number @Filesize of the preview file in bytes
 --- @field installed boolean @If the addon is subscribed, this value represents whether it is installed on the client and its files are accessible, false otherwise.
 --- @field disabled boolean @If the addon is subscribed, this value represents whether it is disabled on the client, false otherwise.
 --- @field children table @A list of child Workshop Items for this item

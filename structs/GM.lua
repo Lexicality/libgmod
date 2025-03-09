@@ -152,7 +152,7 @@ end
 
 --- Called whenever a players tries to undo.  
 --- @param ply GPlayer @The player who tried to undo something.
---- @param undo table @The undo table as a Structures/Undo.
+--- @param undo SUndo @The undo table as a Structures/Undo.
 --- @return boolean @Return false to disallow the undo.
 function GM:CanUndo(ply, undo)
 end
@@ -287,7 +287,7 @@ end
 --- See GM:PostEntityFireBullets if you wish to hook the final bullet values, such as the aim direction post spread calculations.  
 --- ⚠ **WARNING**: This hook is called directly from Entity:FireBullets. Due to this, you cannot call Entity:FireBullets inside this hook or an infinite loop will occur crashing the game.  
 --- @param entity GEntity @The entity that fired the bullet
---- @param data table @The bullet data
+--- @param data SBullet @The bullet data
 --- @return boolean @* Return `true` to apply all changes done to the bullet table
 function GM:EntityFireBullets(entity, data)
 end
@@ -1342,7 +1342,7 @@ end
 --- @param ply GPlayer @The player that has been hit
 --- @param dmginfo GCTakeDamageInfo @The damage info of the bullet
 --- @param dir GVector @Normalized vector direction of the bullet's path
---- @param trace table @The trace of the bullet's path, see Structures/TraceResult
+--- @param trace STraceResult @The trace of the bullet's path, see Structures/TraceResult
 --- @return boolean @Override engine handling
 function GM:PlayerTraceAttack(ply, dmginfo, dir, trace)
 end
@@ -1434,7 +1434,7 @@ end
 --- See GM:EntityFireBullets if you wish to modify the bullets before they are fired.  
 --- ⚠ **WARNING**: This hook is called directly from Entity:FireBullets. Due to this, you cannot call Entity:FireBullets inside this hook or an infinite loop will occur crashing the game.  
 --- @param entity GEntity @The entity that fired the bullet
---- @param data table @A table of data about the bullet that was fired
+--- @param data SFiredBullet @A table of data about the bullet that was fired
 --- @return boolean @Return `false` to suppress the bullet.
 function GM:PostEntityFireBullets(entity, data)
 end

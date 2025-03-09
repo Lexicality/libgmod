@@ -8884,7 +8884,7 @@
         "arguments": [
           {
             "name": "ammoData",
-            "type": "table",
+            "type": "table{AmmoData}",
             "description": "The attributes of the ammo. See the <page>Structures/AmmoData</page>."
           }
         ],
@@ -22678,7 +22678,7 @@
         "arguments": [
           {
             "name": "soundData",
-            "type": "table",
+            "type": "table{SoundData}",
             "description": "The sounds properties. See <page>Structures/SoundData</page>"
           }
         ]
@@ -22814,7 +22814,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{SoundData}",
             "description": "The properties of the soundscript. See <page>Structures/SoundData</page>"
           }
         ]
@@ -22829,7 +22829,7 @@
         "description": "Returns a list of all registered sound scripts.\n\nNew ones can be registered using <page>sound.Add</page>, and detailed information about each one can be retrieved via <page>sound.GetProperties</page>.",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<string>",
             "description": "The list/array of all registered sound scripts ( No other information is provided )"
           }
         ]
@@ -25718,7 +25718,7 @@
           },
           {
             "name": "fontData",
-            "type": "table",
+            "type": "table{FontData}",
             "description": "The font properties. See the <page>Structures/FontData</page>."
           }
         ]
@@ -29173,7 +29173,7 @@
         "arguments": [
           {
             "name": "tab",
-            "type": "table",
+            "type": "table{Undo}",
             "description": "The undo block to process as an <page>Structures/Undo</page>"
           }
         ],
@@ -29220,7 +29220,7 @@
         "description": "Serverside, returns a table containing all undo blocks of all players. Clientside, returns a table of the local player's undo blocks.\n<note>Serverside, this table's keys use <page>Player:UniqueID</page> to store a player's undo blocks.</note>",
         "returnValues": [
           {
-            "type": "table",
+            "type": "table<table{Undo}>",
             "description": "The undo table."
           }
         ],
@@ -30452,7 +30452,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{Trace}",
             "description": "The trace data. See <page>Structures/Trace</page>"
           }
         ],
@@ -31571,14 +31571,14 @@
           },
           {
             "name": "filter",
-            "type": "Entity",
+            "type": "Entity|table<Entity>|table<string>|function",
             "default": "nil",
             "description": "Entity which should be ignored by the trace. Can also be a table of entities or a function - see <page>Structures/Trace</page>."
           }
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "Trace result. See <page>Structures/TraceResult</page>."
           }
         ],
@@ -32123,7 +32123,7 @@
         "arguments": [
           {
             "name": "tracedata",
-            "type": "table",
+            "type": "table{Trace}",
             "description": "Trace data. See <page>Structures/Trace</page>"
           },
           {
@@ -32134,7 +32134,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "Trace result. See <page>Structures/TraceResult</page>"
           }
         ]
@@ -32150,8 +32150,8 @@
         "arguments": [
           {
             "name": "tracedata",
-            "type": "table",
-            "description": "Trace data. See <page>Structures/Trace</page>"
+            "type": "table{HullTrace}",
+            "description": "Trace data. See <page>Structures/HullTrace</page>"
           },
           {
             "name": "ent",
@@ -32161,7 +32161,7 @@
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "Trace result. See <page>Structures/TraceResult</page>"
           }
         ]
@@ -32177,13 +32177,13 @@
         "arguments": [
           {
             "name": "TraceData",
-            "type": "table",
+            "type": "table{HullTrace}",
             "description": "The trace data to use. See <page>Structures/HullTrace</page>"
           }
         ],
         "returnValues": [
           {
-            "type": "table",
+            "type": "table{TraceResult}",
             "description": "Trace result. See <page>Structures/TraceResult</page>"
           }
         ]

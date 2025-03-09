@@ -6,7 +6,7 @@ _G.game = {}
 --- You can find a list of default ammo types [here](https://wiki.facepunch.com/gmod/Default_Ammo_Types).  
 --- ⚠ **WARNING**: This function **must** be called on both the client and server in GM:Initialize or you will have unexpected problems.  
 --- ℹ **NOTE**: There is a limit of 256 ammo types, including the default ones.  
---- @param ammoData table @The attributes of the ammo
+--- @param ammoData SAmmoData @The attributes of the ammo
 function game.AddAmmoType(ammoData)
 end
 

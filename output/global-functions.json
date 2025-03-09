@@ -3908,7 +3908,7 @@
     "arguments": [
       {
         "name": "parameters",
-        "type": "table",
+        "type": "table{HTTPRequest}",
         "description": "The request parameters. See <page>Structures/HTTPRequest</page>."
       }
     ],

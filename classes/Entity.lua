@@ -351,7 +351,7 @@ end
 --- When used in a  hook such as WEAPON:Think or WEAPON:PrimaryAttack, it will use Player:LagCompensation internally.  
 --- ℹ **NOTE**: Lag compensation will not work if this function is called in a timer, regardless if the timer was made in a  hook.  
 --- ℹ **NOTE**: Due to how FireBullets is set up internally, bullet tracers will always originate from attachment 1.  
---- @param bulletInfo table @The bullet data to be used
+--- @param bulletInfo SBullet @The bullet data to be used
 --- @param suppressHostEvents? boolean @Has the effect of encasing the FireBullets call in Global.SuppressHostEvents, only works in multiplayer.
 function GEntity:FireBullets(bulletInfo, suppressHostEvents)
 end
@@ -1661,7 +1661,7 @@ end
 
 --- Returns the last trace used in the collision callbacks such as ENTITY:StartTouch, ENTITY:Touch and ENTITY:EndTouch.  
 --- ℹ **NOTE**: This returns the last collision trace used, regardless of the entity that caused it. As such, it's only reliable when used in the hooks mentioned above  
---- @return table @The Structures/TraceResult
+--- @return STraceResult @The Structures/TraceResult
 function GEntity:GetTouchTrace()
 end
 

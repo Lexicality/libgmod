@@ -2615,12 +2615,14 @@
       {
         "name": "pitchstart",
         "type": "number",
-        "description": "The initial pitch.\n<warning>Deprecated, use pitch.</warning>"
+        "default": "100",
+        "description": "The initial pitch.\n<warning>Deprecated: Use pitch instead.</warning>"
       },
       {
         "name": "pitchend",
         "type": "number",
-        "description": "The pitch end.\n<warning>Deprecated, use pitch.</warning>"
+        "default": "100",
+        "description": "The pitch end.\n<warning>Deprecated: Use pitch instead.</warning>"
       }
     ],
     "realms": [
@@ -3599,12 +3601,12 @@
       {
         "name": "size",
         "type": "number",
-        "description": "File size of the workshop item contents"
+        "description": "File size of the workshop item contents in bytes"
       },
       {
         "name": "previewsize",
         "type": "number",
-        "description": "Filesize of the preview file"
+        "description": "Filesize of the preview file in bytes"
       },
       {
         "name": "installed",

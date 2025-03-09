@@ -9,7 +9,7 @@ _G.surface = {}
 --- ⚠ **WARNING**: Due to the static nature of fonts, do **NOT** create the font more than once. You should only be creating them once, it is recommended to create them at the top of your script. Do not use this function within GM:HUDPaint or any other hook!  
 --- Define fonts that you will actually use, as fonts are very taxing on performance and will cause crashes! Do not create fonts for every size.  
 --- @param fontName string @The new font name.
---- @param fontData table @The font properties
+--- @param fontData SFontData @The font properties
 function surface.CreateFont(fontName, fontData)
 end
 

@@ -412,7 +412,7 @@ end
 --- The results of this function are **cached** clientside every frame.  
 --- Uses util.GetPlayerTrace internally and is therefore bound by its limits.  
 --- See also Player:GetEyeTraceNoCursor.  
---- @return table @Trace information, see Structures/TraceResult.
+--- @return STraceResult @Trace information, see Structures/TraceResult.
 function GPlayer:GetEyeTrace()
 end
 
@@ -420,7 +420,7 @@ end
 --- The results of this function are **cached** clientside every frame.  
 --- Uses util.GetPlayerTrace internally and is therefore bound by its limits.  
 --- See also Player:GetEyeTrace.  
---- @return table @Trace result
+--- @return STraceResult @Trace result
 function GPlayer:GetEyeTraceNoCursor()
 end
 
