@@ -15398,7 +15398,7 @@
         "description": "Returns the vertical scroll bar of the panel.",
         "returnValues": [
           {
-            "type": "Panel",
+            "type": "Panel{DVScrollBar}",
             "description": "The <page>DVScrollBar</page>."
           }
         ],

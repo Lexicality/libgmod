@@ -8442,7 +8442,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{FSASYNC}",
             "name": "status",
             "description": "<page text=\"FSASYNC_OK\">Enums/FSASYNC</page> on success, <page text=\"FSASYNC_ERR_\">Enums/FSASYNC</page> on failure."
           }
@@ -9266,7 +9266,7 @@
         "returnValues": [
           {
             "type": "string",
-            "description": "nextMap"
+            "description": "nextMap or nil if called too early"
           }
         ]
       },
@@ -9435,7 +9435,7 @@
           "client",
           "server"
         ],
-        "description": "Removes all the clientside ragdolls."
+        "description": "Removes all the clientside ragdolls. On server, it will remove all `prop_ragdolls` that have the `SF_RAGDOLLPROP_USE_LRU_RETIREMENT` (4096) spawnflag."
       },
       {
         "name": "SetGlobalCounter",
@@ -9498,7 +9498,7 @@
         "realms": [
           "server"
         ],
-        "description": "Sets the time scale of the game.\n\nThis function is supposed to remove the need of using the host_timescale convar, which is cheat protected.\n\nTo slow down or speed up the movement of a specific player, use <page>Player:SetLaggedMovementValue</page> instead.\n\n<note>\nLike host_timescale, this method does not affect sounds, if you wish to change that, look into <page>GM:EntityEmitSound</page>.\nThe true timescale will be `host_timescale` multiplied by <page>game.GetTimeScale</page>\n</note>",
+        "description": "Sets the time scale of the game.\n\nThis function is supposed to remove the need of using the host_timescale convar, which is cheat protected.\n\nTo slow down or speed up the movement of a specific player, use <page>Player:SetLaggedMovementValue</page> instead.\n\n<note>\nLike host_timescale, this method does not affect sounds, if you wish to change that, look into <page>GM:EntityEmitSound</page>.\n</note>\n\n<note>\nThe true timescale will be `host_timescale` multiplied by <page>game.GetTimeScale</page>\n</note>",
         "arguments": [
           {
             "name": "timeScale",
@@ -9528,11 +9528,11 @@
         "realms": [
           "server"
         ],
-        "description": "Returns position the player should start from, this is not the same thing as spawn points, it is used to properly transit the player between maps.",
+        "description": "Returns the name of the entity that should be used as player start position.\n\nThis is not the same thing as spawn points (See <page>GM:PlayerSelectSpawn</page> for that), this is used to properly transit the player between maps, and therefore will only be set after a level change via `trigger_changelevel` entity in singleplayer.",
         "returnValues": [
           {
-            "type": "Vector",
-            "description": "startSpot"
+            "type": "string",
+            "description": "The name of the entity that should be used as start position."
           }
         ]
       }
@@ -10544,7 +10544,7 @@
           {
             "name": "func",
             "type": "function",
-            "description": "The function to be called, arguments given to it depend on the identifier used.\n<warning>\nReturning any value besides nil from the hook's function will stop other hooks of the same event down the loop from being executed. Only return a value when absolutely necessary and when you know what you are doing.\n\nIt WILL break other addons.\n</warning>"
+            "description": "The function to be called, arguments given to it depend on the identifier used.\n<warning>\nReturning any value besides nil from the hook's function will stop other hooks of the same event down the loop from being executed. Only return a value when absolutely necessary and when you know what you are doing.\n\nIt will also prevent the associated `GM:*` hook from being called on the gamemode.\n\nIt WILL break other addons.\n</warning>"
           }
         ],
         "source": {
@@ -10797,7 +10797,7 @@
         "arguments": [
           {
             "name": "axis",
-            "type": "number",
+            "type": "number{ANALOG}",
             "description": "The analog axis to poll. See <page>Enums/ANALOG</page>."
           }
         ],
@@ -10844,7 +10844,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{BUTTON_CODE}",
             "description": "The button code, see <page>Enums/BUTTON_CODE</page>."
           }
         ]
@@ -10860,7 +10860,7 @@
         "arguments": [
           {
             "name": "button",
-            "type": "number",
+            "type": "number{BUTTON_CODE}",
             "description": "The button, see <page>Enums/BUTTON_CODE</page>."
           }
         ],
@@ -10882,7 +10882,7 @@
         "arguments": [
           {
             "name": "button",
-            "type": "number",
+            "type": "number{BUTTON_CODE}",
             "description": "The button, valid values are in the range of <page>Enums/BUTTON_CODE</page>."
           }
         ],
@@ -11021,7 +11021,7 @@
         "arguments": [
           {
             "name": "key",
-            "type": "number",
+            "type": "number{BUTTON_CODE}",
             "description": "Key from <page>Enums/BUTTON_CODE</page>"
           }
         ],
@@ -17890,12 +17890,12 @@
           "client",
           "server"
         ],
-        "description": "Adds surface properties to the game's physics environment.\n\n<bug issue=\"2604\">The game has a limit of 128 surface properties - this includes properties loaded automatically from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt). Due to this, there's only a small amount of open slots that can be registered with GMod's provided surfaceproperties.txt.</bug>",
+        "description": "Adds a [material surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) type to the game's physics environment.\n\nSee <page>util.GetSurfaceData</page> for the opposite function.\n\n<bug issue=\"2604\">The game has a limit of 128 surface properties - this includes properties loaded automatically from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt). Due to this, there's only a small amount of open slots that can be registered with GMod's provided surfaceproperties.txt.</bug>",
         "arguments": [
           {
             "name": "properties",
             "type": "string",
-            "description": "The properties to add. Each one should include \"base\" or the game will crash due to some values being missing."
+            "description": "The properties to add. Each one should include `\"base\"` or the game will crash due to some values being missing."
           }
         ]
       },
@@ -20624,17 +20624,17 @@
           },
           {
             "name": "sourceMultiplier",
-            "type": "number",
+            "type": "number{BLEND}",
             "description": "This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Function.\nOne of the <page>Enums/BLEND</page> enums."
           },
           {
             "name": "destinationMultiplier",
-            "type": "number",
+            "type": "number{BLEND}",
             "description": "This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending Function.\nOne of the <page>Enums/BLEND</page> enums."
           },
           {
             "name": "blendingFunction",
-            "type": "number",
+            "type": "number{BLENDFUNC}",
             "description": "After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blending Function which combines them into the final color and alpha for the pixel.\nOne of the <page>Enums/BLENDFUNC</page> enums."
           }
         ],
@@ -20648,34 +20648,34 @@
               },
               {
                 "name": "sourceColorMultiplier",
-                "type": "number",
+                "type": "number{BLEND}",
                 "description": "This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function.\nOne of the <page>Enums/BLEND</page> enums."
               },
               {
                 "name": "destinationColorMultiplier",
-                "type": "number",
+                "type": "number{BLEND}",
                 "description": "This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Function.\nOne of the <page>Enums/BLEND</page> enums."
               },
               {
                 "name": "colorBlendingFunction",
-                "type": "number",
+                "type": "number{BLENDFUNC}",
                 "description": "After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending Function which combines them into the final color and alpha for the pixel.\nOne of the <page>Enums/BLENDFUNC</page> enums."
               },
               {
                 "name": "sourceAlphaMultiplier",
-                "type": "number",
+                "type": "number{BLEND}",
                 "default": "none",
                 "description": "This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function.\nOne of the <page>Enums/BLEND</page> enums."
               },
               {
                 "name": "destinationAlphaMultiplier",
-                "type": "number",
+                "type": "number{BLEND}",
                 "default": "none",
                 "description": "This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Function.\nOne of the <page>Enums/BLEND</page> enums."
               },
               {
                 "name": "alphaBlendingFunction",
-                "type": "number",
+                "type": "number{BLENDFUNC}",
                 "default": "none",
                 "description": "After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending Function which combines them into the final alpha for the pixel."
               }
@@ -21305,7 +21305,7 @@
         "arguments": [
           {
             "name": "lightDirection",
-            "type": "number",
+            "type": "number{BOX}",
             "description": "The light source to edit, see <page>Enums/BOX</page>."
           },
           {
@@ -26390,7 +26390,7 @@
           "client",
           "menu"
         ],
-        "description": "Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by a <page>Color</page>.",
+        "description": "Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers.",
         "arguments": [
           {
             "name": "r",
@@ -26412,17 +26412,6 @@
             "type": "number",
             "default": "255",
             "description": "The alpha value of color"
-          }
-        ],
-        "overloads": [
-          {
-            "arguments": [
-              {
-                "name": "color",
-                "type": "table",
-                "description": "A <page>Color</page> object/table to read the color from. This is slower than providing four numbers. You could use <page>Color:Unpack</page> to address this. You should also cache your color objects if you wish to use them, for performance reasons."
-              }
-            ]
           }
         ]
       },
@@ -30483,18 +30472,18 @@
           "client",
           "server"
         ],
-        "description": "Returns data of a surface property at given ID.",
+        "description": "Returns data of a [surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) at given ID. New surface properties can be added via <page>physenv.AddSurfaceData</page>.",
         "arguments": [
           {
             "name": "id",
             "type": "number",
-            "description": "Surface property ID. You can get it from <page>Structures/TraceResult</page>."
+            "description": "Surface property ID. You can get it from <page>Structures/TraceResult</page> or using <page>util.GetSurfaceIndex</page>."
           }
         ],
         "returnValues": [
           {
-            "type": "table",
-            "description": "The data or no value if there is no valid surface property at given index.\n\nSee <page>Structures/SurfacePropertyData</page>"
+            "type": "table{SurfacePropertyData}",
+            "description": "The data or no value if there is no valid surface property at given index."
           }
         ]
       },
@@ -31512,7 +31501,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{CONTENTS}",
             "description": "Contents bitflag, see <page>Enums/CONTENTS</page>"
           }
         ]
@@ -31635,6 +31624,45 @@
             "type": "table",
             "name": "addonInfo",
             "description": "The info about owner addon. Will return nil if the file doesn't belong to an addon. Table Structure:\n```lua\nAuthor\t=\t[Addon Author]\nFile\t=\t[Steam folder]\\workshop\\content\\4000\\[Addon ID]/[GMA Name].gma\nID\t=\t[Addon ID]\nTitle\t=\t[Addon Title]\n```"
+          }
+        ]
+      },
+      {
+        "name": "RemoveDecalsAt",
+        "parent": "util",
+        "realms": [
+          "client"
+        ],
+        "description": "Removes world decals at given position, in given radius. Does not remove decals on models!",
+        "arguments": [
+          {
+            "name": "pos",
+            "type": "Vector",
+            "description": "The position at which to remove decals."
+          },
+          {
+            "name": "distance",
+            "type": "number",
+            "description": "Radius of the sphere to remove decals in."
+          },
+          {
+            "name": "limit",
+            "type": "number",
+            "default": "0",
+            "description": "If set to above 0, only remove this many decals."
+          },
+          {
+            "name": "permanent",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether to remove map-spawned decals (`true`), or only gameplay-spawned decals\nsuch as bullet holes or anything placed by <page>util.Decal</page> and similar(`false`)"
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "number",
+            "name": "removed",
+            "description": "How many decals were removed."
           }
         ]
       },

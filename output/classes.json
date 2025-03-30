@@ -6123,7 +6123,7 @@
         "arguments": [
           {
             "name": "input",
-            "type": "CRecipientFilter",
+            "type": "CRecipientFilter|table<Player>",
             "description": "The filter to add players from. This can also be a sequential table of players. Non player entities or duplicate players will be ignored."
           }
         ]
@@ -6678,7 +6678,7 @@
         "description": "Returns a bitflag which indicates the damage type(s) of the damage.\n\nConsider using <page>CTakeDamageInfo:IsDamageType</page> instead. Value returned by this function can contain multiple damage types.",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{DMG}",
             "description": "Damage type(s), a combination of <page>Enums/DMG</page>"
           }
         ]
@@ -6769,7 +6769,7 @@
         "arguments": [
           {
             "name": "dmgType",
-            "type": "number",
+            "type": "number{DMG}",
             "description": "Damage type to test. See <page>Enums/DMG</page>."
           }
         ],
@@ -6965,7 +6965,7 @@
         "arguments": [
           {
             "name": "type",
-            "type": "number",
+            "type": "number{DMG}",
             "description": "The damage type, see <page>Enums/DMG</page>."
           }
         ]
@@ -7521,7 +7521,7 @@
         "arguments": [
           {
             "name": "effect",
-            "type": "number",
+            "type": "number{EF}",
             "description": "The effect to apply, see <page>Enums/EF</page>."
           }
         ]
@@ -7537,7 +7537,7 @@
         "arguments": [
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{EFL}",
             "description": "Engine flag to add, see <page>Enums/EFL</page>"
           }
         ]
@@ -7553,7 +7553,7 @@
         "arguments": [
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{FL}",
             "description": "Flag to add, see <page>Enums/FL</page>"
           }
         ]
@@ -7824,7 +7824,7 @@
           },
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{BONE}",
             "description": "The flag to test, see <page>Enums/BONE</page>"
           }
         ],
@@ -8700,7 +8700,7 @@
         "description": "Returns the blood color of this entity. This can be set with <page>Entity:SetBloodColor</page>.",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{BLOOD_COLOR}",
             "description": "Color from <page>Enums/BLOOD_COLOR</page>"
           }
         ]
@@ -9127,7 +9127,7 @@
         "description": "Returns the entity's collision group",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{COLLISION_GROUP}",
             "description": "The collision group. See <page>Enums/COLLISION_GROUP</page>"
           }
         ]
@@ -10229,11 +10229,11 @@
         "realms": [
           "server"
         ],
-        "description": "Returns the surface material of this entity.",
+        "description": "Returns the [surface material type](https://developer.valvesoftware.com/wiki/Material_Types) of this entity.\n\nThis can be approximated clientside via <page>util.GetModelInfo</page>.\n\nInternally, all this does is return `gamematerial` of the surface property on the first physics object of the entity. You can do this yourself using <page>PhysObj:GetMaterial</page> and <page>util.GetSurfaceData</page>.",
         "returnValues": [
           {
-            "type": "number",
-            "description": "Surface material. See <page>Enums/MAT</page>"
+            "type": "number{MAT}",
+            "description": "Surface material type."
           }
         ]
       },
@@ -12386,7 +12386,7 @@
         "description": "Returns solid flag(s) of an entity.",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{FSOLID}",
             "description": "The flag(s) of the entity, see <page>Enums/FSOLID</page>."
           }
         ]
@@ -12662,7 +12662,7 @@
           "client",
           "server"
         ],
-        "description": "Causes the entity to break into its current models gibs, if it has any.\n\nYou must call <page>Entity:PrecacheGibs</page> on the entity before using this function, or it will not create any gibs.\n\nThe gibs will be spawned on the server and be synchronized with all clients.\n\nNote, that this function will not remove or hide the entity it is called on.\n\nThis function is affected by `props_break_max_pieces_perframe` and `props_break_max_pieces` console variables.\n\n<warning>Large numbers of serverside gibs will cause lag.\n\nYou can avoid this cost by spawning the gibs on the client using <page>Entity:GibBreakClient</page></warning>\n\n<note>Despite existing on client, it doesn't actually do anything on client.</note>",
+        "description": "Causes the entity to break into its current models gibs, if it has any.\n\nYou must call <page>Entity:PrecacheGibs</page> on the entity before using this function, or it will not create any gibs.\n\nThe gibs will be spawned on the server and be synchronized with all clients.\n\nNote, that this function will not remove or hide the entity it is called on.\n\nThis function is affected by `props_break_max_pieces_perframe`, `props_break_max_pieces`, `prop_active_gib_limit` and `prop_active_gib_max_fade_time` console variables.\n\n<warning>Large numbers of serverside gibs will cause lag.\n\nYou can avoid this cost by spawning the gibs on the client using <page>Entity:GibBreakClient</page></warning>\n\n<note>Despite existing on client, it doesn't actually do anything on client.</note>",
         "arguments": [
           {
             "name": "force",
@@ -12903,7 +12903,7 @@
         "arguments": [
           {
             "name": "effect",
-            "type": "number",
+            "type": "number{EF}",
             "description": "The effect to check for, see <page>Enums/EF</page>."
           }
         ],
@@ -12925,7 +12925,7 @@
         "arguments": [
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{EFL}",
             "description": "The engine flag to test, see <page>Enums/EFL</page>"
           }
         ],
@@ -12947,7 +12947,7 @@
         "arguments": [
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{FL}",
             "description": "The engine flag(s) to test, see <page>Enums/FL</page>"
           }
         ],
@@ -14342,7 +14342,7 @@
         "arguments": [
           {
             "name": "effect",
-            "type": "number",
+            "type": "number{EF}",
             "description": "The effect to remove, see <page>Enums/EF</page>."
           }
         ]
@@ -14358,7 +14358,7 @@
         "arguments": [
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{EFL}",
             "description": "The flag to remove, see <page>Enums/EFL</page>"
           }
         ]
@@ -14374,7 +14374,7 @@
         "arguments": [
           {
             "name": "flag",
-            "type": "number",
+            "type": "number{FL}",
             "description": "The flag(s) to remove, see <page>Enums/FL</page>"
           }
         ]
@@ -14721,7 +14721,7 @@
         "arguments": [
           {
             "name": "bloodColor",
-            "type": "number",
+            "type": "number{BLOOD_COLOR}",
             "description": "An integer corresponding to <page>Enums/BLOOD_COLOR</page>."
           }
         ]
@@ -14883,7 +14883,7 @@
         "arguments": [
           {
             "name": "group",
-            "type": "number",
+            "type": "number{COLLISION_GROUP}",
             "description": "Collision group of the entity, see <page>Enums/COLLISION_GROUP</page>"
           }
         ]
@@ -16239,6 +16239,32 @@
         ]
       },
       {
+        "name": "SetNetworkKeyValue",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ],
+        "description": "A helper function to allow setting <page text=\"Network Variables\">Networking_Entities</page> via <page>Entity:SetKeyValue</page>, primarily to allow mappers to set them from Hammer.\n\nMeant to be called from <page>ENTITY:KeyValue</page>, see example.\n\nSee also <page>Entity:SetNetworkVarsFromMapInput</page> for a function that does similar thing for map inputs instead.\n\n<note>This function will only work on entities which had <page>Entity:InstallDataTable</page> called on them, which is done automatically for players and all <page>Scripted Entities</page>.</note>",
+        "arguments": [
+          {
+            "name": "key",
+            "type": "string",
+            "description": "The key-value name, or simply the \"key\"."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The key-value value."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "Whether a network variable was set successfully"
+          }
+        ]
+      },
+      {
         "name": "SetNetworkOrigin",
         "parent": "Entity",
         "realms": [
@@ -16251,6 +16277,32 @@
             "name": "origin",
             "type": "Vector",
             "description": "The position to make clients think this entity is at."
+          }
+        ]
+      },
+      {
+        "name": "SetNetworkVarsFromMapInput",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ],
+        "description": "A helper function to allow setting <page text=\"Network Variables\">Networking_Entities</page> via <page>Entity:Fire</page>, primarily to allow mappers to set them from Hammer via Map I/O logic.\n\nMeant to be called from <page>ENTITY:AcceptInput</page>, see example.\n\nSee also <page>Entity:SetNetworkKeyValue</page> for a function that does similar thing, but for entity key-values in Hammer instead.\n\n<note>This function will only work on entities which had <page>Entity:InstallDataTable</page> called on them, which is done automatically for players and all <page>Scripted Entities</page>.</note>",
+        "arguments": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The name of the Map I/O input, including the `Set` prefix."
+          },
+          {
+            "name": "param",
+            "type": "string",
+            "description": "The input parameter."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "Whether a network variable was set successfully"
           }
         ]
       },
@@ -17201,7 +17253,7 @@
         "arguments": [
           {
             "name": "flags",
-            "type": "number",
+            "type": "number{FSOLID}",
             "description": "The flag(s) to set, see <page>Enums/FSOLID</page>."
           }
         ]
@@ -17298,7 +17350,7 @@
         "arguments": [
           {
             "name": "bounds",
-            "type": "number",
+            "type": "number{BOUNDS}",
             "description": "Bounds type of the entity, see <page>Enums/BOUNDS</page>"
           }
         ]
@@ -18606,7 +18658,7 @@
           },
           {
             "name": "size",
-            "type": "number",
+            "type": "number{FFT}",
             "description": "The number of samples to use. See <page>Enums/FFT</page>"
           }
         ],
@@ -20896,7 +20948,7 @@
         "arguments": [
           {
             "name": "capabilities",
-            "type": "number",
+            "type": "number{CAP}",
             "description": "Capabilities to add, see <page>Enums/CAP</page>."
           }
         ]
@@ -20918,7 +20970,7 @@
         "description": "Returns the NPC's capabilities along the ones defined on its weapon.",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{CAP}",
             "description": "The capabilities as a bitflag.\nSee <page>Enums/CAP</page>"
           }
         ]
@@ -20947,7 +20999,7 @@
         "description": "Returns the NPC class. Do not confuse with <page>Entity:GetClass</page>!",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{CLASS}",
             "description": "See <page>Enums/CLASS</page>"
           }
         ]
@@ -21052,7 +21104,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{D}",
             "description": "The NPCs disposition, see <page>Enums/D</page>."
           },
           {
@@ -21440,6 +21492,20 @@
         ]
       },
       {
+        "name": "GetEyeDirection",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Returns the eye direction of the NPC.",
+        "returnValues": [
+          {
+            "type": "Vector",
+            "description": "The eye direction."
+          }
+        ]
+      },
+      {
         "name": "GetFOV",
         "parent": "NPC",
         "realms": [
@@ -21479,6 +21545,20 @@
           {
             "type": "Entity",
             "description": "The entity we are trying to reach, or `NULL`."
+          }
+        ]
+      },
+      {
+        "name": "GetHeadDirection",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "description": "Returns the 2D head direction of the NPC.",
+        "returnValues": [
+          {
+            "type": "Vector",
+            "description": "The head direction."
           }
         ]
       },
@@ -22375,7 +22455,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{AIMR}",
             "description": "The result. See <page>Enums/AIMR</page>."
           }
         ]
@@ -22427,7 +22507,7 @@
         "description": "Executes a jump move.\n\nRelated functions are <page>NPC:MoveJumpStart</page> and <page>NPC:MoveJumpStop</page>.",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{AIMR}",
             "description": "The result. See <page>Enums/AIMR</page>."
           }
         ]
@@ -22456,7 +22536,7 @@
         "description": "Stops a jump move.\n\nRelated functions are <page>NPC:MoveJumpExec</page> and <page>NPC:MoveJumpStart</page>.",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{AIMR}",
             "description": "The result. See <page>Enums/AIMR</page>."
           }
         ]
@@ -22886,7 +22966,7 @@
         "arguments": [
           {
             "name": "condition",
-            "type": "number",
+            "type": "number{COND}",
             "description": "The condition index, see <page>Enums/COND</page>."
           }
         ]
@@ -24276,7 +24356,7 @@
         "arguments": [
           {
             "name": "dockType",
-            "type": "number",
+            "type": "number{DOCK}",
             "description": "Dock type using <page>Enums/DOCK</page>."
           }
         ]
@@ -30226,11 +30306,11 @@
           "client",
           "server"
         ],
-        "description": "Returns the physical material of the physics object.",
+        "description": "Returns the [physical material](https://developer.valvesoftware.com/wiki/Material_surface_properties) of the physics object.\n\nSee <page>util.GetSurfaceData</page> for a function that adds these types as well as further explanation of what they are.",
         "returnValues": [
           {
             "type": "string",
-            "description": "The physical material"
+            "description": "The physical material name."
           }
         ]
       },
@@ -30777,7 +30857,7 @@
         "arguments": [
           {
             "name": "contents",
-            "type": "number",
+            "type": "number{CONTENTS}",
             "description": "The <page>Enums/CONTENTS</page>."
           }
         ]
@@ -31038,7 +31118,6 @@
         "name": "AddCleanup",
         "parent": "Player",
         "realms": [
-          "client",
           "server"
         ],
         "description": "<note>This function is only available in Sandbox and its derivatives.</note>Adds an entity to the player's clean up list. This uses <page>cleanup.Add</page> internally.",
@@ -31056,8 +31135,8 @@
         ],
         "source": {
           "file": "gamemodes/sandbox/gamemode/player_extension.lua",
-          "lineStart": 99,
-          "lineEnd": 103
+          "lineStart": 107,
+          "lineEnd": 111
         }
       },
       {
@@ -33636,8 +33715,8 @@
         ],
         "source": {
           "file": "gamemodes/sandbox/gamemode/player_extension.lua",
-          "lineStart": 93,
-          "lineEnd": 97
+          "lineStart": 113,
+          "lineEnd": 117
         }
       },
       {
@@ -33692,11 +33771,11 @@
           "client",
           "server"
         ],
-        "description": "Returns the players name. Identical to <page>Player:Nick</page> and <page>Player:GetName</page>.",
+        "description": "Returns the player's name. Identical to <page>Player:Nick</page> and <page>Player:GetName</page>.",
         "returnValues": [
           {
             "type": "string",
-            "description": "Player's Steam name."
+            "description": "Player's name."
           }
         ],
         "source": {
@@ -33712,11 +33791,11 @@
           "client",
           "server"
         ],
-        "description": "Returns the player's nickname.",
+        "description": "Returns the player's name. Identical to <page>Player:Name</page> and <page>Player:GetName</page>.",
         "returnValues": [
           {
             "type": "string",
-            "description": "Player's Steam name"
+            "description": "Player's name"
           }
         ]
       },

@@ -12337,7 +12337,7 @@
     "realms": [
       "server"
     ],
-    "description": "Enumerations describing certain spawnflags. Everything except for SF_PHYS* and SF_WEAPON* is serverside only.\n\nSpawnflags are set using <page>Entity:SetKeyValue</page> with **\"spawnflags\"** as the key.\n\n* SF_CITIZEN_* spawnflags represent spawnflags only usable on [npc_citizen](https://developer.valvesoftware.com/wiki/Npc_citizen).\n* SF_NPC_* - Usable on all NPCs\n* SF_PHYSBOX_* - Usable on [func_physbox](https://developer.valvesoftware.com/wiki/Func_physbox)\n* SF_PHYSPROP_* - Usable on [prop_physics](https://developer.valvesoftware.com/wiki/Prop_physics) entities\n* SF_WEAPON_* - Usable on <page text=\"Weapons\">Weapon</page>\n\n<note>This is not a full list of available spawnflags, there are `a lot` more, each unique to each entity, you can find out more on the [Valve Developer Community](https://developer.valvesoftware.com/wiki/Main_Page) website for the entities in question.</note>",
+    "description": "Enumerations describing certain spawnflags. Everything except for SF_PHYS* and SF_WEAPON* is serverside only.\n\nSpawnflags are set using <page>Entity:SetKeyValue</page> with **\"spawnflags\"** as the key.\n\n* SF_CITIZEN_* spawnflags represent spawnflags only usable on [npc_citizen](https://developer.valvesoftware.com/wiki/Npc_citizen).\n* SF_NPC_* - Usable on all NPCs\n* SF_PHYSBOX_* - Usable on [func_physbox](https://developer.valvesoftware.com/wiki/Func_physbox)\n* SF_PHYSPROP_* - Usable on [prop_physics](https://developer.valvesoftware.com/wiki/Prop_physics) entities\n* SF_WEAPON_* - Usable on <page text=\"Weapons\">Weapon</page>\n\n<note>This is not a full list of available spawnflags, there are **a lot** more, each unique to each entity, you can find out more on the [Valve Developer Community](https://developer.valvesoftware.com/wiki/Main_Page) website for the entities in question.</note>",
     "name": "SF"
   },
   {
@@ -13442,17 +13442,17 @@
       {
         "name": "TEXTUREFLAGS_STAGING_MEMORY",
         "value": 524288,
-        "description": "<deprecated notag=\"1\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_00080000"
+        "description": "<deprecated notag=\"true\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_00080000"
       },
       {
         "name": "TEXTUREFLAGS_IMMEDIATE_CLEANUP",
         "value": 1048576,
-        "description": "<deprecated notag=\"1\"></deprecated>\nImmediately destroy this texture when its reference count hits zero.\n\nAka TEXTUREFLAGS_UNUSED_00100000"
+        "description": "<deprecated notag=\"true\"></deprecated>\nImmediately destroy this texture when its reference count hits zero.\n\nAka TEXTUREFLAGS_UNUSED_00100000"
       },
       {
         "name": "TEXTUREFLAGS_IGNORE_PICMIP",
         "value": 2097152,
-        "description": "<deprecated notag=\"1\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_00200000"
+        "description": "<deprecated notag=\"true\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_00200000"
       },
       {
         "name": "TEXTUREFLAGS_UNUSED_00400000",
@@ -13494,12 +13494,12 @@
       {
         "name": "TEXTUREFLAGS_STREAMABLE_COARSE",
         "value": 1073741824,
-        "description": "<deprecated notag=\"1\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_40000000"
+        "description": "<deprecated notag=\"true\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_40000000"
       },
       {
         "name": "TEXTUREFLAGS_STREAMABLE_FINE",
         "value": 2147483648,
-        "description": "<deprecated notag=\"1\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_80000000"
+        "description": "<deprecated notag=\"true\"></deprecated>\n\nAka TEXTUREFLAGS_UNUSED_80000000"
       }
     ],
     "realms": [
@@ -13578,7 +13578,7 @@
       {
         "name": "TYPE_INVALID",
         "value": -1,
-        "description": "<deprecated>Use TYPE_NONE</deprecated>"
+        "description": "<deprecated notag=\"true\">Use TYPE_NONE</deprecated>"
       },
       {
         "name": "TYPE_NIL",
@@ -13683,7 +13683,7 @@
       {
         "name": "TYPE_SCRIPTEDVEHICLE",
         "value": 20,
-        "description": "<deprecated>Leftover from GMod 13 Beta</deprecated>"
+        "description": "<deprecated notag=\"true\">Leftover from GMod 13 Beta</deprecated>"
       },
       {
         "name": "TYPE_MATERIAL",

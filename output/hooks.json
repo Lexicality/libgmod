@@ -155,23 +155,23 @@
           {
             "name": "activator",
             "type": "Entity",
-            "description": "The initial cause for the input getting triggered. (EG the player who pushed a button)"
+            "description": "The initial cause for the input getting triggered. (e.g. the player who pushed a button)"
           },
           {
             "name": "caller",
             "type": "Entity",
-            "description": "The entity that directly triggered the input. (EG the button that was pushed)"
+            "description": "The entity that directly triggered the input. (e.g. the button that was pushed)"
           },
           {
-            "name": "data",
+            "name": "param",
             "type": "string",
-            "description": "The data passed."
+            "description": "The input parameter."
           }
         ],
         "returnValues": [
           {
             "type": "boolean",
-            "description": "Should we suppress the default action for this input?"
+            "description": "Should we suppress the default action for this input?\n\nReturning `true` for unknown inputs will also prevent the game complaining about the unknown input in console with `developer 2`."
           }
         ]
       },
@@ -548,7 +548,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{D}",
             "description": "How our scripter NPC \"feels\" towards the entity in question. See <page>Enums/D</page>. Not returning any value will make <page>NPC:Disposition</page> return the default disposition for this SNPC's given `m_iClass` by the engine."
           }
         ],
@@ -1586,7 +1586,7 @@
         "returnValues": [
           {
             "type": "Vector",
-            "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nNot returning anything, or returning a non vector will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_basenpc_schedule.cpp#L4251)."
+            "description": "The actual point that NPC will move to reach its enemy or target. For the path to get updated, the new move path must be away from the current <page>NPC:GetGoalPos</page> by 120 units.\n\n\nNot returning anything, or returning a non vector will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc_schedule.cpp#L4251)."
           }
         ]
       },
@@ -2025,7 +2025,12 @@
             "type": "boolean",
             "description": "Return false to disallow creation of the undo."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/modules/undo.lua",
+          "lineStart": 328,
+          "lineEnd": 328
+        }
       },
       {
         "name": "CanEditVariable",
@@ -2156,7 +2161,12 @@
             "type": "boolean",
             "description": "True if they can suicide."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 554,
+          "lineEnd": 556
+        }
       },
       {
         "name": "CanPlayerUnfreeze",
@@ -2187,7 +2197,12 @@
             "type": "boolean",
             "description": "True if they can unfreeze."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 65,
+          "lineEnd": 69
+        }
       },
       {
         "name": "CanProperty",
@@ -2219,7 +2234,12 @@
             "type": "boolean",
             "description": "Return false to disallow using that property"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 263,
+          "lineEnd": 265
+        }
       },
       {
         "name": "CanUndo",
@@ -2245,7 +2265,12 @@
             "type": "boolean",
             "description": "Return false to disallow the undo."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/modules/undo.lua",
+          "lineStart": 429,
+          "lineEnd": 429
+        }
       },
       {
         "name": "CaptureVideo",
@@ -2294,7 +2319,12 @@
             "type": "boolean",
             "description": "Return true to suppress the chat message."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 250,
+          "lineEnd": 260
+        }
       },
       {
         "name": "ChatTextChanged",
@@ -2309,7 +2339,12 @@
             "type": "string",
             "description": "The new contents of the input box"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 243,
+          "lineEnd": 244
+        }
       },
       {
         "name": "CheckPassword",
@@ -2354,7 +2389,12 @@
             "type": "string",
             "description": "If returning false in the first argument, then this should be the disconnect message. This will default to `#GameUI_ServerRejectBadPassword`, which is `Bad Password.` translated to the client's language."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/init.lua",
+          "lineStart": 124,
+          "lineEnd": 141
+        }
       },
       {
         "name": "ClientSignOnStateChanged",
@@ -2389,7 +2429,12 @@
           "client",
           "menu"
         ],
-        "description": "Called when derma menus are closed with <page>Global.CloseDermaMenus</page>."
+        "description": "Called when derma menus are closed with <page>Global.CloseDermaMenus</page>.",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 729,
+          "lineEnd": 730
+        }
       },
       {
         "name": "CreateClientsideRagdoll",
@@ -2409,7 +2454,12 @@
             "type": "Entity",
             "description": "The ragdoll being created."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 732,
+          "lineEnd": 733
+        }
       },
       {
         "name": "CreateEntityRagdoll",
@@ -2429,7 +2479,12 @@
             "type": "Entity",
             "description": "The ragdoll entity"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/init.lua",
+          "lineStart": 85,
+          "lineEnd": 86
+        }
       },
       {
         "name": "CreateMove",
@@ -2450,7 +2505,12 @@
             "type": "boolean",
             "description": "Return true to:\n* Disable Sandbox C menu \"screen clicking\"\n* Disable Teammate nocollide (verification required)\n* Prevent calling of C_BaseHLPlayer::CreateMove &amp; subsequently C_BasePlayer::CreateMove"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 653,
+          "lineEnd": 659
+        }
       },
       {
         "name": "CreateTeams",
@@ -2459,7 +2519,12 @@
           "client",
           "server"
         ],
-        "description": "Teams are created within this hook using <page>team.SetUp</page>.\n\nThis hook is called before <page>GM:PreGamemodeLoaded</page>."
+        "description": "Teams are created within this hook using <page>team.SetUp</page>.\n\nThis hook is called before <page>GM:PreGamemodeLoaded</page>.",
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 127,
+          "lineEnd": 149
+        }
       },
       {
         "name": "DoAnimationEvent",
@@ -2492,7 +2557,12 @@
             "type": "number",
             "description": "The translated activity to send to the weapon. See <page>Enums/ACT</page>. Return `ACT_INVALID` if you don't want to send an activity."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 352,
+          "lineEnd": 396
+        }
       },
       {
         "name": "DoPlayerDeath",
@@ -2517,7 +2587,12 @@
             "type": "CTakeDamageInfo",
             "description": "Damage info"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/init.lua",
+          "lineStart": 39,
+          "lineEnd": 57
+        }
       },
       {
         "name": "DrawDeathNotice",
@@ -2537,7 +2612,12 @@
             "type": "number",
             "description": "Y position to draw death notices as a ratio"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_deathnotice.lua",
+          "lineStart": 254,
+          "lineEnd": 292
+        }
       },
       {
         "name": "DrawMonitors",
@@ -2545,7 +2625,12 @@
         "realms": [
           "client"
         ],
-        "description": "Called every frame before drawing the in-game monitors ( Breencast, in-game TVs, etc ), but doesn't seem to be doing anything, trying to render 2D or 3D elements fail."
+        "description": "Called every frame before drawing the in-game monitors ( Breencast, in-game TVs, etc ), but doesn't seem to be doing anything, trying to render 2D or 3D elements fail.",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 717,
+          "lineEnd": 718
+        }
       },
       {
         "name": "DrawOverlay",
@@ -2554,7 +2639,12 @@
           "client",
           "menu"
         ],
-        "description": "Called after all other 2D draw hooks are called. Draws over all VGUI Panels and HUDs.\n\nUnlike <page>GM:HUDPaint</page>, this hook is called with the game paused and while the Camera SWEP is equipped.\n\n<note>Only gets called when `r_drawvgui` is enabled.</note>\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>"
+        "description": "Called after all other 2D draw hooks are called. Draws over all VGUI Panels and HUDs.\n\nUnlike <page>GM:HUDPaint</page>, this hook is called with the game paused and while the Camera SWEP is equipped.\n\n<note>Only gets called when `r_drawvgui` is enabled.</note>\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 714,
+          "lineEnd": 715
+        }
       },
       {
         "name": "DrawPhysgunBeam",
@@ -2600,7 +2690,12 @@
             "type": "boolean",
             "description": "Return false to hide default effects"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 634,
+          "lineEnd": 639
+        }
       },
       {
         "name": "EndEntityDriving",
@@ -2621,7 +2716,12 @@
             "type": "Player",
             "description": "The player driving the entity"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 215,
+          "lineEnd": 219
+        }
       },
       {
         "name": "EntityEmitSound",
@@ -2670,7 +2770,12 @@
             "type": "boolean",
             "description": "* Return `true` to apply all changes done to the bullet table.\n* Return `false` to suppress the bullet."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 270,
+          "lineEnd": 272
+        }
       },
       {
         "name": "EntityKeyValue",
@@ -2702,7 +2807,12 @@
             "type": "string",
             "description": "If set, the value of the key-value pair will be overridden by this string."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 120,
+          "lineEnd": 121
+        }
       },
       {
         "name": "EntityNetworkedVarChanged",
@@ -2754,7 +2864,12 @@
             "type": "boolean",
             "description": "Whether the removal is happening due to a full update clientside.\n\nThe entity may or **may not** be recreated immediately after, depending on whether it is in the local player's [PVS](https://developer.valvesoftware.com/wiki/PVS \"PVS - Valve Developer Community\"). (See <page>Entity:IsDormant</page>)"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 98,
+          "lineEnd": 99
+        }
       },
       {
         "name": "EntityTakeDamage",
@@ -2780,7 +2895,12 @@
             "type": "boolean",
             "description": "Return true to completely block the damage event"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/init.lua",
+          "lineStart": 71,
+          "lineEnd": 72
+        }
       },
       {
         "name": "FindUseEntity",
@@ -2807,7 +2927,12 @@
             "type": "Entity",
             "description": "The entity to use instead of default entity"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player_shd.lua",
+          "lineStart": 103,
+          "lineEnd": 120
+        }
       },
       {
         "name": "FinishChat",
@@ -2815,7 +2940,12 @@
         "realms": [
           "client"
         ],
-        "description": "Runs when user cancels/finishes typing."
+        "description": "Runs when user cancels/finishes typing.",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 237,
+          "lineEnd": 238
+        }
       },
       {
         "name": "FinishMove",
@@ -2842,7 +2972,12 @@
             "type": "boolean",
             "description": "Return true to suppress default engine behavior, i.e. declare that you have already moved the player according to the move data in a custom way."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 189,
+          "lineEnd": 194
+        }
       },
       {
         "name": "ForceDermaSkin",
@@ -2856,7 +2991,12 @@
             "type": "string",
             "description": "A **case sensitive** Derma skin name to be used as default, registered previously via <page>derma.DefineSkin</page>.\n\n\nReturning nothing, nil or invalid name will make it fallback to the \"Default\" skin."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 437,
+          "lineEnd": 442
+        }
       },
       {
         "name": "GameContentChanged",
@@ -2877,9 +3017,9 @@
         "description": "An internal function used to get an untranslated string to show in the kill feed as the entity's name. See <page>GM:SendDeathNotice</page>",
         "arguments": [
           {
-            "name": "ent",
-            "type": "Entity",
-            "description": "The entity to get a name of."
+            "name": "name",
+            "type": "String",
+            "description": "The name of the entity."
           }
         ],
         "returnValues": [
@@ -2887,7 +3027,12 @@
             "type": "string",
             "description": "The untranslated name for given NPC. The translation/localization would happen on the client."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/npc.lua",
+          "lineStart": 49,
+          "lineEnd": 79
+        }
       },
       {
         "name": "GetFallDamage",
@@ -2913,7 +3058,12 @@
             "type": "number",
             "description": "New fall damage"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 727,
+          "lineEnd": 735
+        }
       },
       {
         "name": "GetGameDescription",
@@ -2928,7 +3078,12 @@
             "type": "string",
             "description": "The text to be shown in the server browser as the gamemode."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineStart": 76,
+          "lineEnd": 78
+        }
       },
       {
         "name": "GetMotionBlurValues",
@@ -2976,7 +3131,12 @@
             "type": "number",
             "description": "New amount of rotational blur."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 462,
+          "lineEnd": 468
+        }
       },
       {
         "name": "GetPreferredCarryAngles",
@@ -3023,7 +3183,12 @@
             "type": "table",
             "description": "Team <page>Global.Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 124,
+          "lineEnd": 130
+        }
       },
       {
         "name": "GetTeamNumColor",
@@ -3044,7 +3209,12 @@
             "type": "table",
             "description": "Team <page>Global.Color</page>"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 136,
+          "lineEnd": 140
+        }
       },
       {
         "name": "GrabEarAnimation",
@@ -3060,7 +3230,12 @@
             "type": "Player",
             "description": "Player"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 249,
+          "lineEnd": 271
+        }
       },
       {
         "name": "GravGunOnDropped",
@@ -3080,7 +3255,12 @@
             "type": "Entity",
             "description": "The entity that has been dropped"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/gravitygun.lua",
+          "lineStart": 33,
+          "lineEnd": 34
+        }
       },
       {
         "name": "GravGunOnPickedUp",
@@ -3100,7 +3280,12 @@
             "type": "Entity",
             "description": "The entity that has been picked up by the gravity gun"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/gravitygun.lua",
+          "lineStart": 25,
+          "lineEnd": 26
+        }
       },
       {
         "name": "GravGunPickupAllowed",
@@ -3126,7 +3311,12 @@
             "type": "boolean",
             "description": "Return true to allow entity pick up"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/gravitygun.lua",
+          "lineStart": 15,
+          "lineEnd": 17
+        }
       },
       {
         "name": "GravGunPunt",
@@ -3153,7 +3343,12 @@
             "type": "boolean",
             "description": "Return true to allow and false to disallow."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/gravitygun.lua",
+          "lineStart": 7,
+          "lineEnd": 9
+        }
       },
       {
         "name": "GUIMouseDoublePressed",
@@ -3173,7 +3368,12 @@
             "type": "Vector",
             "description": "A normalized vector pointing in the direction the client has clicked"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 99,
+          "lineEnd": 103
+        }
       },
       {
         "name": "GUIMousePressed",
@@ -3193,7 +3393,12 @@
             "type": "Vector",
             "description": "A normalized direction vector local to the camera. Internally, this is  <page>gui.ScreenToVector</page>( <page>gui.MousePos</page>() )."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 681,
+          "lineEnd": 682
+        }
       },
       {
         "name": "GUIMouseReleased",
@@ -3213,7 +3418,12 @@
             "type": "Vector",
             "description": "A normalized direction vector local to the camera. Internally this is  <page>gui.ScreenToVector</page>( <page>gui.MousePos</page>() )."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 688,
+          "lineEnd": 689
+        }
       },
       {
         "name": "HandlePlayerArmorReduction",
@@ -3233,7 +3443,12 @@
             "type": "CTakeDamageInfo",
             "description": "The taken damage."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 829,
+          "lineEnd": 861
+        }
       },
       {
         "name": "HandlePlayerDriving",
@@ -3255,7 +3470,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 139,
+          "lineEnd": 192
+        }
       },
       {
         "name": "HandlePlayerDucking",
@@ -3282,7 +3502,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 55,
+          "lineEnd": 69
+        }
       },
       {
         "name": "HandlePlayerJumping",
@@ -3309,7 +3534,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 2,
+          "lineEnd": 53
+        }
       },
       {
         "name": "HandlePlayerLanding",
@@ -3341,7 +3571,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 129,
+          "lineEnd": 137
+        }
       },
       {
         "name": "HandlePlayerNoClipping",
@@ -3368,7 +3603,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 71,
+          "lineEnd": 98
+        }
       },
       {
         "name": "HandlePlayerSwimming",
@@ -3395,7 +3635,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 113,
+          "lineEnd": 127
+        }
       },
       {
         "name": "HandlePlayerVaulting",
@@ -3422,7 +3667,12 @@
             "type": "boolean",
             "description": "Return true if we've changed/set the animation, false otherwise"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 100,
+          "lineEnd": 111
+        }
       },
       {
         "name": "HideTeam",
@@ -3430,7 +3680,12 @@
         "realms": [
           "client"
         ],
-        "description": "Hides the team selection panel."
+        "description": "Hides the team selection panel.",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_pickteam.lua",
+          "lineStart": 58,
+          "lineEnd": 65
+        }
       },
       {
         "name": "HUDAmmoPickedUp",
@@ -3450,7 +3705,12 @@
             "type": "number",
             "description": "Amount of the item (ammo) picked up"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_hudpickup.lua",
+          "lineStart": 64,
+          "lineEnd": 92
+        }
       },
       {
         "name": "HUDDrawPickupHistory",
@@ -3458,7 +3718,12 @@
         "realms": [
           "client"
         ],
-        "description": "Renders the HUD pick-up history. Override to hide default or draw your own HUD."
+        "description": "Renders the HUD pick-up history. Override to hide default or draw your own HUD.",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_hudpickup.lua",
+          "lineStart": 94,
+          "lineEnd": 173
+        }
       },
       {
         "name": "HUDDrawScoreBoard",
@@ -3466,7 +3731,12 @@
         "realms": [
           "client"
         ],
-        "description": "Called every frame to render the scoreboard.\n\n\nIt is recommended to use Derma and VGUI for this job instead of this hook. Called right after <page>GM:HUDPaint</page>.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>"
+        "description": "Called every frame to render the scoreboard.\n\n\nIt is recommended to use Derma and VGUI for this job instead of this hook. Called right after <page>GM:HUDPaint</page>.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_scoreboard.lua",
+          "lineStart": 294,
+          "lineEnd": 295
+        }
       },
       {
         "name": "HUDDrawTargetID",
@@ -3480,7 +3750,12 @@
             "type": "boolean",
             "description": "Should the player info be drawn."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_targetid.lua",
+          "lineStart": 6,
+          "lineEnd": 60
+        }
       },
       {
         "name": "HUDItemPickedUp",
@@ -3495,7 +3770,12 @@
             "type": "string",
             "description": "Name of the picked up item"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_hudpickup.lua",
+          "lineStart": 36,
+          "lineEnd": 45
+        }
       },
       {
         "name": "HUDPaint",
@@ -3503,7 +3783,12 @@
         "realms": [
           "client"
         ],
-        "description": "Called whenever the HUD should be drawn.\n\nThis is the ideal place to draw custom HUD elements.\n\nTo prevent the default game HUD from drawing, use <page>GM:HUDShouldDraw</page>.\n\nThis hook does **not** get called when the Camera SWEP is held, or when the <key>esc</key> menu is open.\nIf you need to draw in those situations, use <page>GM:DrawOverlay</page> instead.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>"
+        "description": "Called whenever the HUD should be drawn.\n\nThis is the ideal place to draw custom HUD elements.\n\nTo prevent the default game HUD from drawing, use <page>GM:HUDShouldDraw</page>.\n\nThis hook does **not** get called when the Camera SWEP is held, or when the <key>esc</key> menu is open.\nIf you need to draw in those situations, use <page>GM:DrawOverlay</page> instead.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 80,
+          "lineEnd": 86
+        }
       },
       {
         "name": "HUDPaintBackground",
@@ -3511,7 +3796,12 @@
         "realms": [
           "client"
         ],
-        "description": "Called before <page>GM:HUDPaint</page> when the HUD background is being drawn.\n\nJust like <page>GM:HUDPaint</page>, this hook will not be called when the main menu is visible. <page>GM:PostDrawHUD</page> does not have this behavior.\n\nThings rendered in this hook will **always** appear behind things rendered in <page>GM:HUDPaint</page>.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>"
+        "description": "Called before <page>GM:HUDPaint</page> when the HUD background is being drawn.\n\nJust like <page>GM:HUDPaint</page>, this hook will not be called when the main menu is visible. <page>GM:PostDrawHUD</page> does not have this behavior.\n\nThings rendered in this hook will **always** appear behind things rendered in <page>GM:HUDPaint</page>.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>",
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 92,
+          "lineEnd": 93
+        }
       },
       {
         "name": "HUDShouldDraw",
@@ -3532,7 +3822,12 @@
             "type": "boolean",
             "description": "Return false to prevent the given element from being drawn on the client's screen."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 49,
+          "lineEnd": 74
+        }
       },
       {
         "name": "HUDWeaponPickedUp",
@@ -3547,7 +3842,12 @@
             "type": "Weapon",
             "description": "The picked up weapon"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_hudpickup.lua",
+          "lineStart": 36,
+          "lineEnd": 45
+        }
       },
       {
         "name": "Initialize",
@@ -3741,14 +4041,19 @@
           "client",
           "server"
         ],
-        "description": "Override this gamemode function to disable mouth movement when talking on voice chat.",
+        "description": "Override this gamemode function to disable mouth movement when talking on voice chat. By default, it is not called anywhere on the server.",
         "arguments": [
           {
             "name": "ply",
             "type": "Player",
             "description": "Player in question"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/animations.lua",
+          "lineStart": 276,
+          "lineEnd": 294
+        }
       },
       {
         "name": "Move",
@@ -3924,7 +4229,7 @@
         "realms": [
           "client"
         ],
-        "description": "Called when a caption has been emitted to the closed caption box.",
+        "description": "Called when a caption/subtitle has been emitted to the closed caption box.",
         "arguments": [
           {
             "name": "soundScript",
@@ -4009,7 +4314,12 @@
             "type": "CTakeDamageInfo",
             "description": "Damage info from explosion"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineStart": 554,
+          "lineEnd": 574
+        }
       },
       {
         "name": "OnEntityCreated",
@@ -4741,7 +5051,7 @@
           },
           {
             "name": "button",
-            "type": "number",
+            "type": "number{BUTTON_CODE}",
             "description": "The button, see <page>Enums/BUTTON_CODE</page>"
           }
         ]
@@ -4762,7 +5072,7 @@
           },
           {
             "name": "button",
-            "type": "number",
+            "type": "number{BUTTON_CODE}",
             "description": "The button, see <page>Enums/BUTTON_CODE</page>"
           }
         ]
@@ -4808,7 +5118,7 @@
         "realms": [
           "server"
         ],
-        "description": "Returns whether or not a player is allowed to join a team",
+        "description": "Returns whether or not a player is allowed to join a team\n<warning>This hook will not work with <page>hook.Add</page> and it is only called manually from <page>GM:PlayerJoinTeam</page> by the base gamemode</warning>",
         "arguments": [
           {
             "name": "ply",
@@ -6937,7 +7247,7 @@
           "client",
           "server"
         ],
-        "description": "Called to decide whether a pair of entities should collide with each other. This is only called if <page>Entity:SetCustomCollisionCheck</page> was used on one or both entities.\n\nWhere applicable, consider using <page>constraint.NoCollide</page> or a [logic_collision_pair](https://developer.valvesoftware.com/wiki/Logic_collision_pair) entity instead - they are considerably easier to use and may be more appropriate in some situations.\n\n<warning>This hook **must** return the same value consistently for the same pair of entities. If an entity changed in such a way that its collision rules change, you **must** call <page>Entity:CollisionRulesChanged</page> on that entity immediately - **not in this hook and not in physics callbacks.**</warning>\n\n<warning>The default <page>Entity:CollisionRulesChanged</page> has been found to be ineffective in preventing issues in this hook, a more reliable alternative can be found in the examples below. As long as you religiously follow the rules set by the examples this hook will work reliably without breaking, even a small mistake will break physics.</warning>\n\n<bug issue=\"642\">This hook can cause all physics to break under certain conditions.</bug>",
+        "description": "Called to decide whether a pair of entities should collide with each other. This is only called if <page>Entity:SetCustomCollisionCheck</page> was used on one or both entities.\n\nWhere applicable, consider using <page>constraint.NoCollide</page> or a [logic_collision_pair](https://developer.valvesoftware.com/wiki/Logic_collision_pair) entity instead - they are considerably easier to use and may be more appropriate in some situations.\n\n<warning>\nThis hook **must** return the same value consistently for the same pair of entities.\nIf an entity changed in such a way that its collision rules change, you **must** call <page>Entity:CollisionRulesChanged</page> on that entity immediately - **not in this hook and not in physics callbacks.**\nAs long as you religiously follow the rules set by the examples this hook will work reliably without breaking, even a small mistake might break physics.\n</warning>\n\n<bug issue=\"642\">This hook can cause all physics to break under certain conditions.</bug>",
         "arguments": [
           {
             "name": "ent1",
@@ -6976,7 +7286,12 @@
             "type": "boolean",
             "description": "`true` to draw the player, `false` to hide."
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineStart": 406,
+          "lineEnd": 410
+        }
       },
       {
         "name": "ShowHelp",
@@ -7090,7 +7405,7 @@
         "realms": [
           "client"
         ],
-        "description": "Runs when the user tries to open the chat box.\n\n<bug issue=\"855\">Returning true won't stop the chatbox from taking VGUI focus.</bug>",
+        "description": "Runs when the user tries to open the chat box.\n\n<warning>Returning `true` won't stop the chatbox from taking VGUI focus. <page>chat.Close</page> may be of use to mitigate that, or usage of <page>GM:PlayerBindPress</page>.</warning>",
         "arguments": [
           {
             "name": "isTeamChat",
@@ -7237,7 +7552,7 @@
         "realms": [
           "server"
         ],
-        "description": "Called when a variable is edited on an Entity (called by Edit Properties... menu). See <page>Editable Entities</page> for more information.",
+        "description": "Called when a variable is edited on an Entity (called by Edit Properties... menu). See <page>Editable Entities</page> for more information.\n\n<warning>This hook is called to change a variable and not after a variable was changed</warning>",
         "arguments": [
           {
             "name": "ent",
@@ -9713,6 +10028,31 @@
         ]
       },
       {
+        "name": "SpawnmenuIconMenuOpen",
+        "parent": "SANDBOX",
+        "realms": [
+          "client"
+        ],
+        "description": "Called when the player opens a context menu by right clicking one of the spawnmenu icons. Either <page>ContentIcon</page> or <page>SpawnIcon</page>.\n\nThis hook can be used to add new custom menu options to the context menu.",
+        "arguments": [
+          {
+            "name": "menu",
+            "type": "Panel",
+            "description": "The <page>DMenu</page> to add options to."
+          },
+          {
+            "name": "icon",
+            "type": "Panel",
+            "description": "The <page>ContentIcon</page> or <page>SpawnIcon</page> that was right clicked. It will be a `SpawnIcon` for `model` content type, and a `ContentIcon` for all others."
+          },
+          {
+            "name": "contentType",
+            "type": "string",
+            "description": "The content type, such as:\n* `weapon`\n* `entity`\n* `vehicle`\n* `npc`\n* `model`\n* `tool`\n* `postprocess`\n\nAddon related icons may have different types."
+          }
+        ]
+      },
+      {
         "name": "SpawnMenuOpen",
         "parent": "SANDBOX",
         "realms": [
@@ -10376,7 +10716,7 @@
         "description": "This hook is for NPCs, you return what they should try to do with it.\n<warning>Calling <page>NPC:CapabilitiesGet</page> in this hook on the same entity can cause infinite loops since that function adds the result of <page>WEAPON:GetCapabilities</page> on top of the return value. </warning>",
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{CAP}",
             "description": "A number defining what NPC should do with the weapon. Use the <page>Enums/CAP</page>."
           }
         ]
@@ -10897,13 +11237,14 @@
         "arguments": [
           {
             "name": "act",
-            "type": "number",
+            "type": "number{ACT}",
             "description": "The activity to translate"
           }
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number{ACT}",
+            "name": "act",
             "description": "The translated activity"
           }
         ]

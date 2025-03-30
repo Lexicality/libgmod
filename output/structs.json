@@ -2616,13 +2616,13 @@
         "name": "pitchstart",
         "type": "number",
         "default": "100",
-        "description": "The initial pitch.\n<warning>Deprecated: Use pitch instead.</warning>"
+        "description": "The initial pitch.\n<deprecated notag=\"true\">Use pitch instead.</deprecated>"
       },
       {
         "name": "pitchend",
         "type": "number",
         "default": "100",
-        "description": "The pitch end.\n<warning>Deprecated: Use pitch instead.</warning>"
+        "description": "The pitch end.\n<deprecated notag=\"true\">Use pitch instead.</deprecated>"
       }
     ],
     "realms": [
@@ -4336,7 +4336,7 @@
       {
         "name": "viewid",
         "type": "number",
-        "description": "The view's id"
+        "description": "The current view id. See <page>Enums/VIEW</page>."
       },
       {
         "name": "origin",

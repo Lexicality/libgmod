@@ -26,7 +26,7 @@
       },
       {
         "name": "force",
-        "type": "number",
+        "type": "number{FORCE}",
         "default": "nil",
         "description": "The type the setter should force to (uses <page>Enums/FORCE</page>)."
       }
@@ -100,7 +100,7 @@
       },
       {
         "name": "flags",
-        "type": "number",
+        "type": "number{FCVAR}",
         "description": "Concommand flags using <page>Enums/FCVAR</page>"
       }
     ]
@@ -1011,7 +1011,7 @@
       },
       {
         "name": "flags",
-        "type": "number",
+        "type": "number{FCVAR}|table<number>",
         "default": "FCVAR_NONE",
         "description": "Flags of the convar, see <page>Enums/FCVAR</page>, either as bitflag or as table."
       },
@@ -1765,7 +1765,7 @@
     "realms": [
       "client"
     ],
-    "description": "A hacky method used to fix some bugs regarding DoF. What this basically does it force all `C_BaseAnimating` entities to have the translucent <page text=\"rendergroup\">Enums/RENDERGROUP</page>, even if they use opaque or two-pass models.\n\n<internal></internal>",
+    "description": "A hacky method used to fix some bugs regarding DoF. What this basically does it force all `C_BaseAnimating` entities to have the translucent <page text=\"rendergroup\">Enums/RENDERGROUP</page>, even if they use opaque or two-pass models.\n\nThis is specifically to do with <page>GM:NeedsDepthPass</page>\n\n<internal></internal>",
     "arguments": [
       {
         "name": "enable",
@@ -2343,7 +2343,7 @@
       },
       {
         "name": "channel",
-        "type": "number",
+        "type": "number{CHAN}",
         "default": "CHAN_AUTO",
         "description": "The sound channel, see <page>Enums/CHAN</page>."
       },
@@ -2355,13 +2355,13 @@
       },
       {
         "name": "soundLevel",
-        "type": "number",
+        "type": "number{SNDLVL}",
         "default": "75",
         "description": "The sound level of the sound, see <page>Enums/SNDLVL</page>"
       },
       {
         "name": "soundFlags",
-        "type": "number",
+        "type": "number{SND}",
         "default": "0",
         "description": "The flags of the sound, see <page>Enums/SND</page>"
       },
@@ -3691,23 +3691,23 @@
       },
       {
         "name": "sizeMode",
-        "type": "number",
+        "type": "number{RT_SIZE}",
         "description": "Bitflag that influences the sizing of the render target, see <page>Enums/RT_SIZE</page>."
       },
       {
         "name": "depthMode",
-        "type": "number",
+        "type": "number{MATERIAL_RT_DEPTH}",
         "description": "Bitflag that determines the depth buffer usage of the render target <page>Enums/MATERIAL_RT_DEPTH</page>.\n\n<warning>PNG's may not render to non MATERIAL_RT_DEPTH_NONE RenderTargets</warning>"
       },
       {
         "name": "textureFlags",
-        "type": "number",
-        "description": "Bitflag that configurates the texture, see <page>Enums/TEXTUREFLAGS</page>.\n\nList of flags can also be found on the Valve's Developer Wiki:\nhttps://developer.valvesoftware.com/wiki/Valve_Texture_Format"
+        "type": "number{TEXTUREFLAGS}",
+        "description": "Bitflag that configures the texture, see <page>Enums/TEXTUREFLAGS</page>.\n\nList of flags can also be found on the Valve's Developer Wiki:\nhttps://developer.valvesoftware.com/wiki/Valve_Texture_Format"
       },
       {
         "name": "rtFlags",
-        "type": "number",
-        "description": "Flags that controll the HDR behaviour of the render target, see <page>Enums/CREATERENDERTARGETFLAGS</page>."
+        "type": "number{CREATERENDERTARGETFLAGS}",
+        "description": "Flags that control the HDR behaviour of the render target, see <page>Enums/CREATERENDERTARGETFLAGS</page>."
       },
       {
         "name": "imageFormat",
@@ -3828,7 +3828,7 @@
       "client",
       "server"
     ],
-    "description": "Converts a color from [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a <page>Color</page>.\n\n<bug issue=\"2407\">The returned color will not have the color metatable.</bug>",
+    "description": "Converts a color from [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a <page>Color</page>.",
     "arguments": [
       {
         "name": "hue",
@@ -3866,7 +3866,7 @@
       "client",
       "server"
     ],
-    "description": "Converts a color from [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a <page>Color</page>.\n\n<bug issue=\"2407\">The returned color will not have the color metatable.</bug>",
+    "description": "Converts a color from [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a <page>Color</page>.",
     "arguments": [
       {
         "name": "hue",
@@ -3915,7 +3915,7 @@
     "returnValues": [
       {
         "type": "boolean",
-        "description": "`true` if we made a request, `nil` if we failed."
+        "description": "`true` if a request is queued, `false` if a request could not be queued. (i.e. When not giving a `table` or the game is ran with `-disablehttp`)"
       }
     ]
   },
@@ -4016,7 +4016,7 @@
       "client",
       "server"
     ],
-    "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for a [Generic For Loops](https://www.lua.org/pil/4.3.5.html), to return ordered key-value pairs from a table.\n\nThis will only iterate though **numerical** keys, and these must also be **sequential**; starting at 1 with no gaps.\n\nFor unordered pairs, see <page>Global.pairs</page>.\n\nFor pairs sorted by key in alphabetical order, see <page>Global.SortedPairs</page>.",
+    "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for a [Generic For Loops](https://www.lua.org/pil/4.3.5.html), to return ordered key-value pairs from a table.\n\nThis will only iterate through **numerical** keys, and these must also be **sequential**; starting at 1 with no gaps.\n\nFor unordered pairs, see <page>Global.pairs</page>.\n\nFor pairs sorted by key in alphabetical order, see <page>Global.SortedPairs</page>.",
     "arguments": [
       {
         "name": "tab",
@@ -4556,8 +4556,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineStart": 225,
-      "lineEnd": 234
+      "lineStart": 244,
+      "lineEnd": 253
     }
   },
   {
@@ -7694,7 +7694,7 @@
       "client",
       "server"
     ],
-    "description": "Gets the associated type ID of the variable. Unlike <page>Global.type</page>, this does not work with <page>no value</page> - an argument must be provided.\n\n<warning>This will return `TYPE_TABLE` for <page>Color</page> objects.</warning>\n<warning>All subclasses of <page>Entity</page> will return `TYPE_ENTITY`.</warning>\n<bug request=\"1120\">This returns garbage for _LOADLIB objects.</bug>\n<bug request=\"1459\">This returns `TYPE_NIL` for <page>proto</page>s.</bug>",
+    "description": "Gets the associated type ID of the variable. Unlike <page>Global.type</page>, this does not work with <page>no value</page> - an argument must be provided.\n\n<warning>This will return `TYPE_TABLE` for <page>Color</page> objects.\n\nAll subclasses of <page>Entity</page> will return `TYPE_ENTITY`.</warning>\n\n<bug request=\"1120\">This returns garbage for _LOADLIB objects.</bug>\n<bug request=\"1459\">This returns `TYPE_NIL` for <page>proto</page>s.</bug>",
     "arguments": [
       {
         "name": "variable",
