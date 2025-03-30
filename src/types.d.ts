@@ -64,4 +64,5 @@ interface Enum {
     description?: string;
     realms: Realm[];
     fields: EnumValue[];
+    extraFields?: EnumValue[];
 }

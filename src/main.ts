@@ -4,7 +4,7 @@ import path from "node:path";
 import _ from "lodash";
 
 import { handleClass, preProcessClasses } from "./classes";
-import { handleEnum } from "./enums";
+import { handleEnum, preProcessEnums } from "./enums";
 import { handleFunc } from "./functions";
 import { handleLib } from "./libraries";
 import { handlePanel, preProcessPanels } from "./panels";
@@ -172,11 +172,11 @@ async function doPanels(data: Panel[]): Promise<void> {
     }
 }
 
-async function doEnums(): Promise<void> {
-    let data: Enum[] = JSON.parse(
-        await fs.readFile("output/enums.json", "utf-8"),
-    );
-    data = _.sortBy(data, "name");
+async function getEnums(): Promise<Enum[]> {
+    return JSON.parse(await fs.readFile("output/enums.json", "utf-8"));
+}
+
+async function doEnums(data: Enum[]): Promise<void> {
     await fs.mkdir("enums", { recursive: true });
     for (let enumData of data) {
         let libdata: string;
@@ -205,6 +205,7 @@ async function main() {
         classes = preProcessClasses(classes);
         let panels = await getPanels();
         panels = preProcessPanels(panels);
+        let enums = preProcessEnums(await getEnums());
 
         await Promise.all([
             doGlobals(),
@@ -212,7 +213,7 @@ async function main() {
             doClasses(classes),
             doStructs(),
             doPanels(panels),
-            doEnums(),
+            doEnums(enums),
         ]);
         console.log("woop");
     } catch (e) {
