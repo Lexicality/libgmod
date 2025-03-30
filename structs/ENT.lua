@@ -34,9 +34,9 @@ _G.ENT = {}
 --- @param inputName string @The name of the input that was triggered.
 --- @param activator GEntity @The initial cause for the input getting triggered
 --- @param caller GEntity @The entity that directly triggered the input
---- @param data string @The data passed.
+--- @param param string @The input parameter.
 --- @return boolean @Should we suppress the default action for this input?
-function ENT:AcceptInput(inputName, activator, caller, data)
+function ENT:AcceptInput(inputName, activator, caller, param)
 end
 
 --- A helper function for creating Scripted Entities.  
@@ -158,7 +158,7 @@ end
 
 --- Called when scripted NPC needs to check how he "feels" against another entity, such as when NPC:Disposition is called.  
 --- @param ent GEntity @The entity in question
---- @return number @How our scripter NPC "feels" towards the entity in question
+--- @return ED @How our scripter NPC "feels" towards the entity in question
 function ENT:GetRelationship(ent)
 end
 

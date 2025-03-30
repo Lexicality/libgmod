@@ -5,7 +5,7 @@
 --- @param tab table @The table to add the accessor functions to.
 --- @param key any @The key of the table to be get/set.
 --- @param name string @The name of the functions (will be prefixed with Get and Set).
---- @param force? number @The type the setter should force to (uses Enums/FORCE).
+--- @param force? EFORCE @The type the setter should force to (uses Enums/FORCE).
 function _G.AccessorFunc(tab, key, name, force)
 end
 
@@ -234,7 +234,7 @@ end
 --- ⚠ **WARNING**: Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.  
 --- @param name string @Name of the ConVar
 --- @param value string @Default value of the convar
---- @param flags? number @Flags of the convar, see Enums/FCVAR, either as bitflag or as table.
+--- @param flags? EFCVAR|number[] @Flags of the convar, see Enums/FCVAR, either as bitflag or as table.
 --- @param helptext? string @The help text to show in the console.
 --- @param min? number @If set, the ConVar cannot be changed to a number lower than this value.
 --- @param max? number @If set, the ConVar cannot be changed to a number higher than this value.
@@ -589,10 +589,10 @@ end
 --- @param soundName string @The sound to play
 --- @param position GVector @The position where the sound is meant to play, which is also used for a network filter (`CPASAttenuationFilter`) to decide which players wil
 --- @param entity? number @The entity to emit the sound from
---- @param channel? number @The sound channel, see Enums/CHAN.
+--- @param channel? ECHAN @The sound channel, see Enums/CHAN.
 --- @param volume? number @The volume of the sound, from 0 to 1
---- @param soundLevel? number @The sound level of the sound, see Enums/SNDLVL
---- @param soundFlags? number @The flags of the sound, see Enums/SND
+--- @param soundLevel? ESNDLVL @The sound level of the sound, see Enums/SNDLVL
+--- @param soundFlags? ESND @The flags of the sound, see Enums/SND
 --- @param pitch? number @The pitch of the sound, 0-255
 --- @param dsp? number @The DSP preset for this sound
 --- @param filter? GCRecipientFilter @If set serverside, the sound will only be networked to the clients in the filter.
@@ -875,10 +875,10 @@ end
 --- @param name string @The internal name of the render target
 --- @param width number @The width of the render target, must be power of 2.
 --- @param height number @The height of the render target, must be power of 2.
---- @param sizeMode number @Bitflag that influences the sizing of the render target, see Enums/RT_SIZE.
---- @param depthMode number @Bitflag that determines the depth buffer usage of the render target Enums/MATERIAL_RT_DEPTH
---- @param textureFlags number @Bitflag that configurates the texture, see Enums/TEXTUREFLAGS
---- @param rtFlags number @Flags that controll the HDR behaviour of the render target, see Enums/CREATERENDERTARGETFLAGS.
+--- @param sizeMode ERT_SIZE @Bitflag that influences the sizing of the render target, see Enums/RT_SIZE.
+--- @param depthMode EMATERIAL_RT_DEPTH @Bitflag that determines the depth buffer usage of the render target Enums/MATERIAL_RT_DEPTH
+--- @param textureFlags ETEXTUREFLAGS @Bitflag that configures the texture, see Enums/TEXTUREFLAGS
+--- @param rtFlags ECREATERENDERTARGETFLAGS @Flags that control the HDR behaviour of the render target, see Enums/CREATERENDERTARGETFLAGS.
 --- @param imageFormat number @Image format, see Enums/IMAGE_FORMAT
 --- @return GITexture @The new render target.
 function _G.GetRenderTargetEx(name, width, height, sizeMode, depthMode, textureFlags, rtFlags, imageFormat)
@@ -896,7 +896,6 @@ function _G.GetViewEntity()
 end
 
 --- Converts a color from [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
---- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param hue number @The hue in degrees from 0-360.
 --- @param saturation number @The saturation from 0-1.
 --- @param value number @The lightness from 0-1.
@@ -905,7 +904,6 @@ function _G.HSLToColor(hue, saturation, value)
 end
 
 --- Converts a color from [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
---- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param hue number @The hue in degrees from 0-360.
 --- @param saturation number @The saturation from 0-1.
 --- @param value number @The value from 0-1.
@@ -919,7 +917,7 @@ end
 --- ℹ **NOTE**: HTTP-requests to destinations on private networks (such as `192.168.0.1`, or `127.0.0.1`) won't work.  
 --- To enable HTTP-requests to destinations on private networks use Command Line Parameters `-allowlocalhttp`. (Dedicated servers only)  
 --- @param parameters SHTTPRequest @The request parameters
---- @return boolean @`true` if we made a request, `nil` if we failed.
+--- @return boolean @`true` if a request is queued, `false` if a request could not be queued
 function _G.HTTP(parameters)
 end
 
@@ -1767,7 +1765,7 @@ end
 
 --- Gets the associated type ID of the variable. Unlike Global.type, this does not work with no value - an argument must be provided.  
 --- ⚠ **WARNING**: This will return `TYPE_TABLE` for Color objects.  
---- ⚠ **WARNING**: All subclasses of Entity will return `TYPE_ENTITY`.  
+--- All subclasses of Entity will return `TYPE_ENTITY`.  
 --- 🦟 **BUG**: [This returns garbage for _LOADLIB objects.](https://github.com/Facepunch/garrysmod-requests/issues/1120)  
 --- 🦟 **BUG**: [This returns `TYPE_NIL` for protos.](https://github.com/Facepunch/garrysmod-requests/issues/1459)  
 --- @param variable any @The variable to get the type ID of.
@@ -1917,7 +1915,7 @@ function _G.include(fileName)
 end
 
 --- Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for a [Generic For Loops](https://www.lua.org/pil/4.3.5.html), to return ordered key-value pairs from a table.  
---- This will only iterate though **numerical** keys, and these must also be **sequential**; starting at 1 with no gaps.  
+--- This will only iterate through **numerical** keys, and these must also be **sequential**; starting at 1 with no gaps.  
 --- For unordered pairs, see Global.pairs.  
 --- For pairs sorted by key in alphabetical order, see Global.SortedPairs.  
 --- @param tab table @The table to iterate over.

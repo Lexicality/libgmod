@@ -260,16 +260,12 @@ end
 function surface.SetMaterial(material)
 end
 
---- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by a Color.  
+--- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers.  
 --- @param r number @The red value of color.
 --- @param g number @The green value of color
 --- @param b number @The blue value of color
 --- @param a? number @The alpha value of color
 function surface.SetTextColor(r, g, b, a)
-end
---- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by a Color.  
---- @param color table @A Color object/table to read the color from
-function surface.SetTextColor(color)
 end
 
 --- Set the top-left position to draw any future text at.  

@@ -202,7 +202,7 @@ end
 
 --- This hook is for NPCs, you return what they should try to do with it.  
 --- ⚠ **WARNING**: Calling NPC:CapabilitiesGet in this hook on the same entity can cause infinite loops since that function adds the result of WEAPON:GetCapabilities on top of the return value.  
---- @return number @A number defining what NPC should do with the weapon
+--- @return ECAP @A number defining what NPC should do with the weapon
 function SWEP:GetCapabilities()
 end
 
@@ -403,8 +403,8 @@ end
 
 --- Translate a player's Activity into a weapon's activity, depending on how you want the player to be holding the weapon.  
 --- For example, ACT_MP_RUN becomes ACT_HL2MP_RUN_PISTOL.  
---- @param act number @The activity to translate
---- @return number @The translated activity
+--- @param act EACT @The activity to translate
+--- @return EACT @The translated activity
 function SWEP:TranslateActivity(act)
 end
 

@@ -940,13 +940,13 @@ end
 function GPlayer:MotionSensorPos(bone)
 end
 
---- Returns the players name. Identical to Player:Nick and Player:GetName.  
---- @return string @Player's Steam name.
+--- Returns the player's name. Identical to Player:Nick and Player:GetName.  
+--- @return string @Player's name.
 function GPlayer:Name()
 end
 
---- Returns the player's nickname.  
---- @return string @Player's Steam name
+--- Returns the player's name. Identical to Player:Name and Player:GetName.  
+--- @return string @Player's name
 function GPlayer:Nick()
 end
 

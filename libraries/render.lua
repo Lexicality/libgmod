@@ -479,9 +479,9 @@ end
 --- This function allows you to control the way that those two colors (The Source and Destination) are combined to produce the final pixel color.  
 --- It's important to know that while Colors use values in the range `(0-255)`, the color and alpha values used here are normalized to the range `(0-1)` so that they can be multiplied together to produce a value that is still in the range `(0-1)`.  
 --- @param enabled boolean @Set to `true` to enable Blend Overrides.
---- @param sourceMultiplier number @This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Func
---- @param destinationMultiplier number @This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending
---- @param blendingFunction number @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
+--- @param sourceMultiplier EBLEND @This determines which value each affected pixel's **Source color and alpha** will be multiplied by before they are sent to the Blending Func
+--- @param destinationMultiplier EBLEND @This determines which value each affected pixel's **Destination color and alpha** will be multiplied by before they are sent to the Blending
+--- @param blendingFunction EBLENDFUNC @After the Source and Destination color and alpha have been multiplied against their corresponding multipliers, they are passed to the Blendi
 function render.OverrideBlend(enabled, sourceMultiplier, destinationMultiplier, blendingFunction)
 end
 --- Overrides the way that the final color and alpha is calculated for each pixel affected by upcoming draw operations.  
@@ -489,12 +489,12 @@ end
 --- This function allows you to control the way that those two colors (The Source and Destination) are combined to produce the final pixel color.  
 --- It's important to know that while Colors use values in the range `(0-255)`, the color and alpha values used here are normalized to the range `(0-1)` so that they can be multiplied together to produce a value that is still in the range `(0-1)`.  
 --- @param enabled boolean @Set to `true` to enable Blend Overrides.
---- @param sourceColorMultiplier number @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
---- @param destinationColorMultiplier number @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
---- @param colorBlendingFunction number @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
---- @param sourceAlphaMultiplier? number @This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function
---- @param destinationAlphaMultiplier? number @This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Fun
---- @param alphaBlendingFunction? number @After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending 
+--- @param sourceColorMultiplier EBLEND @This determines which value each affected pixel's **Source color** will be multiplied by before they are sent to the Color Blending Function
+--- @param destinationColorMultiplier EBLEND @This determines which value each affected pixel's **Destination color** will be multiplied by before they are sent to the Color Blending Fun
+--- @param colorBlendingFunction EBLENDFUNC @After the Source and Destination colors have been multiplied against their corresponding multipliers, they are passed to the Color Blending 
+--- @param sourceAlphaMultiplier? EBLEND @This determines which value each affected pixel's **Source alpha** will be multiplied by before they are sent to the Alpha Blending Function
+--- @param destinationAlphaMultiplier? EBLEND @This determines which value each affected pixel's **Destination alpha** will be multiplied by before they are sent to the Alpha Blending Fun
+--- @param alphaBlendingFunction? EBLENDFUNC @After the Source and Destination alphas have been multiplied against their corresponding multipliers, they are passed to the Alpha Blending 
 function render.OverrideBlend(enabled, sourceColorMultiplier, destinationColorMultiplier, colorBlendingFunction, sourceAlphaMultiplier, destinationAlphaMultiplier, alphaBlendingFunction)
 end
 --- Overrides the way that the final color and alpha is calculated for each pixel affected by upcoming draw operations.  
@@ -753,7 +753,7 @@ end
 
 --- Sets up the ambient lighting for any upcoming render operation. Ambient lighting can be seen as a cube enclosing the object to be drawn, each of its faces representing a directional light source that shines towards the object. Thus, there is a total of six different light sources that can be configured separately.  
 --- Light color components are not restricted to a specific range (i.e. 0-255), instead, higher values will result in a brighter light.  
---- @param lightDirection number @The light source to edit, see Enums/BOX.
+--- @param lightDirection EBOX @The light source to edit, see Enums/BOX.
 --- @param red number @The red component of the light color.
 --- @param green number @The green component of the light color.
 --- @param blue number @The blue component of the light color.

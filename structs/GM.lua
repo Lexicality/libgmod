@@ -381,9 +381,9 @@ function GM:GameContentChanged()
 end
 
 --- An internal function used to get an untranslated string to show in the kill feed as the entity's name. See GM:SendDeathNotice  
---- @param ent GEntity @The entity to get a name of.
+--- @param name string @The name of the entity.
 --- @return string @The untranslated name for given NPC
-function GM:GetDeathNoticeEntityName(ent)
+function GM:GetDeathNoticeEntityName(name)
 end
 
 --- Called when a player takes damage from falling, allows to override the damage.  
@@ -629,7 +629,7 @@ end
 function GM:KeyRelease(ply, key)
 end
 
---- Override this gamemode function to disable mouth movement when talking on voice chat.  
+--- Override this gamemode function to disable mouth movement when talking on voice chat. By default, it is not called anywhere on the server.  
 --- @param ply GPlayer @Player in question
 function GM:MouthMoveAnimation(ply)
 end
@@ -690,7 +690,7 @@ end
 function GM:OnCleanup(name)
 end
 
---- Called when a caption has been emitted to the closed caption box.  
+--- Called when a caption/subtitle has been emitted to the closed caption box.  
 --- @param soundScript string @The name of the soundscript, or `customLuaToken` if it's from gui.AddCaption
 --- @param duration number @How long the caption should stay for
 --- @param fromPlayer boolean @Is this caption coming from the player?
@@ -941,14 +941,14 @@ end
 --- Called when a player presses a button.  
 --- This will not be called if player has a panel opened with keyboard input enabled, use PANEL:OnKeyCodePressed instead.  
 --- @param ply GPlayer @Player who pressed the button
---- @param button number @The button, see Enums/BUTTON_CODE
+--- @param button EBUTTON_CODE @The button, see Enums/BUTTON_CODE
 function GM:PlayerButtonDown(ply, button)
 end
 
 --- Called when a player releases a button.  
 --- This will not be called if player has a panel opened with keyboard input enabled, use PANEL:OnKeyCodeReleased instead.  
 --- @param ply GPlayer @Player who released the button
---- @param button number @The button, see Enums/BUTTON_CODE
+--- @param button EBUTTON_CODE @The button, see Enums/BUTTON_CODE
 function GM:PlayerButtonUp(ply, button)
 end
 
@@ -962,6 +962,7 @@ function GM:PlayerCanHearPlayersVoice(listener, talker)
 end
 
 --- Returns whether or not a player is allowed to join a team  
+--- ⚠ **WARNING**: This hook will not work with hook.Add and it is only called manually from GM:PlayerJoinTeam by the base gamemode  
 --- @param ply GPlayer @Player attempting to switch teams
 --- @param team number @Index of the team
 --- @return boolean @Allowed to switch
@@ -1701,8 +1702,9 @@ end
 
 --- Called to decide whether a pair of entities should collide with each other. This is only called if Entity:SetCustomCollisionCheck was used on one or both entities.  
 --- Where applicable, consider using constraint.NoCollide or a [logic_collision_pair](https://developer.valvesoftware.com/wiki/Logic_collision_pair) entity instead - they are considerably easier to use and may be more appropriate in some situations.  
---- ⚠ **WARNING**: This hook **must** return the same value consistently for the same pair of entities. If an entity changed in such a way that its collision rules change, you **must** call Entity:CollisionRulesChanged on that entity immediately - **not in this hook and not in physics callbacks.**  
---- ⚠ **WARNING**: The default Entity:CollisionRulesChanged has been found to be ineffective in preventing issues in this hook, a more reliable alternative can be found in the examples below. As long as you religiously follow the rules set by the examples this hook will work reliably without breaking, even a small mistake will break physics.  
+--- ⚠ **WARNING**: This hook **must** return the same value consistently for the same pair of entities.  
+--- If an entity changed in such a way that its collision rules change, you **must** call Entity:CollisionRulesChanged on that entity immediately - **not in this hook and not in physics callbacks.**  
+--- As long as you religiously follow the rules set by the examples this hook will work reliably without breaking, even a small mistake might break physics.  
 --- 🦟 **BUG**: [This hook can cause all physics to break under certain conditions.](https://github.com/Facepunch/garrysmod-issues/issues/642)  
 --- @param ent1 GEntity @The first entity in the collision poll.
 --- @param ent2 GEntity @The second entity in the collision poll.
@@ -1754,7 +1756,7 @@ function GM:SpawniconGenerated(lastmodel, imagename, modelsleft)
 end
 
 --- Runs when the user tries to open the chat box.  
---- 🦟 **BUG**: [Returning true won't stop the chatbox from taking VGUI focus.](https://github.com/Facepunch/garrysmod-issues/issues/855)  
+--- ⚠ **WARNING**: Returning `true` won't stop the chatbox from taking VGUI focus. chat.Close may be of use to mitigate that, or usage of GM:PlayerBindPress.  
 --- @param isTeamChat boolean @Whether the message was sent through team chat.
 --- @return boolean @Return true to hide the default chat box.
 function GM:StartChat(isTeamChat)
@@ -1813,6 +1815,7 @@ function GM:VGUIMousePressed(pnl, mouseCode)
 end
 
 --- Called when a variable is edited on an Entity (called by Edit Properties... menu). See Editable Entities for more information.  
+--- ⚠ **WARNING**: This hook is called to change a variable and not after a variable was changed  
 --- @param ent GEntity @The entity being edited
 --- @param ply GPlayer @The player doing the editing
 --- @param key string @The name of the variable

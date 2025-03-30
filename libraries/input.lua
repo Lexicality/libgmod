@@ -8,7 +8,7 @@ function input.CheckKeyTrapping()
 end
 
 --- Returns the digital value of an analog stick on the current (set up via convars) controller.  
---- @param axis number @The analog axis to poll
+--- @param axis EANALOG @The analog axis to poll
 --- @return number @The digital value
 function input.GetAnalogValue(axis)
 end
@@ -22,20 +22,20 @@ end
 
 --- Gets the button code from a button name. This is opposite of input.GetKeyName.  
 --- @param button string @The internal button name, such as <key>E</key> or <key>SHIFT</key>.
---- @return number @The button code, see Enums/BUTTON_CODE.
+--- @return EBUTTON_CODE @The button code, see Enums/BUTTON_CODE.
 function input.GetKeyCode(button)
 end
 
 --- Gets the button name from a numeric button code. The name needs to be translated with language.GetPhrase before being displayed.  
 --- ℹ **NOTE**: Despite the name of the function, this also works for the full range of keys in Enums/BUTTON_CODE.  
---- @param button number @The button, see Enums/BUTTON_CODE.
+--- @param button EBUTTON_CODE @The button, see Enums/BUTTON_CODE.
 --- @return string @Button name.
 function input.GetKeyName(button)
 end
 
 --- Gets whether the specified button code is down.  
 --- Unlike input.IsKeyDown this can also detect joystick presses from Enums/JOYSTICK  
---- @param button number @The button, valid values are in the range of Enums/BUTTON_CODE.
+--- @param button EBUTTON_CODE @The button, valid values are in the range of Enums/BUTTON_CODE.
 --- @return boolean @Is the button down
 function input.IsButtonDown(button)
 end
@@ -75,7 +75,7 @@ function input.LookupBinding(binding, exact)
 end
 
 --- Returns the bind string that the given key is bound to.  
---- @param key number @Key from Enums/BUTTON_CODE
+--- @param key EBUTTON_CODE @Key from Enums/BUTTON_CODE
 --- @return string @The bind string of the given key.
 function input.LookupKeyBinding(key)
 end

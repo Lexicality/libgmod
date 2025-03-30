@@ -2,7 +2,7 @@
 
 --- Table structure used for render.GetViewSetup.  
 --- @class SViewSetup
---- @field viewid number @The view's id
+--- @field viewid number @The current view id
 --- @field origin GVector @The view's origin/position
 --- @field angles GAngle @The view's angles
 --- @field aspect number @Width divided by height

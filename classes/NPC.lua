@@ -33,7 +33,7 @@ function GNPC:AutoMovement(interval, target)
 end
 
 --- Adds a capability to the NPC.  
---- @param capabilities number @Capabilities to add, see Enums/CAP.
+--- @param capabilities ECAP @Capabilities to add, see Enums/CAP.
 function GNPC:CapabilitiesAdd(capabilities)
 end
 
@@ -42,7 +42,7 @@ function GNPC:CapabilitiesClear()
 end
 
 --- Returns the NPC's capabilities along the ones defined on its weapon.  
---- @return number @The capabilities as a bitflag
+--- @return ECAP @The capabilities as a bitflag
 function GNPC:CapabilitiesGet()
 end
 
@@ -52,7 +52,7 @@ function GNPC:CapabilitiesRemove(capabilities)
 end
 
 --- Returns the NPC class. Do not confuse with Entity:GetClass!  
---- @return number @See Enums/CLASS
+--- @return ECLASS @See Enums/CLASS
 function GNPC:Classify()
 end
 
@@ -91,7 +91,7 @@ end
 --- Returns the way the NPC "feels" about a given entity. See NPC:AddEntityRelationship.  
 --- ℹ **NOTE**: For `ai` type entities, this will return ENTITY:GetRelationship. If it returns `nil` or for engine NPCs, this will return whatever was last set by NPC:AddEntityRelationship. As a last resort, engine will decide on the disposition based on this NPC's NPC:Classify.  
 --- @param ent GEntity @The entity to test our disposition towards.
---- @return number @The NPCs disposition, see Enums/D.
+--- @return ED @The NPCs disposition, see Enums/D.
 --- @return number @The NPCs disposition priority.
 function GNPC:Disposition(ent)
 end
@@ -223,6 +223,11 @@ end
 function GNPC:GetExpression()
 end
 
+--- Returns the eye direction of the NPC.  
+--- @return GVector @The eye direction.
+function GNPC:GetEyeDirection()
+end
+
 --- Returns the Field Of View of the NPC. See NPC:SetFOV.  
 --- @return number @The FOV for the NPC in degrees.
 function GNPC:GetFOV()
@@ -236,6 +241,11 @@ end
 --- Returns the entity we are trying to reach, if any.  
 --- @return GEntity @The entity we are trying to reach, or `NULL`.
 function GNPC:GetGoalTarget()
+end
+
+--- Returns the 2D head direction of the NPC.  
+--- @return GVector @The head direction.
+function GNPC:GetHeadDirection()
 end
 
 --- Returns NPCs hull type set by NPC:SetHullType.  
@@ -541,7 +551,7 @@ end
 --- @param distance number @The distance.
 --- @param yaw number @The yaw angle.
 --- @param left number @Amount of climb nodes left?
---- @return number @The result
+--- @return EAIMR @The result
 function GNPC:MoveClimbExec(destination, dir, distance, yaw, left)
 end
 
@@ -561,7 +571,7 @@ end
 
 --- Executes a jump move.  
 --- Related functions are NPC:MoveJumpStart and NPC:MoveJumpStop.  
---- @return number @The result
+--- @return EAIMR @The result
 function GNPC:MoveJumpExec()
 end
 
@@ -573,7 +583,7 @@ end
 
 --- Stops a jump move.  
 --- Related functions are NPC:MoveJumpExec and NPC:MoveJumpStart.  
---- @return number @The result
+--- @return EAIMR @The result
 function GNPC:MoveJumpStop()
 end
 
@@ -719,7 +729,7 @@ function GNPC:SetArrivalSpeed(speed)
 end
 
 --- Sets an NPC condition.  
---- @param condition number @The condition index, see Enums/COND.
+--- @param condition ECOND @The condition index, see Enums/COND.
 function GNPC:SetCondition(condition)
 end
 

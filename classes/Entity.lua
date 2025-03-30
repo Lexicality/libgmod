@@ -20,18 +20,18 @@ function GEntity:AddCallback(hook, func)
 end
 
 --- Adds engine flags.  
---- @param flag number @Engine flag to add, see Enums/EFL
+--- @param flag EEFL @Engine flag to add, see Enums/EFL
 function GEntity:AddEFlags(flag)
 end
 
 --- Applies an engine effect to an entity.  
 --- See also Entity:IsEffectActive and  Entity:RemoveEffects.  
---- @param effect number @The effect to apply, see Enums/EF.
+--- @param effect EEF @The effect to apply, see Enums/EF.
 function GEntity:AddEffects(effect)
 end
 
 --- Adds flags to the entity.  
---- @param flag number @Flag to add, see Enums/FL
+--- @param flag EFL @Flag to add, see Enums/FL
 function GEntity:AddFlags(flag)
 end
 
@@ -123,7 +123,7 @@ end
 
 --- Returns whether the entity's bone has the flag or not.  
 --- @param boneID number @Bone ID to test flag of.
---- @param flag number @The flag to test, see Enums/BONE
+--- @param flag EBONE @The flag to test, see Enums/BONE
 --- @return boolean @Whether the bone has that flag or not
 function GEntity:BoneHasFlag(boneID, flag)
 end
@@ -437,7 +437,7 @@ function GEntity:GetBaseVelocity()
 end
 
 --- Returns the blood color of this entity. This can be set with Entity:SetBloodColor.  
---- @return number @Color from Enums/BLOOD_COLOR
+--- @return EBLOOD_COLOR @Color from Enums/BLOOD_COLOR
 function GEntity:GetBloodColor()
 end
 
@@ -594,7 +594,7 @@ function GEntity:GetCollisionBounds()
 end
 
 --- Returns the entity's collision group  
---- @return number @The collision group
+--- @return ECOLLISION_GROUP @The collision group
 function GEntity:GetCollisionGroup()
 end
 
@@ -896,8 +896,10 @@ end
 function GEntity:GetMaterial()
 end
 
---- Returns the surface material of this entity.  
---- @return number @Surface material
+--- Returns the [surface material type](https://developer.valvesoftware.com/wiki/Material_Types) of this entity.  
+--- This can be approximated clientside via util.GetModelInfo.  
+--- Internally, all this does is return `gamematerial` of the surface property on the first physics object of the entity. You can do this yourself using PhysObj:GetMaterial and util.GetSurfaceData.  
+--- @return EMAT @Surface material type.
 function GEntity:GetMaterialType()
 end
 
@@ -1620,7 +1622,7 @@ function GEntity:GetSolid()
 end
 
 --- Returns solid flag(s) of an entity.  
---- @return number @The flag(s) of the entity, see Enums/FSOLID.
+--- @return EFSOLID @The flag(s) of the entity, see Enums/FSOLID.
 function GEntity:GetSolidFlags()
 end
 
@@ -1724,7 +1726,7 @@ end
 --- You must call Entity:PrecacheGibs on the entity before using this function, or it will not create any gibs.  
 --- The gibs will be spawned on the server and be synchronized with all clients.  
 --- Note, that this function will not remove or hide the entity it is called on.  
---- This function is affected by `props_break_max_pieces_perframe` and `props_break_max_pieces` console variables.  
+--- This function is affected by `props_break_max_pieces_perframe`, `props_break_max_pieces`, `prop_active_gib_limit` and `prop_active_gib_max_fade_time` console variables.  
 --- ⚠ **WARNING**: Large numbers of serverside gibs will cause lag.  
 --- You can avoid this cost by spawning the gibs on the client using Entity:GibBreakClient  
 --- ℹ **NOTE**: Despite existing on client, it doesn't actually do anything on client.  
@@ -1816,19 +1818,19 @@ function GEntity:IsDormant()
 end
 
 --- Checks if given flag is set or not.  
---- @param flag number @The engine flag to test, see Enums/EFL
+--- @param flag EEFL @The engine flag to test, see Enums/EFL
 --- @return boolean @Is set or not
 function GEntity:IsEFlagSet(flag)
 end
 
 --- Returns whether an entity has engine effect applied or not.  
---- @param effect number @The effect to check for, see Enums/EF.
+--- @param effect EEF @The effect to check for, see Enums/EF.
 --- @return boolean @Whether the entity has the engine effect applied or not.
 function GEntity:IsEffectActive(effect)
 end
 
 --- Checks if given flag(s) is set or not.  
---- @param flag number @The engine flag(s) to test, see Enums/FL
+--- @param flag EFL @The engine flag(s) to test, see Enums/FL
 --- @return boolean @Is set or not
 function GEntity:IsFlagSet(flag)
 end
@@ -2346,17 +2348,17 @@ function GEntity:RemoveCallback(hook, callbackid)
 end
 
 --- Removes specified engine flag  
---- @param flag number @The flag to remove, see Enums/EFL
+--- @param flag EEFL @The flag to remove, see Enums/EFL
 function GEntity:RemoveEFlags(flag)
 end
 
 --- Removes an engine effect applied to an entity.  
---- @param effect number @The effect to remove, see Enums/EF.
+--- @param effect EEF @The effect to remove, see Enums/EF.
 function GEntity:RemoveEffects(effect)
 end
 
 --- Removes specified flag(s) from the entity  
---- @param flag number @The flag(s) to remove, see Enums/FL
+--- @param flag EFL @The flag(s) to remove, see Enums/FL
 function GEntity:RemoveFlags(flag)
 end
 
@@ -2482,7 +2484,7 @@ function GEntity:SetAttachment(ent, attachment)
 end
 
 --- Sets the blood color this entity uses.  
---- @param bloodColor number @An integer corresponding to Enums/BLOOD_COLOR.
+--- @param bloodColor EBLOOD_COLOR @An integer corresponding to Enums/BLOOD_COLOR.
 function GEntity:SetBloodColor(bloodColor)
 end
 
@@ -2538,7 +2540,7 @@ function GEntity:SetCollisionBoundsWS(vec1, vec2)
 end
 
 --- Sets the entity's collision group.  
---- @param group number @Collision group of the entity, see Enums/COLLISION_GROUP
+--- @param group ECOLLISION_GROUP @Collision group of the entity, see Enums/COLLISION_GROUP
 function GEntity:SetCollisionGroup(group)
 end
 
@@ -3023,10 +3025,30 @@ end
 function GEntity:SetNetworkAngles(angle)
 end
 
+--- A helper function to allow setting Network Variables via Entity:SetKeyValue, primarily to allow mappers to set them from Hammer.  
+--- Meant to be called from ENTITY:KeyValue, see example.  
+--- See also Entity:SetNetworkVarsFromMapInput for a function that does similar thing for map inputs instead.  
+--- ℹ **NOTE**: This function will only work on entities which had Entity:InstallDataTable called on them, which is done automatically for players and all Scripted Entities.  
+--- @param key string @The key-value name, or simply the "key".
+--- @param value string @The key-value value.
+--- @return boolean @Whether a network variable was set successfully
+function GEntity:SetNetworkKeyValue(key, value)
+end
+
 --- Virtually changes entity position for clients. Does almost the same thing as Entity:SetPos when used serverside.  
 --- ℹ **NOTE**: Unlike Entity:SetPos it directly changes the position without checking for any unreasonable position.  
 --- @param origin GVector @The position to make clients think this entity is at.
 function GEntity:SetNetworkOrigin(origin)
+end
+
+--- A helper function to allow setting Network Variables via Entity:Fire, primarily to allow mappers to set them from Hammer via Map I/O logic.  
+--- Meant to be called from ENTITY:AcceptInput, see example.  
+--- See also Entity:SetNetworkKeyValue for a function that does similar thing, but for entity key-values in Hammer instead.  
+--- ℹ **NOTE**: This function will only work on entities which had Entity:InstallDataTable called on them, which is done automatically for players and all Scripted Entities.  
+--- @param name string @The name of the Map I/O input, including the `Set` prefix.
+--- @param param string @The input parameter.
+--- @return boolean @Whether a network variable was set successfully
+function GEntity:SetNetworkVarsFromMapInput(name, param)
 end
 
 --- Sets a networked angle value on the entity.  
@@ -3466,7 +3488,7 @@ end
 
 --- Sets solid flag(s) for the entity.  
 --- This overrides any other flags the entity might have had. See Entity:AddSolidFlags for adding flags.  
---- @param flags number @The flag(s) to set, see Enums/FSOLID.
+--- @param flags EFSOLID @The flag(s) to set, see Enums/FSOLID.
 function GEntity:SetSolidFlags(flags)
 end
 
@@ -3502,7 +3524,7 @@ end
 
 --- Automatically sets the axis-aligned bounding box (AABB) for an entity's hitbox detection.  
 --- See also Entity:SetSurroundingBounds (mutually exclusive).  
---- @param bounds number @Bounds type of the entity, see Enums/BOUNDS
+--- @param bounds EBOUNDS @Bounds type of the entity, see Enums/BOUNDS
 function GEntity:SetSurroundingBoundsType(bounds)
 end
 

@@ -237,7 +237,7 @@ end
 --- You can set the inner spacing of a panel's docking using Panel:DockPadding, which will affect docked child panels, and you can set the outer spacing of a panel's docking using Panel:DockMargin, which affects how docked siblings are positioned/sized.  
 --- You may need to use Panel:SetZPos to ensure child panels (DTextEntry) stay in a specific order.  
 --- ℹ **NOTE**: After using this function, if you want to get the correct panel's bounds (position, size), use Panel:InvalidateParent (use `true` as argument if you need to update immediately)  
---- @param dockType number @Dock type using Enums/DOCK.
+--- @param dockType EDOCK @Dock type using Enums/DOCK.
 function GPanel:Dock(dockType)
 end
 

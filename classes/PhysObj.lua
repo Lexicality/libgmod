@@ -168,8 +168,9 @@ end
 function GPhysObj:GetMassCenter()
 end
 
---- Returns the physical material of the physics object.  
---- @return string @The physical material
+--- Returns the [physical material](https://developer.valvesoftware.com/wiki/Material_surface_properties) of the physics object.  
+--- See util.GetSurfaceData for a function that adds these types as well as further explanation of what they are.  
+--- @return string @The physical material name.
 function GPhysObj:GetMaterial()
 end
 
@@ -348,7 +349,7 @@ function GPhysObj:SetBuoyancyRatio(buoyancy)
 end
 
 --- Sets the contents flag of the PhysObj.  
---- @param contents number @The Enums/CONTENTS.
+--- @param contents ECONTENTS @The Enums/CONTENTS.
 function GPhysObj:SetContents(contents)
 end
 

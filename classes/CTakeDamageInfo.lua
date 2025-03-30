@@ -69,7 +69,7 @@ end
 
 --- Returns a bitflag which indicates the damage type(s) of the damage.  
 --- Consider using CTakeDamageInfo:IsDamageType instead. Value returned by this function can contain multiple damage types.  
---- @return number @Damage type(s), a combination of Enums/DMG
+--- @return EDMG @Damage type(s), a combination of Enums/DMG
 function GCTakeDamageInfo:GetDamageType()
 end
 
@@ -104,7 +104,7 @@ function GCTakeDamageInfo:IsBulletDamage()
 end
 
 --- Returns whenever the damageinfo contains the damage type specified.  
---- @param dmgType number @Damage type to test
+--- @param dmgType EDMG @Damage type to test
 --- @return boolean @Whether this damage contains specified damage type or not
 function GCTakeDamageInfo:IsDamageType(dmgType)
 end
@@ -166,7 +166,7 @@ function GCTakeDamageInfo:SetDamagePosition(pos)
 end
 
 --- Sets the damage type.  
---- @param type number @The damage type, see Enums/DMG.
+--- @param type EDMG @The damage type, see Enums/DMG.
 function GCTakeDamageInfo:SetDamageType(type)
 end
 

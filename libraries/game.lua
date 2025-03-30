@@ -130,7 +130,7 @@ function game.GetMap()
 end
 
 --- Returns the next map that would be loaded according to the file that is set by the mapcyclefile convar.  
---- @return string @nextMap
+--- @return string @nextMap or nil if called too early
 function game.GetMapNext()
 end
 
@@ -196,7 +196,7 @@ end
 function game.MountGMA(path)
 end
 
---- Removes all the clientside ragdolls.  
+--- Removes all the clientside ragdolls. On server, it will remove all `prop_ragdolls` that have the `SF_RAGDOLLPROP_USE_LRU_RETIREMENT` (4096) spawnflag.  
 function game.RemoveRagdolls()
 end
 
@@ -224,7 +224,7 @@ end
 --- This function is supposed to remove the need of using the host_timescale convar, which is cheat protected.  
 --- To slow down or speed up the movement of a specific player, use Player:SetLaggedMovementValue instead.  
 --- ℹ **NOTE**: Like host_timescale, this method does not affect sounds, if you wish to change that, look into GM:EntityEmitSound.  
---- The true timescale will be `host_timescale` multiplied by game.GetTimeScale  
+--- ℹ **NOTE**: The true timescale will be `host_timescale` multiplied by game.GetTimeScale  
 --- @param timeScale number @The new timescale, minimum value is 0.001 and maximum is 5.
 function game.SetTimeScale(timeScale)
 end
@@ -234,7 +234,8 @@ end
 function game.SinglePlayer()
 end
 
---- Returns position the player should start from, this is not the same thing as spawn points, it is used to properly transit the player between maps.  
---- @return GVector @startSpot
+--- Returns the name of the entity that should be used as player start position.  
+--- This is not the same thing as spawn points (See GM:PlayerSelectSpawn for that), this is used to properly transit the player between maps, and therefore will only be set after a level change via `trigger_changelevel` entity in singleplayer.  
+--- @return string @The name of the entity that should be used as start position.
 function game.StartSpot()
 end

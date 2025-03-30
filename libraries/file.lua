@@ -22,7 +22,7 @@ end
 --- @param gamePath string @The path to look for the files and directories in
 --- @param callback function @A callback function that will be called when the file read operation finishes
 --- @param sync? boolean @If `true` the file will be read synchronously.
---- @return number @FSASYNC_OK on success, FSASYNC_ERR_ on failure.
+--- @return EFSASYNC @FSASYNC_OK on success, FSASYNC_ERR_ on failure.
 function file.AsyncRead(fileName, gamePath, callback, sync)
 end
 

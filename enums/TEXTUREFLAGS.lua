@@ -36,14 +36,17 @@ _G.TEXTUREFLAGS_RENDERTARGET = 32768
 _G.TEXTUREFLAGS_DEPTHRENDERTARGET = 65536
 _G.TEXTUREFLAGS_NODEBUGOVERRIDE = 131072
 _G.TEXTUREFLAGS_SINGLECOPY = 262144
---- <deprecated notag="1"></deprecated>  
+--- @deprecated  
+--- 🛑 **DEPRECATED**:   
 --- Aka TEXTUREFLAGS_UNUSED_00080000  
 _G.TEXTUREFLAGS_STAGING_MEMORY = 524288
---- <deprecated notag="1"></deprecated>  
+--- @deprecated  
+--- 🛑 **DEPRECATED**:   
 --- Immediately destroy this texture when its reference count hits zero.  
 --- Aka TEXTUREFLAGS_UNUSED_00100000  
 _G.TEXTUREFLAGS_IMMEDIATE_CLEANUP = 1048576
---- <deprecated notag="1"></deprecated>  
+--- @deprecated  
+--- 🛑 **DEPRECATED**:   
 --- Aka TEXTUREFLAGS_UNUSED_00200000  
 _G.TEXTUREFLAGS_IGNORE_PICMIP = 2097152
 _G.TEXTUREFLAGS_UNUSED_00400000 = 4194304
@@ -59,10 +62,12 @@ _G.TEXTUREFLAGS_SSBUMP = 134217728
 _G.TEXTUREFLAGS_UNUSED_10000000 = 268435456
 --- Clamp to border colour on all texture coordinates  
 _G.TEXTUREFLAGS_BORDER = 536870912
---- <deprecated notag="1"></deprecated>  
+--- @deprecated  
+--- 🛑 **DEPRECATED**:   
 --- Aka TEXTUREFLAGS_UNUSED_40000000  
 _G.TEXTUREFLAGS_STREAMABLE_COARSE = 1073741824
---- <deprecated notag="1"></deprecated>  
+--- @deprecated  
+--- 🛑 **DEPRECATED**:   
 --- Aka TEXTUREFLAGS_UNUSED_80000000  
 _G.TEXTUREFLAGS_STREAMABLE_FINE = 2147483648
 

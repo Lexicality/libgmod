@@ -235,9 +235,9 @@ end
 function util.GetSunInfo()
 end
 
---- Returns data of a surface property at given ID.  
+--- Returns data of a [surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) at given ID. New surface properties can be added via physenv.AddSurfaceData.  
 --- @param id number @Surface property ID
---- @return table @The data or no value if there is no valid surface property at given index
+--- @return SSurfacePropertyData @The data or no value if there is no valid surface property at given index.
 function util.GetSurfaceData(id)
 end
 
@@ -517,7 +517,7 @@ end
 --- Returns the contents of the position specified.  
 --- ℹ **NOTE**: This function will sample only the world environments. It can be used to check if Entity:GetPos is underwater for example unlike Entity:WaterLevel which works for players only.  
 --- @param position GVector @Position to get the contents sample from.
---- @return number @Contents bitflag, see Enums/CONTENTS
+--- @return ECONTENTS @Contents bitflag, see Enums/CONTENTS
 function util.PointContents(position)
 end
 
@@ -542,6 +542,15 @@ end
 --- @param filter? GEntity|GEntity[]|string[]|function @Entity which should be ignored by the trace
 --- @return STraceResult @Trace result
 function util.QuickTrace(origin, dir, filter)
+end
+
+--- Removes world decals at given position, in given radius. Does not remove decals on models!  
+--- @param pos GVector @The position at which to remove decals.
+--- @param distance number @Radius of the sphere to remove decals in.
+--- @param limit? number @If set to above 0, only remove this many decals.
+--- @param permanent? boolean @Whether to remove map-spawned decals (`true`), or only gameplay-spawned decals
+--- @return number @How many decals were removed.
+function util.RemoveDecalsAt(pos, distance, limit, permanent)
 end
 
 --- Removes persistent data of an offline player using their SteamID.  

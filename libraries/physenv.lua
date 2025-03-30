@@ -2,7 +2,8 @@
 
 --- The physenv library allows you to control the physics environment created by the engine, and lets you modify constants such as gravity and maximum velocity.  
 _G.physenv = {}
---- Adds surface properties to the game's physics environment.  
+--- Adds a [material surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) type to the game's physics environment.  
+--- See util.GetSurfaceData for the opposite function.  
 --- 🦟 **BUG**: [The game has a limit of 128 surface properties - this includes properties loaded automatically from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt). Due to this, there's only a small amount of open slots that can be registered with GMod's provided surfaceproperties.txt.](https://github.com/Facepunch/garrysmod-issues/issues/2604)  
 --- @param properties string @The properties to add
 function physenv.AddSurfaceData(properties)

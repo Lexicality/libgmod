@@ -23,7 +23,7 @@ function GCRecipientFilter:AddPlayer(Player)
 end
 
 --- Adds players to the recipient filter from a given table or another recipient filter.  
---- @param input GCRecipientFilter @The filter to add players from
+--- @param input GCRecipientFilter|GPlayer[] @The filter to add players from
 function GCRecipientFilter:AddPlayers(input)
 end
 
