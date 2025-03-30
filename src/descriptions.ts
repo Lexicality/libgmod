@@ -4,7 +4,7 @@ import { unpaginate } from "./utils";
 
 // Time to parse XML with regular expressions
 const WARNINGS_REGEX =
-    /<(note|warning|deprecated|bug|validate|internal)>((?:.|\n)*?)<\/\1>/g;
+    /<(note|warning|deprecated|bug|validate|internal)(?: notag="true")?>((?:.|\n)*?)<\/\1>/g;
 const USELESS_REGEX = /<br>|<pagelist.+?\/pagelist>|<img.+?>/g;
 const RENDER_REGEX =
     /<rendercontext hook="(true|false)" type="(\dD)"><\/rendercontext>/;
