@@ -234,7 +234,7 @@ end
 --- ⚠ **WARNING**: Do not use the FCVAR_NEVER_AS_STRING and FCVAR_REPLICATED flags together, as this can cause the console variable to have strange values on the client.  
 --- @param name string @Name of the ConVar
 --- @param value string @Default value of the convar
---- @param flags? EFCVAR|number[] @Flags of the convar, see Enums/FCVAR, either as bitflag or as table.
+--- @param flags? EFCVAR @Flags of the convar, see Enums/FCVAR, either as bitflag or as table.
 --- @param helptext? string @The help text to show in the console.
 --- @param min? number @If set, the ConVar cannot be changed to a number lower than this value.
 --- @param max? number @If set, the ConVar cannot be changed to a number higher than this value.

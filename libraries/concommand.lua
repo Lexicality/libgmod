@@ -8,7 +8,7 @@ _G.concommand = {}
 --- @param callback function @The function to run when the concommand is executed
 --- @param autoComplete? function @The function to call which should return a table of options for autocompletion
 --- @param helpText? string @The text to display should a user run 'help cmdName'.
---- @param flags? EFCVAR|number[] @Console command modifier flags
+--- @param flags? EFCVAR @Console command modifier flags
 function concommand.Add(name, callback, autoComplete, helpText, flags)
 end
 
