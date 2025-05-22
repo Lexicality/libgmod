@@ -790,7 +790,7 @@ end
 function GPlayer:IsListenServerHost()
 end
 
---- Returns whether or not the player is muted locally.  
+--- Returns whether or not the player is voice muted locally.  
 --- @return boolean @whether or not the player is muted locally.
 function GPlayer:IsMuted()
 end
@@ -967,9 +967,9 @@ end
 function GPlayer:PhysgunUnfreeze()
 end
 
---- This makes the player hold ( same as pressing `E` on a small prop ) the provided entity.  
---- ℹ **NOTE**: Don't get this confused with picking up items like ammo or health kits  
---- ℹ **NOTE**: This picks up the passed entity regardless of its mass or distance from the player  
+--- This makes the player hold (same as pressing `E` on a small prop) given entity.  
+--- Not to be confused with picking up items like ammo or health kits.  
+--- This picks up the passed entity regardless of its mass or distance from the player.  
 --- @param entity GEntity @Entity to pick up.
 function GPlayer:PickupObject(entity)
 end
@@ -1231,7 +1231,7 @@ end
 function GPlayer:SetMaxSpeed(walkSpeed)
 end
 
---- Sets if the player should be muted locally.  
+--- Sets if the player should be voicechat muted locally.  
 --- @param mute boolean @Mute or unmute.
 function GPlayer:SetMuted(mute)
 end
@@ -1582,7 +1582,7 @@ end
 function GPlayer:ViewPunchReset(tolerance)
 end
 
---- Returns the players voice volume, how loud the player's voice communication currently is, as a normal number.  
+--- Returns the players voice volume, how loud the player's voice communication currently is, as a number in range of [0,1].  
 --- Doesn't work on local player unless the `voice_loopback` convar is set to `1`.  
 --- @return number @The voice volume.
 function GPlayer:VoiceVolume()

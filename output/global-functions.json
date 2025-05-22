@@ -387,7 +387,7 @@
       "client",
       "server"
     ],
-    "description": "A variable containing a string indicating which (Beta) Branch of the game you are using.\n\nWhile this variable is always available in the <page text=\"Client\">States#client</page> &amp; <page text=\"Menu\">States#menu</page>\nrealms, it is only defined in the <page text=\"Server\">States#server</page>  realm on local servers.\n\nFor more information on beta branches, see <page text=\"this page\">Dev_Branch</page>",
+    "description": "A variable containing a string indicating which (Beta) Branch of the game you are using.\n\nWhile this variable is always available in the <page text=\"Client\">States#client</page> &amp; <page text=\"Menu\">States#menu</page>\nrealms, it is only defined in the <page text=\"Server\">States#server</page>  realm on local servers.\n\nFor more information on beta branches, see <page text=\"this page\">Dev_Branch</page>\n<bug issue=\"6085\">Will return `prerelease` instead of `unknown` on dedicated servers.</bug>",
     "returnValues": [
       {
         "type": "string",
@@ -860,7 +860,6 @@
     "name": "CompileString",
     "parent": "Global",
     "realms": [
-      "menu",
       "client",
       "server"
     ],
@@ -2441,7 +2440,7 @@
       {
         "name": "message",
         "type": "string",
-        "description": "The error message to throw"
+        "description": "The error message to throw."
       },
       {
         "name": "errorLevel",
@@ -3841,7 +3840,7 @@
         "description": "The saturation from 0-1."
       },
       {
-        "name": "value",
+        "name": "lightness",
         "type": "number",
         "description": "The lightness from 0-1."
       }
@@ -4892,7 +4891,7 @@
       "client",
       "menu"
     ],
-    "description": "Returns a localisation for the given token, if none is found it will return the default (second) parameter.",
+    "description": "Returns a localisation for the given token, if none is found it will return the default (second) parameter.\n\n<deprecated>Use <page>language.GetPhrase</page> instead.</deprecated>",
     "arguments": [
       {
         "name": "localisationToken",
@@ -4903,6 +4902,12 @@
         "name": "default",
         "type": "string",
         "description": "The default value to be returned if no translation was found."
+      }
+    ],
+    "returnValues": [
+      {
+        "type": "string",
+        "description": "The localized string, 128 char limit."
       }
     ]
   },
@@ -6434,8 +6439,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineStart": 239,
-      "lineEnd": 245
+      "lineStart": 258,
+      "lineEnd": 264
     }
   },
   {
@@ -8031,7 +8036,7 @@
       "client",
       "server"
     ],
-    "description": "Identical to <page>Global.SysTime</page>."
+    "description": "<deprecated>Use the function <page>Global.SysTime</page> instead.</deprecated>\nIdentical to <page>Global.SysTime</page>."
   },
   {
     "name": "VGUIRect",

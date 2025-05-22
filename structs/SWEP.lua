@@ -14,8 +14,8 @@
 --- @field PrintName? string @The name of the SWEP displayed in the spawn menu.
 --- @field Base? string @The weapon's base script, relative to `lua/weapons`.
 --- @field m_WeaponDeploySpeed? number @The deploy speed multiplier
---- @field Owner GEntity @<warning>Deprecated, use Entity:GetOwner() instead.</warning>
---- @field Weapon GWeapon @<warning>Deprecated, use `SWEP` instead
+--- @field Owner GEntity @<deprecated notag="true">Use Entity:GetOwner() instead.</deprecated>
+--- @field Weapon GWeapon @<deprecated notag="true">Use `SWEP` instead
 --- @field Author string @The SWEP's author.
 --- @field Contact string @The contact information regarding the SWEP's author.
 --- @field Purpose string @The purpose of the SWEP.

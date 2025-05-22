@@ -2,7 +2,7 @@
 
 --- GWEN is a system that allows you to load a spritesheet and generate a skin out of it.  
 _G.GWEN = {}
---- Used in derma skins to create a bordered rectangle drawing function from an image.  
+--- This is a utility function that generates a specialized drawing function to render scalable textured borders. This is done with [9-slice scaling](https://en.wikipedia.org/wiki/9-slice_scaling). This is used in derma skins to create a bordered rectangle drawing function from an image.  
 --- The texture is taken from `SKIN.GwenTexture` when the `material` argument is not supplied.  
 --- @param x number @The X coordinate on the texture.
 --- @param y number @The Y coordinate on the texture.
@@ -17,7 +17,7 @@ _G.GWEN = {}
 function GWEN.CreateTextureBorder(x, y, w, h, left, top, right, bottom, material)
 end
 
---- Used in derma skins to create a rectangle drawing function from an image. The rectangle will not be scaled, but instead it will be drawn in the center of the box.  
+--- Used in derma skins to create a fixed scale rectangle drawing function from an image. it will be drawn in the center of the box.  
 --- The texture is taken from `SKIN.GwenTexture` when the `material` is not supplied.  
 --- @param x number @The X coordinate on the texture
 --- @param y number @The Y coordinate on the texture
@@ -28,7 +28,7 @@ end
 function GWEN.CreateTextureCentered(x, y, w, h, material)
 end
 
---- Used in derma skins to create a rectangle drawing function from an image. The texture of the rectangle will be scaled.  
+--- Helper function that returns a specialized drawing function for rendering a texture that scales freely to fit the given area.  
 --- The texture is taken from `SKIN.GwenTexture` when the `material` is not supplied.  
 --- @param x number @The X coordinate on the texture
 --- @param y number @The Y coordinate on the texture
@@ -39,7 +39,7 @@ end
 function GWEN.CreateTextureNormal(x, y, w, h, material)
 end
 
---- When used in a material skin, it returns a color value from a point in the skin image.  
+--- Retrieves the color from a materials texture at the provided UV coordinates  
 --- @param x number @X position of the pixel to get the color from.
 --- @param y number @Y position of the pixel to get the color from.
 --- @return table @The color of the point on the skin as a Color.

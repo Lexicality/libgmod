@@ -20,7 +20,7 @@ end
 --- Creates a new timer that will repeat its function given amount of times.  
 --- This function also requires the timer to be named, which allows you to control it after it was created via the timer.  
 --- For a simple one-time timer with no identifiers, see timer.Simple.  
---- ⚠ **WARNING**: Timers use Global.CurTime internally. Due to this, they won't advance while the client is timing out from the server or on an empty dedicated server due to hibernation. (unless `sv_hibernate_think` is set to `1`).  
+--- ⚠ **WARNING**: Timers use Global.CurTime internally. Due to this, they won't advance while the client is timing out from the server or on an empty dedicated server due to hibernation. (unless `sv_hibernate_think` is set to `1` or `delay` is set to `0` ).  
 --- @param identifier string @Identifier of the timer to create
 --- @param delay number @The delay interval in seconds
 --- @param repetitions number @The number of times to repeat the timer

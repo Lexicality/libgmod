@@ -737,11 +737,11 @@
           "client",
           "server"
         ],
-        "description": "Returns the surface property index of the effect.",
+        "description": "Returns the surface property index of the effect. See <page>util.GetSurfaceData</page> for more details about what they are.\n\nSee <page>CEffectData:SetSurfaceProp</page> for details about limitations of this function.",
         "returnValues": [
           {
             "type": "number",
-            "description": "The surface property index of the effect"
+            "description": "The surface property index of the effect."
           }
         ]
       },
@@ -991,7 +991,7 @@
           "client",
           "server"
         ],
-        "description": "Sets the surface property index of the effect.\n<note>Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `-1`-`254` range.(yes, that's not a mistake)</note>",
+        "description": "Sets the surface property index of the effect. See <page>util.GetSurfaceData</page> for more details about what they are.\n\n<note>Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `-1`-`254` range. (Yes, that's not a mistake, `-1` signifying an invalid value.)</note>",
         "arguments": [
           {
             "name": "surfaceProperties",
@@ -6929,7 +6929,7 @@
           "client",
           "server"
         ],
-        "description": "Sets the directional force of the damage.\n<note>\nThis function seems to have no effect on player knockback. To disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use workaround example below.\n</note>",
+        "description": "Sets the directional force of the damage.\n<note>\nThis function only affects entities using the VPHYSICS movetype. This means players and most NPCs won't receive the force vector you provide as knockback.\n\nIf the entity taking damage is using the WALK or STEP movetypes, the damage force is instead automatically calculated. It will push the entity away from the inflictor's <page>Entity:WorldSpaceCenter</page>, scaling the push by a calculated value involving the total amount of damage and the size of the entity. [Source](https://github.com/ValveSoftware/source-sdk-2013/blob/0565403b153dfcde602f6f58d8f4d13483696a13/src/game/server/baseentity.cpp#L1525)\n\nTo disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use the workaround example below.\n</note>",
         "arguments": [
           {
             "name": "force",
@@ -7910,7 +7910,7 @@
           "client",
           "server"
         ],
-        "description": "Causes a specified function to be run if the entity is removed by any means. This can later be undone by <page>Entity:RemoveCallOnRemove</page> if you need it to not run.\n\n<warning>This hook is called clientside during full updates. See <page>GM:EntityRemoved</page> for more information.</warning>",
+        "description": "Causes a specified function to be run if the entity is removed by any means. This can later be undone by <page>Entity:RemoveCallOnRemove</page> if you need it to not run.\n\n<warning>This hook is called clientside during full updates. See <page>GM:EntityRemoved</page> for more information.</warning>\n<warning>An error being thrown inside `removeFunc` is likely break <page>player.Iterator</page> and <page>ents.Iterator</page> functions. </warning>",
         "arguments": [
           {
             "name": "identifier",
@@ -8487,7 +8487,7 @@
           "client",
           "server"
         ],
-        "description": "Fires a bullet.\n\nWhen used in a  hook such as <page>WEAPON:Think</page> or <page>WEAPON:PrimaryAttack</page>, it will use <page>Player:LagCompensation</page> internally.\n\n<note>Lag compensation will not work if this function is called in a timer, regardless if the timer was made in a  hook.</note>\n\n<note>Due to how FireBullets is set up internally, bullet tracers will always originate from attachment 1.</note>",
+        "description": "Fires a bullet.\n\nWhen used in a  hook such as <page>WEAPON:Think</page> or <page>WEAPON:PrimaryAttack</page>, it will use <page>Player:LagCompensation</page> internally.\n\nLag compensation will not work if this function is called in a timer, regardless if the timer was made in a predicted hook.\n\nDue to how `Entity:FireBullets` is set up internally, bullet tracers will always originate from attachment 1. This can be avoided by supplying your own tracer effect.\n\nWhen firing bullets from a <page>Weapon</page>, it is recommended to fire bullets from the weapon owner entity (<page>Player</page> or <page>NPC</page>), not the <page>Weapon</page> itself.",
         "arguments": [
           {
             "name": "bulletInfo",
@@ -8655,8 +8655,8 @@
         ],
         "returnValues": [
           {
-            "type": "table",
-            "description": "The angle and position of the attachment. See the <page>Structures/AngPos</page>. Most notably, the table contains the keys `Ang` and `Pos` as well as `Bone`."
+            "type": "table{AngPos}|nil",
+            "description": "The table with angle and position of the attachment or `nil` if does not exist. See the <page>Structures/AngPos</page>. Most notably, the table contains the keys `Ang` and `Pos` as well as `Bone`."
           }
         ]
       },
@@ -8667,11 +8667,11 @@
           "client",
           "server"
         ],
-        "description": "Returns a table containing all attachments of the given entity's model.\n\nReturns an empty table or **nil** in case its model has no attachments.\n\n<bug issue=\"3167\">This can have inconsistent results in single-player.</bug>",
+        "description": "Returns a table containing all attachments of the given entity's model.\n\n<bug issue=\"3167\">This can have inconsistent results in single-player.</bug>",
         "returnValues": [
           {
             "type": "table",
-            "description": "Attachment data. See <page>Structures/AttachmentData</page>."
+            "description": "Attachment data. See <page>Structures/AttachmentData</page>.\n\nReturns an empty table in case its model has no attachments or there's a some kind of other issue."
           }
         ]
       },
@@ -8701,7 +8701,7 @@
         "returnValues": [
           {
             "type": "number{BLOOD_COLOR}",
-            "description": "Color from <page>Enums/BLOOD_COLOR</page>"
+            "description": "Color from <page>Enums/BLOOD_COLOR</page> or <page>nil</page>"
           }
         ]
       },
@@ -8885,7 +8885,7 @@
         "returnValues": [
           {
             "type": "string",
-            "description": "The name of given bone.\n\n* `nil` in case we failed or entity doesn't have a model.\n* `__INVALIDBONE__` in case the name cannot be read or the index is out of range."
+            "description": "The name of given bone.\n\n* `\"__INVALIDBONE__\"` in case the name cannot be read or the index is out of range, or we failed or entity doesn't have a model."
           }
         ]
       },
@@ -8944,7 +8944,7 @@
           "client",
           "server"
         ],
-        "description": "Returns the surface property of the specified bone.",
+        "description": "Returns the surface property of the specified bone. See <page>util.GetSurfaceData</page> for more details about what they are.",
         "arguments": [
           {
             "name": "bone",
@@ -12869,7 +12869,7 @@
         "realms": [
           "server"
         ],
-        "description": "Returns if entity is constraint or not.\n\nThis also means that <page>Entity:GetConstrainedPhysObjects</page>. <page>Entity:GetConstrainedEntities</page> and  <page>Entity:SetPhysConstraintObjects</page> can be used on this entity.\n\n<warning>Some constraint entities, such as `phys_spring`, will return false!</warning>",
+        "description": "Returns if entity is constraint or not.\n\nThis also means that <page>Entity:GetConstrainedPhysObjects</page>. <page>Entity:GetConstrainedEntities</page> and  <page>Entity:SetPhysConstraintObjects</page> can be used on this entity.\n\n<warning>For some constraint entities, such as `phys_spring`, `phys_slideconstraint`, `phys_torque` and `logic_collision_pair`, this function will return `false`!</warning>",
         "returnValues": [
           {
             "type": "boolean",
@@ -13399,7 +13399,7 @@
         ],
         "returnValues": [
           {
-            "type": "number",
+            "type": "number|nil",
             "description": "Index of the given bone name, or `nil` if the bone doesn't exist on the Entity"
           }
         ]
@@ -13519,7 +13519,7 @@
           {
             "name": "type",
             "type": "number",
-            "description": "The jiggle bone type. There are currently the following options:\n* `0` = No jiggle override, use model default\n* `1` = Force jiggle, with hardcoded settings\n* `2` = Force disable jiggle bone (currently also broken, but will be fixed in the next update)"
+            "description": "The jiggle bone type. There are currently the following options:\n* `0` = No jiggle override, use model default\n* `1` = Force jiggle, with hardcoded settings\n* `2` = Force disable jiggle bone"
           }
         ]
       },
@@ -13557,7 +13557,7 @@
           "client",
           "server"
         ],
-        "description": "Sets custom bone scale.\n\n<bug issue=\"5148\">When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced.</bug>\n\n<bug issue=\"3502\">This does not scale procedural bones.</bug>",
+        "description": "Sets custom bone scale.\n<bug issue=\"3502\">This does not scale procedural bones.</bug>",
         "arguments": [
           {
             "name": "boneID",
@@ -13653,7 +13653,7 @@
             "name": "extended",
             "type": "table",
             "default": "nil",
-            "description": "A table of extended information.\n\n`KeyName`\n* Allows the NetworkVar to be set using <page>Entity:SetKeyValue</page>. This is useful if you're making an entity that you want to be loaded in a map. The sky entity uses this.\n\n`Edit`\n* The edit key lets you mark this variable as editable. See <page>Editable Entities</page> for more information."
+            "description": "A table of extended information.\n\n`KeyName`\n* Allows the NetworkVar to be set using <page>Entity:SetKeyValue</page>.\n* This is **required** for the entity editing to work.\n\nThis is useful if you're making an entity that you want to be loaded in a map. The sky entity uses this.\n\n`Edit`\n* The edit key lets you mark this variable as editable. See <page>Editable Entities</page> for more information."
           }
         ],
         "overloads": [
@@ -13673,7 +13673,7 @@
                 "name": "extended",
                 "type": "table",
                 "default": "nil",
-                "description": "A table of extended information.\n\n`KeyName`\n* Allows the NetworkVar to be set using <page>Entity:SetKeyValue</page>. This is useful if you're making an entity that you want to be loaded in a map. The sky entity uses this.\n\n`Edit`\n* The edit key lets you mark this variable as editable. See <page>Editable Entities</page> for more information."
+                "description": "A table of extended information.\n\n`KeyName`\n* Allows the NetworkVar to be set using <page>Entity:SetKeyValue</page>.\n* This is **required** for the entity editing to work.\n\nThis is useful if you're making an entity that you want to be loaded in a map. The sky entity uses this.\n\n`Edit`\n* The edit key lets you mark this variable as editable. See <page>Editable Entities</page> for more information."
               }
             ]
           }
@@ -16470,7 +16470,7 @@
           {
             "name": "key",
             "type": "string",
-            "description": "The key to associate the value with"
+            "description": "The key to associate the value with, up to 1023 characters"
           },
           {
             "name": "value",
@@ -16996,7 +16996,7 @@
         "realms": [
           "client"
         ],
-        "description": "Sets the render bounds for the entity. For world space coordinates see <page>Entity:SetRenderBoundsWS</page>.",
+        "description": "Sets the render bounds for the entity.\n\nFor world space coordinate alternative see <page>Entity:SetRenderBoundsWS</page>.",
         "arguments": [
           {
             "name": "mins",
@@ -17968,11 +17968,11 @@
           "client",
           "server"
         ],
-        "description": "Returns an integer that represents how deep in water the entity is.\n<note>This function will currently work on players only due to the way it is implemented in the engine. If you need to check interaction with water for regular entities you better use <page>util.PointContents</page>.</note>\n\n* **0** - The entity isn't in water.\n\n* **1** - Slightly submerged (at least to the feet).\n\n* **2** - The majority of the entity is submerged (at least to the waist).\n\n* **3** - Completely submerged.",
+        "description": "Returns an integer that represents how deep in water the entity is.",
         "returnValues": [
           {
             "type": "number",
-            "description": "The water level."
+            "description": "The water level.\n* **0** - The entity isn't in water.\n* **1** - Slightly submerged (at least to the feet).\n* **2** - The majority of the entity is submerged (at least to the waist).\n* **3** - Completely submerged."
           }
         ]
       },
@@ -24970,6 +24970,22 @@
         }
       },
       {
+        "name": "GetContentAlignment",
+        "parent": "Panel",
+        "realms": [
+          "client",
+          "menu"
+        ],
+        "description": "Returns the alignment of the text of a <page>Label</page>.\n\n<note>This function only works on <page>Label</page> panels and its derivatives.</note>",
+        "returnValues": [
+          {
+            "type": "number",
+            "name": "alignment",
+            "description": "The direction of the content, based on the number pad.\n\n<key>1</key>: **bottom-left** <br>\n<key>2</key>: **bottom-center** <br>\n<key>3</key>: **bottom-right** <br>\n<key>4</key>: **middle-left** <br>\n<key>5</key>: **center** <br>\n<key>6</key>: **middle-right** <br>\n<key>7</key>: **top-left** <br>\n<key>8</key>: **top-center** <br>\n<key>9</key>: **top-right** <br>\n<img src=\"DLabel_SetContentAlignment.gif\">"
+          }
+        ]
+      },
+      {
         "name": "GetContentSize",
         "parent": "Panel",
         "realms": [
@@ -27100,7 +27116,7 @@
           "client",
           "menu"
         ],
-        "description": "Paints a ghost copy of the panel at the given position.\n<warning>\nThis function sets Z pos of panel's children (<page>PANEL:SetZPos</page>)\n</warning>",
+        "description": "Paints a ghost copy of the panel at the given position.\n<warning>\nThis function sets Z pos of panel's children (<page>PANEL:SetZPos</page>). It also briefly unparents and reparents the panel.\n</warning>",
         "arguments": [
           {
             "name": "posX",
@@ -33346,7 +33362,7 @@
         "realms": [
           "client"
         ],
-        "description": "Returns whether or not the player is muted locally.",
+        "description": "Returns whether or not the player is voice muted locally.",
         "returnValues": [
           {
             "type": "boolean",
@@ -33854,7 +33870,7 @@
         "realms": [
           "server"
         ],
-        "description": "This makes the player hold ( same as pressing <key>E</key> on a small prop ) the provided entity.\n\n<note>Don't get this confused with picking up items like ammo or health kits</note>\n\n<note>This picks up the passed entity regardless of its mass or distance from the player</note>",
+        "description": "This makes the player hold (same as pressing <key>E</key> on a small prop) given entity.\n\nNot to be confused with picking up items like ammo or health kits.\n\nThis picks up the passed entity regardless of its mass or distance from the player.",
         "arguments": [
           {
             "name": "entity",
@@ -34631,7 +34647,7 @@
         "realms": [
           "client"
         ],
-        "description": "Sets if the player should be muted locally.",
+        "description": "Sets if the player should be voicechat muted locally.",
         "arguments": [
           {
             "name": "mute",
@@ -35557,7 +35573,7 @@
         "realms": [
           "client"
         ],
-        "description": "Returns the players voice volume, how loud the player's voice communication currently is, as a normal number.\n\nDoesn't work on local player unless the `voice_loopback` convar is set to `1`.",
+        "description": "Returns the players voice volume, how loud the player's voice communication currently is, as a number in range of [0,1].\n\nDoesn't work on local player unless the `voice_loopback` convar is set to `1`.",
         "returnValues": [
           {
             "type": "number",
@@ -38350,7 +38366,7 @@
           {
             "name": "role",
             "type": "number",
-            "description": "The passenger role. ( 1 is the driver )"
+            "description": "The passenger role. ( 0 is the driver )"
           }
         ],
         "returnValues": [

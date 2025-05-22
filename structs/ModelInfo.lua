@@ -1,0 +1,27 @@
+--- @meta
+
+--- Table returned by util.GetModelInfo.  
+--- @class SModelInfo
+--- @field SkinCount number @Identical to Entity:SkinCount.
+--- @field KeyValues string @Valve key-value formatted info about the model's physics (Constraint Info, etc)
+--- @field ModelKeyValues string @Valve key-value formatted info about the model (`$keyvalues` command in the `.qc` of the model), if present
+--- @field MeshCount number @Number of meshes the model has
+--- @field BoneCount number @Number of bones the model has.
+--- @field Flags number @Model flags
+--- @field StaticProp boolean @Whether the model is meant to be a static prop (checks a specific model flag)
+--- @field MaterialCount number @Number of materials used by this model.
+--- @field SequenceCount number @Number of sequences the model has.
+--- @field AttachmentCount number @Number of attachments the model has.
+--- @field ModelName string @Name of the model, as embedded in the model file itself
+--- @field Version number @Model version
+--- @field Checksum number @Checksum (CRC32) of the model
+--- @field SurfacePropName string @Name of the surface property for this model
+--- @field EyePosition GVector @If present, position of the eyes of the model, for NPCs.
+--- @field IllumPosition GVector @Illumination position for the model, for cases where the model root would be potentially outside of the world.
+--- @field HullMin GVector @Mins of the model's bounding box.
+--- @field HullMax GVector @Maxs of the model's bounding box.
+--- @field Attachments table @A list of attachments the model has
+--- @field Bones table @A list of bones the model has
+--- @field Sequences table @A list of sequences the model has, including the ones from `$includemodel`s
+--- @field Materials string[] @A list of materials the model uses, across all its meshes.
+--- @field MaterialDirectories string[] @A list of folders the game will look in for the **Materials**.

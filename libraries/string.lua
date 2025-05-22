@@ -62,7 +62,7 @@ function string.FormattedTime(float, format)
 end
 
 --- Creates a string from a Color variable.  
---- @param color table @The color to put in the string.
+--- @param color table @The Color to put in the string.
 --- @return string @Output
 function string.FromColor(color)
 end

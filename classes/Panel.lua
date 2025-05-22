@@ -388,6 +388,12 @@ end
 function GPanel:GetClosestChild(x, y)
 end
 
+--- Returns the alignment of the text of a Label.  
+--- ℹ **NOTE**: This function only works on Label panels and its derivatives.  
+--- @return number @The direction of the content, based on the number pad
+function GPanel:GetContentAlignment()
+end
+
 --- Gets the size of the content/children within a panel object.  
 --- Only works with Label derived panels by default such as DLabel.  
 --- Will also work on any panel that manually implements this method.  
@@ -965,7 +971,7 @@ function GPanel:OpenURL(URL)
 end
 
 --- Paints a ghost copy of the panel at the given position.  
---- ⚠ **WARNING**: This function sets Z pos of panel's children (PANEL:SetZPos)  
+--- ⚠ **WARNING**: This function sets Z pos of panel's children (PANEL:SetZPos). It also briefly unparents and reparents the panel.  
 --- @param posX number @The x coordinate to draw the panel from.
 --- @param posY number @The y coordinate to draw the panel from.
 function GPanel:PaintAt(posX, posY)

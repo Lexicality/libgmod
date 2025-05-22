@@ -70,16 +70,15 @@ end
 function derma.SkinChangeIndex()
 end
 
---- Calls the specified hook for the given panel  
---- @param type string @The type of hook to run
---- @param name string @The name of the hook to run
+--- Checks if a matching hook function exists in the skin _(based on the concatenation of type and name args)_, Then calls it.  
+--- This function is used dynamically inside Global.Derma_Hook  
+--- @param type string @The type of hook to run, usually `Paint`.
+--- @param name string @The name of the hook/panel to run
 --- @param panel GPanel @The panel to call the hook for
 --- @param vararg1? any @First parameter for the panel hook
 --- @param vararg2? any @Second parameter for the panel hook
---- @param vararg3? any @Third parameter for the panel hook.
---- @param vararg4? any @Fourth parameter for the panel hook.
 --- @return any @The returned variable from the skin hook
-function derma.SkinHook(type, name, panel, vararg1, vararg2, vararg3, vararg4)
+function derma.SkinHook(type, name, panel, vararg1, vararg2)
 end
 
 --- This is NOT a function, it's a variable containing all registered via derma.DefineSkin derma skins.  

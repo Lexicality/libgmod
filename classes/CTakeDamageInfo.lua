@@ -155,7 +155,9 @@ function GCTakeDamageInfo:SetDamageCustom(DamageType)
 end
 
 --- Sets the directional force of the damage.  
---- ℹ **NOTE**: This function seems to have no effect on player knockback. To disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use workaround example below.  
+--- ℹ **NOTE**: This function only affects entities using the VPHYSICS movetype. This means players and most NPCs won't receive the force vector you provide as knockback.  
+--- If the entity taking damage is using the WALK or STEP movetypes, the damage force is instead automatically calculated. It will push the entity away from the inflictor's Entity:WorldSpaceCenter, scaling the push by a calculated value involving the total amount of damage and the size of the entity. [Source](https://github.com/ValveSoftware/source-sdk-2013/blob/0565403b153dfcde602f6f58d8f4d13483696a13/src/game/server/baseentity.cpp#L1525)  
+--- To disable knockback entirely, see [EFL_NO_DAMAGE_FORCES](https://wiki.facepunch.com/gmod/Enums/EFL#EFL_NO_DAMAGE_FORCES) or use the workaround example below.  
 --- @param force GVector @The vector to set the force to.
 function GCTakeDamageInfo:SetDamageForce(force)
 end

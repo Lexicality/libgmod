@@ -78,8 +78,9 @@ end
 function GCEffectData:GetStart()
 end
 
---- Returns the surface property index of the effect.  
---- @return number @The surface property index of the effect
+--- Returns the surface property index of the effect. See util.GetSurfaceData for more details about what they are.  
+--- See CEffectData:SetSurfaceProp for details about limitations of this function.  
+--- @return number @The surface property index of the effect.
 function GCEffectData:GetSurfaceProp()
 end
 
@@ -174,8 +175,8 @@ end
 function GCEffectData:SetStart(start)
 end
 
---- Sets the surface property index of the effect.  
---- ℹ **NOTE**: Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `-1`-`254` range.(yes, that's not a mistake)  
+--- Sets the surface property index of the effect. See util.GetSurfaceData for more details about what they are.  
+--- ℹ **NOTE**: Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `-1`-`254` range. (Yes, that's not a mistake, `-1` signifying an invalid value.)  
 --- @param surfaceProperties number @The surface property index of the effect.
 function GCEffectData:SetSurfaceProp(surfaceProperties)
 end

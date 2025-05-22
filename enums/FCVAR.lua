@@ -36,7 +36,7 @@ _G.FCVAR_LUA_SERVER = 524288
 _G.FCVAR_NEVER_AS_STRING = 4096
 --- No flags  
 _G.FCVAR_NONE = 0
---- For serverside ConVars, notifies all players with blue chat text when the value gets changed  
+--- For serverside ConVars, notifies all players with blue chat text when the value gets changed, also makes the convar appear in [A2S_RULES](https://developer.valvesoftware.com/wiki/Server_queries#A2S_RULES)  
 --- Reported as "nf" by `cvarlist`  
 _G.FCVAR_NOTIFY = 256
 --- Makes the ConVar not changeable while connected to a server or in singleplayer  

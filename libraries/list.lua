@@ -1,6 +1,8 @@
 --- @meta
 
---- The list library allows you add and retrieve values to and from lists. The list library is basically a fancy wrapper for a table, but with much more limited functionality. See Default Lists for a page of default Sandbox lists.  
+--- The list library allows you add and retrieve values to and from lists. The list library is basically a fancy wrapper for a table, but with much more limited functionality.  
+--- It is used extensively in the built-in Sandbox gamemode for addon-extensible lists of things (list of wheel models, list of thruster effects, etc) , without using global tables for this task.  
+--- See Default Lists for a page of default Sandbox lists.  
 _G.list = {}
 --- Adds an item to a named list  
 --- @param identifier string @The list identifier
@@ -18,6 +20,7 @@ function list.Contains(list, value)
 end
 
 --- Returns a copy of the list stored at identifier  
+--- ⚠ **WARNING**: If you don't plan to change anything in list, it's better to use list.GetForEdit for better performance.  
 --- @param identifier string @The list identifier
 --- @return table @The copy of the list
 function list.Get(identifier)

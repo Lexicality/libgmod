@@ -12,8 +12,6 @@ _G.steamworks = {}
 function steamworks.Download(workshopPreviewID, uncompress, resultCallback)
 end
 
---- ℹ **NOTE**: A serverside implementation of this function can be provided by binary modules, such as [gmsv_workshop](https://github.com/WilliamVenner/gmsv_workshop).  
---- Downloads a Steam Workshop file by its ID and returns a path to it.  
 --- @param workshopID string @The ID of workshop item to download
 --- @param resultCallback function @The function to process retrieved data
 function steamworks.DownloadUGC(workshopID, resultCallback)

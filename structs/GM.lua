@@ -37,8 +37,10 @@ end
 
 --- Allows you to adjust the mouse sensitivity.  
 --- @param defaultSensitivity number @The old sensitivity
+--- @param localFOV number @Player's current FOV.
+--- @param defaultFOV number @Default FOV.
 --- @return number @A fraction of the normal sensitivity (0.5 would be half as sensitive)
-function GM:AdjustMouseSensitivity(defaultSensitivity)
+function GM:AdjustMouseSensitivity(defaultSensitivity, localFOV, defaultFOV)
 end
 
 --- Called when a player tries to pick up something using the "use" key, return to override.  
@@ -433,7 +435,7 @@ end
 function GM:GetTeamNumColor(team)
 end
 
---- Override this hook to disable/change ear-grabbing in your gamemode.  
+--- Override this hook to disable/change ear-grabbing in your gamemode. By default, it is not called anywhere on the server.  
 --- @param ply GPlayer @Player
 function GM:GrabEarAnimation(ply)
 end
@@ -690,6 +692,15 @@ end
 function GM:OnCleanup(name)
 end
 
+--- Called when a Lua error occurs on a client.  
+--- This hook allows server-side code to detect and respond to client-side errors.  
+--- @param error string @The error that occurred.
+--- @param ply GPlayer @The player whose client caused the error.
+--- @param stack table @The Lua error stack trace
+--- @param name string @Title of the addon that is creating the Lua errors, or "ERROR" if addon is not found.
+function GM:OnClientLuaError(error, ply, stack, name)
+end
+
 --- Called when a caption/subtitle has been emitted to the closed caption box.  
 --- @param soundScript string @The name of the soundscript, or `customLuaToken` if it's from gui.AddCaption
 --- @param duration number @How long the caption should stay for
@@ -723,7 +734,7 @@ function GM:OnDamagedByExplosion(ply, dmginfo)
 end
 
 --- Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.  
---- ℹ **NOTE**: Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with Global.IsValid.  
+--- ℹ **NOTE**: Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with Global.IsValid. Will not require Global.IsValid check if you create your hook after GM:InitPostEntity.  
 --- ⚠ **WARNING**: Removing the created entity during this event can lead to unexpected problems. Use timer.Simple( 0, .... ) to safely remove the entity.  
 --- @param entity GEntity @The entity
 function GM:OnEntityCreated(entity)
@@ -775,6 +786,7 @@ end
 --- @param physobj GPhysObj @Physics object of the entity.
 --- @param ent GEntity @The target entity.
 --- @param ply GPlayer @The player who tried to freeze the entity.
+--- @return boolean @Return `false` to block the unfreeze
 function GM:OnPhysgunFreeze(weapon, physobj, ent, ply)
 end
 
@@ -1301,8 +1313,9 @@ end
 --- Called when a player starts using voice chat.  
 --- ℹ **NOTE**: Set mp_show_voice_icons to 0, if you want disable icons above player.  
 --- @param ply GPlayer @Player who started using voice chat.
+--- @param plyIndex number @The player index
 --- @return boolean @Set true to hide player's `CHudVoiceStatus`.
-function GM:PlayerStartVoice(ply)
+function GM:PlayerStartVoice(ply, plyIndex)
 end
 
 --- Allows you to override the time between footsteps.  

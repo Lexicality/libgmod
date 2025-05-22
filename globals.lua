@@ -101,6 +101,7 @@ end
 --- While this variable is always available in the Client & Menu  
 --- realms, it is only defined in the Server  realm on local servers.  
 --- For more information on beta branches, see this page  
+--- 🦟 **BUG**: [Will return `prerelease` instead of `unknown` on dedicated servers.](https://github.com/Facepunch/garrysmod-issues/issues/6085)  
 --- @return string @The current branch.
 function _G.BRANCH()
 end
@@ -898,9 +899,9 @@ end
 --- Converts a color from [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
 --- @param hue number @The hue in degrees from 0-360.
 --- @param saturation number @The saturation from 0-1.
---- @param value number @The lightness from 0-1.
+--- @param lightness number @The lightness from 0-1.
 --- @return table @The Color created from the HSL color space.
-function _G.HSLToColor(hue, saturation, value)
+function _G.HSLToColor(hue, saturation, lightness)
 end
 
 --- Converts a color from [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) into RGB color space and returns a Color.  
@@ -1145,8 +1146,11 @@ function _G.LocalToWorld(localPos, localAng, originPos, originAngle)
 end
 
 --- Returns a localisation for the given token, if none is found it will return the default (second) parameter.  
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Use language.GetPhrase instead.  
 --- @param localisationToken string @The token to find a translation for.
 --- @param default string @The default value to be returned if no translation was found.
+--- @return string @The localized string, 128 char limit.
 function _G.Localize(localisationToken, default)
 end
 
@@ -1803,6 +1807,8 @@ end
 function _G.UnPredictedCurTime()
 end
 
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Use the function Global.SysTime instead.  
 --- Identical to Global.SysTime.  
 function _G.VGUIFrameTime()
 end
@@ -1879,7 +1885,7 @@ function _G.collectgarbage(action, arg)
 end
 
 --- Throws a Lua error and breaks out of the current call stack.  
---- @param message string @The error message to throw
+--- @param message string @The error message to throw.
 --- @param errorLevel? number @The level to throw the error at.
 function _G.error(message, errorLevel)
 end

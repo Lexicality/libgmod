@@ -80,7 +80,7 @@ end
 
 --- Clamps a number between a minimum and maximum value.  
 --- @param input number @The number to clamp.
---- @param min number @The minimum value, this function will **never** return a number less than this.
+--- @param min number @The minimum value.
 --- @param max number @The maximum value, this function will **never** return a number greater than this.
 --- @return number @The clamped value.
 function math.Clamp(input, min, max)

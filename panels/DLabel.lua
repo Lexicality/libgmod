@@ -2,7 +2,6 @@
 
 --- @class DLabel : VLabel
 --- A standard Derma text label. A lot of this panels functionality is a base for button elements, such as DButton  
---- Does not support multiline text.  
 local PANEL = {}
 _G.DLabel = PANEL;
 --- Called when the label is left clicked (on key release) by the player.  

@@ -3,6 +3,7 @@
 --- Tables used for bullets see Entity:FireBullets and GM:EntityFireBullets.  
 --- @class SBullet
 --- @field Attacker? GEntity @The entity that should be reported as attacker eg
+--- @field Inflictor? GEntity @The entity that should be reported as inflictor eg
 --- @field Callback? function @Function to be called **after** the bullet was fired but **before** the damage is applied (the callback is called even if no damage is appli
 --- @field Damage? number @The damage dealt by the bullet
 --- @field Force? number @The force of the bullets

@@ -148,6 +148,7 @@ end
 
 --- Causes a specified function to be run if the entity is removed by any means. This can later be undone by Entity:RemoveCallOnRemove if you need it to not run.  
 --- ⚠ **WARNING**: This hook is called clientside during full updates. See GM:EntityRemoved for more information.  
+--- ⚠ **WARNING**: An error being thrown inside `removeFunc` is likely break player.Iterator and ents.Iterator functions.  
 --- @param identifier string @Identifier that can be optionally used with Entity:RemoveCallOnRemove to undo this call on remove.
 --- @param removeFunc function @Function to be called on remove
 --- @vararg any @Optional arguments to pass to removeFunc
@@ -349,8 +350,9 @@ end
 
 --- Fires a bullet.  
 --- When used in a  hook such as WEAPON:Think or WEAPON:PrimaryAttack, it will use Player:LagCompensation internally.  
---- ℹ **NOTE**: Lag compensation will not work if this function is called in a timer, regardless if the timer was made in a  hook.  
---- ℹ **NOTE**: Due to how FireBullets is set up internally, bullet tracers will always originate from attachment 1.  
+--- Lag compensation will not work if this function is called in a timer, regardless if the timer was made in a predicted hook.  
+--- Due to how `Entity:FireBullets` is set up internally, bullet tracers will always originate from attachment 1. This can be avoided by supplying your own tracer effect.  
+--- When firing bullets from a Weapon, it is recommended to fire bullets from the weapon owner entity (Player or NPC), not the Weapon itself.  
 --- @param bulletInfo SBullet @The bullet data to be used
 --- @param suppressHostEvents? boolean @Has the effect of encasing the FireBullets call in Global.SuppressHostEvents, only works in multiplayer.
 function GEntity:FireBullets(bulletInfo, suppressHostEvents)
@@ -420,12 +422,11 @@ end
 --- ℹ **NOTE**: The update rate of this function is limited by the setting of ENT.AutomaticFrameAdvance for Scripted Entities!  
 --- 🦟 **BUG**: [This will return improper values for viewmodels if used in GM:CalcView.](https://github.com/Facepunch/garrysmod-issues/issues/1255)  
 --- @param attachmentId number @The internal ID of the attachment.
---- @return table @The angle and position of the attachment
+--- @return SAngPos|nil @The table with angle and position of the attachment or `nil` if does not exist
 function GEntity:GetAttachment(attachmentId)
 end
 
 --- Returns a table containing all attachments of the given entity's model.  
---- Returns an empty table or **nil** in case its model has no attachments.  
 --- 🦟 **BUG**: [This can have inconsistent results in single-player.](https://github.com/Facepunch/garrysmod-issues/issues/3167)  
 --- @return table @Attachment data
 function GEntity:GetAttachments()
@@ -437,7 +438,7 @@ function GEntity:GetBaseVelocity()
 end
 
 --- Returns the blood color of this entity. This can be set with Entity:SetBloodColor.  
---- @return EBLOOD_COLOR @Color from Enums/BLOOD_COLOR
+--- @return EBLOOD_COLOR @Color from Enums/BLOOD_COLOR or nil
 function GEntity:GetBloodColor()
 end
 
@@ -534,7 +535,7 @@ end
 function GEntity:GetBonePosition(boneIndex)
 end
 
---- Returns the surface property of the specified bone.  
+--- Returns the surface property of the specified bone. See util.GetSurfaceData for more details about what they are.  
 --- @param bone number @The bone id, starting at index 0
 --- @return string @The surface property of the bone to be used with util.GetSurfaceIndex or an empty string on failure.
 function GEntity:GetBoneSurfaceProp(bone)
@@ -1805,7 +1806,7 @@ end
 
 --- Returns if entity is constraint or not.  
 --- This also means that Entity:GetConstrainedPhysObjects. Entity:GetConstrainedEntities and  Entity:SetPhysConstraintObjects can be used on this entity.  
---- ⚠ **WARNING**: Some constraint entities, such as `phys_spring`, will return false!  
+--- ⚠ **WARNING**: For some constraint entities, such as `phys_spring`, `phys_slideconstraint`, `phys_torque` and `logic_collision_pair`, this function will return `false`!  
 --- @return boolean @Is the entity a constraint or not
 function GEntity:IsConstraint()
 end
@@ -1988,7 +1989,7 @@ end
 --- Gets the bone index of the given bone name, returns `nil` if the bone does not exist.  
 --- See Entity:GetBoneName for the inverse of this function.  
 --- @param boneName string @The name of the bone
---- @return number @Index of the given bone name, or `nil` if the bone doesn't exist on the Entity
+--- @return number|nil @Index of the given bone name, or `nil` if the bone doesn't exist on the Entity
 function GEntity:LookupBone(boneName)
 end
 
@@ -2037,7 +2038,6 @@ function GEntity:ManipulateBonePosition(boneID, pos, networking)
 end
 
 --- Sets custom bone scale.  
---- 🦟 **BUG**: [When used repeatedly serverside, this method is strongly discouraged due to the huge network traffic produced.](https://github.com/Facepunch/garrysmod-issues/issues/5148)  
 --- 🦟 **BUG**: [This does not scale procedural bones.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
 --- @param boneID number @Index of the bone you want to manipulate
 --- @param scale GVector @Scale vector to apply
@@ -2892,7 +2892,7 @@ end
 --- ℹ **NOTE**: Running this function clientside will only set it for the client it is called on.  
 --- The value will only be networked if it isn't the same as the current value and unlike SetNW*  
 --- the value will only be networked once and not every 10 seconds.  
---- @param key string @The key to associate the value with
+--- @param key string @The key to associate the value with, up to 1023 characters
 --- @param value string @The value to set, up to 511 characters.
 function GEntity:SetNW2String(key, value)
 end
@@ -3406,7 +3406,8 @@ end
 function GEntity:SetRenderAngles(newAngles)
 end
 
---- Sets the render bounds for the entity. For world space coordinates see Entity:SetRenderBoundsWS.  
+--- Sets the render bounds for the entity.  
+--- For world space coordinate alternative see Entity:SetRenderBoundsWS.  
 --- @param mins GVector @The minimum corner of the bounds, relative to origin of the entity.
 --- @param maxs GVector @The maximum corner of the bounds, relative to origin of the entity.
 --- @param add? GVector @If defined, adds this vector to maxs and subtracts this vector from mins.
@@ -3763,12 +3764,7 @@ function GEntity:VisibleVec(pos)
 end
 
 --- Returns an integer that represents how deep in water the entity is.  
---- ℹ **NOTE**: This function will currently work on players only due to the way it is implemented in the engine. If you need to check interaction with water for regular entities you better use util.PointContents.  
---- * **0** - The entity isn't in water.  
---- * **1** - Slightly submerged (at least to the feet).  
---- * **2** - The majority of the entity is submerged (at least to the waist).  
---- * **3** - Completely submerged.  
---- @return number @The water level.
+--- @return number @The water level
 function GEntity:WaterLevel()
 end
 

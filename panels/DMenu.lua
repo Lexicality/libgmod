@@ -98,7 +98,7 @@ end
 function PANEL:HighlightItem(item)
 end
 
---- Opens the DMenu at the current mouse position  
+--- Opens the DMenu at given position.  
 --- @param x? number @Position (X coordinate) to open the menu at.
 --- @param y? number @Position (Y coordinate) to open the menu at.
 --- @param skipanimation? any @This argument does nothing.

@@ -110,7 +110,7 @@ end
 --- Decompresses the given string using [LZMA](https://en.wikipedia.org/wiki/LZMA) algorithm. Used to decompress strings previously compressed with util.Compress.  
 --- ℹ **NOTE**: This function expects the compressed input data to have the uncompressed size of the data prepended to it as an 8-byte little-endian integer. [Source](https://github.com/garrynewman/bootil/blob/beb4cec8ad29533965491b767b177dc549e62d23/src/Bootil/Utility/CompressionLZMA.cpp#L101)  
 --- If your compressed input data was compressed by util.Compress, you don't need to worry about this - the uncompressed size of the data is already prepended to its output.  
---- However, if your compressed data was produced using standard tools **_outside of Garry's Mod_**, you will need to manually prepend the length of the uncompressed data to its compressed form as an 8-byte little endian integer, or use third-party tools such as [gmod-lzma](https://github.com/WilliamVenner/gmod-lzma-rs) to compress your data instead.  
+--- However, if your compressed data was produced using standard tools **_outside of Garry's Mod_**, you will need to manually prepend the length of the uncompressed data to its compressed form as an 8-byte little endian integer.  
 --- @param compressedString string @The compressed string to decompress.
 --- @param maxSize? number @The maximum size of uncompressed data in bytes, if greater it fails.
 --- @return string|nil @The original, decompressed string or `nil` on failure or invalid input
@@ -177,7 +177,7 @@ end
 function util.GetAnimEventNameByID(id)
 end
 
---- Returns a table containing the info about the model.  
+--- Returns a table containing the info about the model. The model will be loaded and cached if it was not previously.  
 --- ℹ **NOTE**: This function will silently fail if used on models with following strings in them:  
 --- * _shared  
 --- * _anims  
@@ -190,19 +190,18 @@ end
 --- * _ss  
 --- * _anm  
 --- * _include  
---- @param mdl string @Model path
---- @return table @The model info as a table with the following keys:
+--- @param mdl string @The model path to retrieve information about.
+--- @return SModelInfo @The model info
 function util.GetModelInfo(mdl)
 end
 
---- Returns a table of visual meshes of given model.  
---- ℹ **NOTE**: This does not work on brush models (`*number` models)  
---- See also ENTITY:GetRenderMesh.  
---- @param model string @The full path to a model to get the visual meshes of.
---- @param lod? number @Which LOD to retrieve
---- @param bodygroupMask? number @Bodygroup combination for the model
---- @return table @A table of tables with the following format:
---- @return table @A table of tables containing the model bind pose (where the keys are the bone ID) with the following contents:
+--- Retrieves vertex, triangle, and bone data for the visual meshes of a given model.  
+--- ℹ **NOTE**: This does not work on brush models (Models with names in the format `*number`)  
+--- @param model string @The full path to the model to get the visual meshes of.
+--- @param lod? number @Which of the model's Level of Detail (LOD) models to retrieve
+--- @param bodygroupMask? number @The combination of bodygroups to retrieve meshes for
+--- @return table @A sequential table of ModelMeshData Structures
+--- @return table @A sequential table of BoneBindPose Structures
 function util.GetModelMeshes(model, lod, bodygroupMask)
 end
 
@@ -429,7 +428,6 @@ end
 
 --- Converts a JSON string to a Lua table.  
 --- See util.TableToJSON for the opposite function.  
---- 🦟 **BUG**: [This will attempt to cast the string keys `"inf"`, `"nan"`, `"true"`, and `"false"` to their respective Lua values. This completely ignores nulls in arrays.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
 --- 🦟 **BUG**: [Colors will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param json string @The JSON string to convert.
 --- @param ignoreLimits? boolean @ignore the depth and breadth limits, **use at your own risk!**
@@ -627,7 +625,7 @@ function util.Stack()
 end
 
 --- Given a 64bit SteamID will return a STEAM_0:0:0 style Steam ID.  
---- ℹ **NOTE**: This operation induces data loss. Not all fields of a 64bit SteamID can be represented using the `STEAM_0:0:0` format.  
+--- ℹ **NOTE**: This operation induces data loss. Not all fields of a [64bit SteamID](https://developer.valvesoftware.com/wiki/SteamID) can be represented using the `STEAM_0:0:0` format, specifically the "account type" and "account instance" fields.  
 --- @param id string @The 64 bit Steam ID
 --- @return string @String STEAM_0:0:0 style Steam ID representation.
 function util.SteamIDFrom64(id)
@@ -651,8 +649,6 @@ end
 --- See util.JSONToTable for the opposite function.  
 --- ⚠ **WARNING**: All keys are strings in the JSON format, so all keys of other types will be converted to strings!  
 --- This can lead to loss of data where a number key could be converted into an already existing string key! (for example in a table like this: `{["5"] = "ok", [5] = "BBB"}`)  
---- All integers will be output as decimals (5 -> 5.0), since all numbers in Lua are internally floating point values.  
---- 🦟 **BUG**: [This will produce invalid JSON if the provided table contains nan or inf values.](https://github.com/Facepunch/garrysmod-issues/issues/3561)  
 --- @param table table @Table to convert.
 --- @param prettyPrint? boolean @Format and indent the JSON.
 --- @return string @A JSON formatted string containing the serialized data

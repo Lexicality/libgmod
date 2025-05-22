@@ -8505,7 +8505,7 @@
       {
         "name": "FCVAR_NOTIFY",
         "value": 256,
-        "description": "For serverside <page>ConVar</page>s, notifies all players with blue chat text when the value gets changed\n\nReported as \"nf\" by `cvarlist`"
+        "description": "For serverside <page>ConVar</page>s, notifies all players with blue chat text when the value gets changed, also makes the convar appear in [A2S_RULES](https://developer.valvesoftware.com/wiki/Server_queries#A2S_RULES)\n\nReported as \"nf\" by `cvarlist`"
       },
       {
         "name": "FCVAR_NOT_CONNECTED",
@@ -9340,6 +9340,11 @@
         "value": 4
       },
       {
+        "name": "IMAGE_FORMAT_I8",
+        "value": 5,
+        "description": "Undeclared variable."
+      },
+      {
         "name": "IMAGE_FORMAT_ARGB8888",
         "value": 11
       },
@@ -9348,12 +9353,27 @@
         "value": 12
       },
       {
+        "name": "IMAGE_FORMAT_BGR565",
+        "value": 17,
+        "description": "Undeclared variable."
+      },
+      {
         "name": "IMAGE_FORMAT_RGBA16161616",
         "value": 25
       },
       {
         "name": "IMAGE_FORMAT_RGBA16161616F",
         "value": 24
+      },
+      {
+        "name": "IMAGE_FORMAT_RGBA32F",
+        "value": 27,
+        "description": "Undeclared variable. Works only with mat_disable_d3d9ex 0"
+      },
+      {
+        "name": "IMAGE_FORMAT_RGBA32323232F",
+        "value": 29,
+        "description": "Undeclared variable. Works only with mat_disable_d3d9ex 0"
       }
     ],
     "realms": [

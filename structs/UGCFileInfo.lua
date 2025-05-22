@@ -24,3 +24,4 @@
 --- @field down number @Number of "down" votes for this item.
 --- @field total number @Number of total votes (up and down) for this item
 --- @field score number @The up down vote ratio for this item, i.e
+--- @field content_descriptors string[] @A list of Steam content descriptiors for this Steam Workshop item

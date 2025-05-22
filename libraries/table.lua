@@ -26,6 +26,7 @@ function table.CollapseKeyValue(input)
 end
 
 --- Creates a deep copy and returns that copy.  
+--- ⚠ **WARNING**: This function is very slow! If you know the table structure, it is better to write your own copying mechanism  
 --- ⚠ **WARNING**: This function does NOT copy userdata, such as Vectors and Angles!  
 --- @param originalTable table @The table to be copied.
 --- @return table @A deep copy of the original table
@@ -202,10 +203,10 @@ end
 function table.MemberValuesFromKey(inputTable, keyName)
 end
 
+--- ℹ **NOTE**: This function can cause a stack overflow under certain circumstances.  
 --- Recursively merges the key-value pairs of the `source` table with the key-value pairs in the `destination` table.  
 --- See table.Inherit, which doesn't override existing values.  
 --- See also table.Add, which simply adds values of one table to another.  
---- ℹ **NOTE**: This function can cause a stack overflow under certain circumstances.  
 --- @param destination table @The table you want the source table to merge with.
 --- @param source table @The table you want to merge with the destination table.
 --- @param forceOverride? boolean @If `true`, does not recursively merge sub-tables, and simply replaces them.

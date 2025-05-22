@@ -242,6 +242,26 @@
   {
     "fields": [
       {
+        "name": "parent",
+        "type": "number",
+        "description": "The bone ID of this bone's parent bone."
+      },
+      {
+        "name": "matrix",
+        "type": "VMatrix",
+        "description": "A <page>VMatrix</page> containing this bone's position and rotation in local space relative to the model's origin."
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "A <page>table</page> structure representing a single bone's orientation when its mesh is in its baseline (or \"bind\") pose before any animation is played.\n\nThis structure does not contain the bone ID for the bone it represents and instead relies on the structure's index within the <page>table</page> returned by <page>util.GetModelMeshes</page> to identify the bone it corresponds to.",
+    "name": "BoneBindPose"
+  },
+  {
+    "fields": [
+      {
         "name": "s",
         "type": "Vector",
         "default": "nil",
@@ -270,10 +290,36 @@
   {
     "fields": [
       {
+        "name": "bone",
+        "type": "number",
+        "description": "The ID of the bone affecting the vertex."
+      },
+      {
+        "name": "weight",
+        "type": "number",
+        "description": "A percentage between `0` and `1` indicating how much influence this bone's <page>VMatrix</page> should have on the the vertex."
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "A <page>table</page> structure representing the amount that a bone's transformation <page>VMatrix</page> should affect its vertex.\n\nA single vertex may have multiple BoneWeight structures affecting it, but each BoneWeight structure belongs to only one vertex.\n\nAdded to the <page>Structures/MeshVertex</page> by <page>util.GetModelMeshes</page>\n\nTo find a bone's transformation <page>VMatrix</page>, see <page>Entity:GetBoneMatrix</page>",
+    "name": "BoneWeight"
+  },
+  {
+    "fields": [
+      {
         "name": "Attacker",
         "type": "Entity",
         "default": "self",
         "description": "The entity that should be reported as attacker eg. a player\n\nBy default this would be set to the entity <page>Entity:FireBullets</page> is called on."
+      },
+      {
+        "name": "Inflictor",
+        "type": "Entity",
+        "default": "NULL",
+        "description": "The entity that should be reported as inflictor eg. a weapon or something similar\n\nAlso defines <page>CTakeDamageInfo:GetWeapon</page> for <page>Weapon</page>."
       },
       {
         "name": "Callback",
@@ -1129,7 +1175,7 @@
         "name": "font",
         "type": "string",
         "default": "Arial",
-        "description": "The font source. Custom font files are stored in resource/fonts/.\n\nThe length is limited to 31 characters maximum.\n\n<warning>This must be the actual 'nice' font, not a file name. Unless the client is running Linux or macOS. (<page>Finding the Font Name</page>)\n\nThis also cannot be an already registered font, i.e. you cannot base your font from any of the <page text=\"Default Fonts\">Default_Fonts</page></warning>"
+        "description": "The font source. Custom font files are stored in `resource/fonts/`.\n\nThe length is limited to 31 characters maximum.\n\n<warning>This must be the actual 'nice' font, not a file name. Unless the client is running Linux or macOS. (<page>Finding the Font Name</page>)\n\nThis also cannot be an already registered font, i.e. you cannot base your font from any of the <page text=\"Default Fonts\">Default_Fonts</page></warning>"
       },
       {
         "name": "extended",
@@ -1526,61 +1572,217 @@
     "fields": [
       {
         "name": "color",
-        "type": "table",
-        "description": "The vertex color. Uses the <page>Color</page>."
+        "type": "Color",
+        "description": "The <page>Color</page> that the area around this corner of a triangle should be tinted."
       },
       {
         "name": "normal",
         "type": "Vector",
-        "description": "The triangles normal required to calculate lighting (Optional)."
+        "description": "A normalized <page>Vector</page> representing a direction facing away from (perpendicular to) the surface of the triangle that this vertex is a part of.\n\nMany shaders use this to calculate lighting."
       },
       {
         "name": "tangent",
         "type": "Vector",
-        "description": "The triangles tangent. Not used by the `VertexLitGeneric` shader."
+        "description": "A normalized <page>Vector</page> representing a direction facing along (parallel with) the surface of the triangle that this vertex is a part of."
       },
       {
         "name": "binormal",
         "type": "Vector",
-        "description": "The triangles binormal. Not used by the `VertexLitGeneric` shader."
+        "description": "A normalized <page>Vector</page> representing a direction facing away from (perpendicular to) both the vertex's normal and tangent directions.\n\nThis is the result of a <page text=\"Cross Product\">Vector:Cross</page> between the vertex's normal and tangent directions."
       },
       {
         "name": "pos",
         "type": "Vector",
-        "description": "The vertex position."
+        "description": "The position of the vertex in local space."
       },
       {
         "name": "u",
         "type": "number",
-        "description": "The U texture coordinate."
+        "description": "The horizontal coordinate of a position on the texture of the triangle that this vertex is a part of.\nThis controls which part of the texture is drawn at this vertex.\n\nIn the range `0` (the texture's left edge) to `1` (the texture's right edge)"
       },
       {
         "name": "v",
         "type": "number",
-        "description": "The V texture coordinate."
+        "description": "The vertical coordinate of a position on the texture of the triangle that this vertex is a part of.\nThis controls which part of the texture is drawn at this vertex.\n\nIn the range `0` (the texture's top edge) to `1` (the texture's bottom edge)"
       },
       {
         "name": "u1",
         "type": "number",
-        "description": "The secondary U texture coordinate. Only works when passed to <page>IMesh:BuildFromTriangles</page>, Useful for `LightmappedGeneric` shader."
+        "description": "A secondary U texture coordinate used by some shaders like `LightmappedGeneric`.\n\nCurrently used exclusively by <page>IMesh:BuildFromTriangles</page>."
       },
       {
         "name": "v1",
         "type": "number",
-        "description": "The secondary V texture coordinate. Only works when passed to <page>IMesh:BuildFromTriangles</page>."
+        "description": "A secondary V texture coordinate used by some shaders like `LightmappedGeneric`.\n\nCurrently used exclusively by <page>IMesh:BuildFromTriangles</page>."
       },
       {
         "name": "userdata",
         "type": "table",
-        "description": "A table of four numbers. This is used by most shaders in Source to hold tangent information of the vertex ( tangentX, tangentY, tangentZ, tangentHandedness )."
+        "description": "A sequential table of four numbers whose purpose and expected values are determined by the shader.\n\nMany Source Engine shaders to hold tangent information of the vertex in the order `tangentX`, `tangentY`, `tangentZ`, `tangentHandedness`."
+      },
+      {
+        "name": "weights",
+        "type": "table",
+        "description": "A sequential table of all the <page text=\"BoneWeight structures\">Structures/BoneWeight</page> that affect this vertex.\n\nThe total sum of their `weight` values should be `1`\n\nCurrent added exclusively by <page>util.GetModelMeshes</page>"
       }
     ],
     "realms": [
       "client",
       "server"
     ],
-    "description": "Table structure representing a mesh vertex used by various functions, such as <page>IMesh:BuildFromTriangles</page> and <page>Entity:PhysicsFromMesh</page> and returned by functions such as <page>util.GetModelMeshes</page> and  <page>PhysObj:GetMesh</page>.",
+    "description": "A <page>table</page> structure representing the data stored by a single vertex of a mesh.\n\nMeshVertex structures are usually grouped together in sets of 3 to define the corners of a triangle.\n\n<note>\nNot all MeshVertex will contain all fields and not all fields are used by all shaders\n\nInformation on the fields used by most Source Engine shaders (Like `VertexLitGeneric`, `UnlitGeneric`, etc.) can be found [on the Valve Developer Wiki here.](https://developer.valvesoftware.com/wiki/Category:Shaders)\n</note>\n\nReturned by:\n* <page>util.GetModelMeshes</page>\n* <page>PhysObj:GetMesh</page>\n\nUsed by:\n* <page>IMesh:BuildFromTriangles</page>\n* <page>Entity:PhysicsFromMesh</page>",
     "name": "MeshVertex"
+  },
+  {
+    "fields": [
+      {
+        "name": "SkinCount",
+        "type": "number",
+        "description": "Identical to <page>Entity:SkinCount</page>."
+      },
+      {
+        "name": "KeyValues",
+        "type": "string",
+        "description": "Valve key-value formatted info about the model's physics (Constraint Info, etc). This is limited to 4096 characters.\n\nThis data can be parsed into a Lua table via <page>util.KeyValuesToTablePreserveOrder</page>"
+      },
+      {
+        "name": "ModelKeyValues",
+        "type": "string",
+        "description": "Valve key-value formatted info about the model (`$keyvalues` command in the `.qc` of the model), if present.\n\nCan describe things like health of a prop, flammability, etc."
+      },
+      {
+        "name": "MeshCount",
+        "type": "number",
+        "description": "Number of meshes the model has. This could be 0 for animation only models."
+      },
+      {
+        "name": "BoneCount",
+        "type": "number",
+        "description": "Number of bones the model has."
+      },
+      {
+        "name": "Flags",
+        "type": "number",
+        "description": "Model flags. See [this page on Valve Developer Wiki](https://developer.valvesoftware.com/wiki/MDL#Model_flags) for explanation of each one."
+      },
+      {
+        "name": "StaticProp",
+        "type": "boolean",
+        "description": "Whether the model is meant to be a static prop (checks a specific model flag)"
+      },
+      {
+        "name": "MaterialCount",
+        "type": "number",
+        "description": "Number of materials used by this model."
+      },
+      {
+        "name": "SequenceCount",
+        "type": "number",
+        "description": "Number of sequences the model has."
+      },
+      {
+        "name": "AttachmentCount",
+        "type": "number",
+        "description": "Number of attachments the model has."
+      },
+      {
+        "name": "ModelName",
+        "type": "string",
+        "description": "Name of the model, as embedded in the model file itself. This may be different from the model path of the model on disk."
+      },
+      {
+        "name": "Version",
+        "type": "number",
+        "description": "Model version. This should be 48 most of the time, but can be different from mountable games."
+      },
+      {
+        "name": "Checksum",
+        "type": "number",
+        "description": "Checksum (CRC32) of the model. This value should be identical across all files for the same model. (.vtx, .mdl, .vvd, etc.)"
+      },
+      {
+        "name": "SurfacePropName",
+        "type": "string",
+        "description": "Name of the surface property for this model. See <page>util.GetSurfaceData</page> for more details about what they are."
+      },
+      {
+        "name": "EyePosition",
+        "type": "Vector",
+        "description": "If present, position of the eyes of the model, for NPCs."
+      },
+      {
+        "name": "IllumPosition",
+        "type": "Vector",
+        "description": "Illumination position for the model, for cases where the model root would be potentially outside of the world."
+      },
+      {
+        "name": "HullMin",
+        "type": "Vector",
+        "description": "Mins of the model's bounding box."
+      },
+      {
+        "name": "HullMax",
+        "type": "Vector",
+        "description": "Maxs of the model's bounding box."
+      },
+      {
+        "name": "Attachments",
+        "type": "table",
+        "description": "A list of attachments the model has.\n\nEach attachment is a table with the following info:\n* Name\n* Bone\n* Offset"
+      },
+      {
+        "name": "Bones",
+        "type": "table",
+        "description": "A list of bones the model has. Please node that the keys of this table are **not** bone IDs, it's just a list, <validate>but it might be safe to assume the keys are (BoneID-1) due to Lua table indexes starting at 1.</validate>.\n\nEach bone in the list has the following fields:\n* Name\n* Parent\n* Flags\n* PhysObj\n* SurfacePropName\n* Position\n* Angle"
+      },
+      {
+        "name": "Sequences",
+        "type": "table",
+        "description": "A list of sequences the model has, including the ones from `$includemodel`s.\n\nEach sequence is a table with the following info:\n* Name\n* Activity"
+      },
+      {
+        "name": "Materials",
+        "type": "table<string>",
+        "description": "A list of materials the model uses, across all its meshes."
+      },
+      {
+        "name": "MaterialDirectories",
+        "type": "table<string>",
+        "description": "A list of folders the game will look in for the **Materials**."
+      }
+    ],
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "description": "Table returned by <page>util.GetModelInfo</page>.",
+    "name": "ModelInfo"
+  },
+  {
+    "fields": [
+      {
+        "name": "material",
+        "type": "string",
+        "description": "The name or path of this mesh's material."
+      },
+      {
+        "name": "triangles",
+        "type": "table",
+        "description": "A sequential <page>table</page> of <page text=\"MeshVertex Structures\">Structures/MeshVertex</page> that represents the triangles of this mesh.\n\nThese triangles are created from the contents of the `verticies` field.\n\nThis can be used as an input to <page>IMesh:BuildFromTriangles</page>"
+      },
+      {
+        "name": "verticies",
+        "type": "table",
+        "description": "A sequential <page>table</page> of <page text=\"MeshVertex Structures\">Structures/MeshVertex</page> that represents each vertex of the mesh.\n\n<bug>\nThis field has a typo in its name and should be named \"vertices\"\n</bug>"
+      }
+    ],
+    "realms": [
+      "client",
+      "server"
+    ],
+    "description": "A <page>table</page> structure containing the information required to create a mesh.\n\nReturned by <page>util.GetModelMeshes</page>",
+    "name": "ModelMeshData"
   },
   {
     "fields": [
@@ -2891,12 +3093,12 @@
       {
         "name": "Owner",
         "type": "Entity",
-        "description": "<warning>Deprecated, use <page>Entity:GetOwner</page>() instead.</warning>"
+        "description": "<deprecated notag=\"true\">Use <page>Entity:GetOwner</page>() instead.</deprecated>"
       },
       {
         "name": "Weapon",
         "type": "Weapon",
-        "description": "<warning>Deprecated, use `SWEP` instead. However, if called in a method; use `self` instead.</warning>"
+        "description": "<deprecated notag=\"true\">Use `SWEP` instead. However, if called in a SWEP method; use `self` instead.</deprecated>"
       },
       {
         "name": "Author",
@@ -3652,6 +3854,11 @@
         "name": "score",
         "type": "number",
         "description": "The up down vote ratio for this item, i.e. `1` is when every vote is `up`, `0.5` is when half of the total votes are the up votes, etc."
+      },
+      {
+        "name": "content_descriptors",
+        "type": "table<string>",
+        "description": "A list of Steam content descriptiors for this Steam Workshop item.\n\nPossible values are:\n* `general_mature`\n* `gore`\n* `suggestive`\n* `nudity`\n* `adult_only`"
       }
     ],
     "realms": [

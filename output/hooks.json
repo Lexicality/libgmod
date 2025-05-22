@@ -400,7 +400,7 @@
         "realms": [
           "client"
         ],
-        "description": "Called if and when the entity should be drawn opaquely, based on the <page>Entity:GetRenderGroup</page> of the entity.\n\nSee <page>Structures/ENT</page> and <page>Enums/RENDERGROUP</page> for more information.\n\nSee also <page>ENTITY:DrawTranslucent</page>.\n\n<note>This function is not called by the game whenever the player looks away from the entity due to optimizations. To change that,\nyou must define an empty <page>Entity:Think</page> method client-side!</note>",
+        "description": "Called if and when the entity should be drawn opaquely, based on the <page>Entity:GetRenderGroup</page> of the entity.\n\nSee <page>Structures/ENT</page> and <page>Enums/RENDERGROUP</page> for more information.\n\nSee also <page>ENTITY:DrawTranslucent</page>.\n\n<note>This function will not called if the entity's render bounds are not in player's view. See <page>Entity:SetRenderBounds</page>.</note>",
         "arguments": [
           {
             "name": "flags",
@@ -415,7 +415,7 @@
         "realms": [
           "client"
         ],
-        "description": "Called when the entity should be drawn translucently. If your scripted entity has a translucent model, it will be invisible unless it is drawn here.",
+        "description": "Called when the entity should be drawn translucently. If your scripted entity has a translucent model, it will be invisible unless it is drawn here.\n\nSee <page>ENTITY:Draw</page> for the opaque rendering alternative to this hook.",
         "arguments": [
           {
             "name": "flags",
@@ -1115,11 +1115,11 @@
         "returnValues": [
           {
             "type": "Vector",
-            "description": "Angular force"
+            "description": "Angular force. The 3rd argument must be above SIM_NOTHING."
           },
           {
             "type": "Vector",
-            "description": "Linear force"
+            "description": "Linear force. The 3rd argument must be above SIM_NOTHING."
           },
           {
             "type": "number",
@@ -1783,6 +1783,16 @@
             "name": "defaultSensitivity",
             "type": "number",
             "description": "The old sensitivity\n\nIn general it will be 0, which is equivalent to a sensitivity of 1."
+          },
+          {
+            "name": "localFOV",
+            "type": "number",
+            "description": "Player's current FOV."
+          },
+          {
+            "name": "defaultFOV",
+            "type": "number",
+            "description": "Default FOV."
           }
         ],
         "returnValues": [
@@ -3223,7 +3233,7 @@
           "client",
           "server"
         ],
-        "description": "Override this hook to disable/change ear-grabbing in your gamemode.",
+        "description": "Override this hook to disable/change ear-grabbing in your gamemode. By default, it is not called anywhere on the server.",
         "arguments": [
           {
             "name": "ply",
@@ -4224,6 +4234,36 @@
         }
       },
       {
+        "name": "OnClientLuaError",
+        "parent": "GM",
+        "realms": [
+          "server"
+        ],
+        "description": "Called when a Lua error occurs on a client.\nThis hook allows server-side code to detect and respond to client-side errors.",
+        "arguments": [
+          {
+            "name": "error",
+            "type": "string",
+            "description": "The error that occurred."
+          },
+          {
+            "name": "ply",
+            "type": "Player",
+            "description": "The player whose client caused the error."
+          },
+          {
+            "name": "stack",
+            "type": "table",
+            "description": "The Lua error stack trace"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Title of the addon that is creating the Lua errors, or \"ERROR\" if addon is not found."
+          }
+        ]
+      },
+      {
         "name": "OnCloseCaptionEmit",
         "parent": "GM",
         "realms": [
@@ -4328,7 +4368,7 @@
           "client",
           "server"
         ],
-        "description": "Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.\n\n<note>Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with <page>Global.IsValid</page>.</note>\n\n<warning>Removing the created entity during this event can lead to unexpected problems. Use <page>timer.Simple</page>( 0, .... ) to safely remove the entity.</warning>",
+        "description": "Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.\n\n<note>Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with <page>Global.IsValid</page>. Will not require <page>Global.IsValid</page> check if you create your hook after <page>GM:InitPostEntity</page>.</note>\n\n<warning>Removing the created entity during this event can lead to unexpected problems. Use <page>timer.Simple</page>( 0, .... ) to safely remove the entity.</warning>",
         "arguments": [
           {
             "name": "entity",
@@ -4535,6 +4575,12 @@
             "name": "ply",
             "type": "Player",
             "description": "The player who tried to freeze the entity."
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "boolean",
+            "description": "Return `false` to block the unfreeze.\n\n<warning>The unfreezing is handled by the base gamemode hook. This hook has no return value, returning any value will prevent the gamemode hook from running, which is true for every hook.</warning>"
           }
         ]
       },
@@ -6096,6 +6142,11 @@
             "name": "ply",
             "type": "Player",
             "description": "Player who started using voice chat."
+          },
+          {
+            "name": "plyIndex",
+            "type": "number",
+            "description": "The player index. Only appears when non-local player speaks for the first time."
           }
         ],
         "returnValues": [

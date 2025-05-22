@@ -108,13 +108,13 @@ end
 --- Called if and when the entity should be drawn opaquely, based on the Entity:GetRenderGroup of the entity.  
 --- See Structures/ENT and Enums/RENDERGROUP for more information.  
 --- See also ENTITY:DrawTranslucent.  
---- ℹ **NOTE**: This function is not called by the game whenever the player looks away from the entity due to optimizations. To change that,  
---- you must define an empty Entity:Think method client-side!  
+--- ℹ **NOTE**: This function will not called if the entity's render bounds are not in player's view. See Entity:SetRenderBounds.  
 --- @param flags number @The bit flags from Enums/STUDIO
 function ENT:Draw(flags)
 end
 
 --- Called when the entity should be drawn translucently. If your scripted entity has a translucent model, it will be invisible unless it is drawn here.  
+--- See ENTITY:Draw for the opaque rendering alternative to this hook.  
 --- @param flags number @The bit flags from Enums/STUDIO
 function ENT:DrawTranslucent(flags)
 end
