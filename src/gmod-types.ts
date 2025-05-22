@@ -38,10 +38,19 @@ export function getTypeName(ret: string): string {
     } else if (structMatch) {
         return "S" + structMatch[1];
     } else if (ret.includes("|")) {
-        return ret
-            .split("|")
-            .map((value) => getTypeName(value))
-            .join("|");
+        let union = ret.split("|").map((value) => getTypeName(value));
+
+        // Workaround for LuaLS/lua-language-server#3141
+        if (
+            union.some((v) => v.startsWith("E") && !v.endsWith("[]")) &&
+            union.some((v) => v.endsWith("[]"))
+        ) {
+            // Honestly I don't know what the best option is here, but this one
+            // makes the convar functions behave correctly:
+            return union.find((v) => v.startsWith("E"))!;
+        }
+
+        return union.join("|");
     } else if (ret == "vararg") {
         // TODO: I don't think emmylua lets you mark returns as arbitrary varargs
         return "any";
