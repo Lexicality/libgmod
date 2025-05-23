@@ -20,10 +20,22 @@ function list.Contains(list, value)
 end
 
 --- Returns a copy of the list stored at identifier  
---- ⚠ **WARNING**: If you don't plan to change anything in list, it's better to use list.GetForEdit for better performance.  
+--- ⚠ **WARNING**: This function uses table.Copy which can be very slow for larger lists. You should avoid calling it repeatedly or in performance sensitive hooks such as GM:Think.  
+--- Where possible you should use the much faster helper functions:  
+--- list.Contains,  
+--- list.HasEntry, or  
+--- list.GetEntry  
+--- There is also the more dangerous option of calling list.GetForEdit to get the unprotected list if you absolutely must iterate through it in a think hook.  
 --- @param identifier string @The list identifier
 --- @return table @The copy of the list
 function list.Get(identifier)
+end
+
+--- Returns a copy of the entry in the list `list` with key `key`.  
+--- @param list string @List to search through
+--- @param key string @The key to search for
+--- @return any|nil @Returns the  value if the list contains the key, nil otherwise
+function list.GetEntry(list, key)
 end
 
 --- Returns the actual table of the list stored at identifier. Modifying this will affect the stored list  

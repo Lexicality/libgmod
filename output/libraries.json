@@ -12103,7 +12103,7 @@
           "client",
           "server"
         ],
-        "description": "Returns a copy of the list stored at identifier\n<warning>If you don't plan to change anything in list, it's better to use <page>list.GetForEdit</page> for better performance.</warning>",
+        "description": "Returns a copy of the list stored at identifier\n<warning>This function uses <page>table.Copy</page> which can be very slow for larger lists. You should avoid calling it repeatedly or in performance sensitive hooks such as <page>GM:Think</page>.</warning>\nWhere possible you should use the much faster helper functions:\n<page>list.Contains</page>,\n<page>list.HasEntry</page>, or\n<page>list.GetEntry</page>\n\nThere is also the more dangerous option of calling <page>list.GetForEdit</page> to get the unprotected list if you absolutely must iterate through it in a think hook.",
         "arguments": [
           {
             "name": "identifier",
@@ -12121,6 +12121,39 @@
           "file": "lua/includes/modules/list.lua",
           "lineStart": 10,
           "lineEnd": 14
+        }
+      },
+      {
+        "name": "GetEntry",
+        "parent": "list",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "description": "Returns a copy of the entry in the list `list` with key `key`.",
+        "arguments": [
+          {
+            "name": "list",
+            "type": "string",
+            "description": "List to search through"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "description": "The key to search for"
+          }
+        ],
+        "returnValues": [
+          {
+            "type": "any|nil",
+            "description": "Returns the  value if the list contains the key, nil otherwise"
+          }
+        ],
+        "source": {
+          "file": "lua/includes/modules/list.lua",
+          "lineStart": 16,
+          "lineEnd": 27
         }
       },
       {
@@ -32111,7 +32144,12 @@
             "type": "boolean",
             "description": "False if the input is equal to the string or boolean \"false\", if the input is equal to the string or number \"0\", or if the input is nil. Returns true otherwise."
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/extensions/util.lua",
+          "lineStart": 73,
+          "lineEnd": 73
+        }
       },
       {
         "name": "TraceEntity",
