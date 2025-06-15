@@ -3,9 +3,20 @@
 --- Library to work with the [LuaJIT](http://luajit.org/) functionality of gmod.  
 _G.jit = {}
 --- A variable containing the target architecture name: `x86`, `x64`, `arm`, `ppc`, `ppcspe`, or `mips`. This will be `x86` or `x64` in GMod.  
---- @return string @The system architecture.
-function jit.arch()
-end
+--- @type string
+jit.arch = nil --[[@as string]]
+
+--- This is NOT a function, it's a variable containing the target OS name: `Windows`, `Linux`, `OSX`, `BSD`, `POSIX` or `Other`.  
+--- @type string
+jit.os = nil --[[@as string]]
+
+--- A variable containing the LuaJIT version string. This is `LuaJIT 2.0.4` in GMod, and `LuaJIT 2.1.0-beta3` on the x86-64 branch of GMod.  
+--- @type string
+jit.version = nil --[[@as string]]
+
+--- A variable containing the version number of the LuaJIT core.  
+--- @type number
+jit.version_num = nil --[[@as number]]
 
 --- You can attach callbacks to a number of compiler events with jit.attach. The callback can be called:  
 --- * when a function has been compiled to bytecode (`"bc"`);  
@@ -42,11 +53,6 @@ end
 --- A list of LuaJIT -O command line options can be found here(a table of various optimization levels are displayed towards the bottom of the page along with exactly which optimization options are enabled for each level): http://luajit.org/running.html  
 --- @vararg any 
 function jit.opt.start(...)
-end
-
---- This is NOT a function, it's a variable containing the target OS name: `Windows`, `Linux`, `OSX`, `BSD`, `POSIX` or `Other`.  
---- @return string @The operating system.
-function jit.os()
 end
 
 --- Returns the status of the JIT compiler and the current optimizations enabled.  
@@ -179,14 +185,4 @@ end
 --- @param sn number @snapshot index for trace (starting from 0 to nexit - 1, nexit gotten via jit.util.traceinfo)
 --- @return table @snapshot
 function jit.util.tracesnap(tr, sn)
-end
-
---- A variable containing the LuaJIT version string. This is `LuaJIT 2.0.4` in GMod, and `LuaJIT 2.1.0-beta3` on the x86-64 branch of GMod.  
---- @return string @The version string.
-function jit.version()
-end
-
---- A variable containing the version number of the LuaJIT core.  
---- @return number @The version number
-function jit.version_num()
 end

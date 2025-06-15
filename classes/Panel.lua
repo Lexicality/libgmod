@@ -32,6 +32,10 @@
 --- vgui.Register( "NewPanel", PANEL, "DLabel" )  
 --- ```  
 local GPanel = {}
+--- Set to true by the dragndrop system when the panel is being drawn for the drag'n'drop.  
+--- @type boolean
+GPanel.PaintingDragging = nil --[[@as boolean]]
+
 --- When provided with a string or table, this function will create a new vgui element with that name and set the parent to the panel that this method is called on. When provided with a panel it will use Panel:SetParent on the provided panel to set it to our source panel  
 --- @param object GPanel @The panel to be added (parented).
 --- @return GPanel @New panel
@@ -980,11 +984,6 @@ end
 --- Paints the panel at its current position. To use this you must call Panel:SetPaintedManually(true).  
 --- @param unclamp? boolean @If set, overrides panels' clipping so that it can render fully when its size is larger than the game's resolution.
 function GPanel:PaintManual(unclamp)
-end
-
---- Set to true by the dragndrop system when the panel is being drawn for the drag'n'drop.  
---- @return boolean @Set to true if drawing for the transparent dragging render.
-function GPanel:PaintingDragging()
 end
 
 --- Parents the panel to the HUD.  

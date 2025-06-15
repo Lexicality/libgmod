@@ -30,6 +30,24 @@
 --- </upload></description>  
 --- </example>  
 _G.math = {}
+--- A variable that effectively represents infinity, in the sense that in any numerical comparison every number will be less than this.  
+--- For example, if `x` is a number, `x > math.huge` will **NEVER** be `true` except in the case of overflow (see below).  
+--- Lua will consider any number greater than or equal to `2^1024` (the exponent limit of a [double](http://en.wikipedia.org/wiki/Double-precision_floating-point_format)) as `inf` and hence equal to this.  
+--- @type number
+math.huge = nil --[[@as number]]
+
+--- A variable containing the mathematical constant pi. (`3.1415926535898`)  
+--- See also: Trigonometry  
+--- ℹ **NOTE**: It should be noted that due to the nature of floating point numbers, results of calculations with `math.pi` may not be what you expect. See second example below.  
+--- @type number
+math.pi = nil --[[@as number]]
+
+--- A variable containing the mathematical constant tau, which is equivalent to 2*math.pi. (`6.28318530718`)  
+--- See also: Trigonometry  
+--- ℹ **NOTE**: It should be noted that due to the nature of floating point numbers, results of calculations with `math.tau` may not be what you expect. See the second example on math.pi page.  
+--- @type number
+math.tau = nil --[[@as number]]
+
 --- Calculates the difference between two angles.  
 --- @param a number @The first angle.
 --- @param b number @The second angle.
@@ -493,13 +511,6 @@ end
 function math.frexp(x)
 end
 
---- A variable that effectively represents infinity, in the sense that in any numerical comparison every number will be less than this.  
---- For example, if `x` is a number, `x > math.huge` will **NEVER** be `true` except in the case of overflow (see below).  
---- Lua will consider any number greater than or equal to `2^1024` (the exponent limit of a [double](http://en.wikipedia.org/wiki/Double-precision_floating-point_format)) as `inf` and hence equal to this.  
---- @return number @The effective infinity.
-function math.huge()
-end
-
 --- Takes a normalised number and returns the floating point representation.  
 --- Effectively it returns the result of `normalizedFraction * 2.0 ^ exponent`. math.frexp is the opposite function.  
 --- @param normalizedFraction number @The value to get the normalized fraction and the exponent from.
@@ -548,13 +559,6 @@ end
 --- @return number @The integral component.
 --- @return number @The fractional component.
 function math.modf(base)
-end
-
---- A variable containing the mathematical constant pi. (`3.1415926535898`)  
---- See also: Trigonometry  
---- ℹ **NOTE**: It should be noted that due to the nature of floating point numbers, results of calculations with `math.pi` may not be what you expect. See second example below.  
---- @return number @The mathematical constant, Pi.
-function math.pi()
 end
 
 --- Returns x raised to the power y.  
@@ -616,11 +620,4 @@ end
 --- @param number number @Angle in radians.
 --- @return number @The hyperbolic tangent of the given angle.
 function math.tanh(number)
-end
-
---- A variable containing the mathematical constant tau, which is equivalent to 2*math.pi. (`6.28318530718`)  
---- See also: Trigonometry  
---- ℹ **NOTE**: It should be noted that due to the nature of floating point numbers, results of calculations with `math.tau` may not be what you expect. See the second example on math.pi page.  
---- @return number @The mathematical constant, Tau.
-function math.tau()
 end

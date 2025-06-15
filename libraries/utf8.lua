@@ -3,6 +3,10 @@
 --- The utf8 library provides basic support for UTF-8 encoding. This library does not provide any support for Unicode other than the handling of the encoding. Any operation that needs the meaning of a character, such as character classification, is outside its scope.  
 --- Unless stated otherwise, all functions that expect a byte position as a parameter assume that the given position is either the start of a byte sequence or one plus the length of the subject string. As in the string library, negative indices count from the end of the string.  
 _G.utf8 = {}
+--- This is NOT a function, it's a pattern (a string, not a function) which matches exactly one UTF-8 byte sequence, assuming that the subject is a valid UTF-8 string.  
+--- @type string
+utf8.charpattern = nil --[[@as string]]
+
 --- A UTF-8 compatible version of string.GetChar.  
 --- @param str string @The string that you will be searching with the supplied index.
 --- @param index number @The index's value of the string to be returned.
@@ -14,11 +18,6 @@ end
 --- @vararg any @Unicode code points to be converted in to a UTF-8 string.
 --- @return string @UTF-8 string generated from given arguments.
 function utf8.char(...)
-end
-
---- This is NOT a function, it's a pattern (a string, not a function) which matches exactly one UTF-8 byte sequence, assuming that the subject is a valid UTF-8 string.  
---- @return string @```
-function utf8.charpattern()
 end
 
 --- Returns the codepoints (as numbers) from all characters in the given string that start between byte position startPos and endPos. It raises an error if it meets any invalid byte sequence. This functions similarly to string.byte.  

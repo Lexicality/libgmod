@@ -2,21 +2,24 @@
 
 --- The derma library allows you to add custom derma controls and create & modify derma skins.  
 _G.derma = {}
---- Gets the color from a Derma skin of a panel and returns default color if not found  
---- @param name string 
---- @param pnl GPanel 
---- @param default table @The default color in case of failure.
-function derma.Color(name, pnl, default)
-end
-
 --- This is NOT a function, it's a variable containing all derma controls, registered with derma.DefineControl.  
 --- Use derma.GetControlList to retrieve this list.  
 --- It's a list of tables, each having 3 keys, all from derma.DefineControl arguments:  
 --- * string ClassName - The class name of the panel  
 --- * string Description - The description of the panel  
 --- * string BaseClass - The base class of the panel  
---- @return table @The list of all registered derma controls.
-function derma.Controls()
+--- @type table
+derma.Controls = nil --[[@as table]]
+
+--- This is NOT a function, it's a variable containing all registered via derma.DefineSkin derma skins.  
+--- @type table
+derma.SkinList = nil --[[@as table]]
+
+--- Gets the color from a Derma skin of a panel and returns default color if not found  
+--- @param name string 
+--- @param pnl GPanel 
+--- @param default table @The default color in case of failure.
+function derma.Color(name, pnl, default)
 end
 
 --- Defines a new Derma control with an optional base.  
@@ -79,11 +82,6 @@ end
 --- @param vararg2? any @Second parameter for the panel hook
 --- @return any @The returned variable from the skin hook
 function derma.SkinHook(type, name, panel, vararg1, vararg2)
-end
-
---- This is NOT a function, it's a variable containing all registered via derma.DefineSkin derma skins.  
---- @return table @The list of all registered derma skins.
-function derma.SkinList()
 end
 
 --- Returns a function to draw a specified texture of panels skin.  

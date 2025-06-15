@@ -2,6 +2,23 @@
 
 --- The duplicator library allows you to specify what should be saved when someone attempts to duplicate your custom entity with the duplicator tool. It can also be used by 3rd party duplicator tools to make use of the built in system.  
 _G.duplicator = {}
+--- A list of all entity bone modifiers registered with duplicator.RegisterBoneModifier.  
+--- @type table
+duplicator.BoneModifiers = nil --[[@as table]]
+
+--- A list of all constraints that can be duplicated. Registered with duplicator.RegisterConstraint.  
+--- @type table
+duplicator.ConstraintType = nil --[[@as table]]
+
+--- A list of all entity classes have a custom duplication spawn function. Registered with duplicator.RegisterEntityClass.  
+--- If you wish to get a specific entity class table, use duplicator.FindEntityClass.  
+--- @type table
+duplicator.EntityClasses = nil --[[@as table]]
+
+--- A list of all entity modifiers registered with duplicator.RegisterEntityModifier.  
+--- @type table
+duplicator.EntityModifiers = nil --[[@as table]]
+
 --- Allow entities with given class name to be duplicated. See duplicator.Disallow for the opposite effect.  
 --- @param classname string @An entity's classname to allow duplicating.
 function duplicator.Allow(classname)
@@ -19,20 +36,10 @@ end
 function duplicator.ApplyEntityModifiers(ply, ent)
 end
 
---- A list of all entity bone modifiers registered with duplicator.RegisterBoneModifier.  
---- @return table @The list of all entity bone modifiers.
-function duplicator.BoneModifiers()
-end
-
 --- Clears/removes the chosen entity modifier from the entity.  
 --- @param ent GEntity @The entity the modification is stored on
 --- @param key any @The key of the stored entity modifier
 function duplicator.ClearEntityModifier(ent, key)
-end
-
---- A list of all constraints that can be duplicated. Registered with duplicator.RegisterConstraint.  
---- @return table @The list of all constraints that can be duplicated
-function duplicator.ConstraintType()
 end
 
 --- Copies the entity, and all of its constraints and entities, then returns them in a table.  
@@ -98,17 +105,6 @@ end
 --- @param ply? GPlayer @The player who owns the entity
 --- @param data? table @The data to be applied onto the entity
 function duplicator.DoGenericPhysics(ent, ply, data)
-end
-
---- A list of all entity classes have a custom duplication spawn function. Registered with duplicator.RegisterEntityClass.  
---- If you wish to get a specific entity class table, use duplicator.FindEntityClass.  
---- @return table @The list of all entity classes with a custom duplication handler
-function duplicator.EntityClasses()
-end
-
---- A list of all entity modifiers registered with duplicator.RegisterEntityModifier.  
---- @return table @The list of all entity modifiers.
-function duplicator.EntityModifiers()
 end
 
 --- Checks the given duplication table and tries to figure out any addons that might be required to correctly spawn the duplication. Currently this is limited to models and material overrides saved in the duplication.  

@@ -4,6 +4,14 @@
 --- This is a list of all available methods for all entities, which includes Players, Weapons, NPCs and Vehicles.  
 --- For a list of possible members of Scripted Entities see ENT Structure  
 local GEntity = {}
+--- If set, the entity will not be duplicated via the built-in duplicator system.  
+--- @type boolean
+GEntity.DoNotDuplicate = nil --[[@as boolean]]
+
+--- A bool which determines if the Physgun can pickup this entity.  
+--- @type boolean
+GEntity.PhysgunDisabled = nil --[[@as boolean]]
+
 --- Activates the entity. This needs to be used on some entities (like constraints) after being spawned.  
 --- ℹ **NOTE**: For some entity types when this function is used after Entity:SetModelScale, the physics object will be recreated with the new scale. [Source-sdk-2013](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp/src/game/server/baseanimating.cpp#L321-L327).  
 --- Calling this method after Entity:SetModelScale will recreate a new scaled `SOLID_VPHYSICS` PhysObj on scripted entities. This can be a problem if you made a properly scaled PhysObj of another kind (using Entity:PhysicsInitSphere for instance) or if you edited the PhysObj's properties. This is especially the behavior of the Sandbox spawn menu.  
@@ -234,11 +242,6 @@ end
 --- @param magnitude? number @Magnitude of the dissolve effect, its effect depends on the dissolve type.
 --- @param origin? GVector @The origin for the dissolve effect, its effect depends on the dissolve type
 function GEntity:Dissolve(type, magnitude, origin)
-end
-
---- If set, the entity will not be duplicated via the built-in duplicator system.  
---- @return boolean @Set to true to disable being saved.
-function GEntity:DoNotDuplicate()
 end
 
 --- This removes the argument entity from an ent's list of entities to 'delete on remove'  
@@ -2185,11 +2188,6 @@ end
 
 --- Wakes up the entity's physics object  
 function GEntity:PhysWake()
-end
-
---- A bool which determines if the Physgun can pickup this entity.  
---- @return boolean @Set to true to disable pickup
-function GEntity:PhysgunDisabled()
 end
 
 --- Destroys the current physics object of an entity.  

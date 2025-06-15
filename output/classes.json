@@ -7495,6 +7495,27 @@
   },
   {
     "description": "This is a list of all available methods for all entities, which includes <page text=\"Players\">Player</page>, <page text=\"Weapons\">Weapon</page>, <page text=\"NPCs\">NPC</page> and <page text=\"Vehicles\">Vehicle</page>.\n\nFor a list of possible members of <page>Scripted Entities</page> see <page text=\"ENT Structure\">Structures/ENT</page>",
+    "fields": [
+      {
+        "description": "If set, the entity will not be duplicated via the built-in duplicator system.",
+        "name": "DoNotDuplicate",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ],
+        "type": "boolean"
+      },
+      {
+        "description": "A bool which determines if the Physgun can pickup this entity.",
+        "name": "PhysgunDisabled",
+        "parent": "Entity",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "boolean"
+      }
+    ],
     "functions": [
       {
         "description": "Activates the entity. This needs to be used on some entities (like constraints) after being spawned.\n\n<note>For some entity types when this function is used after <page>Entity:SetModelScale</page>, the physics object will be recreated with the new scale. [Source-sdk-2013](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp/src/game/server/baseanimating.cpp#L321-L327).\n\nCalling this method after <page>Entity:SetModelScale</page> will recreate a new scaled `SOLID_VPHYSICS` <page>PhysObj</page> on scripted entities. This can be a problem if you made a properly scaled <page>PhysObj</page> of another kind (using <page>Entity:PhysicsInitSphere</page> for instance) or if you edited the <page>PhysObj</page>'s properties. This is especially the behavior of the Sandbox spawn menu.</note>",
@@ -18119,35 +18140,6 @@
             "type": "Angle"
           }
         ]
-      },
-      {
-        "description": "If set, the entity will not be duplicated via the built-in duplicator system.",
-        "name": "DoNotDuplicate",
-        "parent": "Entity",
-        "realms": [
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "Set to true to disable being saved.",
-            "type": "boolean"
-          }
-        ]
-      },
-      {
-        "description": "A bool which determines if the Physgun can pickup this entity.",
-        "name": "PhysgunDisabled",
-        "parent": "Entity",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "Set to true to disable pickup. Only affects visuals Clientside",
-            "type": "boolean"
-          }
-        ]
       }
     ],
     "name": "Entity"
@@ -23681,6 +23673,18 @@
   },
   {
     "description": "This is the base panel for every other [VGUI](vgui) panel.\n\nIt contains all of the basic methods, some of which may only work on certain VGUI elements. See also <page>Panel Hooks</page>.\n\nAs their functionality is provided at the game's C/C++ level rather than by its Lua script extension, they are unfortunately unavailable for most practical purposes, however, they can still be obtained in a way similar to that provided by the <page>baseclass</page> library:\n\n```\n-- Create a new panel type NewPanel that inherits all of its functionality from DLabel,\n-- but has a different SetText method than DLabel does - all without the hassle of that\n-- old DLabel's default text getting in the way. Fun stuff.\n\nlocal PANEL = {}\n\nfunction PANEL:Init()\n\nself:SetText_Base( \"\" )\nself:SetText( \"Time for something different!\" )\n\nend\n\nfunction PANEL:Paint( aWide, aTall )\n\nlocal TextX, TextY = 0, 0\nlocal TextColor = Color( 255, 0, 0, 255 )\n\nsurface.SetFont( self:GetFont() or \"default\" )\nsurface.SetTextColor( TextColor )\nsurface.SetTextPos( TextX, TextY )\nsurface.DrawText( self:GetText() )\n\nend\n\n-- And here we go:\nPANEL.SetText_Base = FindMetaTable( \"Panel\" ).SetText\n\nfunction PANEL:SetText( aText )\n\nself.Text = tostring( aText )\n\nend\n\nfunction PANEL:GetText()\n\nreturn self.Text or \"\"\n\nend\n\nvgui.Register( \"NewPanel\", PANEL, \"DLabel\" )\n```",
+    "fields": [
+      {
+        "description": "Set to true by the <page>dragndrop</page> system when the panel is being drawn for the drag'n'drop.",
+        "name": "PaintingDragging",
+        "parent": "Panel",
+        "realms": [
+          "client",
+          "menu"
+        ],
+        "type": "boolean"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -29281,21 +29285,6 @@
         "returnValues": [
           {
             "description": "Whether the panel is valid or not, true being it is, false being it isn't.",
-            "type": "boolean"
-          }
-        ]
-      },
-      {
-        "description": "Set to true by the <page>dragndrop</page> system when the panel is being drawn for the drag'n'drop.",
-        "name": "PaintingDragging",
-        "parent": "Panel",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "returnValues": [
-          {
-            "description": "Set to true if drawing for the transparent dragging render.",
             "type": "boolean"
           }
         ]

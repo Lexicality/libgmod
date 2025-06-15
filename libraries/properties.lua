@@ -2,6 +2,10 @@
 
 --- The properties library gives you access to the menu that shows up when right clicking entities while holding C.  
 _G.properties = {}
+--- A list of all properties registered with properties.Add.  
+--- @type table
+properties.List = nil --[[@as table]]
+
 --- Add properties to the properties module. Properties can be blocked via GM:CanProperty.  
 --- @param name string @A unique name used to identify the property
 --- @param propertyData table @A table that defines the property
@@ -21,11 +25,6 @@ end
 --- @param aimVec GVector @Aim vector of local player, Player:GetAimVector
 --- @return GEntity @The hovered entity
 function properties.GetHovered(pos, aimVec)
-end
-
---- A list of all properties registered with properties.Add.  
---- @return table @The list of all properties
-function properties.List()
 end
 
 --- Checks if player hovers over any entities and open a properties menu for it.  

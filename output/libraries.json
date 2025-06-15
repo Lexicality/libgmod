@@ -4980,6 +4980,28 @@
   },
   {
     "description": "The derma library allows you to add custom derma controls and create &amp; modify derma skins.",
+    "fields": [
+      {
+        "description": "This is NOT a function, it's a variable containing all derma controls, registered with <page>derma.DefineControl</page>.\n\nUse <page>derma.GetControlList</page> to retrieve this list.\n\nIt's a list of tables, each having 3 keys, all from <page>derma.DefineControl</page> arguments:\n* <page>string</page> ClassName - The class name of the panel\n* <page>string</page> Description - The description of the panel\n* <page>string</page> BaseClass - The base class of the panel",
+        "name": "Controls",
+        "parent": "derma",
+        "realms": [
+          "client",
+          "menu"
+        ],
+        "type": "table"
+      },
+      {
+        "description": "This is NOT a function, it's a variable containing all registered via <page>derma.DefineSkin</page> derma skins.",
+        "name": "SkinList",
+        "parent": "derma",
+        "realms": [
+          "client",
+          "menu"
+        ],
+        "type": "table"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -5011,21 +5033,6 @@
           "lineEnd": 229,
           "lineStart": 222
         }
-      },
-      {
-        "description": "This is NOT a function, it's a variable containing all derma controls, registered with <page>derma.DefineControl</page>.\n\nUse <page>derma.GetControlList</page> to retrieve this list.\n\nIt's a list of tables, each having 3 keys, all from <page>derma.DefineControl</page> arguments:\n* <page>string</page> ClassName - The class name of the panel\n* <page>string</page> Description - The description of the panel\n* <page>string</page> BaseClass - The base class of the panel",
-        "name": "Controls",
-        "parent": "derma",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all registered derma controls.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -5269,21 +5276,6 @@
           "lineEnd": 200,
           "lineStart": 187
         }
-      },
-      {
-        "description": "This is NOT a function, it's a variable containing all registered via <page>derma.DefineSkin</page> derma skins.",
-        "name": "SkinList",
-        "parent": "derma",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all registered derma skins.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -6408,6 +6400,48 @@
   },
   {
     "description": "The duplicator library allows you to specify what should be saved when someone attempts to duplicate your custom entity with the duplicator tool. It can also be used by 3rd party duplicator tools to make use of the built in system.",
+    "fields": [
+      {
+        "description": "A list of all entity bone modifiers registered with <page>duplicator.RegisterBoneModifier</page>.",
+        "name": "BoneModifiers",
+        "parent": "duplicator",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      },
+      {
+        "description": "A list of all <page>constraint</page>s that can be duplicated. Registered with <page>duplicator.RegisterConstraint</page>.",
+        "name": "ConstraintType",
+        "parent": "duplicator",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      },
+      {
+        "description": "A list of all entity classes have a custom duplication spawn function. Registered with <page>duplicator.RegisterEntityClass</page>.\n\nIf you wish to get a specific entity class table, use <page>duplicator.FindEntityClass</page>.",
+        "name": "EntityClasses",
+        "parent": "duplicator",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      },
+      {
+        "description": "A list of all entity modifiers registered with <page>duplicator.RegisterEntityModifier</page>.",
+        "name": "EntityModifiers",
+        "parent": "duplicator",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -6481,21 +6515,6 @@
         }
       },
       {
-        "description": "A list of all entity bone modifiers registered with <page>duplicator.RegisterBoneModifier</page>.",
-        "name": "BoneModifiers",
-        "parent": "duplicator",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all entity bone modifiers.",
-            "type": "table"
-          }
-        ]
-      },
-      {
         "arguments": [
           {
             "description": "The entity the modification is stored on",
@@ -6519,21 +6538,6 @@
           "lineEnd": 534,
           "lineStart": 527
         }
-      },
-      {
-        "description": "A list of all <page>constraint</page>s that can be duplicated. Registered with <page>duplicator.RegisterConstraint</page>.",
-        "name": "ConstraintType",
-        "parent": "duplicator",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all constraints that can be duplicated. Key = classname, Value = table.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -6813,36 +6817,6 @@
           "lineEnd": 1014,
           "lineStart": 1008
         }
-      },
-      {
-        "description": "A list of all entity classes have a custom duplication spawn function. Registered with <page>duplicator.RegisterEntityClass</page>.\n\nIf you wish to get a specific entity class table, use <page>duplicator.FindEntityClass</page>.",
-        "name": "EntityClasses",
-        "parent": "duplicator",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all entity classes with a custom duplication handler. Key = classname, Value = table.",
-            "type": "table"
-          }
-        ]
-      },
-      {
-        "description": "A list of all entity modifiers registered with <page>duplicator.RegisterEntityModifier</page>.",
-        "name": "EntityModifiers",
-        "parent": "duplicator",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all entity modifiers.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -11248,7 +11222,7 @@
   },
   {
     "description": "Library to work with the [LuaJIT](http://luajit.org/) functionality of gmod.",
-    "functions": [
+    "fields": [
       {
         "description": "A variable containing the target architecture name: `x86`, `x64`, `arm`, `ppc`, `ppcspe`, or `mips`. This will be `x86` or `x64` in GMod.",
         "name": "arch",
@@ -11258,13 +11232,43 @@
           "client",
           "server"
         ],
-        "returnValues": [
-          {
-            "description": "The system architecture.",
-            "type": "string"
-          }
-        ]
+        "type": "string"
       },
+      {
+        "description": "This is NOT a function, it's a variable containing the target OS name: `Windows`, `Linux`, `OSX`, `BSD`, `POSIX` or `Other`.",
+        "name": "os",
+        "parent": "jit",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "type": "string"
+      },
+      {
+        "description": "A variable containing the LuaJIT version string. This is `LuaJIT 2.0.4` in GMod, and `LuaJIT 2.1.0-beta3` on the x86-64 branch of GMod.",
+        "name": "version",
+        "parent": "jit",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "type": "string"
+      },
+      {
+        "description": "A variable containing the version number of the LuaJIT core.",
+        "name": "version_num",
+        "parent": "jit",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "type": "number"
+      }
+    ],
+    "functions": [
       {
         "arguments": [
           {
@@ -11332,22 +11336,6 @@
           "menu",
           "client",
           "server"
-        ]
-      },
-      {
-        "description": "This is NOT a function, it's a variable containing the target OS name: `Windows`, `Linux`, `OSX`, `BSD`, `POSIX` or `Other`.",
-        "name": "os",
-        "parent": "jit",
-        "realms": [
-          "menu",
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The operating system.",
-            "type": "string"
-          }
         ]
       },
       {
@@ -11692,38 +11680,6 @@
           {
             "description": "snapshot",
             "type": "table"
-          }
-        ]
-      },
-      {
-        "description": "A variable containing the LuaJIT version string. This is `LuaJIT 2.0.4` in GMod, and `LuaJIT 2.1.0-beta3` on the x86-64 branch of GMod.",
-        "name": "version",
-        "parent": "jit",
-        "realms": [
-          "menu",
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The version string.",
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "description": "A variable containing the version number of the LuaJIT core.",
-        "name": "version_num",
-        "parent": "jit",
-        "realms": [
-          "menu",
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The version number.  Version `xx.yy.zz` is represented by the decimal number `xxyyzz`. In GMod this is `20004`. On x86-64 branch it's `20100`.",
-            "type": "number"
           }
         ]
       }
@@ -12437,6 +12393,41 @@
   },
   {
     "description": "An easing library that allows you to interpolate with various kinds of smoothing [functions](https://easings.net/). To use with <page>Global.Lerp</page>, input what you would to the fraction argument in one of these easing functions and then the output of that into the <page>Global.Lerp</page> fraction argument.\n<example>\n<description>Example usage with Lerp and <page>math.ease.InSine</page></description>\n<code>\n-- Define a wrapper function to make it easier to work with\nlocal function easedLerp(fraction, from, to)\nreturn Lerp(math.ease.InSine(fraction), from, to)\nend\n\n-- Compare with the non-eased version of Lerp\nprint(easedLerp(0.25, 0, 1))\nprint(Lerp(0.25, 0, 1))\n\nprint(easedLerp(0.25, 0, 5))\nprint(Lerp(0.25, 0, 5))\n</code>\n<output>\n```\n0.076120467488713\n0.25\n\n0.38060233744357\n1.25\n```\n</output>\n\n</example>\n\n<example>\n<description>\nA brief visual example of different easing methods\n<upload src=\"ab571/8dc38906fb4cfbe.gif\" size=\"4162886\" name=\"easing_examples.gif\">\n</upload></description>\n</example>",
+    "fields": [
+      {
+        "description": "A variable that effectively represents infinity, in the sense that in any numerical comparison every number will be less than this.\n\nFor example, if `x` is a number, `x &gt; math.huge` will **NEVER** be `true` except in the case of overflow (see below).\n\nLua will consider any number greater than or equal to `2^1024` (the exponent limit of a [double](http://en.wikipedia.org/wiki/Double-precision_floating-point_format)) as `inf` and hence equal to this.",
+        "name": "huge",
+        "parent": "math",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "type": "number"
+      },
+      {
+        "description": "A variable containing the mathematical constant pi. (`3.1415926535898`)\n\nSee also: <page>Trigonometry</page>\n\n<note>It should be noted that due to the nature of floating point numbers, results of calculations with `math.pi` may not be what you expect. See second example below.</note>",
+        "name": "pi",
+        "parent": "math",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "type": "number"
+      },
+      {
+        "description": "A variable containing the mathematical constant tau, which is equivalent to 2*<page>math.pi</page>. (`6.28318530718`)\n\nSee also: <page>Trigonometry</page>\n\n<note>It should be noted that due to the nature of floating point numbers, results of calculations with `math.tau` may not be what you expect. See the second example on <page>math.pi</page> page.</note>",
+        "name": "tau",
+        "parent": "math",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "type": "number"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -14140,22 +14131,6 @@
         ]
       },
       {
-        "description": "A variable that effectively represents infinity, in the sense that in any numerical comparison every number will be less than this.\n\nFor example, if `x` is a number, `x &gt; math.huge` will **NEVER** be `true` except in the case of overflow (see below).\n\nLua will consider any number greater than or equal to `2^1024` (the exponent limit of a [double](http://en.wikipedia.org/wiki/Double-precision_floating-point_format)) as `inf` and hence equal to this.",
-        "name": "huge",
-        "parent": "math",
-        "realms": [
-          "menu",
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The effective infinity.",
-            "type": "number"
-          }
-        ]
-      },
-      {
         "arguments": [
           {
             "description": "Number to be converted.",
@@ -14430,22 +14405,6 @@
           "lineEnd": 187,
           "lineStart": 185
         }
-      },
-      {
-        "description": "A variable containing the mathematical constant pi. (`3.1415926535898`)\n\nSee also: <page>Trigonometry</page>\n\n<note>It should be noted that due to the nature of floating point numbers, results of calculations with `math.pi` may not be what you expect. See second example below.</note>",
-        "name": "pi",
-        "parent": "math",
-        "realms": [
-          "menu",
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The mathematical constant, Pi.",
-            "type": "number"
-          }
-        ]
       },
       {
         "arguments": [
@@ -14852,22 +14811,6 @@
         ]
       },
       {
-        "description": "A variable containing the mathematical constant tau, which is equivalent to 2*<page>math.pi</page>. (`6.28318530718`)\n\nSee also: <page>Trigonometry</page>\n\n<note>It should be noted that due to the nature of floating point numbers, results of calculations with `math.tau` may not be what you expect. See the second example on <page>math.pi</page> page.</note>",
-        "name": "tau",
-        "parent": "math",
-        "realms": [
-          "menu",
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The mathematical constant, Tau.",
-            "type": "number"
-          }
-        ]
-      },
-      {
         "arguments": [
           {
             "description": "Start time in seconds",
@@ -14944,7 +14887,7 @@
   },
   {
     "description": "A library that allows implementing custom [material proxies](https://developer.valvesoftware.com/wiki/Material_proxies) for materials.\n\nMaterial proxies allow programmatically setting specific `.vmt` shader parameters on a per-entity basis, rather being global across all instances of a material.",
-    "functions": [
+    "fields": [
       {
         "description": "<internal></internal>A list of all **active** material proxies.",
         "name": "ActiveList",
@@ -14952,13 +14895,19 @@
         "realms": [
           "client"
         ],
-        "returnValues": [
-          {
-            "description": "The list of all active material proxies.",
-            "type": "table"
-          }
-        ]
+        "type": "table"
       },
+      {
+        "description": "A list of all material proxies registered with <page>matproxy.Add</page>.",
+        "name": "ProxyList",
+        "parent": "matproxy",
+        "realms": [
+          "client"
+        ],
+        "type": "table"
+      }
+    ],
+    "functions": [
       {
         "arguments": [
           {
@@ -15043,20 +14992,6 @@
           "lineEnd": 79,
           "lineStart": 63
         }
-      },
-      {
-        "description": "A list of all material proxies registered with <page>matproxy.Add</page>.",
-        "name": "ProxyList",
-        "parent": "matproxy",
-        "realms": [
-          "client"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all material proxies.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -16359,6 +16294,38 @@
   },
   {
     "description": "The net library is one of a number of ways to send data between the client and server.\n\nThe major advantages of the net library are the large size limit (64kb/message) and the ability to send data backwards - from the client to the server.\n\nRefer to <page>Net Library Usage</page> for a short introduction.",
+    "fields": [
+      {
+        "description": "<internal></internal>\n\nA list of types that can be sent over the network via <page>net.ReadType</page>.",
+        "name": "ReadVars",
+        "parent": "net",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      },
+      {
+        "description": "<internal></internal>\n\nThis is NOT a function, it's a table used internally by the net library to store net receivers added with <page>net.Receive</page>.\n\nThe key is the lowercase net message name and the value is the message's callback function.\n\n<note>Modifying <page>net.Receivers</page> won't affect the net string pool used in <page>util.AddNetworkString</page>.</note>",
+        "name": "Receivers",
+        "parent": "net",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      },
+      {
+        "description": "<internal></internal>\n\nA list of types that can be sent over the network via <page>net.WriteType</page>.",
+        "name": "WriteVars",
+        "parent": "net",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      }
+    ],
     "functions": [
       {
         "description": "Cancels a net message started by <page>net.Start</page>, so you can immediately start a new one without any errors.",
@@ -16787,21 +16754,6 @@
         ]
       },
       {
-        "description": "<internal></internal>\n\nA list of types that can be sent over the network via <page>net.ReadType</page>.",
-        "name": "ReadVars",
-        "parent": "net",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "Key = type ID (<page>Global.TypeID</page>), Value = function to send the data over the net.",
-            "type": "table"
-          }
-        ]
-      },
-      {
         "description": "Reads a vector from the received net message. Vectors sent by this function are **compressed**, which may result in precision loss. See <page>net.WriteVector</page> for more information.\n\n<warning>You **must** read information in same order as you write it.</warning>",
         "name": "ReadVector",
         "parent": "net",
@@ -16841,21 +16793,6 @@
           "lineEnd": 18,
           "lineStart": 14
         }
-      },
-      {
-        "description": "<internal></internal>\n\nThis is NOT a function, it's a table used internally by the net library to store net receivers added with <page>net.Receive</page>.\n\nThe key is the lowercase net message name and the value is the message's callback function.\n\n<note>Modifying <page>net.Receivers</page> won't affect the net string pool used in <page>util.AddNetworkString</page>.</note>",
-        "name": "Receivers",
-        "parent": "net",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all registered derma controls.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -17315,21 +17252,6 @@
         ]
       },
       {
-        "description": "<internal></internal>\n\nA list of types that can be sent over the network via <page>net.WriteType</page>.",
-        "name": "WriteVars",
-        "parent": "net",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "Key = type ID (<page>Global.TypeID</page>), Value = function to send the data over the net.",
-            "type": "table"
-          }
-        ]
-      },
-      {
         "arguments": [
           {
             "description": "The vector to be sent.",
@@ -17782,7 +17704,7 @@
   },
   {
     "description": "The package library is a standard Lua library, it's mainly for use with the module system built into Lua.",
-    "functions": [
+    "fields": [
       {
         "description": "A list of all loaded packages.",
         "name": "loaded",
@@ -17792,13 +17714,10 @@
           "client",
           "server"
         ],
-        "returnValues": [
-          {
-            "description": "The list of all loaded packages.",
-            "type": "table"
-          }
-        ]
-      },
+        "type": "table"
+      }
+    ],
+    "functions": [
       {
         "arguments": [
           {
@@ -18939,6 +18858,18 @@
   },
   {
     "description": "The properties library gives you access to the menu that shows up when right clicking entities while holding C.",
+    "fields": [
+      {
+        "description": "A list of all properties registered with <page>properties.Add</page>.",
+        "name": "List",
+        "parent": "properties",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "type": "table"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -19028,21 +18959,6 @@
           "lineEnd": 156,
           "lineStart": 122
         }
-      },
-      {
-        "description": "A list of all properties registered with <page>properties.Add</page>.",
-        "name": "List",
-        "parent": "properties",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "returnValues": [
-          {
-            "description": "The list of all properties. The keys will be the first argument passed to <page>properties.Add</page>, the values will be the second argument.",
-            "type": "table"
-          }
-        ]
       },
       {
         "arguments": [
@@ -29514,6 +29430,18 @@
   },
   {
     "description": "The utf8 library provides basic support for UTF-8 encoding. This library does not provide any support for Unicode other than the handling of the encoding. Any operation that needs the meaning of a character, such as character classification, is outside its scope.\n\nUnless stated otherwise, all functions that expect a byte position as a parameter assume that the given position is either the start of a byte sequence or one plus the length of the subject string. As in the string library, negative indices count from the end of the string.",
+    "fields": [
+      {
+        "description": "This is NOT a function, it's a <page text=\"pattern\">Patterns</page> (a string, not a function) which matches exactly one UTF-8 byte sequence, assuming that the subject is a valid UTF-8 string.",
+        "name": "charpattern",
+        "parent": "utf8",
+        "realms": [
+          "client",
+          "menu"
+        ],
+        "type": "string"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -29542,21 +29470,6 @@
           "lineEnd": 144,
           "lineStart": 95
         }
-      },
-      {
-        "description": "This is NOT a function, it's a <page text=\"pattern\">Patterns</page> (a string, not a function) which matches exactly one UTF-8 byte sequence, assuming that the subject is a valid UTF-8 string.",
-        "name": "charpattern",
-        "parent": "utf8",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "returnValues": [
-          {
-            "description": "```\n\"[%z\\x01-\\x7F\\xC2-\\xF4][\\x80-\\xBF]*\"\n```",
-            "type": "string"
-          }
-        ]
       },
       {
         "arguments": [
