@@ -24,7 +24,7 @@
     },
     "scripts": {
         "start": "tsx src/main.ts",
-        "download": "gmod-wiki-scraper"
+        "download": "gmod-wiki-scraper && ./sort_output.sh"
     },
     "repository": {
         "type": "git",
