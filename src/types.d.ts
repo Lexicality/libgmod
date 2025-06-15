@@ -29,7 +29,16 @@ interface Func extends FuncInstance {
 interface FuncContainer {
     name: string;
     description?: string;
+    fields?: Member[];
     functions: Func[];
+}
+
+interface Member {
+    name: string;
+    type: string;
+    parent: string;
+    description?: string;
+    realms: Realm[];
 }
 
 interface Field {
@@ -50,7 +59,8 @@ interface Panel {
     name: string;
     parent: string;
     description: string;
-    functions?: func[];
+    fields?: Member[];
+    functions?: Func[];
 }
 
 interface EnumValue {

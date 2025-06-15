@@ -2,7 +2,7 @@ import { formatDesc } from "./descriptions";
 import { getTypeName } from "./gmod-types";
 import { trimArg, unpaginate } from "./utils";
 
-const INTERNAL_REGEX = /<internal>/;
+export const INTERNAL_REGEX = /<internal>/;
 
 const KEYWORD_REPLACEMENTS = new Map<string | RegExp, string>([
     [/^function$/, "func"],

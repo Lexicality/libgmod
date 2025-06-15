@@ -5,6 +5,7 @@ import { handleFunc } from "./functions";
 import { getTypeName, registerGModType } from "./gmod-types";
 import { trimArg, unpaginate } from "./utils";
 import { extractTables, hasWikiTable, WikiTable } from "./wiki-table";
+import { handleMember } from "./members";
 
 // urgh
 const ENTITY_CHILDREN = [
@@ -74,6 +75,26 @@ export function handleClass(cls: FuncContainer): string {
     let def = `--- @meta\n\n--- @class ${name}${inherits}\n`;
     let lua = `local ${name} = {}\n`;
 
+    let fields = cls.fields ?? [];
+    fields = _.sortBy(fields, "name");
+    for (let field of fields) {
+        let fieldData: string | undefined;
+        try {
+            fieldData = handleMember(field);
+        } catch (e) {
+            console.error(
+                "Problem while getting field definition for %s.%s(): %s",
+                cls.name,
+                field.name,
+                e,
+            );
+            throw e;
+        }
+        if (fieldData) {
+            lua += fieldData + "\n";
+        }
+    }
+
     let funcs = cls.functions;
     funcs = _.sortBy(funcs, "name");
     for (let func of funcs) {
@@ -110,6 +131,10 @@ export function preProcessClasses(classes: FuncContainer[]): FuncContainer[] {
                 ...(existingData.functions ?? []),
                 ...(classData.functions ?? []),
             ];
+            classData.fields = [
+                ...(existingData.fields ?? []),
+                ...(classData.fields ?? []),
+            ]
         }
         alreadySeen.set(name, classData);
     }
