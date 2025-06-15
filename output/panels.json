@@ -550,6 +550,7 @@
             "type": "string"
           },
           {
+            "default": "nil",
             "description": "Name of the <page>convar</page> that will store the A component of the selected color.",
             "name": "convarA",
             "type": "string"
@@ -4158,7 +4159,7 @@
         ],
         "returnValues": [
           {
-            "description": "A table containing the following keys:\n* <page>Panel</page> Tab - The created tab button that will switch to the given panel\n* <page>Panel</page> Panel - The given panel to switch to when the button is pressed",
+            "description": "A table containing the following keys:\n* <page>DButton</page> / <page>DImageButton</page> Button - The created tab button that will switch to the given panel.\n* <page>Panel</page> Panel - The given panel to switch to when the button is pressed.",
             "type": "table"
           }
         ],

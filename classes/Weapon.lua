@@ -184,7 +184,7 @@ function GWeapon:SetLastShootTime(time)
 end
 
 --- Sets when the weapon can fire again. Time should be based on Global.CurTime.  
---- ℹ **NOTE**: The standard HL2 Pistol (`weapon_pistol`) bypasses this function due to an [internal implementation](https://github.com/ValveSoftware/source-sdk-2013/blob/master/mp/src/game/server/hl2/weapon_pistol.cpp#L313-L317).  
+--- ℹ **NOTE**: The standard HL2 Pistol (`weapon_pistol`) bypasses this function due to an [internal implementation](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/hl2/weapon_pistol.cpp#L313-L317).  
 --- 🦟 **BUG**: [This will fire extra bullets if the time is set to less than Global.CurTime.](https://github.com/Facepunch/garrysmod-issues/issues/3786)  
 --- @param time number @Time when player should be able to use primary fire again
 function GWeapon:SetNextPrimaryFire(time)

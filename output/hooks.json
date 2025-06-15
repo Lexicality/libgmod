@@ -653,7 +653,7 @@
       {
         "arguments": [
           {
-            "description": "The event ID of happened even. See [this page](http://developer.valvesoftware.com/wiki/Animation_Events).",
+            "description": "The ID of the event. See [this page](http://developer.valvesoftware.com/wiki/Animation_Events) for a list of default events, and see <page>util.GetAnimEventNameByID</page> for a helper function in handing custom events.",
             "name": "event",
             "type": "number"
           },
@@ -668,7 +668,7 @@
             "type": "number"
           },
           {
-            "description": "Event type. See [the Source SDK](https://github.com/ValveSoftware/source-sdk-2013/blob/master/mp/src/game/shared/eventlist.h#L14-L23).",
+            "description": "Event type. See [the Source SDK](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/shared/eventlist.h#L14-L23).",
             "name": "type",
             "type": "number"
           },
@@ -686,7 +686,7 @@
         ],
         "returnValues": [
           {
-            "description": "Return true to mark the event as handled",
+            "description": "Return true to mark the event as handled.",
             "type": "boolean"
           }
         ]
@@ -758,7 +758,7 @@
         ],
         "returnValues": [
           {
-            "description": "Return true if this jump should be allowed to be performed, false otherwise.\n\nNot returning anything, or returning a non boolean will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_basenpc_movement.cpp#L319).",
+            "description": "Return true if this jump should be allowed to be performed, false otherwise.\n\nNot returning anything, or returning a non boolean will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc_movement.cpp#L319).",
             "type": "boolean"
           }
         ]
@@ -1555,7 +1555,7 @@
         ],
         "returnValues": [
           {
-            "description": "The activity that should override the incoming activity.\n\nNot returning anything, or returning a non value will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_basenpc.cpp#L5976).",
+            "description": "The activity that should override the incoming activity.\n\nNot returning anything, or returning a non value will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc.cpp#L5976).",
             "name": "newAct",
             "type": "number{ACT}"
           }
@@ -1605,7 +1605,7 @@
         ],
         "returnValues": [
           {
-            "description": "The schedule that should override the incoming schedule.\n\nNot returning anything, or returning a non value will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/ai_default.cpp#L253).",
+            "description": "The schedule that should override the incoming schedule.\n\nNot returning anything, or returning a non value will perform the [default action](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_default.cpp#L253).",
             "type": "number{SCHED}"
           }
         ]
@@ -1767,7 +1767,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/cl_deathnotice.lua",
-          "lineStart": 127
+          "lineEnd": 223,
+          "lineStart": 202
         }
       },
       {
@@ -2148,7 +2149,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player.lua",
-          "lineStart": 552
+          "lineEnd": 590,
+          "lineStart": 584
         }
       },
       {
@@ -2642,7 +2644,7 @@
         }
       },
       {
-        "description": "Called after all other 2D draw hooks are called. Draws over all VGUI Panels and HUDs.\n\nUnlike <page>GM:HUDPaint</page>, this hook is called with the game paused and while the Camera SWEP is equipped.\n\n<note>Only gets called when `r_drawvgui` is enabled.</note>\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>",
+        "description": "Called after all other 2D draw hooks are called. Draws over all VGUI Panels and HUDs.\n\nUnlike <page>GM:HUDPaint</page>, this hook is called with the game paused and while the Camera SWEP is equipped.\n\nDoes not get called when `r_drawvgui` is disabled.\n\n<rendercontext hook=\"true\" type=\"2D\"></rendercontext>",
         "name": "DrawOverlay",
         "parent": "GM",
         "realms": [
@@ -3956,7 +3958,7 @@
             "type": "number"
           }
         ],
-        "description": "Called whenever a player pressed a key included within the IN keys.\n\nFor a more general purpose function that handles all kinds of input, see <page>GM:PlayerButtonDown</page>.\n\nDespite being a predicted hook, it will still be called in singleplayer for your convenience.\n\n<warning>Due to this being a predicted hook, <page>Global.ParticleEffect</page>s created only serverside from this hook will not be networked to the client, so make sure to do that on both realms.</warning>",
+        "description": "Called whenever a player pressed a key included within the IN keys.\n\nFor a more general purpose function that handles all kinds of input, see <page>GM:PlayerButtonDown</page>.\nSee <page>GM:KeyRelease</page> for the key release event.\n\nDespite being a predicted hook, it will still be called in singleplayer for your convenience.\n\n<warning>Due to this being a predicted hook, <page>Global.ParticleEffect</page>s created only serverside from this hook will not be networked to the client, so make sure to do that on both realms.</warning>",
         "name": "KeyPress",
         "parent": "GM",
         "realms": [
@@ -3977,7 +3979,7 @@
             "type": "number"
           }
         ],
-        "description": "Runs when a IN key was released by a player.\n\nFor a more general purpose function that handles all kinds of input, see <page>GM:PlayerButtonUp</page>.\n\nDespite being a predicted hook, it will still be called in singleplayer for your convenience.",
+        "description": "Runs when a IN key was released by a player.\n\nFor a more general purpose function that handles all kinds of input, see <page>GM:PlayerButtonUp</page>.\nSee <page>GM:KeyPress</page> for the key press event.\n\nDespite being a predicted hook, it will still be called in singleplayer for your convenience.",
         "name": "KeyRelease",
         "parent": "GM",
         "realms": [
@@ -4235,7 +4237,7 @@
       {
         "arguments": [
           {
-            "description": "The error that occurred.",
+            "description": "The error that occurred. As well as the path and line of the error. Example : addons/test/lua/autorun/client/test_error.lua:4: 'then' expected near '<eof>'\n</eof>",
             "name": "error",
             "type": "string"
           },
@@ -4255,7 +4257,7 @@
             "type": "string"
           }
         ],
-        "description": "Called when a Lua error occurs on a client.\nThis hook allows server-side code to detect and respond to client-side errors.",
+        "description": "Called on the server when a Lua error occurs on a client and is sent to the server.\n\nThis hook allows server-side code to detect and log client-side errors.\n\nSee <page>GM:OnLuaError</page> for a hook that captures Lua errors directly within its [realm](States).\n\n<warning>Note that the stack argument can contain a table with 0 values. </warning>\n<note>Warning: the hook \"protects\" against lua error spam. If it has 5 errors in less than 1 second, the hook will not receive any of these 4 errors.</note>",
         "name": "OnClientLuaError",
         "parent": "GM",
         "realms": [
@@ -4438,7 +4440,7 @@
             "type": "string"
           }
         ],
-        "description": "Called when a Lua error occurs.\n<note>On the <page text=\"server realm\">States</page>, this hook will only account for server-side errors, not client-side ones.</note>",
+        "description": "Called when a Lua error occurs.\nIf you want to retrieve client errors on the server side, you can use this hook: <page text=\"GM:OnClientLuaError\">GM:OnClientLuaError</page>\n<note>On the <page text=\"server realm\">States</page>, this hook will only account for server-side errors, not client-side ones.</note>",
         "name": "OnLuaError",
         "parent": "GM",
         "realms": [
@@ -4543,8 +4545,8 @@
         ],
         "source": {
           "file": "lua/menu/problems/permissions.lua",
-          "lineEnd": 230,
-          "lineStart": 224
+          "lineEnd": 227,
+          "lineStart": 221
         }
       },
       {
@@ -4691,8 +4693,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/cl_init.lua",
-          "lineEnd": 172,
-          "lineStart": 135
+          "lineEnd": 182,
+          "lineStart": 142
         }
       },
       {
@@ -4869,7 +4871,7 @@
         ],
         "source": {
           "file": "lua/vgui/dtextentry.lua",
-          "lineStart": 346
+          "lineStart": 354
         }
       },
       {
@@ -4885,7 +4887,11 @@
         "parent": "GM",
         "realms": [
           "client"
-        ]
+        ],
+        "source": {
+          "file": "lua/vgui/dtextentry.lua",
+          "lineStart": 362
+        }
       },
       {
         "arguments": [
@@ -4912,7 +4918,12 @@
             "name": "suppress",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/cl_init.lua",
+          "lineEnd": 74,
+          "lineStart": 46
+        }
       },
       {
         "arguments": [
@@ -4938,7 +4949,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineEnd": 258,
+          "lineStart": 251
+        }
       },
       {
         "arguments": [
@@ -4959,7 +4975,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineEnd": 71,
+          "lineStart": 70
+        }
       },
       {
         "arguments": [
@@ -4986,7 +5007,12 @@
             "description": "Returns whether the player can pick up the entity or not.",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineEnd": 64,
+          "lineStart": 58
+        }
       },
       {
         "arguments": [
@@ -5093,7 +5119,7 @@
             "type": "number{BUTTON_CODE}"
           }
         ],
-        "description": "Called when a player presses a button.\n\nThis will not be called if player has a panel opened with keyboard input enabled, use <page>PANEL:OnKeyCodePressed</page> instead.",
+        "description": "Called when a player presses a button.\n\nThis will not be called if player has a panel opened with keyboard input enabled, use <page>PANEL:OnKeyCodePressed</page> instead.\n\nSee <page>GM:KeyPress</page> for an alternative that uses <page>Enums/IN</page>.\nSee <page>GM:PlayerButtonUp</page> for the \"key release\" event.",
         "name": "PlayerButtonDown",
         "parent": "GM",
         "realms": [
@@ -5114,7 +5140,7 @@
             "type": "number{BUTTON_CODE}"
           }
         ],
-        "description": "Called when a player releases a button.\n\nThis will not be called if player has a panel opened with keyboard input enabled, use <page>PANEL:OnKeyCodeReleased</page> instead.",
+        "description": "Called when a player releases a button.\n\nThis will not be called if player has a panel opened with keyboard input enabled, use <page>PANEL:OnKeyCodeReleased</page> instead.\n\nSee <page>GM:KeyRelease</page> for an alternative that uses <page>Enums/IN</page>.\nSee <page>GM:PlayerButtonDown</page> for the \"key press\" event.",
         "name": "PlayerButtonUp",
         "parent": "GM",
         "realms": [
@@ -5673,7 +5699,7 @@
             "type": "number"
           },
           {
-            "description": "Event type. See [the Source SDK](https://github.com/ValveSoftware/source-sdk-2013/blob/master/mp/src/game/shared/eventlist.h#L14-L23).",
+            "description": "Event type. See [the Source SDK](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/shared/eventlist.h#L14-L23).",
             "name": "type",
             "type": "number"
           },
@@ -6450,7 +6476,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Called after the player hands are drawn.",
+        "description": "Called after the player hands are drawn.\n\nSee <page>GM:PostDrawViewModel</page> for the view model alternative.\nSee <page>GM:PreDrawPlayerHands</page> for a hook that is called just before view model hands are drawn.",
         "name": "PostDrawPlayerHands",
         "parent": "GM",
         "realms": [
@@ -6508,7 +6534,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Called after view model is drawn.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>\n\n<note>The 3D rendering context in this event is different from the main view. Every render operation will only be accurate with the view model entity.</note>",
+        "description": "Called after view model is drawn.\n\nThe render FOV in this hook is different from the main view, as view models are usually rendered with a different FOV. Every render operation will only be accurate with the view model entity.\n\nSee <page>GM:PreDrawViewModel</page> for a hook that is called just before a view model is drawn.\n\nFor view model hands alternative, see <page>GM:PostDrawPlayerHands</page>.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
         "name": "PostDrawViewModel",
         "parent": "GM",
         "realms": [
@@ -6759,7 +6785,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Called before the player hands are drawn.",
+        "description": "Called before the player hands are drawn.\n\nSee <page>GM:PreDrawViewModel</page> for the view model alternative.\nSee <page>GM:POstDrawPlayerHands</page> for a hook that is called just before view model hands are drawn.",
         "name": "PreDrawPlayerHands",
         "parent": "GM",
         "realms": [
@@ -6835,7 +6861,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Called before the view model has been drawn. This hook by default also calls this on weapons, so you can use <page>WEAPON:PreDrawViewModel</page>.\n\nYou can use <page>GM:PreDrawEffects</page> as a \"PostDrawViewModel\" hook as it is called just after the view model(s) are drawn.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
+        "description": "Called before the view model has been drawn.\n\nBy default this hook also calls <page>WEAPON:PreDrawViewModel</page>, so you can use that if developing a scripted weapon.\n\nSee <page>GM:PostDrawViewModel</page> for a hook that runs immediately after rendering a view model.\nSee <page>GM:PreDrawViewModels</page> for a hook that runs before **all** view models are drawn within a frame.\n\nFor view model hands, see <page>GM:PreDrawPlayerHands</page>.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
         "name": "PreDrawViewModel",
         "parent": "GM",
         "realms": [
@@ -6849,7 +6875,7 @@
         ]
       },
       {
-        "description": "Called before view models and entities with `RENDERGROUP_VIEWMODEL` are drawn.\n\nYou can use <page>GM:PreDrawEffects</page> as a `PostDrawViewModel` hook as it is called just after the view model(s) are drawn.\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
+        "description": "Called just before all view models (there are 3 per player, see <page>Player:GetViewModel</page>) and entities with `RENDERGROUP_VIEWMODEL` are drawn.\n\nSee <page>GM:PreDrawViewModel</page> and <page>GM:PostDrawViewModel</page> for hooks that run for specific view models.\n\nYou can use <page>GM:PreDrawEffects</page> as a \"`PostDrawViewModels`\" hook as it is called just after the all the view model(s) are drawn.\n\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
         "name": "PreDrawViewModels",
         "parent": "GM",
         "realms": [
@@ -7233,7 +7259,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/shared.lua",
+          "lineEnd": 184,
+          "lineStart": 179
+        }
       },
       {
         "arguments": [
@@ -7525,7 +7556,7 @@
         }
       },
       {
-        "description": "Called every frame. This will be the same as <page>GM:Tick</page> on the server when there is no lag, but will only be called once every processed server frame during lag.\n\nSee <page>GM:Tick</page> for a hook that runs every tick on both the client and server.\n\n<note>On server, this hook **WILL NOT** run if the server is empty, unless you set the <page>ConVar</page> `sv_hibernate_think` to `1`.</note>",
+        "description": "Called every rendered frame on client, except when the game is paused.\n\nCalled every  game tick on the server. This will be the same as <page>GM:Tick</page> on the server when there is no lag, but will only be called once every processed server frame during lag.\n<page>Global.CurTime</page> is guaranteed to be different with each call to this hook on the server.\n\nSee <page>GM:Tick</page> for a hook that runs every tick on both the client and server.\n\n<note>On server, this hook **WILL NOT** run if the server is empty, unless you set the <page>ConVar</page> `sv_hibernate_think` to `1`.</note>",
         "name": "Think",
         "parent": "GM",
         "realms": [
@@ -7535,7 +7566,7 @@
         ]
       },
       {
-        "description": "Called every server tick. Serverside, this is similar to <page>GM:Think</page>.\n\n<note>This hook **WILL NOT** run if the server is empty, unless you set the <page>ConVar</page> `sv_hibernate_think` to 1</note>",
+        "description": "Called every game tick. <page>engine.TickCount</page> is guaranteed to be different between each call.\n\nServer side, this is similar to <page>GM:Think</page> (See that page for details).\n\nThe default tickrate is `66.6666` (16 millisecond intervals). It can be changed via the `-tickrate` [command line option](Command_Line_Parameters).\nSee <page>engine.TickInterval</page> for a function to retrieve this data at runtime.\n\n<note>This hook **WILL NOT** run if the server is empty, unless you set the <page>ConVar</page> `sv_hibernate_think` to 1</note>",
         "name": "Tick",
         "parent": "GM",
         "realms": [
@@ -8497,7 +8528,7 @@
         ],
         "returnValues": [
           {
-            "description": "Return true to suppress default action.",
+            "description": "Return `true` to suppress default action.",
             "type": "boolean"
           }
         ]
@@ -8880,8 +8911,9 @@
           }
         ],
         "source": {
-          "file": "gamemodes/base/gamemode/shared.lua",
-          "lineStart": 207
+          "file": "gamemodes/sandbox/gamemode/player_class/player_sandbox.lua",
+          "lineEnd": 197,
+          "lineStart": 161
         }
       },
       {
@@ -8913,7 +8945,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player_class/player_default.lua",
-          "lineStart": 40
+          "lineEnd": null,
+          "lineStart": 37
         }
       },
       {
@@ -8950,8 +8983,8 @@
           }
         ],
         "source": {
-          "file": "gamemodes/base/gamemode/shared.lua",
-          "lineStart": 197
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 86
         }
       },
       {
@@ -8975,7 +9008,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player_class/player_default.lua",
-          "lineStart": 112
+          "lineEnd": 118,
+          "lineStart": 110
         }
       },
       {
@@ -8999,7 +9033,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player_class/player_default.lua",
-          "lineStart": 102
+          "lineEnd": 108,
+          "lineStart": 100
         }
       },
       {
@@ -9008,7 +9043,12 @@
         "parent": "PLAYER",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineEnd": 74,
+          "lineStart": 67
+        }
       },
       {
         "description": "Setup the network table accessors.",
@@ -9020,7 +9060,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player_class/player_default.lua",
-          "lineStart": 31
+          "lineEnd": 34,
+          "lineStart": 27
         }
       },
       {
@@ -9032,18 +9073,19 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player_class/player_default.lua",
-          "lineStart": 49
+          "lineEnd": 52,
+          "lineStart": 45
         }
       },
       {
         "arguments": [
           {
-            "description": "",
+            "description": "The move data to override/use",
             "name": "mv",
             "type": "CMoveData"
           },
           {
-            "description": "",
+            "description": "The command data",
             "name": "cmd",
             "type": "CUserCmd"
           }
@@ -9052,7 +9094,8 @@
         "name": "StartMove",
         "parent": "PLAYER",
         "realms": [
-          "client"
+          "client",
+          "server"
         ],
         "returnValues": [
           {
@@ -9061,8 +9104,8 @@
           }
         ],
         "source": {
-          "file": "gamemodes/base/gamemode/shared.lua",
-          "lineStart": 197
+          "file": "gamemodes/base/gamemode/player_class/player_default.lua",
+          "lineStart": 85
         }
       },
       {
@@ -9091,7 +9134,8 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/player_class/player_default.lua",
-          "lineStart": 92
+          "lineEnd": 98,
+          "lineStart": 89
         }
       }
     ],

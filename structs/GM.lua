@@ -256,7 +256,7 @@ end
 
 --- Called after all other 2D draw hooks are called. Draws over all VGUI Panels and HUDs.  
 --- Unlike GM:HUDPaint, this hook is called with the game paused and while the Camera SWEP is equipped.  
---- ℹ **NOTE**: Only gets called when `r_drawvgui` is enabled.  
+--- Does not get called when `r_drawvgui` is disabled.  
 --- 🟥 **NOTE**: Provides a 2D rendering context  
 function GM:DrawOverlay()
 end
@@ -616,6 +616,7 @@ end
 
 --- Called whenever a player pressed a key included within the IN keys.  
 --- For a more general purpose function that handles all kinds of input, see GM:PlayerButtonDown.  
+--- See GM:KeyRelease for the key release event.  
 --- Despite being a predicted hook, it will still be called in singleplayer for your convenience.  
 --- ⚠ **WARNING**: Due to this being a predicted hook, Global.ParticleEffects created only serverside from this hook will not be networked to the client, so make sure to do that on both realms.  
 --- @param ply GPlayer @The player pressing the key
@@ -625,6 +626,7 @@ end
 
 --- Runs when a IN key was released by a player.  
 --- For a more general purpose function that handles all kinds of input, see GM:PlayerButtonUp.  
+--- See GM:KeyPress for the key press event.  
 --- Despite being a predicted hook, it will still be called in singleplayer for your convenience.  
 --- @param ply GPlayer @The player releasing the key
 --- @param key number @The key that the player released using Enums/IN.
@@ -692,9 +694,12 @@ end
 function GM:OnCleanup(name)
 end
 
---- Called when a Lua error occurs on a client.  
---- This hook allows server-side code to detect and respond to client-side errors.  
---- @param error string @The error that occurred.
+--- Called on the server when a Lua error occurs on a client and is sent to the server.  
+--- This hook allows server-side code to detect and log client-side errors.  
+--- See GM:OnLuaError for a hook that captures Lua errors directly within its [realm](States).  
+--- ⚠ **WARNING**: Note that the stack argument can contain a table with 0 values.  
+--- ℹ **NOTE**: Warning: the hook "protects" against lua error spam. If it has 5 errors in less than 1 second, the hook will not receive any of these 4 errors.  
+--- @param error string @The error that occurred
 --- @param ply GPlayer @The player whose client caused the error.
 --- @param stack table @The Lua error stack trace
 --- @param name string @Title of the addon that is creating the Lua errors, or "ERROR" if addon is not found.
@@ -758,6 +763,7 @@ function GM:OnGamemodeLoaded()
 end
 
 --- Called when a Lua error occurs.  
+--- If you want to retrieve client errors on the server side, you can use this hook: GM:OnClientLuaError  
 --- ℹ **NOTE**: On the server realm, this hook will only account for server-side errors, not client-side ones.  
 --- @param error string @The error that occurred.
 --- @param realm string @Where the Lua error took place, "client", or "server"
@@ -952,6 +958,8 @@ end
 
 --- Called when a player presses a button.  
 --- This will not be called if player has a panel opened with keyboard input enabled, use PANEL:OnKeyCodePressed instead.  
+--- See GM:KeyPress for an alternative that uses Enums/IN.  
+--- See GM:PlayerButtonUp for the "key release" event.  
 --- @param ply GPlayer @Player who pressed the button
 --- @param button EBUTTON_CODE @The button, see Enums/BUTTON_CODE
 function GM:PlayerButtonDown(ply, button)
@@ -959,6 +967,8 @@ end
 
 --- Called when a player releases a button.  
 --- This will not be called if player has a panel opened with keyboard input enabled, use PANEL:OnKeyCodeReleased instead.  
+--- See GM:KeyRelease for an alternative that uses Enums/IN.  
+--- See GM:PlayerButtonDown for the "key press" event.  
 --- @param ply GPlayer @Player who released the button
 --- @param button EBUTTON_CODE @The button, see Enums/BUTTON_CODE
 function GM:PlayerButtonUp(ply, button)
@@ -1411,6 +1421,8 @@ function GM:PostDrawOpaqueRenderables(bDrawingDepth, bDrawingSkybox, isDraw3DSky
 end
 
 --- Called after the player hands are drawn.  
+--- See GM:PostDrawViewModel for the view model alternative.  
+--- See GM:PreDrawPlayerHands for a hook that is called just before view model hands are drawn.  
 --- @param hands GEntity @This is the gmod_hands entity.
 --- @param vm GEntity @This is the view model entity.
 --- @param ply GPlayer @The the owner of the view model.
@@ -1436,8 +1448,10 @@ function GM:PostDrawTranslucentRenderables(bDrawingDepth, bDrawingSkybox, isDraw
 end
 
 --- Called after view model is drawn.  
+--- The render FOV in this hook is different from the main view, as view models are usually rendered with a different FOV. Every render operation will only be accurate with the view model entity.  
+--- See GM:PreDrawViewModel for a hook that is called just before a view model is drawn.  
+--- For view model hands alternative, see GM:PostDrawPlayerHands.  
 --- 🧱 **NOTE**: Provides a 3D rendering context  
---- ℹ **NOTE**: The 3D rendering context in this event is different from the main view. Every render operation will only be accurate with the view model entity.  
 --- @param viewmodel GEntity @Players view model
 --- @param player GPlayer @The owner of the weapon/view model
 --- @param weapon GWeapon @The weapon the player is currently holding
@@ -1531,6 +1545,8 @@ function GM:PreDrawOpaqueRenderables(isDrawingDepth, isDrawSkybox, isDraw3DSkybo
 end
 
 --- Called before the player hands are drawn.  
+--- See GM:PreDrawViewModel for the view model alternative.  
+--- See GM:POstDrawPlayerHands for a hook that is called just before view model hands are drawn.  
 --- @param hands GEntity @This is the gmod_hands entity before it is drawn.
 --- @param vm GEntity @This is the view model entity before it is drawn.
 --- @param ply GPlayer @The the owner of the view model.
@@ -1558,8 +1574,11 @@ end
 function GM:PreDrawTranslucentRenderables(isDrawingDepth, isDrawSkybox, isDraw3DSkybox)
 end
 
---- Called before the view model has been drawn. This hook by default also calls this on weapons, so you can use WEAPON:PreDrawViewModel.  
---- You can use GM:PreDrawEffects as a "PostDrawViewModel" hook as it is called just after the view model(s) are drawn.  
+--- Called before the view model has been drawn.  
+--- By default this hook also calls WEAPON:PreDrawViewModel, so you can use that if developing a scripted weapon.  
+--- See GM:PostDrawViewModel for a hook that runs immediately after rendering a view model.  
+--- See GM:PreDrawViewModels for a hook that runs before **all** view models are drawn within a frame.  
+--- For view model hands, see GM:PreDrawPlayerHands.  
 --- 🧱 **NOTE**: Provides a 3D rendering context  
 --- @param vm GEntity @This is the view model entity before it is drawn
 --- @param ply GPlayer @The owner of the view model.
@@ -1568,8 +1587,9 @@ end
 function GM:PreDrawViewModel(vm, ply, weapon)
 end
 
---- Called before view models and entities with `RENDERGROUP_VIEWMODEL` are drawn.  
---- You can use GM:PreDrawEffects as a `PostDrawViewModel` hook as it is called just after the view model(s) are drawn.  
+--- Called just before all view models (there are 3 per player, see Player:GetViewModel) and entities with `RENDERGROUP_VIEWMODEL` are drawn.  
+--- See GM:PreDrawViewModel and GM:PostDrawViewModel for hooks that run for specific view models.  
+--- You can use GM:PreDrawEffects as a "`PostDrawViewModels`" hook as it is called just after the all the view model(s) are drawn.  
 --- 🧱 **NOTE**: Provides a 3D rendering context  
 function GM:PreDrawViewModels()
 end
@@ -1789,13 +1809,18 @@ end
 function GM:StartEntityDriving(ent, ply)
 end
 
---- Called every frame. This will be the same as GM:Tick on the server when there is no lag, but will only be called once every processed server frame during lag.  
+--- Called every rendered frame on client, except when the game is paused.  
+--- Called every  game tick on the server. This will be the same as GM:Tick on the server when there is no lag, but will only be called once every processed server frame during lag.  
+--- Global.CurTime is guaranteed to be different with each call to this hook on the server.  
 --- See GM:Tick for a hook that runs every tick on both the client and server.  
 --- ℹ **NOTE**: On server, this hook **WILL NOT** run if the server is empty, unless you set the ConVar `sv_hibernate_think` to `1`.  
 function GM:Think()
 end
 
---- Called every server tick. Serverside, this is similar to GM:Think.  
+--- Called every game tick. engine.TickCount is guaranteed to be different between each call.  
+--- Server side, this is similar to GM:Think (See that page for details).  
+--- The default tickrate is `66.6666` (16 millisecond intervals). It can be changed via the `-tickrate` [command line option](Command_Line_Parameters).  
+--- See engine.TickInterval for a function to retrieve this data at runtime.  
 --- ℹ **NOTE**: This hook **WILL NOT** run if the server is empty, unless you set the ConVar `sv_hibernate_think` to 1  
 function GM:Tick()
 end

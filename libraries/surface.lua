@@ -142,7 +142,6 @@ function surface.GetAlphaMultiplier()
 end
 
 --- Returns the current color affecting draw operations.  
---- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @return table @The color that drawing operations will use as a Color.
 function surface.GetDrawColor()
 end
@@ -161,7 +160,6 @@ function surface.GetPanelPaintState()
 end
 
 --- Returns the current color affecting text draw operations.  
---- 🦟 **BUG**: [The returned color will not have the color metatable.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @return table @The color that text drawing operations will use as a Color.
 function surface.GetTextColor()
 end

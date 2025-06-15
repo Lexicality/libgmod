@@ -81,11 +81,11 @@ end
 function spawnmenu.ClearToolMenus()
 end
 
---- Creates a new content icon, previously defined via spawnmenu.AddContentType.  
+--- Creates a new ContentIcon previously defined via spawnmenu.AddContentType.  
 --- @param type string @The type of the content icon
---- @param parent? GPanel @The parent to add the content icon to.
+--- @param parent? GPanel @The parent to add the ContentIcon to.
 --- @param data? table @The data to send to the content icon in spawnmenu.AddContentType
---- @return GPanel @The created content icon, if it was returned by spawnmenu.AddContentType.
+--- @return GPanel @The created ContentIcon, if it was returned by spawnmenu.AddContentType.
 function spawnmenu.CreateContentIcon(type, parent, data)
 end
 

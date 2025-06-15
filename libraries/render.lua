@@ -636,6 +636,7 @@ end
 
 --- Renders the scene with the specified viewData to the current active render target.  
 --- 🦟 **BUG**: [Static props and LODs are rendered improperly due to incorrectly perceived distance.](https://github.com/Facepunch/garrysmod-issues/issues/1330)  
+--- 🦟 **BUG**: Using render.RenderView on a RenderTarget texture in a 3d context like SWEP:PostDrawViewModel() while drawing the RenderTarget texture causes screen flickers  
 --- @param view? table @The view data to be used in the rendering
 function render.RenderView(view)
 end
@@ -862,8 +863,9 @@ end
 function render.SetStencilZFailOperation(zFailOperation)
 end
 
---- @param vec GVector 
-function render.SetToneMappingScaleLinear(vec)
+--- Sets the tone mapping scale for upcoming rendering operations.  
+--- @param scales GVector @The tonemapping scales
+function render.SetToneMappingScaleLinear(scales)
 end
 
 --- Changes the view port position and size. The values will be clamped to the game's screen resolution.  

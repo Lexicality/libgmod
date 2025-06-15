@@ -3419,7 +3419,7 @@
             "type": "number"
           }
         ],
-        "description": "Returns a list of all the <page>CNavArea</page>s that have a one-way connection **to** this <page>CNavArea</page> and their pre-computed distances.\n\nIf an area has a one-way incoming connection to this <page>CNavArea</page>, then it will **not** be returned from this function, use <page>CNavArea:GetIncomingConnectionDistances</page> to get all one-way incoming connections.",
+        "description": "Returns a list of all the <page>CNavArea</page>s that have a (one and two way) connection **from** this <page>CNavArea</page> and their pre-computed distances.\n\nIf an area has a one-way incoming connection to this <page>CNavArea</page>, then it will **not** be returned from this function, use <page>CNavArea:GetIncomingConnectionDistances</page> to get all one-way incoming connections.",
         "name": "GetAdjacentAreaDistances",
         "parent": "CNavArea",
         "realms": [
@@ -5360,6 +5360,29 @@
           "menu",
           "client",
           "server"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The target color to copy.",
+            "name": "target",
+            "type": "Color"
+          }
+        ],
+        "description": "Returns a copy of this color, usually so it can be safely modified later without affecting the original color.",
+        "name": "Copy",
+        "parent": "Color",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "The copy of the given color, safe to modify.",
+            "type": "Color"
+          }
         ]
       },
       {
@@ -7718,7 +7741,7 @@
         ]
       },
       {
-        "description": "Checks if the entity is considered alive.\n\nChecks entity's internal life state variable. Does not check health, but it is generally expected the health to be 0 or below at the point of an entity being considered dead.",
+        "description": "Checks if the entity is considered alive.\n\nChecks entity's internal life state variable. Does not check health, but it is generally expected the health to be 0 or below at the point of an entity being considered dead. This internally looks up the save value `m_lifeState`",
         "name": "Alive",
         "parent": "Entity",
         "realms": [
@@ -7976,7 +7999,7 @@
             "type": "table"
           }
         ],
-        "description": "Creates bone followers based on the current entity model.\n\nBone followers are physics objects that follow the visual mesh. This is what is used by `prop_dynamic` for things like big combine doors for vehicles with multiple physics objects which follow the visual mesh of the door when it animates.\n\nBe mindful that bone followers create a separate entity (`phys_bone_follower`) for each physics object.\n\nYou must call <page>Entity:UpdateBoneFollowers</page> every tick for bone followers to update their positions.\n\n<note>This function only works on `anim`, `nextbot` and `ai` type entities.</note>",
+        "description": "Creates bone followers based on the current entity model.\n\nBone followers are <page text=\"Entities\">Entity</page> whose <page text=\"Physics Object\">PhysObj</page> follows a specific bone on another Entity's model.\nThis is what is used by `prop_dynamic` for things like big combine doors for vehicles with multiple physics objects which follow the visual mesh of the door when it animates.\n\nBe mindful that bone followers create a separate entity (`phys_bone_follower`) for each physics object.\n\nYou must call <page>Entity:UpdateBoneFollowers</page> every tick for bone followers to update their positions.\n\n<note>This function only works on `anim`, `nextbot` and `ai` type entities.</note>",
         "name": "CreateBoneFollowers",
         "parent": "Entity",
         "realms": [
@@ -11722,7 +11745,7 @@
         ],
         "returnValues": [
           {
-            "description": "The physics object",
+            "description": "The physics object or nil if not found",
             "type": "PhysObj"
           }
         ]
@@ -13571,7 +13594,7 @@
         ]
       },
       {
-        "description": "Returns entity's map creation ID. Unlike <page>Entity:EntIndex</page> or <page>Entity:GetCreationID</page>, it will always be the same on same map, no matter how much you clean up or restart it.\n\nTo be used in conjunction with <page>ents.GetMapCreatedEntity</page>. See also <page>Entity:CreatedByMap</page>.",
+        "description": "Returns entity's map creation ID. Unlike <page>Entity:EntIndex</page> or <page>Entity:GetCreationID</page>, it will always be the same on same map, no matter how much you clean up or restart it.\n\nIt may change if the map is recompiled, even if no edits were made. It will definitely change if entities are added or removed from the map file.\n\nTo be used in conjunction with <page>ents.GetMapCreatedEntity</page>. See also <page>Entity:CreatedByMap</page>.",
         "name": "MapCreationID",
         "parent": "Entity",
         "realms": [
@@ -13580,7 +13603,7 @@
         ],
         "returnValues": [
           {
-            "description": "The map creation ID or -1 if the entity is not compiled into the map.",
+            "description": "The map creation ID or -1 if the entity is not compiled into the map.\n<note>If the ID exists, it is identical to the entity's order number as it appears in Lump 1 of the BSP file. It is believed to start at 1234 for some reason.</note>",
             "type": "number"
           }
         ]
@@ -14796,7 +14819,7 @@
             "type": "VMatrix"
           }
         ],
-        "description": "Sets the bone matrix of given bone to given matrix. See also <page>Entity:GetBoneMatrix</page>.\n\n<note>Despite existing serverside, it does nothing.</note>",
+        "description": "Sets the bone matrix of given bone to given matrix. See also <page>Entity:GetBoneMatrix</page>. Will cause a uncatchable error when used on `__INVALIDBONE__` bones. Can be caught with `if ent:GetBoneName(boneid) == \"__INVALIDBONE__\" then`\n\n<note>Despite existing serverside, it does nothing.</note>",
         "name": "SetBoneMatrix",
         "parent": "Entity",
         "realms": [
@@ -14943,6 +14966,7 @@
       {
         "arguments": [
           {
+            "default": "NULL",
             "description": "The creator",
             "name": "ply",
             "type": "Player"
@@ -16819,7 +16843,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the player who gets credit if this entity kills something with physics damage within the time limit.\n\n<note>This can only be called on props, \"anim\" type SENTs and vehicles.</note>",
+        "description": "Sets the player who gets credit if this entity kills something with physics damage within the time limit.\n\n<note>Only functional on props, \"anim\" type SENTs, vehicles and a few other select entities.</note>",
         "name": "SetPhysicsAttacker",
         "parent": "Entity",
         "realms": [
@@ -18093,6 +18117,35 @@
           {
             "description": "The local angles",
             "type": "Angle"
+          }
+        ]
+      },
+      {
+        "description": "If set, the entity will not be duplicated via the built-in duplicator system.",
+        "name": "DoNotDuplicate",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "Set to true to disable being saved.",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "description": "A bool which determines if the Physgun can pickup this entity.",
+        "name": "PhysgunDisabled",
+        "parent": "Entity",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "Set to true to disable pickup. Only affects visuals Clientside",
+            "type": "boolean"
           }
         ]
       }
@@ -22149,7 +22202,7 @@
         ]
       },
       {
-        "description": "Returns true if the current navigation has an obstacle, this is different from <page>NPC:GetBlockingEntity</page>, this is for virtual navigation obstacles put by AI's local navigation system to prevent movement to the marked area, forcing NPC to steer around, [for example](https://github.com/ValveSoftware/source-sdk-2013/blob/master/mp/src/game/server/hl2/npc_playercompanion.cpp#L2897).",
+        "description": "Returns true if the current navigation has an obstacle, this is different from <page>NPC:GetBlockingEntity</page>, this is for virtual navigation obstacles put by AI's local navigation system to prevent movement to the marked area, forcing NPC to steer around, [for example](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/hl2/npc_playercompanion.cpp#L2897).",
         "name": "HasObstacles",
         "parent": "NPC",
         "realms": [
@@ -29710,7 +29763,7 @@
             "type": "NextBot"
           }
         ],
-        "description": "Move the bot along the path.",
+        "description": "Move the bot along the path.\n<note>player nextbots require <page>CUserCmd:SetForwardMove</page> to move forward along the path</note>",
         "name": "Update",
         "parent": "PathFollower",
         "realms": [
@@ -31619,6 +31672,7 @@
         "name": "DebugInfo",
         "parent": "Player",
         "realms": [
+          "client",
           "server"
         ],
         "source": {
@@ -33735,7 +33789,7 @@
         }
       },
       {
-        "description": "Returns the direction a player is looking as a entity/local-oriented angle.\n\nUnlike <page>Entity:EyeAngles</page>, this function does not include angles of the Player's <page>Entity:GetParent</page>.",
+        "description": "Returns the direction a player is looking as a entity/local-oriented angle.\n\nUnlike <page>Entity:EyeAngles</page>, this function does not include angles of the Player's <page>Entity:GetParent</page>.\n\n<bug>Does not work correctly clientside for non local players when in a vehicle. (validate: when parented in general?)</bug>",
         "name": "LocalEyeAngles",
         "parent": "Player",
         "realms": [
@@ -33744,7 +33798,7 @@
         ],
         "returnValues": [
           {
-            "description": "local eye angles",
+            "description": "The local eye angles.",
             "type": "Angle"
           }
         ]
@@ -38485,8 +38539,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/entity.lua",
-          "lineEnd": 663,
-          "lineStart": 659
+          "lineEnd": 688,
+          "lineStart": 684
         }
       },
       {
@@ -40238,7 +40292,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets when the weapon can fire again. Time should be based on <page>Global.CurTime</page>.\n\n<note>The standard HL2 Pistol (`weapon_pistol`) bypasses this function due to an [internal implementation](https://github.com/ValveSoftware/source-sdk-2013/blob/master/mp/src/game/server/hl2/weapon_pistol.cpp#L313-L317).</note>\n<bug issue=\"3786\">This will fire extra bullets if the time is set to less than <page>Global.CurTime</page>.</bug>",
+        "description": "Sets when the weapon can fire again. Time should be based on <page>Global.CurTime</page>.\n\n<note>The standard HL2 Pistol (`weapon_pistol`) bypasses this function due to an [internal implementation](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/hl2/weapon_pistol.cpp#L313-L317).</note>\n<bug issue=\"3786\">This will fire extra bullets if the time is set to less than <page>Global.CurTime</page>.</bug>",
         "name": "SetNextPrimaryFire",
         "parent": "Weapon",
         "realms": [

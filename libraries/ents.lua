@@ -18,6 +18,16 @@ end
 function ents.CreateClientProp(model)
 end
 
+--- Creates a clientside only rope, similar to those used by the DOG model from Half-Life 2.  
+--- @param ent1 GEntity @The first entity to attach the rope to.
+--- @param ent1attach number @The attachment ID on the first entity to attach the rope to.
+--- @param ent2 GEntity @The second entity to attach the rope to.
+--- @param ent2attach GEntity @The attachment ID on the second entity to attach the rope to.
+--- @param extra? table @Extra optional settings for the rope
+--- @return GEntity @Created entity (`C_RopeKeyframe`).
+function ents.CreateClientRope(ent1, ent1attach, ent2, ent2attach, extra)
+end
+
 --- Creates a clientside only scripted entity. The scripted entity must be of "anim" type.  
 --- @param class string @The class name of the entity to create.
 --- @return GEntity @Created entity.

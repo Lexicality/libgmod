@@ -101,7 +101,11 @@ end
 --- While this variable is always available in the Client & Menu  
 --- realms, it is only defined in the Server  realm on local servers.  
 --- For more information on beta branches, see this page  
---- 🦟 **BUG**: [Will return `prerelease` instead of `unknown` on dedicated servers.](https://github.com/Facepunch/garrysmod-issues/issues/6085)  
+--- Branch List :  
+--- * unknown **(No beta program)**  
+--- * dev  
+--- * prerelease  
+--- * x86-64  
 --- @return string @The current branch.
 function _G.BRANCH()
 end
@@ -157,6 +161,13 @@ end
 
 --- Creates a Color.  
 --- ⚠ **WARNING**: This function is relatively expensive when used in rendering hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the color in a variable or to use the [default colors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available.  
+--- Here is a list of colors already cached by the game  
+--- Variable | Color (RGBA) |  
+--- -----|------------|  
+--- | color_white | Color(255, 255, 255, 255) |  
+--- | color_black | Color(0, 0, 255, 255) |  
+--- | color_transparent | Color(255, 255, 255, 0) |  
+--- ⚠ **WARNING**: Under no circumstances should these variables be modified (by a Lerp or value modification). Some addons that use these values (e.g. color_white) will be affected by this change.  
 --- @param r number @An integer from `0-255` describing the red value of the color.
 --- @param g number @An integer from `0-255` describing the green value of the color.
 --- @param b number @An integer from `0-255` describing the blue value of the color.
@@ -685,6 +696,8 @@ end
 function _G.FrameTime()
 end
 
+--- @deprecated  
+--- 🛑 **DEPRECATED**: This function is only available locally and cannot be used outside the gameprops.lua file.  
 --- This function adds all models from a specified folder to a custom Spawnlist category. Internally uses Global.AddPropsOfParent  
 --- ⚠ **WARNING**: Using this function before SANDBOX:PopulateContent has been called will result in an error  
 --- @param folder string @the folder to search for models
@@ -839,6 +852,7 @@ function _G.GetHUDPanel()
 end
 
 --- Returns the name of the current server.  
+--- ℹ **NOTE**: GetHostName returns information from ConVar hostname  
 --- @return string @The name of the server.
 function _G.GetHostName()
 end
@@ -1000,6 +1014,12 @@ end
 function _G.IsEnemyEntityName(className)
 end
 
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Use the function Global.isentity instead.  
+--- Identical to Global.isentity.  
+function _G.IsEntity()
+end
+
 --- Returns if this is the first time this hook was predicted.  
 --- This is useful for one-time logic in your SWEPs PrimaryAttack, SecondaryAttack and Reload and other  (to prevent those hooks from being called rapidly in succession). It's also useful in a Move hook for when the client predicts movement.  
 --- Visit Prediction for more information about this behavior.  
@@ -1065,6 +1085,7 @@ end
 
 --- Returns whether an object is valid or not. (Such as entities, Panels, custom table objects and more).  
 --- Checks that an object is not nil, has an `IsValid` method and if this method returns `true`. If the object has no `IsValid` method, it will return `false`.  
+--- ℹ **NOTE**: If you are sure that the object you are about to check is not `nil` and has the `IsValid` method, it would be more faster to call it directly rather than using `IsValid`.  
 --- ℹ **NOTE**: Due to vehicles being technically valid the moment they're spawned, also use Vehicle:IsValidVehicle to make sure they're fully initialized.  
 --- @param toBeValidated any @The table or object to be validated.
 --- @return boolean @True if the object is valid.
@@ -2071,7 +2092,7 @@ function _G.rawset(table, index, value)
 end
 
 --- First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.  
---- 🦟 **BUG**: [Running this function with Global.pcall or Global.xpcall will still print an error that counts towards sv_kickerrornum.](https://github.com/Facepunch/garrysmod-issues/issues/1041" request="813)  
+--- 🦟 **BUG**: [Running this function with Global.pcall or Global.xpcall will still print an error that counts towards sv_kickerrornum.](https://github.com/Facepunch/garrysmod-issues/issues/2498" request="813)  
 --- ℹ **NOTE**: This function will try to load local client file if `sv_allowcslua` is set to `1`  
 --- ℹ **NOTE**: Binary modules can't be installed as part of an addon and have to be put directly into ``garrysmod/lua/bin/`` to be detected.  
 --- This is a safety measure, because modules can be malicious and harm the system.  

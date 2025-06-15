@@ -50,6 +50,12 @@ end
 function GColor:AddWhiteness(whiteness)
 end
 
+--- Returns a copy of this color, usually so it can be safely modified later without affecting the original color.  
+--- @param target GColor @The target color to copy.
+--- @return GColor @The copy of the given color, safe to modify.
+function GColor:Copy(target)
+end
+
 --- Converts a Color into [HWB color space](https://en.wikipedia.org/wiki/HWB_color_model) and returns the "blackness" of the color.  
 --- See COLOR:ToHWB if you want to get all 3 components.  
 --- @return number @Blackness of the color in range [0, 1]

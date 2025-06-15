@@ -76,7 +76,7 @@ end
 function GCNavArea:DrawSpots()
 end
 
---- Returns a list of all the CNavAreas that have a one-way connection **to** this CNavArea and their pre-computed distances.  
+--- Returns a list of all the CNavAreas that have a (one and two way) connection **from** this CNavArea and their pre-computed distances.  
 --- If an area has a one-way incoming connection to this CNavArea, then it will **not** be returned from this function, use CNavArea:GetIncomingConnectionDistances to get all one-way incoming connections.  
 --- @param dir? number @If set, will only return areas in the specified direction
 --- @return table @A list of tables in the following format:

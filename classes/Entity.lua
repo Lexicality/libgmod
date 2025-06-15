@@ -94,7 +94,7 @@ function GEntity:AlignAngles(from, to)
 end
 
 --- Checks if the entity is considered alive.  
---- Checks entity's internal life state variable. Does not check health, but it is generally expected the health to be 0 or below at the point of an entity being considered dead.  
+--- Checks entity's internal life state variable. Does not check health, but it is generally expected the health to be 0 or below at the point of an entity being considered dead. This internally looks up the save value `m_lifeState`  
 --- @return boolean @Whether the entity is considered alive.
 function GEntity:Alive()
 end
@@ -171,7 +171,8 @@ function GEntity:CollisionRulesChanged()
 end
 
 --- Creates bone followers based on the current entity model.  
---- Bone followers are physics objects that follow the visual mesh. This is what is used by `prop_dynamic` for things like big combine doors for vehicles with multiple physics objects which follow the visual mesh of the door when it animates.  
+--- Bone followers are Entities whose Physics Object follows a specific bone on another Entity's model.  
+--- This is what is used by `prop_dynamic` for things like big combine doors for vehicles with multiple physics objects which follow the visual mesh of the door when it animates.  
 --- Be mindful that bone followers create a separate entity (`phys_bone_follower`) for each physics object.  
 --- You must call Entity:UpdateBoneFollowers every tick for bone followers to update their positions.  
 --- ℹ **NOTE**: This function only works on `anim`, `nextbot` and `ai` type entities.  
@@ -233,6 +234,11 @@ end
 --- @param magnitude? number @Magnitude of the dissolve effect, its effect depends on the dissolve type.
 --- @param origin? GVector @The origin for the dissolve effect, its effect depends on the dissolve type
 function GEntity:Dissolve(type, magnitude, origin)
+end
+
+--- If set, the entity will not be duplicated via the built-in duplicator system.  
+--- @return boolean @Set to true to disable being saved.
+function GEntity:DoNotDuplicate()
 end
 
 --- This removes the argument entity from an ent's list of entities to 'delete on remove'  
@@ -1387,7 +1393,7 @@ end
 --- Returns a specific physics object from an entity with multiple PhysObjects (like ragdolls)  
 --- See also Entity:TranslateBoneToPhysBone.  
 --- @param physNum number @The number corresponding to the PhysObj to grab
---- @return GPhysObj @The physics object
+--- @return GPhysObj @The physics object or nil if not found
 function GEntity:GetPhysicsObjectNum(physNum)
 end
 
@@ -2045,8 +2051,9 @@ function GEntity:ManipulateBoneScale(boneID, scale)
 end
 
 --- Returns entity's map creation ID. Unlike Entity:EntIndex or Entity:GetCreationID, it will always be the same on same map, no matter how much you clean up or restart it.  
+--- It may change if the map is recompiled, even if no edits were made. It will definitely change if entities are added or removed from the map file.  
 --- To be used in conjunction with ents.GetMapCreatedEntity. See also Entity:CreatedByMap.  
---- @return number @The map creation ID or -1 if the entity is not compiled into the map.
+--- @return number @The map creation ID or -1 if the entity is not compiled into the map
 function GEntity:MapCreationID()
 end
 
@@ -2178,6 +2185,11 @@ end
 
 --- Wakes up the entity's physics object  
 function GEntity:PhysWake()
+end
+
+--- A bool which determines if the Physgun can pickup this entity.  
+--- @return boolean @Set to true to disable pickup
+function GEntity:PhysgunDisabled()
 end
 
 --- Destroys the current physics object of an entity.  
@@ -2509,7 +2521,7 @@ end
 function GEntity:SetBoneController(boneControllerID, value)
 end
 
---- Sets the bone matrix of given bone to given matrix. See also Entity:GetBoneMatrix.  
+--- Sets the bone matrix of given bone to given matrix. See also Entity:GetBoneMatrix. Will cause a uncatchable error when used on `__INVALIDBONE__` bones. Can be caught with `if ent:GetBoneName(boneid) == "__INVALIDBONE__" then`  
 --- ℹ **NOTE**: Despite existing serverside, it does nothing.  
 --- @param boneid number @The ID of the bone
 --- @param matrix GVMatrix @The matrix to set.
@@ -2553,7 +2565,7 @@ function GEntity:SetColor(color)
 end
 
 --- Sets the creator of this entity. This is set automatically in Sandbox gamemode when spawning SENTs, but is never used/read by default.  
---- @param ply GPlayer @The creator
+--- @param ply? GPlayer @The creator
 function GEntity:SetCreator(ply)
 end
 
@@ -3335,7 +3347,7 @@ function GEntity:SetPhysConstraintObjects(Phys1, Phys2)
 end
 
 --- Sets the player who gets credit if this entity kills something with physics damage within the time limit.  
---- ℹ **NOTE**: This can only be called on props, "anim" type SENTs and vehicles.  
+--- ℹ **NOTE**: Only functional on props, "anim" type SENTs, vehicles and a few other select entities.  
 --- @param ent GPlayer @Player who gets the kills
 --- @param timeLimit? number @Time in seconds until the entity forgets its physics attacker and prevents it from getting the kill credit.
 function GEntity:SetPhysicsAttacker(ent, timeLimit)

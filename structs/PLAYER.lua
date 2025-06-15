@@ -86,8 +86,8 @@ end
 --- Called from GM:CreateMove.  
 --- ⚠ **WARNING**: This hook will not work if the current gamemode overrides GM:SetupMove and does not call this hook.  
 --- ℹ **NOTE**: This hook is run after the drive.StartMove has been called.  
---- @param mv GCMoveData 
---- @param cmd GCUserCmd 
+--- @param mv GCMoveData @The move data to override/use
+--- @param cmd GCUserCmd @The command data
 --- @return boolean @Return true to prevent default action
 function PLAYER:StartMove(mv, cmd)
 end

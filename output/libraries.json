@@ -1003,7 +1003,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets up the model transformation matrix to draw 2D content in 3D space and pushes it into the stack (<page>cam.PushModelMatrix</page>).\n\nMatrix formula:\n```\nlocal m = Matrix()\nm:SetAngles(angles)\nm:SetTranslation(pos)\nm:SetScale(Vector(scale, -scale, 1))\n```\n<warning>This must be closed by <page>cam.End3D2D</page>. If not done so, unexpected issues might arise.</warning>",
+        "description": "Sets up the model transformation matrix to draw 2D content in 3D space and pushes it into the stack (<page>cam.PushModelMatrix</page>).\n\nMatrix formula:\n```\nlocal m = Matrix()\nm:SetAngles( angles )\nm:SetTranslation( pos )\nm:SetScale( Vector( scale, -scale, 1 ) )\n```\n<warning>This must be closed by <page>cam.End3D2D</page>. If not done so, unexpected issues might arise.</warning>\n\n<page>render.SetToneMappingScaleLinear</page> may of use when dealing with bloom.",
         "name": "Start3D2D",
         "parent": "cam",
         "realms": [
@@ -5934,7 +5934,7 @@
             "type": "number"
           }
         ],
-        "description": "Works like <page>draw.Text</page>, but draws the text as a shadow.\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>",
+        "description": "Works like <page>draw.Text</page>, but draws the text with a shadow.\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>",
         "name": "TextShadow",
         "parent": "draw",
         "realms": [
@@ -7657,9 +7657,8 @@
         "name": "GetUserContent",
         "parent": "engine",
         "realms": [
-          "menu",
           "client",
-          "server"
+          "menu"
         ],
         "returnValues": [
           {
@@ -7794,7 +7793,7 @@
         ]
       },
       {
-        "description": "Returns the number of seconds between each gametick.",
+        "description": "Returns the time interval between each game tick in seconds.\n\nThis function is useful for making animations (usually serverside, such as doors rotating) and similar things to be independent of the tickrate in hooks that run at the tick rate, such as <page>GM:Tick</page>.\n\nClientside you'd want to use <page>Global.FrameTime</page> for this purpose in hooks that run every frame.\n\nThe default tickrate is `66.6666`, aka `16` milliseconds interval between each game tick.\nThe tickrate can be adjusted via the `-tickrate` [command line option](Command_Line_Parameters).",
         "name": "TickInterval",
         "parent": "engine",
         "realms": [
@@ -7908,6 +7907,48 @@
         "returnValues": [
           {
             "description": "Created entity (`C_PhysPropClientside`).",
+            "type": "Entity"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The first entity to attach the rope to.",
+            "name": "ent1",
+            "type": "Entity"
+          },
+          {
+            "description": "The attachment ID on the first entity to attach the rope to.",
+            "name": "ent1attach",
+            "type": "number"
+          },
+          {
+            "description": "The second entity to attach the rope to.",
+            "name": "ent2",
+            "type": "Entity"
+          },
+          {
+            "description": "The attachment ID on the second entity to attach the rope to.",
+            "name": "ent2attach",
+            "type": "Entity"
+          },
+          {
+            "default": "nil",
+            "description": "Extra optional settings for the rope. Possible values are:\n* slack - How much extra rope to add to the length (default: 0)\n* width - Width of the rope (default: 2)\n* segments - How many segments the rope should have (default: 8)\n* material - Which material should the rope have (default: `\"cable/cable\"`)\n* nogravity - If set, the rope should have no gravity. (default: 0)",
+            "name": "extra",
+            "type": "table"
+          }
+        ],
+        "description": "Creates a clientside only rope, similar to those used by the DOG model from Half-Life 2.",
+        "name": "CreateClientRope",
+        "parent": "ents",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "Created entity (`C_RopeKeyframe`).",
             "type": "Entity"
           }
         ]
@@ -8338,7 +8379,7 @@
         "source": {
           "file": "lua/includes/extensions/ents.lua",
           "lineEnd": null,
-          "lineStart": 33
+          "lineStart": 27
         }
       }
     ],
@@ -9826,7 +9867,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Pushes text to the closed caption box.\n<note>The function will not work, if the console command variable `closecaption` is set to 0.</note>",
+        "description": "Pushes text to the closed caption box.\n<warning>The function will not work, if the console command variable `closecaption` is set to 0.</warning>",
         "name": "AddCaption",
         "parent": "gui",
         "realms": [
@@ -11011,7 +11052,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Switches to the provided weapon on the next CUserCmd generation/CreateMove call. Direct binding to [CInput::MakeWeaponSelection](https://github.com/LestaD/SourceEngine2007/blob/43a5c90a5ada1e69ca044595383be67f40b33c61/se2007/game/client/in_main.cpp#L929-L932).",
+        "description": "Switches to the provided weapon on the next CUserCmd generation/CreateMove call. Direct binding to [CInput::MakeWeaponSelection](https://github.com/ValveSoftware/source-sdk-2013/blob/39f6dde8fbc238727c020d13b05ecadd31bda4c0/src/game/client/in_main.cpp#L989-L992).",
         "name": "SelectWeapon",
         "parent": "input",
         "realms": [
@@ -12242,6 +12283,28 @@
           "lineEnd": 66,
           "lineStart": 60
         }
+      },
+      {
+        "arguments": [
+          {
+            "description": "List to remove an entry in.",
+            "name": "list",
+            "type": "string"
+          },
+          {
+            "description": "The key for the entry to remove.",
+            "name": "key",
+            "type": "string"
+          }
+        ],
+        "description": "Removes a single entry from the list `list` with key `key`.\n\nThis is equivalent to `list.Set( myList, myKey, nil )`.",
+        "name": "RemoveEntry",
+        "parent": "list",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ]
       },
       {
         "arguments": [
@@ -16605,7 +16668,7 @@
         ],
         "returnValues": [
           {
-            "description": "The player, or `nil` if no entity could be read.",
+            "description": "The player, or throwed error if no entity could be read.",
             "type": "Player"
           }
         ],
@@ -17895,7 +17958,7 @@
             "type": "string"
           }
         ],
-        "description": "Adds a [material surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) type to the game's physics environment.\n\nSee <page>util.GetSurfaceData</page> for the opposite function.\n\n<bug issue=\"2604\">The game has a limit of 128 surface properties - this includes properties loaded automatically from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt). Due to this, there's only a small amount of open slots that can be registered with GMod's provided surfaceproperties.txt.</bug>",
+        "description": "Adds a [material surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) type to the game's physics environment.\n\nSee <page>util.GetSurfaceData</page> for the opposite function.\n\n<bug issue=\"2604\">The game has a limit of 128 surface properties - this includes properties loaded automatically from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt). Due to this, there's only a small amount of open slots that can be registered with GMod's provided surfaceproperties.txt.\n\nDoes nothing on `x86-64` beta.\n</bug>",
         "name": "AddSurfaceData",
         "parent": "physenv",
         "realms": [
@@ -17959,7 +18022,7 @@
         ],
         "returnValues": [
           {
-            "description": "Performance settings. See <page>Structures/PhysEnvPerformanceSettings</page>",
+            "description": "Performance settings or <page>nil</page> if called too early. See <page>Structures/PhysEnvPerformanceSettings</page>",
             "type": "table"
           }
         ]
@@ -18199,7 +18262,7 @@
         ],
         "source": {
           "file": "lua/includes/extensions/player.lua",
-          "lineEnd": 309,
+          "lineEnd": 308,
           "lineStart": 299
         }
       },
@@ -18231,7 +18294,7 @@
         }
       },
       {
-        "description": "Gives you the player count.\n\n<note>Similar to **#**<page>player.GetAll</page>() but with better performance since the player table doesn't have to be generated. If <page>player.GetAll</page> is already being called for iteration, then using the **#** operator on the table will be faster than calling this function since it is JITted.</note>",
+        "description": "Returns the active player count.\n\n<note>Similar to **#**<page>player.GetAll</page>() but with better performance since the player table doesn't have to be generated. If <page>player.GetAll</page> is already being called for iteration, then using the **#** operator on the table will be faster than calling this function since it is JITted.</note>",
         "name": "GetCount",
         "parent": "player",
         "realms": [
@@ -18241,6 +18304,20 @@
         "returnValues": [
           {
             "description": "Number of players",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "description": "Returns the amount of players connecting to the server, but not yet spawned in.\n\n`player.GetCountConnecting() + player.GetCount()` would result in the total player count on this server.",
+        "name": "GetCountConnecting",
+        "parent": "player",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "Number of players still connecting.",
             "type": "number"
           }
         ]
@@ -18284,8 +18361,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/player.lua",
-          "lineEnd": 320,
-          "lineStart": 314
+          "lineEnd": 319,
+          "lineStart": 313
         }
       }
     ],
@@ -21055,7 +21132,7 @@
             "type": "table"
           }
         ],
-        "description": "Renders the scene with the specified viewData to the current active render target.\n\n<bug issue=\"1330\">Static props and LODs are rendered improperly due to incorrectly perceived distance.</bug>",
+        "description": "Renders the scene with the specified viewData to the current active render target.\n\n<bug issue=\"1330\">Static props and LODs are rendered improperly due to incorrectly perceived distance.</bug>\n<bug>Using render.RenderView on a RenderTarget texture in a 3d context like SWEP:PostDrawViewModel() while drawing the RenderTarget texture causes screen flickers</bug>",
         "name": "RenderView",
         "parent": "render",
         "realms": [
@@ -21601,11 +21678,12 @@
       {
         "arguments": [
           {
-            "description": "",
-            "name": "vec",
+            "description": "The tonemapping scales.\n* X - Output scale\n* Y - Lightmap scale\n* Z - Reflection map scale",
+            "name": "scales",
             "type": "Vector"
           }
         ],
+        "description": "Sets the tone mapping scale for upcoming rendering operations.",
         "name": "SetToneMappingScaleLinear",
         "parent": "render",
         "realms": [
@@ -23291,7 +23369,7 @@
           },
           {
             "default": "nil",
-            "description": "The parent to add the content icon to.",
+            "description": "The parent to add the <page>ContentIcon</page> to.",
             "name": "parent",
             "type": "Panel"
           },
@@ -23301,7 +23379,7 @@
             "type": "table"
           }
         ],
-        "description": "Creates a new content icon, previously defined via <page>spawnmenu.AddContentType</page>.",
+        "description": "Creates a new <page>ContentIcon</page> previously defined via <page>spawnmenu.AddContentType</page>.",
         "name": "CreateContentIcon",
         "parent": "spawnmenu",
         "realms": [
@@ -23309,7 +23387,7 @@
         ],
         "returnValues": [
           {
-            "description": "The created content icon, if it was returned by <page>spawnmenu.AddContentType</page>.",
+            "description": "The created <page>ContentIcon</page>, if it was returned by <page>spawnmenu.AddContentType</page>.",
             "type": "Panel"
           }
         ],
@@ -23685,8 +23763,8 @@
         ],
         "returnValues": [
           {
-            "description": "false is returned if there is an error, nil if the query returned no data.",
-            "type": "table"
+            "description": "`false` is returned if there is an error, `nil` if the query returned no data.",
+            "type": "table|boolean|nil"
           }
         ]
       },
@@ -23723,6 +23801,34 @@
           "lineEnd": 66,
           "lineStart": 52
         }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The query to execute with optional `?` parameter placeholders.\n\n<warning>\n* Always use parameter binding with `?` placeholders instead of string concatenation to prevent SQL injection vulnerabilities.\n</warning>",
+            "name": "query",
+            "type": "string"
+          },
+          {
+            "description": "Parameters to bind to the query placeholders. Supports <page>nil</page>, <page>boolean</page>, <page>number</page>, and <page>string</page> types.\n\nThe number of query parameters must match the number of `?` placeholders, or the query will fail. See examples.",
+            "name": "queryParams",
+            "type": "vararg"
+          }
+        ],
+        "description": "Performs a query on the local SQLite database with proper type handling and parameter binding, returns a table as result set, empty table if no results, and false on error. Unlike <page>sql.Query</page>, this function properly handles SQLite data types and allows safe parameter binding to prevent SQL injection attacks.\n<warning>\n* This function only executes a single SQL statement, unlike <page>sql.Query</page> which can execute multiple statements separated by semicolons.\n\n* Large INTEGER values (beyond ±9,007,199,254,740,991) are returned as strings to preserve exact values. This is because Lua represents all numbers as doubles, which lose precision for integers larger than 2⁵³-1. Returning them as strings prevents data corruption from rounding errors.\n</warning>",
+        "name": "QueryTyped",
+        "parent": "sql",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "`false` is returned if there is an error (See <page>sql.LastError</page>), otherwise a table with properly typed column values (empty table if no results).",
+            "type": "table|boolean"
+          }
+        ]
       },
       {
         "arguments": [
@@ -26067,7 +26173,7 @@
         ]
       },
       {
-        "description": "Returns the current color affecting draw operations.\n\n<bug issue=\"2407\">The returned color will not have the color metatable.</bug>",
+        "description": "Returns the current color affecting draw operations.",
         "name": "GetDrawColor",
         "parent": "surface",
         "realms": [
@@ -26118,7 +26224,7 @@
         ]
       },
       {
-        "description": "Returns the current color affecting text draw operations.\n\n<bug issue=\"2407\">The returned color will not have the color metatable.</bug>",
+        "description": "Returns the current color affecting text draw operations.",
         "name": "GetTextColor",
         "parent": "surface",
         "realms": [
@@ -26933,8 +27039,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 666,
-          "lineStart": 658
+          "lineEnd": 667,
+          "lineStart": 659
         }
       },
       {
@@ -26966,8 +27072,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 678,
-          "lineStart": 668
+          "lineEnd": 679,
+          "lineStart": 669
         }
       },
       {
@@ -27055,8 +27161,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 750,
-          "lineStart": 744
+          "lineEnd": 753,
+          "lineStart": 747
         }
       },
       {
@@ -27105,7 +27211,7 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 639,
+          "lineEnd": 642,
           "lineStart": 636
         }
       },
@@ -27133,8 +27239,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 644,
-          "lineStart": 641
+          "lineEnd": 647,
+          "lineStart": 644
         }
       },
       {
@@ -27161,8 +27267,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 764,
-          "lineStart": 752
+          "lineEnd": 767,
+          "lineStart": 755
         }
       },
       {
@@ -27189,8 +27295,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 649,
-          "lineStart": 646
+          "lineEnd": 652,
+          "lineStart": 649
         }
       },
       {
@@ -30127,7 +30233,7 @@
       {
         "arguments": [
           {
-            "description": "The name of the effect to create.\n\nYou can find a list of <page text=\"built-in engine effects here\">Default_Effects</page>. You can create your own, [example effects can be found here](https://github.com/garrynewman/garrysmod/tree/master/garrysmod/gamemodes/sandbox/entities/effects) and [here](https://github.com/garrynewman/garrysmod/tree/master/garrysmod/gamemodes/base/entities/effects).",
+            "description": "The name of the effect to create.\n\nYou can find a list of <page text=\"built-in engine effects here\">Default_Effects</page>. You can create your own, [example effects can be found here](https://github.com/Facepunch/garrysmod/tree/master/garrysmod/gamemodes/sandbox/entities/effects) and [here](https://github.com/Facepunch/garrysmod/tree/master/garrysmod/gamemodes/base/entities/effects).",
             "name": "effectName",
             "type": "string"
           },
@@ -30249,7 +30355,7 @@
             "type": "number"
           }
         ],
-        "description": "Returns a name for given activity ID. This is useful for models that define custom animation events.\n\nSee <page>util.GetActivityIDByName</page> for a function that does the opposite.",
+        "description": "Returns a name for given activity ID. This is useful for models that define custom activities.\n\nSee <page>util.GetActivityIDByName</page> for a function that does the opposite.",
         "name": "GetActivityNameByID",
         "parent": "util",
         "realms": [

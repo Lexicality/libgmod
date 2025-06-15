@@ -64,10 +64,16 @@ end
 function player.GetByUniqueID(uniqueID)
 end
 
---- Gives you the player count.  
+--- Returns the active player count.  
 --- ℹ **NOTE**: Similar to **#**player.GetAll() but with better performance since the player table doesn't have to be generated. If player.GetAll is already being called for iteration, then using the **#** operator on the table will be faster than calling this function since it is JITted.  
 --- @return number @Number of players
 function player.GetCount()
+end
+
+--- Returns the amount of players connecting to the server, but not yet spawned in.  
+--- `player.GetCountConnecting() + player.GetCount()` would result in the total player count on this server.  
+--- @return number @Number of players still connecting.
+function player.GetCountConnecting()
 end
 
 --- Returns a table containing all human players (non-bot/AI).  

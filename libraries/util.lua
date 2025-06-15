@@ -156,7 +156,7 @@ end
 function util.GetActivityIDByName(arg)
 end
 
---- Returns a name for given activity ID. This is useful for models that define custom animation events.  
+--- Returns a name for given activity ID. This is useful for models that define custom activities.  
 --- See util.GetActivityIDByName for a function that does the opposite.  
 --- @param id number @The ID of an activity from some hook
 --- @return string @The associated name with given activity ID.

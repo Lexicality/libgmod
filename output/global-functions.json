@@ -33,8 +33,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 239,
-      "lineStart": 201
+      "lineEnd": 254,
+      "lineStart": 212
     }
   },
   {
@@ -55,8 +55,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 412,
-      "lineStart": 409
+      "lineEnd": 450,
+      "lineStart": 441
     }
   },
   {
@@ -75,7 +75,8 @@
     ],
     "source": {
       "file": "lua/menu/background.lua",
-      "lineStart": 77
+      "lineEnd": 105,
+      "lineStart": 101
     }
   },
   {
@@ -332,8 +333,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 110,
-      "lineStart": 108
+      "lineEnd": 144,
+      "lineStart": 139
     }
   },
   {
@@ -380,7 +381,7 @@
     ]
   },
   {
-    "description": "A variable containing a string indicating which (Beta) Branch of the game you are using.\n\nWhile this variable is always available in the <page text=\"Client\">States#client</page> &amp; <page text=\"Menu\">States#menu</page>\nrealms, it is only defined in the <page text=\"Server\">States#server</page>  realm on local servers.\n\nFor more information on beta branches, see <page text=\"this page\">Dev_Branch</page>\n<bug issue=\"6085\">Will return `prerelease` instead of `unknown` on dedicated servers.</bug>",
+    "description": "A variable containing a string indicating which (Beta) Branch of the game you are using.\n\nWhile this variable is always available in the <page text=\"Client\">States#client</page> &amp; <page text=\"Menu\">States#menu</page>\nrealms, it is only defined in the <page text=\"Server\">States#server</page>  realm on local servers.\n\nFor more information on beta branches, see <page text=\"this page\">Dev_Branch</page>\n<br><br>\nBranch List :\n* unknown **(No beta program)**\n* dev\n* prerelease\n* x86-64",
     "name": "BRANCH",
     "parent": "Global",
     "realms": [
@@ -464,8 +465,8 @@
     ],
     "source": {
       "file": "lua/menu/background.lua",
-      "lineEnd": 93,
-      "lineStart": 73
+      "lineEnd": 164,
+      "lineStart": 109
     }
   },
   {
@@ -518,8 +519,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 77,
-      "lineStart": 64
+      "lineEnd": 86,
+      "lineStart": 73
     }
   },
   {
@@ -538,8 +539,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 89,
-      "lineStart": 79
+      "lineEnd": 98,
+      "lineStart": 88
     }
   },
   {
@@ -684,7 +685,7 @@
         "type": "number"
       }
     ],
-    "description": "Creates a <page>Color</page>.\n<warning>This function is relatively expensive when used in rendering hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the color in a variable or to use the [default colors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available.</warning>",
+    "description": "Creates a <page>Color</page>.\n<warning>This function is relatively expensive when used in rendering hooks or in operations requiring very frequent calls (like loops for example) due to object creation and garbage collection. It is better to store the color in a variable or to use the [default colors](https://wiki.facepunch.com/gmod/Global_Variables#misc) available.</warning>\n\nHere is a list of colors already cached by the game\n\nVariable | Color (RGBA) |\n-----|------------|\n| color_white | Color(255, 255, 255, 255) |\n| color_black | Color(0, 0, 255, 255) |\n| color_transparent | Color(255, 255, 255, 0) |\n\n<warning>Under no circumstances should these variables be modified (by a Lerp or value modification). Some addons that use these values (e.g. color_white) will be affected by this change.</warning>",
     "name": "Color",
     "parent": "Global",
     "realms": [
@@ -762,8 +763,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 121,
-      "lineStart": 115
+      "lineEnd": 155,
+      "lineStart": 149
     }
   },
   {
@@ -971,8 +972,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 464,
-      "lineStart": 450
+      "lineEnd": 502,
+      "lineStart": 488
     }
   },
   {
@@ -984,8 +985,8 @@
     ],
     "source": {
       "file": "gamemodes/sandbox/gamemode/spawnmenu/contextmenu.lua",
-      "lineEnd": 220,
-      "lineStart": 135
+      "lineEnd": 230,
+      "lineStart": 137
     }
   },
   {
@@ -1088,8 +1089,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 442,
-      "lineStart": 435
+      "lineEnd": 592,
+      "lineStart": 585
     }
   },
   {
@@ -1356,8 +1357,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 470,
-      "lineStart": 461
+      "lineEnd": 620,
+      "lineStart": 611
     }
   },
   {
@@ -1529,7 +1530,7 @@
     ],
     "source": {
       "file": "lua/derma/derma_utils.lua",
-      "lineEnd": 92,
+      "lineEnd": 93,
       "lineStart": 45
     }
   },
@@ -1610,8 +1611,8 @@
     ],
     "source": {
       "file": "lua/derma/derma_utils.lua",
-      "lineEnd": 179,
-      "lineStart": 104
+      "lineEnd": 180,
+      "lineStart": 105
     }
   },
   {
@@ -1670,8 +1671,8 @@
     ],
     "source": {
       "file": "lua/derma/derma_utils.lua",
-      "lineEnd": 263,
-      "lineStart": 194
+      "lineEnd": 264,
+      "lineStart": 195
     }
   },
   {
@@ -1789,8 +1790,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 371,
-      "lineStart": 367
+      "lineEnd": 451,
+      "lineStart": 447
     }
   },
   {
@@ -1862,7 +1863,7 @@
     ],
     "source": {
       "file": "lua/postprocess/bloom.lua",
-      "lineEnd": 59,
+      "lineEnd": 56,
       "lineStart": 25
     }
   },
@@ -1907,8 +1908,8 @@
     ],
     "source": {
       "file": "lua/postprocess/color_modify.lua",
-      "lineEnd": 32,
-      "lineStart": 19
+      "lineEnd": 33,
+      "lineStart": 20
     }
   },
   {
@@ -1962,7 +1963,7 @@
     ],
     "source": {
       "file": "lua/postprocess/motion_blur.lua",
-      "lineEnd": 61,
+      "lineEnd": 57,
       "lineStart": 17
     }
   },
@@ -2148,8 +2149,8 @@
     ],
     "source": {
       "file": "lua/includes/extensions/entity.lua",
-      "lineEnd": 216,
-      "lineStart": 212
+      "lineEnd": 215,
+      "lineStart": 211
     }
   },
   {
@@ -2255,8 +2256,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 401,
-      "lineStart": 398
+      "lineEnd": 439,
+      "lineStart": 436
     }
   },
   {
@@ -2610,8 +2611,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 324,
-      "lineStart": 303
+      "lineEnd": 342,
+      "lineStart": 321
     }
   },
   {
@@ -2630,8 +2631,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 102,
-      "lineStart": 91
+      "lineEnd": 111,
+      "lineStart": 100
     }
   },
   {
@@ -2660,8 +2661,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 191,
-      "lineStart": 179
+      "lineEnd": 203,
+      "lineStart": 188
     }
   },
   {
@@ -2693,7 +2694,7 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineStart": 10
+      "lineStart": 29
     }
   },
   {
@@ -2762,7 +2763,8 @@
     ],
     "source": {
       "file": "lua/menu/loading.lua",
-      "lineStart": 243
+      "lineEnd": 274,
+      "lineStart": 249
     }
   },
   {
@@ -2810,7 +2812,7 @@
         "type": "number"
       }
     ],
-    "description": "This function adds all models from a specified folder to a custom Spawnlist category. Internally uses <page>Global.AddPropsOfParent</page>\n<warning>Using this function before <page>SANDBOX:PopulateContent</page> has been called will result in an error</warning>",
+    "description": "<deprecated>This function is only available locally and cannot be used outside the gameprops.lua file.</deprecated>\nThis function adds all models from a specified folder to a custom Spawnlist category. Internally uses <page>Global.AddPropsOfParent</page>\n<warning>Using this function before <page>SANDBOX:PopulateContent</page> has been called will result in an error</warning>",
     "name": "GenerateSpawnlistFromPath",
     "parent": "Global",
     "realms": [
@@ -2881,8 +2883,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 507,
-      "lineStart": 495
+      "lineEnd": 522,
+      "lineStart": 510
     }
   },
   {
@@ -2932,8 +2934,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 490,
-      "lineStart": 486
+      "lineEnd": 528,
+      "lineStart": 524
     }
   },
   {
@@ -2960,8 +2962,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 496,
-      "lineStart": 492
+      "lineEnd": 534,
+      "lineStart": 530
     }
   },
   {
@@ -3483,7 +3485,7 @@
     ]
   },
   {
-    "description": "Returns the name of the current server.",
+    "description": "Returns the name of the current server.\n\n<note>GetHostName returns information from <page text=\"ConVar\">ConVars_In_Garrysmod#cvarlistdump</page> hostname</note>",
     "name": "GetHostName",
     "parent": "Global",
     "realms": [
@@ -3526,7 +3528,8 @@
     ],
     "source": {
       "file": "lua/menu/loading.lua",
-      "lineStart": 224
+      "lineEnd": 236,
+      "lineStart": 228
     }
   },
   {
@@ -3558,8 +3561,8 @@
     ],
     "source": {
       "file": "lua/menu/getmaps.lua",
-      "lineEnd": 358,
-      "lineStart": 356
+      "lineEnd": 421,
+      "lineStart": 419
     }
   },
   {
@@ -3615,8 +3618,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 198,
-      "lineStart": 189
+      "lineEnd": 266,
+      "lineStart": 257
     }
   },
   {
@@ -3763,8 +3766,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 365,
-      "lineStart": 299
+      "lineEnd": 445,
+      "lineStart": 387
     }
   },
   {
@@ -4003,9 +4006,25 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 168,
-      "lineStart": 162
+      "lineEnd": 202,
+      "lineStart": 196
     }
+  },
+  {
+    "arguments": [
+      {
+        "description": "An entity that is about to be removed or that has just been created.",
+        "name": "ent",
+        "type": "Entity"
+      }
+    ],
+    "description": "<internal></internal>\nCalled by the engine before <page>GM:OnEntityCreated</page> or <page>GM:EntityRemoved</page> hooks are called.\nInternally used to clear the <page>player.Iterator</page> and <page>ents.Iterator</page> cache",
+    "name": "InvalidateInternalEntityCache",
+    "parent": "Global",
+    "realms": [
+      "client",
+      "server"
+    ]
   },
   {
     "arguments": [
@@ -4159,8 +4178,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 354,
-      "lineStart": 334
+      "lineEnd": 388,
+      "lineStart": 386
     }
   },
   {
@@ -4184,6 +4203,16 @@
         "description": "True if the variable is an <page>Entity</page>.",
         "type": "boolean"
       }
+    ]
+  },
+  {
+    "description": "<deprecated>Use the function <page>Global.isentity</page> instead.</deprecated>\nIdentical to <page>Global.isentity</page>.",
+    "name": "IsEntity",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
     ]
   },
   {
@@ -4225,8 +4254,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 371,
-      "lineStart": 359
+      "lineEnd": 405,
+      "lineStart": 403
     }
   },
   {
@@ -4281,8 +4310,8 @@
     ],
     "source": {
       "file": "lua/menu/loading.lua",
-      "lineEnd": 230,
-      "lineStart": 222
+      "lineEnd": 247,
+      "lineStart": 239
     }
   },
   {
@@ -4332,8 +4361,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 393,
-      "lineStart": 378
+      "lineEnd": 431,
+      "lineStart": 407
     }
   },
   {
@@ -4425,8 +4454,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 294,
-      "lineStart": 245
+      "lineEnd": 362,
+      "lineStart": 313
     }
   },
   {
@@ -4499,8 +4528,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 46,
-      "lineStart": 36
+      "lineEnd": 80,
+      "lineStart": 67
     }
   },
   {
@@ -4527,8 +4556,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 300,
-      "lineStart": 286
+      "lineEnd": 334,
+      "lineStart": 312
     }
   },
   {
@@ -4539,7 +4568,7 @@
         "type": "any"
       }
     ],
-    "description": "Returns whether an object is valid or not. (Such as <page text=\"entities\">Entity</page>, <page>Panel</page>s, custom <page>table</page> objects and more).\n\nChecks that an object is not <page>nil</page>, has an `IsValid` method and if this method returns `true`. If the object has no `IsValid` method, it will return `false`.\n\n<note>Due to vehicles being technically valid the moment they're spawned, also use <page>Vehicle:IsValidVehicle</page> to make sure they're fully initialized.</note>",
+    "description": "Returns whether an object is valid or not. (Such as <page text=\"entities\">Entity</page>, <page>Panel</page>s, custom <page>table</page> objects and more).\n\nChecks that an object is not <page>nil</page>, has an `IsValid` method and if this method returns `true`. If the object has no `IsValid` method, it will return `false`.\n\n<note>If you are sure that the object you are about to check is not `nil` and has the `IsValid` method, it would be more faster to call it directly rather than using `IsValid`.</note>\n<note>Due to vehicles being technically valid the moment they're spawned, also use <page>Vehicle:IsValidVehicle</page> to make sure they're fully initialized.</note>",
     "name": "IsValid",
     "parent": "Global",
     "realms": [
@@ -4555,8 +4584,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 253,
-      "lineStart": 244
+      "lineEnd": 268,
+      "lineStart": 256
     }
   },
   {
@@ -4656,7 +4685,7 @@
     ],
     "source": {
       "file": "lua/includes/util/javascript_util.lua",
-      "lineEnd": 39,
+      "lineEnd": 40,
       "lineStart": 19
     }
   },
@@ -4689,8 +4718,8 @@
     ],
     "source": {
       "file": "lua/vgui/dlabel.lua",
-      "lineEnd": 298,
-      "lineStart": 291
+      "lineEnd": 314,
+      "lineStart": 307
     }
   },
   {
@@ -4709,8 +4738,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 394,
-      "lineStart": 387
+      "lineEnd": 544,
+      "lineStart": 534
     }
   },
   {
@@ -4747,8 +4776,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 268,
-      "lineStart": 261
+      "lineEnd": 302,
+      "lineStart": 292
     }
   },
   {
@@ -4826,8 +4855,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 475,
-      "lineStart": 471
+      "lineEnd": 625,
+      "lineStart": 621
     }
   },
   {
@@ -4854,7 +4883,8 @@
     ],
     "source": {
       "file": "lua/menu/getmaps.lua",
-      "lineStart": 347
+      "lineEnd": 464,
+      "lineStart": 451
     }
   },
   {
@@ -4866,8 +4896,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 239,
-      "lineStart": 232
+      "lineEnd": 307,
+      "lineStart": 300
     }
   },
   {
@@ -5000,8 +5030,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 31,
-      "lineStart": 15
+      "lineEnd": 49,
+      "lineStart": 34
     }
   },
   {
@@ -5043,8 +5073,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 427,
-      "lineStart": 422
+      "lineEnd": 577,
+      "lineStart": 572
     }
   },
   {
@@ -5093,8 +5123,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 138,
-      "lineStart": 135
+      "lineEnd": 172,
+      "lineStart": 166
     }
   },
   {
@@ -5395,8 +5425,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 176,
-      "lineStart": 156
+      "lineEnd": 185,
+      "lineStart": 165
     }
   },
   {
@@ -5476,8 +5506,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 148,
-      "lineStart": 143
+      "lineEnd": 182,
+      "lineStart": 174
     }
   },
   {
@@ -5810,8 +5840,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 94,
-      "lineStart": 56
+      "lineEnd": 128,
+      "lineStart": 90
     }
   },
   {
@@ -5885,7 +5915,7 @@
     ],
     "source": {
       "file": "lua/includes/extensions/table.lua",
-      "lineEnd": 631,
+      "lineEnd": 634,
       "lineStart": 614
     }
   },
@@ -6049,8 +6079,8 @@
     ],
     "source": {
       "file": "lua/menu/problems/problems.lua",
-      "lineEnd": 301,
-      "lineStart": 299
+      "lineEnd": 319,
+      "lineStart": 317
     }
   },
   {
@@ -6101,8 +6131,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 436,
-      "lineStart": 427
+      "lineEnd": 474,
+      "lineStart": 454
     }
   },
   {
@@ -6264,8 +6294,8 @@
     ],
     "source": {
       "file": "lua/menu/openurl.lua",
-      "lineEnd": 274,
-      "lineStart": 266
+      "lineEnd": 300,
+      "lineStart": 292
     }
   },
   {
@@ -6284,8 +6314,8 @@
     ],
     "source": {
       "file": "lua/menu/openurl.lua",
-      "lineEnd": 265,
-      "lineStart": 261
+      "lineEnd": 291,
+      "lineStart": 286
     }
   },
   {
@@ -6304,8 +6334,8 @@
     ],
     "source": {
       "file": "lua/menu/openurl.lua",
-      "lineEnd": 279,
-      "lineStart": 275
+      "lineEnd": 305,
+      "lineStart": 301
     }
   },
   {
@@ -6316,7 +6346,7 @@
         "type": "string"
       }
     ],
-    "description": "First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.\n\n<bug issue=\"1041\" request=\"813\">Running this function with <page>Global.pcall</page> or <page>Global.xpcall</page> will still print an error that counts towards sv_kickerrornum.</bug>\n<note>This function will try to load local client file if `sv_allowcslua` is set to `1`</note>\n<note>\nBinary modules can't be installed as part of an addon and have to be put directly into ``garrysmod/lua/bin/`` to be detected.\nThis is a safety measure, because modules can be malicious and harm the system.\n</note>",
+    "description": "First tries to load a binary module with the given name, if unsuccessful, it tries to load a Lua module with the given name.\n\n<bug issue=\"2498\" request=\"813\">Running this function with <page>Global.pcall</page> or <page>Global.xpcall</page> will still print an error that counts towards sv_kickerrornum.</bug>\n<note>This function will try to load local client file if `sv_allowcslua` is set to `1`</note>\n<note>\nBinary modules can't be installed as part of an addon and have to be put directly into ``garrysmod/lua/bin/`` to be detected.\nThis is a safety measure, because modules can be malicious and harm the system.\n</note>",
     "name": "require",
     "parent": "Global",
     "realms": [
@@ -6335,8 +6365,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 445,
-      "lineStart": 438
+      "lineEnd": 481,
+      "lineStart": 476
     }
   },
   {
@@ -6439,8 +6469,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 264,
-      "lineStart": 258
+      "lineEnd": 279,
+      "lineStart": 270
     }
   },
   {
@@ -6466,8 +6496,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 256,
-      "lineStart": 250
+      "lineEnd": 290,
+      "lineStart": 281
     }
   },
   {
@@ -6501,8 +6531,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 243,
-      "lineStart": 241
+      "lineEnd": 311,
+      "lineStart": 309
     }
   },
   {
@@ -6526,7 +6556,8 @@
     ],
     "source": {
       "file": "lua/menu/getmaps.lua",
-      "lineStart": 337
+      "lineEnd": 449,
+      "lineStart": 441
     }
   },
   {
@@ -7180,8 +7211,8 @@
     ],
     "source": {
       "file": "lua/includes/extensions/table.lua",
-      "lineEnd": 573,
-      "lineStart": 553
+      "lineEnd": 576,
+      "lineStart": 552
     }
   },
   {
@@ -7223,8 +7254,8 @@
     ],
     "source": {
       "file": "lua/includes/extensions/table.lua",
-      "lineEnd": 609,
-      "lineStart": 597
+      "lineEnd": 612,
+      "lineStart": 578
     }
   },
   {
@@ -7261,8 +7292,8 @@
     ],
     "source": {
       "file": "lua/includes/extensions/table.lua",
-      "lineEnd": 591,
-      "lineStart": 579
+      "lineEnd": 594,
+      "lineStart": 578
     }
   },
   {
@@ -7289,8 +7320,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 130,
-      "lineStart": 127
+      "lineEnd": 164,
+      "lineStart": 158
     }
   },
   {
@@ -7365,8 +7396,7 @@
     ],
     "source": {
       "file": "lua/includes/extensions/client/globals.lua",
-      "lineEnd": 10,
-      "lineStart": 6
+      "lineStart": 14
     }
   },
   {
@@ -7393,8 +7423,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 315,
-      "lineStart": 308
+      "lineEnd": 349,
+      "lineStart": 338
     }
   },
   {
@@ -7458,8 +7488,8 @@
     ],
     "source": {
       "file": "lua/vgui/dtextentry.lua",
-      "lineEnd": 429,
-      "lineStart": 410
+      "lineEnd": 437,
+      "lineStart": 415
     }
   },
   {
@@ -7501,8 +7531,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 329,
-      "lineStart": 327
+      "lineEnd": 363,
+      "lineStart": 358
     }
   },
   {
@@ -7544,8 +7574,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 322,
-      "lineStart": 320
+      "lineEnd": 356,
+      "lineStart": 351
     }
   },
   {
@@ -7572,8 +7602,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 276,
-      "lineStart": 273
+      "lineEnd": 310,
+      "lineStart": 304
     }
   },
   {
@@ -7592,8 +7622,8 @@
     ],
     "source": {
       "file": "lua/menu/getmaps.lua",
-      "lineEnd": 375,
-      "lineStart": 359
+      "lineEnd": 439,
+      "lineStart": 423
     }
   },
   {
@@ -7690,7 +7720,12 @@
         "description": "The name of the object's type.",
         "type": "string"
       }
-    ]
+    ],
+    "source": {
+      "file": "lua/includes/util.lua",
+      "lineEnd": 65,
+      "lineStart": 51
+    }
   },
   {
     "arguments": [
@@ -7774,8 +7809,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 420,
-      "lineStart": 417
+      "lineEnd": 570,
+      "lineStart": 567
     }
   },
   {
@@ -7787,8 +7822,8 @@
     ],
     "source": {
       "file": "lua/menu/getmaps.lua",
-      "lineEnd": 236,
-      "lineStart": 229
+      "lineEnd": 278,
+      "lineStart": 271
     }
   },
   {
@@ -7800,8 +7835,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 403,
-      "lineStart": 396
+      "lineEnd": 553,
+      "lineStart": 546
     }
   },
   {
@@ -7813,8 +7848,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 382,
-      "lineStart": 376
+      "lineEnd": 532,
+      "lineStart": 523
     }
   },
   {
@@ -7830,12 +7865,7 @@
     "parent": "Global",
     "realms": [
       "menu"
-    ],
-    "source": {
-      "file": "lua/menu/loading.lua",
-      "lineEnd": 223,
-      "lineStart": 217
-    }
+    ]
   },
   {
     "description": "<internal>Called from JS when starting a new game</internal>\nThis function updates the Map List",
@@ -7846,8 +7876,8 @@
     ],
     "source": {
       "file": "lua/menu/getmaps.lua",
-      "lineEnd": 251,
-      "lineStart": 239
+      "lineEnd": 293,
+      "lineStart": 280
     }
   },
   {
@@ -7859,8 +7889,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 184,
-      "lineStart": 151
+      "lineEnd": 252,
+      "lineStart": 216
     }
   },
   {
@@ -7872,8 +7902,8 @@
     ],
     "source": {
       "file": "lua/menu/mainmenu.lua",
-      "lineEnd": 415,
-      "lineStart": 405
+      "lineEnd": 565,
+      "lineStart": 555
     }
   },
   {
@@ -7900,8 +7930,7 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 301,
-      "lineStart": 285
+      "lineStart": 336
     }
   },
   {
@@ -8024,8 +8053,8 @@
     ],
     "source": {
       "file": "lua/includes/util.lua",
-      "lineEnd": 103,
-      "lineStart": 99
+      "lineEnd": 137,
+      "lineStart": 130
     }
   },
   {
@@ -8075,8 +8104,8 @@
     ],
     "source": {
       "file": "lua/vgui/dshape.lua",
-      "lineEnd": 39,
-      "lineStart": 33
+      "lineEnd": 41,
+      "lineStart": 34
     }
   },
   {
@@ -8128,8 +8157,8 @@
     ],
     "source": {
       "file": "lua/includes/util/workshop_files.lua",
-      "lineEnd": 280,
-      "lineStart": 7
+      "lineEnd": 282,
+      "lineStart": 6
     }
   },
   {

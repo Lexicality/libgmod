@@ -159,6 +159,7 @@ function GPathFollower:SetMinLookAheadDistance(mindist)
 end
 
 --- Move the bot along the path.  
+--- ℹ **NOTE**: player nextbots require CUserCmd:SetForwardMove to move forward along the path  
 --- @param bot GNextBot @The bot to update along the path
 function GPathFollower:Update(bot)
 end

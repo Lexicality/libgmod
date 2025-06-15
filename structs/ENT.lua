@@ -195,12 +195,12 @@ end
 --- Called before firing serverside animation events, such as weapon reload, drawing and holstering for NPCs, scripted sequences, etc.  
 --- See ENTITY:FireAnimationEvent for the clientside version.  
 --- ℹ **NOTE**: This hook only works on "anim", "ai" and "nextbot" type entities.  
---- @param event number @The event ID of happened even
+--- @param event number @The ID of the event
 --- @param eventTime number @The absolute time this event occurred using Global.CurTime.
 --- @param cycle number @The frame this event occurred as a number between 0 and 1.
 --- @param type number @Event type
 --- @param options string @Name or options of this event.
---- @return boolean @Return true to mark the event as handled
+--- @return boolean @Return true to mark the event as handled.
 function ENT:HandleAnimEvent(event, eventTime, cycle, type, options)
 end
 

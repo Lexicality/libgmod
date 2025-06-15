@@ -99,7 +99,7 @@ end
 --- Reads a player entity that was written with net.WritePlayer from the received net message.  
 --- You should always check if the specified entity exists as it may have been removed and therefore `NULL` if it is outside of the local players [PVS](https://developer.valvesoftware.com/wiki/PVS) or was already removed.  
 --- ⚠ **WARNING**: You **must** read information in same order as you write it.  
---- @return GPlayer @The player, or `nil` if no entity could be read.
+--- @return GPlayer @The player, or throwed error if no entity could be read.
 function net.ReadPlayer()
 end
 

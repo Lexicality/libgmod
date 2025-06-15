@@ -5,6 +5,7 @@ _G.physenv = {}
 --- Adds a [material surface property](https://developer.valvesoftware.com/wiki/Material_surface_properties) type to the game's physics environment.  
 --- See util.GetSurfaceData for the opposite function.  
 --- 🦟 **BUG**: [The game has a limit of 128 surface properties - this includes properties loaded automatically from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt). Due to this, there's only a small amount of open slots that can be registered with GMod's provided surfaceproperties.txt.](https://github.com/Facepunch/garrysmod-issues/issues/2604)  
+--- Does nothing on `x86-64` beta.  
 --- @param properties string @The properties to add
 function physenv.AddSurfaceData(properties)
 end
@@ -26,7 +27,7 @@ function physenv.GetLastSimulationTime()
 end
 
 --- Gets the current performance settings in table form.  
---- @return table @Performance settings
+--- @return table @Performance settings or nil if called too early
 function physenv.GetPerformanceSettings()
 end
 

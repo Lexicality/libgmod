@@ -58,6 +58,13 @@ end
 function list.HasEntry(list, key)
 end
 
+--- Removes a single entry from the list `list` with key `key`.  
+--- This is equivalent to `list.Set( myList, myKey, nil )`.  
+--- @param list string @List to remove an entry in.
+--- @param key string @The key for the entry to remove.
+function list.RemoveEntry(list, key)
+end
+
 --- Sets a specific position in the named list to a value.  
 --- @param identifier string @The list identifier
 --- @param key any @The key in the list to set

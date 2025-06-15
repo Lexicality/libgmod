@@ -25,3 +25,6 @@
 --- @field Sequences table @A list of sequences the model has, including the ones from `$includemodel`s
 --- @field Materials string[] @A list of materials the model uses, across all its meshes.
 --- @field MaterialDirectories string[] @A list of folders the game will look in for the **Materials**.
+--- @field IncludeModelCount number @Number of other models this model includes for their animations.
+--- @field IncludeModels string[] @The list of models this model includes for their animations.
+--- @field HitBoxSets table @A list of hitbox sets this model has

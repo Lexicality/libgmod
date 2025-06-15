@@ -93,7 +93,7 @@ end
 function draw.Text(textdata)
 end
 
---- Works like draw.Text, but draws the text as a shadow.  
+--- Works like draw.Text, but draws the text with a shadow.  
 --- 🟥 **NOTE**: Requires a 2D rendering context  
 --- @param textdata table @The text properties
 --- @param distance number @How far away the shadow appears.

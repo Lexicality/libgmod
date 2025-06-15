@@ -89,11 +89,12 @@ end
 --- Matrix formula:  
 --- ```  
 --- local m = Matrix()  
---- m:SetAngles(angles)  
---- m:SetTranslation(pos)  
---- m:SetScale(Vector(scale, -scale, 1))  
+--- m:SetAngles( angles )  
+--- m:SetTranslation( pos )  
+--- m:SetScale( Vector( scale, -scale, 1 ) )  
 --- ```  
 --- ⚠ **WARNING**: This must be closed by cam.End3D2D. If not done so, unexpected issues might arise.  
+--- render.SetToneMappingScaleLinear may of use when dealing with bloom.  
 --- @param pos GVector @Origin of the 3D2D context, ie
 --- @param angles GAngle @Angles of the 3D2D context
 --- @param scale number @The scale of the render context

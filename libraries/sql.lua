@@ -47,7 +47,7 @@ end
 --- Performs a query on the local SQLite database, returns a table as result set, nil if result is empty and false on error.  
 --- ⚠ **WARNING**: To run SQL queries with this function safely, it is crucial to ensure that the concatenated variables in the query string are safe to avoid vulnerabilities like SQL injections. For this, it is recommended to use the sql.SQLStr, which allows arguments to be escaped correctly.  
 --- @param query string @The query to execute.
---- @return table @false is returned if there is an error, nil if the query returned no data.
+--- @return table|boolean|nil @`false` is returned if there is an error, `nil` if the query returned no data.
 function sql.Query(query)
 end
 
@@ -60,6 +60,15 @@ end
 --- @param row? number @The row number.
 --- @return table @The returned row.
 function sql.QueryRow(query, row)
+end
+
+--- Performs a query on the local SQLite database with proper type handling and parameter binding, returns a table as result set, empty table if no results, and false on error. Unlike sql.Query, this function properly handles SQLite data types and allows safe parameter binding to prevent SQL injection attacks.  
+--- ⚠ **WARNING**: * This function only executes a single SQL statement, unlike sql.Query which can execute multiple statements separated by semicolons.  
+--- * Large INTEGER values (beyond ±9,007,199,254,740,991) are returned as strings to preserve exact values. This is because Lua represents all numbers as doubles, which lose precision for integers larger than 2⁵³-1. Returning them as strings prevents data corruption from rounding errors.  
+--- @param query string @The query to execute with optional `?` parameter placeholders
+--- @vararg any @Parameters to bind to the query placeholders
+--- @return table|boolean @`false` is returned if there is an error (See sql.LastError), otherwise a table with properly typed column values (empty table if no results
+function sql.QueryTyped(query, ...)
 end
 
 --- Performs the query like sql.QueryRow, but returns the first value found.  

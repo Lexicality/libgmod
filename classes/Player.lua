@@ -924,7 +924,8 @@ end
 
 --- Returns the direction a player is looking as a entity/local-oriented angle.  
 --- Unlike Entity:EyeAngles, this function does not include angles of the Player's Entity:GetParent.  
---- @return GAngle @local eye angles
+--- 🦟 **BUG**: Does not work correctly clientside for non local players when in a vehicle. (validate: when parented in general?)  
+--- @return GAngle @The local eye angles.
 function GPlayer:LocalEyeAngles()
 end
 
