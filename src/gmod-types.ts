@@ -14,7 +14,8 @@ const JANKY_WIKI_CLASSES = new Map<string, string>([
 ]);
 
 const TABLE_REGEX = /^table<([^,]+)(,\s*([^,]+))?>$/;
-const STRUCT_REGEX = /^table\{([^,]+)\}$/;
+const STRUCT_REGEX = /^table\{([^}]+)\}$/;
+const PANEL_REGEX = /^Panel\{([^}]+)\}$/;
 const ENUM_REGEX = /^number\{(.+)\}$/;
 
 let GMOD_TYPES: { [key: string]: string } = {};
@@ -24,6 +25,7 @@ export function getTypeName(ret: string): string {
     let tableMatch = ret.match(TABLE_REGEX);
     let enumMatch = ret.match(ENUM_REGEX);
     let structMatch = ret.match(STRUCT_REGEX);
+    let panelMatch = ret.match(PANEL_REGEX);
     if (tableMatch) {
         if (tableMatch[2]) {
             let key = tableMatch[1];
@@ -37,6 +39,9 @@ export function getTypeName(ret: string): string {
         return "E" + enumMatch[1];
     } else if (structMatch) {
         return "S" + structMatch[1];
+    } else if (panelMatch) {
+        let value = panelMatch[1];
+        return PANEL_TYPES[value] ?? value;
     } else if (ret.includes("|")) {
         let union = ret
             .split("|")
