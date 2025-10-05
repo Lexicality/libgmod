@@ -557,7 +557,7 @@
         "type": "number"
       }
     ],
-    "description": "Creates a non physical entity that only exists on the client. See also <page>ents.CreateClientProp</page>.\n\n<bug issue=\"861\">Parented clientside models will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**</bug>\n\n<bug issue=\"1387\">Clientside entities are not garbage-collected, thus you must store a reference to the object and call <page>CSEnt:Remove</page> manually. **To workaround this bug, you need to hold a reference (in a variable) to the entity and remove it when necessary.**</bug>\n\n<bug issue=\"3184\">Clientside models will occasionally delete themselves during high server lag.</bug>",
+    "description": "Creates a non physical entity that only exists on the client. See also <page>ents.CreateClientProp</page> if physics is wanted.\n\n<bug issue=\"861\">Parented clientside models will become detached if the parent entity leaves the PVS. A workaround is available on the issue tracker page linked below.</bug>\n\n<bug issue=\"1387\">Clientside entities are not garbage-collected, thus you must store a reference to the object (in a variable) and call <page>CSEnt:Remove</page> manually when necessary.</bug>\n\n<bug issue=\"3184\">Clientside models will occasionally delete themselves during high server lag.</bug>",
     "name": "ClientsideModel",
     "parent": "Global",
     "realms": [
@@ -565,8 +565,8 @@
     ],
     "returnValues": [
       {
-        "description": "Created client-side model (`C_BaseFlex`).",
-        "type": "CSEnt"
+        "description": "Created client-side model (`C_BaseFlex`) or `nil` if creation of the entity failed for any reason.",
+        "type": "CSEnt|nil"
       }
     ]
   },
@@ -1332,7 +1332,7 @@
         "type": "string"
       }
     ],
-    "description": "A preprocessor keyword that is directly replaced with the following text:\n```lua\nlocal BaseClass = baseclass.Get\n```\n\nBecause this is a simple preprocessor keyword and not a function, it will cause problems if not used properly\n\nSee <page>baseclass.Get</page> for more information.\n<warning>The preprocessor is not smart enough to know when substitution doesn't make sense, such as: table keys and strings.\n\nRunning `print(\"DEFINE_BASECLASS\")` is the same as `print(\"local BaseClass = baseclass.Get\")`</warning>\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
+    "description": "Generates and provides a local variable `BaseClass` that can be used to call the original version of a class functions after modifying it.\n\nThis is a preprocessor keyword that is directly replaced with the following text:\n```lua\nlocal BaseClass = baseclass.Get\n```\n\nBecause this is a simple preprocessor keyword and not a function, it will cause problems if not used properly\n\nSee <page>baseclass.Get</page> for more information.\n<warning>The preprocessor is not smart enough to know when substitution doesn't make sense, such as: table keys and strings.\n\nRunning `print(\"DEFINE_BASECLASS\")` is the same as `print(\"local BaseClass = baseclass.Get\")`</warning>\n\nFor more information, including usage examples, see the <page>BaseClasses</page> reference page.",
     "name": "DEFINE_BASECLASS",
     "parent": "Global",
     "realms": [
@@ -2365,7 +2365,7 @@
         "type": "number"
       },
       {
-        "default": "0",
+        "default": "1",
         "description": "The DSP preset for this sound. [List of DSP presets](https://developer.valvesoftware.com/wiki/Dsp_presets)",
         "name": "dsp",
         "type": "number"
@@ -3825,6 +3825,34 @@
   {
     "arguments": [
       {
+        "description": "A hex formatted color. Accepted formats are:\n* `#RRGGBB`\n* `#RRGGBBAA` (Web color standard variation)\n* `#RGB`\n* `#RGBA`\n\n`#` can be omitted.",
+        "name": "hue",
+        "type": "string"
+      }
+    ],
+    "description": "Converts a hexadecimal representation of a color to <page>Color</page> object.",
+    "name": "HexToColor",
+    "parent": "Global",
+    "realms": [
+      "menu",
+      "client",
+      "server"
+    ],
+    "returnValues": [
+      {
+        "description": "The <page>Color</page> created from the hexadecimal color code.",
+        "type": "Color"
+      }
+    ],
+    "source": {
+      "file": "lua/includes/util/color.lua",
+      "lineEnd": 161,
+      "lineStart": 119
+    }
+  },
+  {
+    "arguments": [
+      {
         "description": "The hue in degrees from 0-360.",
         "name": "hue",
         "type": "number"
@@ -4013,18 +4041,23 @@
   {
     "arguments": [
       {
-        "description": "An entity that is about to be removed or that has just been created.",
-        "name": "ent",
-        "type": "Entity"
+        "description": "Reset the <page>player.Iterator</page> cache",
+        "name": "isPly",
+        "type": "boolean"
       }
     ],
-    "description": "<internal></internal>\nCalled by the engine before <page>GM:OnEntityCreated</page> or <page>GM:EntityRemoved</page> hooks are called.\nInternally used to clear the <page>player.Iterator</page> and <page>ents.Iterator</page> cache",
+    "description": "<internal></internal>\nCalled by the engine before <page>GM:OnEntityCreated</page> and after <page>GM:EntityRemoved</page> hooks are called.\nInternally used to clear the <page>player.Iterator</page> or <page>ents.Iterator</page> cache",
     "name": "InvalidateInternalEntityCache",
     "parent": "Global",
     "realms": [
       "client",
       "server"
-    ]
+    ],
+    "source": {
+      "file": "lua/includes/extensions/entity_iter.lua",
+      "lineEnd": 28,
+      "lineStart": 22
+    }
   },
   {
     "arguments": [
@@ -4111,7 +4144,7 @@
         "type": "any"
       }
     ],
-    "description": "Returns whether the given object does or doesn't have a `metatable` of a color.\n\n<bug issue=\"2407\">Engine functions (i.e. those not written in plain Lua) that return color objects do not currently set the color metatable and this function will return false if you use it on them.</bug>",
+    "description": "Returns whether the given object does or doesn't have a `metatable` of a color.",
     "name": "IsColor",
     "parent": "Global",
     "realms": [
@@ -4999,6 +5032,62 @@
   {
     "arguments": [
       {
+        "description": "The player who spawns the balloon. This argument can be <page>nil</page>",
+        "name": "ply",
+        "type": "player"
+      },
+      {
+        "default": "255",
+        "description": "Balloon <page>color</page> (red)",
+        "name": "r",
+        "type": "number"
+      },
+      {
+        "default": "255",
+        "description": "Balloon <page>color</page> (green)",
+        "name": "g",
+        "type": "number"
+      },
+      {
+        "default": "255",
+        "description": "Balloon <page>color</page> (blue).",
+        "name": "b",
+        "type": "number"
+      },
+      {
+        "default": "0",
+        "description": "The lift force applied to the balloon.",
+        "name": "force",
+        "type": "number"
+      },
+      {
+        "description": "Data applied to the balloon. This data is required for correctly spawning the balloon.\nFor more information, please see: <page>Structures/BalloonData</page>",
+        "name": "data",
+        "type": "table{BalloonData}"
+      }
+    ],
+    "description": "<internal></internal>\nThis function makes a balloon appear, similar to the one from the Toolgun.\n\n<warning>This function doesn't make the rope attached to the balloon appear.</warning>",
+    "name": "MakeBalloon",
+    "parent": "Global",
+    "realms": [
+      "server"
+    ],
+    "returnValues": [
+      {
+        "description": "Returns the created balloon entity.",
+        "name": "balloon",
+        "type": "Entity"
+      }
+    ],
+    "source": {
+      "file": "gamemodes/sandbox/entities/weapons/gmod_tool/stools/balloon.lua",
+      "lineEnd": null,
+      "lineStart": 135
+    }
+  },
+  {
+    "arguments": [
+      {
         "description": "The material name or path relative to the `materials/` folder.\nPaths outside the `materials/` folder like `data/MyImage.jpg` or `maps/thumb/gm_construct.png` will also work for when generating materials.\n\nTo retrieve a Lua material created with <page>Global.CreateMaterial</page>, just prepend a `!` to the material name.",
         "name": "materialName",
         "type": "string"
@@ -5157,7 +5246,7 @@
         "type": "vararg"
       }
     ],
-    "description": "Writes every given argument to the console.\n\nAutomatically attempts to convert each argument to a string. (See <page>Global.tostring</page>)\n\nUnlike <page>Global.print</page>, arguments are not separated by anything. They are simply concatenated.\n\nAdditionally, a newline isn't added automatically to the end, so subsequent Msg or print operations will continue the same line of text in the console. See <page>Global.MsgN</page> for a version that does add a newline.\n\nThe text is blue on the server, orange on the client, and green on the menu: <img src=\"msg_server_client_colors.png\">",
+    "description": "Writes every given argument to the console. Limitations of <page>Global.print</page> apply.\n\nAutomatically attempts to convert each argument to a string. (See <page>Global.tostring</page>)\n\nUnlike <page>Global.print</page>, arguments are not separated by anything. They are simply concatenated.\n\nAdditionally, a newline isn't added automatically to the end, so subsequent Msg or print operations will continue the same line of text in the console. See <page>Global.MsgN</page> for a version that does add a newline.\n\nThe text is blue on the server, orange on the client, and green on the menu: <img src=\"msg_server_client_colors.png\">",
     "name": "Msg",
     "parent": "Global",
     "realms": [
@@ -5174,7 +5263,7 @@
         "type": "vararg"
       }
     ],
-    "description": "Works exactly like <page>Global.Msg</page> except that, if called on the server, will print to all players consoles plus the server console.",
+    "description": "Works exactly like <page>Global.Msg</page> except that, if called on the server, will print to all players consoles plus the server console. Limitations of <page>Global.print</page> apply.",
     "name": "MsgAll",
     "parent": "Global",
     "realms": [
@@ -5603,12 +5692,12 @@
   {
     "arguments": [
       {
-        "description": "The name of the path to create.\nThis is going to be `\"Follow\"` or `\"Chase\"` right now.",
+        "description": "The type of the path to create, must be `\"Follow\"` or `\"Chase\"`",
         "name": "type",
         "type": "string"
       }
     ],
-    "description": "Creates a path for the bot to follow",
+    "description": "Creates a path for the bot to follow using one of two types (`Follow` or `Chase`)\n\n`Follow` is a general purpose path. Best used for static or infrequently updated locations. The path will only be updated once <page>PathFollower:Update</page> is called. This needs to be done manually (typically inside the bots `BehaveThread` coroutine.\n\n`Chase` is a specifically optimized for chasing a moving entity. Paths of this type will use <page>PathFollower:Chase</page>",
     "name": "Path",
     "parent": "Global",
     "realms": [
@@ -5781,7 +5870,7 @@
         "type": "vararg"
       }
     ],
-    "description": "Writes every given argument to the console.\nAutomatically attempts to convert each argument to a string. (See <page>Global.tostring</page>)\n\nSeparates lines with a line break (`\"\\n\"`)\n\nSeparates arguments with a tab character (`\"\\t\"`).",
+    "description": "Writes every given argument to the console.\nAutomatically attempts to convert each argument to a string. (See <page>Global.tostring</page>)\n\nSeparates lines with a line break (`\"\\n\"`)\n\nSeparates arguments with a tab character (`\"\\t\"`).\n\nCan only print up to `4096` characters at a time, and will stop at NULL character. (`\"\\0\"`)",
     "name": "print",
     "parent": "Global",
     "realms": [
@@ -6150,7 +6239,7 @@
     }
   },
   {
-    "description": "Returns the angle that the clients view is being rendered at",
+    "description": "Returns the angle that the clients view is being rendered at. Returns `angles` from the return value of <page>render.GetViewSetup</page>.\n\nSee also <page>Global.EyeAngles</page>.",
     "name": "RenderAngles",
     "parent": "Global",
     "realms": [
@@ -7355,12 +7444,12 @@
       },
       {
         "default": "false",
-        "description": "Whether the returned value should be surrounded in quotes or not",
+        "description": "Set this as `true`, and the function will not wrap the input string in apostrophes.",
         "name": "noQuotes",
         "type": "boolean"
       }
     ],
-    "description": "Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless noQuotes is true. Alias of <page>sql.SQLStr</page>\n\n<note>This function is not meant to be used with external database engines such as `MySQL`. Escaping strings with inadequate functions is dangerous!</note>",
+    "description": "Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless `noQuotes` is true. Alias of <page>sql.SQLStr</page>.\n\n<warning>Do not use this function with external database engines such as `MySQL`. `MySQL` and `SQLite` use different escape sequences that are incompatible with each other! Escaping strings with inadequate functions is dangerous and will lead to SQL injection vulnerabilities.</warning>",
     "name": "SQLStr",
     "parent": "Global",
     "realms": [

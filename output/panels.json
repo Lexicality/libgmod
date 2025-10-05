@@ -658,7 +658,7 @@
             "type": "string"
           }
         ],
-        "description": "Creates a <page>CtrlNumPad</page> (a Sandbox key binder) panel and adds it as an <page text=\"item\">ControlPanel:AddPanel</page>.",
+        "description": "Creates a CtrlNumPad (a Sandbox key binder) panel and adds it as an <page text=\"item\">ControlPanel:AddPanel</page>.",
         "name": "KeyBinder",
         "parent": "ControlPanel",
         "realms": [
@@ -672,8 +672,8 @@
         ],
         "source": {
           "file": "gamemodes/sandbox/gamemode/spawnmenu/controlpanel.lua",
-          "lineEnd": 92,
-          "lineStart": 76
+          "lineEnd": 133,
+          "lineStart": 117
         }
       },
       {
@@ -1007,6 +1007,133 @@
     "description": "A <page>DComboBox</page> based dropdown menu with build in easy <page>ConVar</page> support.\n\nThis control only exists in Sandbox derived gamemodes.",
     "name": "CtrlListBox",
     "parent": "DComboBox"
+  },
+  {
+    "description": "CtrlNumPad is a <page>VGUI</page> element designed primarily for <page>SpawnMenu</page> and <page>ControlPanel</page>. It is used to create a <page>DBinder</page> with at least one <page>DLabel</page>. Each change made by the player in the `CtrlNumPad` acts on a previously defined <page>ConVar</page>.\n\nTo retrieve the panels associated with this panel:\n* To retrieve the <page>DBinder</page> created, you can use this variable associated with the panel: `PANEL.NumPad1`\n* To retrieve the first <page>DLabel</page> created, you can use this variable associated with the panel: `PANEL.Label1`\n* To retrieve the second <page>DLabel</page> created, you can use this variable associated with the panel: `PANEL.Label2`\n\nBy default, the <page>DLabel:SetDark</page> function is activated on both DLabels.\n\nTo retrieve the value of the `CtrlNumPad` you can use these functions : <page>Player:GetInfoNum</page>, <page>CtrlNumPad:GetValue1</page> or <page>CtrlNumPad:GetValue2</page>",
+    "functions": [
+      {
+        "description": "The value (key bind) of the first <page>DBinder</page>.",
+        "name": "GetValue1",
+        "parent": "CtrlNumPad",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "The key bind or `KEY_NONE`.",
+            "name": "keyBind",
+            "type": "number{KEY}"
+          }
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/ctrlnumpad.lua",
+          "lineEnd": 64,
+          "lineStart": 58
+        }
+      },
+      {
+        "description": "The value (key bind) of the second <page>DBinder</page>, if it's enabled.",
+        "name": "GetValue2",
+        "parent": "CtrlNumPad",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "The key bind or `KEY_NONE`.",
+            "name": "keyBind",
+            "type": "number{KEY}"
+          }
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/ctrlnumpad.lua",
+          "lineEnd": 72,
+          "lineStart": 66
+        }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The convar that will be used in the event of a key change by a player.",
+            "name": "cvar",
+            "type": "string"
+          }
+        ],
+        "description": "The name of the convar that will store the key code for player selected key of the left key binder.",
+        "name": "SetConVar1",
+        "parent": "CtrlNumPad",
+        "realms": [
+          "client"
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/ctrlnumpad.lua",
+          "lineEnd": 48,
+          "lineStart": 45
+        }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The convar that will be used in the event of a key change by a player.",
+            "name": "cvar",
+            "type": "string"
+          }
+        ],
+        "description": "If set and label2 is set, the name of the convar that will store the key code for player selected key of the right key binder.",
+        "name": "SetConVar2",
+        "parent": "CtrlNumPad",
+        "realms": [
+          "client"
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/ctrlnumpad.lua",
+          "lineEnd": 56,
+          "lineStart": 53
+        }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The label for the left key binder.",
+            "name": "txt",
+            "type": "string"
+          }
+        ],
+        "description": "The label for the left key binder.",
+        "name": "SetLabel1",
+        "parent": "CtrlNumPad",
+        "realms": [
+          "client"
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/ctrlnumpad.lua",
+          "lineEnd": 32,
+          "lineStart": 29
+        }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The label for the right key binder.",
+            "name": "txt",
+            "type": "string"
+          }
+        ],
+        "description": "If set and convar2 is set, the label for the right key binder.",
+        "name": "SetLabel2",
+        "parent": "CtrlNumPad",
+        "realms": [
+          "client"
+        ],
+        "source": {
+          "file": "gamemodes/sandbox/gamemode/spawnmenu/controls/ctrlnumpad.lua",
+          "lineEnd": 40,
+          "lineStart": 37
+        }
+      }
+    ],
+    "name": "CtrlNumPad",
+    "parent": ""
   },
   {
     "description": "A derivative of the DModelPanel in which the user may modify the perspective of the model with their mouse and keyboard by clicking and dragging.\n\nThe keyboard keys <key>W</key> <key>S</key> <key>A</key> <key>D</key> <key>Up</key> <key>Down</key> <key>Left</key> <key>Right</key> <key>Space</key> and <key>Ctrl</key> can be used when the right mouse is held down, with <key>Shift</key> acting as a speed multiplier. When the left mouse is used, the Shift key holds the current `y` angle steady.\n\nThis is used by <page>IconEditor</page> for modifying spawn icons.",
@@ -1525,7 +1652,7 @@
         "arguments": [
           {
             "default": "nil",
-            "description": "The image file to use, relative to `/materials`. If this is nil, the image background is removed.",
+            "description": "The image file to use, relative to the `materials/` folder. Can be set to `nil` to remove the image background.",
             "name": "img",
             "type": "string"
           }
@@ -6119,12 +6246,12 @@
       {
         "arguments": [
           {
-            "description": "The label of the DNumSlider",
+            "description": "A short label for the slider.",
             "name": "label",
             "type": "string"
           },
           {
-            "description": "The console variable to change when the slider is changed",
+            "description": "The [console variable](ConVars) to change when the slider is changed",
             "name": "convar",
             "type": "string"
           },
@@ -6140,7 +6267,7 @@
           },
           {
             "default": "2",
-            "description": "The number of decimals to allow on the slider.",
+            "description": "The number of decimals to allow for the slider value.",
             "name": "decimals",
             "type": "number"
           }
@@ -6154,7 +6281,7 @@
         ],
         "returnValues": [
           {
-            "description": "The created <page>DNumSlider</page>",
+            "description": "The created <page>DNumSlider</page>.",
             "type": "Panel"
           }
         ],
@@ -8577,7 +8704,7 @@
       {
         "arguments": [
           {
-            "description": "The path of the image to load. When no file extension is supplied the VMT file extension is used.",
+            "description": "The path of the image to load, relative to the `materials/` folder. When no file extension is supplied the `.vmt` file extension is assumed.",
             "name": "strImage",
             "type": "string"
           },
@@ -8804,7 +8931,7 @@
       {
         "arguments": [
           {
-            "description": "The path of the image to load. When no file extension is supplied the VMT file extension is used.",
+            "description": "The path of the image to load, relative to the `materials/` folder. When no file extension is supplied the `.vmt` file extension is assumed.",
             "name": "strImage",
             "type": "string"
           },
@@ -14112,6 +14239,21 @@
         ]
       },
       {
+        "arguments": [
+          {
+            "description": "Whether to actually delete the panels, not just hide them.",
+            "name": "remove",
+            "type": "boolean"
+          }
+        ],
+        "description": "Hides all child panels, and optionally deletes them.",
+        "name": "Clear",
+        "parent": "DPanelList",
+        "realms": [
+          "client"
+        ]
+      },
+      {
         "description": "Enables/creates the vertical scroll bar so that the panel list can be scrolled through.",
         "name": "EnableVerticalScrollbar",
         "parent": "DPanelList",
@@ -17566,7 +17708,7 @@
     "parent": "DDragBase"
   },
   {
-    "description": "<internal></internal>\n\nThe panel used internally for tool tips. See <page>Panel:SetTooltip</page>.",
+    "description": "<internal></internal>\n\nThe panel used internally for tooltips. See <page>Panel:SetTooltip</page> for more information.\n\n<upload src=\"70c/8de029dfe107ffc.gif\" size=\"12567\" name=\"October03-1797-gmod.gif\">\n</upload>",
     "functions": [
       {
         "description": "Forces the tooltip to close. This will remove the panel.",
@@ -20417,7 +20559,7 @@
     "parent": "Panel"
   },
   {
-    "description": "A very versatile text display element that's used to power the default chat and console.\n\nRich Text panels allows multicolored, highlight-able, and interactive text using individual text segment markup (segments are defined by the <page>Panel:AppendText</page> method).\n\nThe **RichText** element has a `64000` character limit.",
+    "description": "A very versatile text display element that's used to power the default chat and console.\n\nRich Text panels allows multicolored, highlight-able, and interactive text using individual text segment markup (segments are defined by the <page>Panel:AppendText</page> method).\n\nThe **RichText** element has a `64000` character limit.\n\nYou can hide the RichText scrollbar with the following function: <page>Panel:SetVerticalScrollbarEnabled</page>",
     "name": "RichText",
     "parent": "Panel"
   },

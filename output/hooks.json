@@ -260,6 +260,27 @@
       {
         "arguments": [
           {
+            "description": "The player is trying to edit a variable on this entity.",
+            "name": "ply",
+            "type": "Player"
+          }
+        ],
+        "description": "Called by the Sandbox gamemode from the default implementation of <page>GM:CanEditVariable</page>.",
+        "name": "CanEditVariables",
+        "parent": "ENTITY",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "`true` to allow the edit, `false` to disallow.",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
             "description": "Player, that tried to use the property",
             "name": "ply",
             "type": "Player"
@@ -376,7 +397,17 @@
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "returnValues": [
+          {
+            "name": "ENT.bDoingEngineSchedule",
+            "type": "boolean"
+          }
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 193
+        }
       },
       {
         "arguments": [
@@ -386,12 +417,16 @@
             "type": "table"
           }
         ],
-        "description": "Runs a Lua schedule. Runs tasks inside the schedule.",
+        "description": "Runs a Lua schedule. Runs tasks inside the schedule.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
         "name": "DoSchedule",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 63
+        }
       },
       {
         "arguments": [
@@ -426,12 +461,12 @@
       {
         "arguments": [
           {
-            "description": "The entity which was touched.",
+            "description": "The entity that we no longer touch.",
             "name": "entity",
             "type": "Entity"
           }
         ],
-        "description": "Called when the entity stops touching another entity.\n\n<warning>This only works for **brush** entities and for entities that have <page>Entity:SetTrigger</page> set to true.</warning>",
+        "description": "Called when the entity stops touching another entity.\n\nSee <page>ENTITY:StartTouch</page> and <page>ENTITY:Touch</page> for related hooks.\n\n<warning>This only works for **brush** entities and for entities that have <page>Entity:SetTrigger</page> set to true.</warning>",
         "name": "EndTouch",
         "parent": "ENTITY",
         "realms": [
@@ -557,7 +592,7 @@
         }
       },
       {
-        "description": "Specify a mesh that should be rendered instead of this SENT's model.",
+        "description": "Specify a mesh that should be rendered instead of this SENT's model.\n<note>You should not be creating or modifying an <page>IMesh</page> in this hook. [Reference](https://github.com/Facepunch/garrysmod-issues/issues/6411#issuecomment-3070608549)</note>",
         "name": "GetRenderMesh",
         "parent": "ENTITY",
         "realms": [
@@ -565,7 +600,7 @@
         ],
         "returnValues": [
           {
-            "description": "A table containing the following keys:\n* <page>IMesh</page> Mesh - Required\n* <page>IMaterial</page> Material - Required\n* <page>VMatrix</page> Matrix - Optional",
+            "description": "A table containing the following keys:\n* <page>IMesh</page> Mesh - (Required) The mesh to render instead of the default model\n* <page>IMaterial</page> Material - (Required) The material to render the mesh with.\n* <page>VMatrix</page> Matrix - (Optional) - Render matrix override (mesh position, angles, etc)",
             "type": "table"
           }
         ]
@@ -797,12 +832,16 @@
             "type": "table"
           }
         ],
-        "description": "Start the next task in specific schedule.\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Start the next task in specific Lua schedule.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
         "name": "NextTask",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 108
+        }
       },
       {
         "arguments": [
@@ -1032,8 +1071,8 @@
             "type": "number"
           },
           {
-            "description": "Extra data for the movement. A table containing the following data:\n* <page>boolean</page> hasTraced - The result if a forward probing trace has been done\n* <page>number</page> expectedDist - The distance expected to move this think\n* <page>number</page> flags - AILMG flags\n* <page>number</page> maxDist - The distance maximum distance intended to travel in path length\n* <page>number</page> navType - <page>Enums/NAV</page>\n* <page>number</page> speed - The sequence ground speed. Note these need not always agree with `target`\n* <page>Entity</page> moveTarget - Target entity\n* <page>Vector</page> dir - The actual move. Note these need not always agree with `target`\n* <page>Vector</page> facing - The actual move. Note these need not always agree with `target`\n* <page>Vector</page> target - Object of the goal",
-            "name": "data",
+            "description": "Extra data for the movement. A table containing the following data:\n* <page>boolean</page> hasTraced - The result if a forward probing trace has been done\n* <page>number</page> expectedDist = `speed*interval` - The distance expected to move this think\n* <page>number</page> flags - [AILMG flags](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_movetypes.h#L113)\n* <page>number</page> maxDist = <page>NPC:GetPathDistanceToGoal</page> - The distance maximum distance intended to travel in path length\n* <page>number</page> navType - <page>Enums/NAV</page>\n* <page>number</page> speed - <page>Entity:GetSequenceGroundSpeed</page> Note these need not always agree with `target`\n* <page>Entity</page> moveTarget = `m_hGoalEnt` - Target entity as goal.\n* <page>Vector</page> dir - The step direction, towards `target`\n* <page>Vector</page> facing - The direction NPC's body will turn during movement.\n* <page>Vector</page> target = <page>NPC:GetCurWaypointPos</page> - Current waypoint in world coordinates.",
+            "name": "AILMG",
             "type": "table"
           }
         ],
@@ -1084,7 +1123,7 @@
             "type": "PhysObj"
           }
         ],
-        "description": "Called when the entity collides with anything. The move type and solid type must be VPHYSICS for the hook to be called.\n\n<note>If you want to use this hook on default/engine/non-Lua entites ( like prop_physics ), use <page>Entity:AddCallback</page> instead! This page describes a hook for Lua entities</note>",
+        "description": "Called when the entity collides with anything via [physics objects](PhysObj). The [move type](Enums/MOVETYPE) and [solid mode](Enums/SOLID) must be `VPHYSICS` for the hook to be called.\nThis hook only works for `anim` type entities.\n\nThis is different from <page>ENTITY:Touch</page>.\n\n<note>If you want to use this hook on default/engine/non-Lua entities (like `prop_physics`), use <page>Entity:AddCallback</page> instead! This page describes a hook for Lua scripted entities</note>",
         "name": "PhysicsCollide",
         "parent": "ENTITY",
         "realms": [
@@ -1134,7 +1173,7 @@
             "type": "PhysObj"
           }
         ],
-        "description": "Called whenever the physics of the entity are updated.\n\n<warning>This hook won't be called if the Entity's <page>PhysObj</page> goes asleep</warning>",
+        "description": "Called whenever a physics object of this entity is updated.\n\nThis hook won't be called if the Entity's <page>PhysObj</page> goes asleep, or doesn't exist.",
         "name": "PhysicsUpdate",
         "parent": "ENTITY",
         "realms": [
@@ -1199,12 +1238,22 @@
         ]
       },
       {
-        "description": "Called from the engine every 0.1 seconds. Returning `true` inside this hook will allow `CAI_BaseNPC::MaintainSchedule` to also be called.\n\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Called from the engine every [m_flNextDecisionTime](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc.cpp#L3943C10-L3943C30) in seconds. This interval changes depending on NPC's [Efficiency](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc.cpp#L3093). Returning `true` inside this hook will allow [CAI_BaseNPC::MaintainSchedule](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc_schedule.cpp#L562) to also be called.\n\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
         "name": "RunAI",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "returnValues": [
+          {
+            "description": "`true` to run engine schedules",
+            "type": "boolean"
+          }
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 5
+        }
       },
       {
         "arguments": [
@@ -1240,12 +1289,16 @@
             "type": "table"
           }
         ],
-        "description": "Called every think on running task.\nThe actual task function should tell us when the task is finished.\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Called every think on running task.\nThe actual task function should tell us when the task is finished.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
         "name": "RunTask",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 138
+        }
       },
       {
         "description": "Called whenever a Lua schedule is finished or <page>ENTITY:StartEngineSchedule</page> is called. Clears out schedule and task data stored within NPC's table.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
@@ -1253,7 +1306,11 @@
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 80
+        }
       },
       {
         "description": "Set the schedule we should be playing right now. Allows the NPC to start either a Lua schedule or an engine schedule. Despite sharing the same name as `CAI_BaseNPC::SelectSchedule()`, this isn't hooked to that function; this is called by Lua's <page>ENTITY:RunAI</page>, doesn't return an engine function, returning an engine function doesn't help and doesn't make the NPC start an engine schedule. To alter initial engine schedule, it is recommended to use <page>ENTITY:TranslateSchedule</page>.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
@@ -1261,7 +1318,11 @@
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 39
+        }
       },
       {
         "arguments": [
@@ -1287,12 +1348,16 @@
             "type": "table"
           }
         ],
-        "description": "Sets the current task.\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Sets the current task, to be used in a Lua schedule.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
         "name": "SetTask",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 93
+        }
       },
       {
         "description": "Called when the entity should set up its <page text=\" Data Tables\">Networking_Entities</page>.\n\nThis is a much better option than using Set/Get Networked Values.\n\nThis hook is called after <page>GM:OnEntityCreated</page> and <page>GM:NetworkEntityCreated</page>.",
@@ -1377,12 +1442,16 @@
             "type": "Schedule"
           }
         ],
-        "description": "Starts a schedule previously created by <page>ai_schedule.New</page>.\n\nNot to be confused with <page>ENTITY:StartEngineSchedule</page> or <page>NPC:SetSchedule</page> which start an Engine-based schedule.\n\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Starts a schedule previously created by <page>ai_schedule.New</page>.\n\nNot to be confused with <page>ENTITY:StartEngineSchedule</page> or <page>NPC:SetSchedule</page> which start an Engine-based schedule.\n\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
         "name": "StartSchedule",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 50
+        }
       },
       {
         "arguments": [
@@ -1392,22 +1461,26 @@
             "type": "Task"
           }
         ],
-        "description": "Called once on starting task.\n<note>This hook only exists for `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Called once when a LUA schedule has started a task.\n<note>This is a helper function only available if your SENT is based on `base_ai`</note>",
         "name": "StartTask",
         "parent": "ENTITY",
         "realms": [
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/entities/base_ai/schedules.lua",
+          "lineStart": 129
+        }
       },
       {
         "arguments": [
           {
-            "description": "The entity which is being touched.",
+            "description": "The entity that we started touching for the first time.",
             "name": "entity",
             "type": "Entity"
           }
         ],
-        "description": "Called when the entity starts touching another entity.\n\n<warning>This only works for **brush** entities and for entities that have <page>Entity:SetTrigger</page> set to true.</warning>",
+        "description": "Called when the entity starts touching another entity.\n\nSee <page>ENTITY:Touch</page> and <page>ENTITY:EndTouch</page> for related hooks.\n\n<warning>This only works for **brush** entities and for entities that have <page>Entity:SetTrigger</page> set to true.</warning>",
         "name": "StartTouch",
         "parent": "ENTITY",
         "realms": [
@@ -1532,7 +1605,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Called every tick for every entity being \"touched\".\n\nSee also <page>ENTITY:StartTouch</page> and <page>ENTITY:EndTouch</page>.\n\n<note>For physics enabled entities, this hook will **not** be ran while the entity's physics is asleep. See <page>PhysObj:Wake</page>.</note>",
+        "description": "Called every tick for every entity being \"touched\". Touching is usually detected via AABB intersection checks using entity's <page text=\"collision bounds\">Entity:GetCollisionBounds</page>.\n\nEntities like triggers would be using the touch hooks for their function.\n\nSee <page>Entity:PhysicsCollide</page> for physics based collision events.\n\nSee also <page>ENTITY:StartTouch</page> and <page>ENTITY:EndTouch</page>.\n\n<note>For physics enabled entities, this hook will **not** be ran while the entity's physics is asleep. See <page>PhysObj:Wake</page>.</note>",
         "name": "Touch",
         "parent": "ENTITY",
         "realms": [
@@ -1869,6 +1942,7 @@
         ],
         "source": {
           "file": "gamemodes/base/gamemode/animations.lua",
+          "lineEnd": 321,
           "lineStart": 296
         }
       },
@@ -2061,7 +2135,7 @@
           },
           {
             "description": "The new value, as a string which will later be converted to its appropriate type.",
-            "name": "val",
+            "name": "value",
             "type": "string"
           },
           {
@@ -2070,7 +2144,7 @@
             "type": "table"
           }
         ],
-        "description": "Called when a variable is edited on an Entity (called by `Edit Properties...` menu), to determine if the edit should be permitted.\n\nSee <page text=\"Editable entities\">Editable_Entities</page> for more details about the system.",
+        "description": "Called when a variable is about to be edited on an Entity (called by `Edit Properties...` menu), to determine if the edit should be permitted.\n\nSee <page text=\"Editable entities\">Editable_Entities</page> for more details about the system.\n\nBy default, Sandbox will also call <page>ENTITY:CanEditVariables</page> if no hook returns a value.",
         "name": "CanEditVariable",
         "parent": "GM",
         "realms": [
@@ -2078,7 +2152,7 @@
         ],
         "returnValues": [
           {
-            "description": "Return true to allow editing.",
+            "description": "Return `false` to disallow editing.",
             "type": "boolean"
           }
         ],
@@ -2161,7 +2235,7 @@
             "type": "Player"
           }
         ],
-        "description": "Determines if the player can kill themselves using the concommands `kill` or `explode`.",
+        "description": "Determines if the player can kill themselves using the `kill` or `explode` console commands.",
         "name": "CanPlayerSuicide",
         "parent": "GM",
         "realms": [
@@ -2169,7 +2243,7 @@
         ],
         "returnValues": [
           {
-            "description": "True if they can suicide.",
+            "description": "`true` if the player should be allowed to suicide, `false` if not.",
             "type": "boolean"
           }
         ],
@@ -2895,7 +2969,7 @@
             "type": "CTakeDamageInfo"
           }
         ],
-        "description": "Called when an entity takes damage. You can modify all parts of the damage info in this hook.\n\nSee <page>GM:PostEntityTakeDamage</page> if you wish to hook the final damage event.\n\n<warning>Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.</warning>",
+        "description": "Called when an entity is about to take damage. You can modify all parts of the damage info in this hook or completely block the damage event.\n\nSee <page>GM:PostEntityTakeDamage</page> if you wish to hook the final damage event.\n\n<warning>Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.</warning>",
         "name": "EntityTakeDamage",
         "parent": "GM",
         "realms": [
@@ -3943,7 +4017,12 @@
             "description": "Return true to indicate that the spawnpoint is suitable (Allow for the player to spawn here), false to prevent spawning.",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineEnd": 358,
+          "lineStart": 330
+        }
       },
       {
         "arguments": [
@@ -4195,7 +4274,7 @@
             "type": "string"
           }
         ],
-        "description": "Called when the local player presses TAB while having their chatbox opened.",
+        "description": "Called when the local player presses TAB while having their chatbox opened.\n\n<warning>This function now uses <page>player.Iterator</page>. This means it can't run all the time, as an error in the <page>GM:OnEntityCreated</page> or <page>GM:EntityRemoved</page> hooks is likely to interrupt it. Make sure that no addon causes an error in these hooks.</warning>",
         "name": "OnChatTab",
         "parent": "GM",
         "realms": [
@@ -4206,7 +4285,12 @@
             "description": "What should be placed into the chatbox instead of what currently is when player presses tab",
             "type": "string"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/cl_init.lua",
+          "lineEnd": 215,
+          "lineStart": 184
+        }
       },
       {
         "arguments": [
@@ -4231,13 +4315,14 @@
         ],
         "source": {
           "file": "gamemodes/sandbox/gamemode/cl_init.lua",
-          "lineStart": 52
+          "lineEnd": 90,
+          "lineStart": 76
         }
       },
       {
         "arguments": [
           {
-            "description": "The error that occurred. As well as the path and line of the error. Example : addons/test/lua/autorun/client/test_error.lua:4: 'then' expected near '<eof>'\n</eof>",
+            "description": "The error that occurred. As well as the path and line of the error. Example:\n`addons/test/lua/autorun/client/test_error.lua:4: 'then' expected near '<eof>'`\n</eof>",
             "name": "error",
             "type": "string"
           },
@@ -4329,7 +4414,7 @@
             "type": "PhysObj"
           }
         ],
-        "description": "Called when the crazy physics detection detects an entity with Crazy Physics.",
+        "description": "Called when the crazy physics detection detects an entity with crazy physics, i.e. position being far outside of the map, velocities being near or at infinity, etc. The primary reason for this system is to prevent program crashes in physics engine.",
         "name": "OnCrazyPhysics",
         "parent": "GM",
         "realms": [
@@ -4370,7 +4455,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.\n\n<note>Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with <page>Global.IsValid</page>. Will not require <page>Global.IsValid</page> check if you create your hook after <page>GM:InitPostEntity</page>.</note>\n\n<warning>Removing the created entity during this event can lead to unexpected problems. Use <page>timer.Simple</page>( 0, .... ) to safely remove the entity.</warning>",
+        "description": "Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.\n\n<note>Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with <page>Global.IsValid</page>. Will not require <page>Global.IsValid</page> check if you create your hook after <page>GM:InitPostEntity</page>.</note>\n\n<warning>Removing the created entity during this event can lead to unexpected problems. Use <page>Global.SafeRemoveEntityDelayed</page>( entity, 0 ) to safely remove the entity.</warning>",
         "name": "OnEntityCreated",
         "parent": "GM",
         "realms": [
@@ -4440,7 +4525,7 @@
             "type": "string"
           }
         ],
-        "description": "Called when a Lua error occurs.\nIf you want to retrieve client errors on the server side, you can use this hook: <page text=\"GM:OnClientLuaError\">GM:OnClientLuaError</page>\n<note>On the <page text=\"server realm\">States</page>, this hook will only account for server-side errors, not client-side ones.</note>",
+        "description": "Called when a Lua error occurs.\nIf you want to retrieve client errors on the server side, you can use this hook: <page>GM:OnClientLuaError</page>\n<note>On the <page text=\"server realm\">States</page>, this hook will only account for server-side errors, not client-side ones.</note>",
         "name": "OnLuaError",
         "parent": "GM",
         "realms": [
@@ -4482,6 +4567,26 @@
           "lineEnd": 297,
           "lineStart": 260
         }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The killed NPC",
+            "name": "npc",
+            "type": "NPC"
+          },
+          {
+            "description": "The item that got dropped by the NPC.",
+            "name": "item",
+            "type": "Entity"
+          }
+        ],
+        "description": "Called whenever an NPC drops an item upon its death, such as health kits, armor batteries, etc.\n\nIt will NOT be called for dropped weapons, with exception of Half-Life: Source NPCs, since they don't use actual weapon entities and create a weapon entity on death.\n<page>GM:PlayerDroppedWeapon</page> works for NPC weapon drops already. (Yes, it's not a typo)\n\nIt will also not be called for live grenades spawned by Zombine.",
+        "name": "OnNPCDropItem",
+        "parent": "GM",
+        "realms": [
+          "server"
+        ]
       },
       {
         "arguments": [
@@ -4572,7 +4677,7 @@
             "type": "Player"
           }
         ],
-        "description": "Called when a player freezes an entity with the physgun.\n\n<bug issue=\"723\">This is not called for players or NPCs being held with the physgun.</bug>",
+        "description": "Called when a player freezes an entity with the physgun.",
         "name": "OnPhysgunFreeze",
         "parent": "GM",
         "realms": [
@@ -5161,7 +5266,7 @@
             "type": "Player"
           }
         ],
-        "description": "Decides whether a player can hear another player using voice chat.\n\n<warning>This hook is called **several** times a tick, so ensure your code is efficient.</warning>",
+        "description": "Decides whether a player can hear another player using voice chat.\n\n<warning>\nThis hook is called <page>game.MaxPlayers</page> * <page>game.MaxPlayers</page> times every 0.3 seconds if at least 1 player is talking, if no one is talking its called every 5 seconds.\nYou should ensure that your code is efficient, or this will definitely influence performance.\n</warning>",
         "name": "PlayerCanHearPlayersVoice",
         "parent": "GM",
         "realms": [
@@ -5222,7 +5327,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Returns whether or not a player is allowed to pick an item up. (ammo, health, armor)",
+        "description": "Returns whether or not a player is allowed to pick an item up. (ammo, health, armor)\n\nThis will typically only work for base game entities, unless mod authors that implement similar entities also manually call this hook.\n\nSee <page>GM:PlayerCanPickupWeapon</page> for a hook that controls weapon pickups.",
         "name": "PlayerCanPickupItem",
         "parent": "GM",
         "realms": [
@@ -5248,7 +5353,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Returns whether or not a player is allowed to pick up a weapon.\n\nIf this returns false, <page>Player:Give</page> won't work.",
+        "description": "Returns whether or not a player is allowed to pick up a weapon.\n\nIf this returns `false`, <page>Player:Give</page> won't work.\n\nSee <page>GM:PlayerCanPickupItem</page> for a hook that affects things like health kits, armor batteries and ammo entities.\n\nSee <page>GM:WeaponEquip</page> for a hook that is called when a player successfully picks up a weapon after passing this hook.",
         "name": "PlayerCanPickupWeapon",
         "parent": "GM",
         "realms": [
@@ -5256,7 +5361,7 @@
         ],
         "returnValues": [
           {
-            "description": "Allowed pick up or not.",
+            "description": "`false` to disallow pickup.",
             "type": "boolean"
           }
         ]
@@ -5295,7 +5400,12 @@
             "description": "Can see other player's chat",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineEnd": null,
+          "lineStart": 763
+        }
       },
       {
         "arguments": [
@@ -5506,17 +5616,17 @@
       {
         "arguments": [
           {
-            "description": "The player who owned this weapon before it was dropped",
+            "description": "The player or NPC who owned this weapon before it was dropped.",
             "name": "owner",
-            "type": "Player"
+            "type": "Player|NPC"
           },
           {
-            "description": "The weapon that was dropped",
+            "description": "The weapon that was dropped.",
             "name": "wep",
             "type": "Weapon"
           }
         ],
-        "description": "Called when a weapon is dropped by a player via <page>Player:DropWeapon</page>.\n\nAlso called when a weapon is removed from a player via <page>Player:StripWeapon</page>.\n\nSee also <page>GM:WeaponEquip</page> for a hook when a player picks up a weapon.\n\nThe weapon's <page>Entity:GetOwner</page> will be NULL at the time this hook is called.\n\n\n<page>WEAPON:OnDrop</page> will be called before this hook is.",
+        "description": "Called when a weapon is dropped by a player via <page>Player:DropWeapon</page>. Despite its name, this hook is also called for NPC weapon drops.\n\nAlso called when a weapon is removed from a player via <page>Player:StripWeapon</page>.\n\nSee also <page>GM:WeaponEquip</page> for a hook when a player picks up a weapon.\n\nThe weapon's <page>Entity:GetOwner</page> will be NULL at the time this hook is called.\n\n<page>WEAPON:OnDrop</page> will be called before this hook is.",
         "name": "PlayerDroppedWeapon",
         "parent": "GM",
         "realms": [
@@ -5759,7 +5869,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Called when the player spawns for the first time.\n\nSee <page>GM:PlayerSpawn</page> for a hook called every player spawn.\n\n<note>This hook is called before the player has fully loaded, when the player is still in seeing the `Starting Lua` screen. For example, trying to use the <page>Entity:GetModel</page> function will return the default model (`models/player.mdl`).</note>\n\n<note>You can send <page>net</page> messages starting from the [player_activate](gameevent/player_activate) game event.</note>\n\n<warning>Due to the above note, sending <page>net</page> messages to the spawned player in this hook are highly unreliable, and they most likely won't be received (more information here: https://github.com/Facepunch/garrysmod-requests/issues/718).\n\nWorkaround without networking:\n```\nlocal load_queue = {}\n\nhook.Add( \"PlayerInitialSpawn\", \"myAddonName/Load\", function( ply )\nload_queue[ ply ] = true\nend )\n\nhook.Add( \"StartCommand\", \"myAddonName/Load\", function( ply, cmd )\nif load_queue[ ply ] and not cmd:IsForced() then\nload_queue[ ply ] = nil\n\n-- Send what you need here!\nend\nend )\n```\n\n\nWith networking:\n```\n-- CLIENT\nhook.Add( \"InitPostEntity\", \"Ready\", function()\nnet.Start( \"cool_addon_client_ready\" )\nnet.SendToServer()\nend )\n```\n```\n-- SERVER\nutil.AddNetworkString( \"cool_addon_client_ready\" )\n\nnet.Receive( \"cool_addon_client_ready\", function( len, ply )\n-- Send what you need here!\nend )\n```\n</warning>",
+        "description": "Called when the player spawns for the first time.\n\nSee <page>GM:PlayerSpawn</page> for a hook called every player spawn.\n\n<note>This hook is called before the player has fully loaded, when the player is still in seeing the `Starting Lua` screen. For example, trying to use the <page>Entity:GetModel</page> function will return the default model (`models/player.mdl`).</note>",
         "name": "PlayerInitialSpawn",
         "parent": "GM",
         "realms": [
@@ -5939,7 +6049,12 @@
             "description": "The spawn point entity to spawn the player at",
             "type": "Entity"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineEnd": 495,
+          "lineStart": 360
+        }
       },
       {
         "arguments": [
@@ -5965,7 +6080,12 @@
             "description": "The entity to use as a spawn point.",
             "type": "Entity"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/gamemode/player.lua",
+          "lineEnd": 323,
+          "lineStart": 301
+        }
       },
       {
         "arguments": [
@@ -6785,7 +6905,7 @@
             "type": "Weapon"
           }
         ],
-        "description": "Called before the player hands are drawn.\n\nSee <page>GM:PreDrawViewModel</page> for the view model alternative.\nSee <page>GM:POstDrawPlayerHands</page> for a hook that is called just before view model hands are drawn.",
+        "description": "Called before the player hands are drawn.\n\nSee <page>GM:PreDrawViewModel</page> for the view model alternative.\nSee <page>GM:PostDrawPlayerHands</page> for a hook that is called just before view model hands are drawn.",
         "name": "PreDrawPlayerHands",
         "parent": "GM",
         "realms": [
@@ -7227,7 +7347,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets player run and sprint speeds.\n\n<warning>This is not a hook. Treat this as a utility function to set the player's speed.</warning>",
+        "description": "Sets player run and sprint speeds.\n<bug issue=\"2030\">Using a speed of `0` can lead to prediction errors, and can cause players to move at `sv_maxvelocity`</bug>\n<warning>This is not a hook. Treat this as a utility function to set the player's speed.</warning>",
         "name": "SetPlayerSpeed",
         "parent": "GM",
         "realms": [
@@ -7386,6 +7506,7 @@
         "name": "ShowHelp",
         "parent": "GM",
         "realms": [
+          "client",
           "server"
         ]
       },
@@ -7401,6 +7522,7 @@
         "name": "ShowSpare1",
         "parent": "GM",
         "realms": [
+          "client",
           "server"
         ]
       },
@@ -7416,6 +7538,7 @@
         "name": "ShowSpare2",
         "parent": "GM",
         "realms": [
+          "client",
           "server"
         ]
       },
@@ -7431,6 +7554,7 @@
         "name": "ShowTeam",
         "parent": "GM",
         "realms": [
+          "client",
           "server"
         ]
       },
@@ -7566,7 +7690,7 @@
         ]
       },
       {
-        "description": "Called every game tick. <page>engine.TickCount</page> is guaranteed to be different between each call.\n\nServer side, this is similar to <page>GM:Think</page> (See that page for details).\n\nThe default tickrate is `66.6666` (16 millisecond intervals). It can be changed via the `-tickrate` [command line option](Command_Line_Parameters).\nSee <page>engine.TickInterval</page> for a function to retrieve this data at runtime.\n\n<note>This hook **WILL NOT** run if the server is empty, unless you set the <page>ConVar</page> `sv_hibernate_think` to 1</note>",
+        "description": "Called every game tick. <page>engine.TickCount</page> is guaranteed to be different between each call.\n\nServer side, this is similar to <page>GM:Think</page> (See that page for details).\n\nThe default tickrate is `66.6666` (15 millisecond intervals). It can be changed via the `-tickrate` [command line option](Command_Line_Parameters).\nSee <page>engine.TickInterval</page> for a function to retrieve this data at runtime.\n\n<note>This hook **WILL NOT** run if the server is empty, unless you set the <page>ConVar</page> `sv_hibernate_think` to 1</note>",
         "name": "Tick",
         "parent": "GM",
         "realms": [
@@ -7587,7 +7711,7 @@
             "type": "number"
           }
         ],
-        "description": "<note>Isn't call when CalcMainActivity return a valid override sequence id</note>\nAllows you to translate player activities.",
+        "description": "<note>Isn't called when CalcMainActivity returns a valid override sequence id</note>\nAllows you to translate player activities.",
         "name": "TranslateActivity",
         "parent": "GM",
         "realms": [
@@ -7747,7 +7871,7 @@
             "type": "Player"
           }
         ],
-        "description": "Called as a weapon entity is picked up by a player.\n\nSee also <page>GM:PlayerDroppedWeapon</page>.\n\n<note>At the time when this hook is called <page>Entity:GetOwner</page> will return `NULL`. The owner is set on the next frame.</note>\n<note>This will not be called when picking up a weapon you already have as the weapon will be removed and <page>WEAPON:EquipAmmo</page> will be called instead.</note>",
+        "description": "Called as a weapon entity is picked up by a player. (Including <page>Player:Give</page>)\n\nContrary to the name of the hook, it is **not called** when the player switches their active weapon to another.\n\nSee also <page>GM:PlayerDroppedWeapon</page> and <page>GM:PlayerCanPickupWeapon</page>.\n\n<note>At the time when this hook is called <page>Entity:GetOwner</page> will return `NULL`. The owner is set on the next frame.</note>\n<note>This will not be called when picking up a weapon you already have as the weapon will be removed and <page>WEAPON:EquipAmmo</page> will be called instead.</note>",
         "name": "WeaponEquip",
         "parent": "GM",
         "realms": [
@@ -8013,7 +8137,7 @@
             "type": "number"
           }
         ],
-        "description": "Called to update the bot's behaviour.",
+        "description": "Called to update the bot's behaviour.\n\nIf you override this hook you must call `coroutine.resume(self.BehaveThread)` to resume the <page>NEXTBOT:RunBehaviour</page> Behavior",
         "name": "BehaveUpdate",
         "parent": "NEXTBOT",
         "realms": [
@@ -8902,7 +9026,8 @@
         "name": "FinishMove",
         "parent": "PLAYER",
         "realms": [
-          "client"
+          "client",
+          "server"
         ],
         "returnValues": [
           {
@@ -8921,7 +9046,7 @@
         "name": "GetHandsModel",
         "parent": "PLAYER",
         "realms": [
-          "client"
+          "server"
         ],
         "returnValues": [
           {
@@ -8974,7 +9099,8 @@
         "name": "Move",
         "parent": "PLAYER",
         "realms": [
-          "client"
+          "client",
+          "server"
         ],
         "returnValues": [
           {
@@ -10402,7 +10528,12 @@
             "description": "The amount of primary ammo player has",
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 257,
+          "lineStart": 251
+        }
       },
       {
         "description": "Returns how much of secondary ammo the player has.",
@@ -10417,7 +10548,12 @@
             "description": "The amount of secondary ammo player has",
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 267,
+          "lineStart": 262
+        }
       },
       {
         "arguments": [
@@ -10535,7 +10671,12 @@
             "description": "Can use primary attack",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 213,
+          "lineStart": 200
+        }
       },
       {
         "description": "Helper function for checking for no ammo.",
@@ -10550,7 +10691,12 @@
             "description": "Can use secondary attack",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 231,
+          "lineStart": 219
+        }
       },
       {
         "description": "Allows you to use any numbers you want for the ammo display on the HUD.\n\nCan be useful for weapons that don't use standard ammo.",
@@ -10579,7 +10725,12 @@
             "description": "Return true to allow switching away from this weapon using `lastinv` command",
             "type": "boolean"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 116,
+          "lineStart": 114
+        }
       },
       {
         "arguments": [
@@ -10683,7 +10834,12 @@
         "parent": "WEAPON",
         "realms": [
           "client"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/cl_init.lua",
+          "lineEnd": 58,
+          "lineStart": 34
+        }
       },
       {
         "arguments": [
@@ -10758,7 +10914,7 @@
             "type": "Angle"
           },
           {
-            "description": "The event ID of happened even. See [this page](http://developer.valvesoftware.com/wiki/Animation_Events).",
+            "description": "The event ID of the happened event. See [this page](http://developer.valvesoftware.com/wiki/Animation_Events).",
             "name": "event",
             "type": "number"
           },
@@ -10773,7 +10929,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Called before firing animation events, such as muzzle flashes or shell ejections.\n\nThis will only be called serverside for 3000-range events, and clientside for 5000-range  and other events.",
+        "description": "Called before executing an animation event, such as a muzzle flash appearing or a shell ejecting.\n\nThis will only be called serverside for 3000-range events, and clientside for 5000-range and other events.",
         "name": "FireAnimationEvent",
         "parent": "WEAPON",
         "realms": [
@@ -10813,7 +10969,12 @@
             "description": "A number defining what NPC should do with the weapon. Use the <page>Enums/CAP</page>.",
             "type": "number{CAP}"
           }
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/init.lua",
+          "lineEnd": 77,
+          "lineStart": 73
+        }
       },
       {
         "arguments": [
@@ -10871,7 +11032,7 @@
             "type": "number"
           },
           {
-            "description": "Maximum amount of time the NPC can rest (not shoot) between bursts in seconds. Default is `0.66` seconds.",
+            "description": "Maximum amount of time the NPC can rest (not shoot) between bursts in seconds. Default is `0.6` seconds.",
             "type": "number"
           }
         ]
@@ -11001,6 +11162,58 @@
       {
         "arguments": [
           {
+            "default": "GetShootPos()",
+            "description": "The world position the NPC will use as attack starting position. You can create your projectiles here.",
+            "name": "shootPos",
+            "type": "Vector"
+          },
+          {
+            "default": "GetAimVector()",
+            "description": "The direction the NPC wants to shoot at.",
+            "name": "shootDir",
+            "type": "Vector"
+          }
+        ],
+        "description": "Called internally during `TASK_RANGE_ATTACK1 --&gt; OnRangeAttack1`. This allows you to separate your SWEPs primary firing function from players and NPCs.\n\nTo get the delay the NPC will fire again, you can call `self:GetOwner():GetInternalVariable(\"m_flNextAttack\")`\n\n<note>This hook is called internally only for NPCs that has `CAP_USE_SHOT_REGULATOR` set.</note>",
+        "name": "NPCShoot_Primary",
+        "parent": "WEAPON",
+        "realms": [
+          "server"
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/init.lua",
+          "lineStart": 93
+        }
+      },
+      {
+        "arguments": [
+          {
+            "default": "GetShootPos()",
+            "description": "The world position the NPC will use as attack starting position. You can create your projectiles here.",
+            "name": "shootPos",
+            "type": "Vector"
+          },
+          {
+            "default": "GetAimVector()",
+            "description": "The direction the NPC wants to shoot at.",
+            "name": "shootDir",
+            "type": "Vector"
+          }
+        ],
+        "description": "A utility function to seperate your SWEPs secondary firing from players.\n\nUnlike <page>WEAPON:NPCShoot_Primary</page>, this won't be called by the engine for `TASK_RANGE_ATTACK2`.",
+        "name": "NPCShoot_Secondary",
+        "parent": "WEAPON",
+        "realms": [
+          "server"
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/init.lua",
+          "lineStart": 83
+        }
+      },
+      {
+        "arguments": [
+          {
             "description": "The entity that dropped the weapon.",
             "name": "owner",
             "type": "Entity"
@@ -11097,6 +11310,12 @@
         "parent": "WEAPON",
         "realms": [
           "client"
+        ],
+        "returnValues": [
+          {
+            "description": "Return `true` to prevent the default action of rendering the view model. `PostDrawViewModel` will NOT be called in this scenario.",
+            "type": "boolean"
+          }
         ]
       },
       {
@@ -11106,7 +11325,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 60,
+          "lineStart": 42
+        }
       },
       {
         "arguments": [
@@ -11131,7 +11355,12 @@
         "parent": "WEAPON",
         "realms": [
           "client"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/cl_init.lua",
+          "lineEnd": 89,
+          "lineStart": 63
+        }
       },
       {
         "description": "Called when the reload key ( +reload ) is pressed.",
@@ -11157,7 +11386,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 84,
+          "lineStart": 66
+        }
       },
       {
         "description": "Called when the SWEP should set up its <page text=\" Data Tables\">Networking_Entities</page>.",
@@ -11240,7 +11474,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 130,
+          "lineStart": 122
+        }
       },
       {
         "description": "Called to determine if the view model should be drawn or not.",
@@ -11284,7 +11523,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 175,
+          "lineStart": 162
+        }
       },
       {
         "arguments": [
@@ -11300,7 +11544,12 @@
         "realms": [
           "client",
           "server"
-        ]
+        ],
+        "source": {
+          "file": "gamemodes/base/entities/weapons/weapon_base/shared.lua",
+          "lineEnd": 194,
+          "lineStart": 181
+        }
       },
       {
         "description": "Called when the weapon thinks.\n\nThis hook won't be called during the deploy animation and when using <page>Weapon:DefaultReload</page>.\n\nDespite being a predicted hook, this hook is called clientside in single player (for your convenience), however it will not be recognized as a predicted hook via <page>Player:GetCurrentCommand</page>, and will run more often in this case.\n\nThis hook will be called before Player movement is processed on the client, and after on the server.\n\n<note>This hook only runs while the weapon is in players hands. It does not run while it is carried by an NPC.</note>\n<bug issue=\"2855\">This will not be run during deploy animations after a serverside-only deploy. This usually happens after picking up and dropping an object with +use.</bug>",
@@ -11328,7 +11577,7 @@
             "type": "number{ACT}"
           }
         ],
-        "description": "Translate a player's Activity into a weapon's activity, depending on how you want the player to be holding the weapon.\n\nFor example, ACT_MP_RUN becomes ACT_HL2MP_RUN_PISTOL.",
+        "description": "Translate a generic activity into a more specific activity, such as holdtype-specific activities.\n\nThe translated activity is then used to request animations from the owner's model via <page>Entity:SelectWeightedSequence</page> and similar functions.\n\nFor example, `ACT_MP_RUN` becomes `ACT_HL2MP_RUN_PISTOL`.",
         "name": "TranslateActivity",
         "parent": "WEAPON",
         "realms": [

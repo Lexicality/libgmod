@@ -7939,6 +7939,26 @@
     ]
   },
   {
+    "description": "Enumerations used internally by death notice system.\n\nThis enumeration is a bit field/bitflag, which means that you can combine multiple death flags using the <page>bit</page> library. You can use <page>bit.band</page> to test if a specific death flag is set.",
+    "fields": [
+      {
+        "description": "Was the victim friendly?",
+        "name": "DEATH_NOTICE_FRIENDLY_VICTIM",
+        "value": 1
+      },
+      {
+        "description": "Was the attacker friendly?",
+        "name": "DEATH_NOTICE_FRIENDLY_ATTACKER",
+        "value": 2
+      }
+    ],
+    "name": "DEATH_NOTICE",
+    "realms": [
+      "client",
+      "server"
+    ]
+  },
+  {
     "description": "Displacement surface flags, used by the <page>Structures/TraceResult</page>.",
     "fields": [
       {
@@ -9321,60 +9341,114 @@
         "value": -1
       },
       {
+        "description": "Red, Green, Blue, Alpha, 8 bit per pixel.",
         "name": "IMAGE_FORMAT_RGBA8888",
         "value": 0
       },
       {
+        "description": "Probably legacy format. Alpha, Red, Green, Blue, 8 bit per pixel.",
         "name": "IMAGE_FORMAT_ABGR8888",
         "value": 1
       },
       {
+        "description": "Red, Green, Blue, 8 bit per pixel.",
         "name": "IMAGE_FORMAT_RGB888",
         "value": 2
       },
       {
+        "description": "Legacy format. Blue, Green, Red order, 8 bit per pixel.",
         "name": "IMAGE_FORMAT_BGR888",
         "value": 3
       },
       {
+        "description": "Red, Green, Blue, 5 bit per pixel for Red and Blue channels, 6 bits for Green. Effectively uses less video memory.",
         "name": "IMAGE_FORMAT_RGB565",
         "value": 4
       },
       {
-        "description": "Undeclared variable.",
-        "name": "IMAGE_FORMAT_I8",
-        "value": 5
-      },
-      {
+        "description": "`IMAGE_FORMAT_RGBA8888` with different byte order. Legacy format.",
         "name": "IMAGE_FORMAT_ARGB8888",
         "value": 11
       },
       {
+        "description": "`IMAGE_FORMAT_RGBA8888` with different byte order. Legacy format.",
         "name": "IMAGE_FORMAT_BGRA8888",
         "value": 12
       },
       {
-        "description": "Undeclared variable.",
-        "name": "IMAGE_FORMAT_BGR565",
-        "value": 17
-      },
-      {
+        "description": "RGBA, but 16 bits per pixel. Was meant to be used for \"Integer mode\" for HDR. Probably legacy format.",
         "name": "IMAGE_FORMAT_RGBA16161616",
         "value": 25
       },
       {
+        "description": "RGBA, but floating point 16 bits per pixel. Is used for \"Float mode\" HDR.",
         "name": "IMAGE_FORMAT_RGBA16161616F",
         "value": 24
       },
       {
-        "description": "Undeclared variable. Works only with mat_disable_d3d9ex 0",
-        "name": "IMAGE_FORMAT_RGBA32F",
+        "description": "Grayscale format (black and white), 8 bits per pixel. Not working on Proton.",
+        "name": "IMAGE_FORMAT_I8",
+        "value": 5
+      },
+      {
+        "description": "Grayscale format (black and white) with alpha support, 8 bits per pixel/channel. Not working on Proton.",
+        "name": "IMAGE_FORMAT_IA88",
+        "value": 6
+      },
+      {
+        "description": "Unknown legacy format. 8 bit alpha? Same as `I8` besides assigned meaning/name to the channel?",
+        "name": "IMAGE_FORMAT_A8",
+        "value": 8
+      },
+      {
+        "description": "Unknown legacy format. Same as `BGRA8888`, but without defining meaning to the 4th channel?",
+        "name": "IMAGE_FORMAT_BGRX8888",
+        "value": 16
+      },
+      {
+        "description": "`RGB565`, but reverse color order. Legacy format.",
+        "name": "IMAGE_FORMAT_BGR565",
+        "value": 17
+      },
+      {
+        "description": "Unknown legacy format.",
+        "name": "IMAGE_FORMAT_BGRX5551",
+        "value": 18
+      },
+      {
+        "description": "Unknown legacy format.",
+        "name": "IMAGE_FORMAT_BGRA4444",
+        "value": 19
+      },
+      {
+        "description": "Unknown legacy format.",
+        "name": "IMAGE_FORMAT_BGRA5551",
+        "value": 21
+      },
+      {
+        "description": "Single color channel, 32bit float per pixel. Works only with `mat_disable_d3d9ex 0`. Not working on dx 92.",
+        "name": "IMAGE_FORMAT_R32F",
         "value": 27
       },
       {
-        "description": "Undeclared variable. Works only with mat_disable_d3d9ex 0",
+        "description": "32bit floating point RGBA. Works only with `mat_disable_d3d9ex 0`",
         "name": "IMAGE_FORMAT_RGBA32323232F",
         "value": 29
+      },
+      {
+        "description": "Compressed texture format. See https://en.wikipedia.org/wiki/S3_Texture_Compression.",
+        "name": "IMAGE_FORMAT_DXT1",
+        "value": 13
+      },
+      {
+        "description": "Compressed texture format. Do not use. See https://en.wikipedia.org/wiki/S3_Texture_Compression.",
+        "name": "IMAGE_FORMAT_DXT3",
+        "value": 14
+      },
+      {
+        "description": "Compressed texture format. Better quality than DXT1, supports alpha. See https://en.wikipedia.org/wiki/S3_Texture_Compression.",
+        "name": "IMAGE_FORMAT_DXT5",
+        "value": 15
       }
     ],
     "name": "IMAGE_FORMAT",
@@ -9993,6 +10067,7 @@
         "value": 98
       },
       {
+        "description": "<warning>By default, it serves as bind \"load quick\", which loads the save by forcing the player to exit the server.</warning>",
         "name": "KEY_F8",
         "value": 99
       },
@@ -10248,6 +10323,7 @@
         "value": 22
       },
       {
+        "description": "Is ragdoll, can be set to force an entity to create a clientside ragdoll.",
         "name": "kRenderFxRagdoll",
         "value": 23
       },
@@ -12245,7 +12321,7 @@
         "value": 1024
       },
       {
-        "description": "NPC Drops health kit when it dies",
+        "description": "NPC Drops health kit when it dies. Also works on player.",
         "name": "SF_NPC_DROP_HEALTHKIT",
         "value": 8
       },
@@ -13277,18 +13353,22 @@
     "description": "Enumerations used by <page>render.PushFilterMin</page> and <page>render.PushFilterMag</page>.\n\nSee [this](https://msdn.microsoft.com/en-us/library/windows/desktop/bb172615(v=vs.85).aspx) and [this page](https://en.wikipedia.org/wiki/Texture_filtering) for more information on texture filtering.",
     "fields": [
       {
+        "description": "Disables any filter override.",
         "name": "TEXFILTER.NONE",
         "value": 0
       },
       {
+        "description": "Point sampling, no interpolation.",
         "name": "TEXFILTER.POINT",
         "value": 1
       },
       {
+        "description": "Basic interpolation between 2 samples.",
         "name": "TEXFILTER.LINEAR",
         "value": 2
       },
       {
+        "description": "Highest quality filter. Most useful for textures on 3D geometry.",
         "name": "TEXFILTER.ANISOTROPIC",
         "value": 3
       }

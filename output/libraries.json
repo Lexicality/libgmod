@@ -208,6 +208,20 @@
     "description": "The ai library.",
     "functions": [
       {
+        "description": "Returns the number of AI nodes on the map, used by the base game NPCs.\n\nFor nextbots, see <page>navmesh</page>.",
+        "name": "GetNodeCount",
+        "parent": "ai",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "The node count.",
+            "type": "number"
+          }
+        ]
+      },
+      {
         "arguments": [
           {
             "description": "Then schedule name. In most cases, this will be the same as the <page>Enums/SCHED</page> name.",
@@ -608,7 +622,7 @@
             "type": "number"
           }
         ],
-        "description": "Returns the left shifted value.\n<note>The returned value will be clamped to a signed 32-bit integer, even on 64-bit builds.</note>",
+        "description": "Returns the result of shifting given value left bitwise by given number of bits. See [this wiki article](https://en.wikipedia.org/wiki/Bitwise_operation#Bit_shifts) for more details.\n<note>The returned value will be clamped to a signed 32-bit integer, even on 64-bit builds.</note>",
         "name": "lshift",
         "parent": "bit",
         "realms": [
@@ -618,7 +632,7 @@
         ],
         "returnValues": [
           {
-            "description": "shiftedValue",
+            "description": "The resulting value. Input of `0b1001` will become `0b10010` for one left shift, etc.",
             "type": "number"
           }
         ]
@@ -1359,7 +1373,7 @@
             "type": "number{FCVAR}|table<number>"
           }
         ],
-        "description": "Creates a console command that runs a function in lua with optional autocompletion function and help text.\n\n<bug issue=\"1183\">This will fail if the concommand was previously removed with <page>concommand.Remove</page> in a different realm (creating a command on the client that was removed from the server and vice-versa).</bug>",
+        "description": "Creates a console command that runs a function in lua with optional autocompletion function and help text.\n\n<warning>Clients can still run commands created only on the server. Always check permissions in the callback</warning>\n<bug issue=\"1183\">This will fail if the concommand was previously removed with <page>concommand.Remove</page> in a different realm (creating a command on the client that was removed from the server and vice-versa).</bug>",
         "name": "Add",
         "parent": "concommand",
         "realms": [
@@ -3488,7 +3502,7 @@
     "name": "controlpanel"
   },
   {
-    "description": "Functions to persist data on a user's computer.\n\nThe data will be read / written to / from a database\ncorresponding to the realm the library was used in.\n\n\n| Realm | Database File |\n|:-----:|:-----|\n| [Server] | `garrysmod/sv.db`\n| [Client] | `garrysmod/cl.db`\n|  [Menu]  | `garrysmod/mn.db`\n\n[Server]: /gmod/States#server\n[Client]: /gmod/States#client\n[Menu]: /gmod/States#menu",
+    "description": "Functions to persist data on a user's computer.\n\nThe data will be read / written to / from a database\ncorresponding to the realm the library was used in.\n\n| Realm | Database File |\n|:-----:|:-----|\n| [Server](/gmod/States#server) | `garrysmod/sv.db`\n| [Client](/gmod/States#client) | `garrysmod/cl.db`\n| [Menu](/gmod/States#menu) | `garrysmod/mn.db`",
     "functions": [
       {
         "arguments": [
@@ -4103,7 +4117,7 @@
             "type": "function"
           },
           {
-            "default": "flnSu>",
+            "default": ">flnSu",
             "description": "A string whose characters specify the information to be retrieved.\n\n* `f` - Populates the func field.\n* `l` - Populates the currentline field.\n* `L` - Populates the activelines field.\n* `n` - Populates the name and namewhat fields - only works if stack level is passed rather than function pointer.\n* `S` - Populates the location fields (lastlinedefined, linedefined, short_src, source and what).\n* `u` - Populates the argument and upvalue fields (isvararg, nparams, nups).\n* `&gt;` - Causes this function to use the last argument to get the data from",
             "name": "fields",
             "type": "string"
@@ -4246,9 +4260,9 @@
       {
         "arguments": [
           {
-            "description": "Object to set environment of",
+            "description": "Object to set environment of. Valid types: userdata, thread, function.",
             "name": "object",
-            "type": "table"
+            "type": "any"
           },
           {
             "description": "Environment to set",
@@ -4256,7 +4270,7 @@
             "type": "table"
           }
         ],
-        "description": "<deprecated></deprecated>\n\nSets the environment of the passed object.",
+        "description": "<deprecated></deprecated>\n\nSets the environment of the passed object.\n\nUnlike <page>Global.setfenv</page>, this also works on **any** userdata, allowing you to save data stored to it which can be accessed using <page>debug.getfenv</page>.\nUserdata seem to intentionally support this &amp; setting/changing it does not affect anything (though unused by gmod / Entities and such don't this)\nThis can be useful when trying to store data on a <page>IGModAudioChannel</page>, <page>Vector</page>, <page>Angle</page> or any other that doesn't already allow you to store data on it.",
         "name": "setfenv",
         "parent": "debug",
         "realms": [
@@ -6451,7 +6465,7 @@
             "type": "string"
           }
         ],
-        "description": "Allow entities with given class name to be duplicated. See <page>duplicator.Disallow</page> for the opposite effect.",
+        "description": "Allow entities with given class name to be duplicated. See <page>duplicator.Disallow</page> for the opposite effect.\n\n<page>duplicator.IsAllowed</page> can be used to poll the status of a particular entity class.\n\n`duplicator.Allow` is automatically called by <page>scripted_ents.Register</page> and <page>weapons.Register</page>, unless the associated entity table has `ENT.DisableDuplicator` set to `true`.\n\nThis is also automatically called by <page>duplicator.RegisterEntityClass</page>.\n\nIn addition to that most spawnmenu content, such as engine weapons and pickup-ables, as well as most engine NPCs in Sandbox-derived gamemodes are also allowed by default.",
         "name": "Allow",
         "parent": "duplicator",
         "realms": [
@@ -6693,7 +6707,7 @@
             "type": "string"
           }
         ],
-        "description": "Disallow this entity to be duplicated. Opposite of <page>duplicator.Allow</page>.\n\nBy default, all classes are disallowed to be duplicated. This function is useful for temporarily disabling duplication of certain entity classes that may have been previously allowed.",
+        "description": "Disallow this entity to be duplicated. Opposite of <page>duplicator.Allow</page>.\n\nThis function is useful for temporarily disabling duplication of certain entity classes that may have been previously allowed.",
         "name": "Disallow",
         "parent": "duplicator",
         "realms": [
@@ -7473,6 +7487,38 @@
           "lineEnd": 45,
           "lineStart": 18
         }
+      },
+      {
+        "arguments": [
+          {
+            "description": "Start position of the tracer.",
+            "name": "start",
+            "type": "Vector"
+          },
+          {
+            "description": "End position of the tracer",
+            "name": "endpos",
+            "type": "Vector"
+          },
+          {
+            "default": "1",
+            "description": "Tracer type. Acceptable values are:\n* 1 - Normal bullet\n* 2 - Gunship bullet\n* 4 - Strider bullet\n* 8 - Underwater bullet\n\nThis affects the default sound, as well as the distance from which the sound can be heard compared to the closest point on the tracer line to the <page text=\"player's eyes\">Player:GetShootPos</page>.",
+            "name": "tracerType",
+            "type": "number"
+          },
+          {
+            "default": "nil",
+            "description": "If set, this sound will be played instead of the default sound.",
+            "name": "soundOverride",
+            "type": "string"
+          }
+        ],
+        "description": "Imitates the \"near miss\" tracer sound, with the ability to override the sound played.\n\nThe frequency of the sound is limited internally, as to not overwhelm the player. (same as normal tracers)",
+        "name": "TracerSound",
+        "parent": "effects",
+        "realms": [
+          "client"
+        ]
       }
     ],
     "name": "effects"
@@ -7767,7 +7813,7 @@
         ]
       },
       {
-        "description": "Returns the time interval between each game tick in seconds.\n\nThis function is useful for making animations (usually serverside, such as doors rotating) and similar things to be independent of the tickrate in hooks that run at the tick rate, such as <page>GM:Tick</page>.\n\nClientside you'd want to use <page>Global.FrameTime</page> for this purpose in hooks that run every frame.\n\nThe default tickrate is `66.6666`, aka `16` milliseconds interval between each game tick.\nThe tickrate can be adjusted via the `-tickrate` [command line option](Command_Line_Parameters).",
+        "description": "Returns the time interval between each game tick in seconds.\n\nThis function is useful for making animations (usually serverside, such as doors rotating) and similar things to be independent of the tickrate in hooks that run at the tick rate, such as <page>GM:Tick</page>.\n\nClientside you'd want to use <page>Global.FrameTime</page> for this purpose in hooks that run every frame.\n\nThe default tickrate is `66.6666`, aka `15` milliseconds interval between each game tick.\nThe tickrate can be adjusted via the `-tickrate` [command line option](Command_Line_Parameters).",
         "name": "TickInterval",
         "parent": "engine",
         "realms": [
@@ -7893,9 +7939,9 @@
             "type": "Entity"
           },
           {
-            "description": "The attachment ID on the first entity to attach the rope to.",
+            "description": "The attachment ID on the first entity to attach the rope to, or a local Vector relative to the first entity.",
             "name": "ent1attach",
-            "type": "number"
+            "type": "number|Vector"
           },
           {
             "description": "The second entity to attach the rope to.",
@@ -7903,18 +7949,18 @@
             "type": "Entity"
           },
           {
-            "description": "The attachment ID on the second entity to attach the rope to.",
+            "description": "The attachment ID on the second entity to attach the rope to, or a local Vector relative to the second entity.",
             "name": "ent2attach",
-            "type": "Entity"
+            "type": "number|Vector"
           },
           {
             "default": "nil",
-            "description": "Extra optional settings for the rope. Possible values are:\n* slack - How much extra rope to add to the length (default: 0)\n* width - Width of the rope (default: 2)\n* segments - How many segments the rope should have (default: 8)\n* material - Which material should the rope have (default: `\"cable/cable\"`)\n* nogravity - If set, the rope should have no gravity. (default: 0)",
+            "description": "Extra optional settings for the rope. Possible values are:\n* slack - How much extra rope to add to the length (default: 0)\n* width - Width of the rope (default: 2)\n* segments - How many segments the rope should have (default: 8, valid range is [2,10])\n* material - Which material should the rope have (default: `\"cable/cable\"`)\n* nogravity - If set, the rope should have no gravity. (default: 0)",
             "name": "extra",
             "type": "table"
           }
         ],
-        "description": "Creates a clientside only rope, similar to those used by the DOG model from Half-Life 2.",
+        "description": "Creates a clientside only rope, similar to those used by the Dog and Fast Zombie models from Half-Life 2.\n\nCreated ropes will be automatically cleaned up when one of the attached entities is removed.",
         "name": "CreateClientRope",
         "parent": "ents",
         "realms": [
@@ -8329,7 +8375,7 @@
         ]
       },
       {
-        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all entities.\nIntended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>player.Iterator</page> for a similar function for all players.\n\nInternally, this function uses cached values that exist entirely within lua, as opposed to <page>ents.GetAll</page>, which is a C++ function.\nBecause switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than <page>ents.GetAll</page>.\n<note>The <page>GM:OnEntityCreated</page> and <page>GM:EntityRemoved</page> hooks are used internally to invalidate this function's cache. Using this function inside those hooks is not guaranteed to use an up-to-date cache because hooks are currently executed in an arbitrary order.</note>\n<warning>An error being thrown inside the <page>GM:OnEntityCreated</page> or <page>GM:EntityRemoved</page> hooks is likely to break this function. Make it certain that no addons are causing any errors in those hooks.</warning>",
+        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all entities.\nIntended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>player.Iterator</page> for a similar function for all players.\n\nInternally, this function uses cached values that exist entirely within lua, as opposed to <page>ents.GetAll</page>, which is a C++ function.\nBecause switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than <page>ents.GetAll</page>.",
         "name": "Iterator",
         "parent": "ents",
         "realms": [
@@ -8351,9 +8397,9 @@
           }
         ],
         "source": {
-          "file": "lua/includes/extensions/ents.lua",
-          "lineEnd": null,
-          "lineStart": 27
+          "file": "lua/includes/extensions/entity_iter.lua",
+          "lineEnd": 11,
+          "lineStart": 4
         }
       }
     ],
@@ -8616,8 +8662,8 @@
             "type": "string"
           },
           {
-            "default": "GAME or DATA",
-            "description": "The path to look for the files and directories in. If this argument is set to `true` then the path will be `GAME`, otherwise if the argument is `false` or `nil` then the path will be `DATA`. See <page text=\"this list\">File_Search_Paths</page> for a list of valid paths.",
+            "default": "DATA",
+            "description": "The path to look for the files and directories in. See <page text=\"this list\">File_Search_Paths</page> for a list of valid paths.",
             "name": "gamePath",
             "type": "string"
           }
@@ -9333,13 +9379,13 @@
       {
         "arguments": [
           {
-            "description": "UserID or SteamID of the player to kick. Uses SteamID32 eg STEAM_0:0:00000000",
+            "description": "<page text=\"UserID\">Player:UserID</page>, <page text=\"SteamID\">Player:SteamID</page> or <page text=\"SteamID64\">Player:SteamID64</page> of the player to kick. Uses SteamID32 eg STEAM_0:0:00000000",
             "name": "id",
             "type": "string"
           },
           {
             "default": "No reason given",
-            "description": "Reason to display to the player. This can span across multiple lines.\n\n<warning>This will be shortened to ~512 chars, though this includes the command itself and the player index so will realistically be more around ~498. It is recommended to avoid going near the limit to avoid truncation.</warning>",
+            "description": "Reason to display to the player. This can span across multiple lines.\n\n<warning>This will be shortened to ~512 chars, though this includes the command itself and the player index so will realistically be more around ~483. It is recommended to avoid going near the limit to avoid truncation.</warning>",
             "name": "reason",
             "type": "string"
           }
@@ -11282,7 +11328,7 @@
             "type": "string"
           }
         ],
-        "description": "You can attach callbacks to a number of compiler events with jit.attach. The callback can be called:\n\n* when a function has been compiled to bytecode (`\"bc\"`);\n* when trace recording starts or stops (`\"trace\"`);\n* as a trace is being recorded (`\"record\"`);\n* or when a trace exits through a side exit (`\"texit\"`).\n\nSet a callback with `jit.attach(callback, \"event\")` and clear the same callback with `jit.attach(callback)`\n\n<warning>This function isn't officially documented on LuaJIT wiki, use it at your own risk.</warning>\n<warning>Using these constantly (especially bytecode) can be very performance heavy due to the constant stream of data being compiled at a time.</warning>",
+        "description": "You can attach callbacks to a number of compiler events with jit.attach. The callback can be called:\n\n* when a function has been compiled to bytecode (`\"bc\"`);\n* when trace recording starts or stops (`\"trace\"`);\n* as a trace is being recorded (`\"record\"`);\n* or when a trace exits through a side exit (`\"texit\"`).\n\nSet a callback with `jit.attach(callback, \"event\")` and clear the same callback with `jit.attach(callback)`.\nOnly one callback can be active per event.\n\n<warning>This function isn't officially documented on LuaJIT wiki, use it at your own risk.</warning>",
         "name": "attach",
         "parent": "jit",
         "realms": [
@@ -11478,7 +11524,7 @@
       {
         "arguments": [
           {
-            "description": "This arugment is ignored.",
+            "description": "This argument is ignored.",
             "name": "index",
             "type": "number"
           }
@@ -12369,7 +12415,7 @@
             "type": "number"
           }
         ],
-        "description": "Parses markup into a <page>MarkupObject</page>. Currently, this only supports fonts and colors as demonstrated in the example.",
+        "description": "Parses markup into a <page>MarkupObject</page>. Currently, this only supports fonts and colors as demonstrated in the example.\n<warning>This function is very slow! Always cache its result</warning>",
         "name": "Parse",
         "parent": "markup",
         "realms": [
@@ -12774,7 +12820,7 @@
             "type": "number"
           }
         ],
-        "description": "Ceils or rounds a number up.",
+        "description": "Ceils or rounds a number up.\n\nSee <page>math.floor</page> for the inverse of this function.",
         "name": "ceil",
         "parent": "math",
         "realms": [
@@ -14060,7 +14106,7 @@
             "type": "number"
           }
         ],
-        "description": "Floors or rounds a number down.",
+        "description": "Floors or rounds a number down.\n\nSee <page>math.ceil</page> for the inverse of this function.",
         "name": "floor",
         "parent": "math",
         "realms": [
@@ -15161,7 +15207,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the color to be used for the next vertex. See <page>mesh.Begin</page>.",
+        "description": "Sets the color to be used for the next vertex. This is `COLOR0` semantic of\nVertex Shader. See <page>mesh.Begin</page>.",
         "name": "Color",
         "parent": "mesh",
         "realms": [
@@ -15341,7 +15387,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the specular map values.\n\nThere is no known use case for this function.",
+        "description": "Sets the specular map values. This is `COLOR1` semantic of Vertex Shader.\n<note>This doesn't currently work, even though `COLOR0` can be successfully passed to the Vertex Shader using <page>mesh.Color</page>, unlike `COLOR1`, ​​using this function.</note>",
         "name": "Specular",
         "parent": "mesh",
         "realms": [
@@ -15428,11 +15474,23 @@
             "type": "number"
           },
           {
+            "description": "S coordinate.",
+            "name": "s",
+            "type": "number"
+          },
+          {
+            "description": "T coordinate.",
+            "name": "t",
+            "type": "number"
+          },
+          {
+            "default": "nil",
             "description": "U coordinate.",
             "name": "u",
             "type": "number"
           },
           {
+            "default": "nil",
             "description": "V coordinate.",
             "name": "v",
             "type": "number"
@@ -16635,7 +16693,7 @@
         ],
         "returnValues": [
           {
-            "description": "The player, or throwed error if no entity could be read.",
+            "description": "The player, or `Entity(0)` if no entity could be read.",
             "type": "Player"
           }
         ],
@@ -18126,8 +18184,8 @@
         ],
         "returnValues": [
           {
-            "description": "Player if one is found, `nil` otherwise.",
-            "type": "Player|nil"
+            "description": "Player if one is found, `NULL` otherwise.",
+            "type": "Player|NULL"
           }
         ]
       },
@@ -18213,7 +18271,7 @@
         }
       },
       {
-        "description": "Returns the active player count.\n\n<note>Similar to **#**<page>player.GetAll</page>() but with better performance since the player table doesn't have to be generated. If <page>player.GetAll</page> is already being called for iteration, then using the **#** operator on the table will be faster than calling this function since it is JITted.</note>",
+        "description": "Returns the active player count.\n\n<note>Similar to **#**<page>player.GetAll</page>() but with better performance since the player table doesn't have to be generated. If <page>player.GetAll</page> is already being called for iteration, then using the **#** operator on the table will be faster than calling this function since it is JITted.</note>\n<note>Players who are currently connecting to the server will not be counted. See function: <page>player.GetCountConnecting</page></note>",
         "name": "GetCount",
         "parent": "player",
         "realms": [
@@ -18257,7 +18315,7 @@
         ]
       },
       {
-        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all players on the server.\nIntended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>ents.Iterator</page> for a similar function for all entities.\n\nInternally, this function uses cached values that exist entirely within lua, as opposed to <page>player.GetAll</page>, which is a C++ function.\nBecause switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than <page>player.GetAll</page>.\n<note>The <page>GM:OnEntityCreated</page> and <page>GM:EntityRemoved</page> hooks are used internally to invalidate this function's cache. Using this function inside those hooks is not guaranteed to use an up-to-date cache because hooks are currently executed in an arbitrary order.</note>\n<warning>An error being thrown inside the <page>GM:OnEntityCreated</page> or <page>GM:EntityRemoved</page> hooks is likely to break this function. Make it certain that no addons are causing any errors in those hooks.</warning>",
+        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all players on the server.\nIntended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>ents.Iterator</page> for a similar function for all entities.\n\nInternally, this function uses cached values that exist entirely within lua, as opposed to <page>player.GetAll</page>, which is a C++ function.\nBecause switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than <page>player.GetAll</page>.",
         "name": "Iterator",
         "parent": "player",
         "realms": [
@@ -18279,9 +18337,9 @@
           }
         ],
         "source": {
-          "file": "lua/includes/extensions/player.lua",
-          "lineEnd": 319,
-          "lineStart": 313
+          "file": "lua/includes/extensions/entity_iter.lua",
+          "lineEnd": 20,
+          "lineStart": 13
         }
       }
     ],
@@ -19643,7 +19701,7 @@
             "type": "number"
           }
         ],
-        "description": "Draws a quad.\n\n<rendercontext hook=\"false\" type=\"3D\"></rendercontext>",
+        "description": "Draws a quad. Expects material to be set by <page>render.SetMaterial</page>.\n\n<rendercontext hook=\"false\" type=\"3D\"></rendercontext>",
         "name": "DrawQuadEasy",
         "parent": "render",
         "realms": [
@@ -20574,7 +20632,7 @@
           {
             "description": "The <page>IMaterial</page> that will be used for all upcoming draw operations, or `nil` to stop overriding.",
             "name": "material",
-            "type": "IMaterial"
+            "type": "IMaterial|nil"
           }
         ],
         "description": "Forces all future draw operations to use a specific <page>IMaterial</page>.\n\nBecause this is independent of a specific <page>Entity</page>, it can be used to change materials on static models that are part of maps.",
@@ -20592,6 +20650,7 @@
             "type": "boolean"
           },
           {
+            "default": "nil",
             "description": "If the previous argument is true, sets whether the next rendering operations should write to the alpha channel or not. Has no effect if the previous argument is false.",
             "name": "shouldWrite",
             "type": "boolean"
@@ -20850,7 +20909,7 @@
             "type": "number"
           }
         ],
-        "description": "Pushes (Adds) a texture filter onto the magnification texture filter stack.\nThis will modify how textures are stretched to sizes larger than their native resolution for upcoming rendering and drawing operations.\nFor a version of this same function that modifies filtering for texture sizes smaller than their native resolution, see <page text=\"render.PushFilterMin()\">render.PushFilterMin</page>\n\nAlways be sure to call <page text=\"render.PopFilterMag()\">render.PopFilterMag</page> afterwards to avoid texture filtering problems.\n\nFor more detailed information and a usage example, see <page text=\"the texture minification and magnification render reference.\">render_min_mag_filters</page>",
+        "description": "Pushes (Adds) a texture filter onto the magnification texture filter stack.\nThis will modify how textures are stretched to sizes larger than their native resolution for upcoming rendering and drawing operations.\nFor a version of this same function that modifies filtering for texture sizes smaller than their native resolution, see <page>render.PushFilterMin</page>\n\nAlways be sure to call <page>render.PopFilterMag</page> afterwards to avoid texture filtering problems.\n\nFor more detailed information and a usage example, see <page text=\"the texture minification and magnification render reference.\">render_min_mag_filters</page>\n\nIf current texture has more than 1 mipmap, this also sets the mipmap filter.",
         "name": "PushFilterMag",
         "parent": "render",
         "realms": [
@@ -21451,12 +21510,12 @@
       {
         "arguments": [
           {
-            "description": "",
-            "name": "newState",
+            "description": "`true` to disable shadows, `false` to enable.",
+            "name": "disable",
             "type": "boolean"
           }
         ],
-        "description": "Sets whether any future render operations will ignore shadow drawing.",
+        "description": "Sets whether all shadow rendering should be disabled.\n\nInternally sets `r_shadows_gamecontrol` convar, exactly like `shadow_control` does via its `SetShadowsDisabled` input.\n\n<bug>Currently broken due to internal bug. Will be fixed in the next update, as of 15 Sept 2025.</bug>",
         "name": "SetShadowsDisabled",
         "parent": "render",
         "realms": [
@@ -21834,12 +21893,12 @@
       {
         "arguments": [
           {
-            "description": "Virtual path of the file to be added, relative to `garrysmod/`.\nDo not add `.bz2` to the filepath.\nDo not put `gamemodes/*gamemodename*/content/` or `addons/*addonname*/` into the path.",
+            "description": "**Virtual path** of the file to be added, relative to `garrysmod/`.\nDo not add `.bz2` to the filepath.\nDo not add `gamemodes/*gamemodename*/content/` or `addons/*addonname*/` to the path, since those paths are mounted virtually as if they are in the root `garrysmod/`.",
             "name": "path",
             "type": "string"
           }
         ],
-        "description": "Adds the specified and all related files to the files the client should download from the server.\n\nFor convenience, this function will automatically add any other files that are related to the selected one, and throw an error if it can't find them. For example, a `.vmt` file will automatically add the `.vtf` with the same name, and a `.mdl` file will automatically add all `.vvd`, `.ani`, `.dx80.vtx`, `.dx90.vtx`, `.sw.vtx`, `.phy`, `.png` and `.jpg` files with the same name, with a separate error for each missing file.\n\nIf you do not want it to do this, use <page>resource.AddSingleFile</page>.\n\n<warning>There's a 8192 downloadable file limit. If you need more, consider using Workshop addons - <page>resource.AddWorkshop</page>. You should also consider the fact that you have way too many downloads. This limit is shared among all `resource.Add*` functions.</warning>\n\n<note>The file must exist on the server it will not be added to the downloadables list!</note>",
+        "description": "Adds the specified and all related files to the list of files the client should download from the server.\n\nFor convenience, this function will automatically add any other files that are related to the selected one, and throw an error if it can't find them. For example, a `.vmt` file will automatically add the `.vtf` with the same name, and a `.mdl` file will automatically add all `.vvd`, `.ani`, `.dx80.vtx`, `.dx90.vtx` and `.phy` files with the same name, with a separate error for each missing file.\n\nIf you do not want it to do this, use <page>resource.AddSingleFile</page>.\n\nSee also <page>Serving Content</page>\n\n<warning>There's a 8192 downloadable file limit. If you need more, consider using Workshop addons - <page>resource.AddWorkshop</page>. You should also consider the fact that you have way too many downloads. This limit is shared among all `resource.Add*` functions.</warning>\n\n<note>The file must exist on the server it will not be added to the downloadables list!</note>",
         "name": "AddFile",
         "parent": "resource",
         "realms": [
@@ -21854,7 +21913,7 @@
             "type": "string"
           }
         ],
-        "description": "Adds the specified file to the files the client should download from the server.\n\nIf you wish to add textures or models, consider using <page>resource.AddFile</page> to add all the files required for a texture/model.\n\n<warning>There's a 8192 downloadable file limit. If you need more, consider using Workshop addons - <page>resource.AddWorkshop</page>. You should also consider the fact that you have way too many downloads. This limit is shared among all `resource.Add*` functions.</warning>\n\n<note>The file must exist on the server or players will not download it!</note>",
+        "description": "Adds the specified file to the files the client should download from the server.\n\nIf you wish to add textures or models, consider using <page>resource.AddFile</page> to add all the files required for a texture/model.\n\n<warning>There's a 8192 downloadable file limit. If you need more, consider using Workshop addons - <page>resource.AddWorkshop</page>. You should also consider the fact that you have way too many downloads. This limit is shared among all `resource.Add*` functions.</warning>\n\n<note>The file must exist on the server or players will not download it!</note>\n\nSee also <page>Serving Content</page>",
         "name": "AddSingleFile",
         "parent": "resource",
         "realms": [
@@ -21869,7 +21928,7 @@
             "type": "string"
           }
         ],
-        "description": "Adds a workshop addon for the client to download before entering the server. This will not \"install\" the addon on your server, see <page>Workshop for Dedicated Servers</page> for installing Steam Workshop addons onto your servers.\n\nHaving the raw files from a workshop item does not count as having already downloaded it.<br>\nSo players who previously downloaded a map through Fast Download will have to re-download it if it is part of a workshop addon.\n\nYou should try to only add addons that have custom content (models, sounds, etc).\n\nGamemodes that are <page text=\"workshop enabled\">Gamemode_Creation#Gamemode_Text_File</page> and the current map are automatically added to this list, if they come from the servers' workshop collection - so there's no need to manually add them.\n\n<warning>There's a 8192 downloadable file limit. If you need more, consider the fact that you have way too many downloads. This limit is shared among all `resource.Add*` functions.</warning>",
+        "description": "Adds a workshop addon for the client to download before entering the server. This will not \"install\" the addon on your server, see <page>Workshop for Dedicated Servers</page> for installing Steam Workshop addons onto your servers.\n\nHaving the raw files from a workshop item does not count as having already downloaded it.<br>\nSo players who previously downloaded a map through [FastDL](Serving_Content) will have to re-download it if it is part of a workshop addon.\n\nYou should try to only add addons that have custom content (models, sounds, etc). Lua files are not considered content, and are handled by a separate system. Adding workshop addons that only have Lua files is a waste, it will do nothing.\n\nGamemodes that are <page text=\"workshop enabled\">Gamemode_Creation#Gamemode_Text_File</page> and the current map are automatically added to this list, if they come from the servers' workshop collection - so there's no need to manually add them.\n\n<warning>There's a 8192 downloadable file limit. If you need more, consider the fact that you have way too many downloads. This limit is shared among all `resource.Add*` functions.</warning>\n\nSee also <page>Serving Content</page>",
         "name": "AddWorkshop",
         "parent": "resource",
         "realms": [
@@ -23669,7 +23728,7 @@
             "type": "string"
           }
         ],
-        "description": "Performs a query on the local SQLite database, returns a table as result set, nil if result is empty and false on error.\n<warning>\nTo run SQL queries with this function safely, it is crucial to ensure that the concatenated variables in the query string are safe to avoid vulnerabilities like SQL injections. For this, it is recommended to use the <page>sql.SQLStr</page>, which allows arguments to be escaped correctly.\n</warning>",
+        "description": "Performs a query on the local SQLite database, returns a table as result set, nil if result is empty and false on error.\n<warning>\nTo run SQL queries with this function safely, it is crucial to ensure that the concatenated variables in the query string are safe to avoid vulnerabilities like SQL injections. For this, it is recommended to use the <page>sql.SQLStr</page>, which allows arguments to be escaped correctly.\n\nIt's best to just use <page>sql.QueryTyped</page> instead if possible.\n</warning>",
         "name": "Query",
         "parent": "sql",
         "realms": [
@@ -23788,7 +23847,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Escapes dangerous characters and symbols from user input used in an SQLite SQL Query.\n\n<note>This function is not meant to be used with external database engines such as `MySQL`. Escaping strings with inadequate functions is dangerous!</note>",
+        "description": "Escapes dangerous characters and symbols from user input used in an SQLite SQL Query.\n\nIf possible, it is recommended to use <page>sql.QueryTyped</page> instead.\n\n<warning>Do not use this function with external database engines such as `MySQL`. `MySQL` and `SQLite` use different escape sequences that are incompatible with each other! Escaping strings with inadequate functions is dangerous and will lead to SQL injection vulnerabilities.</warning>",
         "name": "SQLStr",
         "parent": "sql",
         "realms": [
@@ -23868,7 +23927,7 @@
             "type": "function"
           }
         ],
-        "description": "<note>You really should be using <page>steamworks.DownloadUGC</page>. This is a legacy function.</note>\n\nDownloads a file from the supplied addon and saves it as a `.cache` file in `garrysmod/cache/` folder.\n\nThis is mostly used to download the preview image of the addon.\n\nIn case the retrieved file is an image and you need the <page>IMaterial</page>, use <page>Global.AddonMaterial</page> with the path supplied from the callback.",
+        "description": "<note>You really should be using <page>steamworks.DownloadUGC</page> when downloading Steam Workshop items. This is a legacy function for preview images.</note>\n\nDownloads a file from the supplied addon and saves it as a `.cache` file in `garrysmod/cache/` folder.\n\nThis is mostly used to download the preview image of the addon.\n\nIn case the retrieved file is an image and you need the <page>IMaterial</page>, use <page>Global.AddonMaterial</page> with the path supplied from the callback.",
         "name": "Download",
         "parent": "steamworks",
         "realms": [
@@ -24589,8 +24648,8 @@
         ],
         "returnValues": [
           {
-            "description": "Returns the time as a formatted string only if a format was specified.\n\nReturns a table only if no format was specified. The table will contain these fields:\n* <page>number</page> ms - milliseconds\n* <page>number</page> s - seconds\n* <page>number</page> m - minutes\n* <page>number</page> h - hours",
-            "type": "string"
+            "description": "Returns the time as a formatted string only if a format was specified.\n\nReturns a table if no format was specified.",
+            "type": "string|table{FormattedTime}"
           }
         ],
         "source": {
@@ -24668,7 +24727,7 @@
             "type": "string"
           }
         ],
-        "description": "Returns extension of the file.",
+        "description": "Returns extension of the file.\n<note>Make sure there are no trailing whitespaces in your `path` argument</note>",
         "name": "GetExtensionFromFilename",
         "parent": "string",
         "realms": [
@@ -26204,7 +26263,7 @@
       {
         "arguments": [
           {
-            "description": "Name or path of the texture.",
+            "description": "Name or path of the texture. The path must be to a `.vmt` file (a material), not to `.vtf` (a texture)!",
             "name": "name/path",
             "type": "string"
           }
@@ -26432,8 +26491,19 @@
             "type": "number"
           }
         ],
-        "description": "Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers.",
+        "description": "Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by providing a <page>Color</page>.",
         "name": "SetTextColor",
+        "overloads": [
+          {
+            "arguments": [
+              {
+                "description": "A <page>Color</page> object/table to read the color from. This is slower than providing four numbers. You could use <page>Color:Unpack</page> to address this. You should also cache your color objects if you wish to use them, for performance reasons.",
+                "name": "color",
+                "type": "table"
+              }
+            ]
+          }
+        ],
         "parent": "surface",
         "realms": [
           "client",
@@ -26872,8 +26942,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/table.lua",
-          "lineEnd": 164,
-          "lineStart": 160
+          "lineEnd": 166,
+          "lineStart": 158
         }
       },
       {
@@ -27401,7 +27471,7 @@
             "type": "table"
           }
         ],
-        "description": "Returns whether or not the given table is empty.\n\nThis works on both sequential and non-sequential tables, and is a lot faster for non-sequential tables than `table.Count(tbl) == 0`.\nIf you want to check if a table is not empty, use `next(tbl) ~= nil`, as it is slightly faster.\n\nFor sequential tables it is better to use `tab[1] ~= nil`.",
+        "description": "Returns whether or not the given table is empty.\n\nThis works on both sequential and non-sequential tables, and is a lot faster for non-sequential tables than `table.Count(tbl) == 0`.\n\nFor sequential tables it is better to use `tab[1] == nil`.",
         "name": "IsEmpty",
         "parent": "table",
         "realms": [
@@ -29185,7 +29255,7 @@
             "type": "table{Undo}"
           }
         ],
-        "description": "Processes an undo block (in table form). This is used internally by the undo manager when a player presses Z.\n\nYou should use `gm_undo` or `gm_undonum *num*` console commands instead of calling this function directly.",
+        "description": "Processes an undo block (in table form). This is used internally by the undo manager when a player presses Z.\n\nYou should use `gmod_undo` or `gmod_undonum *num*` console commands instead of calling this function directly.",
         "name": "Do_Undo",
         "parent": "undo",
         "realms": [
@@ -30404,7 +30474,7 @@
           {
             "description": "The default value, in case there's nothing stored",
             "name": "default",
-            "type": "string"
+            "type": "any"
           }
         ],
         "description": "Gets persistent data of an offline player using their SteamID.\n\nSee also <page>Player:GetPData</page> for a more convenient version of this function for online players, <page>util.RemovePData</page> and\n<page>util.SetPData</page> for the other accompanying functions.\n\n<note>This function internally uses <page>util.SteamIDTo64</page>, it previously utilized <page>Player:UniqueID</page> which can cause collisions (two or more players sharing the same PData entry). This function now only uses the old method as a fallback if the name isn't found.</note>",
@@ -30734,6 +30804,43 @@
           "lineEnd": 418,
           "lineStart": 394
         }
+      },
+      {
+        "arguments": [
+          {
+            "description": "The minimum extents of the Axis-Aligned box.",
+            "name": "boxMin",
+            "type": "Vector"
+          },
+          {
+            "description": "The maximum extents of the Axis-Aligned box.",
+            "name": "boxMax",
+            "type": "Vector"
+          },
+          {
+            "description": "The minimum extents of the second Axis-Aligned box.",
+            "name": "box2Min",
+            "type": "Vector"
+          },
+          {
+            "description": "The maximum extents of the second Axis-Aligned box.",
+            "name": "box2Max",
+            "type": "Vector"
+          }
+        ],
+        "description": "Performs a box-box intersection and returns whether there was an intersection or not.",
+        "name": "IsBoxIntersectingBox",
+        "parent": "util",
+        "realms": [
+          "client",
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "`true` if there is an intersection, `false` otherwise.",
+            "type": "boolean"
+          }
+        ]
       },
       {
         "arguments": [
@@ -31132,7 +31239,7 @@
             "type": "string"
           }
         ],
-        "description": "Checks if the specified prop is valid.",
+        "description": "Checks if the specified prop is valid (has valid physics object).",
         "name": "IsValidProp",
         "parent": "util",
         "realms": [
@@ -31485,8 +31592,8 @@
             "type": "Vector"
           },
           {
-            "description": "The radius of the sphere to check for visibility.",
-            "name": "radius",
+            "description": "The size of the square to check for visibility.",
+            "name": "size",
             "type": "number"
           },
           {
@@ -31495,7 +31602,7 @@
             "type": "pixelvis_handle_t"
           }
         ],
-        "description": "Returns the visibility of a sphere in the world.",
+        "description": "Returns the visibility of a square that is always pointed at the camera in the world-space.\n\nThis is typically used for in-game sprites or \"billboards\". (<page>render.DrawSprite</page>)",
         "name": "PixelVisible",
         "parent": "util",
         "realms": [
@@ -31503,7 +31610,7 @@
         ],
         "returnValues": [
           {
-            "description": "Visibility, ranges from `0-1`. `0` when none of the area is visible, `1` when all of it is visible.",
+            "description": "Visibility percentage, in range of `[0-1]`. `0` when none of the area is visible, `0.5` when half the area is visible, `1` when all of it is visible, etc.",
             "type": "number"
           }
         ]
@@ -31538,7 +31645,7 @@
             "type": "string"
           }
         ],
-        "description": "Precaches a model for later use. Model is cached after being loaded once.\n<warning>\nModelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.\n</warning>",
+        "description": "Precaches a model for later use. Model is cached after being loaded once.\n<warning>\nModelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.\n</warning>\n\n<note>Does nothing on the client.</note>",
         "name": "PrecacheModel",
         "parent": "util",
         "realms": [
@@ -32052,7 +32159,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Converts a table to a JSON string.\n\nSee <page>util.JSONToTable</page> for the opposite function.\n\n<warning>All keys are strings in the JSON format, so all keys of other types will be converted to strings!\nThis can lead to loss of data where a number key could be converted into an already existing string key! (for example in a table like this: `{[\"5\"] = \"ok\", [5] = \"BBB\"}`)\n</warning>",
+        "description": "Converts a table to a JSON string. Keep in mind that not every data type can be stored in the JSON format, notably any entity will not be written, as if it wasn't in the table. Same goes for materials and textures, etc.\n\nSee <page>util.JSONToTable</page> for the opposite function.\n\n<warning>All keys are strings in the JSON format, so all keys of other types will be converted to strings!\nThis can lead to loss of data where a number key could be converted into an already existing string key! (for example in a table like this: `{[\"5\"] = \"ok\", [5] = \"BBB\"}`)\n</warning>",
         "name": "TableToJSON",
         "parent": "util",
         "realms": [

@@ -6,7 +6,7 @@
         "default": "DMG_BULLET",
         "description": "Damage type using <page>Enums/DMG</page>.\n\nRelated function is <page>game.GetAmmoDamageType</page>.",
         "name": "dmgtype",
-        "type": "number"
+        "type": "number{DMG}"
       },
       {
         "default": "1000",
@@ -47,7 +47,7 @@
         "default": "TRACER_NONE",
         "description": "Tracer type using <page>Enums/TRACER</page>.",
         "name": "tracer",
-        "type": "number"
+        "type": "number{TRACER}"
       },
       {
         "default": "9999",
@@ -59,7 +59,7 @@
         "default": "0",
         "description": "Flags for the ammo type using <page>Enums/AMMO</page>.",
         "name": "flags",
-        "type": "number"
+        "type": "number{AMMO}"
       }
     ],
     "name": "AmmoData",
@@ -156,12 +156,12 @@
       {
         "description": "The target colour of the panel object. Only used by <page>Panel:ColorTo</page>.",
         "name": "Color",
-        "type": "table"
+        "type": "Color"
       },
       {
         "description": "The colour of the panel object when the animation started. Only used by <page>Panel:ColorTo</page>.",
         "name": "StartColor",
-        "type": "table"
+        "type": "Color"
       },
       {
         "description": "The target alpha (0-255) of the panel object. Only used by <page>Panel:AlphaTo</page>.",
@@ -210,6 +210,33 @@
     ]
   },
   {
+    "description": "TTable structure used as balloon spawn data. Default values are applied when the trace hits nothing. This data is required for correctly spawning the balloon.\n\nSee <page>MakeBalloon</page>",
+    "fields": [
+      {
+        "default": "Vector(0, 0, 0)",
+        "description": "Where the balloon will spawn",
+        "name": "Pos",
+        "type": "Vector"
+      },
+      {
+        "default": "models/error.mdl",
+        "description": "The balloon’s model",
+        "name": "Model",
+        "type": "string"
+      },
+      {
+        "default": "0",
+        "description": "The balloon’s skin",
+        "name": "Skin",
+        "type": "number"
+      }
+    ],
+    "name": "BalloonData",
+    "realms": [
+      "server"
+    ]
+  },
+  {
     "description": "The tables that make up the values of the table returned by <page>Entity:GetBodyGroups</page>.",
     "fields": [
       {
@@ -230,7 +257,7 @@
       {
         "description": "A table of the names of the Sub Models within this Body Group.\nSub Model IDs start at `0`.",
         "name": "submodels",
-        "type": "table"
+        "type": "table<string>"
       }
     ],
     "name": "BodyGroupData",
@@ -858,7 +885,7 @@
         "default": "75",
         "description": "The sound's attenuation, a number between 0 (low) and 511 (high)\n\nThis determines how fast the sound drops away. A higher value means the sound can be heard farther away.\n\nSee <page>Enums/SNDLVL</page>.",
         "name": "SoundLevel",
-        "type": "number"
+        "type": "number{SNDLVL}"
       },
       {
         "default": "100",
@@ -870,12 +897,12 @@
         "default": "0",
         "description": "The bit flags of the played sound. See <page>Enums/SND</page> for available options.",
         "name": "Flags",
-        "type": "number"
+        "type": "number{SND}"
       },
       {
         "description": "The sound's channel. See <page>Enums/CHAN</page> for available options.",
         "name": "Channel",
-        "type": "number"
+        "type": "number{CHAN}"
       },
       {
         "description": "The volume of the played sound, return as a decimal number between 0 (low) and 1 (high).",
@@ -1160,7 +1187,7 @@
       {
         "description": "The <page>Structures/TraceResult</page> from the <page text=\"Trace\">util.TraceLine</page> that determined where and what the bullet hit.",
         "name": "Trace",
-        "type": "table"
+        "type": "table{TraceResult}"
       }
     ],
     "name": "FiredBullet",
@@ -1267,6 +1294,37 @@
     "realms": [
       "client",
       "menu"
+    ]
+  },
+  {
+    "description": "Table created by the <page>string.FormattedTime</page> function if no format is given to it.",
+    "fields": [
+      {
+        "description": "milliseconds",
+        "name": "ms",
+        "type": "number"
+      },
+      {
+        "description": "seconds",
+        "name": "s",
+        "type": "number"
+      },
+      {
+        "description": "minutes",
+        "name": "m",
+        "type": "number"
+      },
+      {
+        "description": "hours",
+        "name": "h",
+        "type": "number"
+      }
+    ],
+    "name": "FormattedTime",
+    "realms": [
+      "menu",
+      "client",
+      "server"
     ]
   },
   {
@@ -1414,19 +1472,19 @@
         "default": "nil",
         "description": "Things the trace should not hit. Can be an entity, a table of entities, a table of entity classes or a function:\n\n<callback>\n<arg type=\"Entity\" name=\"ent\">The entity that the trace hit</arg>\n<ret type=\"boolean\">Return `true` to hit the entity, `false` to skip it.</ret>\n</callback>\n\nUsing a function here is super slow. Try to avoid it.",
         "name": "filter",
-        "type": "Entity"
+        "type": "Entity|table<Entity>|table<string>|function"
       },
       {
         "default": "MASK_SOLID",
         "description": "The trace mask <page>Enums/MASK</page>. This determines what the trace should hit and what it shouldn't hit.",
         "name": "mask",
-        "type": "number"
+        "type": "number{MASK}"
       },
       {
         "default": "COLLISION_GROUP_NONE",
         "description": "The collision group <page>Enums/COLLISION_GROUP</page>. This determines what the trace should hit in regards to the entity's collision group.",
         "name": "collisiongroup",
-        "type": "number"
+        "type": "number{COLLISION_GROUP}"
       },
       {
         "default": "false",
@@ -1438,7 +1496,7 @@
         "default": "nil",
         "description": "If set, the trace result will be written to the supplied table instead of returning a new table",
         "name": "output",
-        "type": "table"
+        "type": "table{TraceResult}"
       },
       {
         "default": "false",
@@ -1466,7 +1524,7 @@
         "default": "MATERIAL_LIGHT_POINT",
         "description": "The type of the light source, see <page>Enums/MATERIAL_LIGHT</page>.",
         "name": "type",
-        "type": "number"
+        "type": "number{MATERIAL_LIGHT}"
       },
       {
         "default": "vector_origin",
@@ -1619,12 +1677,12 @@
       {
         "description": "A sequential table of four numbers whose purpose and expected values are determined by the shader.\n\nMany Source Engine shaders to hold tangent information of the vertex in the order `tangentX`, `tangentY`, `tangentZ`, `tangentHandedness`.",
         "name": "userdata",
-        "type": "table"
+        "type": "table<number>"
       },
       {
         "description": "A sequential table of all the <page text=\"BoneWeight structures\">Structures/BoneWeight</page> that affect this vertex.\n\nThe total sum of their `weight` values should be `1`\n\nCurrent added exclusively by <page>util.GetModelMeshes</page>",
         "name": "weights",
-        "type": "table"
+        "type": "table<table>"
       }
     ],
     "name": "MeshVertex",
@@ -1729,17 +1787,17 @@
       {
         "description": "A list of attachments the model has.\n\nEach attachment is a table with the following info:\n* Name\n* Bone\n* Offset",
         "name": "Attachments",
-        "type": "table"
+        "type": "table<table>"
       },
       {
         "description": "A list of bones the model has. Please node that the keys of this table are **not** bone IDs, it's just a list, <validate>but it might be safe to assume the keys are (BoneID-1) due to Lua table indexes starting at 1.</validate>.\n\nEach bone in the list has the following fields:\n* Name\n* Parent\n* Flags\n* PhysObj\n* SurfacePropName\n* Position\n* Angle",
         "name": "Bones",
-        "type": "table"
+        "type": "table<table>"
       },
       {
-        "description": "A list of sequences the model has, including the ones from `$includemodel`s.\n\nEach sequence is a table with the following info:\n* Name\n* Activity",
+        "description": "A list of sequences the model has, including the ones from `$includemodel`s.\n\nEach sequence is a table with the following info:\n* <page>string</page> Name\n* <page>string</page> Activity\n* <page>table</page> Events\n\n`Events` table is a list of tables with following memebers:\n* <page>number</page> Cycle\n* <page>number</page> Event\n* <page>string</page> Name\n* <page>number</page> Type\n* <page>string</page> Options",
         "name": "Sequences",
-        "type": "table"
+        "type": "table<table>"
       },
       {
         "description": "A list of materials the model uses, across all its meshes.",
@@ -1764,7 +1822,7 @@
       {
         "description": "A list of hitbox sets this model has. Each hitbox set has the following structure:\n* Name\n* Count\n* HitBoxes - a table of hitboxes within this set\n\nEach hitbox has the following format:\n* Mins\n* Maxs\n* Bone",
         "name": "HitBoxSets",
-        "type": "table"
+        "type": "table<table>"
       }
     ],
     "name": "ModelInfo",
@@ -1785,12 +1843,12 @@
       {
         "description": "A sequential <page>table</page> of <page text=\"MeshVertex Structures\">Structures/MeshVertex</page> that represents the triangles of this mesh.\n\nThese triangles are created from the contents of the `verticies` field.\n\nThis can be used as an input to <page>IMesh:BuildFromTriangles</page>",
         "name": "triangles",
-        "type": "table"
+        "type": "table<table>"
       },
       {
         "description": "A sequential <page>table</page> of <page text=\"MeshVertex Structures\">Structures/MeshVertex</page> that represents each vertex of the mesh.\n\n<bug>\nThis field has a typo in its name and should be named \"vertices\"\n</bug>",
         "name": "verticies",
-        "type": "table"
+        "type": "table<table>"
       }
     ],
     "name": "ModelMeshData",
@@ -2597,7 +2655,7 @@
       {
         "description": "The activity ID associated with this sequence. See <page>Enums/ACT</page>.",
         "name": "activity",
-        "type": "number"
+        "type": "number{ACT}"
       },
       {
         "description": "How likely this sequence is to be picked when playing an activity its attached to. -1 means this is the only sequence for that activity. (needs validation)",
@@ -2675,7 +2733,7 @@
       {
         "description": "A 1-based array of all animationIDs associated with this sequence. For use with <page>Entity:GetAnimInfo</page>.",
         "name": "anims",
-        "type": "table"
+        "type": "table<number>"
       }
     ],
     "name": "SequenceInfo",
@@ -2811,12 +2869,12 @@
       {
         "description": "The sound channel to play in. See <page>Enums/CHAN</page>",
         "name": "channel",
-        "type": "number"
+        "type": "number{CHAN}"
       },
       {
         "description": "The soundlevel of the sound in dB. See <page>Enums/SNDLVL</page>. This will affect how far the sound can be heard.",
         "name": "level",
-        "type": "number"
+        "type": "number{SNDLVL}"
       },
       {
         "default": "1.0",
@@ -2828,7 +2886,7 @@
         "default": "100",
         "description": "The pitch of the sound. Can be a table of two numbers, a minimum and a maximum value.",
         "name": "pitch",
-        "type": "number"
+        "type": "number|table<number>"
       },
       {
         "default": "100",
@@ -2875,7 +2933,7 @@
       {
         "description": "<page text=\"SOUND_ enums\">Enums/SOUND</page>",
         "name": "type",
-        "type": "number"
+        "type": "number{SOUND}"
       },
       {
         "description": "<page text=\"CurTime\">Global.CurTime</page> based expiration date",
@@ -2890,7 +2948,7 @@
       {
         "description": "<page text=\"CHAN_ enums\">Enums/CHAN</page>",
         "name": "channel",
-        "type": "number"
+        "type": "number{CHAN}"
       }
     ],
     "name": "SoundHintData",
@@ -2968,7 +3026,7 @@
       {
         "description": "The surface material. See <page>Enums/MAT</page>.",
         "name": "material",
-        "type": "number"
+        "type": "number{MAT}"
       },
       {
         "description": "Scalar multiplier for player speed. Achieves this by multiplying <page>CMoveData:SetMaxSpeed</page> in <page>GM:Move</page>.",
@@ -3071,7 +3129,7 @@
         "type": "string"
       },
       {
-        "default": "Other",
+        "default": "#spawnmenu.category.other",
         "description": "The spawn menu category that this weapon\nresides in.",
         "name": "Category",
         "type": "string"
@@ -3101,7 +3159,7 @@
         "type": "string"
       },
       {
-        "default": "1",
+        "default": "GetConVar('sv_defaultdeployspeed'):GetFloat()",
         "description": "The deploy speed multiplier. This does not change the\ninternal deployment speed.",
         "name": "m_WeaponDeploySpeed",
         "type": "number"
@@ -3229,7 +3287,7 @@
       {
         "description": "The SWEP render group, see <page>Enums/RENDERGROUP</page>. If unset, the engine will decide the render group based on the SWEPs world model.",
         "name": "RenderGroup",
-        "type": "number"
+        "type": "number{RENDERGROUP}"
       },
       {
         "default": "0",
@@ -3251,7 +3309,7 @@
       },
       {
         "default": "surface.GetTextureID( 'weapons/swep' )",
-        "description": "Path to\nan texture. Override this in your SWEP to set the icon in the weapon selection. This must be the texture ID,\nsee <page>surface.GetTextureID</page>. Alternatively you can render custom weapon selection via <page>WEAPON:DrawWeaponSelection</page>.",
+        "description": "Path to\na material. Override this in your SWEP to set the icon in the weapon selection. This must be the texture ID,\nsee <page>surface.GetTextureID</page>. Keep in mind that the path must be to a `.vmt` file, NOT `.vtf`.\n\n\nAlternatively you can render custom weapon selection via <page>WEAPON:DrawWeaponSelection</page>.",
         "name": "WepSelectIcon",
         "type": "number"
       },
@@ -3331,7 +3389,7 @@
       {
         "description": "Color of the team",
         "name": "Color",
-        "type": "table"
+        "type": "Color"
       },
       {
         "description": "Whether the team is joinable or not.",
@@ -3378,19 +3436,19 @@
         "default": "TEXT_ALIGN_LEFT",
         "description": "The alignment of the X position. See <page>Enums/TEXT_ALIGN</page>",
         "name": "xalign",
-        "type": "number"
+        "type": "number{TEXT_ALIGN}"
       },
       {
         "default": "TEXT_ALIGN_TOP",
         "description": "The alignment of the Y position. See <page>Enums/TEXT_ALIGN</page>",
         "name": "yalign",
-        "type": "number"
+        "type": "number{TEXT_ALIGN}"
       },
       {
         "default": "color_white",
         "description": "The text color",
         "name": "color",
-        "type": "table"
+        "type": "Color"
       }
     ],
     "name": "TextData",
@@ -3431,7 +3489,7 @@
         "default": "color_white",
         "description": "The texture color. See <page>Color</page>.",
         "name": "color",
-        "type": "table"
+        "type": "Color"
       }
     ],
     "name": "TextureData",
@@ -3569,19 +3627,19 @@
         "default": "nil",
         "description": "Things the trace should not hit. Can be an entity, a table of entities, a table of entity classes or a function:\n\n<callback>\n<arg type=\"Entity\" name=\"ent\">The entity that the trace hit</arg>\n<ret type=\"boolean\">Return `true` to hit the entity, `false` to skip it.</ret>\n</callback>\n\nUsing a function here is super slow. Try to avoid it.",
         "name": "filter",
-        "type": "Entity"
+        "type": "Entity|table<Entity>|table<string>|function"
       },
       {
         "default": "MASK_SOLID",
         "description": "The trace mask <page>Enums/MASK</page>. This determines what the trace should hit and what it shouldn't hit. A mask is a combination of <page>Enums/CONTENTS</page> - you can use these for more advanced masks.",
         "name": "mask",
-        "type": "number"
+        "type": "number{MASK}"
       },
       {
         "default": "COLLISION_GROUP_NONE",
         "description": "The collision group <page>Enums/COLLISION_GROUP</page>. This determines what the trace should hit in regards to the entity's collision group.",
         "name": "collisiongroup",
-        "type": "number"
+        "type": "number{COLLISION_GROUP}"
       },
       {
         "default": "false",
@@ -3593,7 +3651,7 @@
         "default": "nil",
         "description": "If set, the trace result will be written to the supplied table instead of returning a new table",
         "name": "output",
-        "type": "table"
+        "type": "table{TraceResult}"
       },
       {
         "default": "false",
@@ -3651,7 +3709,7 @@
         "default": "0",
         "description": "<page>Enums/HITGROUP</page> describing what hitgroup the trace hit (not the same as HitBox).",
         "name": "HitGroup",
-        "type": "number"
+        "type": "number{HITGROUP}"
       },
       {
         "default": "false",
@@ -3695,10 +3753,10 @@
         "type": "boolean"
       },
       {
-        "default": "0",
+        "default": "nil",
         "description": "<page>Enums/MAT</page> of the material hit by the trace.",
         "name": "MatType",
-        "type": "number"
+        "type": "number{MAT}"
       },
       {
         "description": "The direction of the trace as a normal vector (vector with <page text=\"length\">Vector:Length</page> of 1).\n\nEquivalent to: `( traceRes.HitPos - traceRes.StartPos ):Normalize()`",
@@ -3738,17 +3796,24 @@
         "default": "0",
         "description": "The surface flags of the hit surface. See <page>Enums/SURF</page>.",
         "name": "SurfaceFlags",
-        "type": "number"
+        "type": "number{SURF}"
       },
       {
         "default": "0",
         "description": "The displacement flags of the hit surface. See <page>Enums/DISPSURF</page>.",
         "name": "DispFlags",
-        "type": "number"
+        "type": "number{DISPSURF}"
       },
       {
+        "default": "0",
         "description": "The contents of the hit surface. See <page>Enums/CONTENTS</page>.",
         "name": "Contents",
+        "type": "number{CONTENTS}"
+      },
+      {
+        "default": "nil",
+        "description": "BoneID on the model that the hit hitbox is attached to, if available.",
+        "name": "HitBoxBone",
         "type": "number"
       }
     ],
@@ -3899,12 +3964,12 @@
       {
         "description": "A table of entities to be removed by the undo",
         "name": "Entities",
-        "type": "table"
+        "type": "table<Entity>"
       },
       {
         "description": "A table of {function_to_call, func_arg2, func_arg3}",
         "name": "Functions",
-        "type": "table"
+        "type": "table<table>"
       },
       {
         "description": "A custom undo text to show the client",
@@ -3938,22 +4003,22 @@
       {
         "description": "A table of <page>Structures/VehicleParamsAxle</page> tables.",
         "name": "axles",
-        "type": "table"
+        "type": "table<table{VehicleParamsAxle}>"
       },
       {
         "description": "See <page>Structures/VehicleParamsBody</page>",
         "name": "body",
-        "type": "table"
+        "type": "table{VehicleParamsBody}"
       },
       {
         "description": "See <page>Structures/VehicleParamsEngine</page>",
         "name": "engine",
-        "type": "table"
+        "type": "table{VehicleParamsEngine}"
       },
       {
         "description": "See <page>Structures/VehicleParamsSteering</page>",
         "name": "steering",
-        "type": "table"
+        "type": "table{VehicleParamsSteering}"
       }
     ],
     "name": "VehicleParams",
@@ -4540,7 +4605,7 @@
         "default": "0",
         "description": "This is identifying which logical part of the scene an entity is being redered in, see <page>Enums/VIEW</page>.",
         "name": "viewid",
-        "type": "number"
+        "type": "number{VIEW}"
       },
       {
         "description": "This allows you to \"zoom in\" on a part of the screen - for example, the top-left quarter of the screen. This is similar to how [poster splits the screen](https://garry.blog/poster-screenshots/) into separate renders.\n\nIt's a table with 4 keys, controlling what portion of the screen to draw:\n* left - where the left edge starts. Natural value is 0.\n* right - where the right edge ends. Natural value is equal to w (the width of the viewport).\n* top - where the `bottom` edge starts. Natural value is 0.\n* bottom - where the `top` edge ends. Natural value is equal to h (the height of the viewport).\n\nNote that top and bottom are reversed.\n\nValues outside the viewport are allowed, but not recommended - instead you should increase the view FOV.",
@@ -4559,7 +4624,7 @@
       {
         "description": "The current view id. See <page>Enums/VIEW</page>.",
         "name": "viewid",
-        "type": "number"
+        "type": "number{VIEW}"
       },
       {
         "description": "The view's origin/position",

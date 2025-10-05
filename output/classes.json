@@ -1,6 +1,6 @@
 [
   {
-    "description": "List of all possible functions to manipulate angles.\n\nCreated by <page>Global.Angle</page>.\n\n| Type                | Name                                 | Description                      |\n| ------------------- | ------------------------------------ | -------------------------------- |\n| <page>number</page> | `p` or `pitch` or `x` or `1` | The pitch component of the angle. |\n| <page>number</page> | `y` or `yaw` or `y` or `2` | The yaw component of the angle. |\n| <page>number</page> | `r` or `roll`  or `z` or `3` | The roll  component of the angle. |\n\nMetamethod | Second Operand | Description\n---------- | -------------- | -----------\n`__add` | <page>Angle</page> | Returns new <page>Angle</page> with the result of addition.\n`__div` | <page>number</page> | Returns new <page>Angle</page> with the result of division.\n`__eq` | <page>any</page> | Compares 2 operands, if they both are <page>Angle</page>, compares each individual component. <br>Doesn't normalize the angles (360 is not equal to 0).\n`__index` | <page>number</page> or <page>string</page> | Gets the component of the <page>Angle</page>. Returns a <page>number</page>.\n`__mul` | <page>number</page> | Returns new <page>Angle</page> with the result of multiplication.\n`__newindex` | <page>number</page> or <page>string</page> | Sets the component of the <page>Angle</page>. Accepts <page>number</page> and <page>string</page>.\n`__sub` | <page>Angle</page> | Returns new <page>Angle</page> with the result of subtraction.\n`__tostring` | | Returns `p y r`.\n`__unm` | | Returns new <page>Angle</page> with the result of negation.",
+    "description": "List of all possible functions to manipulate angles.\n\nCreated by <page>Global.Angle</page>.\n\n| Type                | Name                                 | Description                      |\n| ------------------- | ------------------------------------ | -------------------------------- |\n| <page>number</page> | `p` or `pitch` or `x` or `1` | The pitch component of the angle. |\n| <page>number</page> | `y` or `yaw` or `2` | The yaw component of the angle. |\n| <page>number</page> | `r` or `roll`  or `z` or `3` | The roll  component of the angle. |\n\nMetamethod | Second Operand | Description\n---------- | -------------- | -----------\n`__add` | <page>Angle</page> | Returns new <page>Angle</page> with the result of addition.\n`__div` | <page>number</page> | Returns new <page>Angle</page> with the result of division.\n`__eq` | <page>any</page> | Compares 2 operands, if they both are <page>Angle</page>, compares each individual component. <br>Doesn't normalize the angles (360 is not equal to 0).\n`__index` | <page>number</page> or <page>string</page> | Gets the component of the <page>Angle</page>. Returns a <page>number</page>.\n`__mul` | <page>number</page> | Returns new <page>Angle</page> with the result of multiplication.\n`__newindex` | <page>number</page> or <page>string</page> | Sets the component of the <page>Angle</page>. Accepts <page>number</page> and <page>string</page>.\n`__sub` | <page>Angle</page> | Returns new <page>Angle</page> with the result of subtraction.\n`__tostring` | | Returns `p y r`.\n`__unm` | | Returns new <page>Angle</page> with the result of negation.",
     "functions": [
       {
         "arguments": [
@@ -858,12 +858,12 @@
       {
         "arguments": [
           {
-            "description": "The hit box index of the effect.",
+            "description": "The hit box index of the effect, for example from <page>Structures/TraceResult#HitBox</page>",
             "name": "hitBoxIndex",
             "type": "number"
           }
         ],
-        "description": "Sets the hit box index of the effect.\n\n<note>Internally stored as an integer, but only first 11 bits are networked, effectively limiting this function to 0-2047 range.</note>",
+        "description": "Sets the hit box index of the effect. Used by various effects for various purposes.\n\n<note>Internally stored as an integer, but only first 11 bits are networked, effectively limiting this function to 0-2047 range.</note>",
         "name": "SetHitBox",
         "parent": "CEffectData",
         "realms": [
@@ -1202,12 +1202,12 @@
             "type": "Vector"
           },
           {
-            "description": "If unsure then set this to `1`.",
-            "name": "goalweight",
+            "description": "How influential the movement should be, in case of this function being called multiple times in between physical movements of the entity.\n\nIf unsure then set this to `1`.",
+            "name": "goalWeight",
             "type": "number"
           }
         ],
-        "description": "Sets the location we want to get to.\n\nEach call of <page text=\"Approach\">CLuaLocomotion:Approach</page> moves the <page text=\"NextBot\">NextBot</page> 1 unit towards the specified goal. The size of this unit is determined by <page text=\"SetDesiredSpeed\">CLuaLocomotion:SetDesiredSpeed</page>; the default is `0` (each call of <page text=\"Approach\">CLuaLocomotion:Approach</page> moves the <page text=\"NextBot\">NextBot</page> 0).\n\nTo achieve smooth movement with <page text=\"Approach\">CLuaLocomotion:Approach</page>, it should be called in a hook like <page text=\"Think\">ENTITY:Think</page>, as shown in the example.",
+        "description": "Moves the <page text=\"NextBot\">NextBot</page> incrementally closer to the provided goal location.\n\nEach time this function is called, the NextBot moves towards the goal position passed as an argument by the amount previously set by <page>CLuaLocomotion:SetDesiredSpeed</page>.\n\nTo achieve smooth movement, this function must be called frequently.\nThis is commonly accomplished by calling it in the <page>ENTITY:Think</page> hook.",
         "name": "Approach",
         "parent": "CLuaLocomotion",
         "realms": [
@@ -1347,6 +1347,7 @@
         "returnValues": [
           {
             "description": "The gravity.",
+            "name": "gravity",
             "type": "number"
           }
         ]
@@ -1608,7 +1609,8 @@
       {
         "arguments": [
           {
-            "description": "Speed acceleration (default is 400)",
+            "default": "400",
+            "description": "Speed acceleration",
             "name": "speed",
             "type": "number"
           }
@@ -1653,7 +1655,8 @@
       {
         "arguments": [
           {
-            "description": "Height (default is 200)",
+            "default": "200",
+            "description": "Height",
             "name": "height",
             "type": "number"
           }
@@ -1668,7 +1671,8 @@
       {
         "arguments": [
           {
-            "description": "New deceleration speed (default is 400)",
+            "default": "400",
+            "description": "New deceleration speed.",
             "name": "deceleration",
             "type": "number"
           }
@@ -1683,12 +1687,13 @@
       {
         "arguments": [
           {
+            "default": "0",
             "description": "The new desired speed",
             "name": "speed",
             "type": "number"
           }
         ],
-        "description": "Sets movement speed.",
+        "description": "Sets how far the NextBot will need to move each time <page>CLuaLocomotion:Approach</page> is called to move at given speed.\n\nThe default amount is 0. This means the bot will not move if this value has not been set.",
         "name": "SetDesiredSpeed",
         "parent": "CLuaLocomotion",
         "realms": [
@@ -1698,7 +1703,8 @@
       {
         "arguments": [
           {
-            "description": "New gravity to set. Default is 1000.",
+            "default": "1000",
+            "description": "New gravity to set.",
             "name": "gravity",
             "type": "number"
           }
@@ -1728,7 +1734,8 @@
       {
         "arguments": [
           {
-            "description": "Height (default is 58)",
+            "default": "58",
+            "description": "Height",
             "name": "height",
             "type": "number"
           }
@@ -1743,6 +1750,7 @@
       {
         "arguments": [
           {
+            "default": "250",
             "description": "Desired new maximum yaw rate",
             "name": "yawRate",
             "type": "number"
@@ -1758,7 +1766,8 @@
       {
         "arguments": [
           {
-            "description": "Height (default is 18)",
+            "default": "18",
+            "description": "Height",
             "name": "height",
             "type": "number"
           }
@@ -5363,13 +5372,6 @@
         ]
       },
       {
-        "arguments": [
-          {
-            "description": "The target color to copy.",
-            "name": "target",
-            "type": "Color"
-          }
-        ],
         "description": "Returns a copy of this color, usually so it can be safely modified later without affecting the original color.",
         "name": "Copy",
         "parent": "Color",
@@ -5383,7 +5385,12 @@
             "description": "The copy of the given color, safe to modify.",
             "type": "Color"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/util/color.lua",
+          "lineEnd": 187,
+          "lineStart": 183
+        }
       },
       {
         "description": "Converts a <page>Color</page> into [HWB color space](https://en.wikipedia.org/wiki/HWB_color_model) and returns the \"blackness\" of the color.\n\nSee <page>COLOR:ToHWB</page> if you want to get all 3 components.",
@@ -5400,7 +5407,12 @@
             "name": "blackness",
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/util/color.lua",
+          "lineEnd": 354,
+          "lineStart": 349
+        }
       },
       {
         "description": "Converts a <page>Color</page> into [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) and returns the [brightness also known as \"value\"](https://en.wikipedia.org/wiki/Brightness).\n\nSee <page>COLOR:ToHSV</page> if you want to get all 3 components.",
@@ -5417,7 +5429,12 @@
             "name": "brightness",
             "type": "number"
           }
-        ]
+        ],
+        "source": {
+          "file": "lua/includes/util/color.lua",
+          "lineEnd": 282,
+          "lineStart": 277
+        }
       },
       {
         "description": "Converts a <page>Color</page> into [HSV color space](https://en.wikipedia.org/wiki/HSL_and_HSV) and returns the [hue](https://en.wikipedia.org/wiki/Hue).\n\nSee <page>COLOR:ToHSV</page> if you want to get all 3 components.",
@@ -5659,6 +5676,30 @@
         ]
       },
       {
+        "arguments": [
+          {
+            "default": "false",
+            "description": "Whether to forcibly omit the alpha channel from the output.",
+            "name": "",
+            "type": "boolean"
+          }
+        ],
+        "description": "Converts a <page>Color</page> to its hexadecimal representation.",
+        "name": "ToHex",
+        "parent": "Color",
+        "realms": [
+          "menu",
+          "client",
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "The hexadecimal representation of the color. (`#RRGGBBAA`)\n\nIf the alpha channel is `255`, it will be omitted from the output (`#RRGGBB`)",
+            "type": "string"
+          }
+        ]
+      },
+      {
         "description": "Converts a <page>Color</page> into [HSL color space](https://en.wikipedia.org/wiki/HSL_and_HSV) .\n\nThis calls <page>Global.ColorToHSL</page> internally.",
         "name": "ToHSL",
         "parent": "Color",
@@ -5762,7 +5803,7 @@
         "returnValues": [
           {
             "description": "The table with elements 1 = r, 2 = g, 3 = b, 4 = a,( `{ r, g, b, a }` )",
-            "type": "table"
+            "type": "table<number>"
           }
         ],
         "source": {
@@ -7495,27 +7536,6 @@
   },
   {
     "description": "This is a list of all available methods for all entities, which includes <page text=\"Players\">Player</page>, <page text=\"Weapons\">Weapon</page>, <page text=\"NPCs\">NPC</page> and <page text=\"Vehicles\">Vehicle</page>.\n\nFor a list of possible members of <page>Scripted Entities</page> see <page text=\"ENT Structure\">Structures/ENT</page>",
-    "fields": [
-      {
-        "description": "If set, the entity will not be duplicated via the built-in duplicator system.",
-        "name": "DoNotDuplicate",
-        "parent": "Entity",
-        "realms": [
-          "server"
-        ],
-        "type": "boolean"
-      },
-      {
-        "description": "A bool which determines if the Physgun can pickup this entity.",
-        "name": "PhysgunDisabled",
-        "parent": "Entity",
-        "realms": [
-          "client",
-          "server"
-        ],
-        "type": "boolean"
-      }
-    ],
     "functions": [
       {
         "description": "Activates the entity. This needs to be used on some entities (like constraints) after being spawned.\n\n<note>For some entity types when this function is used after <page>Entity:SetModelScale</page>, the physics object will be recreated with the new scale. [Source-sdk-2013](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp/src/game/server/baseanimating.cpp#L321-L327).\n\nCalling this method after <page>Entity:SetModelScale</page> will recreate a new scaled `SOLID_VPHYSICS` <page>PhysObj</page> on scripted entities. This can be a problem if you made a properly scaled <page>PhysObj</page> of another kind (using <page>Entity:PhysicsInitSphere</page> for instance) or if you edited the <page>PhysObj</page>'s properties. This is especially the behavior of the Sandbox spawn menu.</note>",
@@ -7610,7 +7630,7 @@
           },
           {
             "default": "true",
-            "description": "",
+            "description": "Automatically remove the gesture when it fully plays (<page>Entity:GetLayerCycle</page> reaches 1).",
             "name": "autokill",
             "type": "boolean"
           }
@@ -7623,7 +7643,7 @@
         ],
         "returnValues": [
           {
-            "description": "Layer ID of the started gesture, used to manipulate the played gesture by other functions.",
+            "description": "Layer ID of the started gesture, used to manipulate the played gesture by other functions.\n<note>If a layer has already been allocated for supplied <page>Enums/ACT</page>, it will return existing layer ID instead of allocating a new layer. </note>",
             "type": "number"
           }
         ]
@@ -7637,7 +7657,7 @@
           },
           {
             "default": "true",
-            "description": "",
+            "description": "Automatically remove the gesture when it fully plays (<page>Entity:GetLayerCycle</page> reaches 1).",
             "name": "autokill",
             "type": "boolean"
           }
@@ -7785,7 +7805,7 @@
         ],
         "returnValues": [
           {
-            "description": "The created ragdoll. (class C_ClientRagdoll])",
+            "description": "The created ragdoll. (`class C_ClientRagdoll`)",
             "type": "Entity"
           }
         ]
@@ -7964,7 +7984,7 @@
             "type": "vararg"
           }
         ],
-        "description": "Causes a specified function to be run if the entity is removed by any means. This can later be undone by <page>Entity:RemoveCallOnRemove</page> if you need it to not run.\n\n<warning>This hook is called clientside during full updates. See <page>GM:EntityRemoved</page> for more information.</warning>\n<warning>An error being thrown inside `removeFunc` is likely break <page>player.Iterator</page> and <page>ents.Iterator</page> functions. </warning>",
+        "description": "Causes a specified function to be run if the entity is removed by any means. This can later be undone by <page>Entity:RemoveCallOnRemove</page> if you need it to not run.\n\n<warning>This hook is called clientside during full updates. See <page>GM:EntityRemoved</page> for more information.</warning>\n<warning>An error being thrown inside `removeFunc` will stop other `EntityRemoved` hooks from executing. </warning>",
         "name": "CallOnRemove",
         "parent": "Entity",
         "realms": [
@@ -8318,7 +8338,7 @@
             "type": "number"
           },
           {
-            "default": "0",
+            "default": "1",
             "description": "The DSP preset for this sound. [List of DSP presets](https://developer.valvesoftware.com/wiki/Dsp_presets)",
             "name": "dsp",
             "type": "number"
@@ -8453,6 +8473,50 @@
         "returnValues": [
           {
             "description": "The <page text=\"Body Group's ID\">Structures/BodyGroupData#id</page> or `-1` if no Body Group has the provided name.",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The activity to search for.",
+            "name": "activity",
+            "type": "number{ACT}"
+          }
+        ],
+        "description": "Searches the currently active layers for a layer playing animation with given activity.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "name": "FindGestureLayer",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "A layer ID for given activity, or `-1` if not found.",
+            "name": "layerID",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The sequence ID to search for. See <page>Entity:LookupSequence</page>.",
+            "name": "sequenceID",
+            "type": "number"
+          }
+        ],
+        "description": "Searches the currently active layers for a layer playing animation with given sequence.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "name": "FindGestureLayer",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "A layer ID for given activity, or `-1` if not found.",
+            "name": "layerID",
             "type": "number"
           }
         ]
@@ -8883,7 +8947,7 @@
         ],
         "returnValues": [
           {
-            "description": "The amount of bones in given entity.",
+            "description": "The amount of bones in given entity, starting at index 0.",
             "type": "number"
           }
         ]
@@ -9142,7 +9206,7 @@
         ]
       },
       {
-        "description": "Returns an entity's collision bounding box. In most cases, this will return the same bounding box as <page>Entity:GetModelBounds</page> unless the entity does not have a physics mesh or it has a <page>PhysObj</page> different from the default.\n\n<bug issue=\"223\">This can be out-of-sync between the client and server for weapons.</bug>",
+        "description": "Returns an entity's collision bounding box.\n\nIn most cases, this will return the same bounding box as <page>Entity:GetModelBounds</page> unless the entity does not have a physics mesh or it has a <page>PhysObj</page> different from the default.\n\nCollision bounds can be previewed in singleplayer via `ent_bbox` console command, while looking at a desired entity and with `developer 1`. (Will appear as an orange wireframe box)",
         "name": "GetCollisionBounds",
         "parent": "Entity",
         "realms": [
@@ -9151,11 +9215,11 @@
         ],
         "returnValues": [
           {
-            "description": "The minimum vector of the collision bounds",
+            "description": "The minimum vector of the collision bounds, basically <page>Entity:OBBMins</page>.",
             "type": "Vector"
           },
           {
-            "description": "The maximum vector of the collision bounds",
+            "description": "The maximum vector of the collision bounds, basically <page>Entity:OBBMaxs</page>.",
             "type": "Vector"
           }
         ]
@@ -9303,8 +9367,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/entity.lua",
-          "lineEnd": 71,
-          "lineStart": 69
+          "lineEnd": 83,
+          "lineStart": 81
         }
       },
       {
@@ -12322,7 +12386,7 @@
         ],
         "returnValues": [
           {
-            "description": "Name of the sequence, or `\"Unknown\"` if it was out of bounds.",
+            "description": "Name of the sequence, `\"Unknown\"` if it was out of bounds or `\"Not Found!\"` if -1 is provided.",
             "type": "string"
           }
         ]
@@ -12874,8 +12938,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/entity.lua",
-          "lineEnd": 565,
-          "lineStart": 218
+          "lineEnd": 590,
+          "lineStart": 217
         }
       },
       {
@@ -13199,7 +13263,7 @@
         ]
       },
       {
-        "description": "Checks if the entity is a ragdoll.",
+        "description": "Checks if the entity is a ragdoll, or became a ragdoll. Internally checks whether [kRenderFXRagdoll](kRenderFX) is set.",
         "name": "IsRagdoll",
         "parent": "Entity",
         "realms": [
@@ -13472,12 +13536,12 @@
       {
         "arguments": [
           {
-            "description": "Sequence name",
+            "description": "Sequence name. Input string can alternatively be an activity name, to lookup an activity from its name and get a sequence as result.",
             "name": "name",
             "type": "string"
           }
         ],
-        "description": "Returns sequence ID from its name. See <page>Entity:GetSequenceName</page> for a function that does the opposite.",
+        "description": "Returns sequence ID from either sequence name or activity name. See <page>Entity:GetSequenceName</page> for a function that does the opposite.\n\n**Sequences** are animations tied to a specific model. Different models can have sequences with same names, but have different IDs.\nSequences can also be tied to certain activities (<page>Enums/ACT</page>), see <page>Entity:SelectWeightedSequence</page>.",
         "name": "LookupSequence",
         "parent": "Entity",
         "realms": [
@@ -13486,11 +13550,11 @@
         ],
         "returnValues": [
           {
-            "description": "Sequence ID for that name. This **will** differ for models with same sequence names. Will be -1 when the sequence is invalid.",
+            "description": "Sequence ID for that name. This **will** differ for models with same sequence names. Will be `-1` when the sequence is invalid or not found.",
             "type": "number"
           },
           {
-            "description": "The sequence duration\n* 0 if the sequence is invalid",
+            "description": "The sequence duration, or `0` if the sequence is invalid or there's no sequence with given name on entity's current model.",
             "type": "number"
           }
         ]
@@ -13606,7 +13670,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Sets custom bone scale.\n<bug issue=\"3502\">This does not scale procedural bones.</bug>",
+        "description": "Sets custom bone scale.\n<bug issue=\"3502\">This does not scale procedural bones.</bug>\n<note>This silently fails when given a Vector with nan values, hiding the vertices associated with the bone. See example below.</note>",
         "name": "ManipulateBoneScale",
         "parent": "Entity",
         "realms": [
@@ -13829,7 +13893,7 @@
         ]
       },
       {
-        "description": "Returns the center of an entity's bounding box in local space.",
+        "description": "Returns the center of an entity's collision bounding box as a local vector.\n\nSee also <page>Entity:GetCollisionBounds</page>, <page>Entity:OBBMins</page> and <page>Entity:OBBMaxs</page>.",
         "name": "OBBCenter",
         "parent": "Entity",
         "realms": [
@@ -13844,7 +13908,7 @@
         ]
       },
       {
-        "description": "Returns the highest corner of an entity's bounding box as a local vector.",
+        "description": "Returns the highest corner of an entity's collision bounding box as a local vector.\n\nSee also <page>Entity:GetCollisionBounds</page>, <page>Entity:OBBMins</page> and <page>Entity:OBBCenter</page>.",
         "name": "OBBMaxs",
         "parent": "Entity",
         "realms": [
@@ -13859,7 +13923,7 @@
         ]
       },
       {
-        "description": "Returns the lowest corner of an entity's bounding box as a local vector.",
+        "description": "Returns the lowest corner of an entity's collision bounding box as a local vector.\n\nSee also <page>Entity:GetCollisionBounds</page>, <page>Entity:OBBMaxs</page> and <page>Entity:OBBCenter</page>.",
         "name": "OBBMins",
         "parent": "Entity",
         "realms": [
@@ -14007,7 +14071,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Initializes the <page text=\"physics object\">Entity:GetPhysicsObject</page> of the entity using its current <page text=\"model\">Entity:GetModel</page>. Deletes the previous physics object if it existed and the new object creation was successful.\n\nIf the entity's current model has no physics mesh associated to it, no physics object will be created and the previous object will still exist, if applicable.\n\n<note>When called clientside, this will not create a valid <page>PhysObj</page> if the model hasn't been <page text=\"precached\">util.PrecacheModel</page> serverside.\n\nIf successful, this function will automatically call <page>Entity:SetSolid</page>( solidType ) and <page>Entity:SetSolidFlags</page>( 0 ).</note>\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
+        "description": "Initializes the <page text=\"physics object\">Entity:GetPhysicsObject</page> of the entity using its current <page text=\"model\">Entity:GetModel</page>. Deletes the previous physics object if it existed and the new object creation was successful.\n\nIf the entity's current model has no physics mesh associated to it, no physics object will be created and the previous object will still exist, if applicable.\n\n<note>When called clientside, this will not create a valid <page>PhysObj</page> if the model hasn't been <page text=\"precached\">util.PrecacheModel</page> serverside.\n\nIf successful, this function will automatically call <page>Entity:SetSolid</page>( solidType ) and <page>Entity:SetSolidFlags</page>( 0 ).</note>\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
         "name": "PhysicsInit",
         "parent": "Entity",
         "realms": [
@@ -14046,7 +14110,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Makes the physics object of the entity a AABB.\n\nThis function will automatically destroy any previous physics objects and do the following:\n* <page>Entity:SetSolid</page>( `SOLID_BBOX` )\n* <page>Entity:SetMoveType</page>( `MOVETYPE_VPHYSICS` )\n* <page>Entity:SetCollisionBounds</page>( `mins`, `maxs` )\n\n<note>If the volume of the resulting box is 0 (the mins and maxs are the same), the mins and maxs will be changed to <page>Global.Vector</page>( -1, -1, -1 ) and <page>Global.Vector</page>( 1, 1, 1 ), respectively.</note>\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
+        "description": "Makes the physics object of the entity a AABB.\n\nThis function will automatically destroy any previous physics objects and do the following:\n* <page>Entity:SetSolid</page>( `SOLID_BBOX` )\n* <page>Entity:SetMoveType</page>( `MOVETYPE_VPHYSICS` )\n* <page>Entity:SetCollisionBounds</page>( `mins`, `maxs` )\n\n<note>If the volume of the resulting box is 0 (the mins and maxs are the same), the mins and maxs will be changed to <page>Global.Vector</page>( -1, -1, -1 ) and <page>Global.Vector</page>( 1, 1, 1 ), respectively.</note>\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
         "name": "PhysicsInitBox",
         "parent": "Entity",
         "realms": [
@@ -14080,7 +14144,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Initializes the physics mesh of the entity with a convex mesh defined by a table of points. The resulting mesh is the  of all the input points. If successful, the previous physics object will be removed.\n\nThis is the standard way of creating moving physics objects with a custom convex shape. For more complex, concave shapes, see <page>Entity:PhysicsInitMultiConvex</page>.\n\n<bug issue=\"3301\">This will crash if given all <page>Global.Vector</page>(0,0,0)s.</bug>\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nYou can use the following workaround for movement, though clientside collisions will still be broken.\n```\nfunction ENT:Think()\nif ( CLIENT ) then\nlocal physobj = self:GetPhysicsObject()\n\nif ( IsValid( physobj ) ) then\nphysobj:SetPos( self:GetPos() )\nphysobj:SetAngles( self:GetAngles() )\nend\nend\nend\n```\n</bug>",
+        "description": "Initializes the physics mesh of the entity with a convex mesh defined by a table of points. The resulting mesh is the  of all the input points. If successful, the previous physics object will be removed.\n\nThis is the standard way of creating moving physics objects with a custom convex shape. For more complex, concave shapes, see <page>Entity:PhysicsInitMultiConvex</page>.\n\nYou may be expected to call <page>Entity:SetSolid</page> with desired solid type **before** calling this function.\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nYou can use the following workaround for movement, though clientside collisions will still be broken.\n```\nfunction ENT:Think()\nif ( CLIENT ) then\nlocal physobj = self:GetPhysicsObject()\n\nif ( IsValid( physobj ) ) then\nphysobj:SetPos( self:GetPos() )\nphysobj:SetAngles( self:GetAngles() )\nend\nend\nend\n```\n</bug>",
         "name": "PhysicsInitConvex",
         "parent": "Entity",
         "realms": [
@@ -14114,7 +14178,7 @@
             "type": "Vector"
           }
         ],
-        "description": "An advanced version of <page>Entity:PhysicsInitConvex</page> which initializes a physics object from multiple convex meshes. This should be used for physics objects with a custom shape which cannot be represented by a single convex mesh.\n\nIf successful, the previous physics object will be removed.\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
+        "description": "An advanced version of <page>Entity:PhysicsInitConvex</page> which initializes a physics object from multiple convex meshes. This should be used for physics objects with a custom shape which cannot be represented by a single convex mesh.\n\nIf successful, the previous physics object will be removed.\n\nYou may be expected to call <page>Entity:SetSolid</page> with desired solid type **before** calling this function.\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
         "name": "PhysicsInitMultiConvex",
         "parent": "Entity",
         "realms": [
@@ -14143,7 +14207,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Initializes the entity's physics object as a physics shadow. Removes the previous physics object if successful. This is used internally for the Player's and NPC's physics object, and certain HL2 entities such as the crane.\n\nA physics shadow can be used to have static entities that never move by setting both arguments to false.\n\nThe created physics object will depend on the entity's solidity `SOLID_NONE` will not create a physics object, `SOLID_BBOX` will create a Axis-Aligned BBox one, `SOLID_OBB` will create Orientated Bounding Box one, and anything else will use the models' physics mesh.\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
+        "description": "Initializes the entity's physics object as a physics shadow. Removes the previous physics object if successful. This is used internally for the Player's and NPC's physics object, and certain HL2 entities such as the crane.\n\nA physics shadow can be used to have static entities that never move by setting both arguments to false.\n\nThe created physics object will depend on the entity's solidity `SOLID_NONE` will not create a physics object, `SOLID_BBOX` will create a Axis-Aligned BBox one, `SOLID_OBB` will create Orientated Bounding Box one, and anything else will use the models' physics mesh.\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
         "name": "PhysicsInitShadow",
         "parent": "Entity",
         "realms": [
@@ -14171,7 +14235,7 @@
             "type": "string"
           }
         ],
-        "description": "Makes the physics object of the entity a sphere.\n\nThis function will automatically destroy any previous physics objects and do the following:\n* <page>Entity:SetSolid</page>( `SOLID_BBOX` )\n* <page>Entity:SetMoveType</page>( `MOVETYPE_VPHYSICS` )\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
+        "description": "Makes the physics object of the entity a sphere.\n\nThis function will automatically destroy any previous physics objects and do the following:\n* <page>Entity:SetSolid</page>( `SOLID_BBOX` )\n* <page>Entity:SetMoveType</page>( `MOVETYPE_VPHYSICS` )\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
         "name": "PhysicsInitSphere",
         "parent": "Entity",
         "realms": [
@@ -14193,7 +14257,7 @@
             "type": "number"
           }
         ],
-        "description": "Initializes a static physics object of the entity using its <page text=\"current model\">Entity:GetModel</page>. If successful, the previous physics object is removed.\n\nThis is what used by entities such as `func_breakable`, `prop_dynamic`, `item_suitcharger`, `prop_thumper` and `npc_rollermine` while it is in its \"buried\" state in the Half-Life 2 Campaign.\n\nIf the entity's current model has no physics mesh associated to it, no physics object will be created.\n\n<note>This function will automatically call <page>Entity:SetSolid</page>( `solidType` ).</note>\n\n<bug issue=\"5060\">Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
+        "description": "Initializes a static physics object of the entity using its <page text=\"current model\">Entity:GetModel</page>. If successful, the previous physics object is removed.\n\nThis is what used by entities such as `func_breakable`, `prop_dynamic`, `item_suitcharger`, `prop_thumper` and `npc_rollermine` while it is in its \"buried\" state in the Half-Life 2 Campaign.\n\nIf the entity's current model has no physics mesh associated to it, no physics object will be created.\n\n<note>This function will automatically call <page>Entity:SetSolid</page>( `solidType` ).</note>\n\n<bug issue=\"5060\">Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.\n\nA workaround is available on the <page>Entity:PhysicsInitConvex</page> page.</bug>",
         "name": "PhysicsInitStatic",
         "parent": "Entity",
         "realms": [
@@ -14217,8 +14281,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/entity.lua",
-          "lineEnd": 163,
-          "lineStart": 156
+          "lineEnd": 175,
+          "lineStart": 168
         }
       },
       {
@@ -14325,7 +14389,7 @@
         ]
       },
       {
-        "description": "Removes and stops all gestures.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "description": "Removes and stops all gestures.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>\n<note>Layer removal procedures aren't immediate. Layer removal functions actually manipulate <page>Entity:GetLayerWeight</page> down to 0, then remove the layer in next intervals. If the targeted layer's weight keeps changing, your layer will not be removed.</note>",
         "name": "RemoveAllGestures",
         "parent": "Entity",
         "realms": [
@@ -14446,7 +14510,7 @@
             "type": "number"
           }
         ],
-        "description": "Removes and stops the gesture with given activity.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "description": "Removes and stops the gesture with given activity. Same as <page>Entity:RemoveLayer</page> with <page>Entity:FindGestureLayer</page>.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>\n<note>Layer removal procedures aren't immediate. Layer removal functions actually manipulate <page>Entity:GetLayerWeight</page> down to 0, then remove the layer in next intervals. If the targeted layer's weight keeps changing, your layer will not be removed.</note>",
         "name": "RemoveGesture",
         "parent": "Entity",
         "realms": [
@@ -14464,6 +14528,21 @@
         ],
         "description": "Breaks internal Ragdoll constrains, so you can for example separate an arm from the body of a ragdoll and preserve all physics.\n\nThe visual mesh will still stretch as if it was properly connected unless the ragdoll model is specifically designed to avoid that.",
         "name": "RemoveInternalConstraint",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The layer ID to remove.",
+            "name": "layerID",
+            "type": "number"
+          }
+        ],
+        "description": "Removes the given layer by ID. See also <page>Entity:RemoveGesture</page>.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>\n<note>Layer removal procedures aren't immediate. Layer removal functions actually manipulate <page>Entity:GetLayerWeight</page> down to 0, then remove the layer in next intervals. If the targeted layer's weight keeps changing, your layer will not be removed.</note>",
+        "name": "RemoveLayer",
         "parent": "Entity",
         "realms": [
           "server"
@@ -14587,10 +14666,10 @@
           {
             "description": "The activity ID, see <page>Enums/ACT</page>.",
             "name": "act",
-            "type": "number"
+            "type": "number{ACT}"
           }
         ],
-        "description": "Returns sequence ID corresponding to given activity ID.\n\nOpposite of <page>Entity:GetSequenceActivity</page>.\n\nSimilar to <page>Entity:LookupSequence</page>.\n\nSee also <page>Entity:SelectWeightedSequenceSeeded</page>.",
+        "description": "Returns sequence ID corresponding to given activity ID.\n\nMultiple sequences can be assigned to a single <page>Enums/ACT</page>, in which case a random one will be selected. This can be used for example to randomize idle animations (and is used for that by built-in weapons) without the need to code logic for this.\nSee also <page>Entity:SelectWeightedSequenceSeeded</page>.\n\nOpposite of <page>Entity:GetSequenceActivity</page>.\n\nSimilar to <page>Entity:LookupSequence</page>.",
         "name": "SelectWeightedSequence",
         "parent": "Entity",
         "realms": [
@@ -14639,7 +14718,7 @@
             "type": "number"
           }
         ],
-        "description": "Sends sequence animation to the view model. It is recommended to use this for view model animations, instead of <page>Entity:ResetSequence</page>.\n\nThis function is only usable on view models.",
+        "description": "Sends sequence animation to the view model. It is recommended to use this for view model animations, instead of <page>Entity:ResetSequence</page>.\n\nThis function is only usable on view models.\n\n<note>Predicted viewmodels will have their sequence and cycle reset during prediction checks, making this function appear to do nothing unless also called on the server.</note>",
         "name": "SendViewModelMatchingSequence",
         "parent": "Entity",
         "realms": [
@@ -14782,7 +14861,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the currently active <page text=\"Sub Model ID\">Structures/BodyGroupData#submodels</page> for the Body Group corresponding to the given <page text=\"Body Group ID\">Structures/BodyGroupData#id</page> of the <page text=\"Entity's\">Entity</page> model.\n<note>\nWhen used on a Weapon, this will modify its viewmodel.\n</note>",
+        "description": "Sets the currently active <page text=\"Sub Model ID\">Structures/BodyGroupData#submodels</page> for the Body Group corresponding to the given <page text=\"Body Group ID\">Structures/BodyGroupData#id</page> of the <page text=\"Entity's\">Entity</page> model.\n\nBodygroups, for which <page>Entity:GetBodygroupCount</page> returns `1` or less are considered invalid, and will have no effect in-game.\n<note>When used on a Weapon, this will modify its viewmodel.</note>",
         "name": "SetBodygroup",
         "parent": "Entity",
         "realms": [
@@ -14840,7 +14919,7 @@
             "type": "VMatrix"
           }
         ],
-        "description": "Sets the bone matrix of given bone to given matrix. See also <page>Entity:GetBoneMatrix</page>. Will cause a uncatchable error when used on `__INVALIDBONE__` bones. Can be caught with `if ent:GetBoneName(boneid) == \"__INVALIDBONE__\" then`\n\n<note>Despite existing serverside, it does nothing.</note>",
+        "description": "Sets the bone matrix of given bone to given matrix. See also <page>Entity:GetBoneMatrix</page>. Will cause a uncatchable error when used on `__INVALIDBONE__` bones, see the examples on a way to prevent this.\n\n<note>Despite existing serverside, it does nothing.</note>",
         "name": "SetBoneMatrix",
         "parent": "Entity",
         "realms": [
@@ -15367,7 +15446,8 @@
         "name": "SetIK",
         "parent": "Entity",
         "realms": [
-          "client"
+          "client",
+          "server"
         ]
       },
       {
@@ -15409,17 +15489,37 @@
       {
         "arguments": [
           {
+            "description": "The layer ID to change.",
+            "name": "layerID",
+            "type": "number"
+          },
+          {
+            "description": "Whether to set or unset the autokill flag.",
+            "name": "autoKill",
+            "type": "boolean"
+          }
+        ],
+        "description": "Sets the autokill flag on the layer, making the layer be automatically removed once the animation playback finishes.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "name": "SetLayerAutokill",
+        "parent": "Entity",
+        "realms": [
+          "server"
+        ]
+      },
+      {
+        "arguments": [
+          {
             "description": "The Layer ID",
             "name": "layerID",
             "type": "number"
           },
           {
-            "description": "",
+            "description": "Blend range from 0 to 1.",
             "name": "blendIn",
             "type": "number"
           }
         ],
-        "description": "<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "description": "Sets the interval the layer will fully blend in since startup, based on <page>Entity:GetLayerCycle</page>. Setting this above 0 will enable internal blending of <page>Entity:GetLayerWeight</page>.\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>\n<bug> Enabling this will prevent looping gestures with autokill disabled to be removed with <page>Entity:RemoveGesture</page> or <page>Entity:RemoveAllGestures</page> because layer removal functions mark the layer to decrement <page>Entity:GetLayerWeight</page> and unallocate layer ID in next frames if the layer weight is `0`, but blending functions will still keep manipulating layer weight.\n\nTherefore; before calling layer cleanup functions, make sure both <page>Entity:SetLayerBlendIn</page> and <page>Entity:SetLayerBlendOut</page> are set to `0`. </bug>",
         "name": "SetLayerBlendIn",
         "parent": "Entity",
         "realms": [
@@ -15435,12 +15535,12 @@
             "type": "number"
           },
           {
-            "description": "",
+            "description": "Blend range from 0 to 1.",
             "name": "blendOut",
             "type": "number"
           }
         ],
-        "description": "<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>",
+        "description": "Sets the interval the layer will fully blend out, based on <page>Entity:GetLayerCycle</page>. Setting this above 0 will enable internal blending of <page>Entity:GetLayerWeight</page>.\n<note>This function only works on <page>BaseAnimatingOverlay</page> entites!</note>\n<bug> Enabling this will prevent looping gestures with autokill disabled to be removed with <page>Entity:RemoveGesture</page> or <page>Entity:RemoveAllGestures</page> because layer removal functions mark the layer to decrement <page>Entity:GetLayerWeight</page> and unallocate layer ID in next frames if the layer weight is `0`, but blending functions will still keep manipulating layer weight.\n\nTherefore; before calling layer cleanup functions, make sure both <page>Entity:SetLayerBlendIn</page> and <page>Entity:SetLayerBlendOut</page> are set to `0`. </bug>",
         "name": "SetLayerBlendOut",
         "parent": "Entity",
         "realms": [
@@ -15482,7 +15582,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the duration of given layer. This internally overrides the <page>Entity:SetLayerPlaybackRate</page>.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entities.</note>",
+        "description": "Sets the duration of given layer. This internally overrides the <page>Entity:SetLayerPlaybackRate</page>.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entities.</note>\n<bug>This stops layer playback if layer sequence conists of 1 frame. Use `Entity:SetLayerPlaybackRate(layerID,1/duration)` instead.</bug>",
         "name": "SetLayerDuration",
         "parent": "Entity",
         "realms": [
@@ -15585,7 +15685,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the layer weight. This influences how strongly the animation should be overriding the normal animations of the entity.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entities.</note>",
+        "description": "Sets the layer weight. This influences how strongly the animation should be overriding the normal animations of the entity.\n\n<note>This function only works on <page>BaseAnimatingOverlay</page> entities.</note>\n<note>Setting either <page>Entity:SetLayerBlendIn</page> or <page>Entity:SetLayerBlendOut</page> above 0 will turn on automatic weight blending, so you shouldn't be using this if you use any of above. </note>",
         "name": "SetLayerWeight",
         "parent": "Entity",
         "realms": [
@@ -15663,7 +15763,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Sets local position relative to the parented position. This is for use with <page>Entity:SetParent</page> to offset position.",
+        "description": "Sets local position relative to the parented position. This is for use with <page>Entity:SetParent</page> to offset position.\n\nThis is also used by NPCs for interpolated movement. If you use <page>Entity:SetPos</page> for step movement, your NPC will snap to position instead.",
         "name": "SetLocalPos",
         "parent": "Entity",
         "realms": [
@@ -17570,7 +17670,7 @@
         ]
       },
       {
-        "description": "Returns the amount of skins the entity has.",
+        "description": "Returns the amount of skins the entity has. To retrieve the total number of skins on a model, please look at this function <page>util.GetModelInfo</page>",
         "name": "SkinCount",
         "parent": "Entity",
         "realms": [
@@ -18329,7 +18429,7 @@
         ]
       },
       {
-        "description": "Returns the contents of the file from the current position up until the end of the current line.\n\n<note>This function will look specifically for `Line Feed` characters `\\n` and will **completely ignore `Carriage Return` characters** `\\r`.</note>\n<note>This function will not return more than 8192 characters. The return value will include the `\\n` character.</note>",
+        "description": "Returns the contents of the file from the current position up until the end of the current line.\n\n<note>This function will look specifically for `Line Feed` characters `\\n` and will **completely ignore `Carriage Return` characters** `\\r`.\n\nIt will also stop at a `\\0` or `NULL` character, but will add a new line instead.\n\nThis function will not return more than 8192 characters. The return value will include the `\\n` character.</note>",
         "name": "ReadLine",
         "parent": "File",
         "realms": [
@@ -18927,7 +19027,7 @@
         ]
       },
       {
-        "description": "Retrieves HTTP headers from a bass stream channel created by <page>sound.PlayURL</page>, if available.",
+        "description": "Retrieves HTTP headers from a bass stream channel created by <page>sound.PlayURL</page>, if available.\n\nOf special interest here are headers such as `icy-name`, `icy-br`, `ice-audio-info`, `icy-genre`.",
         "name": "GetTagsHTTP",
         "parent": "IGModAudioChannel",
         "realms": [
@@ -18935,9 +19035,9 @@
         ],
         "returnValues": [
           {
-            "description": "Returns a table of HTTP headers.<br>Returns nil if no information is available.",
+            "description": "A list of HTTP headers or `nil` if no information is available.\n\nExample output:\n```\n... other headers\n[7]\t=\tice-audio-info: channels=2;samplerate=44100;bitrate=128\n[8]\t=\ticy-genre: lounge\n[9]\t=\ticy-name: RTFM Lounge\n... other headers\n```",
             "name": "info",
-            "type": "table"
+            "type": "table<string>"
           }
         ]
       },
@@ -18950,14 +19050,14 @@
         ],
         "returnValues": [
           {
-            "description": "Returns a table containing the information.\nReturns nil if no information is available.",
+            "description": "A table containing the information, or `nil` if no information is available.\n\nThe table will always have the following keys, filled out based on what is available:\n`album`, `artist`, `comment`, `genre`, `id`, `title`, `year`",
             "name": "info",
             "type": "table"
           }
         ]
       },
       {
-        "description": "Retrieves meta stream info from a bass stream channel created by <page>sound.PlayURL</page>, if available.",
+        "description": "Retrieves ICY metadata from a bass stream channel created by <page>sound.PlayURL</page>, if available.",
         "name": "GetTagsMeta",
         "parent": "IGModAudioChannel",
         "realms": [
@@ -18965,7 +19065,7 @@
         ],
         "returnValues": [
           {
-            "description": "Returns a string containing the information.\nReturns nil if no information is available.",
+            "description": "The meta information, or `nil` if no information is available.\n\nExample output: `StreamTitle='MUSIC NAME HERE';`",
             "name": "info",
             "type": "string"
           }
@@ -18980,9 +19080,9 @@
         ],
         "returnValues": [
           {
-            "description": "Returns a table containing the information.\nReturns nil if no information is available.",
+            "description": "A list of available information in no particular order, or `nil` if no information is available.\n\nExample output:\n```\n[0]\t=\tAuthor=MY AUTHIOR\n[1]\t=\tTitle=MY TITLE\n... other data if available\n```",
             "name": "info",
-            "type": "table"
+            "type": "table<string>"
           }
         ]
       },
@@ -18995,7 +19095,7 @@
         ],
         "returnValues": [
           {
-            "description": "Returns a string containing the information.\nReturns nil if no information is available.",
+            "description": "The OGG vendor tag, or `nil` if no information is available.",
             "name": "info",
             "type": "string"
           }
@@ -19274,7 +19374,7 @@
     "name": "IGModAudioChannel"
   },
   {
-    "description": "A Material object. It represents a game material, similarly to how a .vmt file does.\n\nIt can be created with <page>Global.Material</page> or <page>Global.CreateMaterial</page>.",
+    "description": "A Material object. It represents a game material, similarly to how a `.vmt` file does, which are in fact loaded into an **IMaterial** object.\n\nIn most cases the game works with materials as far as file paths go. Materials then point to different <page>ITexture</page>s (`.vtf` files) they might be using.\nThey are not the same and cannot be interchanged.\n\nA material object can be created with <page>Global.Material</page> or <page>Global.CreateMaterial</page>.",
     "functions": [
       {
         "arguments": [
@@ -20158,7 +20258,7 @@
     "name": "ISave"
   },
   {
-    "description": "An object representing game texture, like a .vtf file. Do not confuse with <page>IMaterial</page>. Returned by <page>IMaterial:GetTexture</page>",
+    "description": "An object representing game texture, such as those loaded from a `.vtf` file.\n\nDo not confuse with <page>IMaterial</page>. Materials use textures. Game uses materials.\n\nReturned by <page>IMaterial:GetTexture</page>",
     "functions": [
       {
         "description": "Invokes the generator of the texture. Reloads file based textures from disk and clears render target textures.",
@@ -20340,7 +20440,7 @@
             "type": "number"
           },
           {
-            "description": "If true it will downsample the whole screenspace to the videos width and height, otherwise it will just record from the top left corner to the given width and height and therefor not the whole screen.",
+            "description": "If true it will downsample the whole screenspace to the videos width and height, otherwise it will just record from the top left corner to the given width and height and therefore not the whole screen.",
             "name": "downsample",
             "type": "boolean"
           }
@@ -20803,7 +20903,7 @@
         ],
         "source": {
           "file": "gamemodes/base/entities/entities/base_nextbot/sv_nextbot.lua",
-          "lineStart": 281
+          "lineStart": 299
         }
       },
       {
@@ -20885,7 +20985,7 @@
             "type": "number"
           }
         ],
-        "description": "Start doing an activity (animation)",
+        "description": "Start doing an activity (animation).\n\nThis function may not produce the desired result if <page>Entity:SetModel</page> has not yet been called on the nextbot entity",
         "name": "StartActivity",
         "parent": "NextBot",
         "realms": [
@@ -20940,7 +21040,7 @@
         ]
       },
       {
-        "description": "Advances the NPC on its path to the next waypoint.",
+        "description": "Advances the NPC on its path to the next waypoint.\n<warning>Calling this on an NPC without any route will result in an instant crash.</warning>",
         "name": "AdvancePath",
         "parent": "NPC",
         "realms": [
@@ -20985,6 +21085,27 @@
       {
         "arguments": [
           {
+            "description": "Damage info passed from an onkilled event",
+            "name": "info",
+            "type": "CTakeDamageInfo"
+          }
+        ],
+        "description": "Become a ragdoll and remove the entity. Internally handles serverside/clientside ragdoll creation, momentum calculation, triggering ragdoll creation hooks / events and cloning entity's bone transforms to the created ragdoll.",
+        "name": "BecomeRagdoll",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "The created serverside ragdoll, nil if failed or a clientside ragdoll created.",
+            "type": "Entity"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
             "description": "Capabilities to add, see <page>Enums/CAP</page>.",
             "name": "capabilities",
             "type": "number{CAP}"
@@ -21017,6 +21138,21 @@
             "description": "The capabilities as a bitflag.\nSee <page>Enums/CAP</page>",
             "type": "number{CAP}"
           }
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "Capabilities to check, see <page>Enums/CAP</page>.",
+            "name": "capabilities",
+            "type": "number{CAP}"
+          }
+        ],
+        "description": "Checks whether the NPC has the specified capabilities.",
+        "name": "CapabilitiesHas",
+        "parent": "NPC",
+        "realms": [
+          "server"
         ]
       },
       {
@@ -21114,12 +21250,33 @@
       {
         "arguments": [
           {
+            "description": "The condition name.",
+            "name": "conditionName",
+            "type": "string"
+          }
+        ],
+        "description": "Returns the ID of a given condition by name. Opposite of <page>NPC:ConditionName</page>.\n\nThis is useful for custom conditions defined by engine NPCs, such as `COND_ZOMBIE_RELEASECRAB` for zombies, and `COND_COMBINE_ON_FIRE` for Combine Soldiers.",
+        "name": "ConditionID",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "The condition ID, see <page>Enums/COND</page>. Custom conditions will have a \"randomly\" assigned IDs, which will change with each game session.",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
             "description": "The NPCs condition ID, see <page>Enums/COND</page>",
             "name": "cond",
             "type": "number"
           }
         ],
-        "description": "Translates condition ID to a string.",
+        "description": "Translates condition ID to a string. For the opposite process, see <page>NPC:ConditionID</page>.",
         "name": "ConditionName",
         "parent": "NPC",
         "realms": [
@@ -21239,7 +21396,7 @@
         ]
       },
       {
-        "description": "Returns the aim vector of the NPC. NPC alternative of <page>Player:GetAimVector</page>.",
+        "description": "Returns the aim vector of the NPC. NPC alternative of <page>Player:GetAimVector</page>.\n\n<note> If the NPC has both <page>NPC:GetEnemy</page> and <page>NPC:GetActiveWeapon</page>, engine will automatically call <page>ENTITY:GetAttackSpread</page> to add random spread degrees to the return value. </note>",
         "name": "GetAimVector",
         "parent": "NPC",
         "realms": [
@@ -21247,7 +21404,7 @@
         ],
         "returnValues": [
           {
-            "description": "The aim direction of the NPC.",
+            "description": "The aim direction of the NPC, usually a noisy direction to it's <page>NPC:GetEnemy</page>. This will default to <page>Entity:GetForward</page> when there's no enemy. Thus, <page>NPC:GetCurrentWeaponProficiency</page> will be used.",
             "type": "Vector"
           }
         ]
@@ -21531,6 +21688,7 @@
         "returnValues": [
           {
             "description": "The file path of the expression.",
+            "name": "m_iszExpressionScene",
             "type": "string"
           }
         ]
@@ -21621,7 +21779,7 @@
         ]
       },
       {
-        "description": "Returns the ideal activity the NPC currently wants to achieve.",
+        "description": "Returns the ideal activity the NPC currently wants to achieve.\n<note>By default, base NPCs will automatically attempt to play a sequence bound to the ideal activity. To prevent ideal activity from overriding NPC's active sequence, set this to `ACT_DO_NOT_DISTURB`.</note>",
         "name": "GetIdealActivity",
         "parent": "NPC",
         "realms": [
@@ -22236,6 +22394,20 @@
         ]
       },
       {
+        "description": "Returns whether the NPC is currently crouching or not. Citizens and Combine Soldiers are capable of this behavior by default.",
+        "name": "IsCrouching",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "Whether the NPC is currently crouching.",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
         "arguments": [
           {
             "description": "The schedule number, see <page>Enums/SCHED</page>.",
@@ -22397,6 +22569,27 @@
       {
         "arguments": [
           {
+            "description": "Enemy entity to check.",
+            "name": "enemy",
+            "type": "Entity"
+          }
+        ],
+        "description": "Returns the \"forgettable\" status for a given enemy, as set by <page>NPC:SetUnforgettable</page>, or by internal logic of engine NPCs.",
+        "name": "IsUnforgettable",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "Whether the given enemy is unforgettable (`true`) or not.",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
             "description": "The entity to test.",
             "name": "testEntity",
             "type": "Entity"
@@ -22540,6 +22733,51 @@
         "parent": "NPC",
         "realms": [
           "server"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The position we want to reach.",
+            "name": "pos",
+            "type": "Vector"
+          },
+          {
+            "default": "nil",
+            "description": "Used to test whether we hit the move target when deciding success.",
+            "name": "targetEntity",
+            "type": "Entity"
+          },
+          {
+            "default": "-1",
+            "description": "Target Yaw angle at the end of the move. -1 to keep original yaw.",
+            "name": "yaw",
+            "type": "number"
+          },
+          {
+            "default": "true",
+            "description": "Whether to move as far as possible.",
+            "name": "asFarAsCan",
+            "type": "boolean"
+          },
+          {
+            "default": "true",
+            "description": "Also test the Z axis of the target position and NPC position to decide success.",
+            "name": "testZ",
+            "type": "boolean"
+          }
+        ],
+        "description": "Similar to other `NPC:Move*` functions, invokes internal code to move the NPC to a given location.\n\nMeant to be used within <page>ENTITY:OverrideMove</page>.",
+        "name": "MoveGroundStep",
+        "parent": "NPC",
+        "realms": [
+          "server"
+        ],
+        "returnValues": [
+          {
+            "description": "Whether the movement succeeded or not.\n\n`AIMotorMoveResult_t` enum:\n* AIM_FAILED = 0\n* AIM_SUCCESS = 1\n* AIM_PARTIAL_HIT_NPC = 2\n* AIM_PARTIAL_HIT_WORLD = 3\n* AIM_PARTIAL_HIT_TARGET = 4",
+            "type": "number"
+          }
         ]
       },
       {
@@ -22892,8 +23130,8 @@
         "arguments": [
           {
             "description": "A classname of the weapon or a <page>Weapon</page> entity to switch to.",
-            "name": "class",
-            "type": "string"
+            "name": "weapon",
+            "type": "string|Weapon"
           }
         ],
         "description": "Forces the NPC to switch to a specific weapon the NPC owns. See <page>NPC:GetWeapons</page>.",
@@ -23055,7 +23293,7 @@
         "arguments": [
           {
             "description": "The expression filepath.",
-            "name": "expression",
+            "name": "m_iszExpressionScene",
             "type": "string"
           }
         ],
@@ -23067,8 +23305,25 @@
         ],
         "returnValues": [
           {
+            "description": "Default duration of assigned expression, in seconds.",
+            "name": "flDuration",
             "type": "number"
           }
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "Whether to force the NPC to crouch or not. `false` clears the \"force crouch\" flag, but does not guarantee to force the NPC to stand back up.",
+            "name": "force",
+            "type": "boolean"
+          }
+        ],
+        "description": "Forces given NPC to crouch, if it is able to do so. Only Citizens and Combine Soldiers can by default.",
+        "name": "SetForceCrouch",
+        "parent": "NPC",
+        "realms": [
+          "server"
         ]
       },
       {
@@ -23293,7 +23548,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the sequence the NPC navigation path uses for speed calculation. Doesn't seem to have any visible effect on NPC movement.",
+        "description": "Sets the sequence the NPC navigation path uses for speed calculation. Doesn't seem to have any visible effect on NPC movement or actively playing sequence.\n\nTo be able to use this, first set <page>NPC:SetIdealActivity</page> to `ACT_DO_NOT_DISTURB`, set this to any sequence with root motion data and call <page>Entity:SetSequence</page> on your desired sequence. As long as your NPC's <page>NPC:GetMovementSequence</page> has root motion data, your NPC will move to navigation point even though your NPC's <page>Entity:GetSequence</page> doesn't have any motion.",
         "name": "SetMovementSequence",
         "parent": "NPC",
         "realms": [
@@ -23450,7 +23705,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Sets given entity as an unforgettable enemy.",
+        "description": "Sets given entity as an unforgettable enemy. The state can be retrieved via <page>NPC:IsUnforgettable</page>.",
         "name": "SetUnforgettable",
         "parent": "NPC",
         "realms": [
@@ -23605,7 +23860,7 @@
         ]
       },
       {
-        "description": "<note>This function only works on `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Enables the AI's [Assault Behavior](https://developer.valvesoftware.com/wiki/Assault \"Assault Behavior\") when an `ai_goal_assault` is set for this SENT.\n<note>This function only works on `ai` type [SENTs](Scripted_Entities).</note>",
         "name": "UseAssaultBehavior",
         "parent": "NPC",
         "realms": [
@@ -23633,7 +23888,7 @@
         ]
       },
       {
-        "description": "<note>This function only works on `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Orders the SNPC to control any nearby `func_tank`s looking for an NPC to operate itself, if available.\n<note>This function only works on `ai` type [SENTs](Scripted_Entities).</note>",
         "name": "UseFuncTankBehavior",
         "parent": "NPC",
         "realms": [
@@ -23647,7 +23902,7 @@
         ]
       },
       {
-        "description": "<note>This function only works on `ai` type [SENTs](Scripted_Entities).</note>",
+        "description": "Enables the AI's [Lead Behavior](https://developer.valvesoftware.com/wiki/ai_goal_lead \"Lead Behavior\") when an `ai_goal_lead` is set for this SENT.\n<note>This function only works on `ai` type [SENTs](Scripted_Entities).</note>",
         "name": "UseLeadBehavior",
         "parent": "NPC",
         "realms": [
@@ -24083,7 +24338,7 @@
           {
             "description": "The color to fade to",
             "name": "color",
-            "type": "table"
+            "type": "Color"
           },
           {
             "description": "Length of the animation",
@@ -24098,7 +24353,7 @@
           },
           {
             "default": "nil",
-            "description": "Function to execute when finished\n<callback>\n<arg type=\"table\" name=\"animData\">The <page>Structures/AnimationData</page> that was used.</arg>\n<arg type=\"Panel\" name=\"targetPanel\">The panel object that was animated.</arg>\n</callback>",
+            "description": "Function to execute when finished\n<callback>\n<arg type=\"table{AnimationData}\" name=\"animData\">The <page>Structures/AnimationData</page> that was used.</arg>\n<arg type=\"Panel\" name=\"targetPanel\">The panel object that was animated.</arg>\n</callback>",
             "name": "callback",
             "type": "function"
           }
@@ -27681,7 +27936,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the alignment of the contents.\n\n<note>This function only works on <page>Label</page> panels and its derivatives.</note>",
+        "description": "Sets the alignment of the contents.\n\n<note>This function only works on <page>Label</page> panels and its derivatives.</note>\n<note>This function doesnt work, if <page>Panel:SetWrap</page> is true.</note>",
         "name": "SetContentAlignment",
         "parent": "Panel",
         "realms": [
@@ -27986,7 +28241,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Sets the panel that owns this FocusNavGroup to be the root in the focus traversal hierarchy. This function will only work on EditablePanel class panels and its derivatives.",
+        "description": "Sets the panel that owns this FocusNavGroup to be the root in the focus traversal hierarchy. This function will only work on EditablePanel class panels and its derivatives.\n\n<note>Child panels that should be part of the tab navigation need <page>Panel:SetTabPosition</page> called on them.</note>",
         "name": "SetFocusTopLevel",
         "parent": "Panel",
         "realms": [
@@ -28510,7 +28765,7 @@
             "type": "number"
           }
         ],
-        "description": "When TAB is pressed, the next selectable panel in the number sequence is selected.",
+        "description": "When TAB is pressed, the next selectable panel in the number sequence is selected.\n\n<note>This function requires <page>Panel:SetFocusTopLevel</page> to be called on the parent panel for tab navigation to work.</note>",
         "name": "SetTabPosition",
         "parent": "Panel",
         "realms": [
@@ -28631,7 +28886,7 @@
             "type": "string"
           }
         ],
-        "description": "Sets the tooltip to be displayed when a player hovers over the panel object with their cursor.",
+        "description": "Sets the tooltip to be displayed when a player hovers over the panel object with their cursor.\n\nBy default, <page>DTooltip</page> will be used. <page>Panel:SetTooltipPanelOverride</page> can be used to override the tooltip panel.",
         "name": "SetTooltip",
         "parent": "Panel",
         "realms": [
@@ -29314,7 +29569,7 @@
             "type": "function"
           }
         ],
-        "description": "If you created your path with type `\"Chase\"` this functions should be used in place of <page>PathFollower:Update</page> to cause the bot to chase the specified entity.",
+        "description": "Computes the shortest path to the provided entity arg. PathFollower Object must have `Chase` type.\n\nFor PathFollower objects of the `Follow` type use <page>PathFollower:Compute</page>",
         "name": "Chase",
         "parent": "PathFollower",
         "realms": [
@@ -29335,12 +29590,12 @@
           },
           {
             "default": "nil",
-            "description": "A function that allows you to alter the path generation. See example below for the default function.\n\n<callback>\n<arg name=\"area\" type=\"CNavArea\">The area to move to.</arg>\n<arg name=\"fromArea\" type=\"CNavArea\">The area to move from.</arg>\n<arg name=\"ladder\" type=\"CNavLadder\">The ladder to move to or from (Validation required), if any.</arg>\n<arg name=\"elevator\" type=\"Entity\">Will probably be always NULL</arg>\n<arg name=\"length\" type=\"number\">Precomputed length between `area` and `fromArea`.</arg>\n<ret name=\"cost\" type=\"number\">The cost of movement between `area` and `fromArea`.</ret>\n</callback>",
+            "description": "A function that allows you to alter the path generation by adjusting the \"cost\". See example below for the default function.\n\n<callback>\n<arg name=\"area\" type=\"CNavArea\">The area to move to.</arg>\n<arg name=\"fromArea\" type=\"CNavArea\">The area to move from.</arg>\n<arg name=\"ladder\" type=\"CNavLadder\">The ladder to move to or from (Validation required), if any.</arg>\n<arg name=\"elevator\" type=\"Entity\">Will probably be always NULL</arg>\n<arg name=\"length\" type=\"number\">Precomputed length between `area` and `fromArea`.</arg>\n<ret name=\"cost\" type=\"number\">The cost of movement between `area` and `fromArea`.</ret>\n</callback>",
             "name": "generator",
             "type": "function"
           }
         ],
-        "description": "Compute shortest path from bot to 'goal' via A* algorithm.",
+        "description": "Compute shortest path from bot to 'goal' via A* algorithm. This only works if the PathFollower is the `Follow` Type.\n\nFor PathFollowers of the `Chase` Type see <page>PathFollower:Chase</page>",
         "name": "Compute",
         "parent": "PathFollower",
         "realms": [
@@ -29848,7 +30103,7 @@
     "name": "PhysCollide"
   },
   {
-    "description": "This is the object returned by <page>Entity:GetPhysicsObject</page>, <page>Entity:GetPhysicsObjectNum</page> and <page>Vehicle:GetWheel</page>.\n\nIt represents a physics object.",
+    "description": "This is the object returned by <page>Entity:GetPhysicsObject</page>, <page>Entity:GetPhysicsObjectNum</page> and <page>Vehicle:GetWheel</page>.\n\nIt represents a physics object. An entity can have multiple physics objects (ragdolls), one physics objects (props), or none. (NPCs, non physics entities, etc.)\n\nPhysics objects are usually simulated by the physics engine and usually dictate the position of the entity, and not the other way around.",
     "functions": [
       {
         "arguments": [
@@ -31904,7 +32159,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Enables/Disables the player's flashlight.<page>Player:CanUseFlashlight</page> must be true in order for the player's flashlight to be changed.",
+        "description": "Enables/Disables the player's flashlight.\n\n<page>Player:CanUseFlashlight</page> must be true in order for the player's flashlight to be changed.",
         "name": "Flashlight",
         "parent": "Player",
         "realms": [
@@ -31950,7 +32205,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to <page>Player:Lock</page> but the player can still take damage.\n\nAdds or removes the <page text=\"FL_FROZEN\">Enums/FL</page> flag from the player.\n\n<bug>Frozen bots will still be able to look around.</bug>",
+        "description": "Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to <page>Player:Lock</page> but the player can still take damage.\n\nAdds or removes the <page text=\"FL_FROZEN\">Enums/FL</page> flag from the player.",
         "name": "Freeze",
         "parent": "Player",
         "realms": [
@@ -33142,7 +33397,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Gives the player a weapon.\n\n<note>While this function is meant for weapons/pickupables only, it is **not** restricted to weapons. Any entity can be spawned using this function, including NPCs and SENTs.</note>",
+        "description": "Gives the player a weapon.\n\nThis function will call <page>GM:PlayerCanPickupWeapon</page>. If that hook returns false, this function will do nothing.\n\n<note>While this function is meant for weapons/pickupables only, it is **not** restricted to weapons. Any entity can be spawned using this function, including NPCs and SENTs.</note>",
         "name": "Give",
         "parent": "Player",
         "realms": [
@@ -33773,8 +34028,8 @@
         ],
         "source": {
           "file": "gamemodes/sandbox/gamemode/player_extension.lua",
-          "lineEnd": 117,
-          "lineStart": 113
+          "lineEnd": 124,
+          "lineStart": 120
         }
       },
       {
@@ -33793,7 +34048,7 @@
         ]
       },
       {
-        "description": "Stops a player from using any inputs, such as moving, turning, or attacking. Key binds are still called. Similar to <page>Player:Freeze</page> but the player takes no damage.\n\nAdds the <page text=\"FL_FROZEN\">Enums/FL</page> and <page text=\"FL_GODMODE\">Enums/FL</page> flags to the player.\n\n<bug>Frozen bots will still be able to look around.</bug>",
+        "description": "Stops a player from using any inputs, such as moving, turning, or attacking. Key binds are still called. Similar to <page>Player:Freeze</page> but the player takes no damage.\n\nAdds the <page text=\"FL_FROZEN\">Enums/FL</page> and <page text=\"FL_GODMODE\">Enums/FL</page> flags to the player.",
         "name": "Lock",
         "parent": "Player",
         "realms": [
@@ -33887,7 +34142,7 @@
         ]
       },
       {
-        "description": "Unfreezes the props player is looking at. This is essentially the same as pressing reload with the physics gun, including double press for unfreeze all.",
+        "description": "Unfreezes the props player is looking at. This is essentially the same as pressing reload with the physics gun, including double press for unfreeze all.\n\nFor freezing props, use <page>PhysObj:EnableMotion</page>.",
         "name": "PhysgunUnfreeze",
         "parent": "Player",
         "realms": [
@@ -34095,7 +34350,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Forces the player to say whatever the first argument is. Works on bots too.\n\n<note>This function ignores the default chat message cooldown</note>",
+        "description": "Forces the player to say whatever the first argument is. Works on bots too.\n\n<note>This function ignores the default chat message cooldown</note>\n<warning>The argument can only contain 126 characters. [Source SDK 2013](https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/game/server/client.cpp#L84-L86)</warning>",
         "name": "Say",
         "parent": "Player",
         "realms": [
@@ -34432,7 +34687,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Activates a given DSP (Digital Signal Processor) effect on all sounds that the player hears.\n\nTo apply a DSP effect to individual sounds, see <page>CSoundPatch:SetDSP</page>",
+        "description": "Activates a given DSP (Digital Signal Processor) effect on all sounds that the player hears. This is equivalent to setting `dsp_player` convar on the player.\n\nTo apply a DSP effect to individual sounds, see <page>CSoundPatch:SetDSP</page>",
         "name": "SetDSP",
         "parent": "Player",
         "realms": [
@@ -34464,7 +34719,7 @@
             "type": "Angle"
           }
         ],
-        "description": "Sets the local angle of the player's view (may rotate body too if angular difference is large)",
+        "description": "Sets the local angle of the player's view (may rotate body too if angular difference is large)\n\n<note>This function works differently when the player is in a vehicle. In that case passing `Angle(0, 90, 0)` will have the player look forward (out the windshield) and `Angle(0, 0, 0)` will have them look to the right.</note>",
         "name": "SetEyeAngles",
         "parent": "Player",
         "realms": [
@@ -34475,7 +34730,7 @@
       {
         "arguments": [
           {
-            "description": "the angle of perception (FOV). Set to 0 to return to default user FOV. ( Which is ranging from 75 to 90, depending on user settings )",
+            "description": "the angle of perception (FOV). Set to 0 to return to default user FOV. ( Which is ranging from 75 to 100, depending on user settings )",
             "name": "fov",
             "type": "number"
           },
@@ -34834,7 +35089,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the player's sprint speed.\n\nSee also <page>Player:GetRunSpeed</page>, <page>Player:SetWalkSpeed</page> and <page>Player:SetMaxSpeed</page>.\n<note>player_default class run speed is: `240`</note>",
+        "description": "Sets the player's sprint speed.\n\nSee also <page>Player:GetRunSpeed</page>, <page>Player:SetWalkSpeed</page> and <page>Player:SetMaxSpeed</page>.\n<note>player_default class run speed is: `400`</note>",
         "name": "SetRunSpeed",
         "parent": "Player",
         "realms": [
@@ -35065,7 +35320,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the voice volume scale for given player on client. This value will persist from server to server, but will be reset when the game is shut down.\n\n<note>This doesn't work on bots, their scale will always be `1`.</note>",
+        "description": "Sets the voice volume scale for given player on client. This value will persist from server to server, but will be reset when the game is shut down.\n\n<note>This doesn't work on bots, their scale will always be `1`. Does not work with multiruns.</note>",
         "name": "SetVoiceVolumeScale",
         "parent": "Player",
         "realms": [
@@ -35080,7 +35335,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the player's normal walking speed. Not sprinting, not slow walking <key>+walk</key>.\n\nSee also <page>Player:SetSlowWalkSpeed</page>, <page>Player:GetWalkSpeed</page>, <page>Player:SetCrouchedWalkSpeed</page>, <page>Player:SetMaxSpeed</page> and <page>Player:SetRunSpeed</page>.\n\n<bug issue=\"2030\">Using a speed of `0` can lead to prediction errors.</bug>\n\n<note>`player_default` class walk speed is: `200`.</note>",
+        "description": "Sets the player's normal walking speed. Not sprinting, not slow walking <key>+walk</key>.\n\nSee also <page>Player:SetSlowWalkSpeed</page>, <page>Player:GetWalkSpeed</page>, <page>Player:SetCrouchedWalkSpeed</page>, <page>Player:SetMaxSpeed</page> and <page>Player:SetRunSpeed</page>.\n\n<bug issue=\"2030\">Using a speed of `0` can lead to prediction errors, and can cause players to move at sv_maxvelocity</bug>\n\n<note>`player_default` class walk speed is: `200`.</note>",
         "name": "SetWalkSpeed",
         "parent": "Player",
         "realms": [
@@ -35185,7 +35440,7 @@
             "type": "number"
           }
         ],
-        "description": "Starts spectate mode for given player. This will also affect the players movetype in some cases.",
+        "description": "<warning>The player must be respawned, otherwise they will be able to walk through doors and become invincible.</warning>\nStarts spectate mode for given player. This will also affect the players movetype in some cases.",
         "name": "Spectate",
         "parent": "Player",
         "realms": [
@@ -35200,7 +35455,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Makes the player spectate the entity.\n\nTo get the applied spectated entity, use <page>Player:GetObserverTarget</page>.",
+        "description": "<warning>The player must be respawned, otherwise they will be able to walk through doors and become invincible.</warning>\nMakes the player spectate the entity.\n\nTo get the applied spectated entity, use <page>Player:GetObserverTarget</page>.",
         "name": "SpectateEntity",
         "parent": "Player",
         "realms": [
@@ -35262,7 +35517,7 @@
         ]
       },
       {
-        "description": "Returns the player's SteamID.\n\nSee <page>Player:AccountID</page> for a shorter version of the SteamID and <page>Player:SteamID64</page> for the full SteamID.\n\nIt is recommended to use <page>Player:SteamID64</page> over the other SteamID formats whenever possible.\n\n<note>In a `-multirun` environment, this will return `STEAM_0:0:0` (serverside) or `NULL` (clientside) for all \"copies\" of a player because they are not authenticated with Steam.\n\nFor Bots this will return `BOT`.</note>",
+        "description": "Returns the player's SteamID.\n\nSee <page>Player:AccountID</page> for a shorter version of the SteamID and <page>Player:SteamID64</page> for the full SteamID.\n\nIt is recommended to use <page>Player:SteamID64</page> over the other SteamID formats whenever possible.\n\n<note>In a `-multirun` environment, this will return `STEAM_ID_LAN` for all \"copies\" of a player because they are not authenticated with Steam.\n\nFor Bots this will return `BOT`.</note>",
         "name": "SteamID",
         "parent": "Player",
         "realms": [
@@ -35504,7 +35759,7 @@
         }
       },
       {
-        "description": "<deprecated><br>\n**This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use <page>Player:SteamID64</page> or <page>Player:SteamID</page> instead, which are guaranteed to be unique to each player.</deprecated>\n\nReturns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.\n\n<note>In Singleplayer, this function will always return 1.</note>",
+        "description": "<deprecated><br>\n**This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use <page>Player:SteamID64</page>, <page>Player:SteamID</page> or <page>Player:AccountID</page> instead, which are guaranteed to be unique to each player.</deprecated>\n\nReturns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.\n\n<note>In Singleplayer, this function will always return 1.</note>\n<bug issue=\"6389\">In a `-multirun` environment, the value returned is different on the serverside and clientside.</bug>",
         "name": "UniqueID",
         "parent": "Player",
         "realms": [
@@ -35554,7 +35809,7 @@
         ]
       },
       {
-        "description": "Stops the player from spectating another entity.",
+        "description": "<warning>The player must be respawned, otherwise they will be able to walk through doors and become invincible.</warning>\nStops the player from spectating another entity.",
         "name": "UnSpectate",
         "parent": "Player",
         "realms": [
@@ -35610,7 +35865,7 @@
         ]
       },
       {
-        "description": "Returns the players voice volume, how loud the player's voice communication currently is, as a number in range of [0,1].\n\nDoesn't work on local player unless the `voice_loopback` convar is set to `1`.",
+        "description": "Returns the players voice volume, how loud the player's voice communication currently is, as a number in range of [0,1].",
         "name": "VoiceVolume",
         "parent": "Player",
         "realms": [
@@ -37572,7 +37827,7 @@
     "name": "Tool"
   },
   {
-    "description": "List of all possible functions to manipulate vectors.\n\nCreated by <page>Global.Vector</page>.\n\nType   | Name           | Description\n------ | -------------- | ------------------------------\n<page>number</page> | `x` or `1` | The X component of the vector.\n<page>number</page> | `y` or `2` | The Y component of the vector.\n<page>number</page> | `z` or `3` | The Z component of the vector.\n\nMetamethod | Second Operand | Description\n---------- | -------------- | -----------\n`__add` | <page>Vector</page> | Returns new <page>Vector</page> with the result of addition.\n`__div` | <page>number</page> or <page>Vector</page> | Returns new <page>Vector</page> with the result of division.\n`__eq` | <page>any</page> | Compares 2 operands, if they both are <page>Vector</page>, compares each individual component.\n`__index` | <page>number</page> or <page>string</page> | Gets the component of the <page>Vector</page>. Returns a <page>number</page>.\n`__mul` | <page>number</page> or <page>Vector</page>| Returns new <page>Vector</page> with the result of multiplication.\n`__newindex` | <page>number</page> or <page>string</page> | Sets the component of the <page>Vector</page>. Accepts <page>number</page> and <page>string</page>.\n`__sub` | <page>Vector</page> | Returns new <page>Vector</page> with the result of subtraction.\n`__tostring` | | Returns `x y z`.\n`__unm` | | Returns new <page>Vector</page> with the result of negation.",
+    "description": "List of all possible functions to manipulate vectors.\n\nCreated by <page>Global.Vector</page>.\n\nType   | Name           | Description\n------ | -------------- | ------------------------------\n<page>number</page> | `x`, `X`, `r` or `1` | The X component of the vector.\n<page>number</page> | `y`, `Y`, `g` or `2` | The Y component of the vector.\n<page>number</page> | `z`, `Z`, `b` or `3` | The Z component of the vector.\n\nMetamethod | Second Operand | Description\n---------- | -------------- | -----------\n`__add` | <page>Vector</page> | Returns new <page>Vector</page> with the result of addition.\n`__div` | <page>number</page> or <page>Vector</page> | Returns new <page>Vector</page> with the result of division.\n`__eq` | <page>any</page> | Compares 2 operands, if they both are <page>Vector</page>, compares each individual component.\n`__index` | <page>number</page> or <page>string</page> | Gets the component of the <page>Vector</page>. Returns a <page>number</page>.\n`__mul` | <page>number</page> or <page>Vector</page>| Returns new <page>Vector</page> with the result of multiplication.\n`__newindex` | <page>number</page> or <page>string</page> | Sets the component of the <page>Vector</page>. Accepts <page>number</page> and <page>string</page>.\n`__sub` | <page>Vector</page> | Returns new <page>Vector</page> with the result of subtraction.\n`__tostring` | | Returns `x y z`.\n`__unm` | | Returns new <page>Vector</page> with the result of negation.",
     "functions": [
       {
         "arguments": [
@@ -38754,7 +39009,7 @@
         ]
       },
       {
-        "description": "Returns true if the vehicle object is a valid or not. This will return `false` when <page>Vehicle</page> functions are not usable on the vehicle.",
+        "description": "Determines whether a given <page>Vehicle</page> is fully initialized.\n\nIt is possible, in uncommon circumstances, for a <page text=\"valid\">Global.IsValid</page> <page text=\"vehicle\">Entity:IsVehicle</page> entity to be in an invalid state, such as before <page>Entity:Spawn</page> is called on the vehicle after creation.\n\nIf this function returns `false`, then the <page>Vehicle</page> functions are not usable on this vehicle, while <page>Entity</page> functions are.",
         "name": "IsValidVehicle",
         "parent": "Vehicle",
         "realms": [
@@ -38763,7 +39018,7 @@
         ],
         "returnValues": [
           {
-            "description": "Is the vehicle a valid vehicle or not",
+            "description": "`true` if the Vehicle is in a valid state, or `false` if the Vehicle is in an invalid state.",
             "type": "boolean"
           }
         ]
@@ -38994,8 +39249,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/entity.lua",
-          "lineEnd": 657,
-          "lineStart": 653
+          "lineEnd": 682,
+          "lineStart": 678
         }
       },
       {
@@ -39086,7 +39341,7 @@
         ]
       },
       {
-        "description": "Returns the absolute rotation of the matrix.",
+        "description": "Returns the absolute rotation of the matrix. Scaled matrix might produce unexpected results!",
         "name": "GetAngles",
         "parent": "VMatrix",
         "realms": [
@@ -39273,7 +39528,7 @@
         ]
       },
       {
-        "description": "Inverts the matrix. This function will not fail, but only works correctly on matrices that contain only translation and/or rotation.\n\nUsing this function on a matrix with modified scale may return an incorrect inverted matrix.\n\nTo invert a matrix that contains other modifications, see <page>VMatrix:Invert</page>.",
+        "description": "Quickly inverts the matrix. This function will not fail, but only works correctly on matrices that contain only translation and/or rotation.\n\nUsing this function on a matrix with modified scale may return an incorrect inverted matrix.\n\nTo invert a matrix that contains other modifications, see <page>VMatrix:Invert</page>. This function is faster.",
         "name": "InvertTR",
         "parent": "VMatrix",
         "realms": [
