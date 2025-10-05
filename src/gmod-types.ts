@@ -38,7 +38,10 @@ export function getTypeName(ret: string): string {
     } else if (structMatch) {
         return "S" + structMatch[1];
     } else if (ret.includes("|")) {
-        let union = ret.split("|").map((value) => getTypeName(value));
+        let union = ret
+            .split("|")
+            .filter((value) => value != "NULL")
+            .map((value) => getTypeName(value));
 
         // Workaround for LuaLS/lua-language-server#3141
         if (
