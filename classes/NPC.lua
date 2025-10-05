@@ -18,6 +18,7 @@ function GNPC:AddRelationship(relationstring)
 end
 
 --- Advances the NPC on its path to the next waypoint.  
+--- ⚠ **WARNING**: Calling this on an NPC without any route will result in an instant crash.  
 function GNPC:AdvancePath()
 end
 
@@ -32,6 +33,12 @@ end
 function GNPC:AutoMovement(interval, target)
 end
 
+--- Become a ragdoll and remove the entity. Internally handles serverside/clientside ragdoll creation, momentum calculation, triggering ragdoll creation hooks / events and cloning entity's bone transforms to the created ragdoll.  
+--- @param info GCTakeDamageInfo @Damage info passed from an onkilled event
+--- @return GEntity @The created serverside ragdoll, nil if failed or a clientside ragdoll created.
+function GNPC:BecomeRagdoll(info)
+end
+
 --- Adds a capability to the NPC.  
 --- @param capabilities ECAP @Capabilities to add, see Enums/CAP.
 function GNPC:CapabilitiesAdd(capabilities)
@@ -44,6 +51,11 @@ end
 --- Returns the NPC's capabilities along the ones defined on its weapon.  
 --- @return ECAP @The capabilities as a bitflag
 function GNPC:CapabilitiesGet()
+end
+
+--- Checks whether the NPC has the specified capabilities.  
+--- @param capabilities ECAP @Capabilities to check, see Enums/CAP.
+function GNPC:CapabilitiesHas(capabilities)
 end
 
 --- Remove a certain capability.  
@@ -82,7 +94,14 @@ end
 function GNPC:ClearSchedule()
 end
 
---- Translates condition ID to a string.  
+--- Returns the ID of a given condition by name. Opposite of NPC:ConditionName.  
+--- This is useful for custom conditions defined by engine NPCs, such as `COND_ZOMBIE_RELEASECRAB` for zombies, and `COND_COMBINE_ON_FIRE` for Combine Soldiers.  
+--- @param conditionName string @The condition name.
+--- @return number @The condition ID, see Enums/COND
+function GNPC:ConditionID(conditionName)
+end
+
+--- Translates condition ID to a string. For the opposite process, see NPC:ConditionID.  
 --- @param cond number @The NPCs condition ID, see Enums/COND
 --- @return string @A human understandable string equivalent of that condition.
 function GNPC:ConditionName(cond)
@@ -126,7 +145,8 @@ function GNPC:GetActivity()
 end
 
 --- Returns the aim vector of the NPC. NPC alternative of Player:GetAimVector.  
---- @return GVector @The aim direction of the NPC.
+--- ℹ **NOTE**: If the NPC has both NPC:GetEnemy and NPC:GetActiveWeapon, engine will automatically call ENTITY:GetAttackSpread to add random spread degrees to the return value.  
+--- @return GVector @The aim direction of the NPC, usually a noisy direction to it's NPC:GetEnemy
 function GNPC:GetAimVector()
 end
 
@@ -254,6 +274,7 @@ function GNPC:GetHullType()
 end
 
 --- Returns the ideal activity the NPC currently wants to achieve.  
+--- ℹ **NOTE**: By default, base NPCs will automatically attempt to play a sequence bound to the ideal activity. To prevent ideal activity from overriding NPC's active sequence, set this to `ACT_DO_NOT_DISTURB`.  
 --- @return number @The ideal activity
 function GNPC:GetIdealActivity()
 end
@@ -462,6 +483,11 @@ end
 function GNPC:IgnoreEnemyUntil(enemy, until_)
 end
 
+--- Returns whether the NPC is currently crouching or not. Citizens and Combine Soldiers are capable of this behavior by default.  
+--- @return boolean @Whether the NPC is currently crouching.
+function GNPC:IsCrouching()
+end
+
 --- Returns whether the current navigational waypoint is the final one.  
 --- @return boolean @Whether the current navigational waypoint is the final one.
 function GNPC:IsCurWaypointGoal()
@@ -512,6 +538,12 @@ end
 --- Returns whether the current NPC is the leader of the squad it is in.  
 --- @return boolean @Whether the NPC is the leader of the squad or not.
 function GNPC:IsSquadLeader()
+end
+
+--- Returns the "forgettable" status for a given enemy, as set by NPC:SetUnforgettable, or by internal logic of engine NPCs.  
+--- @param enemy GEntity @Enemy entity to check.
+--- @return boolean @Whether the given enemy is unforgettable (`true`) or not.
+function GNPC:IsUnforgettable(enemy)
 end
 
 --- Returns true if the entity was remembered as unreachable. The memory is updated automatically from following engine tasks if they failed:  
@@ -567,6 +599,17 @@ end
 --- Stops a climb move.  
 --- Related functions are NPC:MoveClimbExec and NPC:MoveClimbStart.  
 function GNPC:MoveClimbStop()
+end
+
+--- Similar to other `NPC:Move*` functions, invokes internal code to move the NPC to a given location.  
+--- Meant to be used within ENTITY:OverrideMove.  
+--- @param pos GVector @The position we want to reach.
+--- @param targetEntity? GEntity @Used to test whether we hit the move target when deciding success.
+--- @param yaw? number @Target Yaw angle at the end of the move
+--- @param asFarAsCan? boolean @Whether to move as far as possible.
+--- @param testZ? boolean @Also test the Z axis of the target position and NPC position to decide success.
+--- @return number @Whether the movement succeeded or not
+function GNPC:MoveGroundStep(pos, targetEntity, yaw, asFarAsCan, testZ)
 end
 
 --- Executes a jump move.  
@@ -690,8 +733,8 @@ function GNPC:RunEngineTask(taskID, taskData)
 end
 
 --- Forces the NPC to switch to a specific weapon the NPC owns. See NPC:GetWeapons.  
---- @param class string @A classname of the weapon or a Weapon entity to switch to.
-function GNPC:SelectWeapon(class)
+--- @param weapon string|GWeapon @A classname of the weapon or a Weapon entity to switch to.
+function GNPC:SelectWeapon(weapon)
 end
 
 --- Stops any sounds (speech) the NPC is currently palying.  
@@ -745,14 +788,19 @@ function GNPC:SetEnemy(enemy, newenemy)
 end
 
 --- Sets the NPC's .vcd expression. Similar to Entity:PlayScene except the scene is looped until it's interrupted by default NPC behavior or NPC:ClearExpression.  
---- @param expression string @The expression filepath.
---- @return number 
-function GNPC:SetExpression(expression)
+--- @param m_iszExpressionScene string @The expression filepath.
+--- @return number @Default duration of assigned expression, in seconds.
+function GNPC:SetExpression(m_iszExpressionScene)
 end
 
 --- Sets the Field Of View of the NPC, for use with such functions as NPC:IsInViewCone. it is also used internally by the NPC for enemy detection, etc.  
 --- @param fov number @The new FOV for the NPC in degrees.
 function GNPC:SetFOV(fov)
+end
+
+--- Forces given NPC to crouch, if it is able to do so. Only Citizens and Combine Soldiers can by default.  
+--- @param force boolean @Whether to force the NPC to crouch or not
+function GNPC:SetForceCrouch(force)
 end
 
 --- Updates the NPC's hull and physics hull in order to match its model scale. Entity:SetModelScale seems to take care of this regardless.  
@@ -833,7 +881,8 @@ end
 function GNPC:SetMovementActivity(activity)
 end
 
---- Sets the sequence the NPC navigation path uses for speed calculation. Doesn't seem to have any visible effect on NPC movement.  
+--- Sets the sequence the NPC navigation path uses for speed calculation. Doesn't seem to have any visible effect on NPC movement or actively playing sequence.  
+--- To be able to use this, first set NPC:SetIdealActivity to `ACT_DO_NOT_DISTURB`, set this to any sequence with root motion data and call Entity:SetSequence on your desired sequence. As long as your NPC's NPC:GetMovementSequence has root motion data, your NPC will move to navigation point even though your NPC's Entity:GetSequence doesn't have any motion.  
 --- @param sequenceId number @The movement sequence index
 function GNPC:SetMovementSequence(sequenceId)
 end
@@ -876,7 +925,7 @@ end
 function GNPC:SetTaskStatus(status)
 end
 
---- Sets given entity as an unforgettable enemy.  
+--- Sets given entity as an unforgettable enemy. The state can be retrieved via NPC:IsUnforgettable.  
 --- @param enemy GEntity @The enemy entity to set.
 --- @param set? boolean @The entity to set.
 function GNPC:SetUnforgettable(enemy, set)
@@ -937,6 +986,7 @@ end
 function GNPC:UseActBusyBehavior()
 end
 
+--- Enables the AI's [Assault Behavior](https://developer.valvesoftware.com/wiki/Assault "Assault Behavior") when an `ai_goal_assault` is set for this SENT.  
 --- ℹ **NOTE**: This function only works on `ai` type [SENTs](Scripted_Entities).  
 --- @return boolean @Whether the action succeeded.
 function GNPC:UseAssaultBehavior()
@@ -947,11 +997,13 @@ end
 function GNPC:UseFollowBehavior()
 end
 
+--- Orders the SNPC to control any nearby `func_tank`s looking for an NPC to operate itself, if available.  
 --- ℹ **NOTE**: This function only works on `ai` type [SENTs](Scripted_Entities).  
 --- @return boolean @Whether the action succeeded.
 function GNPC:UseFuncTankBehavior()
 end
 
+--- Enables the AI's [Lead Behavior](https://developer.valvesoftware.com/wiki/ai_goal_lead "Lead Behavior") when an `ai_goal_lead` is set for this SENT.  
 --- ℹ **NOTE**: This function only works on `ai` type [SENTs](Scripted_Entities).  
 --- @return boolean @Whether the action succeeded.
 function GNPC:UseLeadBehavior()

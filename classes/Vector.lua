@@ -3,9 +3,9 @@
 --- @class GVector
 --- List of all possible functions to manipulate vectors.  
 --- Created by Global.Vector.  
---- @field x number @The X component of the vector.
---- @field y number @The Y component of the vector.
---- @field z number @The Z component of the vector.
+--- @field xXr number @The X component of the vector.
+--- @field yYg number @The Y component of the vector.
+--- @field zZb number @The Z component of the vector.
 local GVector = {}
 --- Adds the values of the argument vector to the original vector. This function is the same as vector1 + vector2 without creating a new vector object, skipping object construction and garbage collection.  
 --- @param vector GVector @The vector to add.

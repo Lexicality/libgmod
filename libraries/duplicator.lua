@@ -20,6 +20,10 @@ duplicator.EntityClasses = nil --[[@as table]]
 duplicator.EntityModifiers = nil --[[@as table]]
 
 --- Allow entities with given class name to be duplicated. See duplicator.Disallow for the opposite effect.  
+--- duplicator.IsAllowed can be used to poll the status of a particular entity class.  
+--- `duplicator.Allow` is automatically called by scripted_ents.Register and weapons.Register, unless the associated entity table has `ENT.DisableDuplicator` set to `true`.  
+--- This is also automatically called by duplicator.RegisterEntityClass.  
+--- In addition to that most spawnmenu content, such as engine weapons and pickup-ables, as well as most engine NPCs in Sandbox-derived gamemodes are also allowed by default.  
 --- @param classname string @An entity's classname to allow duplicating.
 function duplicator.Allow(classname)
 end
@@ -72,7 +76,7 @@ function duplicator.CreateEntityFromTable(ply, entTable)
 end
 
 --- Disallow this entity to be duplicated. Opposite of duplicator.Allow.  
---- By default, all classes are disallowed to be duplicated. This function is useful for temporarily disabling duplication of certain entity classes that may have been previously allowed.  
+--- This function is useful for temporarily disabling duplication of certain entity classes that may have been previously allowed.  
 --- @param classname string @An entity's classname to disallow duplicating.
 function duplicator.Disallow(classname)
 end

@@ -211,7 +211,7 @@ end
 --- ℹ **NOTE**: This function internally uses util.SteamIDTo64, it previously utilized Player:UniqueID which can cause collisions (two or more players sharing the same PData entry). This function now only uses the old method as a fallback if the name isn't found.  
 --- @param steamID string @SteamID of the player, in the `STEAM_0:0:0` format
 --- @param name string @Variable name to get the value of
---- @param default string @The default value, in case there's nothing stored
+--- @param default any @The default value, in case there's nothing stored
 --- @return string @The stored value
 function util.GetPData(steamID, name, default)
 end
@@ -298,6 +298,15 @@ end
 --- @param name string @Name of the binary module, exactly the same as you would enter it as the argument to Global.require.
 --- @return boolean @Whether the binary module is installed and Global.require can resolve it.
 function util.IsBinaryModuleInstalled(name)
+end
+
+--- Performs a box-box intersection and returns whether there was an intersection or not.  
+--- @param boxMin GVector @The minimum extents of the Axis-Aligned box.
+--- @param boxMax GVector @The maximum extents of the Axis-Aligned box.
+--- @param box2Min GVector @The minimum extents of the second Axis-Aligned box.
+--- @param box2Max GVector @The maximum extents of the second Axis-Aligned box.
+--- @return boolean @`true` if there is an intersection, `false` otherwise.
+function util.IsBoxIntersectingBox(boxMin, boxMax, box2Min, box2Max)
 end
 
 --- Performs a box-sphere intersection and returns whether there was an intersection or not.  
@@ -414,7 +423,7 @@ end
 function util.IsValidPhysicsObject(ent, physobj)
 end
 
---- Checks if the specified prop is valid.  
+--- Checks if the specified prop is valid (has valid physics object).  
 --- @param modelName string @Name/Path of the model to check.
 --- @return boolean @Returns true if the specified prop is valid; otherwise false.
 function util.IsValidProp(modelName)
@@ -504,12 +513,13 @@ end
 function util.ParticleTracerEx(name, startPos, endPos, doWhiz, entityIndex, attachmentIndex)
 end
 
---- Returns the visibility of a sphere in the world.  
+--- Returns the visibility of a square that is always pointed at the camera in the world-space.  
+--- This is typically used for in-game sprites or "billboards". (render.DrawSprite)  
 --- @param position GVector @The center of the visibility test.
---- @param radius number @The radius of the sphere to check for visibility.
+--- @param size number @The size of the square to check for visibility.
 --- @param PixVis Gpixelvis_handle_t @The PixVis handle created with util.GetPixelVisibleHandle
---- @return number @Visibility, ranges from `0-1`
-function util.PixelVisible(position, radius, PixVis)
+--- @return number @Visibility percentage, in range of `[0-1]`
+function util.PixelVisible(position, size, PixVis)
 end
 
 --- Returns the contents of the position specified.  
@@ -521,6 +531,7 @@ end
 
 --- Precaches a model for later use. Model is cached after being loaded once.  
 --- ⚠ **WARNING**: Modelprecache is limited to 8192 unique models. When it reaches the limit the game will crash.  
+--- ℹ **NOTE**: Does nothing on the client.  
 --- @param modelName string @The model to precache.
 function util.PrecacheModel(modelName)
 end
@@ -645,7 +656,7 @@ end
 function util.StringToType(str, typename)
 end
 
---- Converts a table to a JSON string.  
+--- Converts a table to a JSON string. Keep in mind that not every data type can be stored in the JSON format, notably any entity will not be written, as if it wasn't in the table. Same goes for materials and textures, etc.  
 --- See util.JSONToTable for the opposite function.  
 --- ⚠ **WARNING**: All keys are strings in the JSON format, so all keys of other types will be converted to strings!  
 --- This can lead to loss of data where a number key could be converted into an already existing string key! (for example in a table like this: `{["5"] = "ok", [5] = "BBB"}`)  

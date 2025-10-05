@@ -10,7 +10,7 @@ local GVMatrix = {}
 function GVMatrix:Add(input)
 end
 
---- Returns the absolute rotation of the matrix.  
+--- Returns the absolute rotation of the matrix. Scaled matrix might produce unexpected results!  
 --- @return GAngle @Absolute rotation of the matrix
 function GVMatrix:GetAngles()
 end
@@ -81,9 +81,9 @@ end
 function GVMatrix:Invert()
 end
 
---- Inverts the matrix. This function will not fail, but only works correctly on matrices that contain only translation and/or rotation.  
+--- Quickly inverts the matrix. This function will not fail, but only works correctly on matrices that contain only translation and/or rotation.  
 --- Using this function on a matrix with modified scale may return an incorrect inverted matrix.  
---- To invert a matrix that contains other modifications, see VMatrix:Invert.  
+--- To invert a matrix that contains other modifications, see VMatrix:Invert. This function is faster.  
 function GVMatrix:InvertTR()
 end
 

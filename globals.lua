@@ -128,13 +128,13 @@ end
 function _G.ChangeTooltip(panel)
 end
 
---- Creates a non physical entity that only exists on the client. See also ents.CreateClientProp.  
---- 🦟 **BUG**: [Parented clientside models will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**](https://github.com/Facepunch/garrysmod-issues/issues/861)  
---- 🦟 **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object and call CSEnt:Remove manually. **To workaround this bug, you need to hold a reference (in a variable) to the entity and remove it when necessary.**](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
+--- Creates a non physical entity that only exists on the client. See also ents.CreateClientProp if physics is wanted.  
+--- 🦟 **BUG**: [Parented clientside models will become detached if the parent entity leaves the PVS. A workaround is available on the issue tracker page linked below.](https://github.com/Facepunch/garrysmod-issues/issues/861)  
+--- 🦟 **BUG**: [Clientside entities are not garbage-collected, thus you must store a reference to the object (in a variable) and call CSEnt:Remove manually when necessary.](https://github.com/Facepunch/garrysmod-issues/issues/1387)  
 --- 🦟 **BUG**: [Clientside models will occasionally delete themselves during high server lag.](https://github.com/Facepunch/garrysmod-issues/issues/3184)  
 --- @param model string @The file path to the model.
 --- @param renderGroup? number @The render group of the entity for the clientside leaf system, see Enums/RENDERGROUP.
---- @return GCSEnt @Created client-side model (`C_BaseFlex`).
+--- @return GCSEnt|nil @Created client-side model (`C_BaseFlex`) or `nil` if creation of the entity failed for any reason.
 function _G.ClientsideModel(model, renderGroup)
 end
 
@@ -328,7 +328,8 @@ end
 function _G.CurTime()
 end
 
---- A preprocessor keyword that is directly replaced with the following text:  
+--- Generates and provides a local variable `BaseClass` that can be used to call the original version of a class functions after modifying it.  
+--- This is a preprocessor keyword that is directly replaced with the following text:  
 --- ```lua  
 --- local BaseClass = baseclass.Get  
 --- ```  
@@ -944,6 +945,12 @@ end
 function _G.HWBToColor(hue, whiteness, blackness)
 end
 
+--- Converts a hexadecimal representation of a color to Color object.  
+--- @param hue string @A hex formatted color
+--- @return GColor @The Color created from the hexadecimal color code.
+function _G.HexToColor(hue)
+end
+
 --- @deprecated  
 --- 🛑 **DEPRECATED**: To send the target file to the client simply call AddCSLuaFile() in the target file itself.  
 --- This function works exactly the same as Global.include both clientside and serverside.  
@@ -954,7 +961,6 @@ function _G.IncludeCS(filename)
 end
 
 --- Returns whether the given object does or doesn't have a `metatable` of a color.  
---- 🦟 **BUG**: [Engine functions (i.e. those not written in plain Lua) that return color objects do not currently set the color metatable and this function will return false if you use it on them.](https://github.com/Facepunch/garrysmod-issues/issues/2407)  
 --- @param Object any @The object to be tested
 --- @return boolean @Whether the given object is a color or not
 function _G.IsColor(Object)
@@ -1208,7 +1214,7 @@ end
 function _G.Model(model)
 end
 
---- Writes every given argument to the console.  
+--- Writes every given argument to the console. Limitations of Global.print apply.  
 --- Automatically attempts to convert each argument to a string. (See Global.tostring)  
 --- Unlike Global.print, arguments are not separated by anything. They are simply concatenated.  
 --- Additionally, a newline isn't added automatically to the end, so subsequent Msg or print operations will continue the same line of text in the console. See Global.MsgN for a version that does add a newline.  
@@ -1217,7 +1223,7 @@ end
 function _G.Msg(...)
 end
 
---- Works exactly like Global.Msg except that, if called on the server, will print to all players consoles plus the server console.  
+--- Works exactly like Global.Msg except that, if called on the server, will print to all players consoles plus the server console. Limitations of Global.print apply.  
 --- @vararg any @List of values to print.
 function _G.MsgAll(...)
 end
@@ -1286,8 +1292,10 @@ end
 function _G.ParticleEmitter(position, use3D)
 end
 
---- Creates a path for the bot to follow  
---- @param type string @The name of the path to create
+--- Creates a path for the bot to follow using one of two types (`Follow` or `Chase`)  
+--- `Follow` is a general purpose path. Best used for static or infrequently updated locations. The path will only be updated once PathFollower:Update is called. This needs to be done manually (typically inside the bots `BehaveThread` coroutine.  
+--- `Chase` is a specifically optimized for chasing a moving entity. Paths of this type will use PathFollower:Chase  
+--- @param type string @The type of the path to create, must be `"Follow"` or `"Chase"`
 --- @return GPathFollower @The path
 function _G.Path(type)
 end
@@ -1407,7 +1415,8 @@ end
 function _G.RemoveTooltip()
 end
 
---- Returns the angle that the clients view is being rendered at  
+--- Returns the angle that the clients view is being rendered at. Returns `angles` from the return value of render.GetViewSetup.  
+--- See also Global.EyeAngles.  
 --- @return GAngle @Render Angles
 function _G.RenderAngles()
 end
@@ -1464,10 +1473,10 @@ end
 function _G.RunStringEx()
 end
 
---- Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless noQuotes is true. Alias of sql.SQLStr  
---- ℹ **NOTE**: This function is not meant to be used with external database engines such as `MySQL`. Escaping strings with inadequate functions is dangerous!  
+--- Returns the input value in an escaped form so that it can safely be used inside of queries. The returned value is surrounded by quotes unless `noQuotes` is true. Alias of sql.SQLStr.  
+--- ⚠ **WARNING**: Do not use this function with external database engines such as `MySQL`. `MySQL` and `SQLite` use different escape sequences that are incompatible with each other! Escaping strings with inadequate functions is dangerous and will lead to SQL injection vulnerabilities.  
 --- @param input string @String to be escaped
---- @param noQuotes? boolean @Whether the returned value should be surrounded in quotes or not
+--- @param noQuotes? boolean @Set this as `true`, and the function will not wrap the input string in apostrophes.
 --- @return string @Escaped input
 function _G.SQLStr(input, noQuotes)
 end
@@ -2066,6 +2075,7 @@ end
 --- Automatically attempts to convert each argument to a string. (See Global.tostring)  
 --- Separates lines with a line break (`"\n"`)  
 --- Separates arguments with a tab character (`"\t"`).  
+--- Can only print up to `4096` characters at a time, and will stop at NULL character. (`"\0"`)  
 --- @vararg any @List of values to print.
 function _G.print(...)
 end

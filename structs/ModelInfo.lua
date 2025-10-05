@@ -20,11 +20,11 @@
 --- @field IllumPosition GVector @Illumination position for the model, for cases where the model root would be potentially outside of the world.
 --- @field HullMin GVector @Mins of the model's bounding box.
 --- @field HullMax GVector @Maxs of the model's bounding box.
---- @field Attachments table @A list of attachments the model has
---- @field Bones table @A list of bones the model has
---- @field Sequences table @A list of sequences the model has, including the ones from `$includemodel`s
+--- @field Attachments table[] @A list of attachments the model has
+--- @field Bones table[] @A list of bones the model has
+--- @field Sequences table[] @A list of sequences the model has, including the ones from `$includemodel`s
 --- @field Materials string[] @A list of materials the model uses, across all its meshes.
 --- @field MaterialDirectories string[] @A list of folders the game will look in for the **Materials**.
 --- @field IncludeModelCount number @Number of other models this model includes for their animations.
 --- @field IncludeModels string[] @The list of models this model includes for their animations.
---- @field HitBoxSets table @A list of hitbox sets this model has
+--- @field HitBoxSets table[] @A list of hitbox sets this model has

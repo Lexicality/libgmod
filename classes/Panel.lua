@@ -139,7 +139,7 @@ end
 
 --- Fades panels color to specified one.  
 --- ℹ **NOTE**: The panel must have `GetColor` and `SetColor` functions for `ColorTo` to work.  
---- @param color table @The color to fade to
+--- @param color GColor @The color to fade to
 --- @param length number @Length of the animation
 --- @param delay? number @Delay before start fading
 --- @param callback? function @Function to execute when finished
@@ -1153,6 +1153,7 @@ end
 
 --- Sets the alignment of the contents.  
 --- ℹ **NOTE**: This function only works on Label panels and its derivatives.  
+--- ℹ **NOTE**: This function doesnt work, if Panel:SetWrap is true.  
 --- @param alignment number @The direction of the content, based on the number pad
 function GPanel:SetContentAlignment(alignment)
 end
@@ -1241,6 +1242,7 @@ function GPanel:SetFGColor(r_or_color, g, b, a)
 end
 
 --- Sets the panel that owns this FocusNavGroup to be the root in the focus traversal hierarchy. This function will only work on EditablePanel class panels and its derivatives.  
+--- ℹ **NOTE**: Child panels that should be part of the tab navigation need Panel:SetTabPosition called on them.  
 --- @param state boolean 
 function GPanel:SetFocusTopLevel(state)
 end
@@ -1406,6 +1408,7 @@ function GPanel:SetSteamID(steamid, size)
 end
 
 --- When TAB is pressed, the next selectable panel in the number sequence is selected.  
+--- ℹ **NOTE**: This function requires Panel:SetFocusTopLevel to be called on the parent panel for tab navigation to work.  
 --- @param position number 
 function GPanel:SetTabPosition(position)
 end
@@ -1446,6 +1449,7 @@ function GPanel:SetToFullHeight()
 end
 
 --- Sets the tooltip to be displayed when a player hovers over the panel object with their cursor.  
+--- By default, DTooltip will be used. Panel:SetTooltipPanelOverride can be used to override the tooltip panel.  
 --- @param str? string @The text to be displayed in the tooltip
 function GPanel:SetTooltip(str)
 end

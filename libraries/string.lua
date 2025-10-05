@@ -57,7 +57,7 @@ end
 --- Returns the time as a formatted string or as a table if no format is given.  
 --- @param float number @The time in seconds to format.
 --- @param format? string @An optional formatting to use
---- @return string @Returns the time as a formatted string only if a format was specified
+--- @return string|SFormattedTime @Returns the time as a formatted string only if a format was specified
 function string.FormattedTime(float, format)
 end
 
@@ -77,6 +77,7 @@ function string.GetChar(str, index)
 end
 
 --- Returns extension of the file.  
+--- ℹ **NOTE**: Make sure there are no trailing whitespaces in your `path` argument  
 --- @param path string @The string eg
 --- @return string @File extension or `nil`.
 function string.GetExtensionFromFilename(path)

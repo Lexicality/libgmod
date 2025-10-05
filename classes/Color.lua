@@ -51,9 +51,8 @@ function GColor:AddWhiteness(whiteness)
 end
 
 --- Returns a copy of this color, usually so it can be safely modified later without affecting the original color.  
---- @param target GColor @The target color to copy.
 --- @return GColor @The copy of the given color, safe to modify.
-function GColor:Copy(target)
+function GColor:Copy()
 end
 
 --- Converts a Color into [HWB color space](https://en.wikipedia.org/wiki/HWB_color_model) and returns the "blackness" of the color.  
@@ -164,8 +163,14 @@ end
 function GColor:ToHWB()
 end
 
+--- Converts a Color to its hexadecimal representation.  
+--- @param arg? boolean @Whether to forcibly omit the alpha channel from the output.
+--- @return string @The hexadecimal representation of the color
+function GColor:ToHex(arg)
+end
+
 --- Returns the color as a table (an array or a list) with four elements.  
---- @return table @The table with elements 1 = r, 2 = g, 3 = b, 4 = a,( `{ r, g, b, a }` )
+--- @return number[] @The table with elements 1 = r, 2 = g, 3 = b, 4 = a,( `{ r, g, b, a }` )
 function GColor:ToTable()
 end
 

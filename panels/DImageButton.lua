@@ -38,7 +38,7 @@ function PANEL:SetIcon()
 end
 
 --- Sets the "image" of the DImageButton. Equivalent of DImage:SetImage.  
---- @param strImage string @The path of the image to load
+--- @param strImage string @The path of the image to load, relative to the `materials/` folder
 --- @param strBackup? string @The path of the backup image.
 function PANEL:SetImage(strImage, strBackup)
 end

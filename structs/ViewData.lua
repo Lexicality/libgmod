@@ -27,5 +27,5 @@
 --- @field zfarviewmodel number @The distance of the view's origin to the far clipping plane for the viewmodel
 --- @field dopostprocess? boolean @Currently works identically to the "bloomtone" option (it also overrides it if you set this to false).
 --- @field bloomtone? boolean @Disables default engine bloom and pauses the "brightness changes" on HDR maps.
---- @field viewid? number @This is identifying which logical part of the scene an entity is being redered in, see Enums/VIEW.
+--- @field viewid? EVIEW @This is identifying which logical part of the scene an entity is being redered in, see Enums/VIEW.
 --- @field offcenter table @This allows you to "zoom in" on a part of the screen - for example, the top-left quarter of the screen

@@ -18,11 +18,12 @@ end
 function ents.CreateClientProp(model)
 end
 
---- Creates a clientside only rope, similar to those used by the DOG model from Half-Life 2.  
+--- Creates a clientside only rope, similar to those used by the Dog and Fast Zombie models from Half-Life 2.  
+--- Created ropes will be automatically cleaned up when one of the attached entities is removed.  
 --- @param ent1 GEntity @The first entity to attach the rope to.
---- @param ent1attach number @The attachment ID on the first entity to attach the rope to.
+--- @param ent1attach number|GVector @The attachment ID on the first entity to attach the rope to, or a local Vector relative to the first entity.
 --- @param ent2 GEntity @The second entity to attach the rope to.
---- @param ent2attach GEntity @The attachment ID on the second entity to attach the rope to.
+--- @param ent2attach number|GVector @The attachment ID on the second entity to attach the rope to, or a local Vector relative to the second entity.
 --- @param extra? table @Extra optional settings for the rope
 --- @return GEntity @Created entity (`C_RopeKeyframe`).
 function ents.CreateClientRope(ent1, ent1attach, ent2, ent2attach, extra)
@@ -155,8 +156,6 @@ end
 --- See player.Iterator for a similar function for all players.  
 --- Internally, this function uses cached values that exist entirely within lua, as opposed to ents.GetAll, which is a C++ function.  
 --- Because switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than ents.GetAll.  
---- ℹ **NOTE**: The GM:OnEntityCreated and GM:EntityRemoved hooks are used internally to invalidate this function's cache. Using this function inside those hooks is not guaranteed to use an up-to-date cache because hooks are currently executed in an arbitrary order.  
---- ⚠ **WARNING**: An error being thrown inside the GM:OnEntityCreated or GM:EntityRemoved hooks is likely to break this function. Make it certain that no addons are causing any errors in those hooks.  
 --- @return function @The Iterator Function from ipairs
 --- @return GEntity[] @Table of all existing Entities
 --- @return number @The starting index for the table of players

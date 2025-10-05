@@ -2,6 +2,12 @@
 
 --- The ai library.  
 _G.ai = {}
+--- Returns the number of AI nodes on the map, used by the base game NPCs.  
+--- For nextbots, see navmesh.  
+--- @return number @The node count.
+function ai.GetNodeCount()
+end
+
 --- Translates a schedule name to its corresponding ID.  
 --- @param sched string @Then schedule name
 --- @return number @The schedule ID, see Enums/SCHED

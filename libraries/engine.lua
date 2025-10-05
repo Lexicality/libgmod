@@ -102,7 +102,7 @@ end
 --- Returns the time interval between each game tick in seconds.  
 --- This function is useful for making animations (usually serverside, such as doors rotating) and similar things to be independent of the tickrate in hooks that run at the tick rate, such as GM:Tick.  
 --- Clientside you'd want to use Global.FrameTime for this purpose in hooks that run every frame.  
---- The default tickrate is `66.6666`, aka `16` milliseconds interval between each game tick.  
+--- The default tickrate is `66.6666`, aka `15` milliseconds interval between each game tick.  
 --- The tickrate can be adjusted via the `-tickrate` [command line option](Command_Line_Parameters).  
 --- @return number @Number of seconds between each gametick.
 function engine.TickInterval()

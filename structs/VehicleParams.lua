@@ -4,7 +4,7 @@
 --- @class SVehicleParams
 --- @field wheelsPerAxle number @Wheels per axle
 --- @field axleCount number @Number of axles
---- @field axles table @A table of Structures/VehicleParamsAxle tables.
---- @field body table @See Structures/VehicleParamsBody
---- @field engine table @See Structures/VehicleParamsEngine
---- @field steering table @See Structures/VehicleParamsSteering
+--- @field axles SVehicleParamsAxle[] @A table of Structures/VehicleParamsAxle tables.
+--- @field body SVehicleParamsBody @See Structures/VehicleParamsBody
+--- @field engine SVehicleParamsEngine @See Structures/VehicleParamsEngine
+--- @field steering SVehicleParamsSteering @See Structures/VehicleParamsSteering

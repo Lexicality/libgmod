@@ -35,7 +35,7 @@
 --- @field DrawWeaponInfoBox? boolean @Should draw the weapon selection info
 --- @field DrawAmmo? boolean @Should we draw the default HL2 ammo counter?
 --- @field DrawCrosshair? boolean @Should we draw the default crosshair?
---- @field RenderGroup number @The SWEP render group, see Enums/RENDERGROUP
+--- @field RenderGroup ERENDERGROUP @The SWEP render group, see Enums/RENDERGROUP
 --- @field Slot? number @Slot in the weapon selection menu, starts with `0`
 --- @field SlotPos? number @Position in the slot, should be in the range `0-128`
 --- @field SpeechBubbleLid? number @Internal variable for drawing the info box in weapon selection
@@ -183,11 +183,11 @@ end
 function SWEP:EquipAmmo(ply)
 end
 
---- Called before firing animation events, such as muzzle flashes or shell ejections.  
---- This will only be called serverside for 3000-range events, and clientside for 5000-range  and other events.  
+--- Called before executing an animation event, such as a muzzle flash appearing or a shell ejecting.  
+--- This will only be called serverside for 3000-range events, and clientside for 5000-range and other events.  
 --- @param pos GVector @Position of the effect.
 --- @param ang GAngle @Angle of the effect.
---- @param event number @The event ID of happened even
+--- @param event number @The event ID of the happened event
 --- @param options string @Name or options of the event.
 --- @param source GEntity @The source entity
 --- @return boolean @Return true to disable the effect.
@@ -269,6 +269,21 @@ end
 function SWEP:KeyValue(key, value)
 end
 
+--- Called internally during `TASK_RANGE_ATTACK1 --> OnRangeAttack1`. This allows you to separate your SWEPs primary firing function from players and NPCs.  
+--- To get the delay the NPC will fire again, you can call `self:GetOwner():GetInternalVariable("m_flNextAttack")`  
+--- ℹ **NOTE**: This hook is called internally only for NPCs that has `CAP_USE_SHOT_REGULATOR` set.  
+--- @param shootPos? GVector @The world position the NPC will use as attack starting position
+--- @param shootDir? GVector @The direction the NPC wants to shoot at.
+function SWEP:NPCShoot_Primary(shootPos, shootDir)
+end
+
+--- A utility function to seperate your SWEPs secondary firing from players.  
+--- Unlike WEAPON:NPCShoot_Primary, this won't be called by the engine for `TASK_RANGE_ATTACK2`.  
+--- @param shootPos? GVector @The world position the NPC will use as attack starting position
+--- @param shootDir? GVector @The direction the NPC wants to shoot at.
+function SWEP:NPCShoot_Secondary(shootPos, shootDir)
+end
+
 --- Called when weapon is dropped by Player:DropWeapon.  
 --- See also WEAPON:OwnerChanged.  
 --- @param owner GEntity @The entity that dropped the weapon.
@@ -306,6 +321,7 @@ end
 --- @param vm GEntity @This is the view model entity before it is drawn.
 --- @param weapon GWeapon @This is the weapon that is from the view model.
 --- @param ply GPlayer @The the owner of the view model.
+--- @return boolean @Return `true` to prevent the default action of rendering the view model
 function SWEP:PreDrawViewModel(vm, weapon, ply)
 end
 
@@ -401,8 +417,9 @@ end
 function SWEP:Tick()
 end
 
---- Translate a player's Activity into a weapon's activity, depending on how you want the player to be holding the weapon.  
---- For example, ACT_MP_RUN becomes ACT_HL2MP_RUN_PISTOL.  
+--- Translate a generic activity into a more specific activity, such as holdtype-specific activities.  
+--- The translated activity is then used to request animations from the owner's model via Entity:SelectWeightedSequence and similar functions.  
+--- For example, `ACT_MP_RUN` becomes `ACT_HL2MP_RUN_PISTOL`.  
 --- @param act EACT @The activity to translate
 --- @return EACT @The translated activity
 function SWEP:TranslateActivity(act)

@@ -181,7 +181,7 @@ end
 --- Returns the texture id of the material with the given name/path, for use with surface.SetTexture.  
 --- Opposite version of this function is surface.GetTextureNameByID.  
 --- ℹ **NOTE**: This function will not work with .png or .jpg images. For that, see Global.Material. You will probably want to use it regardless.  
---- @param name_or_path string @Name or path of the texture.
+--- @param name_or_path string @Name or path of the texture
 --- @return number @The texture ID
 function surface.GetTextureID(name_or_path)
 end
@@ -258,12 +258,16 @@ end
 function surface.SetMaterial(material)
 end
 
---- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers.  
+--- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by providing a Color.  
 --- @param r number @The red value of color.
 --- @param g number @The green value of color
 --- @param b number @The blue value of color
 --- @param a? number @The alpha value of color
 function surface.SetTextColor(r, g, b, a)
+end
+--- Set the color of any future text to be drawn, can be set by either using R, G, B, A as separate numbers or by providing a Color.  
+--- @param color table @A Color object/table to read the color from
+function surface.SetTextColor(color)
 end
 
 --- Set the top-left position to draw any future text at.  

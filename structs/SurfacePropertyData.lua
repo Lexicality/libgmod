@@ -11,7 +11,7 @@
 --- @field roughThreshold number @Roughness threshold for friction sounds
 --- @field climbable number @Indicates whether or not the surface is a ladder
 --- @field jumpFactor number @Scalar multiplier for player jump height - or more accurately, applied z-axis velocity on a surface
---- @field material number @The surface material
+--- @field material EMAT @The surface material
 --- @field maxSpeedFactor number @Scalar multiplier for player speed
 --- @field dampening number @This is the physical drag on an object when in contact with this surface (0 - x, 0 none to x a lot).
 --- @field density number @Material density in kg / m^3 (water is 1000)

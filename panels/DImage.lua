@@ -36,7 +36,7 @@ end
 
 --- Sets the image to load into the frame. If the first image can't be loaded and `strBackup` is set, that image will be loaded instead.  
 --- This eventually calls DImage:SetMaterial.  
---- @param strImage string @The path of the image to load
+--- @param strImage string @The path of the image to load, relative to the `materials/` folder
 --- @param strBackup? string @The path of the backup image.
 function PANEL:SetImage(strImage, strBackup)
 end

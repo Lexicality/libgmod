@@ -19,6 +19,11 @@ end
 function PANEL:CleanList()
 end
 
+--- Hides all child panels, and optionally deletes them.  
+--- @param remove boolean @Whether to actually delete the panels, not just hide them.
+function PANEL:Clear(remove)
+end
+
 --- Enables/creates the vertical scroll bar so that the panel list can be scrolled through.  
 function PANEL:EnableVerticalScrollbar()
 end

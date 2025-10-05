@@ -262,7 +262,8 @@ end
 function GPlayer:ExitVehicle()
 end
 
---- Enables/Disables the player's flashlight.Player:CanUseFlashlight must be true in order for the player's flashlight to be changed.  
+--- Enables/Disables the player's flashlight.  
+--- Player:CanUseFlashlight must be true in order for the player's flashlight to be changed.  
 --- @param isOn boolean @Turns the flashlight on/off
 function GPlayer:Flashlight(isOn)
 end
@@ -280,7 +281,6 @@ end
 
 --- Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to Player:Lock but the player can still take damage.  
 --- Adds or removes the FL_FROZEN flag from the player.  
---- 🦟 **BUG**: Frozen bots will still be able to look around.  
 --- @param frozen? boolean @Whether the player should be frozen.
 function GPlayer:Freeze(frozen)
 end
@@ -708,6 +708,7 @@ function GPlayer:GetWeapons()
 end
 
 --- Gives the player a weapon.  
+--- This function will call GM:PlayerCanPickupWeapon. If that hook returns false, this function will do nothing.  
 --- ℹ **NOTE**: While this function is meant for weapons/pickupables only, it is **not** restricted to weapons. Any entity can be spawned using this function, including NPCs and SENTs.  
 --- @param weaponClassName string @Class name of weapon to give the player
 --- @param bNoAmmo? boolean @Set to true to not give any ammo on weapon spawn
@@ -931,7 +932,6 @@ end
 
 --- Stops a player from using any inputs, such as moving, turning, or attacking. Key binds are still called. Similar to Player:Freeze but the player takes no damage.  
 --- Adds the FL_FROZEN and FL_GODMODE flags to the player.  
---- 🦟 **BUG**: Frozen bots will still be able to look around.  
 function GPlayer:Lock()
 end
 
@@ -964,6 +964,7 @@ function GPlayer:PacketLoss()
 end
 
 --- Unfreezes the props player is looking at. This is essentially the same as pressing reload with the physics gun, including double press for unfreeze all.  
+--- For freezing props, use PhysObj:EnableMotion.  
 --- @return number @Number of props unfrozen.
 function GPlayer:PhysgunUnfreeze()
 end
@@ -1034,6 +1035,7 @@ end
 
 --- Forces the player to say whatever the first argument is. Works on bots too.  
 --- ℹ **NOTE**: This function ignores the default chat message cooldown  
+--- ⚠ **WARNING**: The argument can only contain 126 characters. [Source SDK 2013](https://github.com/ValveSoftware/source-sdk-2013/blob/0d8dceea4310fde5706b3ce1c70609d72a38efdf/sp/src/game/server/client.cpp#L84-L86)  
 --- @param text string @The text to force the player to say.
 --- @param teamOnly? boolean @Whether to send this message to our own team only.
 function GPlayer:Say(text, teamOnly)
@@ -1133,7 +1135,7 @@ end
 function GPlayer:SetCurrentViewOffset(viewOffset)
 end
 
---- Activates a given DSP (Digital Signal Processor) effect on all sounds that the player hears.  
+--- Activates a given DSP (Digital Signal Processor) effect on all sounds that the player hears. This is equivalent to setting `dsp_player` convar on the player.  
 --- To apply a DSP effect to individual sounds, see CSoundPatch:SetDSP  
 --- @param dspEffectId number @The index of the DSP sound filter to apply
 --- @param fastReset boolean @If set to true the sound filter will be removed faster
@@ -1152,6 +1154,7 @@ function GPlayer:SetDuckSpeed(duckSpeed)
 end
 
 --- Sets the local angle of the player's view (may rotate body too if angular difference is large)  
+--- ℹ **NOTE**: This function works differently when the player is in a vehicle. In that case passing `Angle(0, 90, 0)` will have the player look forward (out the windshield) and `Angle(0, 0, 0)` will have them look to the right.  
 --- @param angle GAngle @Angle to set the view to
 function GPlayer:SetEyeAngles(angle)
 end
@@ -1283,7 +1286,7 @@ end
 
 --- Sets the player's sprint speed.  
 --- See also Player:GetRunSpeed, Player:SetWalkSpeed and Player:SetMaxSpeed.  
---- ℹ **NOTE**: player_default class run speed is: `240`  
+--- ℹ **NOTE**: player_default class run speed is: `400`  
 --- @param runSpeed number @The new sprint speed when `sv_friction` is below `10`
 function GPlayer:SetRunSpeed(runSpeed)
 end
@@ -1356,14 +1359,14 @@ function GPlayer:SetViewPunchVelocity(punchVel)
 end
 
 --- Sets the voice volume scale for given player on client. This value will persist from server to server, but will be reset when the game is shut down.  
---- ℹ **NOTE**: This doesn't work on bots, their scale will always be `1`.  
+--- ℹ **NOTE**: This doesn't work on bots, their scale will always be `1`. Does not work with multiruns.  
 --- @param arg number @The voice volume scale, where `0` is 0% and `1` is 100%.
 function GPlayer:SetVoiceVolumeScale(arg)
 end
 
 --- Sets the player's normal walking speed. Not sprinting, not slow walking `+walk`.  
 --- See also Player:SetSlowWalkSpeed, Player:GetWalkSpeed, Player:SetCrouchedWalkSpeed, Player:SetMaxSpeed and Player:SetRunSpeed.  
---- 🦟 **BUG**: [Using a speed of `0` can lead to prediction errors.](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
+--- 🦟 **BUG**: [Using a speed of `0` can lead to prediction errors, and can cause players to move at sv_maxvelocity](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
 --- ℹ **NOTE**: `player_default` class walk speed is: `200`.  
 --- @param walkSpeed number @The new walk speed when `sv_friction` is below `10`
 function GPlayer:SetWalkSpeed(walkSpeed)
@@ -1405,11 +1408,13 @@ end
 function GPlayer:SimulateGravGunPickup(ent, lightning)
 end
 
+--- ⚠ **WARNING**: The player must be respawned, otherwise they will be able to walk through doors and become invincible.  
 --- Starts spectate mode for given player. This will also affect the players movetype in some cases.  
 --- @param mode number @Spectate mode, see Enums/OBS_MODE.
 function GPlayer:Spectate(mode)
 end
 
+--- ⚠ **WARNING**: The player must be respawned, otherwise they will be able to walk through doors and become invincible.  
 --- Makes the player spectate the entity.  
 --- To get the applied spectated entity, use Player:GetObserverTarget.  
 --- @param entity GEntity @Entity to spectate.
@@ -1445,7 +1450,7 @@ end
 --- Returns the player's SteamID.  
 --- See Player:AccountID for a shorter version of the SteamID and Player:SteamID64 for the full SteamID.  
 --- It is recommended to use Player:SteamID64 over the other SteamID formats whenever possible.  
---- ℹ **NOTE**: In a `-multirun` environment, this will return `STEAM_0:0:0` (serverside) or `NULL` (clientside) for all "copies" of a player because they are not authenticated with Steam.  
+--- ℹ **NOTE**: In a `-multirun` environment, this will return `STEAM_ID_LAN` for all "copies" of a player because they are not authenticated with Steam.  
 --- For Bots this will return `BOT`.  
 --- @return string @"Text" representation of the player's SteamID.
 function GPlayer:SteamID()
@@ -1542,6 +1547,7 @@ end
 function GPlayer:UnLock()
 end
 
+--- ⚠ **WARNING**: The player must be respawned, otherwise they will be able to walk through doors and become invincible.  
 --- Stops the player from spectating another entity.  
 function GPlayer:UnSpectate()
 end
@@ -1552,9 +1558,10 @@ end
 
 --- @deprecated  
 --- 🛑 **DEPRECATED**:   
---- **This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use Player:SteamID64 or Player:SteamID instead, which are guaranteed to be unique to each player.  
+--- **This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use Player:SteamID64, Player:SteamID or Player:AccountID instead, which are guaranteed to be unique to each player.  
 --- Returns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.  
 --- ℹ **NOTE**: In Singleplayer, this function will always return 1.  
+--- 🦟 **BUG**: [In a `-multirun` environment, the value returned is different on the serverside and clientside.](https://github.com/Facepunch/garrysmod-issues/issues/6389)  
 --- @return number @The player's Unique ID
 function GPlayer:UniqueID()
 end
@@ -1584,7 +1591,6 @@ function GPlayer:ViewPunchReset(tolerance)
 end
 
 --- Returns the players voice volume, how loud the player's voice communication currently is, as a number in range of [0,1].  
---- Doesn't work on local player unless the `voice_loopback` convar is set to `1`.  
 --- @return number @The voice volume.
 function GPlayer:VoiceVolume()
 end

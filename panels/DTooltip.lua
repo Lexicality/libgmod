@@ -2,7 +2,9 @@
 
 --- @class DTooltip : DLabel
 --- 🚷 **INTERNAL**:   
---- The panel used internally for tool tips. See Panel:SetTooltip.  
+--- The panel used internally for tooltips. See Panel:SetTooltip for more information.  
+--- <upload src="70c/8de029dfe107ffc.gif" size="12567" name="October03-1797-gmod.gif">  
+--- </upload>  
 local PANEL = {}
 _G.DTooltip = PANEL;
 --- Forces the tooltip to close. This will remove the panel.  

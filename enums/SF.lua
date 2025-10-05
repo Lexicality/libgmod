@@ -24,7 +24,7 @@ _G.SF_FLOOR_TURRET_CITIZEN = 512
 _G.SF_NPC_ALTCOLLISION = 4096
 --- [Think outside PVS](https://developer.valvesoftware.com/wiki/NPC_Sensing)  
 _G.SF_NPC_ALWAYSTHINK = 1024
---- NPC Drops health kit when it dies  
+--- NPC Drops health kit when it dies. Also works on player.  
 _G.SF_NPC_DROP_HEALTHKIT = 8
 --- Fade Corpse  
 _G.SF_NPC_FADE_CORPSE = 512

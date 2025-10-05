@@ -3,6 +3,7 @@
 --- The concommand library is used to create console commands which can be used to network (basic) information & events between the client and the server.  
 _G.concommand = {}
 --- Creates a console command that runs a function in lua with optional autocompletion function and help text.  
+--- ⚠ **WARNING**: Clients can still run commands created only on the server. Always check permissions in the callback  
 --- 🦟 **BUG**: [This will fail if the concommand was previously removed with concommand.Remove in a different realm (creating a command on the client that was removed from the server and vice-versa).](https://github.com/Facepunch/garrysmod-issues/issues/1183)  
 --- @param name string @The command name to be used in console
 --- @param callback function @The function to run when the concommand is executed

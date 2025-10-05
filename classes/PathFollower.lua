@@ -3,17 +3,19 @@
 --- @class GPathFollower
 --- Path object for a NextBot NPC and bots created by player.CreateNextbot. Returned by Global.Path.  
 local GPathFollower = {}
---- If you created your path with type `"Chase"` this functions should be used in place of PathFollower:Update to cause the bot to chase the specified entity.  
+--- Computes the shortest path to the provided entity arg. PathFollower Object must have `Chase` type.  
+--- For PathFollower objects of the `Follow` type use PathFollower:Compute  
 --- @param bot GNextBot @The bot to update along the path
 --- @param ent GEntity @The entity we want to chase
 --- @param generator? function @A function that allows you to alter the path generation
 function GPathFollower:Chase(bot, ent, generator)
 end
 
---- Compute shortest path from bot to 'goal' via A* algorithm.  
+--- Compute shortest path from bot to 'goal' via A* algorithm. This only works if the PathFollower is the `Follow` Type.  
+--- For PathFollowers of the `Chase` Type see PathFollower:Chase  
 --- @param bot GNextBot @The nextbot we're generating for
 --- @param goal GVector @The target location, the goal.
---- @param generator? function @A function that allows you to alter the path generation
+--- @param generator? function @A function that allows you to alter the path generation by adjusting the "cost"
 --- @return boolean @* If returns true, path was found to the goal position
 function GPathFollower:Compute(bot, goal, generator)
 end

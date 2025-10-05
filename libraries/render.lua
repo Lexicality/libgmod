@@ -179,7 +179,7 @@ end
 function render.DrawQuad(vert1, vert2, vert3, vert4, color)
 end
 
---- Draws a quad.  
+--- Draws a quad. Expects material to be set by render.SetMaterial.  
 --- 🧱 **NOTE**: Requires a 3D rendering context  
 --- @param position GVector @Origin of the sprite.
 --- @param normal GVector @The face direction of the quad.
@@ -462,7 +462,7 @@ end
 
 --- Forces all future draw operations to use a specific IMaterial.  
 --- Because this is independent of a specific Entity, it can be used to change materials on static models that are part of maps.  
---- @param material GIMaterial @The IMaterial that will be used for all upcoming draw operations, or `nil` to stop overriding.
+--- @param material GIMaterial|nil @The IMaterial that will be used for all upcoming draw operations, or `nil` to stop overriding.
 function render.ModelMaterialOverride(material)
 end
 
@@ -470,7 +470,7 @@ end
 --- See also render.OverrideBlend.  
 --- ℹ **NOTE**: Doing surface draw calls with alpha set to 0 is a no-op and will never have any effect.  
 --- @param enable boolean @Enable or disable the override.
---- @param shouldWrite boolean @If the previous argument is true, sets whether the next rendering operations should write to the alpha channel or not
+--- @param shouldWrite? boolean @If the previous argument is true, sets whether the next rendering operations should write to the alpha channel or not
 function render.OverrideAlphaWriteEnable(enable, shouldWrite)
 end
 
@@ -569,9 +569,10 @@ end
 
 --- Pushes (Adds) a texture filter onto the magnification texture filter stack.  
 --- This will modify how textures are stretched to sizes larger than their native resolution for upcoming rendering and drawing operations.  
---- For a version of this same function that modifies filtering for texture sizes smaller than their native resolution, see render.PushFilterMin()  
---- Always be sure to call render.PopFilterMag() afterwards to avoid texture filtering problems.  
+--- For a version of this same function that modifies filtering for texture sizes smaller than their native resolution, see render.PushFilterMin  
+--- Always be sure to call render.PopFilterMag afterwards to avoid texture filtering problems.  
 --- For more detailed information and a usage example, see the texture minification and magnification render reference.  
+--- If current texture has more than 1 mipmap, this also sets the mipmap filter.  
 --- @param texFilterType number @The texture filter to use
 function render.PushFilterMag(texFilterType)
 end
@@ -798,9 +799,11 @@ end
 function render.SetShadowDistance(shadowDistance)
 end
 
---- Sets whether any future render operations will ignore shadow drawing.  
---- @param newState boolean 
-function render.SetShadowsDisabled(newState)
+--- Sets whether all shadow rendering should be disabled.  
+--- Internally sets `r_shadows_gamecontrol` convar, exactly like `shadow_control` does via its `SetShadowsDisabled` input.  
+--- 🦟 **BUG**: Currently broken due to internal bug. Will be fixed in the next update, as of 15 Sept 2025.  
+--- @param disable boolean @`true` to disable shadows, `false` to enable.
+function render.SetShadowsDisabled(disable)
 end
 
 --- Sets the Compare Function that all pixels affected by a draw operation will have their Stencil Buffer value tested against.  

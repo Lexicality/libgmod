@@ -129,6 +129,7 @@ _G.KEY_F4 = 95
 _G.KEY_F5 = 96
 _G.KEY_F6 = 97
 _G.KEY_F7 = 98
+--- ⚠ **WARNING**: By default, it serves as bind "load quick", which loads the save by forcing the player to exit the server.  
 _G.KEY_F8 = 99
 _G.KEY_F9 = 100
 _G.KEY_F10 = 101

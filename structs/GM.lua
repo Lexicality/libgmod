@@ -101,15 +101,16 @@ end
 function GM:CanCreateUndo(ply, undo)
 end
 
---- Called when a variable is edited on an Entity (called by `Edit Properties...` menu), to determine if the edit should be permitted.  
+--- Called when a variable is about to be edited on an Entity (called by `Edit Properties...` menu), to determine if the edit should be permitted.  
 --- See Editable entities for more details about the system.  
+--- By default, Sandbox will also call ENTITY:CanEditVariables if no hook returns a value.  
 --- @param ent GEntity @The entity being edited.
 --- @param ply GPlayer @The player doing the editing.
 --- @param key string @The name of the variable.
---- @param val string @The new value, as a string which will later be converted to its appropriate type.
+--- @param value string @The new value, as a string which will later be converted to its appropriate type.
 --- @param editor table @The edit table defined in Entity:NetworkVar.
---- @return boolean @Return true to allow editing.
-function GM:CanEditVariable(ent, ply, key, val, editor)
+--- @return boolean @Return `false` to disallow editing.
+function GM:CanEditVariable(ent, ply, key, value, editor)
 end
 
 --- Determines if the player can exit the vehicle on their own. Player:ExitVehicle will bypass this hook.  
@@ -130,9 +131,9 @@ end
 function GM:CanPlayerEnterVehicle(player, vehicle, role)
 end
 
---- Determines if the player can kill themselves using the concommands `kill` or `explode`.  
+--- Determines if the player can kill themselves using the `kill` or `explode` console commands.  
 --- @param player GPlayer @The player
---- @return boolean @True if they can suicide.
+--- @return boolean @`true` if the player should be allowed to suicide, `false` if not.
 function GM:CanPlayerSuicide(player)
 end
 
@@ -323,7 +324,7 @@ end
 function GM:EntityRemoved(ent, fullUpdate)
 end
 
---- Called when an entity takes damage. You can modify all parts of the damage info in this hook.  
+--- Called when an entity is about to take damage. You can modify all parts of the damage info in this hook or completely block the damage event.  
 --- See GM:PostEntityTakeDamage if you wish to hook the final damage event.  
 --- ⚠ **WARNING**: Applying damage from this hook to the entity taking damage will lead to infinite loop/crash.  
 --- @param target GEntity @The entity taking damage
@@ -683,6 +684,7 @@ function GM:OnAchievementAchieved(ply, achievement)
 end
 
 --- Called when the local player presses TAB while having their chatbox opened.  
+--- ⚠ **WARNING**: This function now uses player.Iterator. This means it can't run all the time, as an error in the GM:OnEntityCreated or GM:EntityRemoved hooks is likely to interrupt it. Make sure that no addon causes an error in these hooks.  
 --- @param text string @The currently typed into chatbox text
 --- @return string @What should be placed into the chatbox instead of what currently is when player presses tab
 function GM:OnChatTab(text)
@@ -726,7 +728,7 @@ end
 function GM:OnContextMenuOpen()
 end
 
---- Called when the crazy physics detection detects an entity with Crazy Physics.  
+--- Called when the crazy physics detection detects an entity with crazy physics, i.e. position being far outside of the map, velocities being near or at infinity, etc. The primary reason for this system is to prevent program crashes in physics engine.  
 --- @param ent GEntity @The entity that was detected as crazy
 --- @param physobj GPhysObj @The physics object that is going crazy
 function GM:OnCrazyPhysics(ent, physobj)
@@ -740,7 +742,7 @@ end
 
 --- Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.  
 --- ℹ **NOTE**: Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with Global.IsValid. Will not require Global.IsValid check if you create your hook after GM:InitPostEntity.  
---- ⚠ **WARNING**: Removing the created entity during this event can lead to unexpected problems. Use timer.Simple( 0, .... ) to safely remove the entity.  
+--- ⚠ **WARNING**: Removing the created entity during this event can lead to unexpected problems. Use Global.SafeRemoveEntityDelayed( entity, 0 ) to safely remove the entity.  
 --- @param entity GEntity @The entity
 function GM:OnEntityCreated(entity)
 end
@@ -773,6 +775,15 @@ end
 function GM:OnLuaError(error, realm, stack, name, id)
 end
 
+--- Called whenever an NPC drops an item upon its death, such as health kits, armor batteries, etc.  
+--- It will NOT be called for dropped weapons, with exception of Half-Life: Source NPCs, since they don't use actual weapon entities and create a weapon entity on death.  
+--- GM:PlayerDroppedWeapon works for NPC weapon drops already. (Yes, it's not a typo)  
+--- It will also not be called for live grenades spawned by Zombine.  
+--- @param npc GNPC @The killed NPC
+--- @param item GEntity @The item that got dropped by the NPC.
+function GM:OnNPCDropItem(npc, item)
+end
+
 --- Called whenever an NPC is killed.  
 --- @param npc GNPC @The killed NPC
 --- @param attacker GEntity @The NPCs attacker, the entity that gets the kill credit, for example a player or an NPC.
@@ -787,7 +798,6 @@ function GM:OnPauseMenuShow()
 end
 
 --- Called when a player freezes an entity with the physgun.  
---- 🦟 **BUG**: [This is not called for players or NPCs being held with the physgun.](https://github.com/Facepunch/garrysmod-issues/issues/723)  
 --- @param weapon GEntity @The weapon that was used to freeze the entity.
 --- @param physobj GPhysObj @Physics object of the entity.
 --- @param ent GEntity @The target entity.
@@ -975,7 +985,8 @@ function GM:PlayerButtonUp(ply, button)
 end
 
 --- Decides whether a player can hear another player using voice chat.  
---- ⚠ **WARNING**: This hook is called **several** times a tick, so ensure your code is efficient.  
+--- ⚠ **WARNING**: This hook is called game.MaxPlayers * game.MaxPlayers times every 0.3 seconds if at least 1 player is talking, if no one is talking its called every 5 seconds.  
+--- You should ensure that your code is efficient, or this will definitely influence performance.  
 --- @param listener GPlayer @The listening player.
 --- @param talker GPlayer @The talking player.
 --- @return boolean @Return `true` if the listener should hear the talker, `false` if they shouldn't.
@@ -992,6 +1003,8 @@ function GM:PlayerCanJoinTeam(ply, team)
 end
 
 --- Returns whether or not a player is allowed to pick an item up. (ammo, health, armor)  
+--- This will typically only work for base game entities, unless mod authors that implement similar entities also manually call this hook.  
+--- See GM:PlayerCanPickupWeapon for a hook that controls weapon pickups.  
 --- @param ply GPlayer @Player attempting to pick up
 --- @param item GEntity @The item the player is attempting to pick up
 --- @return boolean @Allow pick up
@@ -999,10 +1012,12 @@ function GM:PlayerCanPickupItem(ply, item)
 end
 
 --- Returns whether or not a player is allowed to pick up a weapon.  
---- If this returns false, Player:Give won't work.  
+--- If this returns `false`, Player:Give won't work.  
+--- See GM:PlayerCanPickupItem for a hook that affects things like health kits, armor batteries and ammo entities.  
+--- See GM:WeaponEquip for a hook that is called when a player successfully picks up a weapon after passing this hook.  
 --- @param ply GPlayer @The player attempting to pick up the weapon.
 --- @param weapon GWeapon @The weapon entity in question.
---- @return boolean @Allowed pick up or not.
+--- @return boolean @`false` to disallow pickup.
 function GM:PlayerCanPickupWeapon(ply, weapon)
 end
 
@@ -1080,13 +1095,13 @@ end
 function GM:PlayerDriveAnimate(ply)
 end
 
---- Called when a weapon is dropped by a player via Player:DropWeapon.  
+--- Called when a weapon is dropped by a player via Player:DropWeapon. Despite its name, this hook is also called for NPC weapon drops.  
 --- Also called when a weapon is removed from a player via Player:StripWeapon.  
 --- See also GM:WeaponEquip for a hook when a player picks up a weapon.  
 --- The weapon's Entity:GetOwner will be NULL at the time this hook is called.  
 --- WEAPON:OnDrop will be called before this hook is.  
---- @param owner GPlayer @The player who owned this weapon before it was dropped
---- @param wep GWeapon @The weapon that was dropped
+--- @param owner GPlayer|GNPC @The player or NPC who owned this weapon before it was dropped.
+--- @param wep GWeapon @The weapon that was dropped.
 function GM:PlayerDroppedWeapon(owner, wep)
 end
 
@@ -1157,36 +1172,6 @@ end
 --- Called when the player spawns for the first time.  
 --- See GM:PlayerSpawn for a hook called every player spawn.  
 --- ℹ **NOTE**: This hook is called before the player has fully loaded, when the player is still in seeing the `Starting Lua` screen. For example, trying to use the Entity:GetModel function will return the default model (`models/player.mdl`).  
---- ℹ **NOTE**: You can send net messages starting from the [player_activate](gameevent/player_activate) game event.  
---- ⚠ **WARNING**: Due to the above note, sending net messages to the spawned player in this hook are highly unreliable, and they most likely won't be received (more information here: https://github.com/Facepunch/garrysmod-requests/issues/718).  
---- Workaround without networking:  
---- ```  
---- local load_queue = {}  
---- hook.Add( "PlayerInitialSpawn", "myAddonName/Load", function( ply )  
---- load_queue[ ply ] = true  
---- end )  
---- hook.Add( "StartCommand", "myAddonName/Load", function( ply, cmd )  
---- if load_queue[ ply ] and not cmd:IsForced() then  
---- load_queue[ ply ] = nil  
---- -- Send what you need here!  
---- end  
---- end )  
---- ```  
---- With networking:  
---- ```  
---- -- CLIENT  
---- hook.Add( "InitPostEntity", "Ready", function()  
---- net.Start( "cool_addon_client_ready" )  
---- net.SendToServer()  
---- end )  
---- ```  
---- ```  
---- -- SERVER  
---- util.AddNetworkString( "cool_addon_client_ready" )  
---- net.Receive( "cool_addon_client_ready", function( len, ply )  
---- -- Send what you need here!  
---- end )  
---- ```  
 --- @param player GPlayer @The player who spawned.
 --- @param transition boolean @If `true`, the player just spawned from a map transition.
 function GM:PlayerInitialSpawn(player, transition)
@@ -1546,7 +1531,7 @@ end
 
 --- Called before the player hands are drawn.  
 --- See GM:PreDrawViewModel for the view model alternative.  
---- See GM:POstDrawPlayerHands for a hook that is called just before view model hands are drawn.  
+--- See GM:PostDrawPlayerHands for a hook that is called just before view model hands are drawn.  
 --- @param hands GEntity @This is the gmod_hands entity before it is drawn.
 --- @param vm GEntity @This is the view model entity before it is drawn.
 --- @param ply GPlayer @The the owner of the view model.
@@ -1700,6 +1685,7 @@ function GM:SendDeathNotice(attacker, inflictor, victim, flags)
 end
 
 --- Sets player run and sprint speeds.  
+--- 🦟 **BUG**: [Using a speed of `0` can lead to prediction errors, and can cause players to move at `sv_maxvelocity`](https://github.com/Facepunch/garrysmod-issues/issues/2030)  
 --- ⚠ **WARNING**: This is not a hook. Treat this as a utility function to set the player's speed.  
 --- @param ply GPlayer @The player to set the speed of.
 --- @param walkSpeed number @The walk speed.
@@ -1819,13 +1805,13 @@ end
 
 --- Called every game tick. engine.TickCount is guaranteed to be different between each call.  
 --- Server side, this is similar to GM:Think (See that page for details).  
---- The default tickrate is `66.6666` (16 millisecond intervals). It can be changed via the `-tickrate` [command line option](Command_Line_Parameters).  
+--- The default tickrate is `66.6666` (15 millisecond intervals). It can be changed via the `-tickrate` [command line option](Command_Line_Parameters).  
 --- See engine.TickInterval for a function to retrieve this data at runtime.  
 --- ℹ **NOTE**: This hook **WILL NOT** run if the server is empty, unless you set the ConVar `sv_hibernate_think` to 1  
 function GM:Tick()
 end
 
---- ℹ **NOTE**: Isn't call when CalcMainActivity return a valid override sequence id  
+--- ℹ **NOTE**: Isn't called when CalcMainActivity returns a valid override sequence id  
 --- Allows you to translate player activities.  
 --- @param ply GPlayer @The player
 --- @param act number @The activity
@@ -1870,8 +1856,9 @@ end
 function GM:VehicleMove(ply, veh, mv)
 end
 
---- Called as a weapon entity is picked up by a player.  
---- See also GM:PlayerDroppedWeapon.  
+--- Called as a weapon entity is picked up by a player. (Including Player:Give)  
+--- Contrary to the name of the hook, it is **not called** when the player switches their active weapon to another.  
+--- See also GM:PlayerDroppedWeapon and GM:PlayerCanPickupWeapon.  
 --- ℹ **NOTE**: At the time when this hook is called Entity:GetOwner will return `NULL`. The owner is set on the next frame.  
 --- ℹ **NOTE**: This will not be called when picking up a weapon you already have as the weapon will be removed and WEAPON:EquipAmmo will be called instead.  
 --- @param weapon GWeapon @The equipped weapon.

@@ -4,14 +4,6 @@
 --- This is a list of all available methods for all entities, which includes Players, Weapons, NPCs and Vehicles.  
 --- For a list of possible members of Scripted Entities see ENT Structure  
 local GEntity = {}
---- If set, the entity will not be duplicated via the built-in duplicator system.  
---- @type boolean
-GEntity.DoNotDuplicate = nil --[[@as boolean]]
-
---- A bool which determines if the Physgun can pickup this entity.  
---- @type boolean
-GEntity.PhysgunDisabled = nil --[[@as boolean]]
-
 --- Activates the entity. This needs to be used on some entities (like constraints) after being spawned.  
 --- ℹ **NOTE**: For some entity types when this function is used after Entity:SetModelScale, the physics object will be recreated with the new scale. [Source-sdk-2013](https://github.com/ValveSoftware/source-sdk-2013/blob/55ed12f8d1eb6887d348be03aee5573d44177ffb/mp/src/game/server/baseanimating.cpp#L321-L327).  
 --- Calling this method after Entity:SetModelScale will recreate a new scaled `SOLID_VPHYSICS` PhysObj on scripted entities. This can be a problem if you made a properly scaled PhysObj of another kind (using Entity:PhysicsInitSphere for instance) or if you edited the PhysObj's properties. This is especially the behavior of the Sandbox spawn menu.  
@@ -47,8 +39,8 @@ end
 --- See Entity:AddGestureSequence and Entity:AddLayeredSequence for functions that takes sequences instead of Enums/ACT.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param activity number @The activity to play as the gesture
---- @param autokill? boolean 
---- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions.
+--- @param autokill? boolean @Automatically remove the gesture when it fully plays (Entity:GetLayerCycle reaches 1).
+--- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions
 function GEntity:AddGesture(activity, autokill)
 end
 
@@ -57,7 +49,7 @@ end
 --- See also Entity:AddLayeredSequence.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
 --- @param sequence number @The sequence ID to play as the gesture
---- @param autokill? boolean 
+--- @param autokill? boolean @Automatically remove the gesture when it fully plays (Entity:GetLayerCycle reaches 1).
 --- @return number @Layer ID of the started gesture, used to manipulate the played gesture by other functions.
 function GEntity:AddGestureSequence(sequence, autokill)
 end
@@ -156,7 +148,7 @@ end
 
 --- Causes a specified function to be run if the entity is removed by any means. This can later be undone by Entity:RemoveCallOnRemove if you need it to not run.  
 --- ⚠ **WARNING**: This hook is called clientside during full updates. See GM:EntityRemoved for more information.  
---- ⚠ **WARNING**: An error being thrown inside `removeFunc` is likely break player.Iterator and ents.Iterator functions.  
+--- ⚠ **WARNING**: An error being thrown inside `removeFunc` will stop other `EntityRemoved` hooks from executing.  
 --- @param identifier string @Identifier that can be optionally used with Entity:RemoveCallOnRemove to undo this call on remove.
 --- @param removeFunc function @Function to be called on remove
 --- @vararg any @Optional arguments to pass to removeFunc
@@ -339,6 +331,20 @@ end
 function GEntity:FindBodygroupByName(name)
 end
 
+--- Searches the currently active layers for a layer playing animation with given activity.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- @param activity EACT @The activity to search for.
+--- @return number @A layer ID for given activity, or `-1` if not found.
+function GEntity:FindGestureLayer(activity)
+end
+
+--- Searches the currently active layers for a layer playing animation with given sequence.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- @param sequenceID number @The sequence ID to search for
+--- @return number @A layer ID for given activity, or `-1` if not found.
+function GEntity:FindGestureLayer(sequenceID)
+end
+
 --- Returns a transition from the given start and end sequence.  
 --- This function was only used by HL1 entities and NPCs, before the advent of sequence blending and gestures.  
 --- @param currentSequence number @The currently playing sequence
@@ -493,7 +499,7 @@ end
 
 --- Returns the amount of bones in the entity.  
 --- ℹ **NOTE**: Will return `0` for Global.ClientsideModel or undrawn entities until Entity:SetupBones is called on the entity.  
---- @return number @The amount of bones in given entity.
+--- @return number @The amount of bones in given entity, starting at index 0.
 function GEntity:GetBoneCount()
 end
 
@@ -596,10 +602,11 @@ end
 function GEntity:GetClass()
 end
 
---- Returns an entity's collision bounding box. In most cases, this will return the same bounding box as Entity:GetModelBounds unless the entity does not have a physics mesh or it has a PhysObj different from the default.  
---- 🦟 **BUG**: [This can be out-of-sync between the client and server for weapons.](https://github.com/Facepunch/garrysmod-issues/issues/223)  
---- @return GVector @The minimum vector of the collision bounds
---- @return GVector @The maximum vector of the collision bounds
+--- Returns an entity's collision bounding box.  
+--- In most cases, this will return the same bounding box as Entity:GetModelBounds unless the entity does not have a physics mesh or it has a PhysObj different from the default.  
+--- Collision bounds can be previewed in singleplayer via `ent_bbox` console command, while looking at a desired entity and with `developer 1`. (Will appear as an orange wireframe box)  
+--- @return GVector @The minimum vector of the collision bounds, basically Entity:OBBMins.
+--- @return GVector @The maximum vector of the collision bounds, basically Entity:OBBMaxs.
 function GEntity:GetCollisionBounds()
 end
 
@@ -1600,7 +1607,7 @@ end
 --- Refer to Entity:GetSequence to find the current active sequence on this entity.  
 --- See Entity:LookupSequence for a function that does the opposite.  
 --- @param index number @The index of the sequence to look up.
---- @return string @Name of the sequence, or `"Unknown"` if it was out of bounds.
+--- @return string @Name of the sequence, `"Unknown"` if it was out of bounds or `"Not Found!"` if -1 is provided.
 function GEntity:GetSequenceName(index)
 end
 
@@ -1916,7 +1923,7 @@ end
 function GEntity:IsPointInBounds(point)
 end
 
---- Checks if the entity is a ragdoll.  
+--- Checks if the entity is a ragdoll, or became a ragdoll. Internally checks whether [kRenderFXRagdoll](kRenderFX) is set.  
 --- @return boolean @Is ragdoll or not
 function GEntity:IsRagdoll()
 end
@@ -2008,10 +2015,12 @@ end
 function GEntity:LookupPoseParameter(name)
 end
 
---- Returns sequence ID from its name. See Entity:GetSequenceName for a function that does the opposite.  
+--- Returns sequence ID from either sequence name or activity name. See Entity:GetSequenceName for a function that does the opposite.  
+--- **Sequences** are animations tied to a specific model. Different models can have sequences with same names, but have different IDs.  
+--- Sequences can also be tied to certain activities (Enums/ACT), see Entity:SelectWeightedSequence.  
 --- @param name string @Sequence name
 --- @return number @Sequence ID for that name
---- @return number @The sequence duration
+--- @return number @The sequence duration, or `0` if the sequence is invalid or there's no sequence with given name on entity's current model.
 function GEntity:LookupSequence(name)
 end
 
@@ -2048,6 +2057,7 @@ end
 
 --- Sets custom bone scale.  
 --- 🦟 **BUG**: [This does not scale procedural bones.](https://github.com/Facepunch/garrysmod-issues/issues/3502)  
+--- ℹ **NOTE**: This silently fails when given a Vector with nan values, hiding the vertices associated with the bone. See example below.  
 --- @param boneID number @Index of the bone you want to manipulate
 --- @param scale GVector @Scale vector to apply
 function GEntity:ManipulateBoneScale(boneID, scale)
@@ -2140,17 +2150,20 @@ end
 function GEntity:NextThink(timestamp)
 end
 
---- Returns the center of an entity's bounding box in local space.  
+--- Returns the center of an entity's collision bounding box as a local vector.  
+--- See also Entity:GetCollisionBounds, Entity:OBBMins and Entity:OBBMaxs.  
 --- @return GVector @The center of an entity's bounding box relative to its Entity:GetPos.
 function GEntity:OBBCenter()
 end
 
---- Returns the highest corner of an entity's bounding box as a local vector.  
+--- Returns the highest corner of an entity's collision bounding box as a local vector.  
+--- See also Entity:GetCollisionBounds, Entity:OBBMins and Entity:OBBCenter.  
 --- @return GVector @The local position of the highest corner of the entity's oriented bounding box.
 function GEntity:OBBMaxs()
 end
 
---- Returns the lowest corner of an entity's bounding box as a local vector.  
+--- Returns the lowest corner of an entity's collision bounding box as a local vector.  
+--- See also Entity:GetCollisionBounds, Entity:OBBMaxs and Entity:OBBCenter.  
 --- @return GVector @The local position of the lowest corner of the entity's oriented bounding box.
 function GEntity:OBBMins()
 end
@@ -2209,7 +2222,7 @@ end
 --- If the entity's current model has no physics mesh associated to it, no physics object will be created and the previous object will still exist, if applicable.  
 --- ℹ **NOTE**: When called clientside, this will not create a valid PhysObj if the model hasn't been precached serverside.  
 --- If successful, this function will automatically call Entity:SetSolid( solidType ) and Entity:SetSolidFlags( 0 ).  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param solidType number @The solid type of the physics object to create, see Enums/SOLID
 --- @param massCenterOverride? GVector @If set, overwrites the center of mass for the created physics object.
@@ -2223,7 +2236,7 @@ end
 --- * Entity:SetMoveType( `MOVETYPE_VPHYSICS` )  
 --- * Entity:SetCollisionBounds( `mins`, `maxs` )  
 --- ℹ **NOTE**: If the volume of the resulting box is 0 (the mins and maxs are the same), the mins and maxs will be changed to Global.Vector( -1, -1, -1 ) and Global.Vector( 1, 1, 1 ), respectively.  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param mins GVector @The minimum position of the box
 --- @param maxs GVector @The maximum position of the box
@@ -2235,8 +2248,8 @@ end
 
 --- Initializes the physics mesh of the entity with a convex mesh defined by a table of points. The resulting mesh is the  of all the input points. If successful, the previous physics object will be removed.  
 --- This is the standard way of creating moving physics objects with a custom convex shape. For more complex, concave shapes, see Entity:PhysicsInitMultiConvex.  
---- 🦟 **BUG**: [This will crash if given all Global.Vector(0,0,0)s.](https://github.com/Facepunch/garrysmod-issues/issues/3301)  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- You may be expected to call Entity:SetSolid with desired solid type **before** calling this function.  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- You can use the following workaround for movement, though clientside collisions will still be broken.  
 --- ```  
 --- function ENT:Think()  
@@ -2258,7 +2271,8 @@ end
 
 --- An advanced version of Entity:PhysicsInitConvex which initializes a physics object from multiple convex meshes. This should be used for physics objects with a custom shape which cannot be represented by a single convex mesh.  
 --- If successful, the previous physics object will be removed.  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- You may be expected to call Entity:SetSolid with desired solid type **before** calling this function.  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param vertices table @A table consisting of tables of Vectors
 --- @param surfaceprop? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
@@ -2270,7 +2284,7 @@ end
 --- Initializes the entity's physics object as a physics shadow. Removes the previous physics object if successful. This is used internally for the Player's and NPC's physics object, and certain HL2 entities such as the crane.  
 --- A physics shadow can be used to have static entities that never move by setting both arguments to false.  
 --- The created physics object will depend on the entity's solidity `SOLID_NONE` will not create a physics object, `SOLID_BBOX` will create a Axis-Aligned BBox one, `SOLID_OBB` will create Orientated Bounding Box one, and anything else will use the models' physics mesh.  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param allowPhysicsMovement? boolean @Whether to allow the physics shadow to move under stress.
 --- @param allowPhysicsRotation? boolean @Whether to allow the physics shadow to rotate under stress.
@@ -2282,7 +2296,7 @@ end
 --- This function will automatically destroy any previous physics objects and do the following:  
 --- * Entity:SetSolid( `SOLID_BBOX` )  
 --- * Entity:SetMoveType( `MOVETYPE_VPHYSICS` )  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param radius number @The radius of the sphere.
 --- @param physmat? string @Physical material from [surfaceproperties.txt](https://github.com/Facepunch/garrysmod/blob/master/garrysmod/scripts/surfaceproperties.txt) o
@@ -2294,7 +2308,7 @@ end
 --- This is what used by entities such as `func_breakable`, `prop_dynamic`, `item_suitcharger`, `prop_thumper` and `npc_rollermine` while it is in its "buried" state in the Half-Life 2 Campaign.  
 --- If the entity's current model has no physics mesh associated to it, no physics object will be created.  
 --- ℹ **NOTE**: This function will automatically call Entity:SetSolid( `solidType` ).  
---- 🦟 **BUG**: [Clientside physics objects are broken and do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
+--- 🦟 **BUG**: [Clientside physics objects on serverside entities do not move properly in some cases. Physics objects should only created on the server or you will experience incorrect physgun beam position, prediction issues, and other unexpected behavior.](https://github.com/Facepunch/garrysmod-issues/issues/5060)  
 --- A workaround is available on the Entity:PhysicsInitConvex page.  
 --- @param solidType number @The solid type of the physics object to create, see Enums/SOLID
 --- @return boolean @Returns `true` on success, `false` otherwise
@@ -2343,6 +2357,7 @@ end
 
 --- Removes and stops all gestures.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- ℹ **NOTE**: Layer removal procedures aren't immediate. Layer removal functions actually manipulate Entity:GetLayerWeight down to 0, then remove the layer in next intervals. If the targeted layer's weight keeps changing, your layer will not be removed.  
 function GEntity:RemoveAllGestures()
 end
 
@@ -2379,8 +2394,9 @@ end
 function GEntity:RemoveFromMotionController(physObj)
 end
 
---- Removes and stops the gesture with given activity.  
+--- Removes and stops the gesture with given activity. Same as Entity:RemoveLayer with Entity:FindGestureLayer.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- ℹ **NOTE**: Layer removal procedures aren't immediate. Layer removal functions actually manipulate Entity:GetLayerWeight down to 0, then remove the layer in next intervals. If the targeted layer's weight keeps changing, your layer will not be removed.  
 --- @param activity number @The activity remove
 function GEntity:RemoveGesture(activity)
 end
@@ -2389,6 +2405,13 @@ end
 --- The visual mesh will still stretch as if it was properly connected unless the ragdoll model is specifically designed to avoid that.  
 --- @param num? number @Which constraint to break, values below 0 mean break them all
 function GEntity:RemoveInternalConstraint(num)
+end
+
+--- Removes the given layer by ID. See also Entity:RemoveGesture.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- ℹ **NOTE**: Layer removal procedures aren't immediate. Layer removal functions actually manipulate Entity:GetLayerWeight down to 0, then remove the layer in next intervals. If the targeted layer's weight keeps changing, your layer will not be removed.  
+--- @param layerID number @The layer ID to remove.
+function GEntity:RemoveLayer(layerID)
 end
 
 --- Removes solid flag(s) from the entity.  
@@ -2432,10 +2455,11 @@ function GEntity:RestartGesture(activity, addIfMissing, autokill)
 end
 
 --- Returns sequence ID corresponding to given activity ID.  
+--- Multiple sequences can be assigned to a single Enums/ACT, in which case a random one will be selected. This can be used for example to randomize idle animations (and is used for that by built-in weapons) without the need to code logic for this.  
+--- See also Entity:SelectWeightedSequenceSeeded.  
 --- Opposite of Entity:GetSequenceActivity.  
 --- Similar to Entity:LookupSequence.  
---- See also Entity:SelectWeightedSequenceSeeded.  
---- @param act number @The activity ID, see Enums/ACT.
+--- @param act EACT @The activity ID, see Enums/ACT.
 --- @return number @The sequence ID
 function GEntity:SelectWeightedSequence(act)
 end
@@ -2450,6 +2474,7 @@ end
 
 --- Sends sequence animation to the view model. It is recommended to use this for view model animations, instead of Entity:ResetSequence.  
 --- This function is only usable on view models.  
+--- ℹ **NOTE**: Predicted viewmodels will have their sequence and cycle reset during prediction checks, making this function appear to do nothing unless also called on the server.  
 --- @param seq number @The sequence ID returned by Entity:LookupSequence or  Entity:SelectWeightedSequence.
 function GEntity:SendViewModelMatchingSequence(seq)
 end
@@ -2506,6 +2531,7 @@ function GEntity:SetBodyGroups(subModelIds)
 end
 
 --- Sets the currently active Sub Model ID for the Body Group corresponding to the given Body Group ID of the Entity's model.  
+--- Bodygroups, for which Entity:GetBodygroupCount returns `1` or less are considered invalid, and will have no effect in-game.  
 --- ℹ **NOTE**: When used on a Weapon, this will modify its viewmodel.  
 --- @param bodyGroupId number @The Body Group ID to set the Sub Model ID of
 --- @param subModelId number @The Sub Model ID to set as active for this Body Group
@@ -2519,7 +2545,7 @@ end
 function GEntity:SetBoneController(boneControllerID, value)
 end
 
---- Sets the bone matrix of given bone to given matrix. See also Entity:GetBoneMatrix. Will cause a uncatchable error when used on `__INVALIDBONE__` bones. Can be caught with `if ent:GetBoneName(boneid) == "__INVALIDBONE__" then`  
+--- Sets the bone matrix of given bone to given matrix. See also Entity:GetBoneMatrix. Will cause a uncatchable error when used on `__INVALIDBONE__` bones, see the examples on a way to prevent this.  
 --- ℹ **NOTE**: Despite existing serverside, it does nothing.  
 --- @param boneid number @The ID of the bone
 --- @param matrix GVMatrix @The matrix to set.
@@ -2671,15 +2697,28 @@ end
 function GEntity:SetLagCompensated(enable)
 end
 
+--- Sets the autokill flag on the layer, making the layer be automatically removed once the animation playback finishes.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- @param layerID number @The layer ID to change.
+--- @param autoKill boolean @Whether to set or unset the autokill flag.
+function GEntity:SetLayerAutokill(layerID, autoKill)
+end
+
+--- Sets the interval the layer will fully blend in since startup, based on Entity:GetLayerCycle. Setting this above 0 will enable internal blending of Entity:GetLayerWeight.  
+--- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- 🦟 **BUG**: Enabling this will prevent looping gestures with autokill disabled to be removed with Entity:RemoveGesture or Entity:RemoveAllGestures because layer removal functions mark the layer to decrement Entity:GetLayerWeight and unallocate layer ID in next frames if the layer weight is `0`, but blending functions will still keep manipulating layer weight.  
+--- Therefore; before calling layer cleanup functions, make sure both Entity:SetLayerBlendIn and Entity:SetLayerBlendOut are set to `0`.  
 --- @param layerID number @The Layer ID
---- @param blendIn number 
+--- @param blendIn number @Blend range from 0 to 1.
 function GEntity:SetLayerBlendIn(layerID, blendIn)
 end
 
+--- Sets the interval the layer will fully blend out, based on Entity:GetLayerCycle. Setting this above 0 will enable internal blending of Entity:GetLayerWeight.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entites!  
+--- 🦟 **BUG**: Enabling this will prevent looping gestures with autokill disabled to be removed with Entity:RemoveGesture or Entity:RemoveAllGestures because layer removal functions mark the layer to decrement Entity:GetLayerWeight and unallocate layer ID in next frames if the layer weight is `0`, but blending functions will still keep manipulating layer weight.  
+--- Therefore; before calling layer cleanup functions, make sure both Entity:SetLayerBlendIn and Entity:SetLayerBlendOut are set to `0`.  
 --- @param layerID number @The Layer ID
---- @param blendOut number 
+--- @param blendOut number @Blend range from 0 to 1.
 function GEntity:SetLayerBlendOut(layerID, blendOut)
 end
 
@@ -2692,6 +2731,7 @@ end
 
 --- Sets the duration of given layer. This internally overrides the Entity:SetLayerPlaybackRate.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entities.  
+--- 🦟 **BUG**: This stops layer playback if layer sequence conists of 1 frame. Use `Entity:SetLayerPlaybackRate(layerID,1/duration)` instead.  
 --- @param layerID number @The Layer ID
 --- @param duration number @The new duration of the layer in seconds.
 function GEntity:SetLayerDuration(layerID, duration)
@@ -2727,6 +2767,7 @@ end
 
 --- Sets the layer weight. This influences how strongly the animation should be overriding the normal animations of the entity.  
 --- ℹ **NOTE**: This function only works on BaseAnimatingOverlay entities.  
+--- ℹ **NOTE**: Setting either Entity:SetLayerBlendIn or Entity:SetLayerBlendOut above 0 will turn on automatic weight blending, so you shouldn't be using this if you use any of above.  
 --- @param layerID number @The Layer ID
 --- @param weight number @The new layer weight.
 function GEntity:SetLayerWeight(layerID, weight)
@@ -2754,6 +2795,7 @@ function GEntity:SetLocalAngularVelocity(angVel)
 end
 
 --- Sets local position relative to the parented position. This is for use with Entity:SetParent to offset position.  
+--- This is also used by NPCs for interpolated movement. If you use Entity:SetPos for step movement, your NPC will snap to position instead.  
 --- @param pos GVector @The local position
 function GEntity:SetLocalPos(pos)
 end
@@ -3595,7 +3637,7 @@ end
 function GEntity:SetupPhonemeMappings(fileRoot)
 end
 
---- Returns the amount of skins the entity has.  
+--- Returns the amount of skins the entity has. To retrieve the total number of skins on a model, please look at this function util.GetModelInfo  
 --- @return number @The amount of skins the entity's model has.
 function GEntity:SkinCount()
 end

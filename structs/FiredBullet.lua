@@ -8,4 +8,4 @@
 --- @field Damage number @The amount of damage dealt by the bullet
 --- @field Force number @The physics impact force of the bullet.
 --- @field Tracer number @A whole integer number that controls the frequency of visible bullet tracers
---- @field Trace table @The Structures/TraceResult from the Trace that determined where and what the bullet hit.
+--- @field Trace STraceResult @The Structures/TraceResult from the Trace that determined where and what the bullet hit.

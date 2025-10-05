@@ -1,8 +1,10 @@
 --- @meta
 
 --- @class GIMaterial
---- A Material object. It represents a game material, similarly to how a .vmt file does.  
---- It can be created with Global.Material or Global.CreateMaterial.  
+--- A Material object. It represents a game material, similarly to how a `.vmt` file does, which are in fact loaded into an **IMaterial** object.  
+--- In most cases the game works with materials as far as file paths go. Materials then point to different ITextures (`.vtf` files) they might be using.  
+--- They are not the same and cannot be interchanged.  
+--- A material object can be created with Global.Material or Global.CreateMaterial.  
 local GIMaterial = {}
 --- Returns the color of the specified pixel of the `$basetexture`, only works for materials created from PNG files.  
 --- Basically identical to ITexture:GetColor used on IMaterial:GetTexture`( "$basetexture" )`.  

@@ -114,7 +114,8 @@ end
 function GNextBot:SetSolidMask(mask)
 end
 
---- Start doing an activity (animation)  
+--- Start doing an activity (animation).  
+--- This function may not produce the desired result if Entity:SetModel has not yet been called on the nextbot entity  
 --- @param activity number @One of the Enums/ACT
 function GNextBot:StartActivity(activity)
 end

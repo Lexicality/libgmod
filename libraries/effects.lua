@@ -33,3 +33,12 @@ end
 --- @param delay? number @Delay in seconds after the function call and before the effect actually spawns.
 function effects.Bubbles(mins, maxs, count, height, speed, delay)
 end
+
+--- Imitates the "near miss" tracer sound, with the ability to override the sound played.  
+--- The frequency of the sound is limited internally, as to not overwhelm the player. (same as normal tracers)  
+--- @param start GVector @Start position of the tracer.
+--- @param endpos GVector @End position of the tracer
+--- @param tracerType? number @Tracer type
+--- @param soundOverride? string @If set, this sound will be played instead of the default sound.
+function effects.TracerSound(start, endpos, tracerType, soundOverride)
+end

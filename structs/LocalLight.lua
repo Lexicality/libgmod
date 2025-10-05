@@ -2,7 +2,7 @@
 
 --- Table structure used for render.SetLocalModelLights.  
 --- @class SLocalLight
---- @field type? number @The type of the light source, see Enums/MATERIAL_LIGHT.
+--- @field type? EMATERIAL_LIGHT @The type of the light source, see Enums/MATERIAL_LIGHT.
 --- @field color? GVector @The color of the light source (x is red, y is green, z is blue)
 --- @field pos? GVector @The origin of the light in world coordinates.
 --- @field dir? GVector @The direction of the light

@@ -43,11 +43,11 @@ end
 function bit.bxor(value, otherValues)
 end
 
---- Returns the left shifted value.  
+--- Returns the result of shifting given value left bitwise by given number of bits. See [this wiki article](https://en.wikipedia.org/wiki/Bitwise_operation#Bit_shifts) for more details.  
 --- ℹ **NOTE**: The returned value will be clamped to a signed 32-bit integer, even on 64-bit builds.  
 --- @param value number @The value to be manipulated.
 --- @param shiftCount number @Amounts of bits to shift left by.
---- @return number @shiftedValue
+--- @return number @The resulting value
 function bit.lshift(value, shiftCount)
 end
 

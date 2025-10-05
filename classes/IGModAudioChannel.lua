@@ -97,28 +97,29 @@ function GIGModAudioChannel:GetState()
 end
 
 --- Retrieves HTTP headers from a bass stream channel created by sound.PlayURL, if available.  
---- @return table @Returns a table of HTTP headers.<br>Returns nil if no information is available.
+--- Of special interest here are headers such as `icy-name`, `icy-br`, `ice-audio-info`, `icy-genre`.  
+--- @return string[] @A list of HTTP headers or `nil` if no information is available
 function GIGModAudioChannel:GetTagsHTTP()
 end
 
 --- Retrieves the ID3 version 1 info from a bass channel created by sound.PlayFile or sound.PlayURL, if available.  
 --- ID3v2 is not supported.  
---- @return table @Returns a table containing the information
+--- @return table @A table containing the information, or `nil` if no information is available
 function GIGModAudioChannel:GetTagsID3()
 end
 
---- Retrieves meta stream info from a bass stream channel created by sound.PlayURL, if available.  
---- @return string @Returns a string containing the information
+--- Retrieves ICY metadata from a bass stream channel created by sound.PlayURL, if available.  
+--- @return string @The meta information, or `nil` if no information is available
 function GIGModAudioChannel:GetTagsMeta()
 end
 
 --- Retrieves OGG media info tag, from a bass channel created by sound.PlayURL or sound.PlayFile, if available.  
---- @return table @Returns a table containing the information
+--- @return string[] @A list of available information in no particular order, or `nil` if no information is available
 function GIGModAudioChannel:GetTagsOGG()
 end
 
 --- Retrieves OGG Vendor tag, usually containing the application that created the file, from a bass channel created by sound.PlayURL or sound.PlayFile, if available.  
---- @return string @Returns a string containing the information
+--- @return string @The OGG vendor tag, or `nil` if no information is available.
 function GIGModAudioChannel:GetTagsVendor()
 end
 

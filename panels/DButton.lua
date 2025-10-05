@@ -39,7 +39,7 @@ end
 --- Sets an image to be displayed as the button's background.  
 --- See DButton:SetMaterial for equivalent function that uses IMaterial instead.  
 --- Also see: DImageButton  
---- @param img? string @The image file to use, relative to `/materials`
+--- @param img? string @The image file to use, relative to the `materials/` folder
 function PANEL:SetImage(img)
 end
 

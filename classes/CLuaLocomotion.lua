@@ -3,12 +3,13 @@
 --- @class GCLuaLocomotion
 --- This class is essentially what controls a NextBot NPC. You can access it in a NextBot NPC by using **self.loco** variable.  
 local GCLuaLocomotion = {}
---- Sets the location we want to get to.  
---- Each call of Approach moves the NextBot 1 unit towards the specified goal. The size of this unit is determined by SetDesiredSpeed; the default is `0` (each call of Approach moves the NextBot 0).  
---- To achieve smooth movement with Approach, it should be called in a hook like Think, as shown in the example.  
+--- Moves the NextBot incrementally closer to the provided goal location.  
+--- Each time this function is called, the NextBot moves towards the goal position passed as an argument by the amount previously set by CLuaLocomotion:SetDesiredSpeed.  
+--- To achieve smooth movement, this function must be called frequently.  
+--- This is commonly accomplished by calling it in the ENTITY:Think hook.  
 --- @param goal GVector @The vector we want to get to.
---- @param goalweight number @If unsure then set this to `1`.
-function GCLuaLocomotion:Approach(goal, goalweight)
+--- @param goalWeight number @How influential the movement should be, in case of this function being called multiple times in between physical movements of the entity
+function GCLuaLocomotion:Approach(goal, goalWeight)
 end
 
 --- Removes the stuck status from the bot  
@@ -148,7 +149,7 @@ function GCLuaLocomotion:JumpAcrossGap(landingGoal, landingForward)
 end
 
 --- Sets the acceleration speed  
---- @param speed number @Speed acceleration (default is 400)
+--- @param speed? number @Speed acceleration
 function GCLuaLocomotion:SetAcceleration(speed)
 end
 
@@ -163,23 +164,24 @@ function GCLuaLocomotion:SetClimbAllowed(allowed)
 end
 
 --- Sets the height the bot is scared to fall from.  
---- @param height number @Height (default is 200)
+--- @param height? number @Height
 function GCLuaLocomotion:SetDeathDropHeight(height)
 end
 
 --- Sets the deceleration speed.  
---- @param deceleration number @New deceleration speed (default is 400)
+--- @param deceleration? number @New deceleration speed.
 function GCLuaLocomotion:SetDeceleration(deceleration)
 end
 
---- Sets movement speed.  
---- @param speed number @The new desired speed
+--- Sets how far the NextBot will need to move each time CLuaLocomotion:Approach is called to move at given speed.  
+--- The default amount is 0. This means the bot will not move if this value has not been set.  
+--- @param speed? number @The new desired speed
 function GCLuaLocomotion:SetDesiredSpeed(speed)
 end
 
 --- Sets the locomotion's gravity.  
 --- ℹ **NOTE**: With values 0 or below, or even lower positive values, the nextbot will start to drift sideways, use CLuaLocomotion:SetVelocity to counteract this.  
---- @param gravity number @New gravity to set
+--- @param gravity? number @New gravity to set.
 function GCLuaLocomotion:SetGravity(gravity)
 end
 
@@ -189,17 +191,17 @@ function GCLuaLocomotion:SetJumpGapsAllowed(allowed)
 end
 
 --- Sets the height of the bot's jump  
---- @param height number @Height (default is 58)
+--- @param height? number @Height
 function GCLuaLocomotion:SetJumpHeight(height)
 end
 
 --- Sets the max rate at which the NextBot can visually rotate. This will not affect moving or pathing.  
---- @param yawRate number @Desired new maximum yaw rate
+--- @param yawRate? number @Desired new maximum yaw rate
 function GCLuaLocomotion:SetMaxYawRate(yawRate)
 end
 
 --- Sets the max height the bot can step up  
---- @param height number @Height (default is 18)
+--- @param height? number @Height
 function GCLuaLocomotion:SetStepHeight(height)
 end
 

@@ -169,8 +169,10 @@ end
 function GVehicle:IsEngineStarted()
 end
 
---- Returns true if the vehicle object is a valid or not. This will return `false` when Vehicle functions are not usable on the vehicle.  
---- @return boolean @Is the vehicle a valid vehicle or not
+--- Determines whether a given Vehicle is fully initialized.  
+--- It is possible, in uncommon circumstances, for a valid vehicle entity to be in an invalid state, such as before Entity:Spawn is called on the vehicle after creation.  
+--- If this function returns `false`, then the Vehicle functions are not usable on this vehicle, while Entity functions are.  
+--- @return boolean @`true` if the Vehicle is in a valid state, or `false` if the Vehicle is in an invalid state.
 function GVehicle:IsValidVehicle()
 end
 

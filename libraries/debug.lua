@@ -84,7 +84,10 @@ end
 --- @deprecated  
 --- 🛑 **DEPRECATED**:   
 --- Sets the environment of the passed object.  
---- @param object table @Object to set environment of
+--- Unlike Global.setfenv, this also works on **any** userdata, allowing you to save data stored to it which can be accessed using debug.getfenv.  
+--- Userdata seem to intentionally support this & setting/changing it does not affect anything (though unused by gmod / Entities and such don't this)  
+--- This can be useful when trying to store data on a IGModAudioChannel, Vector, Angle or any other that doesn't already allow you to store data on it.  
+--- @param object any @Object to set environment of
 --- @param env table @Environment to set
 --- @return table @The object
 function debug.setfenv(object, env)

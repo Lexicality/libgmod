@@ -3,13 +3,13 @@
 --- Table structure that describes a Source Engine ammo type.  
 --- See game.AddAmmoType and game.GetAmmoData.  
 --- @class SAmmoData
---- @field dmgtype? number @Damage type using Enums/DMG
+--- @field dmgtype? EDMG @Damage type using Enums/DMG
 --- @field force? number @The force of the ammo
 --- @field maxsplash? number @The maximum water splash size.
 --- @field minsplash? number @The minimum water splash size.
 --- @field name string @Name of the ammo
 --- @field npcdmg? number @The damage dealt to NPCs
 --- @field plydmg? number @The damage dealt to players
---- @field tracer? number @Tracer type using Enums/TRACER.
+--- @field tracer? ETRACER @Tracer type using Enums/TRACER.
 --- @field maxcarry? number @Maximum amount of ammo of this type the player should be able to carry in reserve
---- @field flags? number @Flags for the ammo type using Enums/AMMO.
+--- @field flags? EAMMO @Flags for the ammo type using Enums/AMMO.

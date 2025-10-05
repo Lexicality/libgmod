@@ -458,6 +458,7 @@ function math.atan2(y, x)
 end
 
 --- Ceils or rounds a number up.  
+--- See math.floor for the inverse of this function.  
 --- @param number number @The number to be rounded up.
 --- @return number @ceiled numbers
 function math.ceil(number)
@@ -488,6 +489,7 @@ function math.exp(exponent)
 end
 
 --- Floors or rounds a number down.  
+--- See math.ceil for the inverse of this function.  
 --- @param number number @The number to be rounded down.
 --- @return number @floored numbers
 function math.floor(number)

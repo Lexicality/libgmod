@@ -2,7 +2,7 @@
 
 --- Steamworks related functions.  
 _G.steamworks = {}
---- ℹ **NOTE**: You really should be using steamworks.DownloadUGC. This is a legacy function.  
+--- ℹ **NOTE**: You really should be using steamworks.DownloadUGC when downloading Steam Workshop items. This is a legacy function for preview images.  
 --- Downloads a file from the supplied addon and saves it as a `.cache` file in `garrysmod/cache/` folder.  
 --- This is mostly used to download the preview image of the addon.  
 --- In case the retrieved file is an image and you need the IMaterial, use Global.AddonMaterial with the path supplied from the callback.  

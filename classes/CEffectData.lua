@@ -129,9 +129,9 @@ end
 function GCEffectData:SetFlags(flags)
 end
 
---- Sets the hit box index of the effect.  
+--- Sets the hit box index of the effect. Used by various effects for various purposes.  
 --- ℹ **NOTE**: Internally stored as an integer, but only first 11 bits are networked, effectively limiting this function to 0-2047 range.  
---- @param hitBoxIndex number @The hit box index of the effect.
+--- @param hitBoxIndex number @The hit box index of the effect, for example from Structures/TraceResult#HitBox
 function GCEffectData:SetHitBox(hitBoxIndex)
 end
 

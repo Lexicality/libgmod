@@ -43,6 +43,7 @@ _G.kRenderFxClampMinScale = 19
 _G.kRenderFxEnvRain = 20
 _G.kRenderFxEnvSnow = 21
 _G.kRenderFxSpotlight = 22
+--- Is ragdoll, can be set to force an entity to create a clientside ragdoll.  
 _G.kRenderFxRagdoll = 23
 --- Quickly pulses the entitys transparency, from 0 to 255.  
 _G.kRenderFxPulseFastWider = 24

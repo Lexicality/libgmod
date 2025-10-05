@@ -20,5 +20,5 @@
 --- @field v number @The vertical coordinate of a position on the texture of the triangle that this vertex is a part of
 --- @field u1 number @A secondary U texture coordinate used by some shaders like `LightmappedGeneric`
 --- @field v1 number @A secondary V texture coordinate used by some shaders like `LightmappedGeneric`
---- @field userdata table @A sequential table of four numbers whose purpose and expected values are determined by the shader
---- @field weights table @A sequential table of all the BoneWeight structures that affect this vertex
+--- @field userdata number[] @A sequential table of four numbers whose purpose and expected values are determined by the shader
+--- @field weights table[] @A sequential table of all the BoneWeight structures that affect this vertex

@@ -20,7 +20,8 @@ end
 function mesh.Begin(primitiveType, primitiveCount)
 end
 
---- Sets the color to be used for the next vertex. See mesh.Begin.  
+--- Sets the color to be used for the next vertex. This is `COLOR0` semantic of  
+--- Vertex Shader. See mesh.Begin.  
 --- @param r number @Red component.
 --- @param g number @Green component.
 --- @param b number @Blue component.
@@ -73,8 +74,8 @@ end
 function mesh.QuadEasy(position, normal, sizeX, sizeY, color)
 end
 
---- Sets the specular map values.  
---- There is no known use case for this function.  
+--- Sets the specular map values. This is `COLOR1` semantic of Vertex Shader.  
+--- ℹ **NOTE**: This doesn't currently work, even though `COLOR0` can be successfully passed to the Vertex Shader using mesh.Color, unlike `COLOR1`, ​​using this function.  
 --- @param r number @The red channel multiplier of the specular map.
 --- @param g number @The green channel multiplier of the specular map.
 --- @param b number @The blue channel multiplier of the specular map.
@@ -114,9 +115,11 @@ end
 
 --- Sets the texture coordinates for the next vertex.  
 --- @param set number @The texture coordinate set, 0 to 7
---- @param u number @U coordinate.
---- @param v number @V coordinate.
-function mesh.TexCoord(set, u, v)
+--- @param s number @S coordinate.
+--- @param t number @T coordinate.
+--- @param u? number @U coordinate.
+--- @param v? number @V coordinate.
+function mesh.TexCoord(set, s, t, u, v)
 end
 
 --- A set of four numbers that can be used for arbitrary purposes by Material shaders.  

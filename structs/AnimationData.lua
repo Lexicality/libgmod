@@ -13,8 +13,8 @@
 --- @field SizeY boolean @Whether to resize the panel vertically or not
 --- @field Size? GVector @The target size of the panel object
 --- @field StartSize GVector @The size of the panel object when the animation started
---- @field Color table @The target colour of the panel object
---- @field StartColor table @The colour of the panel object when the animation started
+--- @field Color GColor @The target colour of the panel object
+--- @field StartColor GColor @The colour of the panel object when the animation started
 --- @field Alpha number @The target alpha (0-255) of the panel object
 --- @field StartAlpha number @The alpha (0-255) of the panel object when the animation started
 --- @field Speed number @The speed to use for transitions when using linear interpolation (Lerp) animations

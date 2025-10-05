@@ -36,7 +36,7 @@ end
 --- For a function that returns a player based on their Entity:EntIndex, see Global.Entity.  
 --- For a function that returns a player based on their Player:UserID, see Global.Player.  
 --- @param connectionID number @The connection ID to find the player by.
---- @return GPlayer|nil @Player if one is found, `nil` otherwise.
+--- @return GPlayer @Player if one is found, `NULL` otherwise.
 function player.GetByID(connectionID)
 end
 
@@ -66,6 +66,7 @@ end
 
 --- Returns the active player count.  
 --- ℹ **NOTE**: Similar to **#**player.GetAll() but with better performance since the player table doesn't have to be generated. If player.GetAll is already being called for iteration, then using the **#** operator on the table will be faster than calling this function since it is JITted.  
+--- ℹ **NOTE**: Players who are currently connecting to the server will not be counted. See function: player.GetCountConnecting  
 --- @return number @Number of players
 function player.GetCount()
 end
@@ -88,8 +89,6 @@ end
 --- See ents.Iterator for a similar function for all entities.  
 --- Internally, this function uses cached values that exist entirely within lua, as opposed to player.GetAll, which is a C++ function.  
 --- Because switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than player.GetAll.  
---- ℹ **NOTE**: The GM:OnEntityCreated and GM:EntityRemoved hooks are used internally to invalidate this function's cache. Using this function inside those hooks is not guaranteed to use an up-to-date cache because hooks are currently executed in an arbitrary order.  
---- ⚠ **WARNING**: An error being thrown inside the GM:OnEntityCreated or GM:EntityRemoved hooks is likely to break this function. Make it certain that no addons are causing any errors in those hooks.  
 --- @return function @The Iterator Function from ipairs
 --- @return GPlayer[] @Table of all existing Players
 --- @return number @The starting index for the table of players

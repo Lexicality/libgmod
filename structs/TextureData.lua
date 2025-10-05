@@ -7,4 +7,4 @@
 --- @field y number @The y Coordinate.
 --- @field w number @The width of the texture.
 --- @field h number @The height of the texture.
---- @field color? table @The texture color
+--- @field color? GColor @The texture color

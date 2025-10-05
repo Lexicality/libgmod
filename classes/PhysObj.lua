@@ -2,7 +2,8 @@
 
 --- @class GPhysObj
 --- This is the object returned by Entity:GetPhysicsObject, Entity:GetPhysicsObjectNum and Vehicle:GetWheel.  
---- It represents a physics object.  
+--- It represents a physics object. An entity can have multiple physics objects (ragdolls), one physics objects (props), or none. (NPCs, non physics entities, etc.)  
+--- Physics objects are usually simulated by the physics engine and usually dictate the position of the entity, and not the other way around.  
 local GPhysObj = {}
 --- Adds the specified [angular velocity](https://en.wikipedia.org/wiki/Angular_velocity) velocity to the current PhysObj.  
 --- @param angularVelocity GVector @The additional velocity in `degrees/s`

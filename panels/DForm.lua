@@ -72,12 +72,12 @@ function PANEL:ListBox(label)
 end
 
 --- Adds a DNumSlider onto the DForm  
---- @param label string @The label of the DNumSlider
---- @param convar string @The console variable to change when the slider is changed
+--- @param label string @A short label for the slider.
+--- @param convar string @The [console variable](ConVars) to change when the slider is changed
 --- @param min number @The minimum value of the slider
 --- @param max number @The maximum value of the slider
---- @param decimals? number @The number of decimals to allow on the slider.
---- @return GPanel @The created DNumSlider
+--- @param decimals? number @The number of decimals to allow for the slider value.
+--- @return GPanel @The created DNumSlider.
 function PANEL:NumSlider(label, convar, min, max, decimals)
 end
 

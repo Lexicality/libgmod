@@ -25,7 +25,7 @@ function PANEL:GetPadding()
 end
 
 --- Returns the vertical scroll bar of the panel.  
---- @return Panel_DVScrollBar_ @The DVScrollBar.
+--- @return DVScrollBar @The DVScrollBar.
 function PANEL:GetVBar()
 end
 

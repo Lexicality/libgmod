@@ -66,6 +66,12 @@ end
 function ENT:CalcAbsolutePosition(pos, ang)
 end
 
+--- Called by the Sandbox gamemode from the default implementation of GM:CanEditVariable.  
+--- @param ply GPlayer @The player is trying to edit a variable on this entity.
+--- @return boolean @`true` to allow the edit, `false` to disallow.
+function ENT:CanEditVariables(ply)
+end
+
 --- Controls if a property can be used on this entity or not.  
 --- This hook will only work in Sandbox derived gamemodes that do not have GM:CanProperty overridden.  
 --- ℹ **NOTE**: This hook will work on ALL entities, not just the scripted ones (SENTs)  
@@ -96,12 +102,14 @@ function ENT:DoImpactEffect(tr, damageType)
 end
 
 --- Runs a Lua schedule. Runs tasks inside the schedule.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
 --- @param sched table @The schedule to run.
 function ENT:DoSchedule(sched)
 end
 
 --- Called by the default `base_ai` SNPC, checking whether `ENT.bDoingEngineSchedule` is set by ENTITY:StartEngineSchedule..  
 --- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
+--- @return boolean 
 function ENT:DoingEngineSchedule()
 end
 
@@ -120,8 +128,9 @@ function ENT:DrawTranslucent(flags)
 end
 
 --- Called when the entity stops touching another entity.  
+--- See ENTITY:StartTouch and ENTITY:Touch for related hooks.  
 --- ⚠ **WARNING**: This only works for **brush** entities and for entities that have Entity:SetTrigger set to true.  
---- @param entity GEntity @The entity which was touched.
+--- @param entity GEntity @The entity that we no longer touch.
 function ENT:EndTouch(entity)
 end
 
@@ -163,6 +172,7 @@ function ENT:GetRelationship(ent)
 end
 
 --- Specify a mesh that should be rendered instead of this SENT's model.  
+--- ℹ **NOTE**: You should not be creating or modifying an IMesh in this hook. [Reference](https://github.com/Facepunch/garrysmod-issues/issues/6411#issuecomment-3070608549)  
 --- @return table @A table containing the following keys:
 function ENT:GetRenderMesh()
 end
@@ -237,8 +247,8 @@ end
 function ENT:KeyValue(key, value)
 end
 
---- Start the next task in specific schedule.  
---- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
+--- Start the next task in specific Lua schedule.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
 --- @param sched table @The schedule to start next task in.
 function ENT:NextTask(sched)
 end
@@ -350,9 +360,9 @@ end
 --- ℹ **NOTE**: This hook only exists for `ai` type SENTs.  
 --- ℹ **NOTE**: This hook is called by the default movement hook. Returning `true` inside ENTITY:OverrideMove will prevent engine from calling this hook.  
 --- @param interval number @Time interval for the movement, in seconds
---- @param data table @Extra data for the movement
+--- @param AILMG table @Extra data for the movement
 --- @return boolean @Return `true` to disable the default movement facing code.
-function ENT:OverrideMoveFacing(interval, data)
+function ENT:OverrideMoveFacing(interval, AILMG)
 end
 
 --- Polls whenever the entity should trigger the brush.  
@@ -362,8 +372,10 @@ end
 function ENT:PassesTriggerFilters(ent)
 end
 
---- Called when the entity collides with anything. The move type and solid type must be VPHYSICS for the hook to be called.  
---- ℹ **NOTE**: If you want to use this hook on default/engine/non-Lua entites ( like prop_physics ), use Entity:AddCallback instead! This page describes a hook for Lua entities  
+--- Called when the entity collides with anything via [physics objects](PhysObj). The [move type](Enums/MOVETYPE) and [solid mode](Enums/SOLID) must be `VPHYSICS` for the hook to be called.  
+--- This hook only works for `anim` type entities.  
+--- This is different from ENTITY:Touch.  
+--- ℹ **NOTE**: If you want to use this hook on default/engine/non-Lua entities (like `prop_physics`), use Entity:AddCallback instead! This page describes a hook for Lua scripted entities  
 --- @param colData table @Information regarding the collision
 --- @param collider GPhysObj @The physics object that collided.
 function ENT:PhysicsCollide(colData, collider)
@@ -381,8 +393,8 @@ end
 function ENT:PhysicsSimulate(phys, deltaTime)
 end
 
---- Called whenever the physics of the entity are updated.  
---- ⚠ **WARNING**: This hook won't be called if the Entity's PhysObj goes asleep  
+--- Called whenever a physics object of this entity is updated.  
+--- This hook won't be called if the Entity's PhysObj goes asleep, or doesn't exist.  
 --- @param phys GPhysObj @The physics object of the entity.
 function ENT:PhysicsUpdate(phys)
 end
@@ -415,8 +427,9 @@ end
 function ENT:RenderOverride(flags)
 end
 
---- Called from the engine every 0.1 seconds. Returning `true` inside this hook will allow `CAI_BaseNPC::MaintainSchedule` to also be called.  
+--- Called from the engine every [m_flNextDecisionTime](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc.cpp#L3943C10-L3943C30) in seconds. This interval changes depending on NPC's [Efficiency](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc.cpp#L3093). Returning `true` inside this hook will allow [CAI_BaseNPC::MaintainSchedule](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/server/ai_basenpc_schedule.cpp#L562) to also be called.  
 --- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
+--- @return boolean @`true` to run engine schedules
 function ENT:RunAI()
 end
 
@@ -430,7 +443,7 @@ end
 
 --- Called every think on running task.  
 --- The actual task function should tell us when the task is finished.  
---- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
 --- @param task table @The task to run
 function ENT:RunTask(task)
 end
@@ -451,8 +464,8 @@ end
 function ENT:SetAutomaticFrameAdvance(enable)
 end
 
---- Sets the current task.  
---- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
+--- Sets the current task, to be used in a Lua schedule.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
 --- @param task table @The task to set.
 function ENT:SetTask(task)
 end
@@ -488,20 +501,21 @@ end
 
 --- Starts a schedule previously created by ai_schedule.New.  
 --- Not to be confused with ENTITY:StartEngineSchedule or NPC:SetSchedule which start an Engine-based schedule.  
---- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
 --- @param sched GSchedule @Schedule to start.
 function ENT:StartSchedule(sched)
 end
 
---- Called once on starting task.  
---- ℹ **NOTE**: This hook only exists for `ai` type [SENTs](Scripted_Entities).  
+--- Called once when a LUA schedule has started a task.  
+--- ℹ **NOTE**: This is a helper function only available if your SENT is based on `base_ai`  
 --- @param task GTask @The task to start, created by ai_task.New.
 function ENT:StartTask(task)
 end
 
 --- Called when the entity starts touching another entity.  
+--- See ENTITY:Touch and ENTITY:EndTouch for related hooks.  
 --- ⚠ **WARNING**: This only works for **brush** entities and for entities that have Entity:SetTrigger set to true.  
---- @param entity GEntity @The entity which is being touched.
+--- @param entity GEntity @The entity that we started touching for the first time.
 function ENT:StartTouch(entity)
 end
 
@@ -547,7 +561,9 @@ end
 function ENT:Think()
 end
 
---- Called every tick for every entity being "touched".  
+--- Called every tick for every entity being "touched". Touching is usually detected via AABB intersection checks using entity's collision bounds.  
+--- Entities like triggers would be using the touch hooks for their function.  
+--- See Entity:PhysicsCollide for physics based collision events.  
 --- See also ENTITY:StartTouch and ENTITY:EndTouch.  
 --- ℹ **NOTE**: For physics enabled entities, this hook will **not** be ran while the entity's physics is asleep. See PhysObj:Wake.  
 --- @param entity GEntity @The entity that touched it.

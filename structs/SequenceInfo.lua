@@ -4,7 +4,7 @@
 --- @class SSequenceInfo
 --- @field label string @Name of the sequence.
 --- @field activityname string @Name of the activity this sequence is attached to.
---- @field activity number @The activity ID associated with this sequence
+--- @field activity EACT @The activity ID associated with this sequence
 --- @field actweight number @How likely this sequence is to be picked when playing an activity its attached to
 --- @field flags number @The looping and other flags of this sequence.
 --- @field numevents number @Number of animation events this sequence has.
@@ -20,4 +20,4 @@
 --- @field nextseq number @If non 0, the next sequence for auto advancing sequences
 --- @field pose number
 --- @field cycleposeindex number @If non 0, index of pose parameter to be used as cycle index
---- @field anims table @A 1-based array of all animationIDs associated with this sequence
+--- @field anims number[] @A 1-based array of all animationIDs associated with this sequence

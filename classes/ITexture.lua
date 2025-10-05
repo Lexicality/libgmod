@@ -1,7 +1,9 @@
 --- @meta
 
 --- @class GITexture
---- An object representing game texture, like a .vtf file. Do not confuse with IMaterial. Returned by IMaterial:GetTexture  
+--- An object representing game texture, such as those loaded from a `.vtf` file.  
+--- Do not confuse with IMaterial. Materials use textures. Game uses materials.  
+--- Returned by IMaterial:GetTexture  
 local GITexture = {}
 --- Invokes the generator of the texture. Reloads file based textures from disk and clears render target textures.  
 function GITexture:Download()

@@ -5,12 +5,9 @@
 --- corresponding to the realm the library was used in.  
 --- | Realm | Database File |  
 --- |:-----:|:-----|  
---- | [Server] | `garrysmod/sv.db`  
---- | [Client] | `garrysmod/cl.db`  
---- |  [Menu]  | `garrysmod/mn.db`  
---- [Server]: /gmod/States#server  
---- [Client]: /gmod/States#client  
---- [Menu]: /gmod/States#menu  
+--- | [Server](/gmod/States#server) | `garrysmod/sv.db`  
+--- | [Client](/gmod/States#client) | `garrysmod/cl.db`  
+--- | [Menu](/gmod/States#menu) | `garrysmod/mn.db`  
 _G.cookie = {}
 --- Removes any cookie with the given name.  
 --- Does nothing if the cookie doesn't exist.  

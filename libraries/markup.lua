@@ -15,6 +15,7 @@ function markup.Escape(text)
 end
 
 --- Parses markup into a MarkupObject. Currently, this only supports fonts and colors as demonstrated in the example.  
+--- ⚠ **WARNING**: This function is very slow! Always cache its result  
 --- @param markup string @The markup to be parsed.
 --- @param maxWidth? number @The max width of the output
 --- @return GMarkupObject @The parsed markup object ready to be drawn via MarkupObject:Draw.
