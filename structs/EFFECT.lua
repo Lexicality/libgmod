@@ -28,6 +28,7 @@ function EFFECT:PhysicsCollide(colData, collider)
 end
 
 --- Called when the effect should be rendered.  
+--- When not overridden, it will perform default action, which is Entity:DrawModel.  
 function EFFECT:Render()
 end
 

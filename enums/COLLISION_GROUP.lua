@@ -10,9 +10,11 @@ _G.COLLISION_GROUP_DEBRIS_TRIGGER = 2
 _G.COLLISION_GROUP_INTERACTIVE_DEBRIS = 3
 --- Collides with everything except interactive debris or debris  
 _G.COLLISION_GROUP_INTERACTIVE = 4
+--- Used by players, but NOT for movement collision. Does not collide with COLLISION_GROUP_PASSABLE_DOOR and COLLISION_GROUP_PUSHAWAY  
 _G.COLLISION_GROUP_PLAYER = 5
 --- NPCs can see straight through an Entity with this applied.  
 _G.COLLISION_GROUP_BREAKABLE_GLASS = 6
+--- Used by driveable vehicles. Always collides against COLLISION_GROUP_VEHICLE_CLIP  
 _G.COLLISION_GROUP_VEHICLE = 7
 --- For HL2, same as Collision_Group_Player, for TF2, this filters out other players and CBaseObjects  
 _G.COLLISION_GROUP_PLAYER_MOVEMENT = 8
@@ -24,6 +26,7 @@ _G.COLLISION_GROUP_IN_VEHICLE = 10
 _G.COLLISION_GROUP_WEAPON = 11
 --- Only collides with vehicles  
 _G.COLLISION_GROUP_VEHICLE_CLIP = 12
+--- Set on projectiles. Does not collide with other projectiles.  
 _G.COLLISION_GROUP_PROJECTILE = 13
 --- Blocks entities not permitted to get near moving doors  
 _G.COLLISION_GROUP_DOOR_BLOCKER = 14

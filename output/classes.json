@@ -847,7 +847,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the flags of the effect. Can be used to change the appearance of a MuzzleFlash effect.\n\n## Example values for MuzzleFlash effect\nFlags |  Description |\n------|--------------|\n1 | Regular muzzleflash|\n5 | Combine muzzleflash|\n7 | Regular muzzle but bigger|\n\n<note>Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `0-255` range.</note>",
+        "description": "Sets the flags for the effect. What flags do depends entirely on the effect. See <page>Default Effects</page>.\n\n<note>Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `0-255` range.</note>",
         "name": "SetFlags",
         "parent": "CEffectData",
         "realms": [
@@ -6396,7 +6396,7 @@
             "type": "number"
           }
         ],
-        "description": "Adjust the pitch, alias the speed at which the sound is being played.\n\nThis invokes the <page>GM:EntityEmitSound</page>.",
+        "description": "Adjust the pitch, also known as the speed at which the sound is being played.\n\nAppears to only work while the sound is being played. See also <page>CSoundPatch:PlayEx</page>.\n\nThis invokes <page>GM:EntityEmitSound</page>.",
         "name": "ChangePitch",
         "parent": "CSoundPatch",
         "realms": [
@@ -6418,7 +6418,7 @@
             "type": "number"
           }
         ],
-        "description": "Adjusts the volume of the sound played.<br>\nAppears to only work while the sound is being played.",
+        "description": "Adjusts the volume of the sound played.\n\nAppears to only work while the sound is being played. See also <page>CSoundPatch:PlayEx</page>.",
         "name": "ChangeVolume",
         "parent": "CSoundPatch",
         "realms": [
@@ -7971,7 +7971,7 @@
           {
             "description": "Identifier that can be optionally used with <page>Entity:RemoveCallOnRemove</page> to undo this call on remove.",
             "name": "identifier",
-            "type": "string"
+            "type": "any"
           },
           {
             "description": "Function to be called on remove.\n\n<callback>\n<arg type=\"Entity\" name=\"ent\">The entity about to be removed.</arg>\n<arg type=\"vararg\" name=\"data\">Data passed from the arguments to `CallOnRemove`.</arg>\n</callback>",
@@ -8136,12 +8136,12 @@
       {
         "arguments": [
           {
-            "description": "The name of the matrix type to disable.\n\n\n\n\nThe only known matrix type is \"RenderMultiply\".",
+            "description": "The name of the matrix type to disable.\n\nCurrently the only matrix type is `\"RenderMultiply\"`.",
             "name": "matrixType",
             "type": "string"
           }
         ],
-        "description": "Disables an active matrix.",
+        "description": "Disables an active matrix. See <page>Entity:EnableMatrix</page> for more info about active matrixes.",
         "name": "DisableMatrix",
         "parent": "Entity",
         "realms": [
@@ -8196,7 +8196,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Dissolves the entity.\n\nThis function creates `env_entity_dissolver` entity internally.",
+        "description": "Dissolves the entity.\n\nThis function creates an `env_entity_dissolver` entity internally, which seems to be deleted in the same frame. Calling this function on an entity that is already dissolving will not create another `env_entity_dissolver` entity.",
         "name": "Dissolve",
         "parent": "Entity",
         "realms": [
@@ -8227,7 +8227,7 @@
             "type": "number"
           }
         ],
-        "description": "Draws the entity or model.\n\nIf called inside <page>ENTITY:Draw</page> or <page>ENTITY:DrawTranslucent</page>, it only draws the entity's model itself.\n\nIf called outside of those hooks, it will call both of said hooks depending on <page>Entity:GetRenderGroup</page>, drawing the entire entity again.\n\nWhen drawing an entity more than once per frame in different positions, you should call <page>Entity:SetupBones</page> before each draw; Otherwise, the entity will retain its first drawn position.\n\n<rendercontext hook=\"false\" type=\"3D\"></rendercontext>\n\n<bug issue=\"1558\">Calling this on entities with <page text=\"EF_BONEMERGE\">Enums/EF</page> and <page text=\"EF_NODRAW\">Enums/EF</page> applied causes a crash.</bug>\n\n<bug issue=\"2688\">Using this with a map model (<page>game.GetWorld</page>():<page text=\"GetModel\">Entity:GetModel</page>()) crashes the game.</bug>",
+        "description": "Draws the entity or model.\n\nIf called inside <page>ENTITY:Draw</page> or <page>ENTITY:DrawTranslucent</page>, it only draws the entity's model itself.\n\nIf called outside of those hooks, it will call both of said hooks depending on <page>Entity:GetRenderGroup</page>, drawing the entire entity again.\n\nWhen drawing an entity more than once per frame in different positions, you should call <page>Entity:SetupBones</page> before each draw; Otherwise, the entity will retain its first drawn position.\n\n<rendercontext hook=\"false\" type=\"3D\"></rendercontext>\n\n<bug issue=\"1558\">Calling this on entities with <page text=\"EF_BONEMERGE\">Enums/EF</page> and <page text=\"EF_NODRAW\">Enums/EF</page> applied causes a crash.</bug>\n\n<bug issue=\"2688\">Using this with a map model (<page>game.GetWorld</page>():<page text=\"GetModel\">Entity:GetModel</page>()) crashes the game.</bug>\n\n<bug issue=\"4116\">Calling this in <page>GM:PrePlayerDraw</page> will cause infinite recursion and crash the game.</bug>",
         "name": "DrawModel",
         "parent": "Entity",
         "realms": [
@@ -8251,6 +8251,26 @@
         ]
       },
       {
+        "arguments": [
+          {
+            "default": "MASK_SOLID",
+            "description": "Trace mask.",
+            "name": "mask",
+            "type": "number"
+          },
+          {
+            "default": "nil",
+            "description": "Trace ignore entity.",
+            "name": "ignoreEnt",
+            "type": "Entity"
+          },
+          {
+            "default": "256",
+            "description": "Max trace dist.",
+            "name": "maxDist",
+            "type": "number"
+          }
+        ],
         "description": "Move an entity down until it collides with something.\n<warning>The entity needs to already have something below it within 256 units.</warning>",
         "name": "DropToFloor",
         "parent": "Entity",
@@ -8385,7 +8405,7 @@
       {
         "arguments": [
           {
-            "description": "The name of the matrix type. <br>\nThe only implemented matrix type is \"RenderMultiply\".",
+            "description": "The name of the matrix type.\nCurrently the only matrix type is `\"RenderMultiply\"`.",
             "name": "matrixType",
             "type": "string"
           },
@@ -9121,8 +9141,8 @@
         ],
         "returnValues": [
           {
-            "description": "Table of <page>SurfaceInfo</page>s if the entity has a brush model, or <page>no value</page> otherwise.",
-            "type": "table"
+            "description": "A list of <page>SurfaceInfo</page> elements if the entity has a brush model, or `nil` otherwise.",
+            "type": "table<SurfaceInfo>"
           }
         ]
       },
@@ -10538,7 +10558,7 @@
         ]
       },
       {
-        "description": "Returns the map/hammer targetname of this entity.",
+        "description": "Returns the \"targetname\" of this entity, typically used in map making and scripting to uniquely identify and target (hence 'targetname') an entity or a group of entities.\n\n<warning>For players, this function is overwritten by <page>Player:GetName</page>, which returns the player's nick name, not the target name.</warning>",
         "name": "GetName",
         "parent": "Entity",
         "realms": [
@@ -11784,7 +11804,7 @@
         ]
       },
       {
-        "description": "Returns the entity's physics object, if the entity has physics.\n\n<note>Entities don't have clientside physics objects by default, so this will return `[NULL PHYSOBJ]` on the client in most cases.</note>",
+        "description": "Returns the entity's physics object, if the entity has physics. Same as `ent:GetPhysicsObjectNum( 0 )`\n\n<note>Entities don't have clientside physics objects by default, so this will return `[NULL PHYSOBJ]` on the client in most cases.</note>",
         "name": "GetPhysicsObject",
         "parent": "Entity",
         "realms": [
@@ -12454,7 +12474,7 @@
         ]
       },
       {
-        "description": "Returns the skin index of the current skin.",
+        "description": "Returns the skin index of the current skin. Can be manipulated via <page>Entity:SetSkin</page>.",
         "name": "GetSkin",
         "parent": "Entity",
         "realms": [
@@ -12463,7 +12483,7 @@
         ],
         "returnValues": [
           {
-            "description": "skinIndex",
+            "description": "Current skin index.",
             "type": "number"
           }
         ]
@@ -13116,7 +13136,7 @@
         ]
       },
       {
-        "description": "Returns if the entity is going to be deleted in the next frame. Entities marked for deletion should not be accessed.",
+        "description": "Determines if a given Entity is going to be removed at the start of the next tick.\n\nThis will return `true` for an <page>Entity</page> after <page>Entity:Remove</page> is called on it.",
         "name": "IsMarkedForDeletion",
         "parent": "Entity",
         "realms": [
@@ -13125,7 +13145,7 @@
         ],
         "returnValues": [
           {
-            "description": "If the entity is going to be deleted.",
+            "description": "`true` if the Entity is going to be removed, `false` otherwise.",
             "type": "boolean"
           }
         ]
@@ -13426,12 +13446,12 @@
       {
         "arguments": [
           {
-            "description": "The local vector",
+            "description": "A local space vector.",
             "name": "lpos",
             "type": "Vector"
           }
         ],
-        "description": "Converts a vector local to an entity into a worldspace vector",
+        "description": "Translates a vector relative to the entity's coordinate system into a worldspace vector.",
         "name": "LocalToWorld",
         "parent": "Entity",
         "realms": [
@@ -13440,7 +13460,7 @@
         ],
         "returnValues": [
           {
-            "description": "The translated to world coordinates vector",
+            "description": "The corresponding worldspace vector.",
             "type": "Vector"
           }
         ]
@@ -13448,12 +13468,12 @@
       {
         "arguments": [
           {
-            "description": "The local angle",
+            "description": "A local space angle.",
             "name": "ang",
             "type": "Angle"
           }
         ],
-        "description": "Converts a local angle (local to the entity) to a world angle.",
+        "description": "Translates an angle relative to the entity's coordinate system to a worldspace angle.",
         "name": "LocalToWorldAngles",
         "parent": "Entity",
         "realms": [
@@ -13462,7 +13482,7 @@
         ],
         "returnValues": [
           {
-            "description": "The world angle",
+            "description": "The corresponding worldspace angle.",
             "type": "Angle"
           }
         ]
@@ -14371,7 +14391,7 @@
         ]
       },
       {
-        "description": "Removes the entity it is used on. The entity will be removed at the start of next tick.",
+        "description": "Removes (or deletes) a given <page>Entity</page>.\n\nThe Entity will continue to exist until the start of the next tick.\n\nTo check if an Entity will be removed in the next tick, see <page>Entity:IsMarkedForDeletion</page>",
         "name": "Remove",
         "parent": "Entity",
         "realms": [
@@ -14422,7 +14442,7 @@
           {
             "description": "Identifier of the function given to <page>Entity:CallOnRemove</page>.",
             "name": "identifier",
-            "type": "string"
+            "type": "any"
           }
         ],
         "description": "Removes a function previously added via <page>Entity:CallOnRemove</page>.",
@@ -16890,7 +16910,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the parent of this entity, making it move with its parent. This will make the child entity non solid, nothing can interact with them, including traces.\n\n<note>This does not work on <page text=\"the world\">game.GetWorld</page>.</note>\n<warning>This can cause undefined physics behavior when used on entities that don't support parenting. See the [Valve developer wiki](https://developer.valvesoftware.com/wiki/Entity_Hierarchy_(parenting)) for more information.</warning>",
+        "description": "Sets the parent of this entity, making it move with its parent. This will make the child entity non solid, nothing can interact with them, including traces.\n\nAll children of the parent get removed whenever it gets removed.\n\n<note>This does not work on <page text=\"the world\">game.GetWorld</page>.</note>\n<warning>This can cause undefined physics behavior when used on entities that don't support parenting. See the [Valve developer wiki](https://developer.valvesoftware.com/wiki/Entity_Hierarchy_(parenting)) for more information.</warning>",
         "name": "SetParent",
         "parent": "Entity",
         "realms": [
@@ -17286,7 +17306,7 @@
             "type": "any"
           }
         ],
-        "description": "Sets a save value for an entity. You can see a full list of an entity's save values by creating it and printing <page>Entity:GetSaveTable</page>().\n\nSee <page>Entity:GetInternalVariable</page> for the opposite of this function.",
+        "description": "Sets a save value for an entity. You can see a full list of an entity's save values by creating it and printing <page>Entity:GetSaveTable</page>.\n\nSee <page>Entity:GetInternalVariable</page> for the opposite of this function.",
         "name": "SetSaveValue",
         "parent": "Entity",
         "realms": [
@@ -17362,7 +17382,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the skin of the entity.",
+        "description": "Sets the skin of the entity.\n\n<page>Entity:GetSkin</page> returns current skin and <page>Entity:SkinCount</page> returns amount of skins.",
         "name": "SetSkin",
         "parent": "Entity",
         "realms": [
@@ -17670,7 +17690,7 @@
         ]
       },
       {
-        "description": "Returns the amount of skins the entity has. To retrieve the total number of skins on a model, please look at this function <page>util.GetModelInfo</page>",
+        "description": "Returns the amount of skins the entity has.\n\nTo set the entity's skin, use <page>Entity:SetSkin</page>.\nTo retrieve the total number of skins without an entity, see <page>util.GetModelInfo</page>.",
         "name": "SkinCount",
         "parent": "Entity",
         "realms": [
@@ -17908,7 +17928,7 @@
           {
             "description": "<page>Entity</page> or <page>Vector</page> to test against. If an entity is given, this function will test using its bounding box.",
             "name": "testPoint",
-            "type": "any"
+            "type": "Vector|Entity"
           }
         ],
         "description": "Check if the given position or entity is within this entity's [PVS(Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS \"PVS - Valve Developer Community\").\n\nSee also <page>Entity:IsDormant</page>.\n\n<note>The function won't take in to account <page>Global.AddOriginToPVS</page> and the like.</note>",
@@ -17919,7 +17939,7 @@
         ],
         "returnValues": [
           {
-            "description": "True if the testPoint is within our PVS.",
+            "description": "`true` if the testPoint is within our PVS.",
             "type": "boolean"
           }
         ]
@@ -18200,12 +18220,12 @@
       {
         "arguments": [
           {
-            "description": "The world vector",
+            "description": "A worldspace vector.",
             "name": "wpos",
             "type": "Vector"
           }
         ],
-        "description": "Converts a worldspace vector into a vector local to an entity",
+        "description": "Translates a worldspace vector into a vector relative to the entity's coordinate system.",
         "name": "WorldToLocal",
         "parent": "Entity",
         "realms": [
@@ -18214,7 +18234,7 @@
         ],
         "returnValues": [
           {
-            "description": "The local vector",
+            "description": "The corresponding local space vector.",
             "type": "Vector"
           }
         ]
@@ -18222,12 +18242,12 @@
       {
         "arguments": [
           {
-            "description": "The world angles",
+            "description": "A worldspace angle.",
             "name": "ang",
             "type": "Angle"
           }
         ],
-        "description": "Converts world angles to local angles ( local to the entity )",
+        "description": "Translates a worldspace angle into an angle relative to the entity's coordinate system.",
         "name": "WorldToLocalAngles",
         "parent": "Entity",
         "realms": [
@@ -18236,7 +18256,7 @@
         ],
         "returnValues": [
           {
-            "description": "The local angles",
+            "description": "The corresponding local space angle.",
             "type": "Angle"
           }
         ]
@@ -19072,6 +19092,21 @@
         ]
       },
       {
+        "description": "Retrieves `.m4a` media info, from a bass channel created by <page>sound.PlayURL</page> or <page>sound.PlayFile</page>, if available.",
+        "name": "GetTagsMP4",
+        "parent": "IGModAudioChannel",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "A list of available information in no particular order, or `nil` if no information is available.",
+            "name": "info",
+            "type": "table<string>"
+          }
+        ]
+      },
+      {
         "description": "Retrieves OGG media info tag, from a bass channel created by <page>sound.PlayURL</page> or <page>sound.PlayFile</page>, if available.",
         "name": "GetTagsOGG",
         "parent": "IGModAudioChannel",
@@ -19098,6 +19133,21 @@
             "description": "The OGG vendor tag, or `nil` if no information is available.",
             "name": "info",
             "type": "string"
+          }
+        ]
+      },
+      {
+        "description": "Retrieves `.WMA` media info, from a bass channel created by <page>sound.PlayURL</page> or <page>sound.PlayFile</page>, if available.",
+        "name": "GetTagsWMA",
+        "parent": "IGModAudioChannel",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "A list of available information in no particular order, or `nil` if no information is available.",
+            "name": "info",
+            "type": "table<string>"
           }
         ]
       },
@@ -22880,7 +22930,7 @@
             "type": "Vector"
           }
         ],
-        "description": "Works similarly to <page>NPC:NavSetRandomGoal</page>.",
+        "description": "Picks random node around given vector, around specified length, using dir as search direction start. Works similarly to <page>NPC:NavSetRandomGoal</page>, but you can decide any position you want as a search starting point rather than your NPC.",
         "name": "NavSetGoal",
         "parent": "NPC",
         "realms": [
@@ -23789,8 +23839,8 @@
       {
         "arguments": [
           {
-            "description": "A string most likely defined as a Source Task, for more information on Tasks go to https://developer.valvesoftware.com/wiki/Task",
-            "name": "task",
+            "description": "Fail reason to be passed onto <page>ENTITY:OnTaskFailed</page>. The fail reason can also be seen when the NPC's `ent_text` is active.",
+            "name": "failReason",
             "type": "string"
           }
         ],
@@ -25755,7 +25805,7 @@
         ]
       },
       {
-        "description": "Returns the panel's text (where applicable).\n\nThis method returns a maximum of 1023 bytes, except for <page>DTextEntry</page>.",
+        "description": "Returns the panel's text (where applicable).\n\nThis method returns a maximum of 1023 bytes, except for <page>TextEntry</page>.",
         "name": "GetText",
         "parent": "Panel",
         "realms": [
@@ -28829,6 +28879,22 @@
       {
         "arguments": [
           {
+            "description": "Whether to have the text be hidden.",
+            "name": "",
+            "type": "boolean"
+          }
+        ],
+        "description": "Makes <page>TextEntry</page>'s text be replaced by `*` characters, just like a password-entry text field would.",
+        "name": "SetTextHidden",
+        "parent": "Panel",
+        "realms": [
+          "client",
+          "menu"
+        ]
+      },
+      {
+        "arguments": [
+          {
             "description": "The left margin for the text, in pixels. This will only affect centered text if the margin is greater than its x-coordinate.",
             "name": "insetX",
             "type": "number"
@@ -30992,12 +31058,12 @@
       {
         "arguments": [
           {
-            "description": "A vector in the physics object's local frame",
-            "name": "LocalVec",
+            "description": "A vector in the physics object's local space.",
+            "name": "vecLocal",
             "type": "Vector"
           }
         ],
-        "description": "Mapping a vector in local frame of the physics object to world frame.\n\n<note>this function does translation and rotation, with translation done first.</note>",
+        "description": "Translates a vector in the physics object's local space into worldspace coordinates.\n\n<note>Internally transforms the vector by the <page>PhysObj:GetPositionMatrix</page>.\n\nSo in GLua it approximates to:\n```\nlocal matrixWorldTransform = PhysObj:GetPositionMatrix()\nlocal vecWorldspaced = Vector()\nvecWorldspaced:Set( vecLocal )\nvecWorldspaced:Mul( matrixWorldTransform )\n\nreturn vecWorldspaced\n```\n</note>",
         "name": "LocalToWorld",
         "parent": "PhysObj",
         "realms": [
@@ -31006,7 +31072,7 @@
         ],
         "returnValues": [
           {
-            "description": "The corresponding vector in world frame",
+            "description": "The corresponding worldspace vector.",
             "type": "Vector"
           }
         ]
@@ -31014,12 +31080,12 @@
       {
         "arguments": [
           {
-            "description": "A vector in the physics object's local frame",
-            "name": "LocalVec",
+            "description": "A vector in the physics object's local space.",
+            "name": "vecLocal",
             "type": "Vector"
           }
         ],
-        "description": "Rotate a vector from the local frame of the physics object to world frame.\n\n<note>This function only rotates the vector, without any translation operation.</note>",
+        "description": "Rotationally transforms a vector in the physics object's local space by the <page>PhysObj:GetPositionMatrix</page>.\n\n<note>In contrast to <page>PhysObj:LocalToWorld</page>, this function doesn't translate the vector.</note>",
         "name": "LocalToWorldVector",
         "parent": "PhysObj",
         "realms": [
@@ -31028,7 +31094,7 @@
         ],
         "returnValues": [
           {
-            "description": "The corresponding vector in world frame",
+            "description": "The resulting vector from the rotational transformation.",
             "type": "Vector"
           }
         ]
@@ -31235,7 +31301,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the mass of the physics object.\n\n<warning>This resets <page>PhysObj:SetBuoyancyRatio</page> (Recalculated based materials' and the physics objects' densities, latter of which is dependent on mass). This is a physics engine limitation.</warning>",
+        "description": "Sets the mass of the physics object.\n\n<warning>This resets <page>PhysObj:SetBuoyancyRatio</page> (Recalculated based materials' and the physics objects' densities, latter of which is dependent on mass).\n\nIf you used a custom ratio, you will have to re-set it again after `SetMass`.\n</warning>",
         "name": "SetMass",
         "parent": "PhysObj",
         "realms": [
@@ -31360,12 +31426,12 @@
       {
         "arguments": [
           {
-            "description": "The vector in world space coordinates.",
+            "description": "A worldspace vector.",
             "name": "vec",
             "type": "Vector"
           }
         ],
-        "description": "Converts a vector to a relative to the physics object coordinate system.",
+        "description": "Translates a worldspace vector into the physics object's local space.",
         "name": "WorldToLocal",
         "parent": "PhysObj",
         "realms": [
@@ -31374,7 +31440,7 @@
         ],
         "returnValues": [
           {
-            "description": "The vector local to <page>PhysObj:GetPos</page>.",
+            "description": "The corresponding local space vector.",
             "type": "Vector"
           }
         ]
@@ -31382,12 +31448,12 @@
       {
         "arguments": [
           {
-            "description": "A vector in the world frame",
-            "name": "WorldVec",
+            "description": "A worldspace vector.",
+            "name": "vec",
             "type": "Vector"
           }
         ],
-        "description": "Rotate a vector from the world frame to the local frame of the physics object.\n\n<note>This function only rotates the vector, without any translation operation.</note>",
+        "description": "Rotationally transforms a worldspace vector into the physics object's local space by the inverted <page>PhysObj:GetPositionMatrix</page>.\n\nFor example, in GMod this is used in thrusters, for working out linear force for local acceleration.\n\n<note>In contrast to <page>PhysObj:WorldToLocal</page>, this function doesn't translate the vector.</note>",
         "name": "WorldToLocalVector",
         "parent": "PhysObj",
         "realms": [
@@ -31396,7 +31462,7 @@
         ],
         "returnValues": [
           {
-            "description": "The corresponding vector relative to the PhysObj",
+            "description": "The resulting vector from the rotational transformation.",
             "type": "Vector"
           }
         ]
@@ -31622,7 +31688,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Sets if the player can toggle their flashlight. Function exists on both the server and client but has no effect when ran on the client.",
+        "description": "Sets if the player can toggle their flashlight. Function exists on both the server and client but has no effect when ran on the client.\n\nThis is a Lua method that internally uses <page>GM:PlayerSwitchFlashlight</page>. If current gamemode overwrites that hook and doesn't respect <page>Player:CanUseFlashlight</page>, this function will not have any effect.",
         "name": "AllowFlashlight",
         "parent": "Player",
         "realms": [
@@ -31817,7 +31883,7 @@
       {
         "arguments": [
           {
-            "description": "The entity type to check the limit for. Default types:\n* \"props\"\n* \"ragdolls\"\n* \"vehicles\"\n* \"effects\"\n* \"balloons\"\n* \"cameras\"\n* \"npcs\"\n* \"sents\"\n* \"dynamite\"\n* \"lamps\"\n* \"lights\"\n* \"wheels\"\n* \"thrusters\"\n* \"hoverballs\"\n* \"buttons\"\n* \"emitters\"",
+            "description": "The entity type to check the limit for. Default types:\n* \"constraints\"\n* \"props\"\n* \"ragdolls\"\n* \"vehicles\"\n* \"effects\"\n* \"balloons\"\n* \"cameras\"\n* \"npcs\"\n* \"sents\"\n* \"dynamite\"\n* \"lamps\"\n* \"lights\"\n* \"wheels\"\n* \"thrusters\"\n* \"hoverballs\"\n* \"buttons\"\n* \"emitters\"",
             "name": "str",
             "type": "string"
           }
@@ -32159,7 +32225,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Enables/Disables the player's flashlight.\n\n<page>Player:CanUseFlashlight</page> must be true in order for the player's flashlight to be changed.",
+        "description": "Enables/Disables the player's flashlight.\n\n<page>Player:CanUseFlashlight</page> must be true in order for the player's flashlight to be changed.\n<page>GM:PlayerSwitchFlashlight</page> can block this function.",
         "name": "Flashlight",
         "parent": "Player",
         "realms": [
@@ -32205,7 +32271,7 @@
             "type": "boolean"
           }
         ],
-        "description": "Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to <page>Player:Lock</page> but the player can still take damage.\n\nAdds or removes the <page text=\"FL_FROZEN\">Enums/FL</page> flag from the player.",
+        "description": "Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to <page>Player:Lock</page> but the player can still take damage.\n\nManages the <page text=\"FL_FROZEN\">Enums/FL#FL_FROZEN</page> flag on the player.",
         "name": "Freeze",
         "parent": "Player",
         "realms": [
@@ -32796,7 +32862,7 @@
         ]
       },
       {
-        "description": "Returns the player's name, this is an alias of <page>Player:Nick</page>.\n\n<note>This function overrides <page>Entity:GetName</page> (in the Lua metatable, not in c++), keep it in mind when dealing with <page>ents.FindByName</page> or any engine function which requires the mapping name.</note>",
+        "description": "Returns the player's name, this is an alias of <page>Player:Nick</page>.\n\n<deprecated>Use <page>Player:Nick</page>.</deprecated>\n\n<note>This function overrides <page>Entity:GetName</page> (in the Lua metatable, not in c++), keep it in mind when dealing with <page>ents.FindByName</page> or any engine function which requires the mapping name.</note>",
         "name": "GetName",
         "parent": "Player",
         "realms": [
@@ -32894,7 +32960,7 @@
         }
       },
       {
-        "description": "Returns a player model's color. The part of the model that is colored is determined by the model itself, and is different for each model.\n<note>Overide this function clientside on a Entity(not a player) with playermodel and return color will apply color on it</note>",
+        "description": "Returns a player's character model color.\n\nThe part of the model that is colored is determined by the model's materials, and is therefore different for each model.\n\nSee <page>Player:GetWeaponColor</page> for the accompanying function for the weapon color.\n\n<note>Override this function clientside on any Entity (including a player) with a supported model set (such as default player models) and returned color will apply to the model. This is done via the `PlayerColor` <page>matproxy</page>.</note>",
         "name": "GetPlayerColor",
         "parent": "Player",
         "realms": [
@@ -33354,7 +33420,7 @@
         ]
       },
       {
-        "description": "Returns a player's weapon color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is `Vector(r,g,b)`, and each color should be between 0 and 1.",
+        "description": "Returns a player's weapon color.\n\nThe part of the model that is colored is determined by the model itself, and is different for each model.\n\nSee <page>Player:GetPlayerColor</page> for the accompanying function for the player character model color.",
         "name": "GetWeaponColor",
         "parent": "Player",
         "realms": [
@@ -33363,7 +33429,7 @@
         ],
         "returnValues": [
           {
-            "description": "color",
+            "description": "The format is `Vector(r,g,b)`, and each color should be between 0 and 1.",
             "type": "Vector"
           }
         ]
@@ -33443,7 +33509,7 @@
         ]
       },
       {
-        "description": "Disables god mode on the player.",
+        "description": "Disables god mode on the player. Removes the <page text=\"FL_GODMODE\">Enums/FL#FL_GODMODE</page> flag from the player.",
         "name": "GodDisable",
         "parent": "Player",
         "realms": [
@@ -33456,7 +33522,7 @@
         }
       },
       {
-        "description": "Enables god mode on the player.",
+        "description": "Enables god mode on the player. Adds the <page text=\"FL_GODMODE\">Enums/FL#FL_GODMODE</page> flag to the player.",
         "name": "GodEnable",
         "parent": "Player",
         "realms": [
@@ -33464,8 +33530,8 @@
         ],
         "source": {
           "file": "lua/includes/extensions/player.lua",
-          "lineEnd": 262,
-          "lineStart": 254
+          "lineEnd": 230,
+          "lineStart": 222
         }
       },
       {
@@ -34078,7 +34144,7 @@
         ]
       },
       {
-        "description": "Returns the player's name. Identical to <page>Player:Nick</page> and <page>Player:GetName</page>.",
+        "description": "<deprecated>Use <page>Player:Nick</page>.</deprecated>\n\nReturns the player's nick name. Identical to <page>Player:Nick</page> and <page>Player:GetName</page>.",
         "name": "Name",
         "parent": "Player",
         "realms": [
@@ -34098,7 +34164,7 @@
         }
       },
       {
-        "description": "Returns the player's name. Identical to <page>Player:Name</page> and <page>Player:GetName</page>.",
+        "description": "Returns the player's nick name also known as display name, as it appears in Steam.",
         "name": "Nick",
         "parent": "Player",
         "realms": [
@@ -34107,7 +34173,7 @@
         ],
         "returnValues": [
           {
-            "description": "Player's name",
+            "description": "Player's nick name",
             "type": "string"
           }
         ]
@@ -35759,7 +35825,7 @@
         }
       },
       {
-        "description": "<deprecated><br>\n**This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use <page>Player:SteamID64</page>, <page>Player:SteamID</page> or <page>Player:AccountID</page> instead, which are guaranteed to be unique to each player.</deprecated>\n\nReturns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.\n\n<note>In Singleplayer, this function will always return 1.</note>\n<bug issue=\"6389\">In a `-multirun` environment, the value returned is different on the serverside and clientside.</bug>",
+        "description": "<deprecated><br>\n**This function has collisions,** where more than one player can have the same UniqueID. It is **highly** recommended to use <page>Player:SteamID64</page>, <page>Player:SteamID</page> or <page>Player:AccountID</page> instead, which are guaranteed to be unique to each player.</deprecated>\n\nReturns a 32 bit integer that remains constant for a player across joins/leaves and across different servers. This can be used when a string is inappropriate - e.g. in a database primary key.\n\n\n\n<note>In Singleplayer, this function will always return 1.</note>\n<bug issue=\"6389\">In a `-multirun` environment, the value returned is different on the serverside and clientside.</bug>",
         "name": "UniqueID",
         "parent": "Player",
         "realms": [

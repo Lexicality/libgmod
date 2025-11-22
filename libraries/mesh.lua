@@ -113,10 +113,10 @@ end
 function mesh.TangentT(x, y, z)
 end
 
---- Sets the texture coordinates for the next vertex.  
+--- Sets the texture coordinates for the next vertex for the current mesh. (See mesh.Begin)  
 --- @param set number @The texture coordinate set, 0 to 7
 --- @param s number @S coordinate.
---- @param t number @T coordinate.
+--- @param t number @T coordinate
 --- @param u? number @U coordinate.
 --- @param v? number @V coordinate.
 function mesh.TexCoord(set, s, t, u, v)

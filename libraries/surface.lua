@@ -28,11 +28,19 @@ end
 --- @param originX number @The center x integer coordinate.
 --- @param originY number @The center y integer coordinate.
 --- @param radius number @The radius of the circle.
---- @param r number @The red value of the color to draw the circle with, or a Color.
---- @param g number @The green value of the color to draw the circle with
---- @param b number @The blue value of the color to draw the circle with
---- @param a? number @The alpha value of the color to draw the circle with
+--- @param r number @The red value of the color to draw the circle with.
+--- @param g number @The green value of the color to draw the circle with.
+--- @param b number @The blue value of the color to draw the circle with.
+--- @param a? number @The alpha value of the color to draw the circle with.
 function surface.DrawCircle(originX, originY, radius, r, g, b, a)
+end
+--- Draws a hollow circle, made of lines. For a filled circle, see examples for surface.DrawPoly.  
+--- 🟥 **NOTE**: Requires a 2D rendering context  
+--- @param originX number @The center x integer coordinate.
+--- @param originY number @The center y integer coordinate.
+--- @param radius number @The radius of the circle.
+--- @param color table @A Color object/table to read the color from.
+function surface.DrawCircle(originX, originY, radius, color)
 end
 
 --- Draws a line from one point to another.  

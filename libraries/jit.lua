@@ -18,6 +18,8 @@ jit.version = nil --[[@as string]]
 --- @type number
 jit.version_num = nil --[[@as number]]
 
+--- @deprecated  
+--- 🛑 **DEPRECATED**: This function was disabled due to security concerns.  
 --- You can attach callbacks to a number of compiler events with jit.attach. The callback can be called:  
 --- * when a function has been compiled to bytecode (`"bc"`);  
 --- * when trace recording starts or stops (`"trace"`);  

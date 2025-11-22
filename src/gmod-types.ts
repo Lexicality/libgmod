@@ -22,6 +22,11 @@ let GMOD_TYPES: { [key: string]: string } = {};
 let PANEL_TYPES: { [key: string]: string } = {};
 
 export function getTypeName(ret: string): string {
+    // argh
+    if (ret.startsWith("Structures/")) {
+        ret = "S" + ret.substring(11);
+    }
+
     let tableMatch = ret.match(TABLE_REGEX);
     let enumMatch = ret.match(ENUM_REGEX);
     let structMatch = ret.match(STRUCT_REGEX);

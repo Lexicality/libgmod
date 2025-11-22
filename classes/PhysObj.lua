@@ -295,18 +295,26 @@ end
 function GPhysObj:IsValid()
 end
 
---- Mapping a vector in local frame of the physics object to world frame.  
---- ℹ **NOTE**: this function does translation and rotation, with translation done first.  
---- @param LocalVec GVector @A vector in the physics object's local frame
---- @return GVector @The corresponding vector in world frame
-function GPhysObj:LocalToWorld(LocalVec)
+--- Translates a vector in the physics object's local space into worldspace coordinates.  
+--- ℹ **NOTE**: Internally transforms the vector by the PhysObj:GetPositionMatrix.  
+--- So in GLua it approximates to:  
+--- ```  
+--- local matrixWorldTransform = PhysObj:GetPositionMatrix()  
+--- local vecWorldspaced = Vector()  
+--- vecWorldspaced:Set( vecLocal )  
+--- vecWorldspaced:Mul( matrixWorldTransform )  
+--- return vecWorldspaced  
+--- ```  
+--- @param vecLocal GVector @A vector in the physics object's local space.
+--- @return GVector @The corresponding worldspace vector.
+function GPhysObj:LocalToWorld(vecLocal)
 end
 
---- Rotate a vector from the local frame of the physics object to world frame.  
---- ℹ **NOTE**: This function only rotates the vector, without any translation operation.  
---- @param LocalVec GVector @A vector in the physics object's local frame
---- @return GVector @The corresponding vector in world frame
-function GPhysObj:LocalToWorldVector(LocalVec)
+--- Rotationally transforms a vector in the physics object's local space by the PhysObj:GetPositionMatrix.  
+--- ℹ **NOTE**: In contrast to PhysObj:LocalToWorld, this function doesn't translate the vector.  
+--- @param vecLocal GVector @A vector in the physics object's local space.
+--- @return GVector @The resulting vector from the rotational transformation.
+function GPhysObj:LocalToWorldVector(vecLocal)
 end
 
 --- Prints debug info about the state of the physics object to the console.  
@@ -372,7 +380,8 @@ function GPhysObj:SetInertia(angularInertia)
 end
 
 --- Sets the mass of the physics object.  
---- ⚠ **WARNING**: This resets PhysObj:SetBuoyancyRatio (Recalculated based materials' and the physics objects' densities, latter of which is dependent on mass). This is a physics engine limitation.  
+--- ⚠ **WARNING**: This resets PhysObj:SetBuoyancyRatio (Recalculated based materials' and the physics objects' densities, latter of which is dependent on mass).  
+--- If you used a custom ratio, you will have to re-set it again after `SetMass`.  
 --- @param mass number @The mass in kilograms, in range `[0, 50000]`
 function GPhysObj:SetMass(mass)
 end
@@ -418,15 +427,16 @@ end
 function GPhysObj:Wake()
 end
 
---- Converts a vector to a relative to the physics object coordinate system.  
---- @param vec GVector @The vector in world space coordinates.
---- @return GVector @The vector local to PhysObj:GetPos.
+--- Translates a worldspace vector into the physics object's local space.  
+--- @param vec GVector @A worldspace vector.
+--- @return GVector @The corresponding local space vector.
 function GPhysObj:WorldToLocal(vec)
 end
 
---- Rotate a vector from the world frame to the local frame of the physics object.  
---- ℹ **NOTE**: This function only rotates the vector, without any translation operation.  
---- @param WorldVec GVector @A vector in the world frame
---- @return GVector @The corresponding vector relative to the PhysObj
-function GPhysObj:WorldToLocalVector(WorldVec)
+--- Rotationally transforms a worldspace vector into the physics object's local space by the inverted PhysObj:GetPositionMatrix.  
+--- For example, in GMod this is used in thrusters, for working out linear force for local acceleration.  
+--- ℹ **NOTE**: In contrast to PhysObj:WorldToLocal, this function doesn't translate the vector.  
+--- @param vec GVector @A worldspace vector.
+--- @return GVector @The resulting vector from the rotational transformation.
+function GPhysObj:WorldToLocalVector(vec)
 end

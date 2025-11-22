@@ -9,7 +9,7 @@ function scripted_ents.Alias(alias, classname)
 end
 
 --- Returns a copy of the list of all ENT tables registered  
---- @return table @A table of all entities in the following format: (table keys are the classnames)
+--- @return {[string]: table} @A table of all SENTs where the key is the classname and the value is a table where:
 function scripted_ents.GetList()
 end
 

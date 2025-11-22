@@ -1350,7 +1350,7 @@
             "type": "string"
           },
           {
-            "description": "The function to run when the concommand is executed.\n<callback>\n<arg name=\"ply\" type=\"Player\">The player that ran the concommand. NULL entity if command was entered with the dedicated server console.</arg>\n<arg name=\"cmd\" type=\"string\">The concommand string (if one callback is used for several concommands).</arg>\n<arg name=\"args\" type=\"table\">A table of all string arguments.</arg>\n<arg name=\"argStr\" type=\"string\">The arguments as a string.</arg>\n</callback>",
+            "description": "The function to run when the concommand is executed.\n<callback>\n<arg name=\"ply\" type=\"Player\">The player that ran the concommand. NULL entity if command was entered with the dedicated server console.</arg>\n<arg name=\"cmd\" type=\"string\">The concommand string (if one callback is used for several concommands).</arg>\n<arg name=\"args\" type=\"table\">A table of all string arguments.</arg>\n<arg name=\"argStr\" type=\"string\">The arguments as a string (including double quotes if there were any).</arg>\n</callback>",
             "name": "callback",
             "type": "function"
           },
@@ -3025,7 +3025,7 @@
             "type": "number"
           },
           {
-            "default": "",
+            "default": "nil",
             "description": "Material of the rope. If unset, will be solid black.",
             "name": "material",
             "type": "string"
@@ -4534,7 +4534,7 @@
     "name": "debug"
   },
   {
-    "description": "The debugoverlay library is mainly useful for 3D debugging, it can be used to draw shapes on the screen for debug purposes.\n\n<note>These functions will not do anything unless the **developer** console variable is set to non 0.</note>",
+    "description": "The debugoverlay library is mainly useful for 3D debugging, it can be used to draw shapes on the screen for debug purposes.\n\n<note>These functions will not do anything unless the **developer** console variable is set to non 0.</note>\n<bug issue=\"5972#issuecomment-2275751896\">There's some code that prevents debugoverlay from being added if the game is paused, i.e. when console is open in singleplayer.</bug>",
     "functions": [
       {
         "arguments": [
@@ -7918,7 +7918,7 @@
             "type": "string"
           }
         ],
-        "description": "Creates a clientside only prop with optional physics. See also <page>Global.ClientsideModel</page> if physics is not needed.\n\n\nFor physics to work you **must** use the _model_ argument, a simple `SetModel` call will not be enough.\n<bug issue=\"861\">Parented clientside prop will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**</bug>",
+        "description": "Creates a clientside only prop with optional physics. See also <page>Global.ClientsideModel</page> if physics is not needed.\n\nFor physics to work you're expected to use the `model` argument. A simple <page>Entity:SetModel</page> will not be enough — the <page>Entity:PhysicsInit</page>* function will be needed.\n<bug issue=\"861\">Parented clientside prop will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**</bug>",
         "name": "CreateClientProp",
         "parent": "ents",
         "realms": [
@@ -8339,7 +8339,7 @@
         ]
       },
       {
-        "description": "Returns the amount of networked entities, which is limited to 8192. <page>ents.Create</page> will fail somewhere between 8064 and 8176 - this can vary based on the amount of existing temp ents.",
+        "description": "Returns the amount of networked entities, which is limited to 8192. <page>ents.Create</page> will fail somewhere between 8064 and 8176 - this can vary based on the amount of existing temp ents.\n\nSee also [MAX_EDICT_BITS](https://wiki.facepunch.com/gmod/Global_Variables#maxedictbits) global variable.",
         "name": "GetEdictCount",
         "parent": "ents",
         "realms": [
@@ -8375,7 +8375,7 @@
         ]
       },
       {
-        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all entities.\nIntended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>player.Iterator</page> for a similar function for all players.\n\nInternally, this function uses cached values that exist entirely within lua, as opposed to <page>ents.GetAll</page>, which is a C++ function.\nBecause switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than <page>ents.GetAll</page>.",
+        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all entities.\nIntended for use in [Generic For-Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>player.Iterator</page> for a similar function for all players.\n\n<note>Internally, this function uses cached values that are stored in Lua, as opposed to <page>ents.GetAll</page>, which is a C++ function.\nBecause a call operation from Lua to C++ *and* with a return back to Lua is quite costly, this function will be more efficient than <page>ents.GetAll</page>.</note>",
         "name": "Iterator",
         "parent": "ents",
         "realms": [
@@ -8384,15 +8384,15 @@
         ],
         "returnValues": [
           {
-            "description": "The Iterator Function from <page text=\"ipairs\">Global.ipairs</page>",
+            "description": "The Iterator Function from <page text=\"ipairs\">Global.ipairs</page>.",
             "type": "function"
           },
           {
-            "description": "Table of all existing <page text=\"Entities\">Entity</page>.  This is a cached copy of <page>ents.GetAll</page>\n<warning>This table is intended to be read-only.\n\nModifying the return table will affect all subsequent calls to this function until the cache is refreshed, replacing all of your ents.GetAll usages may come with unintended side effects because of this.</warning>",
+            "description": "Table of all existing <page text=\"Entities\">Entity</page>.  This is a cached copy of <page>ents.GetAll</page>.\n<warning>This table is intended to be read-only.\n\nModifying the return table will affect all subsequent calls to this function until the cache is refreshed, replacing all of your ents.GetAll usages may come with unintended side effects because of this.</warning>",
             "type": "table<Entity>"
           },
           {
-            "description": "The starting index for the table of players.\nThis is always `0` and is returned for the benefit of [Generic For Loops](https://www.lua.org/pil/4.3.5.html)",
+            "description": "The starting index for the table of players.\nThis is always `0` and is returned for the benefit of [Generic For-Loops](https://www.lua.org/pil/4.3.5.html).",
             "type": "number"
           }
         ],
@@ -8505,7 +8505,7 @@
             "type": "string"
           },
           {
-            "default": "nil",
+            "default": "DATA",
             "description": "The path to look for the files and directories in. See <page text=\"this list\">File_Search_Paths</page> for a list of valid paths.\n<note>This is only available in the menu state.</note>",
             "name": "path",
             "type": "string"
@@ -8775,7 +8775,7 @@
       {
         "arguments": [
           {
-            "description": "The name of the file being written into. The path is relative to the `data/` folder.\n\nThis argument will be forced lowercase.\n\nThe filename **must** end with one of the following:\n* .txt\n* .dat\n* .json\n* .xml\n* .csv\n* .dem\n* .vcd\n* .gma\n* .mdl\n* .phy\n* .vvd\n* .vtx\n* .ani\n* .vtf\n* .vmt\n* .png\n* .jpg\n* .jpeg\n* .mp3\n* .wav\n* .ogg\n\nRestricted symbols are: `\":`, and multiple consecutive spaces",
+            "description": "The name of the file being written into. The path is relative to the `data/` folder.\n\nThis argument will be forced lowercase.\n\nThe filename **must** end with one of the following:\n* .txt\n* .dat\n* .json\n* .xml\n* .csv\n* .dem\n* .vcd\n* .gma\n* .mdl\n* .phy\n* .vvd\n* .vtx\n* .ani\n* .vtf\n* .vmt\n* .png\n* .jpg\n* .jpeg\n* .mp3\n* .wav\n* .ogg\n\nRestricted symbols are: `\":`, and multiple consecutive spaces, as well as pretty much every other non Latin (a-Z) character",
             "name": "fileName",
             "type": "string"
           },
@@ -10686,7 +10686,7 @@
             "type": "vararg"
           }
         ],
-        "description": "Calls all hooks associated with the given event **until** one returns something other than `nil` and then returns that data. If no hook returns any data, it will try to call the `GAMEMODE:<eventname>`; alternative, if one exists.\n\nThis function internally calls <page>hook.Call</page>.\n\nSee also: <page>gamemode.Call</page> - same as this, but does not call hooks if the gamemode hasn't defined the function.\n</eventname>",
+        "description": "Calls all hooks associated with the given event **until** one returns something other than `nil` and then returns that data. If no hook returns any data, it will try to call the `GAMEMODE:<eventname>` alternative, if one exists.\n\nThis function internally calls <page>hook.Call</page>.\n\nSee also: <page>gamemode.Call</page> - same as this, but does not call hooks if the gamemode hasn't defined the function.\n</eventname>",
         "name": "Run",
         "parent": "hook",
         "realms": [
@@ -11328,7 +11328,7 @@
             "type": "string"
           }
         ],
-        "description": "You can attach callbacks to a number of compiler events with jit.attach. The callback can be called:\n\n* when a function has been compiled to bytecode (`\"bc\"`);\n* when trace recording starts or stops (`\"trace\"`);\n* as a trace is being recorded (`\"record\"`);\n* or when a trace exits through a side exit (`\"texit\"`).\n\nSet a callback with `jit.attach(callback, \"event\")` and clear the same callback with `jit.attach(callback)`.\nOnly one callback can be active per event.\n\n<warning>This function isn't officially documented on LuaJIT wiki, use it at your own risk.</warning>",
+        "description": "<deprecated>This function was disabled due to security concerns.</deprecated>\nYou can attach callbacks to a number of compiler events with jit.attach. The callback can be called:\n\n* when a function has been compiled to bytecode (`\"bc\"`);\n* when trace recording starts or stops (`\"trace\"`);\n* as a trace is being recorded (`\"record\"`);\n* or when a trace exits through a side exit (`\"texit\"`).\n\nSet a callback with `jit.attach(callback, \"event\")` and clear the same callback with `jit.attach(callback)`.\nOnly one callback can be active per event.\n\n<warning>This function isn't officially documented on LuaJIT wiki, use it at your own risk.</warning>",
         "name": "attach",
         "parent": "jit",
         "realms": [
@@ -14617,7 +14617,7 @@
             "type": "number"
           }
         ],
-        "description": "Seeds the random number generator. The same seed will guarantee the same sequence of numbers each time with <page>math.random</page>.\n\nFor shared random values across predicted realms, use <page>util.SharedRandom</page>.\n\n<warning>Incorrect usage of this function will affect `all` random numbers in the game.</warning>",
+        "description": "Seeds the random number generator. The same seed will guarantee the same sequence of numbers each time with <page>math.random</page>.\n\nFor shared random values across predicted realms, use <page>util.SharedRandom</page>.\n\n<warning>Usage of this function affects **ALL** random numbers in the game. This means that improper use (such as setting the seed to a static value that doesn't change with time) can negatively affect other addons or the base game.\n\nIt is a good idea to set the seed back to at least something like <page>Global.SysTime</page> in those cases.\n</warning>",
         "name": "randomseed",
         "parent": "math",
         "realms": [
@@ -14932,7 +14932,7 @@
     "name": "math"
   },
   {
-    "description": "A library that allows implementing custom [material proxies](https://developer.valvesoftware.com/wiki/Material_proxies) for materials.\n\nMaterial proxies allow programmatically setting specific `.vmt` shader parameters on a per-entity basis, rather being global across all instances of a material.",
+    "description": "A library that allows implementing custom [material proxies](https://developer.valvesoftware.com/wiki/Material_proxies) for materials.\n\nMaterial proxies allow programmatically setting specific `.vmt` shader parameters on a per-entity basis, rather being global across all instances of a material.\n\nYou can find a tutorial for making colourable textures over at this [GitHub wiki](https://github.com/fgrg2801/gmod-colorable-playermodels/wiki)",
     "fields": [
       {
         "description": "<internal></internal>A list of all **active** material proxies.",
@@ -15479,7 +15479,7 @@
             "type": "number"
           },
           {
-            "description": "T coordinate.",
+            "description": "T coordinate. Will be optional in the next update.",
             "name": "t",
             "type": "number"
           },
@@ -15496,7 +15496,7 @@
             "type": "number"
           }
         ],
-        "description": "Sets the texture coordinates for the next vertex.",
+        "description": "Sets the texture coordinates for the next vertex for the current mesh. (See <page>mesh.Begin</page>)",
         "name": "TexCoord",
         "parent": "mesh",
         "realms": [
@@ -18315,7 +18315,7 @@
         ]
       },
       {
-        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all players on the server.\nIntended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>ents.Iterator</page> for a similar function for all entities.\n\nInternally, this function uses cached values that exist entirely within lua, as opposed to <page>player.GetAll</page>, which is a C++ function.\nBecause switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than <page>player.GetAll</page>.",
+        "description": "Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all players on the server.\nIntended for use in [Generic For-Loops](https://www.lua.org/pil/4.3.5.html).\nSee <page>ents.Iterator</page> for a similar function for all entities.\n\n<note>Internally, this function uses cached values that are stored in Lua, as opposed to <page>player.GetAll</page>, which is a C++ function.\nBecause a call operation from Lua to C++ *and* with a return back to Lua is quite costly, this function will be more efficient than <page>player.GetAll</page>.</note>",
         "name": "Iterator",
         "parent": "player",
         "realms": [
@@ -18324,15 +18324,15 @@
         ],
         "returnValues": [
           {
-            "description": "The Iterator Function from <page text=\"ipairs\">Global.ipairs</page>",
+            "description": "The Iterator Function from <page text=\"ipairs\">Global.ipairs</page>.",
             "type": "function"
           },
           {
-            "description": "Table of all existing <page text=\"Players\">Player</page>.  This is a cached copy of <page>player.GetAll</page>\n<warning>This table is intended to be read-only.\n\nModifying the return table will affect all subsequent calls to this function until the cache is refreshed, replacing all of your player.GetAll usages may come with unintended side effects because of this.\n\nExample of bad code:\n```\n-- NEVER DO THIS!!!\n\nlocal scan_ents = select(2, player.Iterator())\n\ntable.Add(scan_ents, ents.FindByClass(\"ttt_decoy\"))\n```\n</warning>",
+            "description": "Table of all existing <page text=\"Players\">Player</page>.  This is a cached copy of <page>player.GetAll</page>.\n<warning>This table is intended to be read-only.\n\nModifying the return table will affect all subsequent calls to this function until the cache is refreshed, replacing all of your player.GetAll usages may come with unintended side effects because of this.\n\nAn example:\n```\n-- Bad code.\nlocal scan_ents = select( 2, player.Iterator() )\ntable.Add( scan_ents, ents.FindByClass( \"ttt_decoy\" ) )\n\n-- Fine code. A copy of the table is being made and used.\nlocal scan_ents = table.Copy( select( 2, player.Iterator() ) )\ntable.Add( scan_ents, ents.FindByClass( \"ttt_decoy\" ) )\n```\n</warning>",
             "type": "table<Player>"
           },
           {
-            "description": "The starting index for the table of players.\nThis is always `0` and is returned for the benefit of [Generic For Loops](https://www.lua.org/pil/4.3.5.html)",
+            "description": "The starting index for the table of players.\nThis is always `0` and is returned for the benefit of [Generic For-Loops](https://www.lua.org/pil/4.3.5.html).",
             "type": "number"
           }
         ],
@@ -20218,6 +20218,21 @@
         ]
       },
       {
+        "description": "Get the maximum density of the fog.",
+        "name": "GetFogMaxDensity",
+        "parent": "render",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "The maximum density of the fog, 0-1.",
+            "name": "maxDensity",
+            "type": "number"
+          }
+        ]
+      },
+      {
         "description": "Returns the fog mode.",
         "name": "GetFogMode",
         "parent": "render",
@@ -20380,7 +20395,7 @@
         ]
       },
       {
-        "description": "Returns the `_rt_ResolvedFullFrameDepth` texture for SSAO depth. It will only be updated if <page>GM:NeedsDepthPass</page> returns true.",
+        "description": "Returns the `_rt_ResolvedFullFrameDepth` texture for SSAO depth. It will only be updated if <page>GM:NeedsDepthPass</page> returns true. Depth is written using the <page>Shaders/DepthWrite</page>.",
         "name": "GetResolvedFullFrameDepth",
         "parent": "render",
         "realms": [
@@ -21399,17 +21414,18 @@
       {
         "arguments": [
           {
-            "description": "The index of the rt to set.",
+            "description": "The index of output `COLOR[n]` [semantics](https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics) from pixel-shader. Min: `0`, max: `3`.",
             "name": "rtIndex",
             "type": "number"
           },
           {
+            "default": "nil",
             "description": "The new render target to be used.",
             "name": "texture",
             "type": "ITexture"
           }
         ],
-        "description": "Sets the render target with the specified index to the specified rt.",
+        "description": "Sets the render target with the specified index of `COLOR[n]` to the specified rt, allowing you to work with [Multiple Render Targets (MRT)](https://learn.microsoft.com/en-us/windows/win32/direct3d9/multiple-render-targets). Since standard shaders don't use MRT, you might find this useful at <page>Shaders/screenspace_general</page>.\n<note>MRT doesn't work with 2D render functions like <page>render.DrawScreenQuad</page>. Instead, you can render a <page>render.DrawQuad</page> using <page>cam.Start2D</page>.</note>\n<warning>\nIf you try to render with MSAA and set the main RenderTarget with another RenderTarget, nothing will be rendered.\n\n[Link to Direct3D 9 documentation on MRT](https://learn.microsoft.com/en-us/windows/win32/direct3d9/multiple-render-targets#:~:text=No%20antialiasing%20is%20supported)\n\n`Multiple render targets have the following restrictions:`\n* *No antialiasing is supported.*\n</warning>",
         "name": "SetRenderTargetEx",
         "parent": "render",
         "realms": [
@@ -22317,8 +22333,8 @@
         ],
         "returnValues": [
           {
-            "description": "A table of all entities in the following format: (table keys are the classnames)\n* <page>table</page> t - The <page text=\"ENT\">Structures/ENT</page> table associated with the entity\n* <page>boolean</page> isBaseType - Always true\n* <page>string</page> Base - The entity base (note capital B in the key name)\n* <page>string</page> type - The entity type",
-            "type": "table"
+            "description": "A table of all SENTs where the key is the classname and the value is a table where:\n* <page>table</page> **t** — The <page text=\"ENT\">Structures/ENT</page> table associated with the entity\n* <page>boolean</page> **isBaseType** — Unused. Always `true`\n* <page>string</page> **Base** — The entity base\n* <page>string</page> **type** — The entity type",
+            "type": "table<string, table>"
           }
         ],
         "source": {
@@ -23122,7 +23138,7 @@
           },
           {
             "default": "icon16/exclamation.png",
-            "description": "Path to the material that will be used as an icon on the tab.",
+            "description": "Path to the material that will be used as an icon on the tab. Should be a `.png` file. See <page>Silkicons</page>.",
             "name": "material",
             "type": "string"
           },
@@ -23207,22 +23223,22 @@
       {
         "arguments": [
           {
-            "description": "The ToolTab name, as created with <page>spawnmenu.AddToolTab</page>.\n\nYou can also use the default ToolTab names \"Main\" and \"Utilities\".",
-            "name": "tab",
+            "description": "The internal tool tab name, as created with <page>spawnmenu.AddToolTab</page>.\n\nYou can also use the default Tool Tab names `\"Main\"` and `\"Utilities\"`.",
+            "name": "tabName",
             "type": "string"
           },
           {
-            "description": "The identifier name",
-            "name": "RealName",
+            "description": "The unique identifier name, which will be used to add tool option to this category.",
+            "name": "className",
             "type": "string"
           },
           {
-            "description": "The displayed name",
-            "name": "PrintName",
+            "description": "The nice name to be displayed to the player. See <page>Addon Localization</page>.",
+            "name": "printName",
             "type": "string"
           }
         ],
-        "description": "Used to create a new category in the list inside of a spawnmenu ToolTab.\n\nYou must call this function from <page>SANDBOX:AddToolMenuCategories</page> for it to work properly.",
+        "description": "Used to create a new category in the list inside of a spawnmenu Tool Tab.\n\nYou must call this function from <page>SANDBOX:AddToolMenuCategories</page> for it to work properly.\n\nSee <page>spawnmenu.AddToolTab</page> to add new tool tabs.\nSee <page>spawnmenu.AddToolMenuOption</page> to add new sub options to a newly created tool category.",
         "name": "AddToolCategory",
         "parent": "spawnmenu",
         "realms": [
@@ -23237,32 +23253,34 @@
       {
         "arguments": [
           {
-            "description": "The spawnmenu tab to add into (for example \"Utilities\")",
+            "description": "The internal name of the spawnmenu tab to add into (for example \"Utilities\")",
             "name": "tab",
             "type": "string"
           },
           {
-            "description": "The category to add into (for example \"Admin\")",
+            "description": "The internal name of the category within the tab to add into (for example \"Admin\")",
             "name": "category",
             "type": "string"
           },
           {
-            "description": "Unique identifier of option to add",
+            "description": "Unique internal identifier of the new option. This is used to reference this option by other code.",
             "name": "class",
             "type": "string"
           },
           {
-            "description": "The nice name of item",
+            "description": "The nice name of item to show to the player. See <page>Addon Localization</page>.",
             "name": "name",
             "type": "string"
           },
           {
-            "description": "Command to execute when the item is selected",
+            "default": "nil",
+            "description": "Console command to execute when the item is selected.",
             "name": "cmd",
             "type": "string"
           },
           {
-            "description": "Config name, used in older versions to load tool settings UI from a file. No longer works.\n\n<warning>We advise against using this. It may be changed or removed in a future update.</warning>",
+            "default": "nil",
+            "description": "Config name, used in older versions to load tool settings UI from a file.\n\n<deprecated notag=\"true\">Legacy argument, no longer works.</deprecated>",
             "name": "config",
             "type": "string"
           },
@@ -23278,7 +23296,7 @@
             "type": "table"
           }
         ],
-        "description": "Adds an option to the right side of the spawnmenu",
+        "description": "Adds an option to the right side of the spawnmenu.\n\nSee <page>spawnmenu.AddToolTab</page> to add new right-side tabs. See <page>spawnmenu.AddToolCategory</page> to add new categories.",
         "name": "AddToolMenuOption",
         "parent": "spawnmenu",
         "realms": [
@@ -23293,24 +23311,24 @@
       {
         "arguments": [
           {
-            "description": "The internal name of the tab. This is used for sorting.",
+            "description": "The internal name of the tab. This is used for sorting, as well as adding categories, so it should be unique.",
             "name": "name",
             "type": "string"
           },
           {
             "default": "name",
-            "description": "The 'nice' name of the tab (Tip: <page>language.Add</page>)",
+            "description": "The 'nice' name of the tab that is displayed to the player. See <page>Addon Localization</page>.",
             "name": "label",
             "type": "string"
           },
           {
             "default": "icon16/wrench.png",
-            "description": "The filepath to the icon of the tab. Should be a .png",
+            "description": "The file path to the icon of the tab. Should be a `.png` file. See <page>Silkicons</page>.",
             "name": "icon",
             "type": "string"
           }
         ],
-        "description": "Adds a new tool tab to the right side of the spawnmenu via the <page>SANDBOX:AddToolMenuTabs</page> hook.\n\nThis function is a inferior duplicate of <page>spawnmenu.GetToolMenu</page>, just without its return value.",
+        "description": "Adds a new tool tab to the right side of the spawnmenu. (usually via the <page>SANDBOX:AddToolMenuTabs</page> hook)\n\nSee <page>spawnmenu.GetToolMenu</page> for a function to retrieve existing tool tabs.\n\nSee <page>spawnmenu.AddCreationTab</page> for tabs on the left side of the spawnmenu.\n\nSee <page>spawnmenu.AddToolCategory</page> to add new categories to the newly created tool tab.\nSee <page>spawnmenu.AddToolMenuOption</page> to add new options to the categories within a tool tab.",
         "name": "AddToolTab",
         "parent": "spawnmenu",
         "realms": [
@@ -23490,12 +23508,12 @@
           },
           {
             "default": "icon16/wrench.png",
-            "description": "The filepath to the icon of the tab. Should be a .png",
+            "description": "The file path to the icon of the tab. Should be a `.png` file. See <page>Silkicons</page>.",
             "name": "icon",
             "type": "string"
           }
         ],
-        "description": "Adds a new tool tab (or returns an existing one by name) to the right side of the spawnmenu via the <page>SANDBOX:AddToolMenuTabs</page> hook.",
+        "description": "Returns an existing tool tab by name from the right side of the spawnmenu (usually during the <page>SANDBOX:AddToolMenuTabs</page> hook)\n\nIf the requested tooltab does not exist, it will be added. See also <page>spawnmenu.AddToolTab</page>.",
         "name": "GetToolMenu",
         "parent": "spawnmenu",
         "realms": [
@@ -25848,29 +25866,55 @@
             "type": "number"
           },
           {
-            "description": "The red value of the color to draw the circle with, or a <page>Color</page>.",
+            "description": "The red value of the color to draw the circle with.",
             "name": "r",
             "type": "number"
           },
           {
-            "description": "The green value of the color to draw the circle with. Unused if a <page>Color</page> was given.",
+            "description": "The green value of the color to draw the circle with.",
             "name": "g",
             "type": "number"
           },
           {
-            "description": "The blue value of the color to draw the circle with. Unused if a <page>Color</page> was given.",
+            "description": "The blue value of the color to draw the circle with.",
             "name": "b",
             "type": "number"
           },
           {
             "default": "255",
-            "description": "The alpha value of the color to draw the circle with. Unused if a <page>Color</page> was given.",
+            "description": "The alpha value of the color to draw the circle with.",
             "name": "a",
             "type": "number"
           }
         ],
         "description": "Draws a hollow circle, made of lines. For a filled circle, see examples for <page>surface.DrawPoly</page>.\n\n<rendercontext hook=\"false\" type=\"2D\"></rendercontext>",
         "name": "DrawCircle",
+        "overloads": [
+          {
+            "arguments": [
+              {
+                "description": "The center x integer coordinate.",
+                "name": "originX",
+                "type": "number"
+              },
+              {
+                "description": "The center y integer coordinate.",
+                "name": "originY",
+                "type": "number"
+              },
+              {
+                "description": "The radius of the circle.",
+                "name": "radius",
+                "type": "number"
+              },
+              {
+                "description": "A <page>Color</page> object/table to read the color from.",
+                "name": "color",
+                "type": "table"
+              }
+            ]
+          }
+        ],
         "parent": "surface",
         "realms": [
           "client",
@@ -30405,7 +30449,7 @@
             "type": "string"
           }
         ],
-        "description": "Returns a table containing the info about the model. The model will be loaded and cached if it was not previously.\n\n<note>This function will silently fail if used on models with following strings in them:\n* _shared\n* _anims\n* _gestures\n* _anim\n* _postures\n* _gst\n* _pst\n* _shd\n* _ss\n* _anm\n* _include</note>",
+        "description": "Returns a table containing the info about the model. The model will be loaded and cached if it was not previously.\n\nSee also <page>util.GetModelMeshes</page>\n\n<note>This function will silently fail if used on models with following strings in them:\n* _shared\n* _anims\n* _gestures\n* _anim\n* _postures\n* _gst\n* _pst\n* _shd\n* _ss\n* _anm\n* _include</note>",
         "name": "GetModelInfo",
         "parent": "util",
         "realms": [
@@ -30434,8 +30478,14 @@
           },
           {
             "default": "0",
-            "description": "The combination of bodygroups to retrieve meshes for.\n\nFor more information, see <page>Entity:SetBodyGroups</page>",
+            "description": "The combination of bodygroups to retrieve meshes for. This can also be a specially formatted bitflag.\n\nFor more information, see <page>Entity:SetBodyGroups</page>.",
             "name": "bodygroupMask",
+            "type": "string|number"
+          },
+          {
+            "default": "0",
+            "description": "Skin index. Affects the `.material` of <page>Structures/ModelMeshData</page>.\n\nFor more information, see <page>Entity:GetSkin</page>.",
+            "name": "skin",
             "type": "number"
           }
         ],
@@ -30448,14 +30498,14 @@
         ],
         "returnValues": [
           {
-            "description": "A sequential table of <page text=\"ModelMeshData Structures\">Structures/ModelMeshData</page>\n\nEach index in this table corresponds to a mesh within the model passed as an argument to this function.",
+            "description": "Each index in this table corresponds to a mesh within the model passed as an argument to this function.\n\nThe mesh data is raw, and is not transformed via bone transformations. That's what the second return value is for.",
             "name": "modelMeshes",
-            "type": "table"
+            "type": "table<Structures/ModelMeshData>"
           },
           {
-            "description": "A sequential table of <page text=\"BoneBindPose Structures\">Structures/BoneBindPose</page>\n\nThis tables indices are bone IDs for the <page>Structures/BoneBindPose</page> stored at each index.",
+            "description": "This tables indices are bone IDs for the <page>Structures/BoneBindPose</page> stored at each index.",
             "name": "modelBindPoses",
-            "type": "table"
+            "type": "table<Structures/BoneBindPose>"
           }
         ]
       },
@@ -31201,27 +31251,26 @@
       {
         "arguments": [
           {
-            "description": "The entity",
+            "description": "The entity to take.",
             "name": "ent",
             "type": "Entity"
           },
           {
-            "description": "Number of the physics object to test",
+            "description": "Number of the physics object to test.",
             "name": "physobj",
             "type": "number"
           }
         ],
-        "description": "Checks if given numbered physics object of given entity is valid or not. Most useful for ragdolls.",
+        "description": "Checks whether the given numbered physics object of the given entity is valid or not. Most useful for ragdolls.",
         "name": "IsValidPhysicsObject",
         "parent": "util",
         "realms": [
-          "menu",
           "client",
           "server"
         ],
         "returnValues": [
           {
-            "description": "true is valid, false otherwise",
+            "description": "`true` that's valid, `false` otherwise.",
             "type": "boolean"
           }
         ],
@@ -31383,32 +31432,32 @@
       {
         "arguments": [
           {
-            "description": "The entity lpos is local to",
+            "description": "The entity to take.",
             "name": "ent",
             "type": "Entity"
           },
           {
-            "description": "Coordinates local to the ent",
+            "description": "A local space vector.",
             "name": "lpos",
             "type": "Vector"
           },
           {
-            "description": "The bonenumber of the ent lpos is local to",
-            "name": "bonenum",
+            "default": "0",
+            "description": "Actually to be treated as the number corresponding to a specific <page>PhysObj</page> of the entity.\n\nIf that specific physics object is valid, then <page>PhysObj:LocalToWorld</page> is used.\n\nOtherwise, <page>Entity:LocalToWorld</page>.",
+            "name": "bone",
             "type": "number"
           }
         ],
-        "description": "Returns a vector in world coordinates based on an entity and local coordinates",
+        "description": "A convenience function around LocalToWorld-related functions.\n\n<note>If <page>Entity:EntIndex</page> returns `0`, the function will return the passed `lpos`.</note>",
         "name": "LocalToWorld",
         "parent": "util",
         "realms": [
-          "menu",
           "client",
           "server"
         ],
         "returnValues": [
           {
-            "description": "wpos",
+            "description": "The corresponding worldspace vector.",
             "type": "Vector"
           }
         ],

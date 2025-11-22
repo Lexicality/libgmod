@@ -652,7 +652,7 @@ end
 function GNPC:MoveStop()
 end
 
---- Works similarly to NPC:NavSetRandomGoal.  
+--- Picks random node around given vector, around specified length, using dir as search direction start. Works similarly to NPC:NavSetRandomGoal, but you can decide any position you want as a search starting point rather than your NPC.  
 --- @param pos GVector @The origin to calculate a path from.
 --- @param length number @The target length of the path to calculate.
 --- @param dir GVector @The direction in which to look for a new path end goal.
@@ -962,8 +962,8 @@ end
 
 --- Marks the current NPC task as failed.  
 --- This is meant to be used alongside NPC:TaskComplete to complete or fail custom Lua defined tasks. (Schedule:AddTask)  
---- @param task string @A string most likely defined as a Source Task, for more information on Tasks go to https://developer.valvesoftware.com/wiki/Task
-function GNPC:TaskFail(task)
+--- @param failReason string @Fail reason to be passed onto ENTITY:OnTaskFailed
+function GNPC:TaskFail(failReason)
 end
 
 --- Force the NPC to update information on the supplied enemy, as if it had line of sight to it.  

@@ -270,11 +270,11 @@ end
 --- ℹ **NOTE**: The particle effect must be precached with Global.PrecacheParticleSystem and the file its from must be added via game.AddParticles before it can be used!  
 --- @param ent GEntity @The entity to attach the control point to.
 --- @param effect string @The name of the effect to create
---- @param partAttachment number @See Enums/PATTACH.
---- @param entAttachment? number @The attachment ID on the entity to attach the particle system to
+--- @param partAtt number @See Enums/PATTACH.
+--- @param entAtt? number @The attachment ID on the entity to attach the particle system to
 --- @param offset? GVector @The offset from the Entity:GetPos of the entity we are attaching this CP to.
 --- @return GCNewParticleEffect @The created particle system.
-function _G.CreateParticleSystem(ent, effect, partAttachment, entAttachment, offset)
+function _G.CreateParticleSystem(ent, effect, partAtt, entAtt, offset)
 end
 
 --- Creates a new particle system, and sets control points 0 and 1 to given position, as well as optionally orientation of CP0 to the given angles. See also Global.CreateParticleSystem  
@@ -1160,15 +1160,15 @@ end
 function _G.LocalPlayer()
 end
 
---- Translates the specified position and angle from the specified local coordinate system into worldspace coordinates.  
---- If you're working with an entity's local vectors, use Entity:LocalToWorld and/or Entity:LocalToWorldAngles instead.  
---- See also: Global.WorldToLocal, the reverse of this function.  
---- @param localPos GVector @The position vector in the source coordinate system, that should be translated to world coordinates
---- @param localAng GAngle @The angle in the source coordinate system, that should be converted to a world angle
---- @param originPos GVector @The origin point of the source coordinate system, in world coordinates
---- @param originAngle GAngle @The angles of the source coordinate system, as a world angle
---- @return GVector @The world position of the supplied local position.
---- @return GAngle @The world angles of the supplied local angle.
+--- Translates a vector and angle from a local coordinate system into a global coordinate system.  
+--- For the reverse of this function see Global.WorldToLocal.  
+--- For working with an entity's local space vectors/angles you might consider using Entity:LocalToWorld/Entity:LocalToWorldAngles instead.  
+--- @param localPos GVector @A vector from a local coordinate system.
+--- @param localAng GAngle @An angle from a local coordinate system
+--- @param originPos GVector @The origin of a global coordinate system, in worldspace coordinates.
+--- @param originAngle GAngle @The angles of a global coordinate system, as a worldspace angle.
+--- @return GVector @The corresponding worldspace vector to `localPos`.
+--- @return GAngle @The corresponding worldspace angle to `localAng`.
 function _G.LocalToWorld(localPos, localAng, originPos, originAngle)
 end
 
@@ -1179,6 +1179,18 @@ end
 --- @param default string @The default value to be returned if no translation was found.
 --- @return string @The localized string, 128 char limit.
 function _G.Localize(localisationToken, default)
+end
+
+--- Returns the main view angles, as they were at the start of the latest main view render.  
+--- This is a good alternative to Global.EyeAngles which is affected by other rendering operations, including render.RenderView.  
+--- @return GAngle @The angles of the main view.
+function _G.MainEyeAngles()
+end
+
+--- Returns the origin of the main view, as it was at the start of the latest main view render.  
+--- This is a good alternative to Global.EyePos which is affected by other rendering operations, including render.RenderView.  
+--- @return GVector @Main camera position.
+function _G.MainEyePos()
 end
 
 --- Either returns the material with the given name, or loads the material interpreting the first argument as the path.  
@@ -1887,13 +1899,13 @@ end
 function _G.VectorRand(min, max)
 end
 
---- Translates the specified position and angle into the specified coordinate system.  
---- @param position GVector @The position that should be translated from the current to the new system.
---- @param angle GAngle @The angles that should be translated from the current to the new system.
---- @param newSystemOrigin GVector @The origin of the system to translate to.
---- @param newSystemAngles GAngle @The angles of the system to translate to.
---- @return GVector @Local position
---- @return GAngle @Local angles
+--- Translates a worldspace vector and angle into a specific coordinate system.  
+--- @param position GVector @A worldspace vector.
+--- @param angle GAngle @A worldspace angle.
+--- @param newSystemOrigin GVector @The origin of the new coordinate system.
+--- @param newSystemAngles GAngle @The angles of the new coordinate system.
+--- @return GVector @The corresponding local space `position`
+--- @return GAngle @The corresponding local space `angle`
 function _G.WorldToLocal(position, angle, newSystemOrigin, newSystemAngles)
 end
 
@@ -2137,10 +2149,11 @@ end
 function _G.tobool(input)
 end
 
---- Attempts to convert the value to a number.  
---- @param value any @The value to convert
---- @param base? number @The base used in the string
---- @return number @The numeric representation of the value with the given base, or nil if the conversion failed.
+--- Converts strings containing numbers into actual numbers.  
+--- Can also convert numbers from other [numerical bases](https://www.mathsisfun.com/numbers/bases.html) to base 10.  
+--- @param value string @The value to be converted
+--- @param base? number @The numerical base of the digits in the input value
+--- @return number|nil @The base `10` number representation of the input value, or `nil` if the conversion failed.
 function _G.tonumber(value, base)
 end
 

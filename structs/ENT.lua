@@ -22,7 +22,7 @@
 --- @field Purpose string @The purpose of the entity creation
 --- @field Instructions string @How to use your entity
 --- @field RenderGroup number @The entity's render group, see Enums/RENDERGROUP
---- @field WantsTranslucency? boolean @If set and RenderGroup is not, will switch the render group to RENDERGROUP_BOTH when appropriate.
+--- @field WantsTranslucency? boolean @If set and `RenderGroup` is not, will switch the render group to RENDERGROUP_BOTH when appropriate
 --- @field DisableDuplicator? boolean @Disable the ability for players to duplicate this entity.
 --- @field ScriptedEntityType string @Sets the spawnmenu content icon type for the entity, used by spawnmenu in the Sandbox-derived gamemodes
 --- @field IconOverride? string @If set, overrides the icon path to be displayed in the Spawnmenu for this entity

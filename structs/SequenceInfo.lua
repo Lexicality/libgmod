@@ -6,7 +6,7 @@
 --- @field activityname string @Name of the activity this sequence is attached to.
 --- @field activity EACT @The activity ID associated with this sequence
 --- @field actweight number @How likely this sequence is to be picked when playing an activity its attached to
---- @field flags number @The looping and other flags of this sequence.
+--- @field flags number @The looping and other flags of this sequence, see [flags here](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/public/studi
 --- @field numevents number @Number of animation events this sequence has.
 --- @field numblends number
 --- @field bbmin number @Mins part of the bounding box for this sequence

@@ -96,7 +96,7 @@
         ]
       },
       {
-        "description": "Called when the effect should be rendered.",
+        "description": "Called when the effect should be rendered.\n\nWhen not overridden, it will perform default action, which is <page>Entity:DrawModel</page>.",
         "name": "Render",
         "parent": "EFFECT",
         "realms": [
@@ -1837,6 +1837,12 @@
         "parent": "GM",
         "realms": [
           "client"
+        ],
+        "returnValues": [
+          {
+            "description": "`true/false` to prevent the notice from being shown. Do not return otherwise.",
+            "type": "any"
+          }
         ],
         "source": {
           "file": "gamemodes/base/gamemode/cl_deathnotice.lua",
@@ -4455,7 +4461,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.\n\n<note>Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with <page>Global.IsValid</page>. Will not require <page>Global.IsValid</page> check if you create your hook after <page>GM:InitPostEntity</page>.</note>\n\n<warning>Removing the created entity during this event can lead to unexpected problems. Use <page>Global.SafeRemoveEntityDelayed</page>( entity, 0 ) to safely remove the entity.</warning>",
+        "description": "Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.\n\n<warning>Removing the created entity during this event can lead to unexpected problems. Use <page>Global.SafeRemoveEntityDelayed</page>( entity, 0 ) to safely remove the entity.</warning>",
         "name": "OnEntityCreated",
         "parent": "GM",
         "realms": [
@@ -5864,7 +5870,7 @@
             "type": "Player"
           },
           {
-            "description": "If `true`, the player just spawned from a map transition.",
+            "description": "If `true`, the player just spawned from a [map transition](https://developer.valvesoftware.com/wiki/Level_Transitions). (Specifically via `trigger_changelevel` or `point_changelevel` entities)",
             "name": "transition",
             "type": "boolean"
           }
@@ -6619,12 +6625,12 @@
             "type": "boolean"
           },
           {
-            "description": "Whether the current draw is drawing the 3D or 2D skybox.\n\nIn case of 2D skyboxes it is possible for this hook to always be called with this parameter set to `true`.",
+            "description": "Whether the current call is drawing the 3D or 2D skybox.\n\nIn case of 2D skyboxes it is possible for this hook to always be called with this parameter set to `true`.",
             "name": "bDrawingSkybox",
             "type": "boolean"
           },
           {
-            "description": "Whether the current draw is drawing the 3D.",
+            "description": "Whether the current call is drawing the 3D skybox.",
             "name": "isDraw3DSkybox",
             "type": "boolean"
           }
@@ -6750,7 +6756,7 @@
             "type": "number"
           }
         ],
-        "description": "Called after a player in your [PVS (Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS \"PVS - Valve Developer Community\") was drawn.\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
+        "description": "Called after a given player in your [PVS (Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS \"PVS - Valve Developer Community\") was drawn.\n\nThis hook will not be called if player was prevented from being drawn via <page>GM:PrePlayerDraw</page>.\n<rendercontext hook=\"true\" type=\"3D\"></rendercontext>",
         "name": "PostPlayerDraw",
         "parent": "GM",
         "realms": [
@@ -7024,7 +7030,7 @@
             "type": "number"
           }
         ],
-        "description": "Called before the player is drawn.",
+        "description": "Called before the player is drawn.\n\nSee also <page>GM:PostPlayerDraw</page>.",
         "name": "PrePlayerDraw",
         "parent": "GM",
         "realms": [
@@ -7032,7 +7038,7 @@
         ],
         "returnValues": [
           {
-            "description": "Prevent default player rendering. Return `true` to hide the player.",
+            "description": "Return `true` to prevent default player rendering, which hides the player.",
             "type": "boolean"
           }
         ]
@@ -9734,7 +9740,7 @@
             "type": "Entity"
           }
         ],
-        "description": "Called after the player has spawned a scripted weapon from the spawnmenu with a middle mouse click.\n\nFor left mouse click spawns, see <page>SANDBOX:PlayerGiveSWEP</page>.",
+        "description": "Called after the player has spawned a weapon from the spawnmenu with a middle mouse click (mouse wheel click).\n\nFor a hook capable of preventing such spawns, see <page>SANDBOX:PlayerSpawnSWEP</page>.\nFor left mouse click spawns, see <page>SANDBOX:PlayerGiveSWEP</page>.",
         "name": "PlayerSpawnedSWEP",
         "parent": "SANDBOX",
         "realms": [
@@ -9945,7 +9951,7 @@
             "type": "table"
           }
         ],
-        "description": "Called when a player attempts to spawn a weapon from the Q menu as an entity on the ground. (Mouse wheel clicks on an icon)\n\nNot to be confused with <page>SANDBOX:PlayerGiveSWEP</page>, which is called only when the weapon is given to the player directly, if they don't already have it.",
+        "description": "Called when a player attempts to spawn a weapon from the spawnmenu as an entity on the ground, by middle mouse clicking (mouse wheel clicking) on a weapon icon.\n\nNot to be confused with <page>SANDBOX:PlayerGiveSWEP</page>, which is called only when the weapon is given to the player directly, if they don't already have it.\n\nSee <page>SANDBOX:PlayerSpawnedSWEP</page> for post entity creation event.",
         "name": "PlayerSpawnSWEP",
         "parent": "SANDBOX",
         "realms": [
@@ -11236,7 +11242,7 @@
         ]
       },
       {
-        "description": "Called when the swep is about to be removed.",
+        "description": "Called when the <page text=\"Scripted Weapon\">Scripted Entities</page> is about to be removed.\n\n<page>Entity:GetOwner</page> may be unset at this point, see <page>WEAPON:OnDrop</page> and <page>WEAPON:OwnerChanged</page>.",
         "name": "OnRemove",
         "parent": "WEAPON",
         "realms": [

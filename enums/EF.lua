@@ -4,25 +4,27 @@
 _G.EF_BONEMERGE = 1
 --- For use with EF_BONEMERGE. If this is set, then it places this ents origin at its parent and uses the parent's bbox + the max extents of the aiment. Otherwise, it sets up the parent's bones every frame to figure out where to place the aiment, which is inefficient because it'll setup the parent's bones even if the parent is not in the PVS.  
 _G.EF_BONEMERGE_FASTCULL = 128
---- DLIGHT centered at entity origin  
+--- DLIGHT centered at entity origin.  
 _G.EF_BRIGHTLIGHT = 2
---- Player flashlight  
+--- Player flashlight.  
 _G.EF_DIMLIGHT = 4
---- Don't interpolate the next frame  
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Seems to have no effect. Has been replaced with [C_BaseEntity::IsNoInterpolationFrame()](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/client/c_baseentity.h#L1331-L1332).  
+--- Don't interpolate the next frame.  
 _G.EF_NOINTERP = 8
---- Disables shadow  
+--- Disables shadow.  
 _G.EF_NOSHADOW = 16
 --- Prevents the entity from drawing and networking.  
 _G.EF_NODRAW = 32
---- Don't receive shadows  
+--- Don't receive shadows.  
 _G.EF_NORECEIVESHADOW = 64
---- Makes the entity blink  
+--- Makes the entity blink.  
 _G.EF_ITEM_BLINK = 256
 --- Always assume that the parent entity is animating.  
 _G.EF_PARENT_ANIMATES = 512
 --- Internal flag that is set by Entity:FollowBone.  
 _G.EF_FOLLOWBONE = 1024
---- Makes the entity not accept being lit by projected textures, including the player's flashlight.  
+--- GMod-specific. Makes the entity not accept being lit by projected textures, including the player's flashlight.  
 _G.EF_NOFLASHLIGHT = 8192
 
 --- Enumerations used by Entity:AddEffects,  Entity:RemoveEffects and  Entity:IsEffectActive.  

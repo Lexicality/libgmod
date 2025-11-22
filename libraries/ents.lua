@@ -11,7 +11,7 @@ function ents.Create(class)
 end
 
 --- Creates a clientside only prop with optional physics. See also Global.ClientsideModel if physics is not needed.  
---- For physics to work you **must** use the _model_ argument, a simple `SetModel` call will not be enough.  
+--- For physics to work you're expected to use the `model` argument. A simple Entity:SetModel will not be enough — the Entity:PhysicsInit* function will be needed.  
 --- 🦟 **BUG**: [Parented clientside prop will become detached if the parent entity leaves the PVS. **A workaround is available on its github page.**](https://github.com/Facepunch/garrysmod-issues/issues/861)  
 --- @param model? string @The model for the entity to be created.
 --- @return GEntity @Created entity (`C_PhysPropClientside`).
@@ -141,6 +141,7 @@ function ents.GetCount(IncludeKillMe)
 end
 
 --- Returns the amount of networked entities, which is limited to 8192. ents.Create will fail somewhere between 8064 and 8176 - this can vary based on the amount of existing temp ents.  
+--- See also [MAX_EDICT_BITS](https://wiki.facepunch.com/gmod/Global_Variables#maxedictbits) global variable.  
 --- @return number @Number of networked entities
 function ents.GetEdictCount()
 end
@@ -152,11 +153,11 @@ function ents.GetMapCreatedEntity(id)
 end
 
 --- Returns a [Stateless Iterator](https://www.lua.org/pil/7.3.html) for all entities.  
---- Intended for use in [Generic For Loops](https://www.lua.org/pil/4.3.5.html).  
+--- Intended for use in [Generic For-Loops](https://www.lua.org/pil/4.3.5.html).  
 --- See player.Iterator for a similar function for all players.  
---- Internally, this function uses cached values that exist entirely within lua, as opposed to ents.GetAll, which is a C++ function.  
---- Because switching from lua to C++ (and vice versa) incurs a performance cost, this function will be somewhat more efficient than ents.GetAll.  
---- @return function @The Iterator Function from ipairs
+--- ℹ **NOTE**: Internally, this function uses cached values that are stored in Lua, as opposed to ents.GetAll, which is a C++ function.  
+--- Because a call operation from Lua to C++ *and* with a return back to Lua is quite costly, this function will be more efficient than ents.GetAll.  
+--- @return function @The Iterator Function from ipairs.
 --- @return GEntity[] @Table of all existing Entities
 --- @return number @The starting index for the table of players
 function ents.Iterator()

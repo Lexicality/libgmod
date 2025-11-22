@@ -551,7 +551,7 @@ function GPanel:GetTall()
 end
 
 --- Returns the panel's text (where applicable).  
---- This method returns a maximum of 1023 bytes, except for DTextEntry.  
+--- This method returns a maximum of 1023 bytes, except for TextEntry.  
 --- @return string @The panel's text.
 function GPanel:GetText()
 end
@@ -1429,6 +1429,11 @@ end
 --- ⚠ **WARNING**: Label & its derivatives has hard length limit, maximum 1023 ascii characters.  
 --- @param text string @The text value to set.
 function GPanel:SetText(text)
+end
+
+--- Makes TextEntry's text be replaced by `*` characters, just like a password-entry text field would.  
+--- @param arg boolean @Whether to have the text be hidden.
+function GPanel:SetTextHidden(arg)
 end
 
 --- Sets the left and top text margins of a text-based panel object, such as a DButton or DLabel.  

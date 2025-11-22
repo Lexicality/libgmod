@@ -1101,19 +1101,19 @@
         "type": "Entity"
       },
       {
-        "description": "The name of the effect to create. It must be precached.",
+        "description": "The name of the effect to create. It must be precached via <page>Global.PrecacheParticleSystem</page> beforehand.",
         "name": "effect",
         "type": "string"
       },
       {
         "description": "See <page>Enums/PATTACH</page>.",
-        "name": "partAttachment",
+        "name": "partAtt",
         "type": "number"
       },
       {
         "default": "0",
         "description": "The attachment ID on the entity to attach the particle system to",
-        "name": "entAttachment",
+        "name": "entAtt",
         "type": "number"
       },
       {
@@ -1139,7 +1139,7 @@
   {
     "arguments": [
       {
-        "description": "The name of the effect to create. It must be precached.",
+        "description": "The name of the effect to create. It must be precached via <page>Global.PrecacheParticleSystem</page> beforehand.",
         "name": "effect",
         "type": "string"
       },
@@ -4991,27 +4991,27 @@
   {
     "arguments": [
       {
-        "description": "The position vector in the source coordinate system, that should be translated to world coordinates",
+        "description": "A vector from a local coordinate system.",
         "name": "localPos",
         "type": "Vector"
       },
       {
-        "description": "The angle in the source coordinate system, that should be converted to a world angle. If you don't need to convert an angle, you can supply an arbitrary valid angle (e.g. <page>Global.Angle</page>()).",
+        "description": "An angle from a local coordinate system.\n\nPass a zero angle if you don't need to translate an angle.",
         "name": "localAng",
         "type": "Angle"
       },
       {
-        "description": "The origin point of the source coordinate system, in world coordinates",
+        "description": "The origin of a global coordinate system, in worldspace coordinates.",
         "name": "originPos",
         "type": "Vector"
       },
       {
-        "description": "The angles of the source coordinate system, as a world angle",
+        "description": "The angles of a global coordinate system, as a worldspace angle.",
         "name": "originAngle",
         "type": "Angle"
       }
     ],
-    "description": "Translates the specified position and angle from the specified local coordinate system into worldspace coordinates.\n\nIf you're working with an entity's local vectors, use <page>Entity:LocalToWorld</page> and/or <page>Entity:LocalToWorldAngles</page> instead.\n\nSee also: <page>Global.WorldToLocal</page>, the reverse of this function.",
+    "description": "Translates a vector and angle from a local coordinate system into a global coordinate system.\n\nFor the reverse of this function see <page>Global.WorldToLocal</page>.\n\nFor working with an entity's local space vectors/angles you might consider using <page>Entity:LocalToWorld</page>/<page>Entity:LocalToWorldAngles</page> instead.",
     "name": "LocalToWorld",
     "parent": "Global",
     "realms": [
@@ -5020,12 +5020,40 @@
     ],
     "returnValues": [
       {
-        "description": "The world position of the supplied local position.",
+        "description": "The corresponding worldspace vector to `localPos`.",
         "type": "Vector"
       },
       {
-        "description": "The world angles of the supplied local angle.",
+        "description": "The corresponding worldspace angle to `localAng`.",
         "type": "Angle"
+      }
+    ]
+  },
+  {
+    "description": "Returns the main view angles, as they were at the start of the latest main view render.\n\nThis is a good alternative to <page>Global.EyeAngles</page> which is affected by other rendering operations, including <page>render.RenderView</page>.",
+    "name": "MainEyeAngles",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "returnValues": [
+      {
+        "description": "The angles of the main view.",
+        "type": "Angle"
+      }
+    ]
+  },
+  {
+    "description": "Returns the origin of the main view, as it was at the start of the latest main view render.\n\nThis is a good alternative to <page>Global.EyePos</page> which is affected by other rendering operations, including <page>render.RenderView</page>.",
+    "name": "MainEyePos",
+    "parent": "Global",
+    "realms": [
+      "client"
+    ],
+    "returnValues": [
+      {
+        "description": "Main camera position.",
+        "type": "Vector"
       }
     ]
   },
@@ -7718,18 +7746,18 @@
   {
     "arguments": [
       {
-        "description": "The value to convert. Can be a number or string.",
+        "description": "The value to be converted.\n\nThis string can contain digits from `0` to `9` (inclusive) for numerical bases from `2` to `10` (inclusive), and from `0` to `z` for bases greater than `10`.\n\nThe maximum value depends on the specific base value provided, for example for base 3 `0, 1, 2` are permitted. For base 11, `0-9` and `a` are permitted.",
         "name": "value",
-        "type": "any"
+        "type": "string"
       },
       {
         "default": "10",
-        "description": "The base used in the string. Can be any integer between 2 and 36, inclusive.",
+        "description": "The numerical base of the digits in the input value.\nMust be an integer between `2` and `36` (inclusive)",
         "name": "base",
         "type": "number"
       }
     ],
-    "description": "Attempts to convert the value to a number.",
+    "description": "Converts strings containing numbers into actual <page>number</page>s.\n\nCan also convert numbers from other [numerical bases](https://www.mathsisfun.com/numbers/bases.html) to base 10.",
     "name": "tonumber",
     "parent": "Global",
     "realms": [
@@ -7739,8 +7767,8 @@
     ],
     "returnValues": [
       {
-        "description": "The numeric representation of the value with the given base, or <page>nil</page> if the conversion failed.",
-        "type": "number"
+        "description": "The base `10` number representation of the input value, or `nil` if the conversion failed.",
+        "type": "number|nil"
       }
     ]
   },
@@ -8253,27 +8281,27 @@
   {
     "arguments": [
       {
-        "description": "The position that should be translated from the current to the new system.",
+        "description": "A worldspace vector.",
         "name": "position",
         "type": "Vector"
       },
       {
-        "description": "The angles that should be translated from the current to the new system.",
+        "description": "A worldspace angle.",
         "name": "angle",
         "type": "Angle"
       },
       {
-        "description": "The origin of the system to translate to.",
+        "description": "The origin of the new coordinate system.",
         "name": "newSystemOrigin",
         "type": "Vector"
       },
       {
-        "description": "The angles of the system to translate to.",
+        "description": "The angles of the new coordinate system.",
         "name": "newSystemAngles",
         "type": "Angle"
       }
     ],
-    "description": "Translates the specified position and angle into the specified coordinate system.",
+    "description": "Translates a worldspace vector and angle into a specific coordinate system.",
     "name": "WorldToLocal",
     "parent": "Global",
     "realms": [
@@ -8282,11 +8310,11 @@
     ],
     "returnValues": [
       {
-        "description": "Local position",
+        "description": "The corresponding local space `position`",
         "type": "Vector"
       },
       {
-        "description": "Local angles",
+        "description": "The corresponding local space `angle`",
         "type": "Angle"
       }
     ]

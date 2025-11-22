@@ -210,7 +210,7 @@
     ]
   },
   {
-    "description": "TTable structure used as balloon spawn data. Default values are applied when the trace hits nothing. This data is required for correctly spawning the balloon.\n\nSee <page>MakeBalloon</page>",
+    "description": "Table structure used as balloon spawn data. Default values are applied when the trace hits nothing. This data is required for correctly spawning the balloon.\n\nSee <page>MakeBalloon</page>",
     "fields": [
       {
         "default": "Vector(0, 0, 0)",
@@ -1016,7 +1016,7 @@
       },
       {
         "default": "false",
-        "description": "If set and RenderGroup is not, will switch the render group to <page text=\"RENDERGROUP_BOTH\">Enums/RENDERGROUP#RENDERGROUP_BOTH</page> when appropriate.",
+        "description": "If set and `RenderGroup` is not, will switch the render group to <page text=\"RENDERGROUP_BOTH\">Enums/RENDERGROUP#RENDERGROUP_BOTH</page> when appropriate.\n\nBasically, when the default render group of the entity's model is opaque, <page>ENTITY:DrawTranslucent</page> will still be called, for example to render effects and such. This is preferable to forcing translucent models to render in the opaque pass by setting `RenderGroup` to `RENDERGROUP_BOTH` at all times, causing graphical issues.",
         "name": "WantsTranslucency",
         "type": "boolean"
       },
@@ -1401,6 +1401,7 @@
         "type": "function"
       },
       {
+        "default": "GET",
         "description": "Request method, case insensitive. Possible values are:\n* GET\n* POST\n* HEAD\n* PUT\n* DELETE\n* PATCH\n* OPTIONS",
         "name": "method",
         "type": "string"
@@ -1827,7 +1828,6 @@
     ],
     "name": "ModelInfo",
     "realms": [
-      "menu",
       "client",
       "server"
     ]
@@ -2663,7 +2663,7 @@
         "type": "number"
       },
       {
-        "description": "The looping and other flags of this sequence.",
+        "description": "The looping and other flags of this sequence, see [flags here](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/public/studio.h#L3078).",
         "name": "flags",
         "type": "number"
       },

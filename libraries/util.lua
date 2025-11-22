@@ -178,6 +178,7 @@ function util.GetAnimEventNameByID(id)
 end
 
 --- Returns a table containing the info about the model. The model will be loaded and cached if it was not previously.  
+--- See also util.GetModelMeshes  
 --- ℹ **NOTE**: This function will silently fail if used on models with following strings in them:  
 --- * _shared  
 --- * _anims  
@@ -199,10 +200,11 @@ end
 --- ℹ **NOTE**: This does not work on brush models (Models with names in the format `*number`)  
 --- @param model string @The full path to the model to get the visual meshes of.
 --- @param lod? number @Which of the model's Level of Detail (LOD) models to retrieve
---- @param bodygroupMask? number @The combination of bodygroups to retrieve meshes for
---- @return table @A sequential table of ModelMeshData Structures
---- @return table @A sequential table of BoneBindPose Structures
-function util.GetModelMeshes(model, lod, bodygroupMask)
+--- @param bodygroupMask? string|number @The combination of bodygroups to retrieve meshes for
+--- @param skin? number @Skin index
+--- @return SModelMeshData[] @Each index in this table corresponds to a mesh within the model passed as an argument to this function
+--- @return SBoneBindPose[] @This tables indices are bone IDs for the Structures/BoneBindPose stored at each index.
+function util.GetModelMeshes(model, lod, bodygroupMask, skin)
 end
 
 --- Gets persistent data of an offline player using their SteamID.  
@@ -416,10 +418,10 @@ end
 function util.IsValidModel(modelName)
 end
 
---- Checks if given numbered physics object of given entity is valid or not. Most useful for ragdolls.  
---- @param ent GEntity @The entity
---- @param physobj number @Number of the physics object to test
---- @return boolean @true is valid, false otherwise
+--- Checks whether the given numbered physics object of the given entity is valid or not. Most useful for ragdolls.  
+--- @param ent GEntity @The entity to take.
+--- @param physobj number @Number of the physics object to test.
+--- @return boolean @`true` that's valid, `false` otherwise.
 function util.IsValidPhysicsObject(ent, physobj)
 end
 
@@ -462,12 +464,13 @@ end
 function util.KeyValuesToTablePreserveOrder(keyvals, usesEscapeSequences, preserveKeyCase)
 end
 
---- Returns a vector in world coordinates based on an entity and local coordinates  
---- @param ent GEntity @The entity lpos is local to
---- @param lpos GVector @Coordinates local to the ent
---- @param bonenum number @The bonenumber of the ent lpos is local to
---- @return GVector @wpos
-function util.LocalToWorld(ent, lpos, bonenum)
+--- A convenience function around LocalToWorld-related functions.  
+--- ℹ **NOTE**: If Entity:EntIndex returns `0`, the function will return the passed `lpos`.  
+--- @param ent GEntity @The entity to take.
+--- @param lpos GVector @A local space vector.
+--- @param bone? number @Actually to be treated as the number corresponding to a specific PhysObj of the entity
+--- @return GVector @The corresponding worldspace vector.
+function util.LocalToWorld(ent, lpos, bone)
 end
 
 --- Generates the [MD5 hash](https://en.wikipedia.org/wiki/MD5) of the specified string.  

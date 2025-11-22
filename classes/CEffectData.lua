@@ -117,13 +117,7 @@ end
 function GCEffectData:SetEntity(entity)
 end
 
---- Sets the flags of the effect. Can be used to change the appearance of a MuzzleFlash effect.  
---- ## Example values for MuzzleFlash effect  
---- Flags |  Description |  
---- ------|--------------|  
---- 1 | Regular muzzleflash|  
---- 5 | Combine muzzleflash|  
---- 7 | Regular muzzle but bigger|  
+--- Sets the flags for the effect. What flags do depends entirely on the effect. See Default Effects.  
 --- ℹ **NOTE**: Internally stored as an integer, but only first 8 bits are networked, effectively limiting this function to `0-255` range.  
 --- @param flags number @The flags of the effect
 function GCEffectData:SetFlags(flags)

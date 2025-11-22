@@ -68,6 +68,7 @@ function GPlayer:Alive()
 end
 
 --- Sets if the player can toggle their flashlight. Function exists on both the server and client but has no effect when ran on the client.  
+--- This is a Lua method that internally uses GM:PlayerSwitchFlashlight. If current gamemode overwrites that hook and doesn't respect Player:CanUseFlashlight, this function will not have any effect.  
 --- @param canFlashlight boolean @True allows flashlight toggling
 function GPlayer:AllowFlashlight(canFlashlight)
 end
@@ -264,6 +265,7 @@ end
 
 --- Enables/Disables the player's flashlight.  
 --- Player:CanUseFlashlight must be true in order for the player's flashlight to be changed.  
+--- GM:PlayerSwitchFlashlight can block this function.  
 --- @param isOn boolean @Turns the flashlight on/off
 function GPlayer:Flashlight(isOn)
 end
@@ -280,7 +282,7 @@ function GPlayer:Frags()
 end
 
 --- Freeze the player. Frozen players cannot move, look around, or attack. Key bindings are still called. Similar to Player:Lock but the player can still take damage.  
---- Adds or removes the FL_FROZEN flag from the player.  
+--- Manages the FL_FROZEN flag on the player.  
 --- @param frozen? boolean @Whether the player should be frozen.
 function GPlayer:Freeze(frozen)
 end
@@ -501,6 +503,8 @@ function GPlayer:GetMaxSpeed()
 end
 
 --- Returns the player's name, this is an alias of Player:Nick.  
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Use Player:Nick.  
 --- ℹ **NOTE**: This function overrides Entity:GetName (in the Lua metatable, not in c++), keep it in mind when dealing with ents.FindByName or any engine function which requires the mapping name.  
 --- @return string @The player's name.
 function GPlayer:GetName()
@@ -532,8 +536,10 @@ end
 function GPlayer:GetPData(key, default)
 end
 
---- Returns a player model's color. The part of the model that is colored is determined by the model itself, and is different for each model.  
---- ℹ **NOTE**: Overide this function clientside on a Entity(not a player) with playermodel and return color will apply color on it  
+--- Returns a player's character model color.  
+--- The part of the model that is colored is determined by the model's materials, and is therefore different for each model.  
+--- See Player:GetWeaponColor for the accompanying function for the weapon color.  
+--- ℹ **NOTE**: Override this function clientside on any Entity (including a player) with a supported model set (such as default player models) and returned color will apply to the model. This is done via the `PlayerColor` matproxy.  
 --- @return GVector @The format is `Vector(r,g,b)`, and each color component should be between 0 and 1.
 function GPlayer:GetPlayerColor()
 end
@@ -696,8 +702,10 @@ end
 function GPlayer:GetWeapon(className)
 end
 
---- Returns a player's weapon color. The part of the model that is colored is determined by the model itself, and is different for each model. The format is `Vector(r,g,b)`, and each color should be between 0 and 1.  
---- @return GVector @color
+--- Returns a player's weapon color.  
+--- The part of the model that is colored is determined by the model itself, and is different for each model.  
+--- See Player:GetPlayerColor for the accompanying function for the player character model color.  
+--- @return GVector @The format is `Vector(r,g,b)`, and each color should be between 0 and 1.
 function GPlayer:GetWeaponColor()
 end
 
@@ -724,11 +732,11 @@ end
 function GPlayer:GiveAmmo(amount, type, hidePopup)
 end
 
---- Disables god mode on the player.  
+--- Disables god mode on the player. Removes the FL_GODMODE flag from the player.  
 function GPlayer:GodDisable()
 end
 
---- Enables god mode on the player.  
+--- Enables god mode on the player. Adds the FL_GODMODE flag to the player.  
 function GPlayer:GodEnable()
 end
 
@@ -941,13 +949,15 @@ end
 function GPlayer:MotionSensorPos(bone)
 end
 
---- Returns the player's name. Identical to Player:Nick and Player:GetName.  
+--- @deprecated  
+--- 🛑 **DEPRECATED**: Use Player:Nick.  
+--- Returns the player's nick name. Identical to Player:Nick and Player:GetName.  
 --- @return string @Player's name.
 function GPlayer:Name()
 end
 
---- Returns the player's name. Identical to Player:Name and Player:GetName.  
---- @return string @Player's name
+--- Returns the player's nick name also known as display name, as it appears in Steam.  
+--- @return string @Player's nick name
 function GPlayer:Nick()
 end
 

@@ -108,6 +108,11 @@ end
 function GIGModAudioChannel:GetTagsID3()
 end
 
+--- Retrieves `.m4a` media info, from a bass channel created by sound.PlayURL or sound.PlayFile, if available.  
+--- @return string[] @A list of available information in no particular order, or `nil` if no information is available.
+function GIGModAudioChannel:GetTagsMP4()
+end
+
 --- Retrieves ICY metadata from a bass stream channel created by sound.PlayURL, if available.  
 --- @return string @The meta information, or `nil` if no information is available
 function GIGModAudioChannel:GetTagsMeta()
@@ -121,6 +126,11 @@ end
 --- Retrieves OGG Vendor tag, usually containing the application that created the file, from a bass channel created by sound.PlayURL or sound.PlayFile, if available.  
 --- @return string @The OGG vendor tag, or `nil` if no information is available.
 function GIGModAudioChannel:GetTagsVendor()
+end
+
+--- Retrieves `.WMA` media info, from a bass channel created by sound.PlayURL or sound.PlayFile, if available.  
+--- @return string[] @A list of available information in no particular order, or `nil` if no information is available.
+function GIGModAudioChannel:GetTagsWMA()
 end
 
 --- Returns the current time of the sound channel in seconds  

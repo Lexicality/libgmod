@@ -14,7 +14,7 @@ end
 
 --- Adds a DButton onto the DForm  
 --- @param text string @The text on the button
---- @param concommand string @The concommand to run when the button is clicked
+--- @param concommand? string @The concommand to run when the button is clicked
 --- @vararg any @The arguments to pass on to the concommand when the button is clicked
 --- @return GPanel @The created DButton
 function PANEL:Button(text, concommand, ...)

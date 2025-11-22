@@ -294,7 +294,8 @@ end
 function SWEP:OnReloaded()
 end
 
---- Called when the swep is about to be removed.  
+--- Called when the Scripted Weapon is about to be removed.  
+--- Entity:GetOwner may be unset at this point, see WEAPON:OnDrop and WEAPON:OwnerChanged.  
 function SWEP:OnRemove()
 end
 

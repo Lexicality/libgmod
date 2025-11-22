@@ -32,6 +32,7 @@ end
 --- @param inflictor string @Class name of the entity inflicting the damage
 --- @param victim string @Name of the victim
 --- @param victimTeam number @Team of the victim
+--- @return any @`true/false` to prevent the notice from being shown
 function GM:AddDeathNotice(attacker, attackerTeam, inflictor, victim, victimTeam)
 end
 
@@ -741,7 +742,6 @@ function GM:OnDamagedByExplosion(ply, dmginfo)
 end
 
 --- Called as soon as the entity is created. Very little of the entity's properties will be initialized at this stage. (keyvalues, classname, flags, anything), especially on the serverside.  
---- ℹ **NOTE**: Some entities on initial map spawn are passed through this hook, and then removed in the same frame. This is used by the engine to precache things like models and sounds, so always check their validity with Global.IsValid. Will not require Global.IsValid check if you create your hook after GM:InitPostEntity.  
 --- ⚠ **WARNING**: Removing the created entity during this event can lead to unexpected problems. Use Global.SafeRemoveEntityDelayed( entity, 0 ) to safely remove the entity.  
 --- @param entity GEntity @The entity
 function GM:OnEntityCreated(entity)
@@ -1173,7 +1173,7 @@ end
 --- See GM:PlayerSpawn for a hook called every player spawn.  
 --- ℹ **NOTE**: This hook is called before the player has fully loaded, when the player is still in seeing the `Starting Lua` screen. For example, trying to use the Entity:GetModel function will return the default model (`models/player.mdl`).  
 --- @param player GPlayer @The player who spawned.
---- @param transition boolean @If `true`, the player just spawned from a map transition.
+--- @param transition boolean @If `true`, the player just spawned from a [map transition](https://developer.valvesoftware.com/wiki/Level_Transitions)
 function GM:PlayerInitialSpawn(player, transition)
 end
 
@@ -1427,8 +1427,8 @@ end
 --- 🦟 **BUG**: [This is still called when r_drawentities or r_drawopaquerenderables is disabled.](https://github.com/Facepunch/garrysmod-issues/issues/3295)  
 --- 🦟 **BUG**: [This is not called when r_drawtranslucentworld is disabled.](https://github.com/Facepunch/garrysmod-issues/issues/3296)  
 --- @param bDrawingDepth boolean @Whether the current call is writing depth.
---- @param bDrawingSkybox boolean @Whether the current draw is drawing the 3D or 2D skybox
---- @param isDraw3DSkybox boolean @Whether the current draw is drawing the 3D.
+--- @param bDrawingSkybox boolean @Whether the current call is drawing the 3D or 2D skybox
+--- @param isDraw3DSkybox boolean @Whether the current call is drawing the 3D skybox.
 function GM:PostDrawTranslucentRenderables(bDrawingDepth, bDrawingSkybox, isDraw3DSkybox)
 end
 
@@ -1472,7 +1472,8 @@ end
 function GM:PostPlayerDeath(ply)
 end
 
---- Called after a player in your [PVS (Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS "PVS - Valve Developer Community") was drawn.  
+--- Called after a given player in your [PVS (Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS "PVS - Valve Developer Community") was drawn.  
+--- This hook will not be called if player was prevented from being drawn via GM:PrePlayerDraw.  
 --- 🧱 **NOTE**: Provides a 3D rendering context  
 --- @param ply GPlayer @The player that was drawn.
 --- @param flags number @The STUDIO_ flags for this render operation.
@@ -1584,9 +1585,10 @@ function GM:PreGamemodeLoaded()
 end
 
 --- Called before the player is drawn.  
+--- See also GM:PostPlayerDraw.  
 --- @param player GPlayer @The player that is about to be drawn.
 --- @param flags number @The STUDIO_ flags for this render operation.
---- @return boolean @Prevent default player rendering
+--- @return boolean @Return `true` to prevent default player rendering, which hides the player.
 function GM:PrePlayerDraw(player, flags)
 end
 

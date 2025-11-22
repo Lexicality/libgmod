@@ -20,7 +20,7 @@
     "parent": "DButton"
   },
   {
-    "description": "<internal>Use <page>DCheckBoxLabel</page> instead.</internal>\nEngine checkbox",
+    "description": "<internal>Use <page>DCheckBoxLabel</page> instead.</internal>\n<deprecated>Use <page>DCheckBoxLabel</page> instead.</deprecated>\nEngine checkbox",
     "name": "CheckButton",
     "parent": ""
   },
@@ -5972,6 +5972,7 @@
             "type": "string"
           },
           {
+            "default": "",
             "description": "The concommand to run when the button is clicked",
             "name": "concommand",
             "type": "string"
@@ -7741,7 +7742,7 @@
     "parent": "Panel"
   },
   {
-    "description": "The DHTML control wraps the internal Awesomium framework, supports calling Javascript functions from Lua,\nas well as running Lua from within the HTML. Running Lua code is disabled by default.",
+    "description": "The DHTML control wraps the internal web engine, supports calling Javascript functions from Lua,\nas well as running Lua from within the HTML. Running Lua code is disabled by default.",
     "functions": [
       {
         "arguments": [
@@ -7791,27 +7792,6 @@
         ]
       },
       {
-        "arguments": [
-          {
-            "description": "The message to be logged (or Lua code to be executed; see above).",
-            "name": "msg",
-            "type": "string"
-          }
-        ],
-        "description": "Called when the page inside the <page>DHTML</page> window runs the `console.log` javascript function. On the x86-64 beta, it's called for all built-in `console.*` javascript functions.\n\nIf <page>DHTML:SetAllowLua</page> is set to `true` and the message begins with `RUNLUA:`, the text following `RUNLUA:` will be executed as code within the Lua environment (this is how Lua is called from DHTML windows).",
-        "name": "ConsoleMessage",
-        "parent": "DHTML",
-        "realms": [
-          "client",
-          "menu"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 97,
-          "lineStart": 66
-        }
-      },
-      {
         "description": "Returns if the loaded page can run Lua code, set by <page>DHTML:SetAllowLua</page>",
         "name": "GetAllowLua",
         "parent": "DHTML",
@@ -7841,172 +7821,6 @@
             "type": "boolean"
           }
         ]
-      },
-      {
-        "arguments": [
-          {
-            "description": "The URL of the current page.",
-            "name": "url",
-            "type": "string"
-          }
-        ],
-        "description": "Called when this panel begins loading a page.",
-        "name": "OnBeginLoadingDocument",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 152,
-          "lineStart": 148
-        }
-      },
-      {
-        "arguments": [
-          {
-            "description": "Library name of the JS function that was called.",
-            "name": "library",
-            "type": "string"
-          },
-          {
-            "description": "Name of the JS function that was called.",
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "description": "Table containing all arguments passed to the JS function.",
-            "name": "arguments",
-            "type": "table"
-          }
-        ],
-        "description": "Called by the engine when a callback function is called.",
-        "name": "OnCallback",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "returnValues": [
-          {
-            "description": "Return `true` to suppress default engine action.",
-            "type": "boolean"
-          }
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 121,
-          "lineStart": 107
-        }
-      },
-      {
-        "arguments": [
-          {
-            "description": "New target URL.",
-            "name": "url",
-            "type": "string"
-          }
-        ],
-        "description": "Called by HTML panels when the target URL of the frame has changed, this happens when you hover over a link.",
-        "name": "OnChangeTargetURL",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 182,
-          "lineStart": 178
-        }
-      },
-      {
-        "arguments": [
-          {
-            "description": "The new title of the page.",
-            "name": "newTitle",
-            "type": "string"
-          }
-        ],
-        "description": "Called by HTML panels when the title of the loaded page has been changed.",
-        "name": "OnChangeTitle",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 176,
-          "lineStart": 172
-        }
-      },
-      {
-        "arguments": [
-          {
-            "description": "The URL of the page requesting to create a child.",
-            "name": "sourceURL",
-            "type": "string"
-          },
-          {
-            "description": "The URL of the requested child.",
-            "name": "targetURL",
-            "type": "string"
-          },
-          {
-            "description": "True if the requested view is a popup.",
-            "name": "isPopup",
-            "type": "boolean"
-          }
-        ],
-        "description": "Called by HTML panels when the page attempts to open a new child view (such as a popup or new tab).",
-        "name": "OnChildViewCreated",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 170,
-          "lineStart": 166
-        }
-      },
-      {
-        "arguments": [
-          {
-            "description": "The URL of the current page.",
-            "name": "url",
-            "type": "string"
-          }
-        ],
-        "description": "Called by HTML panels when the panel's DOM has been set up. You can run JavaScript in here.",
-        "name": "OnDocumentReady",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 164,
-          "lineStart": 160
-        }
-      },
-      {
-        "arguments": [
-          {
-            "description": "The URL of the current page.",
-            "name": "url",
-            "type": "string"
-          }
-        ],
-        "description": "Called when this panel successfully loads a page.",
-        "name": "OnFinishLoadingDocument",
-        "parent": "DHTML",
-        "realms": [
-          "client"
-        ],
-        "source": {
-          "file": "lua/vgui/dhtml.lua",
-          "lineEnd": 158,
-          "lineStart": 154
-        }
       },
       {
         "arguments": [
@@ -8059,7 +7873,7 @@
       }
     ],
     "name": "DHTML",
-    "parent": "Awesomium"
+    "parent": "HTML"
   },
   {
     "description": "An element providing navigation controls for a <page>DHTML</page> window.",
@@ -19904,7 +19718,186 @@
     "parent": "Panel"
   },
   {
-    "description": "The HTML control can be used to display HTML code just like an internet browser. Unlike <page>DHTML</page>, this control cannot accept user input or complex interaction, such as retrieving image data.\n\n**Blocked URL Extentions**\n\n`This means your url cannot end in any of these extensions, e.g.: (http://yourdomain.com/garry.exe)`\n* .exe\n* .bat\n* .dll\n* .zip\n* .mp3\n* .swf",
+    "description": "The HTML control can be used to display web pages just like an internet browser.\n\n<page>DHTML</page> has additional functionality for interfacing with the page, such as sending and receiving data.\n\n## Blocked URL Extentions\n\nThis means your url cannot end in any of these extensions, e.g.: (http://yourdomain.com/garry.exe)\n* .exe\n* .bat\n* .dll\n* .zip\n* .mp3\n* .swf",
+    "functions": [
+      {
+        "arguments": [
+          {
+            "description": "The message to be logged (or Lua code to be executed; see above).",
+            "name": "msg",
+            "type": "string"
+          },
+          {
+            "description": "The message source file, if any.",
+            "name": "file",
+            "type": "string"
+          },
+          {
+            "description": "The line number in the file the message was output from.",
+            "name": "lineNr",
+            "type": "number"
+          },
+          {
+            "description": "The severity of the message. Possible values are:\n* \"log\"\n* \"warn\"\n* \"error\"\n* \"debug\"",
+            "name": "severity",
+            "type": "string"
+          }
+        ],
+        "description": "Called when the page inside the <page>HTML</page> window runs the `console.log` javascript function.\n\nOn the x86-64 beta, it's called for all built-in `console.*` javascript functions.\n\nOverwriting this function in any way will disable default behavior of printing the message to the in-game console.",
+        "name": "ConsoleMessage",
+        "parent": "HTML",
+        "realms": [
+          "client",
+          "menu"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The URL of the current page.",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "description": "Called when this panel begins loading a page.",
+        "name": "OnBeginLoadingDocument",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "Library name of the JS function that was called.",
+            "name": "library",
+            "type": "string"
+          },
+          {
+            "description": "Name of the JS function that was called.",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "description": "Table containing all arguments passed to the JS function.",
+            "name": "arguments",
+            "type": "table"
+          }
+        ],
+        "description": "Called by the engine when a callback function is called.",
+        "name": "OnCallback",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ],
+        "returnValues": [
+          {
+            "description": "Return `true` to suppress default engine action.",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The URL of the new page.",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "description": "Called when this panel's address changes.",
+        "name": "OnChangeAddressBar",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "New target URL.",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "description": "Called by HTML panels when the target URL of the frame has changed, this happens when you hover over a link.",
+        "name": "OnChangeTargetURL",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The new title of the page.",
+            "name": "newTitle",
+            "type": "string"
+          }
+        ],
+        "description": "Called by HTML panels when the title of the loaded page has been changed.",
+        "name": "OnChangeTitle",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The URL of the page requesting to create a child.",
+            "name": "sourceURL",
+            "type": "string"
+          },
+          {
+            "description": "The URL of the requested child.",
+            "name": "targetURL",
+            "type": "string"
+          },
+          {
+            "description": "True if the requested view is a popup.",
+            "name": "isPopup",
+            "type": "boolean"
+          }
+        ],
+        "description": "Called by HTML panels when the page attempts to open a new child view (such as a popup or new tab).",
+        "name": "OnChildViewCreated",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The URL of the current page.",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "description": "Called by HTML panels when the panel's DOM has been set up. You can run JavaScript in here.",
+        "name": "OnDocumentReady",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      },
+      {
+        "arguments": [
+          {
+            "description": "The URL of the current page.",
+            "name": "url",
+            "type": "string"
+          }
+        ],
+        "description": "Called when this panel successfully loads a page.",
+        "name": "OnFinishLoadingDocument",
+        "parent": "HTML",
+        "realms": [
+          "client"
+        ]
+      }
+    ],
     "name": "HTML",
     "parent": "Panel"
   },
@@ -20417,6 +20410,17 @@
   },
   {
     "description": "Used in Sandbox tools to allow the player to select models out of a list. Despite being only used in Sandbox, it is **not** exclusive to that gamemode.\n\nSee also <page>MatSelect</page> for the material selecting alternative.",
+    "fields": [
+      {
+        "description": "If set to above 0, automatically stretches the panel to fit this many rows. Default is 2.\n\nIf 0 or below, it will automatically stretch to fit all rows.",
+        "name": "Height",
+        "parent": "PropSelect",
+        "realms": [
+          "client"
+        ],
+        "type": "number"
+      }
+    ],
     "functions": [
       {
         "arguments": [
@@ -20766,7 +20770,7 @@
     "parent": "DPanel"
   },
   {
-    "description": "Basic text input field. See <page>DTextEntry</page> for a more advanced version.",
+    "description": "Basic text input field.\n\nSee <page>DTextEntry</page> for a more advanced version.",
     "functions": [
       {
         "arguments": [
@@ -20940,7 +20944,7 @@
     "parent": "DFrame"
   },
   {
-    "description": "A panel similar to <page>Label</page>, but can be clicked to open a URL in the Steam Overlay, and appears with an underline. This is used by <page>DLabelURL</page>.",
+    "description": "<internal>Use <page>DLabelURL</page> instead.</internal>\n\nA panel similar to <page>Label</page>, but can be clicked to open a URL in the Steam Overlay, and appears with an underline. This is used by <page>DLabelURL</page>.",
     "name": "URLLabel",
     "parent": ""
   }

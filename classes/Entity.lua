@@ -149,7 +149,7 @@ end
 --- Causes a specified function to be run if the entity is removed by any means. This can later be undone by Entity:RemoveCallOnRemove if you need it to not run.  
 --- ⚠ **WARNING**: This hook is called clientside during full updates. See GM:EntityRemoved for more information.  
 --- ⚠ **WARNING**: An error being thrown inside `removeFunc` will stop other `EntityRemoved` hooks from executing.  
---- @param identifier string @Identifier that can be optionally used with Entity:RemoveCallOnRemove to undo this call on remove.
+--- @param identifier any @Identifier that can be optionally used with Entity:RemoveCallOnRemove to undo this call on remove.
 --- @param removeFunc function @Function to be called on remove
 --- @vararg any @Optional arguments to pass to removeFunc
 function GEntity:CallOnRemove(identifier, removeFunc, ...)
@@ -214,7 +214,7 @@ end
 function GEntity:DestroyShadow()
 end
 
---- Disables an active matrix.  
+--- Disables an active matrix. See Entity:EnableMatrix for more info about active matrixes.  
 --- @param matrixType string @The name of the matrix type to disable
 function GEntity:DisableMatrix(matrixType)
 end
@@ -229,7 +229,7 @@ function GEntity:DispatchTraceAttack(damageInfo, traceRes, dir)
 end
 
 --- Dissolves the entity.  
---- This function creates `env_entity_dissolver` entity internally.  
+--- This function creates an `env_entity_dissolver` entity internally, which seems to be deleted in the same frame. Calling this function on an entity that is already dissolving will not create another `env_entity_dissolver` entity.  
 --- @param type? number @Dissolve type
 --- @param magnitude? number @Magnitude of the dissolve effect, its effect depends on the dissolve type.
 --- @param origin? GVector @The origin for the dissolve effect, its effect depends on the dissolve type
@@ -249,6 +249,7 @@ end
 --- 🧱 **NOTE**: Requires a 3D rendering context  
 --- 🦟 **BUG**: [Calling this on entities with EF_BONEMERGE and EF_NODRAW applied causes a crash.](https://github.com/Facepunch/garrysmod-issues/issues/1558)  
 --- 🦟 **BUG**: [Using this with a map model (game.GetWorld():GetModel()) crashes the game.](https://github.com/Facepunch/garrysmod-issues/issues/2688)  
+--- 🦟 **BUG**: [Calling this in GM:PrePlayerDraw will cause infinite recursion and crash the game.](https://github.com/Facepunch/garrysmod-issues/issues/4116)  
 --- @param flags? number @The optional STUDIO_ flags, usually taken from ENTITY:Draw and similar hooks.
 function GEntity:DrawModel(flags)
 end
@@ -260,7 +261,10 @@ end
 
 --- Move an entity down until it collides with something.  
 --- ⚠ **WARNING**: The entity needs to already have something below it within 256 units.  
-function GEntity:DropToFloor()
+--- @param mask? number @Trace mask.
+--- @param ignoreEnt? GEntity @Trace ignore entity.
+--- @param maxDist? number @Max trace dist.
+function GEntity:DropToFloor(mask, ignoreEnt, maxDist)
 end
 
 --- Plays a sound on an entity.  
@@ -571,7 +575,7 @@ function GEntity:GetBrushPlaneCount()
 end
 
 --- Returns a table of brushes surfaces for brush model entities.  
---- @return table @Table of SurfaceInfos if the entity has a brush model, or no value otherwise.
+--- @return GSurfaceInfo[] @A list of SurfaceInfo elements if the entity has a brush model, or `nil` otherwise.
 function GEntity:GetBrushSurfaces()
 end
 
@@ -1134,7 +1138,8 @@ end
 function GEntity:GetNWVector(key, fallback)
 end
 
---- Returns the map/hammer targetname of this entity.  
+--- Returns the "targetname" of this entity, typically used in map making and scripting to uniquely identify and target (hence 'targetname') an entity or a group of entities.  
+--- ⚠ **WARNING**: For players, this function is overwritten by Player:GetName, which returns the player's nick name, not the target name.  
 --- @return string @The name of the Entity
 function GEntity:GetName()
 end
@@ -1389,7 +1394,7 @@ end
 function GEntity:GetPhysicsAttacker(timeLimit)
 end
 
---- Returns the entity's physics object, if the entity has physics.  
+--- Returns the entity's physics object, if the entity has physics. Same as `ent:GetPhysicsObjectNum( 0 )`  
 --- ℹ **NOTE**: Entities don't have clientside physics objects by default, so this will return `[NULL PHYSOBJ]` on the client in most cases.  
 --- @return GPhysObj @The entity's physics object.
 function GEntity:GetPhysicsObject()
@@ -1628,8 +1633,8 @@ end
 function GEntity:GetShouldServerRagdoll()
 end
 
---- Returns the skin index of the current skin.  
---- @return number @skinIndex
+--- Returns the skin index of the current skin. Can be manipulated via Entity:SetSkin.  
+--- @return number @Current skin index.
 function GEntity:GetSkin()
 end
 
@@ -1870,8 +1875,9 @@ end
 function GEntity:IsLineOfSightClear(target)
 end
 
---- Returns if the entity is going to be deleted in the next frame. Entities marked for deletion should not be accessed.  
---- @return boolean @If the entity is going to be deleted.
+--- Determines if a given Entity is going to be removed at the start of the next tick.  
+--- This will return `true` for an Entity after Entity:Remove is called on it.  
+--- @return boolean @`true` if the Entity is going to be removed, `false` otherwise.
 function GEntity:IsMarkedForDeletion()
 end
 
@@ -1984,15 +1990,15 @@ end
 function GEntity:IsWorld()
 end
 
---- Converts a vector local to an entity into a worldspace vector  
---- @param lpos GVector @The local vector
---- @return GVector @The translated to world coordinates vector
+--- Translates a vector relative to the entity's coordinate system into a worldspace vector.  
+--- @param lpos GVector @A local space vector.
+--- @return GVector @The corresponding worldspace vector.
 function GEntity:LocalToWorld(lpos)
 end
 
---- Converts a local angle (local to the entity) to a world angle.  
---- @param ang GAngle @The local angle
---- @return GAngle @The world angle
+--- Translates an angle relative to the entity's coordinate system to a worldspace angle.  
+--- @param ang GAngle @A local space angle.
+--- @return GAngle @The corresponding worldspace angle.
 function GEntity:LocalToWorldAngles(ang)
 end
 
@@ -2347,7 +2353,9 @@ end
 function GEntity:RagdollUpdatePhysics()
 end
 
---- Removes the entity it is used on. The entity will be removed at the start of next tick.  
+--- Removes (or deletes) a given Entity.  
+--- The Entity will continue to exist until the start of the next tick.  
+--- To check if an Entity will be removed in the next tick, see Entity:IsMarkedForDeletion  
 function GEntity:Remove()
 end
 
@@ -2362,7 +2370,7 @@ function GEntity:RemoveAllGestures()
 end
 
 --- Removes a function previously added via Entity:CallOnRemove.  
---- @param identifier string @Identifier of the function given to Entity:CallOnRemove.
+--- @param identifier any @Identifier of the function given to Entity:CallOnRemove.
 function GEntity:RemoveCallOnRemove(identifier)
 end
 
@@ -3359,6 +3367,7 @@ function GEntity:SetOwner(owner)
 end
 
 --- Sets the parent of this entity, making it move with its parent. This will make the child entity non solid, nothing can interact with them, including traces.  
+--- All children of the parent get removed whenever it gets removed.  
 --- ℹ **NOTE**: This does not work on the world.  
 --- ⚠ **WARNING**: This can cause undefined physics behavior when used on entities that don't support parenting. See the [Valve developer wiki](https://developer.valvesoftware.com/wiki/Entity_Hierarchy_(parenting)) for more information.  
 --- @param parent? GEntity @The entity to parent to
@@ -3499,7 +3508,7 @@ end
 function GEntity:SetRenderOrigin(newOrigin)
 end
 
---- Sets a save value for an entity. You can see a full list of an entity's save values by creating it and printing Entity:GetSaveTable().  
+--- Sets a save value for an entity. You can see a full list of an entity's save values by creating it and printing Entity:GetSaveTable.  
 --- See Entity:GetInternalVariable for the opposite of this function.  
 --- @param name string @Name of the save value to set
 --- @param value any @Value to set
@@ -3530,6 +3539,7 @@ function GEntity:SetShouldServerRagdoll(serverragdoll)
 end
 
 --- Sets the skin of the entity.  
+--- Entity:GetSkin returns current skin and Entity:SkinCount returns amount of skins.  
 --- @param skinIndex number @0-based index of the skin to use.
 function GEntity:SetSkin(skinIndex)
 end
@@ -3637,7 +3647,9 @@ end
 function GEntity:SetupPhonemeMappings(fileRoot)
 end
 
---- Returns the amount of skins the entity has. To retrieve the total number of skins on a model, please look at this function util.GetModelInfo  
+--- Returns the amount of skins the entity has.  
+--- To set the entity's skin, use Entity:SetSkin.  
+--- To retrieve the total number of skins without an entity, see util.GetModelInfo.  
 --- @return number @The amount of skins the entity's model has.
 function GEntity:SkinCount()
 end
@@ -3736,8 +3748,8 @@ end
 --- Check if the given position or entity is within this entity's [PVS(Potential Visibility Set)](https://developer.valvesoftware.com/wiki/PVS "PVS - Valve Developer Community").  
 --- See also Entity:IsDormant.  
 --- ℹ **NOTE**: The function won't take in to account Global.AddOriginToPVS and the like.  
---- @param testPoint any @Entity or Vector to test against
---- @return boolean @True if the testPoint is within our PVS.
+--- @param testPoint GVector|GEntity @Entity or Vector to test against
+--- @return boolean @`true` if the testPoint is within our PVS.
 function GEntity:TestPVS(testPoint)
 end
 
@@ -3846,14 +3858,14 @@ end
 function GEntity:WorldSpaceCenter()
 end
 
---- Converts a worldspace vector into a vector local to an entity  
---- @param wpos GVector @The world vector
---- @return GVector @The local vector
+--- Translates a worldspace vector into a vector relative to the entity's coordinate system.  
+--- @param wpos GVector @A worldspace vector.
+--- @return GVector @The corresponding local space vector.
 function GEntity:WorldToLocal(wpos)
 end
 
---- Converts world angles to local angles ( local to the entity )  
---- @param ang GAngle @The world angles
---- @return GAngle @The local angles
+--- Translates a worldspace angle into an angle relative to the entity's coordinate system.  
+--- @param ang GAngle @A worldspace angle.
+--- @return GAngle @The corresponding local space angle.
 function GEntity:WorldToLocalAngles(ang)
 end

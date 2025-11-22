@@ -340,6 +340,11 @@ end
 function render.GetFogDistances()
 end
 
+--- Get the maximum density of the fog.  
+--- @return number @The maximum density of the fog, 0-1.
+function render.GetFogMaxDensity()
+end
+
 --- Returns the fog mode.  
 --- @return number @Fog mode, see Enums/MATERIAL_FOG
 function render.GetFogMode()
@@ -379,7 +384,7 @@ end
 function render.GetRenderTarget()
 end
 
---- Returns the `_rt_ResolvedFullFrameDepth` texture for SSAO depth. It will only be updated if GM:NeedsDepthPass returns true.  
+--- Returns the `_rt_ResolvedFullFrameDepth` texture for SSAO depth. It will only be updated if GM:NeedsDepthPass returns true. Depth is written using the Shaders/DepthWrite.  
 --- @return GITexture @The depth texture.
 function render.GetResolvedFullFrameDepth()
 end
@@ -767,9 +772,14 @@ end
 function render.SetRenderTarget(texture)
 end
 
---- Sets the render target with the specified index to the specified rt.  
---- @param rtIndex number @The index of the rt to set.
---- @param texture GITexture @The new render target to be used.
+--- Sets the render target with the specified index of `COLOR[n]` to the specified rt, allowing you to work with [Multiple Render Targets (MRT)](https://learn.microsoft.com/en-us/windows/win32/direct3d9/multiple-render-targets). Since standard shaders don't use MRT, you might find this useful at Shaders/screenspace_general.  
+--- ℹ **NOTE**: MRT doesn't work with 2D render functions like render.DrawScreenQuad. Instead, you can render a render.DrawQuad using cam.Start2D.  
+--- ⚠ **WARNING**: If you try to render with MSAA and set the main RenderTarget with another RenderTarget, nothing will be rendered.  
+--- [Link to Direct3D 9 documentation on MRT](https://learn.microsoft.com/en-us/windows/win32/direct3d9/multiple-render-targets#:~:text=No%20antialiasing%20is%20supported)  
+--- `Multiple render targets have the following restrictions:`  
+--- * *No antialiasing is supported.*  
+--- @param rtIndex number @The index of output `COLOR[n]` [semantics](https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics) from pix
+--- @param texture? GITexture @The new render target to be used.
 function render.SetRenderTargetEx(rtIndex, texture)
 end
 

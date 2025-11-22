@@ -7302,6 +7302,7 @@
         "value": 4
       },
       {
+        "description": "Used by players, but NOT for movement collision. Does not collide with COLLISION_GROUP_PASSABLE_DOOR and COLLISION_GROUP_PUSHAWAY",
         "name": "COLLISION_GROUP_PLAYER",
         "value": 5
       },
@@ -7311,6 +7312,7 @@
         "value": 6
       },
       {
+        "description": "Used by driveable vehicles. Always collides against COLLISION_GROUP_VEHICLE_CLIP",
         "name": "COLLISION_GROUP_VEHICLE",
         "value": 7
       },
@@ -7340,6 +7342,7 @@
         "value": 12
       },
       {
+        "description": "Set on projectiles. Does not collide with other projectiles.",
         "name": "COLLISION_GROUP_PROJECTILE",
         "value": 13
       },
@@ -8234,22 +8237,22 @@
         "value": 128
       },
       {
-        "description": "DLIGHT centered at entity origin",
+        "description": "DLIGHT centered at entity origin.",
         "name": "EF_BRIGHTLIGHT",
         "value": 2
       },
       {
-        "description": "Player flashlight",
+        "description": "Player flashlight.",
         "name": "EF_DIMLIGHT",
         "value": 4
       },
       {
-        "description": "Don't interpolate the next frame",
+        "description": "<deprecated>Seems to have no effect. Has been replaced with [C_BaseEntity::IsNoInterpolationFrame()](https://github.com/ValveSoftware/source-sdk-2013/blob/master/src/game/client/c_baseentity.h#L1331-L1332).</deprecated>Don't interpolate the next frame.",
         "name": "EF_NOINTERP",
         "value": 8
       },
       {
-        "description": "Disables shadow",
+        "description": "Disables shadow.",
         "name": "EF_NOSHADOW",
         "value": 16
       },
@@ -8259,12 +8262,12 @@
         "value": 32
       },
       {
-        "description": "Don't receive shadows",
+        "description": "Don't receive shadows.",
         "name": "EF_NORECEIVESHADOW",
         "value": 64
       },
       {
-        "description": "Makes the entity blink",
+        "description": "Makes the entity blink.",
         "name": "EF_ITEM_BLINK",
         "value": 256
       },
@@ -8279,7 +8282,7 @@
         "value": 1024
       },
       {
-        "description": "Makes the entity not accept being lit by projected textures, including the player's flashlight.",
+        "description": "GMod-specific. Makes the entity not accept being lit by projected textures, including the player's flashlight.",
         "name": "EF_NOFLASHLIGHT",
         "value": 8192
       }
@@ -10640,6 +10643,11 @@
         "description": "Cull back faces with clockwise vertices.",
         "name": "MATERIAL_CULLMODE_CW",
         "value": 1
+      },
+      {
+        "description": "Do not cull back faces at all.",
+        "name": "MATERIAL_CULLMODE_NONE",
+        "value": 2
       }
     ],
     "name": "MATERIAL_CULLMODE",

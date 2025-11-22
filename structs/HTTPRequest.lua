@@ -4,7 +4,7 @@
 --- @class SHTTPRequest
 --- @field failed function @Function to be called on failure
 --- @field success function @Function to be called on success
---- @field method string @Request method, case insensitive
+--- @field method? string @Request method, case insensitive
 --- @field url string @The target url
 --- @field parameters table @KeyValue table for parameters
 --- @field headers table @KeyValue table for headers

@@ -29,7 +29,7 @@ end
 function hook.Remove(eventName, identifier)
 end
 
---- Calls all hooks associated with the given event **until** one returns something other than `nil` and then returns that data. If no hook returns any data, it will try to call the `GAMEMODE:<eventname>`; alternative, if one exists.  
+--- Calls all hooks associated with the given event **until** one returns something other than `nil` and then returns that data. If no hook returns any data, it will try to call the `GAMEMODE:<eventname>` alternative, if one exists.  
 --- This function internally calls hook.Call.  
 --- See also: gamemode.Call - same as this, but does not call hooks if the gamemode hasn't defined the function.  
 --- </eventname>  

@@ -1,6 +1,6 @@
 --- @meta
 
---- TTable structure used as balloon spawn data. Default values are applied when the trace hits nothing. This data is required for correctly spawning the balloon.  
+--- Table structure used as balloon spawn data. Default values are applied when the trace hits nothing. This data is required for correctly spawning the balloon.  
 --- See MakeBalloon  
 --- @class SBalloonData
 --- @field Pos? GVector @Where the balloon will spawn

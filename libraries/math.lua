@@ -589,7 +589,8 @@ end
 
 --- Seeds the random number generator. The same seed will guarantee the same sequence of numbers each time with math.random.  
 --- For shared random values across predicted realms, use util.SharedRandom.  
---- ⚠ **WARNING**: Incorrect usage of this function will affect `all` random numbers in the game.  
+--- ⚠ **WARNING**: Usage of this function affects **ALL** random numbers in the game. This means that improper use (such as setting the seed to a static value that doesn't change with time) can negatively affect other addons or the base game.  
+--- It is a good idea to set the seed back to at least something like Global.SysTime in those cases.  
 --- @param seed number @The new seed
 function math.randomseed(seed)
 end
